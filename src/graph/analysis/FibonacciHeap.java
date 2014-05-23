@@ -16,29 +16,29 @@ public class FibonacciHeap
 	/**
 	 * Maps from elements to nodes
 	 */
-	protected Map<Object, Node> nodes = new Hashtable<Object, Node>();
+	protected Map<Object, _FibonacciHeapNode> _nodes = new Hashtable<Object, _FibonacciHeapNode>();
 
 	/**
 	 * 
 	 */
-	protected Node min;
+	protected _FibonacciHeapNode _min;
 
 	/**
 	 * 
 	 */
-	protected int size;
+	protected int _size;
 
 	/**
 	 * Returns the node that represents element.
 	 */
-	public Node getNode(Object element, boolean create)
+	public _FibonacciHeapNode getNode(Object element, boolean create)
 	{
-		Node node = nodes.get(element);
+		_FibonacciHeapNode node = _nodes.get(element);
 
 		if (node == null && create)
 		{
-			node = new Node(element, Double.MAX_VALUE);
-			nodes.put(element, node);
+			node = new _FibonacciHeapNode(element, Double.MAX_VALUE);
+			_nodes.put(element, node);
 			insert(node, node.getKey());
 		}
 		return node;
@@ -49,7 +49,7 @@ public class FibonacciHeap
 	 */
 	public boolean isEmpty()
 	{
-		return min == null;
+		return _min == null;
 	}
 
 	/**
@@ -66,26 +66,26 @@ public class FibonacciHeap
 	 * @exception IllegalArgumentException
 	 *                Thrown if k is larger than x.key value.
 	 */
-	public void decreaseKey(Node x, double k)
+	public void decreaseKey(_FibonacciHeapNode x, double k)
 	{
-		if (k > x.key)
+		if (k > x._key)
 		{
 			throw new IllegalArgumentException(
 					"decreaseKey() got larger key value");
 		}
 
-		x.key = k;
-		Node y = x.parent;
+		x._key = k;
+		_FibonacciHeapNode y = x._parent;
 
-		if ((y != null) && (x.key < y.key))
+		if ((y != null) && (x._key < y._key))
 		{
-			cut(x, y);
-			cascadingCut(y);
+			_cut(x, y);
+			_cascadingCut(y);
 		}
 
-		if (min == null || x.key < min.key)
+		if (_min == null || x._key < _min._key)
 		{
-			min = x;
+			_min = x;
 		}
 	}
 
@@ -101,7 +101,7 @@ public class FibonacciHeap
 	 * 
 	 * @param x The node to remove from the heap.
 	 */
-	public void delete(Node x)
+	public void delete(_FibonacciHeapNode x)
 	{
 		// make x as small as possible
 		decreaseKey(x, Double.NEGATIVE_INFINITY);
@@ -124,29 +124,29 @@ public class FibonacciHeap
 	 * @param key
 	 *            key value associated with data object
 	 */
-	public void insert(Node node, double key)
+	public void insert(_FibonacciHeapNode node, double key)
 	{
-		node.key = key;
+		node._key = key;
 
 		// concatenate node into min list
-		if (min != null)
+		if (_min != null)
 		{
-			node.left = min;
-			node.right = min.right;
-			min.right = node;
-			node.right.left = node;
+			node._left = _min;
+			node._right = _min._right;
+			_min._right = node;
+			node._right._left = node;
 
-			if (key < min.key)
+			if (key < _min._key)
 			{
-				min = node;
+				_min = node;
 			}
 		}
 		else
 		{
-			min = node;
+			_min = node;
 		}
 
-		size++;
+		_size++;
 	}
 
 	/**
@@ -159,9 +159,9 @@ public class FibonacciHeap
 	 * 
 	 * @return Returns the heap node with the smallest key.
 	 */
-	public Node min()
+	public _FibonacciHeapNode min()
 	{
-		return min;
+		return _min;
 	}
 
 	/**
@@ -175,53 +175,53 @@ public class FibonacciHeap
 	 * 
 	 * @return Returns the node with the smallest key.
 	 */
-	public Node removeMin()
+	public _FibonacciHeapNode removeMin()
 	{
-		Node z = min;
+		_FibonacciHeapNode z = _min;
 
 		if (z != null)
 		{
-			int numKids = z.degree;
-			Node x = z.child;
-			Node tempRight;
+			int numKids = z._degree;
+			_FibonacciHeapNode x = z._child;
+			_FibonacciHeapNode tempRight;
 
 			// for each child of z do...
 			while (numKids > 0)
 			{
-				tempRight = x.right;
+				tempRight = x._right;
 
 				// remove x from child list
-				x.left.right = x.right;
-				x.right.left = x.left;
+				x._left._right = x._right;
+				x._right._left = x._left;
 
 				// add x to root list of heap
-				x.left = min;
-				x.right = min.right;
-				min.right = x;
-				x.right.left = x;
+				x._left = _min;
+				x._right = _min._right;
+				_min._right = x;
+				x._right._left = x;
 
 				// set parent[x] to null
-				x.parent = null;
+				x._parent = null;
 				x = tempRight;
 				numKids--;
 			}
 
 			// remove z from root list of heap
-			z.left.right = z.right;
-			z.right.left = z.left;
+			z._left._right = z._right;
+			z._right._left = z._left;
 
-			if (z == z.right)
+			if (z == z._right)
 			{
-				min = null;
+				_min = null;
 			}
 			else
 			{
-				min = z.right;
-				consolidate();
+				_min = z._right;
+				_consolidate();
 			}
 
 			// decrement size of heap
-			size--;
+			_size--;
 		}
 
 		return z;
@@ -239,7 +239,7 @@ public class FibonacciHeap
 	 */
 	public int size()
 	{
-		return size;
+		return _size;
 	}
 
 	/**
@@ -260,29 +260,29 @@ public class FibonacciHeap
 
 		if ((h1 != null) && (h2 != null))
 		{
-			h.min = h1.min;
+			h._min = h1._min;
 
-			if (h.min != null)
+			if (h._min != null)
 			{
-				if (h2.min != null)
+				if (h2._min != null)
 				{
-					h.min.right.left = h2.min.left;
-					h2.min.left.right = h.min.right;
-					h.min.right = h2.min;
-					h2.min.left = h.min;
+					h._min._right._left = h2._min._left;
+					h2._min._left._right = h._min._right;
+					h._min._right = h2._min;
+					h2._min._left = h._min;
 
-					if (h2.min.key < h1.min.key)
+					if (h2._min._key < h1._min._key)
 					{
-						h.min = h2.min;
+						h._min = h2._min;
 					}
 				}
 			}
 			else
 			{
-				h.min = h2.min;
+				h._min = h2._min;
 			}
 
-			h.size = h1.size + h2.size;
+			h._size = h1._size + h2._size;
 		}
 
 		return h;
@@ -298,25 +298,25 @@ public class FibonacciHeap
 	 * 
 	 * @param y The node to perform cascading cut on.
 	 */
-	protected void cascadingCut(Node y)
+	protected void _cascadingCut(_FibonacciHeapNode y)
 	{
-		Node z = y.parent;
+		_FibonacciHeapNode z = y._parent;
 
 		// if there's a parent...
 		if (z != null)
 		{
 			// if y is unmarked, set it marked
-			if (!y.mark)
+			if (!y._mark)
 			{
-				y.mark = true;
+				y._mark = true;
 			}
 			else
 			{
 				// it's marked, cut it from parent
-				cut(y, z);
+				_cut(y, z);
 
 				// cut its parent as well
-				cascadingCut(z);
+				_cascadingCut(z);
 			}
 		}
 	}
@@ -329,10 +329,10 @@ public class FibonacciHeap
 	 * Running time: O(log n) amortized
 	 * </p>
 	 */
-	protected void consolidate()
+	protected void _consolidate()
 	{
-		int arraySize = size + 1;
-		Node[] array = new Node[arraySize];
+		int arraySize = _size + 1;
+		_FibonacciHeapNode[] array = new _FibonacciHeapNode[arraySize];
 
 		// Initialize degree array
 		for (int i = 0; i < arraySize; i++)
@@ -342,17 +342,17 @@ public class FibonacciHeap
 
 		// Find the number of root nodes.
 		int numRoots = 0;
-		Node x = min;
+		_FibonacciHeapNode x = _min;
 
 		if (x != null)
 		{
 			numRoots++;
-			x = x.right;
+			x = x._right;
 
-			while (x != min)
+			while (x != _min)
 			{
 				numRoots++;
-				x = x.right;
+				x = x._right;
 			}
 		}
 
@@ -360,25 +360,25 @@ public class FibonacciHeap
 		while (numRoots > 0)
 		{
 			// Access this node's degree..
-			int d = x.degree;
-			Node next = x.right;
+			int d = x._degree;
+			_FibonacciHeapNode next = x._right;
 
 			// ..and see if there's another of the same degree.
 			while (array[d] != null)
 			{
 				// There is, make one of the nodes a child of the other.
-				Node y = array[d];
+				_FibonacciHeapNode y = array[d];
 
 				// Do this based on the key value.
-				if (x.key > y.key)
+				if (x._key > y._key)
 				{
-					Node temp = y;
+					_FibonacciHeapNode temp = y;
 					y = x;
 					x = temp;
 				}
 
 				// Node y disappears from root list.
-				link(y, x);
+				_link(y, x);
 
 				// We've handled this degree, go to next one.
 				array[d] = null;
@@ -396,34 +396,34 @@ public class FibonacciHeap
 
 		// Set min to null (effectively losing the root list) and
 		// reconstruct the root list from the array entries in array[].
-		min = null;
+		_min = null;
 
 		for (int i = 0; i < arraySize; i++)
 		{
 			if (array[i] != null)
 			{
 				// We've got a live one, add it to root list.
-				if (min != null)
+				if (_min != null)
 				{
 					// First remove node from root list.
-					array[i].left.right = array[i].right;
-					array[i].right.left = array[i].left;
+					array[i]._left._right = array[i]._right;
+					array[i]._right._left = array[i]._left;
 
 					// Now add to root list, again.
-					array[i].left = min;
-					array[i].right = min.right;
-					min.right = array[i];
-					array[i].right.left = array[i];
+					array[i]._left = _min;
+					array[i]._right = _min._right;
+					_min._right = array[i];
+					array[i]._right._left = array[i];
 
 					// Check if this is a new min.
-					if (array[i].key < min.key)
+					if (array[i]._key < _min._key)
 					{
-						min = array[i];
+						_min = array[i];
 					}
 				}
 				else
 				{
-					min = array[i];
+					_min = array[i];
 				}
 			}
 		}
@@ -440,35 +440,35 @@ public class FibonacciHeap
 	 * @param x The child of y to be removed from y's child list.
 	 * @param y The parent of x about to lose a child.
 	 */
-	protected void cut(Node x, Node y)
+	protected void _cut(_FibonacciHeapNode x, _FibonacciHeapNode y)
 	{
 		// remove x from childlist of y and decrement degree[y]
-		x.left.right = x.right;
-		x.right.left = x.left;
-		y.degree--;
+		x._left._right = x._right;
+		x._right._left = x._left;
+		y._degree--;
 
 		// reset y.child if necessary
-		if (y.child == x)
+		if (y._child == x)
 		{
-			y.child = x.right;
+			y._child = x._right;
 		}
 
-		if (y.degree == 0)
+		if (y._degree == 0)
 		{
-			y.child = null;
+			y._child = null;
 		}
 
 		// add x to root list of heap
-		x.left = min;
-		x.right = min.right;
-		min.right = x;
-		x.right.left = x;
+		x._left = _min;
+		x._right = _min._right;
+		_min._right = x;
+		x._right._left = x;
 
 		// set parent[x] to nil
-		x.parent = null;
+		x._parent = null;
 
 		// set mark[x] to false
-		x.mark = false;
+		x._mark = false;
 	}
 
 	/**
@@ -481,123 +481,34 @@ public class FibonacciHeap
 	 * @param y The node to become child.
 	 * @param x The node to become parent.
 	 */
-	protected void link(Node y, Node x)
+	protected void _link(_FibonacciHeapNode y, _FibonacciHeapNode x)
 	{
 		// remove y from root list of heap
-		y.left.right = y.right;
-		y.right.left = y.left;
+		y._left._right = y._right;
+		y._right._left = y._left;
 
 		// make y a child of x
-		y.parent = x;
+		y._parent = x;
 
-		if (x.child == null)
+		if (x._child == null)
 		{
-			x.child = y;
-			y.right = y;
-			y.left = y;
+			x._child = y;
+			y._right = y;
+			y._left = y;
 		}
 		else
 		{
-			y.left = x.child;
-			y.right = x.child.right;
-			x.child.right = y;
-			y.right.left = y;
+			y._left = x._child;
+			y._right = x._child._right;
+			x._child._right = y;
+			y._right._left = y;
 		}
 
 		// increase degree[x]
-		x.degree++;
+		x._degree++;
 
 		// set mark[y] false
-		y.mark = false;
-	}
-
-	/**
-	 * Implements a node of the Fibonacci heap. It holds the information
-	 * necessary for maintaining the structure of the heap. It also holds the
-	 * reference to the key value (which is used to determine the heap
-	 * structure). Additional Node data should be stored in a subclass.
-	 */
-	public static class Node
-	{
-
-		Object userObject;
-
-		/**
-		 * first child node
-		 */
-		Node child;
-
-		/**
-		 * left sibling node
-		 */
-		Node left;
-
-		/**
-		 * parent node
-		 */
-		Node parent;
-
-		/**
-		 * right sibling node
-		 */
-		Node right;
-
-		/**
-		 * true if this node has had a child removed since this node was added
-		 * to its parent
-		 */
-		boolean mark;
-
-		/**
-		 * key value for this node
-		 */
-		double key;
-
-		/**
-		 * number of children of this node (does not count grandchildren)
-		 */
-		int degree;
-
-		/**
-		 * Default constructor. Initializes the right and left pointers, making
-		 * this a circular doubly-linked list.
-		 * 
-		 * @param key The initial key for node.
-		 */
-		public Node(Object userObject, double key)
-		{
-			this.userObject = userObject;
-			right = this;
-			left = this;
-			this.key = key;
-		}
-
-		/**
-		 * Obtain the key for this node.
-		 * 
-		 * @return the key
-		 */
-		public final double getKey()
-		{
-			return key;
-		}
-
-		/**
-		 * @return Returns the userObject.
-		 */
-		public Object getUserObject()
-		{
-			return userObject;
-		}
-
-		/**
-		 * @param userObject The userObject to set.
-		 */
-		public void setUserObject(Object userObject)
-		{
-			this.userObject = userObject;
-		}
-
+		y._mark = false;
 	}
 
 }

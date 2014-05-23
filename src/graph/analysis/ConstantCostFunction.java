@@ -15,7 +15,7 @@ public class ConstantCostFunction implements ICostFunction
 	/**
 	 * 
 	 */
-	protected double cost = 0;
+	protected double _cost = 0;
 
 	/**
 	 * 
@@ -23,7 +23,7 @@ public class ConstantCostFunction implements ICostFunction
 	 */
 	public ConstantCostFunction(double cost)
 	{
-		this.cost = cost;
+		this._cost = cost;
 	}
 
 	/**
@@ -31,7 +31,7 @@ public class ConstantCostFunction implements ICostFunction
 	 */
 	public double getCost(CellState state)
 	{
-		return cost;
+		return _cost;
 	}
 
 }

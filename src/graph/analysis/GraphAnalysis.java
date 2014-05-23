@@ -61,7 +61,7 @@ public class GraphAnalysis
 	/**
 	 * Holds the shared instance of this class.
 	 */
-	protected static GraphAnalysis instance = new GraphAnalysis();
+	protected static GraphAnalysis _instance = new GraphAnalysis();
 
 	/**
 	 *
@@ -76,7 +76,7 @@ public class GraphAnalysis
 	 */
 	public static GraphAnalysis getInstance()
 	{
-		return instance;
+		return _instance;
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class GraphAnalysis
 	 */
 	public static void setInstance(GraphAnalysis instance)
 	{
-		GraphAnalysis.instance = instance;
+		GraphAnalysis._instance = instance;
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class GraphAnalysis
 	 * and edges, starting with <code>from</code> and ending with
 	 * <code>to</code>.
 	 * 
-	 * @see #createPriorityQueue()
+	 * @see #_createPriorityQueue()
 	 */
 	public Object[] getShortestPath(Graph graph, Object from, Object to,
 			ICostFunction cf, int steps, boolean directed)
@@ -113,7 +113,7 @@ public class GraphAnalysis
 		// cell in tha graph traversal. The pqueue is initialized
 		// with the from element at prio 0.
 		GraphView view = graph.getView();
-		FibonacciHeap q = createPriorityQueue();
+		FibonacciHeap q = _createPriorityQueue();
 		Hashtable<Object, Object> pred = new Hashtable<Object, Object>();
 		q.decreaseKey(q.getNode(from, true), 0); // Inserts automatically
 
@@ -121,7 +121,7 @@ public class GraphAnalysis
 		// updated with the actual shortest distance to the source vertex.
 		for (int j = 0; j < steps; j++)
 		{
-			FibonacciHeap.Node node = q.removeMin();
+			_FibonacciHeapNode node = q.removeMin();
 			double prio = node.getKey();
 			Object obj = node.getUserObject();
 
@@ -224,7 +224,7 @@ public class GraphAnalysis
 	 * 
 	 * @return Returns the MST as an array of edges
 	 * 
-	 * @see #createPriorityQueue()
+	 * @see #_createPriorityQueue()
 	 */
 	public Object[] getMinimumSpanningTree(Graph graph, Object[] v,
 			ICostFunction cf, boolean directed)
@@ -234,7 +234,7 @@ public class GraphAnalysis
 		// Sets up a pqueue and a hashtable to store the predecessor for each
 		// cell in tha graph traversal. The pqueue is initialized
 		// with the from element at prio 0.
-		FibonacciHeap q = createPriorityQueue();
+		FibonacciHeap q = _createPriorityQueue();
 		Hashtable<Object, Object> pred = new Hashtable<Object, Object>();
 		Object u = v[0];
 		q.decreaseKey(q.getNode(u, true), 0);
@@ -248,7 +248,7 @@ public class GraphAnalysis
 		// updated with the actual shortest distance to the source vertex.
 		while (!q.isEmpty())
 		{
-			FibonacciHeap.Node node = q.removeMin();
+			_FibonacciHeapNode node = q.removeMin();
 			u = node.getUserObject();
 			Object edge = pred.get(u);
 
@@ -316,7 +316,7 @@ public class GraphAnalysis
 	 * 
 	 * @return Returns the MST as an array of edges.
 	 * 
-	 * @see #createUnionFind(Object[])
+	 * @see #_createUnionFind(Object[])
 	 */
 	public Object[] getMinimumSpanningTree(Graph graph, Object[] v,
 			Object[] e, ICostFunction cf)
@@ -329,7 +329,7 @@ public class GraphAnalysis
 		// Whenever an edge is added to the MST, the two different sets are
 		// unified.
 		GraphView view = graph.getView();
-		UnionFind uf = createUnionFind(v);
+		UnionFind uf = _createUnionFind(v);
 		ArrayList<Object> result = new ArrayList<Object>(e.length);
 		CellState[] edgeStates = sort(view.getCellStates(e), cf);
 
@@ -338,8 +338,8 @@ public class GraphAnalysis
 			Object source = edgeStates[i].getVisibleTerminal(true);
 			Object target = edgeStates[i].getVisibleTerminal(false);
 
-			UnionFind.Node setA = uf.find(uf.getNode(source));
-			UnionFind.Node setB = uf.find(uf.getNode(target));
+			_UnionFindNode setA = uf.find(uf.getNode(source));
+			_UnionFindNode setB = uf.find(uf.getNode(target));
 
 			if (setA == null || setB == null || setA != setB)
 			{
@@ -360,13 +360,13 @@ public class GraphAnalysis
 	 * @param e The edges of the graph.
 	 * @return Returns the connection components in G=(E,V)
 	 * 
-	 * @see #createUnionFind(Object[])
+	 * @see #_createUnionFind(Object[])
 	 */
 	public UnionFind getConnectionComponents(Graph graph, Object[] v,
 			Object[] e)
 	{
 		GraphView view = graph.getView();
-		UnionFind uf = createUnionFind(v);
+		UnionFind uf = _createUnionFind(v);
 
 		for (int i = 0; i < e.length; i++)
 		{
@@ -448,7 +448,7 @@ public class GraphAnalysis
 	 * 
 	 * @return Returns a union find structure for <code>v</code>
 	 */
-	protected UnionFind createUnionFind(Object[] v)
+	protected UnionFind _createUnionFind(Object[] v)
 	{
 		return new UnionFind(v);
 	}
@@ -456,7 +456,7 @@ public class GraphAnalysis
 	/**
 	 * Hook for subclassers to provide a custom fibonacci heap.
 	 */
-	protected FibonacciHeap createPriorityQueue()
+	protected FibonacciHeap _createPriorityQueue()
 	{
 		return new FibonacciHeap();
 	}

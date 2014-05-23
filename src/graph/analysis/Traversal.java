@@ -47,7 +47,7 @@ public class Traversal
 	 */
 	public static void dfs(AnalysisGraph aGraph, Object startVertex, ICellVisitor visitor)
 	{
-		dfsRec(aGraph, startVertex, null, new HashSet<Object>(), visitor);
+		_dfsRec(aGraph, startVertex, null, new HashSet<Object>(), visitor);
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class Traversal
 	 * @param seen
 	 * @param visitor
 	 */
-	private static void dfsRec(AnalysisGraph aGraph, Object cell, Object edge, Set<Object> seen, ICellVisitor visitor)
+	private static void _dfsRec(AnalysisGraph aGraph, Object cell, Object edge, Set<Object> seen, ICellVisitor visitor)
 	{
 		if (cell != null)
 		{
@@ -72,7 +72,7 @@ public class Traversal
 
 				for (int i = 0; i < opposites.length; i++)
 				{
-					dfsRec(aGraph, opposites[i], edges[i], seen, visitor);
+					_dfsRec(aGraph, opposites[i], edges[i], seen, visitor);
 				}
 			}
 		}
@@ -107,7 +107,7 @@ public class Traversal
 			queue.addLast(q);
 			queued.add(startVertex);
 
-			bfsRec(aGraph, queued, queue, visitor);
+			_bfsRec(aGraph, queued, queue, visitor);
 		}
 	};
 
@@ -118,7 +118,7 @@ public class Traversal
 	 * @param queue
 	 * @param visitor
 	 */
-	private static void bfsRec(AnalysisGraph aGraph, Set<Object> queued, LinkedList<Object[]> queue, ICellVisitor visitor)
+	private static void _bfsRec(AnalysisGraph aGraph, Set<Object> queued, LinkedList<Object[]> queue, ICellVisitor visitor)
 	{
 		if (queue.size() > 0)
 		{
@@ -143,7 +143,7 @@ public class Traversal
 				}
 			}
 
-			bfsRec(aGraph, queued, queue, visitor);
+			_bfsRec(aGraph, queued, queue, visitor);
 		}
 	};
 
@@ -394,7 +394,7 @@ public class Traversal
 		}
 
 		Object[] edges = aGraph.getChildEdges(aGraph.getGraph().getDefaultParent());
-		dist = initializeWeight(aGraph, vertices, edges, indexMap);
+		dist = _initializeWeight(aGraph, vertices, edges, indexMap);
 
 		for (int k = 0; k < vertices.length; k++)
 		{
@@ -433,7 +433,7 @@ public class Traversal
 	 * @param indexMap
 	 * @return
 	 */
-	private static Double[][] initializeWeight(AnalysisGraph aGraph, Object[] nodes, Object[] edges, Map<Object, Integer> indexMap)
+	private static Double[][] _initializeWeight(AnalysisGraph aGraph, Object[] nodes, Object[] edges, Map<Object, Integer> indexMap)
 	{
 		Double[][] weight = new Double[nodes.length][nodes.length];
 
@@ -505,7 +505,7 @@ public class Traversal
 
 			while (startVertex != targetVertex)
 			{
-				result = getWFIPathRec(aGraph, paths, startVertex, targetVertex, currPath, cf, view);
+				result = _getWFIPathRec(aGraph, paths, startVertex, targetVertex, currPath, cf, view);
 				startVertex = result.get(result.size() - 1);
 			}
 		}
@@ -530,7 +530,7 @@ public class Traversal
 	 * @return
 	 * @throws StructuralException
 	 */
-	private static ArrayList<Object> getWFIPathRec(AnalysisGraph aGraph, Object[][] paths, Object startVertex, Object targetVertex,
+	private static ArrayList<Object> _getWFIPathRec(AnalysisGraph aGraph, Object[][] paths, Object startVertex, Object targetVertex,
 			ArrayList<Object> currPath, CostFunction cf, GraphView view) throws StructuralException
 	{
 		Double sourceIndexD = (Double) cf.getCost(view.getState(startVertex));
@@ -540,7 +540,7 @@ public class Traversal
 
 		if (parents[tIndex] != null)
 		{
-			currPath = getWFIPathRec(aGraph, paths, startVertex, parents[tIndex], currPath, cf, view);
+			currPath = _getWFIPathRec(aGraph, paths, startVertex, parents[tIndex], currPath, cf, view);
 		}
 		else
 		{

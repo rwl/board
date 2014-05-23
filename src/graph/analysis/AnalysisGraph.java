@@ -20,12 +20,12 @@ import java.util.Map;
 public class AnalysisGraph
 {
 	// contains various filters, like visibility and direction
-	protected Map<String, Object> properties = new HashMap<String, Object>();
+	protected Map<String, Object> _properties = new HashMap<String, Object>();
 
 	// contains various data that is used for graph generation and analysis
-	protected GraphGenerator generator;
+	protected GraphGenerator _generator;
 
-	protected Graph graph;
+	protected Graph _graph;
 
 	/**
 	 * Returns the incoming and/or outgoing edges for the given cell.
@@ -48,16 +48,16 @@ public class AnalysisGraph
 	 */
 	public Object[] getEdges(Object cell, Object parent, boolean incoming, boolean outgoing, boolean includeLoops, boolean recurse)
 	{
-		if (!GraphProperties.isTraverseVisible(properties, GraphProperties.DEFAULT_TRAVERSE_VISIBLE))
+		if (!GraphProperties.isTraverseVisible(_properties, GraphProperties.DEFAULT_TRAVERSE_VISIBLE))
 		{
-			return graph.getEdges(cell, parent, incoming, outgoing, includeLoops, recurse);
+			return _graph.getEdges(cell, parent, incoming, outgoing, includeLoops, recurse);
 		}
 		else
 		{
-			Object[] edges = graph.getEdges(cell, parent, incoming, outgoing, includeLoops, recurse);
+			Object[] edges = _graph.getEdges(cell, parent, incoming, outgoing, includeLoops, recurse);
 			List<Object> result = new ArrayList<Object>(edges.length);
 
-			IGraphModel model = graph.getModel();
+			IGraphModel model = _graph.getModel();
 
 			for (int i = 0; i < edges.length; i++)
 			{
@@ -92,7 +92,7 @@ public class AnalysisGraph
 	 */
 	public Object[] getEdges(Object cell, Object parent, boolean includeLoops, boolean recurse)
 	{
-		if (GraphProperties.isDirected(properties, GraphProperties.DEFAULT_DIRECTED))
+		if (GraphProperties.isDirected(_properties, GraphProperties.DEFAULT_DIRECTED))
 		{
 			return getEdges(cell, parent, false, true, includeLoops, recurse);
 		}
@@ -109,7 +109,7 @@ public class AnalysisGraph
 	 */
 	public Object[] getChildVertices(Object parent)
 	{
-		return graph.getChildVertices(parent);
+		return _graph.getChildVertices(parent);
 	};
 
 	/**
@@ -119,7 +119,7 @@ public class AnalysisGraph
 	 */
 	public Object[] getChildEdges(Object parent)
 	{
-		return graph.getChildEdges(parent);
+		return _graph.getChildEdges(parent);
 	};
 
 	/**
@@ -130,12 +130,12 @@ public class AnalysisGraph
 	 */
 	public Object getTerminal(Object edge, boolean isSource)
 	{
-		return graph.getModel().getTerminal(edge, isSource);
+		return _graph.getModel().getTerminal(edge, isSource);
 	};
 
 	public Object[] getChildCells(Object parent, boolean vertices, boolean edges)
 	{
-		return graph.getChildCells(parent, vertices, edges);
+		return _graph.getChildCells(parent, vertices, edges);
 	}
 
 	/**
@@ -155,7 +155,7 @@ public class AnalysisGraph
 	{
 		// TODO needs non-visible graph version
 
-		return graph.getOpposites(edges, terminal, sources, targets);
+		return _graph.getOpposites(edges, terminal, sources, targets);
 	};
 
 	/**
@@ -169,7 +169,7 @@ public class AnalysisGraph
 	 */
 	public Object[] getOpposites(Object[] edges, Object terminal)
 	{
-		if (GraphProperties.isDirected(properties, GraphProperties.DEFAULT_DIRECTED))
+		if (GraphProperties.isDirected(_properties, GraphProperties.DEFAULT_DIRECTED))
 		{
 			return getOpposites(edges, terminal, false, true);
 		}
@@ -181,29 +181,29 @@ public class AnalysisGraph
 
 	public Map<String, Object> getProperties()
 	{
-		return properties;
+		return _properties;
 	};
 
 	public void setProperties(Map<String, Object> properties)
 	{
-		this.properties = properties;
+		this._properties = properties;
 	};
 
 	public Graph getGraph()
 	{
-		return graph;
+		return _graph;
 	};
 
 	public void setGraph(Graph graph)
 	{
-		this.graph = graph;
+		this._graph = graph;
 	}
 
 	public GraphGenerator getGenerator()
 	{
-		if (generator != null)
+		if (_generator != null)
 		{
-			return generator;
+			return _generator;
 		}
 		else
 		{
@@ -213,6 +213,6 @@ public class AnalysisGraph
 
 	public void setGenerator(GraphGenerator generator)
 	{
-		this.generator = generator;
+		this._generator = generator;
 	};
 };

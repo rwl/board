@@ -26,24 +26,24 @@ public class GraphGenerator
 	//	private GeneratorFunction generatorFunction = new GeneratorRandomFunction(0,1,2);
 	//	private GeneratorFunction generatorFunction = new GeneratorConstFunction(1.5);
 	//	private GeneratorFunction generatorFunction = new GeneratorRandomIntFunction(0, 20);
-	private GeneratorFunction generatorFunction = null;
+	private GeneratorFunction _generatorFunction = null;
 
-	private CostFunction costFunction = null;
+	private CostFunction _costFunction = null;
 
 	public GraphGenerator(GeneratorFunction generatorFunction, CostFunction costFunction)
 	{
 		if (generatorFunction != null)
 		{
-			this.generatorFunction = generatorFunction;
+			this._generatorFunction = generatorFunction;
 		}
 
 		if (costFunction != null)
 		{
-			this.costFunction = costFunction;
+			this._costFunction = costFunction;
 		}
 		else
 		{
-			this.costFunction = new DoubleValCostFunction();
+			this._costFunction = new DoubleValCostFunction();
 		}
 	};
 
@@ -392,7 +392,7 @@ public class GraphGenerator
 
 		if (currX > 0 && currX <= xDim && currY > 0 && currY <= yDim)
 		{
-			currVertex = getVertexFromGrid(vertices, xDim, yDim, currX, currY);
+			currVertex = _getVertexFromGrid(vertices, xDim, yDim, currX, currY);
 			possibleMoves.add(currVertex);
 		}
 
@@ -403,7 +403,7 @@ public class GraphGenerator
 		// check if in bounds
 		if (currX > 0 && currX <= xDim && currY > 0 && currY <= yDim)
 		{
-			currVertex = getVertexFromGrid(vertices, xDim, yDim, currX, currY);
+			currVertex = _getVertexFromGrid(vertices, xDim, yDim, currX, currY);
 			possibleMoves.add(currVertex);
 		}
 
@@ -414,7 +414,7 @@ public class GraphGenerator
 		// check if in bounds
 		if (currX > 0 && currX <= xDim && currY > 0 && currY <= yDim)
 		{
-			currVertex = getVertexFromGrid(vertices, xDim, yDim, currX, currY);
+			currVertex = _getVertexFromGrid(vertices, xDim, yDim, currX, currY);
 			possibleMoves.add(currVertex);
 		}
 
@@ -425,7 +425,7 @@ public class GraphGenerator
 		// check if in bounds
 		if (currX > 0 && currX <= xDim && currY > 0 && currY <= yDim)
 		{
-			currVertex = getVertexFromGrid(vertices, xDim, yDim, currX, currY);
+			currVertex = _getVertexFromGrid(vertices, xDim, yDim, currX, currY);
 			possibleMoves.add(currVertex);
 		}
 
@@ -436,7 +436,7 @@ public class GraphGenerator
 		// check if in bounds
 		if (currX > 0 && currX <= xDim && currY > 0 && currY <= yDim)
 		{
-			currVertex = getVertexFromGrid(vertices, xDim, yDim, currX, currY);
+			currVertex = _getVertexFromGrid(vertices, xDim, yDim, currX, currY);
 			possibleMoves.add(currVertex);
 		}
 
@@ -447,7 +447,7 @@ public class GraphGenerator
 		// check if in bounds
 		if (currX > 0 && currX <= xDim && currY > 0 && currY <= yDim)
 		{
-			currVertex = getVertexFromGrid(vertices, xDim, yDim, currX, currY);
+			currVertex = _getVertexFromGrid(vertices, xDim, yDim, currX, currY);
 			possibleMoves.add(currVertex);
 		}
 
@@ -458,7 +458,7 @@ public class GraphGenerator
 		// check if in bounds
 		if (currX > 0 && currX <= xDim && currY > 0 && currY <= yDim)
 		{
-			currVertex = getVertexFromGrid(vertices, xDim, yDim, currX, currY);
+			currVertex = _getVertexFromGrid(vertices, xDim, yDim, currX, currY);
 			possibleMoves.add(currVertex);
 		}
 
@@ -469,7 +469,7 @@ public class GraphGenerator
 		// check if in bounds
 		if (currX > 0 && currX <= xDim && currY > 0 && currY <= yDim)
 		{
-			currVertex = getVertexFromGrid(vertices, xDim, yDim, currX, currY);
+			currVertex = _getVertexFromGrid(vertices, xDim, yDim, currX, currY);
 			possibleMoves.add(currVertex);
 		}
 
@@ -511,7 +511,7 @@ public class GraphGenerator
 	 * @return vertex on the desired coordinates.
 	 * Note that both dimensions and both coordinates must be positive
 	 */
-	private Object getVertexFromGrid(Object[] vertices, int xDim, int yDim, int xCoord, int yCoord)
+	private Object _getVertexFromGrid(Object[] vertices, int xDim, int yDim, int xCoord, int yCoord)
 	{
 		if (xCoord > xDim || yCoord > yDim || xDim < 1 || yDim < 1 || xCoord < 1 || yCoord < 1)
 		{
@@ -598,7 +598,7 @@ public class GraphGenerator
 
 		if (currX > 0 && currX <= xDim && currY > 0 && currY <= yDim)
 		{
-			currVertex = getVertexFromGrid(vertices, xDim, yDim, currX, currY);
+			currVertex = _getVertexFromGrid(vertices, xDim, yDim, currX, currY);
 			possibleMoves.add(currVertex);
 		}
 
@@ -608,7 +608,7 @@ public class GraphGenerator
 		// check if in bounds
 		if (currX > 0 && currX <= xDim && currY > 0 && currY <= yDim)
 		{
-			currVertex = getVertexFromGrid(vertices, xDim, yDim, currX, currY);
+			currVertex = _getVertexFromGrid(vertices, xDim, yDim, currX, currY);
 			possibleMoves.add(currVertex);
 		}
 
@@ -618,7 +618,7 @@ public class GraphGenerator
 		// check if in bounds
 		if (currX > 0 && currX <= xDim && currY > 0 && currY <= yDim)
 		{
-			currVertex = getVertexFromGrid(vertices, xDim, yDim, currX, currY);
+			currVertex = _getVertexFromGrid(vertices, xDim, yDim, currX, currY);
 			possibleMoves.add(currVertex);
 		}
 
@@ -628,7 +628,7 @@ public class GraphGenerator
 		// check if in bounds
 		if (currX > 0 && currX <= xDim && currY > 0 && currY <= yDim)
 		{
-			currVertex = getVertexFromGrid(vertices, xDim, yDim, currX, currY);
+			currVertex = _getVertexFromGrid(vertices, xDim, yDim, currX, currY);
 			possibleMoves.add(currVertex);
 		}
 
@@ -638,7 +638,7 @@ public class GraphGenerator
 		// check if in bounds
 		if (currX > 0 && currX <= xDim && currY > 0 && currY <= yDim)
 		{
-			currVertex = getVertexFromGrid(vertices, xDim, yDim, currX, currY);
+			currVertex = _getVertexFromGrid(vertices, xDim, yDim, currX, currY);
 			possibleMoves.add(currVertex);
 		}
 
@@ -648,7 +648,7 @@ public class GraphGenerator
 		// check if in bounds
 		if (currX > 0 && currX <= xDim && currY > 0 && currY <= yDim)
 		{
-			currVertex = getVertexFromGrid(vertices, xDim, yDim, currX, currY);
+			currVertex = _getVertexFromGrid(vertices, xDim, yDim, currX, currY);
 			possibleMoves.add(currVertex);
 		}
 
@@ -658,7 +658,7 @@ public class GraphGenerator
 		// check if in bounds
 		if (currX > 0 && currX <= xDim && currY > 0 && currY <= yDim)
 		{
-			currVertex = getVertexFromGrid(vertices, xDim, yDim, currX, currY);
+			currVertex = _getVertexFromGrid(vertices, xDim, yDim, currX, currY);
 			possibleMoves.add(currVertex);
 		}
 
@@ -668,7 +668,7 @@ public class GraphGenerator
 		// check if in bounds
 		if (currX > 0 && currX <= xDim && currY > 0 && currY <= yDim)
 		{
-			currVertex = getVertexFromGrid(vertices, xDim, yDim, currX, currY);
+			currVertex = _getVertexFromGrid(vertices, xDim, yDim, currX, currY);
 			possibleMoves.add(currVertex);
 		}
 
@@ -1007,7 +1007,7 @@ public class GraphGenerator
 		{
 			for (int j = 0; j < numVerticesInBranch; j++)
 			{
-				double currSize = this.getRingSize(j + 1, numVerticesInBranch, graphSize);
+				double currSize = this._getRingSize(j + 1, numVerticesInBranch, graphSize);
 
 				//calc the position
 				double x = 0;
@@ -1071,7 +1071,7 @@ public class GraphGenerator
 	 * @param fullSize
 	 * @return ring size
 	 */
-	private double getRingSize(int currIndex, int branchSize, double fullSize)
+	private double _getRingSize(int currIndex, int branchSize, double fullSize)
 	{
 		if (currIndex < 1 || currIndex > branchSize || branchSize < 1 || fullSize < 0)
 		{
@@ -1220,7 +1220,7 @@ public class GraphGenerator
 
 	public GeneratorFunction getGeneratorFunction()
 	{
-		return this.generatorFunction;
+		return this._generatorFunction;
 	};
 
 	/**
@@ -1245,7 +1245,7 @@ public class GraphGenerator
 	};
 
 	/**
-	 * @param graph
+	 * @param _graph
 	 * @param forceConnected if true, an unconnected graph is made connected
 	 * @param forceSimple if true, a non-simple graph is made simple
 	 * Calculates one spanning tree of graph, which doesn't have to be but can be minimal
@@ -1338,7 +1338,7 @@ public class GraphGenerator
 		Object oldMove = vertices[startVertexValue];
 		currCoords = getVertexGridCoords(xDim, yDim, startVertexValue);
 		resultPath.add(oldMove);
-		Object nextMove = getNextKnightMove(aGraph, xDim, yDim, currCoords[0], currCoords[1], resultPath);
+		Object nextMove = _getNextKnightMove(aGraph, xDim, yDim, currCoords[0], currCoords[1], resultPath);
 		CostFunction costFunction = aGraph.getGenerator().getCostFunction();
 		GraphView view = graph.getView();
 		
@@ -1353,7 +1353,7 @@ public class GraphGenerator
 			currValue = (int) costFunction.getCost(new CellState(view, nextMove, null));
 			currCoords = getVertexGridCoords(xDim, yDim, currValue);
 			oldMove = nextMove;
-			nextMove = getNextKnightMove(aGraph, xDim, yDim, currCoords[0], currCoords[1], resultPath);
+			nextMove = _getNextKnightMove(aGraph, xDim, yDim, currCoords[0], currCoords[1], resultPath);
 		}
 
 		if (resultPath.size() < vertexNum)
@@ -1374,7 +1374,7 @@ public class GraphGenerator
 	 * @param resultPath
 	 * @return
 	 */
-	private Object getNextKnightMove(AnalysisGraph aGraph, int xDim, int yDim, int xCoord, int yCoord, ArrayList<Object> resultPath)
+	private Object _getNextKnightMove(AnalysisGraph aGraph, int xDim, int yDim, int xCoord, int yCoord, ArrayList<Object> resultPath)
 	{
 		Object[] possibleMoves = getKnightMoveVertexes(aGraph, xDim, yDim, xCoord, yCoord);
 		//get the position with minimum possible moves
@@ -1388,8 +1388,8 @@ public class GraphGenerator
 		{
 			int currValue = (int) costFunction.getCost(new CellState(view, possibleMoves[i], null));
 			int[] currCoords = getVertexGridCoords(xDim, yDim, currValue);
-			int currMoveNum = getPossibleKnightMoveCount(aGraph, xDim, yDim, currCoords[0], currCoords[1]);
-			float currDistance = getDistanceFromGridCenter(xDim, yDim, currValue);
+			int currMoveNum = _getPossibleKnightMoveCount(aGraph, xDim, yDim, currCoords[0], currCoords[1]);
+			float currDistance = _getDistanceFromGridCenter(xDim, yDim, currValue);
 
 			if ((currMoveNum < minMoveNum || (currMoveNum == minMoveNum && currDistance > biggestDistance))
 					&& !resultPath.contains(possibleMoves[i]))
@@ -1411,7 +1411,7 @@ public class GraphGenerator
 	 * @param yCoord
 	 * @return
 	 */
-	private int getPossibleKnightMoveCount(AnalysisGraph aGraph, int xDim, int yDim, int xCoord, int yCoord)
+	private int _getPossibleKnightMoveCount(AnalysisGraph aGraph, int xDim, int yDim, int xCoord, int yCoord)
 	{
 		//check all possible 8 locations
 
@@ -1424,7 +1424,7 @@ public class GraphGenerator
 
 		if (currX > 0 && currX <= xDim && currY > 0 && currY <= yDim)
 		{
-			if (aGraph.getEdges(getVertexFromGrid(vertices, xDim, yDim, currX, currY), parent, false, true).length == 0)
+			if (aGraph.getEdges(_getVertexFromGrid(vertices, xDim, yDim, currX, currY), parent, false, true).length == 0)
 			{
 				possibleMoveCount++;
 			}
@@ -1436,7 +1436,7 @@ public class GraphGenerator
 
 		if (currX > 0 && currX <= xDim && currY > 0 && currY <= yDim)
 		{
-			if (aGraph.getEdges(getVertexFromGrid(vertices, xDim, yDim, currX, currY), parent, false, true).length == 0)
+			if (aGraph.getEdges(_getVertexFromGrid(vertices, xDim, yDim, currX, currY), parent, false, true).length == 0)
 			{
 				possibleMoveCount++;
 			}
@@ -1448,7 +1448,7 @@ public class GraphGenerator
 
 		if (currX > 0 && currX <= xDim && currY > 0 && currY <= yDim)
 		{
-			if (aGraph.getEdges(getVertexFromGrid(vertices, xDim, yDim, currX, currY), parent, false, true).length == 0)
+			if (aGraph.getEdges(_getVertexFromGrid(vertices, xDim, yDim, currX, currY), parent, false, true).length == 0)
 			{
 				possibleMoveCount++;
 			}
@@ -1460,7 +1460,7 @@ public class GraphGenerator
 
 		if (currX > 0 && currX <= xDim && currY > 0 && currY <= yDim)
 		{
-			if (aGraph.getEdges(getVertexFromGrid(vertices, xDim, yDim, currX, currY), parent, false, true).length == 0)
+			if (aGraph.getEdges(_getVertexFromGrid(vertices, xDim, yDim, currX, currY), parent, false, true).length == 0)
 			{
 				possibleMoveCount++;
 			}
@@ -1472,7 +1472,7 @@ public class GraphGenerator
 
 		if (currX > 0 && currX <= xDim && currY > 0 && currY <= yDim)
 		{
-			if (aGraph.getEdges(getVertexFromGrid(vertices, xDim, yDim, currX, currY), parent, false, true).length == 0)
+			if (aGraph.getEdges(_getVertexFromGrid(vertices, xDim, yDim, currX, currY), parent, false, true).length == 0)
 			{
 				possibleMoveCount++;
 			}
@@ -1484,7 +1484,7 @@ public class GraphGenerator
 
 		if (currX > 0 && currX <= xDim && currY > 0 && currY <= yDim)
 		{
-			if (aGraph.getEdges(getVertexFromGrid(vertices, xDim, yDim, currX, currY), parent, false, true).length == 0)
+			if (aGraph.getEdges(_getVertexFromGrid(vertices, xDim, yDim, currX, currY), parent, false, true).length == 0)
 			{
 				possibleMoveCount++;
 			}
@@ -1496,7 +1496,7 @@ public class GraphGenerator
 
 		if (currX > 0 && currX <= xDim && currY > 0 && currY <= yDim)
 		{
-			if (aGraph.getEdges(getVertexFromGrid(vertices, xDim, yDim, currX, currY), parent, false, true).length == 0)
+			if (aGraph.getEdges(_getVertexFromGrid(vertices, xDim, yDim, currX, currY), parent, false, true).length == 0)
 			{
 				possibleMoveCount++;
 			}
@@ -1508,7 +1508,7 @@ public class GraphGenerator
 
 		if (currX > 0 && currX <= xDim && currY > 0 && currY <= yDim)
 		{
-			if (aGraph.getEdges(getVertexFromGrid(vertices, xDim, yDim, currX, currY), parent, false, true).length == 0)
+			if (aGraph.getEdges(_getVertexFromGrid(vertices, xDim, yDim, currX, currY), parent, false, true).length == 0)
 			{
 				possibleMoveCount++;
 			}
@@ -1524,7 +1524,7 @@ public class GraphGenerator
 	 * @param currValue
 	 * @return
 	 */
-	private float getDistanceFromGridCenter(int xDim, int yDim, int currValue)
+	private float _getDistanceFromGridCenter(int xDim, int yDim, int currValue)
 	{
 		float centerX = (xDim + 1) / 2f;
 		float centerY = (yDim + 1) / 2f;
@@ -1537,11 +1537,11 @@ public class GraphGenerator
 
 	public CostFunction getCostFunction()
 	{
-		return costFunction;
+		return _costFunction;
 	}
 
 	public void setCostFunction(CostFunction costFunction)
 	{
-		this.costFunction = costFunction;
+		this._costFunction = costFunction;
 	};
 };

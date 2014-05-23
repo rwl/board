@@ -23,7 +23,7 @@ public class UnionFind
 	/**
 	 * Maps from elements to nodes
 	 */
-	protected Map<Object, Node> nodes = new Hashtable<Object, Node>();
+	protected Map<Object, _UnionFindNode> _nodes = new Hashtable<Object, _UnionFindNode>();
 
 	/**
 	 * Constructs a union find structure and initializes it with the specified
@@ -35,42 +35,42 @@ public class UnionFind
 	{
 		for (int i = 0; i < elements.length; i++)
 		{
-			nodes.put(elements[i], new Node());
+			_nodes.put(elements[i], new _UnionFindNode());
 		}
 	}
 
 	/**
 	 * Returns the node that represents element.
 	 */
-	public Node getNode(Object element)
+	public _UnionFindNode getNode(Object element)
 	{
-		return nodes.get(element);
+		return _nodes.get(element);
 	}
 
 	/**
 	 * Returns the set that contains <code>node</code>. This implementation
 	 * provides path compression by halving.
 	 */
-	public Node find(Node node)
+	public _UnionFindNode find(_UnionFindNode unionFindNode)
 	{
-		while (node.getParent().getParent() != node.getParent())
+		while (unionFindNode.getParent().getParent() != unionFindNode.getParent())
 		{
-			Node t = node.getParent().getParent();
-			node.setParent(t);
-			node = t;
+			_UnionFindNode t = unionFindNode.getParent().getParent();
+			unionFindNode.setParent(t);
+			unionFindNode = t;
 		}
 
-		return node.getParent();
+		return unionFindNode.getParent();
 	}
 
 	/**
 	 * Unifies the sets <code>a</code> and <code>b</code> in constant time
 	 * using a union by rank on the tree size.
 	 */
-	public void union(Node a, Node b)
+	public void union(_UnionFindNode a, _UnionFindNode b)
 	{
-		Node set1 = find(a);
-		Node set2 = find(b);
+		_UnionFindNode set1 = find(a);
+		_UnionFindNode set2 = find(b);
 
 		if (set1 != set2)
 		{
@@ -100,58 +100,9 @@ public class UnionFind
 	 */
 	public boolean differ(Object a, Object b)
 	{
-		Node set1 = find(getNode(a));
-		Node set2 = find(getNode(b));
+		_UnionFindNode set1 = find(getNode(a));
+		_UnionFindNode set2 = find(getNode(b));
 
 		return set1 != set2;
-	}
-
-	/**
-	 * A class that defines the identity of a set.
-	 */
-	public class Node
-	{
-
-		/**
-		 * Reference to the parent node. Root nodes point to themselves.
-		 */
-		protected Node parent = this;
-
-		/**
-		 * The size of the tree. Initial value is 1.
-		 */
-		protected int size = 1;
-
-		/**
-		 * @return Returns the parent node
-		 */
-		public Node getParent()
-		{
-			return parent;
-		}
-
-		/**
-		 * @param parent The parent node to set.
-		 */
-		public void setParent(Node parent)
-		{
-			this.parent = parent;
-		}
-
-		/**
-		 * @return Returns the size.
-		 */
-		public int getSize()
-		{
-			return size;
-		}
-
-		/**
-		 * @param size The size to set.
-		 */
-		public void setSize(int size)
-		{
-			this.size = size;
-		}
 	}
 }

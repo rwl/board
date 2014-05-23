@@ -46,7 +46,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/**
 	 * Holds the Id. Default is null.
 	 */
-	protected String id;
+	protected String _id;
 
 	/**
 	 * Holds the user object. Default is null.
@@ -120,7 +120,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 */
 	public String getId()
 	{
-		return id;
+		return _id;
 	}
 
 	/* (non-Javadoc)
@@ -128,7 +128,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 */
 	public void setId(String id)
 	{
-		this.id = id;
+		this._id = id;
 	}
 
 	/* (non-Javadoc)
