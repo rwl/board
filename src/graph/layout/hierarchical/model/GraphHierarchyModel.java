@@ -37,12 +37,12 @@ public class GraphHierarchyModel
 	/**
 	 * Map from graph vertices to internal model nodes
 	 */
-	protected Map<Object, GraphHierarchyNode> vertexMapper = null;
+	protected Map<Object, GraphHierarchyNode> _vertexMapper = null;
 
 	/**
 	 * Map from graph edges to internal model edges
 	 */
-	protected Map<Object, GraphHierarchyEdge> edgeMapper = null;
+	protected Map<Object, GraphHierarchyEdge> _edgeMapper = null;
 
 	/**
 	 * Mapping from rank number to actual rank
@@ -63,10 +63,10 @@ public class GraphHierarchyModel
 	/**
 	 * Count of the number of times the ancestor dfs has been used
 	 */
-	protected int dfsCount = 0;
+	protected int _dfsCount = 0;
 
 	/** High value to start source layering scan rank value from */
-	private final int SOURCESCANSTARTRANK = 100000000;
+	private final int _SOURCESCANSTARTRANK = 100000000;
 
 	/**
 	 * Creates an internal ordered graph model using the vertices passed in. If
@@ -92,15 +92,15 @@ public class GraphHierarchyModel
 		// map of cells to internal cell needed for second run through
 		// to setup the sink of edges correctly. Guess size by number
 		// of edges is roughly same as number of vertices.
-		vertexMapper = new Hashtable<Object, GraphHierarchyNode>(
+		_vertexMapper = new Hashtable<Object, GraphHierarchyNode>(
 				vertices.length);
-		edgeMapper = new Hashtable<Object, GraphHierarchyEdge>(
+		_edgeMapper = new Hashtable<Object, GraphHierarchyEdge>(
 				vertices.length);
 
-		maxRank = SOURCESCANSTARTRANK;
+		maxRank = _SOURCESCANSTARTRANK;
 
 		GraphHierarchyNode[] internalVertices = new GraphHierarchyNode[vertices.length];
-		createInternalCells(layout, vertices, internalVertices);
+		_createInternalCells(layout, vertices, internalVertices);
 
 		// Go through edges set their sink values. Also check the
 		// ordering if and invert edges if necessary
@@ -122,7 +122,7 @@ public class GraphHierarchyModel
 					Object realEdge = iter2.next();
 					Object targetCell = graph.getView().getVisibleTerminal(
 							realEdge, false);
-					GraphHierarchyNode internalTargetCell = vertexMapper
+					GraphHierarchyNode internalTargetCell = _vertexMapper
 							.get(targetCell);
 
 					if (internalVertices[i] == internalTargetCell)
@@ -130,7 +130,7 @@ public class GraphHierarchyModel
 						// The real edge is reversed relative to the internal edge
 						targetCell = graph.getView().getVisibleTerminal(
 								realEdge, true);
-						internalTargetCell = vertexMapper.get(targetCell);
+						internalTargetCell = _vertexMapper.get(targetCell);
 					}
 
 					if (internalTargetCell != null
@@ -167,7 +167,7 @@ public class GraphHierarchyModel
 	 *            the blank internal vertices to have their information filled
 	 *            in using the real vertices
 	 */
-	protected void createInternalCells(HierarchicalLayout layout,
+	protected void _createInternalCells(HierarchicalLayout layout,
 			Object[] vertices, GraphHierarchyNode[] internalVertices)
 	{
 		Graph graph = layout.getGraph();
@@ -176,7 +176,7 @@ public class GraphHierarchyModel
 		for (int i = 0; i < vertices.length; i++)
 		{
 			internalVertices[i] = new GraphHierarchyNode(vertices[i]);
-			vertexMapper.put(vertices[i], internalVertices[i]);
+			_vertexMapper.put(vertices[i], internalVertices[i]);
 
 			// If the layout is deterministic, order the cells
 			Object[] conns = layout.getEdges(vertices[i]);
@@ -218,7 +218,7 @@ public class GraphHierarchyModel
 
 					if (undirectEdges != null
 							&& undirectEdges.length > 0
-							&& (edgeMapper.get(undirectEdges[0]) == null)
+							&& (_edgeMapper.get(undirectEdges[0]) == null)
 							&& (directedEdges.length * 2 >= undirectEdges.length))
 					{
 
@@ -237,7 +237,7 @@ public class GraphHierarchyModel
 						while (iter2.hasNext())
 						{
 							Object edge = iter2.next();
-							edgeMapper.put(edge, internalEdge);
+							_edgeMapper.put(edge, internalEdge);
 
 							// Resets all point on the edge and disables the edge style
 							// without deleting it from the cell style
@@ -268,7 +268,7 @@ public class GraphHierarchyModel
 	 */
 	public void initialRank()
 	{
-		Collection<GraphHierarchyNode> internalNodes = vertexMapper.values();
+		Collection<GraphHierarchyNode> internalNodes = _vertexMapper.values();
 		LinkedList<GraphHierarchyNode> startNodes = new LinkedList<GraphHierarchyNode>();
 
 		if (roots != null)
@@ -277,7 +277,7 @@ public class GraphHierarchyModel
 
 			while (iter.hasNext())
 			{
-				GraphHierarchyNode internalNode = vertexMapper.get(iter
+				GraphHierarchyNode internalNode = _vertexMapper.get(iter
 						.next());
 
 				if (internalNode != null)
@@ -321,7 +321,7 @@ public class GraphHierarchyModel
 			// the layer determining edges variable. If we are starting
 			// from sources, need to start at some huge value and
 			// normalise down afterwards
-			int minimumLayer = SOURCESCANSTARTRANK;
+			int minimumLayer = _SOURCESCANSTARTRANK;
 
 			while (allEdgesScanned && iter2.hasNext())
 			{
@@ -427,7 +427,7 @@ public class GraphHierarchyModel
 
 		// Reset the maxRank to that which would be expected for a from-sink
 		// scan
-		maxRank = SOURCESCANSTARTRANK - maxRank;
+		maxRank = _SOURCESCANSTARTRANK - maxRank;
 	}
 
 	/**
@@ -458,7 +458,7 @@ public class GraphHierarchyModel
 			for (int i = 0; i < oldRootsArray.length; i++)
 			{
 				Object node = oldRootsArray[i];
-				GraphHierarchyNode internalNode = vertexMapper.get(node);
+				GraphHierarchyNode internalNode = _vertexMapper.get(node);
 				rootsArray[i] = internalNode;
 			}
 		}
@@ -540,7 +540,7 @@ public class GraphHierarchyModel
 					{
 						// Set up hash code for root
 						internalNode.hashCode = new int[2];
-						internalNode.hashCode[0] = dfsCount;
+						internalNode.hashCode[0] = _dfsCount;
 						internalNode.hashCode[1] = i;
 						dfs(null, internalNode, null, visitor, seenNodes,
 								internalNode.hashCode, i, 0);
@@ -552,7 +552,7 @@ public class GraphHierarchyModel
 				}
 			}
 
-			dfsCount++;
+			_dfsCount++;
 		}
 	}
 
@@ -736,11 +736,11 @@ public class GraphHierarchyModel
 	 */
 	public Map<Object, GraphHierarchyNode> getVertexMapper()
 	{
-		if (vertexMapper == null)
+		if (_vertexMapper == null)
 		{
-			vertexMapper = new Hashtable<Object, GraphHierarchyNode>();
+			_vertexMapper = new Hashtable<Object, GraphHierarchyNode>();
 		}
-		return vertexMapper;
+		return _vertexMapper;
 	}
 
 	/**
@@ -749,7 +749,7 @@ public class GraphHierarchyModel
 	 */
 	public void setVertexMapper(Map<Object, GraphHierarchyNode> vertexMapping)
 	{
-		this.vertexMapper = vertexMapping;
+		this._vertexMapper = vertexMapping;
 	}
 
 	/**
@@ -757,7 +757,7 @@ public class GraphHierarchyModel
 	 */
 	public Map<Object, GraphHierarchyEdge> getEdgeMapper()
 	{
-		return edgeMapper;
+		return _edgeMapper;
 	}
 
 	/**
@@ -766,7 +766,7 @@ public class GraphHierarchyModel
 	 */
 	public void setEdgeMapper(Map<Object, GraphHierarchyEdge> edgeMapper)
 	{
-		this.edgeMapper = edgeMapper;
+		this._edgeMapper = edgeMapper;
 	}
 
 	/**
@@ -774,7 +774,7 @@ public class GraphHierarchyModel
 	 */
 	public int getDfsCount()
 	{
-		return dfsCount;
+		return _dfsCount;
 	}
 
 	/**
@@ -783,6 +783,6 @@ public class GraphHierarchyModel
 	 */
 	public void setDfsCount(int dfsCount)
 	{
-		this.dfsCount = dfsCount;
+		this._dfsCount = dfsCount;
 	}
 }

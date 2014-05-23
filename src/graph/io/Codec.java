@@ -28,17 +28,17 @@ public class Codec
 	/**
 	 * Holds the owner document of the codec.
 	 */
-	protected Document document;
+	protected Document _document;
 
 	/**
 	 * Maps from IDs to objects.
 	 */
-	protected Map<String, Object> objects = new Hashtable<String, Object>();
+	protected Map<String, Object> _objects = new Hashtable<String, Object>();
 
 	/**
 	 * Specifies if default values should be encoded. Default is false.
 	 */
-	protected boolean encodeDefaults = false;
+	protected boolean _encodeDefaults = false;
 
 	/**
 	 * Constructs an XML encoder/decoder with a new owner document.
@@ -61,7 +61,7 @@ public class Codec
 			document = DomUtils.createDocument();
 		}
 
-		this.document = document;
+		this._document = document;
 	}
 
 	/**
@@ -71,7 +71,7 @@ public class Codec
 	 */
 	public Document getDocument()
 	{
-		return document;
+		return _document;
 	}
 
 	/**
@@ -79,7 +79,7 @@ public class Codec
 	 */
 	public void setDocument(Document value)
 	{
-		document = value;
+		_document = value;
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class Codec
 	 */
 	public boolean isEncodeDefaults()
 	{
-		return encodeDefaults;
+		return _encodeDefaults;
 	}
 
 	/**
@@ -95,7 +95,7 @@ public class Codec
 	 */
 	public void setEncodeDefaults(boolean encodeDefaults)
 	{
-		this.encodeDefaults = encodeDefaults;
+		this._encodeDefaults = encodeDefaults;
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class Codec
 	 */
 	public Map<String, Object> getObjects()
 	{
-		return objects;
+		return _objects;
 	}
 
 	/**
@@ -115,12 +115,12 @@ public class Codec
 	 */
 	public Object putObject(String id, Object object)
 	{
-		return objects.put(id, object);
+		return _objects.put(id, object);
 	}
 
 	/**
 	 * Returns the decoded object for the element with the specified ID in
-	 * {@link #document}. If the object is not known then {@link #lookup(String)}
+	 * {@link #_document}. If the object is not known then {@link #lookup(String)}
 	 * is used to find an object. If no object is found, then the element with
 	 * the respective ID from the document is parsed using {@link #decode(Node)}.
 	 * 
@@ -133,7 +133,7 @@ public class Codec
 
 		if (id != null)
 		{
-			obj = objects.get(id);
+			obj = _objects.get(id);
 
 			if (obj == null)
 			{
@@ -197,7 +197,7 @@ public class Codec
 
 		String expr = "//*[@" + attr + "='" + id + "']";
 
-		return Utils.selectSingleNode(document, expr);
+		return Utils.selectSingleNode(_document, expr);
 	}
 
 	/**

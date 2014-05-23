@@ -28,41 +28,41 @@ public class SwimlaneManager extends EventSource
 	 * Defines the type of the source or target terminal. The type is a string
 	 * passed to Cell.is to check if the rule applies to a cell.
 	 */
-	protected Graph graph;
+	protected Graph _graph;
 
 	/**
 	 * Optional string that specifies the value of the attribute to be passed
 	 * to Cell.is to check if the rule applies to a cell.
 	 */
-	protected boolean enabled;
+	protected boolean _enabled;
 
 	/**
 	 * Optional string that specifies the attributename to be passed to
 	 * Cell.is to check if the rule applies to a cell.
 	 */
-	protected boolean horizontal;
+	protected boolean _horizontal;
 
 	/**
 	 * Specifies if newly added cells should be resized to match the size of their
 	 * existing siblings. Default is true.
 	 */
-	protected boolean addEnabled;
+	protected boolean _addEnabled;
 
 	/**
 	 * Specifies if resizing of swimlanes should be handled. Default is true.
 	 */
-	protected boolean resizeEnabled;
+	protected boolean _resizeEnabled;
 
 	/**
 	 * 
 	 */
-	protected IEventListener addHandler = new IEventListener()
+	protected IEventListener _addHandler = new IEventListener()
 	{
 		public void invoke(Object source, EventObj evt)
 		{
 			if (isEnabled() && isAddEnabled())
 			{
-				cellsAdded((Object[]) evt.getProperty("cells"));
+				_cellsAdded((Object[]) evt.getProperty("cells"));
 			}
 		}
 	};
@@ -70,13 +70,13 @@ public class SwimlaneManager extends EventSource
 	/**
 	 * 
 	 */
-	protected IEventListener resizeHandler = new IEventListener()
+	protected IEventListener _resizeHandler = new IEventListener()
 	{
 		public void invoke(Object source, EventObj evt)
 		{
 			if (isEnabled() && isResizeEnabled())
 			{
-				cellsResized((Object[]) evt.getProperty("cells"));
+				_cellsResized((Object[]) evt.getProperty("cells"));
 			}
 		}
 	};
@@ -94,7 +94,7 @@ public class SwimlaneManager extends EventSource
 	 */
 	public boolean isEnabled()
 	{
-		return enabled;
+		return _enabled;
 	}
 
 	/**
@@ -102,7 +102,7 @@ public class SwimlaneManager extends EventSource
 	 */
 	public void setEnabled(boolean value)
 	{
-		enabled = value;
+		_enabled = value;
 	}
 
 	/**
@@ -110,7 +110,7 @@ public class SwimlaneManager extends EventSource
 	 */
 	public boolean isHorizontal()
 	{
-		return horizontal;
+		return _horizontal;
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class SwimlaneManager extends EventSource
 	 */
 	public void setHorizontal(boolean value)
 	{
-		horizontal = value;
+		_horizontal = value;
 	}
 
 	/**
@@ -126,7 +126,7 @@ public class SwimlaneManager extends EventSource
 	 */
 	public boolean isAddEnabled()
 	{
-		return addEnabled;
+		return _addEnabled;
 	}
 
 	/**
@@ -134,7 +134,7 @@ public class SwimlaneManager extends EventSource
 	 */
 	public void setAddEnabled(boolean value)
 	{
-		addEnabled = value;
+		_addEnabled = value;
 	}
 
 	/**
@@ -142,7 +142,7 @@ public class SwimlaneManager extends EventSource
 	 */
 	public boolean isResizeEnabled()
 	{
-		return resizeEnabled;
+		return _resizeEnabled;
 	}
 
 	/**
@@ -150,7 +150,7 @@ public class SwimlaneManager extends EventSource
 	 */
 	public void setResizeEnabled(boolean value)
 	{
-		resizeEnabled = value;
+		_resizeEnabled = value;
 	}
 
 	/**
@@ -158,7 +158,7 @@ public class SwimlaneManager extends EventSource
 	 */
 	public Graph getGraph()
 	{
-		return graph;
+		return _graph;
 	}
 
 	/**
@@ -166,25 +166,25 @@ public class SwimlaneManager extends EventSource
 	 */
 	public void setGraph(Graph graph)
 	{
-		if (this.graph != null)
+		if (this._graph != null)
 		{
-			this.graph.removeListener(addHandler);
-			this.graph.removeListener(resizeHandler);
+			this._graph.removeListener(_addHandler);
+			this._graph.removeListener(_resizeHandler);
 		}
 
-		this.graph = graph;
+		this._graph = graph;
 
-		if (this.graph != null)
+		if (this._graph != null)
 		{
-			this.graph.addListener(Event.ADD_CELLS, addHandler);
-			this.graph.addListener(Event.CELLS_RESIZED, resizeHandler);
+			this._graph.addListener(Event.ADD_CELLS, _addHandler);
+			this._graph.addListener(Event.CELLS_RESIZED, _resizeHandler);
 		}
 	}
 
 	/**
 	 *  Returns true if the given swimlane should be ignored.
 	 */
-	protected boolean isSwimlaneIgnored(Object swimlane)
+	protected boolean _isSwimlaneIgnored(Object swimlane)
 	{
 		return !getGraph().isSwimlane(swimlane);
 	}
@@ -193,13 +193,13 @@ public class SwimlaneManager extends EventSource
 	 * Returns true if the given cell is horizontal. If the given cell is not a
 	 * swimlane, then the <horizontal> value is returned.
 	 */
-	protected boolean isCellHorizontal(Object cell)
+	protected boolean _isCellHorizontal(Object cell)
 	{
-		if (graph.isSwimlane(cell))
+		if (_graph.isSwimlane(cell))
 		{
-			CellState state = graph.getView().getState(cell);
+			CellState state = _graph.getView().getState(cell);
 			Map<String, Object> style = (state != null) ? state.getStyle()
-					: graph.getCellStyle(cell);
+					: _graph.getCellStyle(cell);
 
 			return Utils.isTrue(style, Constants.STYLE_HORIZONTAL, true);
 		}
@@ -211,7 +211,7 @@ public class SwimlaneManager extends EventSource
 	 * Called if any cells have been added. Calls swimlaneAdded for all swimlanes
 	 * where isSwimlaneIgnored returns false.
 	 */
-	protected void cellsAdded(Object[] cells)
+	protected void _cellsAdded(Object[] cells)
 	{
 		if (cells != null)
 		{
@@ -222,9 +222,9 @@ public class SwimlaneManager extends EventSource
 			{
 				for (int i = 0; i < cells.length; i++)
 				{
-					if (!isSwimlaneIgnored(cells[i]))
+					if (!_isSwimlaneIgnored(cells[i]))
 					{
-						swimlaneAdded(cells[i]);
+						_swimlaneAdded(cells[i]);
 					}
 				}
 			}
@@ -241,7 +241,7 @@ public class SwimlaneManager extends EventSource
 	 * sibling can be found then the parent swimlane is resized so that the
 	 * new swimlane fits into the parent swimlane.
 	 */
-	protected void swimlaneAdded(Object swimlane)
+	protected void _swimlaneAdded(Object swimlane)
 	{
 		IGraphModel model = getGraph().getModel();
 		Object parent = model.getParent(swimlane);
@@ -253,7 +253,7 @@ public class SwimlaneManager extends EventSource
 		{
 			Object child = model.getChildAt(parent, i);
 
-			if (child != swimlane && !this.isSwimlaneIgnored(child))
+			if (child != swimlane && !this._isSwimlaneIgnored(child))
 			{
 				geo = model.getGeometry(child);
 
@@ -267,8 +267,8 @@ public class SwimlaneManager extends EventSource
 		// Applies the size of the refernece to the newly added swimlane
 		if (geo != null)
 		{
-			boolean parentHorizontal = (parent != null) ? isCellHorizontal(parent) : horizontal;
-			resizeSwimlane(swimlane, geo.getWidth(), geo.getHeight(), parentHorizontal);
+			boolean parentHorizontal = (parent != null) ? _isCellHorizontal(parent) : _horizontal;
+			_resizeSwimlane(swimlane, geo.getWidth(), geo.getHeight(), parentHorizontal);
 		}
 	}
 
@@ -276,7 +276,7 @@ public class SwimlaneManager extends EventSource
 	 * Called if any cells have been resizes. Calls swimlaneResized for all
 	 * swimlanes where isSwimlaneIgnored returns false.
 	 */
-	protected void cellsResized(Object[] cells)
+	protected void _cellsResized(Object[] cells)
 	{
 		if (cells != null)
 		{
@@ -288,7 +288,7 @@ public class SwimlaneManager extends EventSource
 				// Finds the top-level swimlanes and adds offsets
 				for (int i = 0; i < cells.length; i++)
 				{
-					if (!this.isSwimlaneIgnored(cells[i]))
+					if (!this._isSwimlaneIgnored(cells[i]))
 					{
 						Geometry geo = model.getGeometry(cells[i]);
 						
@@ -302,15 +302,15 @@ public class SwimlaneManager extends EventSource
 							{
 								top = current;
 								current = model.getParent(current);
-								Rect tmp = (graph.isSwimlane(current)) ?
-										graph.getStartSize(current) :
+								Rect tmp = (_graph.isSwimlane(current)) ?
+										_graph.getStartSize(current) :
 										new Rect();
 								size.setWidth(size.getWidth() + tmp.getWidth());
 								size.setHeight(size.getHeight() + tmp.getHeight());
 							}
 							
-							boolean parentHorizontal = (current != null) ? isCellHorizontal(current) : horizontal;
-							resizeSwimlane(top, size.getWidth(), size.getHeight(), parentHorizontal);
+							boolean parentHorizontal = (current != null) ? _isCellHorizontal(current) : _horizontal;
+							_resizeSwimlane(top, size.getWidth(), size.getHeight(), parentHorizontal);
 						}
 					}
 				}
@@ -327,16 +327,16 @@ public class SwimlaneManager extends EventSource
 	 * on <horizontal>. If <horizontal> is true, then the width is set, otherwise,
 	 * the height is set.
 	 */
-	protected void resizeSwimlane(Object swimlane, double w, double h, boolean parentHorizontal)
+	protected void _resizeSwimlane(Object swimlane, double w, double h, boolean parentHorizontal)
 	{
 		IGraphModel model = getGraph().getModel();
 
 		model.beginUpdate();
 		try
 		{
-			boolean horizontal = this.isCellHorizontal(swimlane);
+			boolean horizontal = this._isCellHorizontal(swimlane);
 			
-			if (!this.isSwimlaneIgnored(swimlane))
+			if (!this._isSwimlaneIgnored(swimlane))
 			{
 				Geometry geo = model.getGeometry(swimlane);
 
@@ -362,7 +362,7 @@ public class SwimlaneManager extends EventSource
 				}
 			}
 
-			Rect tmp = (graph.isSwimlane(swimlane)) ? graph
+			Rect tmp = (_graph.isSwimlane(swimlane)) ? _graph
 					.getStartSize(swimlane) : new Rect();
 			w -= tmp.getWidth();
 			h -= tmp.getHeight();
@@ -372,7 +372,7 @@ public class SwimlaneManager extends EventSource
 			for (int i = 0; i < childCount; i++)
 			{
 				Object child = model.getChildAt(swimlane, i);
-				resizeSwimlane(child, w, h, horizontal);
+				_resizeSwimlane(child, w, h, horizontal);
 			}
 		}
 		finally

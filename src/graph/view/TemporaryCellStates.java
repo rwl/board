@@ -10,22 +10,22 @@ public class TemporaryCellStates
 	/**
 	 * 
 	 */
-	protected GraphView view;
+	protected GraphView _view;
 
 	/**
 	 * 
 	 */
-	protected Hashtable<Object, CellState> oldStates;
+	protected Hashtable<Object, CellState> _oldStates;
 
 	/**
 	 * 
 	 */
-	protected Rect oldBounds;
+	protected Rect _oldBounds;
 
 	/**
 	 * 
 	 */
-	protected double oldScale;
+	protected double _oldScale;
 
 	/**
 	 * Constructs a new temporary cell states instance.
@@ -48,12 +48,12 @@ public class TemporaryCellStates
 	 */
 	public TemporaryCellStates(GraphView view, double scale, Object[] cells)
 	{
-		this.view = view;
+		this._view = view;
 
 		// Stores the previous state
-		oldBounds = view.getGraphBounds();
-		oldStates = view.getStates();
-		oldScale = view.getScale();
+		_oldBounds = view.getGraphBounds();
+		_oldStates = view.getStates();
+		_oldScale = view.getScale();
 
 		// Creates space for the new states
 		view.setStates(new Hashtable<Object, CellState>());
@@ -93,9 +93,9 @@ public class TemporaryCellStates
 	 */
 	public void destroy()
 	{
-		view.setScale(oldScale);
-		view.setStates(oldStates);
-		view.setGraphBounds(oldBounds);
+		_view.setScale(_oldScale);
+		_view.setStates(_oldStates);
+		_view.setGraphBounds(_oldBounds);
 	}
 
 }

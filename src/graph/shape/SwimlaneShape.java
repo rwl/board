@@ -25,13 +25,13 @@ public class SwimlaneShape extends BasicShape
 		if (Utils
 				.isTrue(state.getStyle(), Constants.STYLE_HORIZONTAL, true))
 		{
-			if (configureGraphics(canvas, state, true))
+			if (_configureGraphics(canvas, state, true))
 			{
 				canvas.fillShape(new Rectangle(tmp.x, tmp.y, tmp.width, Math
 						.min(tmp.height, start)));
 			}
 
-			if (configureGraphics(canvas, state, false))
+			if (_configureGraphics(canvas, state, false))
 			{
 				canvas.getGraphics().drawRect(tmp.x, tmp.y, tmp.width,
 						Math.min(tmp.height, start));
@@ -41,13 +41,13 @@ public class SwimlaneShape extends BasicShape
 		}
 		else
 		{
-			if (configureGraphics(canvas, state, true))
+			if (_configureGraphics(canvas, state, true))
 			{
 				canvas.fillShape(new Rectangle(tmp.x, tmp.y, Math.min(
 						tmp.width, start), tmp.height));
 			}
 
-			if (configureGraphics(canvas, state, false))
+			if (_configureGraphics(canvas, state, false))
 			{
 				canvas.getGraphics().drawRect(tmp.x, tmp.y,
 						Math.min(tmp.width, start), tmp.height);
@@ -61,7 +61,7 @@ public class SwimlaneShape extends BasicShape
 	/**
 	 * 
 	 */
-	protected Rect getGradientBounds(Graphics2DCanvas canvas,
+	protected Rect _getGradientBounds(Graphics2DCanvas canvas,
 			CellState state)
 	{
 		int start = (int) Math.round(Utils.getInt(state.getStyle(),

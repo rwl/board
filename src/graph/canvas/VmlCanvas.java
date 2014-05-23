@@ -28,7 +28,7 @@ public class VmlCanvas extends BasicCanvas
 	/**
 	 * Holds the HTML document that represents the canvas.
 	 */
-	protected Document document;
+	protected Document _document;
 
 	/**
 	 * Constructs a new VML canvas for the specified dimension and scale.
@@ -52,7 +52,7 @@ public class VmlCanvas extends BasicCanvas
 	 */
 	public void setDocument(Document document)
 	{
-		this.document = document;
+		this._document = document;
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class VmlCanvas extends BasicCanvas
 	 */
 	public Document getDocument()
 	{
-		return document;
+		return _document;
 	}
 
 	/**
@@ -70,9 +70,9 @@ public class VmlCanvas extends BasicCanvas
 	 */
 	public void appendVmlElement(Element node)
 	{
-		if (document != null)
+		if (_document != null)
 		{
-			Node body = document.getDocumentElement().getFirstChild()
+			Node body = _document.getDocumentElement().getFirstChild()
 					.getNextSibling();
 
 			if (body != null)
@@ -96,11 +96,11 @@ public class VmlCanvas extends BasicCanvas
 			List<Point2d> pts = state.getAbsolutePoints();
 
 			// Transpose all points by cloning into a new array
-			pts = Utils.translatePoints(pts, translate.x, translate.y);
+			pts = Utils.translatePoints(pts, _translate.x, _translate.y);
 
 			// Draws the line
 			elem = drawLine(pts, style);
-			Element strokeNode = document.createElement("v:stroke");
+			Element strokeNode = _document.createElement("v:stroke");
 
 			// Draws the markers
 			String start = Utils.getString(style,
@@ -118,7 +118,7 @@ public class VmlCanvas extends BasicCanvas
 					double startSize = Utils.getFloat(style,
 							Constants.STYLE_STARTSIZE,
 							Constants.DEFAULT_MARKERSIZE)
-							* scale;
+							* _scale;
 
 					if (startSize < 6)
 					{
@@ -144,7 +144,7 @@ public class VmlCanvas extends BasicCanvas
 					double endSize = Utils.getFloat(style,
 							Constants.STYLE_ENDSIZE,
 							Constants.DEFAULT_MARKERSIZE)
-							* scale;
+							* _scale;
 
 					if (endSize < 6)
 					{
@@ -171,8 +171,8 @@ public class VmlCanvas extends BasicCanvas
 		}
 		else
 		{
-			int x = (int) state.getX() + translate.x;
-			int y = (int) state.getY() + translate.y;
+			int x = (int) state.getX() + _translate.x;
+			int y = (int) state.getY() + _translate.y;
 			int w = (int) state.getWidth();
 			int h = (int) state.getHeight();
 
@@ -183,7 +183,7 @@ public class VmlCanvas extends BasicCanvas
 
 				if (Utils.isTrue(style, Constants.STYLE_DASHED))
 				{
-					Element strokeNode = document.createElement("v:stroke");
+					Element strokeNode = _document.createElement("v:stroke");
 					strokeNode.setAttribute("dashstyle", "2 2");
 					elem.appendChild(strokeNode);
 				}
@@ -193,7 +193,7 @@ public class VmlCanvas extends BasicCanvas
 				int start = (int) Math.round(Utils.getInt(style,
 						Constants.STYLE_STARTSIZE,
 						Constants.DEFAULT_STARTSIZE)
-						* scale);
+						* _scale);
 
 				// Removes some styles to draw the content area
 				Map<String, Object> cloned = new Hashtable<String, Object>(
@@ -225,10 +225,10 @@ public class VmlCanvas extends BasicCanvas
 	{
 		Rect bounds = state.getLabelBounds();
 
-		if (drawLabels && bounds != null)
+		if (_drawLabels && bounds != null)
 		{
-			int x = (int) bounds.getX() + translate.x;
-			int y = (int) bounds.getY() + translate.y;
+			int x = (int) bounds.getX() + _translate.x;
+			int y = (int) bounds.getY() + _translate.y;
 			int w = (int) bounds.getWidth();
 			int h = (int) bounds.getHeight();
 			Map<String, Object> style = state.getStyle();
@@ -256,7 +256,7 @@ public class VmlCanvas extends BasicCanvas
 		String strokeColor = Utils.getString(style,
 				Constants.STYLE_STROKECOLOR);
 		float strokeWidth = (float) (Utils.getFloat(style,
-				Constants.STYLE_STROKEWIDTH, 1) * scale);
+				Constants.STYLE_STROKEWIDTH, 1) * _scale);
 
 		// Draws the shape
 		String shape = Utils.getString(style, Constants.STYLE_SHAPE);
@@ -268,7 +268,7 @@ public class VmlCanvas extends BasicCanvas
 
 			if (img != null)
 			{
-				elem = document.createElement("v:img");
+				elem = _document.createElement("v:img");
 				elem.setAttribute("src", img);
 			}
 		}
@@ -290,19 +290,19 @@ public class VmlCanvas extends BasicCanvas
 				points = "m " + mid + " 0 L " + mid + " " + h;
 			}
 
-			elem = document.createElement("v:shape");
+			elem = _document.createElement("v:shape");
 			elem.setAttribute("coordsize", w + " " + h);
 			elem.setAttribute("path", points + " x e");
 		}
 		else if (shape.equals(Constants.SHAPE_ELLIPSE))
 		{
-			elem = document.createElement("v:oval");
+			elem = _document.createElement("v:oval");
 		}
 		else if (shape.equals(Constants.SHAPE_DOUBLE_ELLIPSE))
 		{
-			elem = document.createElement("v:shape");
+			elem = _document.createElement("v:shape");
 			elem.setAttribute("coordsize", w + " " + h);
-			int inset = (int) ((3 + strokeWidth) * scale);
+			int inset = (int) ((3 + strokeWidth) * _scale);
 
 			String points = "ar 0 0 " + w + " " + h + " 0 " + (h / 2) + " "
 					+ (w / 2) + " " + (h / 2) + " e ar " + inset + " " + inset
@@ -313,7 +313,7 @@ public class VmlCanvas extends BasicCanvas
 		}
 		else if (shape.equals(Constants.SHAPE_RHOMBUS))
 		{
-			elem = document.createElement("v:shape");
+			elem = _document.createElement("v:shape");
 			elem.setAttribute("coordsize", w + " " + h);
 
 			String points = "m " + (w / 2) + " 0 l " + w + " " + (h / 2)
@@ -323,7 +323,7 @@ public class VmlCanvas extends BasicCanvas
 		}
 		else if (shape.equals(Constants.SHAPE_TRIANGLE))
 		{
-			elem = document.createElement("v:shape");
+			elem = _document.createElement("v:shape");
 			elem.setAttribute("coordsize", w + " " + h);
 
 			String direction = Utils.getString(style,
@@ -354,7 +354,7 @@ public class VmlCanvas extends BasicCanvas
 		}
 		else if (shape.equals(Constants.SHAPE_HEXAGON))
 		{
-			elem = document.createElement("v:shape");
+			elem = _document.createElement("v:shape");
 			elem.setAttribute("coordsize", w + " " + h);
 
 			String direction = Utils.getString(style,
@@ -381,7 +381,7 @@ public class VmlCanvas extends BasicCanvas
 		}
 		else if (shape.equals(Constants.SHAPE_CLOUD))
 		{
-			elem = document.createElement("v:shape");
+			elem = _document.createElement("v:shape");
 			elem.setAttribute("coordsize", w + " " + h);
 
 			String points = "m " + (int) (0.25 * w) + " " + (int) (0.25 * h)
@@ -405,7 +405,7 @@ public class VmlCanvas extends BasicCanvas
 		}
 		else if (shape.equals(Constants.SHAPE_ACTOR))
 		{
-			elem = document.createElement("v:shape");
+			elem = _document.createElement("v:shape");
 			elem.setAttribute("coordsize", w + " " + h);
 
 			double width3 = w / 3;
@@ -422,7 +422,7 @@ public class VmlCanvas extends BasicCanvas
 		}
 		else if (shape.equals(Constants.SHAPE_CYLINDER))
 		{
-			elem = document.createElement("v:shape");
+			elem = _document.createElement("v:shape");
 			elem.setAttribute("coordsize", w + " " + h);
 
 			double dy = Math.min(40, Math.floor(h / 5));
@@ -440,13 +440,13 @@ public class VmlCanvas extends BasicCanvas
 		{
 			if (Utils.isTrue(style, Constants.STYLE_ROUNDED, false))
 			{
-				elem = document.createElement("v:roundrect");
+				elem = _document.createElement("v:roundrect");
 				elem.setAttribute("arcsize",
 						(Constants.RECTANGLE_ROUNDING_FACTOR * 100) + "%");
 			}
 			else
 			{
-				elem = document.createElement("v:rect");
+				elem = _document.createElement("v:rect");
 			}
 		}
 
@@ -468,7 +468,7 @@ public class VmlCanvas extends BasicCanvas
 		if (Utils.isTrue(style, Constants.STYLE_SHADOW, false)
 				&& fillColor != null)
 		{
-			Element shadow = document.createElement("v:shadow");
+			Element shadow = _document.createElement("v:shadow");
 			shadow.setAttribute("on", "true");
 			shadow.setAttribute("color", Constants.W3C_SHADOWCOLOR);
 			elem.appendChild(shadow);
@@ -479,7 +479,7 @@ public class VmlCanvas extends BasicCanvas
 		// Applies opacity to fill
 		if (fillColor != null)
 		{
-			Element fill = document.createElement("v:fill");
+			Element fill = _document.createElement("v:fill");
 			fill.setAttribute("color", fillColor);
 
 			if (opacity != 100)
@@ -498,7 +498,7 @@ public class VmlCanvas extends BasicCanvas
 		if (strokeColor != null)
 		{
 			elem.setAttribute("strokecolor", strokeColor);
-			Element stroke = document.createElement("v:stroke");
+			Element stroke = _document.createElement("v:stroke");
 
 			if (opacity != 100)
 			{
@@ -530,9 +530,9 @@ public class VmlCanvas extends BasicCanvas
 		String strokeColor = Utils.getString(style,
 				Constants.STYLE_STROKECOLOR);
 		float strokeWidth = (float) (Utils.getFloat(style,
-				Constants.STYLE_STROKEWIDTH, 1) * scale);
+				Constants.STYLE_STROKEWIDTH, 1) * _scale);
 
-		Element elem = document.createElement("v:shape");
+		Element elem = _document.createElement("v:shape");
 
 		if (strokeColor != null && strokeWidth > 0)
 		{
@@ -588,7 +588,7 @@ public class VmlCanvas extends BasicCanvas
 	public Element drawText(String text, int x, int y, int w, int h,
 			Map<String, Object> style)
 	{
-		Element table = Utils.createTable(document, text, x, y, w, h, scale,
+		Element table = Utils.createTable(_document, text, x, y, w, h, _scale,
 				style);
 		appendVmlElement(table);
 

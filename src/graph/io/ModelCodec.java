@@ -50,11 +50,11 @@ public class ModelCodec extends ObjectCodec
 	 * of cell nodes as produced by the CellCodec. The sequence is
 	 * wrapped-up in a node with the name root.
 	 */
-	protected void encodeObject(Codec enc, Object obj, Node node)
+	protected void _encodeObject(Codec enc, Object obj, Node node)
 	{
 		if (obj instanceof GraphModel)
 		{
-			Node rootNode = enc.document.createElement("root");
+			Node rootNode = enc._document.createElement("root");
 			GraphModel model = (GraphModel) obj;
 			enc.encodeCell((ICell) model.getRoot(), rootNode, true);
 			node.appendChild(rootNode);

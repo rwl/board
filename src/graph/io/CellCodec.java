@@ -52,7 +52,7 @@ public class CellCodec extends ObjectCodec
 	public boolean isExcluded(Object obj, String attr, Object value,
 			boolean write)
 	{
-		return exclude.contains(attr)
+		return _exclude.contains(attr)
 				|| (write && attr.equals("value") && value instanceof Node && ((Node) value)
 						.getNodeType() == Node.ELEMENT_NODE);
 	}
@@ -108,7 +108,7 @@ public class CellCodec extends ObjectCodec
 			// Handles aliased names
 			if (!nodeName.equals(classname))
 			{
-				String tmp = CodecRegistry.aliases.get(nodeName);
+				String tmp = CodecRegistry._aliases.get(nodeName);
 				
 				if (tmp != null)
 				{
@@ -182,9 +182,9 @@ public class CellCodec extends ObjectCodec
 			// Preprocesses and removes all Id-references
 			// in order to use the correct encoder (this)
 			// for the known references to cells (all).
-			if (inner != null && idrefs != null)
+			if (inner != null && _idrefs != null)
 			{
-				Iterator<String> it = idrefs.iterator();
+				Iterator<String> it = _idrefs.iterator();
 
 				while (it.hasNext())
 				{
@@ -194,7 +194,7 @@ public class CellCodec extends ObjectCodec
 					if (ref != null && ref.length() > 0)
 					{
 						inner.removeAttribute(attr);
-						Object object = dec.objects.get(ref);
+						Object object = dec._objects.get(ref);
 
 						if (object == null)
 						{
@@ -220,7 +220,7 @@ public class CellCodec extends ObjectCodec
 							}
 						}
 
-						setFieldValue(obj, attr, object);
+						_setFieldValue(obj, attr, object);
 					}
 				}
 			}

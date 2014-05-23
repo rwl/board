@@ -35,22 +35,22 @@ public class ConnectPreview extends EventSource
 	/**
 	 * 
 	 */
-	protected GraphComponent graphComponent;
+	protected GraphComponent _graphComponent;
 
 	/**
 	 * 
 	 */
-	protected CellState previewState;
+	protected CellState _previewState;
 
 	/**
 	 * 
 	 */
-	protected CellState sourceState;
+	protected CellState _sourceState;
 
 	/**
 	 * 
 	 */
-	protected Point2d startPoint;
+	protected Point2d _startPoint;
 
 	/**
 	 * 
@@ -58,7 +58,7 @@ public class ConnectPreview extends EventSource
 	 */
 	public ConnectPreview(GraphComponent graphComponent)
 	{
-		this.graphComponent = graphComponent;
+		this._graphComponent = graphComponent;
 
 		// Installs the paint handler
 		graphComponent.addListener(Event.AFTER_PAINT, new IEventListener()
@@ -74,9 +74,9 @@ public class ConnectPreview extends EventSource
 	/**
 	 * Creates a new instance of mxShape for previewing the edge.
 	 */
-	protected Object createCell(CellState startState, String style)
+	protected Object _createCell(CellState startState, String style)
 	{
-		Graph graph = graphComponent.getGraph();
+		Graph graph = _graphComponent.getGraph();
 		ICell cell = ((ICell) graph
 				.createEdge(null, null, "",
 						(startState != null) ? startState.getCell() : null,
@@ -91,7 +91,7 @@ public class ConnectPreview extends EventSource
 	 */
 	public boolean isActive()
 	{
-		return sourceState != null;
+		return _sourceState != null;
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class ConnectPreview extends EventSource
 	 */
 	public CellState getSourceState()
 	{
-		return sourceState;
+		return _sourceState;
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class ConnectPreview extends EventSource
 	 */
 	public CellState getPreviewState()
 	{
-		return previewState;
+		return _previewState;
 	}
 
 	/**
@@ -115,7 +115,7 @@ public class ConnectPreview extends EventSource
 	 */
 	public Point2d getStartPoint()
 	{
-		return startPoint;
+		return _startPoint;
 	}
 
 	/**
@@ -123,16 +123,16 @@ public class ConnectPreview extends EventSource
 	 */
 	public void start(MouseEvent e, CellState startState, String style)
 	{
-		Graph graph = graphComponent.getGraph();
-		sourceState = startState;
-		startPoint = transformScreenPoint(startState.getCenterX(),
+		Graph graph = _graphComponent.getGraph();
+		_sourceState = startState;
+		_startPoint = _transformScreenPoint(startState.getCenterX(),
 				startState.getCenterY());
-		Object cell = createCell(startState, style);
+		Object cell = _createCell(startState, style);
 		graph.getView().validateCell(cell);
-		previewState = graph.getView().getState(cell);
+		_previewState = graph.getView().getState(cell);
 		
 		fireEvent(new EventObj(Event.START, "event", e, "state",
-				previewState));
+				_previewState));
 	}
 
 	/**
@@ -140,11 +140,11 @@ public class ConnectPreview extends EventSource
 	 */
 	public void update(MouseEvent e, CellState targetState, double x, double y)
 	{
-		Graph graph = graphComponent.getGraph();
-		ICell cell = (ICell) previewState.getCell();
+		Graph graph = _graphComponent.getGraph();
+		ICell cell = (ICell) _previewState.getCell();
 
-		Rect dirty = graphComponent.getGraph().getPaintBounds(
-				new Object[] { previewState.getCell() });
+		Rect dirty = _graphComponent.getGraph().getPaintBounds(
+				new Object[] { _previewState.getCell() });
 
 		if (cell.getTerminal(false) != null)
 		{
@@ -156,46 +156,46 @@ public class ConnectPreview extends EventSource
 			((ICell) targetState.getCell()).insertEdge(cell, false);
 		}
 
-		Geometry geo = graph.getCellGeometry(previewState.getCell());
+		Geometry geo = graph.getCellGeometry(_previewState.getCell());
 
-		geo.setTerminalPoint(startPoint, true);
-		geo.setTerminalPoint(transformScreenPoint(x, y), false);
+		geo.setTerminalPoint(_startPoint, true);
+		geo.setTerminalPoint(_transformScreenPoint(x, y), false);
 
-		revalidate(previewState);
+		revalidate(_previewState);
 		fireEvent(new EventObj(Event.CONTINUE, "event", e, "x", x, "y",
 				y));
 
 		// Repaints the dirty region
 		// TODO: Cache the new dirty region for next repaint
-		Rectangle tmp = getDirtyRect(dirty);
+		Rectangle tmp = _getDirtyRect(dirty);
 
 		if (tmp != null)
 		{
-			graphComponent.getGraphControl().repaint(tmp);
+			_graphComponent.getGraphControl().repaint(tmp);
 		}
 		else
 		{
-			graphComponent.getGraphControl().repaint();
+			_graphComponent.getGraphControl().repaint();
 		}
 	}
 
 	/**
 	 * 
 	 */
-	protected Rectangle getDirtyRect()
+	protected Rectangle _getDirtyRect()
 	{
-		return getDirtyRect(null);
+		return _getDirtyRect(null);
 	}
 
 	/**
 	 * 
 	 */
-	protected Rectangle getDirtyRect(Rect dirty)
+	protected Rectangle _getDirtyRect(Rect dirty)
 	{
-		if (previewState != null)
+		if (_previewState != null)
 		{
-			Rect tmp = graphComponent.getGraph().getPaintBounds(
-					new Object[] { previewState.getCell() });
+			Rect tmp = _graphComponent.getGraph().getPaintBounds(
+					new Object[] { _previewState.getCell() });
 
 			if (dirty != null)
 			{
@@ -221,9 +221,9 @@ public class ConnectPreview extends EventSource
 	/**
 	 * 
 	 */
-	protected Point2d transformScreenPoint(double x, double y)
+	protected Point2d _transformScreenPoint(double x, double y)
 	{
-		Graph graph = graphComponent.getGraph();
+		Graph graph = _graphComponent.getGraph();
 		Point2d tr = graph.getView().getTranslate();
 		double scale = graph.getView().getScale();
 
@@ -245,16 +245,16 @@ public class ConnectPreview extends EventSource
 	 */
 	public void paint(Graphics g)
 	{
-		if (previewState != null)
+		if (_previewState != null)
 		{
-			Graphics2DCanvas canvas = graphComponent.getCanvas();
+			Graphics2DCanvas canvas = _graphComponent.getCanvas();
 
-			if (graphComponent.isAntiAlias())
+			if (_graphComponent.isAntiAlias())
 			{
 				Utils.setAntiAlias((Graphics2D) g, true, false);
 			}
 
-			float alpha = graphComponent.getPreviewAlpha();
+			float alpha = _graphComponent.getPreviewAlpha();
 
 			if (alpha < 1)
 			{
@@ -268,11 +268,11 @@ public class ConnectPreview extends EventSource
 
 			try
 			{
-				canvas.setScale(graphComponent.getGraph().getView().getScale());
+				canvas.setScale(_graphComponent.getGraph().getView().getScale());
 				canvas.setTranslate(0, 0);
 				canvas.setGraphics((Graphics2D) g);
 
-				paintPreview(canvas);
+				_paintPreview(canvas);
 			}
 			finally
 			{
@@ -286,10 +286,10 @@ public class ConnectPreview extends EventSource
 	/**
 	 * Draws the preview using the graphics canvas.
 	 */
-	protected void paintPreview(Graphics2DCanvas canvas)
+	protected void _paintPreview(Graphics2DCanvas canvas)
 	{
-		graphComponent.getGraphControl().drawCell(graphComponent.getCanvas(),
-				previewState.getCell());
+		_graphComponent.getGraphControl().drawCell(_graphComponent.getCanvas(),
+				_previewState.getCell());
 	}
 
 	/**
@@ -305,16 +305,16 @@ public class ConnectPreview extends EventSource
 	 */
 	public Object stop(boolean commit, MouseEvent e)
 	{
-		Object result = (sourceState != null) ? sourceState.getCell() : null;
+		Object result = (_sourceState != null) ? _sourceState.getCell() : null;
 
-		if (previewState != null)
+		if (_previewState != null)
 		{
-			Graph graph = graphComponent.getGraph();
+			Graph graph = _graphComponent.getGraph();
 
 			graph.getModel().beginUpdate();
 			try
 			{
-				ICell cell = (ICell) previewState.getCell();
+				ICell cell = (ICell) _previewState.getCell();
 				Object src = cell.getTerminal(true);
 				Object trg = cell.getTerminal(false);
 
@@ -337,15 +337,15 @@ public class ConnectPreview extends EventSource
 						commit, "cell", (commit) ? result : null));
 
 				// Clears the state before the model commits
-				if (previewState != null)
+				if (_previewState != null)
 				{
-					Rectangle dirty = getDirtyRect();
+					Rectangle dirty = _getDirtyRect();
 					graph.getView().clear(cell, false, true);
-					previewState = null;
+					_previewState = null;
 
 					if (!commit && dirty != null)
 					{
-						graphComponent.getGraphControl().repaint(dirty);
+						_graphComponent.getGraphControl().repaint(dirty);
 					}
 				}
 			}
@@ -355,8 +355,8 @@ public class ConnectPreview extends EventSource
 			}
 		}
 
-		sourceState = null;
-		startPoint = null;
+		_sourceState = null;
+		_startPoint = null;
 
 		return result;
 	}

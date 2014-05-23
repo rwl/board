@@ -22,35 +22,35 @@ public class CellOverlay extends JComponent implements ICellOverlay
 	/**
 	 * 
 	 */
-	protected ImageIcon imageIcon;
+	protected ImageIcon _imageIcon;
 
 	/**
 	 * Holds the horizontal alignment for the overlay.
 	 * Default is ALIGN_RIGHT. For edges, the overlay
 	 * always appears in the center of the edge.
 	 */
-	protected Object align = Constants.ALIGN_RIGHT;
+	protected Object _align = Constants.ALIGN_RIGHT;
 
 	/**
 	 * Holds the vertical alignment for the overlay.
 	 * Default is bottom. For edges, the overlay
 	 * always appears in the center of the edge.
 	 */
-	protected Object verticalAlign = Constants.ALIGN_BOTTOM;
+	protected Object _verticalAlign = Constants.ALIGN_BOTTOM;
 
 	/**
 	 * Defines the overlapping for the overlay, that is,
 	 * the proportional distance from the origin to the
 	 * point defined by the alignment. Default is 0.5.
 	 */
-	protected double defaultOverlap = 0.5;
+	protected double _defaultOverlap = 0.5;
 
 	/**
 	 * 
 	 */
 	public CellOverlay(ImageIcon icon, String warning)
 	{
-		this.imageIcon = icon;
+		this._imageIcon = icon;
 		setToolTipText(warning);
 		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 	}
@@ -60,7 +60,7 @@ public class CellOverlay extends JComponent implements ICellOverlay
 	 */
 	public Object getAlign()
 	{
-		return align;
+		return _align;
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class CellOverlay extends JComponent implements ICellOverlay
 	 */
 	public void setAlign(Object value)
 	{
-		align = value;
+		_align = value;
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class CellOverlay extends JComponent implements ICellOverlay
 	 */
 	public Object getVerticalAlign()
 	{
-		return verticalAlign;
+		return _verticalAlign;
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class CellOverlay extends JComponent implements ICellOverlay
 	 */
 	public void setVerticalAlign(Object value)
 	{
-		verticalAlign = value;
+		_verticalAlign = value;
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class CellOverlay extends JComponent implements ICellOverlay
 	 */
 	public void paint(Graphics g)
 	{
-		g.drawImage(imageIcon.getImage(), 0, 0, getWidth(), getHeight(), this);
+		g.drawImage(_imageIcon.getImage(), 0, 0, getWidth(), getHeight(), this);
 	}
 
 	/*
@@ -106,8 +106,8 @@ public class CellOverlay extends JComponent implements ICellOverlay
 		double s = state.getView().getScale();
 		Point2d pt = null;
 
-		int w = imageIcon.getIconWidth();
-		int h = imageIcon.getIconHeight();
+		int w = _imageIcon.getIconWidth();
+		int h = _imageIcon.getIconHeight();
 
 		if (isEdge)
 		{
@@ -130,11 +130,11 @@ public class CellOverlay extends JComponent implements ICellOverlay
 		{
 			pt = new Point2d();
 
-			if (align.equals(Constants.ALIGN_LEFT))
+			if (_align.equals(Constants.ALIGN_LEFT))
 			{
 				pt.setX(state.getX());
 			}
-			else if (align.equals(Constants.ALIGN_CENTER))
+			else if (_align.equals(Constants.ALIGN_CENTER))
 			{
 				pt.setX(state.getX() + state.getWidth() / 2);
 			}
@@ -143,11 +143,11 @@ public class CellOverlay extends JComponent implements ICellOverlay
 				pt.setX(state.getX() + state.getWidth());
 			}
 
-			if (verticalAlign.equals(Constants.ALIGN_TOP))
+			if (_verticalAlign.equals(Constants.ALIGN_TOP))
 			{
 				pt.setY(state.getY());
 			}
-			else if (verticalAlign.equals(Constants.ALIGN_MIDDLE))
+			else if (_verticalAlign.equals(Constants.ALIGN_MIDDLE))
 			{
 				pt.setY(state.getY() + state.getHeight() / 2);
 			}
@@ -157,8 +157,8 @@ public class CellOverlay extends JComponent implements ICellOverlay
 			}
 		}
 
-		return new Rect(pt.getX() - w * defaultOverlap * s, pt.getY()
-				- h * defaultOverlap * s, w * s, h * s);
+		return new Rect(pt.getX() - w * _defaultOverlap * s, pt.getY()
+				- h * _defaultOverlap * s, w * s, h * s);
 	}
 
 }

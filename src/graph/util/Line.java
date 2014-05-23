@@ -19,7 +19,7 @@ public class Line extends Point2d
 	/**
 	 * The end point of the line
 	 */
-	protected Point2d endPoint;
+	protected Point2d _endPoint;
 
 	/**
 	 * Creates a new line
@@ -28,7 +28,7 @@ public class Line extends Point2d
 	{
 		this.setX(startPt.getX());
 		this.setY(startPt.getY());
-		this.endPoint = endPt;
+		this._endPoint = endPt;
 	}
 	
 	/**
@@ -36,9 +36,9 @@ public class Line extends Point2d
 	 */
 	public Line(double startPtX, double startPtY, Point2d endPt)
 	{
-		x = startPtX;
-		y = startPtY;
-		this.endPoint = endPt;
+		_x = startPtX;
+		_y = startPtY;
+		this._endPoint = endPt;
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class Line extends Point2d
 	 */
 	public Point2d getEndPoint()
 	{
-		return this.endPoint;
+		return this._endPoint;
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class Line extends Point2d
 	 */
 	public void setEndPoint(Point2d value)
 	{
-		this.endPoint = value;
+		this._endPoint = value;
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class Line extends Point2d
 	{
 		this.setX(startPt.getX());
 		this.setY(startPt.getY());
-		this.endPoint = endPt;
+		this._endPoint = endPt;
 	}
 	
 	/**
@@ -81,7 +81,7 @@ public class Line extends Point2d
 	 */
 	public double ptLineDistSq(Point2d pt)
 	{
-		return new Line2D.Double(getX(), getY(), endPoint.getX(), endPoint
+		return new Line2D.Double(getX(), getY(), _endPoint.getX(), _endPoint
 				.getY()).ptLineDistSq(pt.getX(), pt.getY());
 	}
 
@@ -94,7 +94,7 @@ public class Line extends Point2d
 	 */
 	public double ptSegDistSq(Point2d pt)
 	{
-		return new Line2D.Double(getX(), getY(), endPoint.getX(), endPoint
+		return new Line2D.Double(getX(), getY(), _endPoint.getX(), _endPoint
 				.getY()).ptSegDistSq(pt.getX(), pt.getY());
 	}
 

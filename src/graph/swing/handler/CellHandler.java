@@ -29,42 +29,42 @@ public class CellHandler
 	/**
 	 * Reference to the enclosing graph component.
 	 */
-	protected GraphComponent graphComponent;
+	protected GraphComponent _graphComponent;
 
 	/**
 	 * Holds the cell state associated with this handler.
 	 */
-	protected CellState state;
+	protected CellState _state;
 
 	/**
 	 * Holds the rectangles that define the handles.
 	 */
-	protected Rectangle[] handles;
+	protected Rectangle[] _handles;
 
 	/**
 	 * Specifies if the handles should be painted. Default is true.
 	 */
-	protected boolean handlesVisible = true;
+	protected boolean _handlesVisible = true;
 
 	/**
 	 * Holds the bounding box of the handler.
 	 */
-	protected transient Rectangle bounds;
+	protected transient Rectangle _bounds;
 
 	/**
 	 * Holds the component that is used for preview.
 	 */
-	protected transient JComponent preview;
+	protected transient JComponent _preview;
 
 	/**
 	 * Holds the start location of the mouse gesture.
 	 */
-	protected transient Point first;
+	protected transient Point _first;
 
 	/**
 	 * Holds the index of the handle that was clicked.
 	 */
-	protected transient int index;
+	protected transient int _index;
 
 	/**
 	 * Constructs a new cell handler for the given cell state.
@@ -74,7 +74,7 @@ public class CellHandler
 	 */
 	public CellHandler(GraphComponent graphComponent, CellState state)
 	{
-		this.graphComponent = graphComponent;
+		this._graphComponent = graphComponent;
 		refresh(state);
 	}
 
@@ -83,7 +83,7 @@ public class CellHandler
 	 */
 	public boolean isActive()
 	{
-		return first != null;
+		return _first != null;
 	}
 
 	/**
@@ -91,22 +91,22 @@ public class CellHandler
 	 */
 	public void refresh(CellState state)
 	{
-		this.state = state;
-		handles = createHandles();
-		Graph graph = graphComponent.getGraph();
+		this._state = state;
+		_handles = _createHandles();
+		Graph graph = _graphComponent.getGraph();
 		Rect tmp = graph.getBoundingBox(state.getCell());
 
 		if (tmp != null)
 		{
-			bounds = tmp.getRectangle();
+			_bounds = tmp.getRectangle();
 
-			if (handles != null)
+			if (_handles != null)
 			{
-				for (int i = 0; i < handles.length; i++)
+				for (int i = 0; i < _handles.length; i++)
 				{
-					if (isHandleVisible(i))
+					if (_isHandleVisible(i))
 					{
-						bounds.add(handles[i]);
+						_bounds.add(_handles[i]);
 					}
 				}
 			}
@@ -118,7 +118,7 @@ public class CellHandler
 	 */
 	public GraphComponent getGraphComponent()
 	{
-		return graphComponent;
+		return _graphComponent;
 	}
 
 	/**
@@ -126,7 +126,7 @@ public class CellHandler
 	 */
 	public CellState getState()
 	{
-		return state;
+		return _state;
 	}
 
 	/**
@@ -134,7 +134,7 @@ public class CellHandler
 	 */
 	public int getIndex()
 	{
-		return index;
+		return _index;
 	}
 
 	/**
@@ -142,7 +142,7 @@ public class CellHandler
 	 */
 	public Rectangle getBounds()
 	{
-		return bounds;
+		return _bounds;
 	}
 
 	/**
@@ -150,10 +150,10 @@ public class CellHandler
 	 */
 	public boolean isLabelMovable()
 	{
-		Graph graph = graphComponent.getGraph();
-		String label = graph.getLabel(state.getCell());
+		Graph graph = _graphComponent.getGraph();
+		String label = graph.getLabel(_state.getCell());
 
-		return graph.isLabelMovable(state.getCell()) && label != null
+		return graph.isLabelMovable(_state.getCell()) && label != null
 				&& label.length() > 0;
 	}
 
@@ -162,7 +162,7 @@ public class CellHandler
 	 */
 	public boolean isHandlesVisible()
 	{
-		return handlesVisible;
+		return _handlesVisible;
 	}
 
 	/**
@@ -170,7 +170,7 @@ public class CellHandler
 	 */
 	public void setHandlesVisible(boolean handlesVisible)
 	{
-		this.handlesVisible = handlesVisible;
+		this._handlesVisible = handlesVisible;
 	}
 
 	/**
@@ -178,13 +178,13 @@ public class CellHandler
 	 */
 	public boolean isLabel(int index)
 	{
-		return index == getHandleCount() - 1;
+		return index == _getHandleCount() - 1;
 	}
 
 	/**
 	 * Creates the rectangles that define the handles.
 	 */
-	protected Rectangle[] createHandles()
+	protected Rectangle[] _createHandles()
 	{
 		return null;
 	}
@@ -192,9 +192,9 @@ public class CellHandler
 	/**
 	 * Returns the number of handles in this handler.
 	 */
-	protected int getHandleCount()
+	protected int _getHandleCount()
 	{
-		return (handles != null) ? handles.length : 0;
+		return (_handles != null) ? _handles.length : 0;
 	}
 
 	/**
@@ -215,14 +215,14 @@ public class CellHandler
 	 */
 	public int getIndexAt(int x, int y)
 	{
-		if (handles != null && isHandlesVisible())
+		if (_handles != null && isHandlesVisible())
 		{
-			int tol = graphComponent.getTolerance();
+			int tol = _graphComponent.getTolerance();
 			Rectangle rect = new Rectangle(x - tol / 2, y - tol / 2, tol, tol);
 
-			for (int i = handles.length - 1; i >= 0; i--)
+			for (int i = _handles.length - 1; i >= 0; i--)
 			{
-				if (isHandleVisible(i) && handles[i].intersects(rect))
+				if (_isHandleVisible(i) && _handles[i].intersects(rect))
 				{
 					return i;
 				}
@@ -241,9 +241,9 @@ public class CellHandler
 		{
 			int tmp = getIndexAt(e.getX(), e.getY());
 
-			if (!isIgnoredEvent(e) && tmp >= 0 && isHandleEnabled(tmp))
+			if (!_isIgnoredEvent(e) && tmp >= 0 && _isHandleEnabled(tmp))
 			{
-				graphComponent.stopEditing(true);
+				_graphComponent.stopEditing(true);
 				start(e, tmp);
 				e.consume();
 			}
@@ -255,22 +255,22 @@ public class CellHandler
 	 */
 	public void mouseMoved(MouseEvent e)
 	{
-		if (!e.isConsumed() && handles != null)
+		if (!e.isConsumed() && _handles != null)
 		{
 			int index = getIndexAt(e.getX(), e.getY());
 
-			if (index >= 0 && isHandleEnabled(index))
+			if (index >= 0 && _isHandleEnabled(index))
 			{
-				Cursor cursor = getCursor(e, index);
+				Cursor cursor = _getCursor(e, index);
 
 				if (cursor != null)
 				{
-					graphComponent.getGraphControl().setCursor(cursor);
+					_graphComponent.getGraphControl().setCursor(cursor);
 					e.consume();
 				}
 				else
 				{
-					graphComponent.getGraphControl().setCursor(
+					_graphComponent.getGraphControl().setCursor(
 							new Cursor(Cursor.HAND_CURSOR));
 				}
 			}
@@ -298,28 +298,28 @@ public class CellHandler
 	 */
 	public void start(MouseEvent e, int index)
 	{
-		this.index = index;
-		first = e.getPoint();
-		preview = createPreview();
+		this._index = index;
+		_first = e.getPoint();
+		_preview = _createPreview();
 
-		if (preview != null)
+		if (_preview != null)
 		{
-			graphComponent.getGraphControl().add(preview, 0);
+			_graphComponent.getGraphControl().add(_preview, 0);
 		}
 	}
 
 	/**
 	 * Returns true if the given event should be ignored.
 	 */
-	protected boolean isIgnoredEvent(MouseEvent e)
+	protected boolean _isIgnoredEvent(MouseEvent e)
 	{
-		return graphComponent.isEditEvent(e);
+		return _graphComponent.isEditEvent(e);
 	}
 
 	/**
 	 * Creates the preview for this handler.
 	 */
-	protected JComponent createPreview()
+	protected JComponent _createPreview()
 	{
 		return null;
 	}
@@ -329,20 +329,20 @@ public class CellHandler
 	 */
 	public void reset()
 	{
-		if (preview != null)
+		if (_preview != null)
 		{
-			preview.setVisible(false);
-			preview.getParent().remove(preview);
-			preview = null;
+			_preview.setVisible(false);
+			_preview.getParent().remove(_preview);
+			_preview = null;
 		}
 
-		first = null;
+		_first = null;
 	}
 
 	/**
 	 * Returns the cursor for the given event and handle.
 	 */
-	protected Cursor getCursor(MouseEvent e, int index)
+	protected Cursor _getCursor(MouseEvent e, int index)
 	{
 		return null;
 	}
@@ -352,21 +352,21 @@ public class CellHandler
 	 */
 	public void paint(Graphics g)
 	{
-		if (handles != null && isHandlesVisible())
+		if (_handles != null && isHandlesVisible())
 		{
-			for (int i = 0; i < handles.length; i++)
+			for (int i = 0; i < _handles.length; i++)
 			{
-				if (isHandleVisible(i)
-						&& g.hitClip(handles[i].x, handles[i].y,
-								handles[i].width, handles[i].height))
+				if (_isHandleVisible(i)
+						&& g.hitClip(_handles[i].x, _handles[i].y,
+								_handles[i].width, _handles[i].height))
 				{
-					g.setColor(getHandleFillColor(i));
-					g.fillRect(handles[i].x, handles[i].y, handles[i].width,
-							handles[i].height);
+					g.setColor(_getHandleFillColor(i));
+					g.fillRect(_handles[i].x, _handles[i].y, _handles[i].width,
+							_handles[i].height);
 
-					g.setColor(getHandleBorderColor(i));
-					g.drawRect(handles[i].x, handles[i].y,
-							handles[i].width - 1, handles[i].height - 1);
+					g.setColor(_getHandleBorderColor(i));
+					g.drawRect(_handles[i].x, _handles[i].y,
+							_handles[i].width - 1, _handles[i].height - 1);
 				}
 			}
 		}
@@ -393,7 +393,7 @@ public class CellHandler
 	/**
 	 * Returns true if the handle at the specified index is enabled.
 	 */
-	protected boolean isHandleEnabled(int index)
+	protected boolean _isHandleEnabled(int index)
 	{
 		return true;
 	}
@@ -401,7 +401,7 @@ public class CellHandler
 	/**
 	 * Returns true if the handle at the specified index is visible.
 	 */
-	protected boolean isHandleVisible(int index)
+	protected boolean _isHandleVisible(int index)
 	{
 		return !isLabel(index) || isLabelMovable();
 	}
@@ -409,7 +409,7 @@ public class CellHandler
 	/**
 	 * Returns the color to be used to fill the handle at the specified index.
 	 */
-	protected Color getHandleFillColor(int index)
+	protected Color _getHandleFillColor(int index)
 	{
 		if (isLabel(index))
 		{
@@ -422,7 +422,7 @@ public class CellHandler
 	/**
 	 * Returns the border color of the handle at the specified index.
 	 */
-	protected Color getHandleBorderColor(int index)
+	protected Color _getHandleBorderColor(int index)
 	{
 		return SwingConstants.HANDLE_BORDERCOLOR;
 	}
@@ -431,7 +431,7 @@ public class CellHandler
 	 * Invoked when the handler is no longer used. This is an empty
 	 * hook for subclassers.
 	 */
-	protected void destroy()
+	protected void _destroy()
 	{
 		// nop
 	}

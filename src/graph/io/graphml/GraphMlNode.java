@@ -15,15 +15,15 @@ import org.w3c.dom.Element;
  */
 public class GraphMlNode
 {
-	private String nodeId;
+	private String _nodeId;
 
-	private GraphMlData nodeData;
+	private GraphMlData _nodeData;
 
-	private List<GraphMlGraph> nodeGraphList = new ArrayList<GraphMlGraph>();
+	private List<GraphMlGraph> _nodeGraphList = new ArrayList<GraphMlGraph>();
 
-	private HashMap<String, GraphMlData> nodeDataMap = new HashMap<String, GraphMlData>();
+	private HashMap<String, GraphMlData> _nodeDataMap = new HashMap<String, GraphMlData>();
 
-	private HashMap<String, GraphMlPort> nodePortMap = new HashMap<String, GraphMlPort>();
+	private HashMap<String, GraphMlPort> _nodePortMap = new HashMap<String, GraphMlPort>();
 
 	/**
 	 * Construct a node with Id and one data element
@@ -32,8 +32,8 @@ public class GraphMlNode
 	 */
 	public GraphMlNode(String nodeId, GraphMlData nodeData)
 	{
-		this.nodeId = nodeId;
-		this.nodeData = nodeData;
+		this._nodeId = nodeId;
+		this._nodeData = nodeData;
 	}
 
 	/**
@@ -42,7 +42,7 @@ public class GraphMlNode
 	 */
 	public GraphMlNode(Element nodeElement)
 	{
-		this.nodeId = nodeElement.getAttribute(GraphMlConstants.ID);
+		this._nodeId = nodeElement.getAttribute(GraphMlConstants.ID);
 
 		//Add data elements
 		List<Element> dataList = GraphMlUtils.childsTags(nodeElement,
@@ -52,7 +52,7 @@ public class GraphMlNode
 		{
 			GraphMlData data = new GraphMlData(dataElem);
 			String key = data.getDataKey();
-			nodeDataMap.put(key, data);
+			_nodeDataMap.put(key, data);
 		}
 
 		//Add graph elements
@@ -62,7 +62,7 @@ public class GraphMlNode
 		for (Element graphElem : graphList)
 		{
 			GraphMlGraph graph = new GraphMlGraph(graphElem);
-			nodeGraphList.add(graph);
+			_nodeGraphList.add(graph);
 		}
 
 		//Add port elements
@@ -73,48 +73,48 @@ public class GraphMlNode
 		{
 			GraphMlPort port = new GraphMlPort(portElem);
 			String name = port.getName();
-			nodePortMap.put(name, port);
+			_nodePortMap.put(name, port);
 		}
 	}
 
 	public String getNodeId()
 	{
-		return nodeId;
+		return _nodeId;
 	}
 
 	public void setNodeId(String nodeId)
 	{
-		this.nodeId = nodeId;
+		this._nodeId = nodeId;
 	}
 
 	public HashMap<String, GraphMlData> getNodeDataMap()
 	{
-		return nodeDataMap;
+		return _nodeDataMap;
 	}
 
 	public void setNodeDataMap(HashMap<String, GraphMlData> nodeDataMap)
 	{
-		this.nodeDataMap = nodeDataMap;
+		this._nodeDataMap = nodeDataMap;
 	}
 
 	public List<GraphMlGraph> getNodeGraph()
 	{
-		return nodeGraphList;
+		return _nodeGraphList;
 	}
 
 	public void setNodeGraph(List<GraphMlGraph> nodeGraph)
 	{
-		this.nodeGraphList = nodeGraph;
+		this._nodeGraphList = nodeGraph;
 	}
 
 	public HashMap<String, GraphMlPort> getNodePort()
 	{
-		return nodePortMap;
+		return _nodePortMap;
 	}
 
 	public void setNodePort(HashMap<String, GraphMlPort> nodePort)
 	{
-		this.nodePortMap = nodePort;
+		this._nodePortMap = nodePort;
 	}
 
 	/**
@@ -126,18 +126,18 @@ public class GraphMlNode
 	{
 		Element node = document.createElement(GraphMlConstants.NODE);
 
-		node.setAttribute(GraphMlConstants.ID, nodeId);
+		node.setAttribute(GraphMlConstants.ID, _nodeId);
 
-		Element dataElement = nodeData.generateNodeElement(document);
+		Element dataElement = _nodeData.generateNodeElement(document);
 		node.appendChild(dataElement);
 
-		for (GraphMlPort port : nodePortMap.values())
+		for (GraphMlPort port : _nodePortMap.values())
 		{
 			Element portElement = port.generateElement(document);
 			node.appendChild(portElement);
 		}
 
-		for (GraphMlGraph graph : nodeGraphList)
+		for (GraphMlGraph graph : _nodeGraphList)
 		{
 			Element graphElement = graph.generateElement(document);
 			node.appendChild(graphElement);
@@ -148,12 +148,12 @@ public class GraphMlNode
 
 	public GraphMlData getNodeData()
 	{
-		return nodeData;
+		return _nodeData;
 	}
 
 	public void setNodeData(GraphMlData nodeData)
 	{
-		this.nodeData = nodeData;
+		this._nodeData = nodeData;
 	}
 
 }

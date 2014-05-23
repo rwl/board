@@ -20,13 +20,13 @@ public class OrthogonalLayout extends GraphLayout
   /**
    * 
    */
-  protected OrthogonalModel orthModel;
+  protected OrthogonalModel _orthModel;
 
   /**
    * Whether or not to route the edges along grid lines only, if the grid
    * is enabled. Default is false
    */
-  protected boolean routeToGrid = false;
+  protected boolean _routeToGrid = false;
   
   /**
    * 
@@ -34,7 +34,7 @@ public class OrthogonalLayout extends GraphLayout
   public OrthogonalLayout(Graph graph)
   {
      super(graph);
-     orthModel = new OrthogonalModel(graph);
+     _orthModel = new OrthogonalModel(graph);
   }
 
   /**

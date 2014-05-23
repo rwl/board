@@ -14,9 +14,9 @@ import org.w3c.dom.Element;
  */
 public class GraphMlPort
 {
-	private String name;
+	private String _name;
 
-	private HashMap<String, GraphMlData> portDataMap = new HashMap<String, GraphMlData>();
+	private HashMap<String, GraphMlData> _portDataMap = new HashMap<String, GraphMlData>();
 
 	/**
 	 * Construct a Port with name.
@@ -24,7 +24,7 @@ public class GraphMlPort
 	 */
 	public GraphMlPort(String name)
 	{
-		this.name = name;
+		this._name = name;
 	}
 
 	/**
@@ -33,7 +33,7 @@ public class GraphMlPort
 	 */
 	public GraphMlPort(Element portElement)
 	{
-		this.name = portElement.getAttribute(GraphMlConstants.PORT_NAME);
+		this._name = portElement.getAttribute(GraphMlConstants.PORT_NAME);
 
 		//Add data elements
 		List<Element> dataList = GraphMlUtils.childsTags(portElement,
@@ -43,28 +43,28 @@ public class GraphMlPort
 		{
 			GraphMlData data = new GraphMlData(dataElem);
 			String key = data.getDataKey();
-			portDataMap.put(key, data);
+			_portDataMap.put(key, data);
 		}
 	}
 
 	public String getName()
 	{
-		return name;
+		return _name;
 	}
 
 	public void setName(String name)
 	{
-		this.name = name;
+		this._name = name;
 	}
 
 	public HashMap<String, GraphMlData> getPortDataMap()
 	{
-		return portDataMap;
+		return _portDataMap;
 	}
 
 	public void setPortDataMap(HashMap<String, GraphMlData> nodeDataMap)
 	{
-		this.portDataMap = nodeDataMap;
+		this._portDataMap = nodeDataMap;
 	}
 
 	/**
@@ -76,9 +76,9 @@ public class GraphMlPort
 	{
 		Element node = document.createElement(GraphMlConstants.PORT);
 
-		node.setAttribute(GraphMlConstants.PORT_NAME, name);
+		node.setAttribute(GraphMlConstants.PORT_NAME, _name);
 
-		for (GraphMlData data : portDataMap.values())
+		for (GraphMlData data : _portDataMap.values())
 		{
 			Element dataElement = data.generateNodeElement(document);
 			node.appendChild(dataElement);

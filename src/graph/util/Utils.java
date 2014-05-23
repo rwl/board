@@ -81,7 +81,7 @@ public class Utils
 	/**
 	 * Static Graphics used for Font Metrics.
 	 */
-	protected static transient Graphics fontGraphics;
+	protected static transient Graphics _fontGraphics;
 
 	// Creates a renderer for HTML markup (only possible in
 	// non-headless environment)
@@ -89,7 +89,7 @@ public class Utils
 	{
 		try
 		{
-			fontGraphics = new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB)
+			_fontGraphics = new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB)
 					.getGraphics();
 		}
 		catch (Exception e)
@@ -330,9 +330,9 @@ public class Utils
 	 */
 	public static FontMetrics getFontMetrics(Font font)
 	{
-		if (fontGraphics != null)
+		if (_fontGraphics != null)
 		{
-			return fontGraphics.getFontMetrics(font);
+			return _fontGraphics.getFontMetrics(font);
 		}
 
 		return null;
@@ -354,9 +354,9 @@ public class Utils
 		font = font.deriveFont((float) (font.getSize2D() * scale));
 		FontMetrics metrics = null;
 
-		if (fontGraphics != null)
+		if (_fontGraphics != null)
 		{
-			metrics = fontGraphics.getFontMetrics(font);
+			metrics = _fontGraphics.getFontMetrics(font);
 		}
 
 		double lineHeight = Constants.LINESPACING;
@@ -854,8 +854,8 @@ public class Utils
 			for (int i = 1; i < state.getAbsolutePointCount(); i++)
 			{
 				Point2d current = state.getAbsolutePoint(i);
-				double dist = new Line2D.Double(last.x, last.y, current.x,
-						current.y).ptSegDistSq(x, y);
+				double dist = new Line2D.Double(last._x, last._y, current._x,
+						current._y).ptSegDistSq(x, y);
 
 				if (dist < min)
 				{

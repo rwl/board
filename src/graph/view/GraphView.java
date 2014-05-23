@@ -64,38 +64,38 @@ public class GraphView extends EventSource
 	/**
 	 *
 	 */
-	private static Point2d EMPTY_POINT = new Point2d();
+	private static Point2d _EMPTY_POINT = new Point2d();
 
 	/**
 	 * Reference to the enclosing graph.
 	 */
-	protected Graph graph;
+	protected Graph _graph;
 
 	/**
 	 * Cell that acts as the root of the displayed cell hierarchy.
 	 */
-	protected Object currentRoot = null;
+	protected Object _currentRoot = null;
 
 	/**
 	 * Caches the current bounds of the graph.
 	 */
-	protected Rect graphBounds = new Rect();
+	protected Rect _graphBounds = new Rect();
 
 	/**
 	 * Specifies the scale. Default is 1 (100%).
 	 */
-	protected double scale = 1;
+	protected double _scale = 1;
 
 	/**
 	 * Point that specifies the current translation. Default is a new
 	 * empty point.
 	 */
-	protected Point2d translate = new Point2d(0, 0);
+	protected Point2d _translate = new Point2d(0, 0);
 
 	/**
 	 * Maps from cells to cell states.
 	 */
-	protected Hashtable<Object, CellState> states = new Hashtable<Object, CellState>();
+	protected Hashtable<Object, CellState> _states = new Hashtable<Object, CellState>();
 
 	/**
 	 * Constructs a new view for the given graph.
@@ -104,7 +104,7 @@ public class GraphView extends EventSource
 	 */
 	public GraphView(Graph graph)
 	{
-		this.graph = graph;
+		this._graph = graph;
 	}
 
 	/**
@@ -114,7 +114,7 @@ public class GraphView extends EventSource
 	 */
 	public Graph getGraph()
 	{
-		return graph;
+		return _graph;
 	}
 
 	/**
@@ -122,7 +122,7 @@ public class GraphView extends EventSource
 	 */
 	public Hashtable<Object, CellState> getStates()
 	{
-		return states;
+		return _states;
 	}
 
 	/**
@@ -130,7 +130,7 @@ public class GraphView extends EventSource
 	 */
 	public void setStates(Hashtable<Object, CellState> states)
 	{
-		this.states = states;
+		this._states = states;
 	}
 
 	/**
@@ -140,7 +140,7 @@ public class GraphView extends EventSource
 	 */
 	public Rect getGraphBounds()
 	{
-		return graphBounds;
+		return _graphBounds;
 	}
 
 	/**
@@ -148,7 +148,7 @@ public class GraphView extends EventSource
 	 */
 	public void setGraphBounds(Rect value)
 	{
-		graphBounds = value;
+		_graphBounds = value;
 	}
 
 	/**
@@ -156,7 +156,7 @@ public class GraphView extends EventSource
 	 */
 	public Object getCurrentRoot()
 	{
-		return currentRoot;
+		return _currentRoot;
 	}
 
 	/**
@@ -167,7 +167,7 @@ public class GraphView extends EventSource
 	 */
 	public Object setCurrentRoot(Object root)
 	{
-		if (currentRoot != root)
+		if (_currentRoot != root)
 		{
 			CurrentRootChange change = new CurrentRootChange(this, root);
 			change.execute();
@@ -190,14 +190,14 @@ public class GraphView extends EventSource
 	 */
 	public void scaleAndTranslate(double scale, double dx, double dy)
 	{
-		double previousScale = this.scale;
-		Object previousTranslate = translate.clone();
+		double previousScale = this._scale;
+		Object previousTranslate = _translate.clone();
 
-		if (scale != this.scale || dx != translate.getX()
-				|| dy != translate.getY())
+		if (scale != this._scale || dx != _translate.getX()
+				|| dy != _translate.getY())
 		{
-			this.scale = scale;
-			translate = new Point2d(dx, dy);
+			this._scale = scale;
+			_translate = new Point2d(dx, dy);
 
 			if (isEventsEnabled())
 			{
@@ -206,7 +206,7 @@ public class GraphView extends EventSource
 		}
 
 		fireEvent(new EventObj(Event.SCALE_AND_TRANSLATE, "scale",
-				scale, "previousScale", previousScale, "translate", translate,
+				scale, "previousScale", previousScale, "translate", _translate,
 				"previousTranslate", previousTranslate));
 	}
 
@@ -217,7 +217,7 @@ public class GraphView extends EventSource
 	 */
 	public double getScale()
 	{
-		return scale;
+		return _scale;
 	}
 
 	/**
@@ -229,11 +229,11 @@ public class GraphView extends EventSource
 	 */
 	public void setScale(double value)
 	{
-		double previousScale = scale;
+		double previousScale = _scale;
 
-		if (scale != value)
+		if (_scale != value)
 		{
-			scale = value;
+			_scale = value;
 
 			if (isEventsEnabled())
 			{
@@ -241,7 +241,7 @@ public class GraphView extends EventSource
 			}
 		}
 
-		fireEvent(new EventObj(Event.SCALE, "scale", scale,
+		fireEvent(new EventObj(Event.SCALE, "scale", _scale,
 				"previousScale", previousScale));
 	}
 
@@ -252,7 +252,7 @@ public class GraphView extends EventSource
 	 */
 	public Point2d getTranslate()
 	{
-		return translate;
+		return _translate;
 	}
 
 	/**
@@ -264,13 +264,13 @@ public class GraphView extends EventSource
 	 */
 	public void setTranslate(Point2d value)
 	{
-		Object previousTranslate = translate.clone();
+		Object previousTranslate = _translate.clone();
 
 		if (value != null
-				&& (value.getX() != translate.getX() || value.getY() != translate
+				&& (value.getX() != _translate.getX() || value.getY() != _translate
 						.getY()))
 		{
-			translate = value;
+			_translate = value;
 
 			if (isEventsEnabled())
 			{
@@ -278,7 +278,7 @@ public class GraphView extends EventSource
 			}
 		}
 
-		fireEvent(new EventObj(Event.TRANSLATE, "translate", translate,
+		fireEvent(new EventObj(Event.TRANSLATE, "translate", _translate,
 				"previousTranslate", previousTranslate));
 	}
 
@@ -319,7 +319,7 @@ public class GraphView extends EventSource
 
 		if (cells != null && cells.length > 0)
 		{
-			IGraphModel model = graph.getModel();
+			IGraphModel model = _graph.getModel();
 
 			for (int i = 0; i < cells.length; i++)
 			{
@@ -356,7 +356,7 @@ public class GraphView extends EventSource
 	 */
 	public void reload()
 	{
-		states.clear();
+		_states.clear();
 		validate();
 	}
 
@@ -389,9 +389,9 @@ public class GraphView extends EventSource
 	{
 		removeState(cell);
 
-		if (recurse && (force || cell != currentRoot))
+		if (recurse && (force || cell != _currentRoot))
 		{
-			IGraphModel model = graph.getModel();
+			IGraphModel model = _graph.getModel();
 			int childCount = model.getChildCount(cell);
 
 			for (int i = 0; i < childCount; i++)
@@ -411,7 +411,7 @@ public class GraphView extends EventSource
 	 */
 	public void invalidate(Object cell)
 	{
-		IGraphModel model = graph.getModel();
+		IGraphModel model = _graph.getModel();
 		cell = (cell != null) ? cell : model.getRoot();
 		CellState state = getState(cell);
 
@@ -447,8 +447,8 @@ public class GraphView extends EventSource
 	 */
 	public void validate()
 	{
-		Rect graphBounds = getBoundingBox(validateCellState(validateCell((currentRoot != null) ? currentRoot
-				: graph.getModel().getRoot())));
+		Rect graphBounds = getBoundingBox(validateCellState(validateCell((_currentRoot != null) ? _currentRoot
+				: _graph.getModel().getRoot())));
 		setGraphBounds((graphBounds != null) ? graphBounds : new Rect());
 	}
 
@@ -480,13 +480,13 @@ public class GraphView extends EventSource
 
 			if (recurse)
 			{
-				IGraphModel model = graph.getModel();
-				int childCount = model.getChildCount(state.cell);
+				IGraphModel model = _graph.getModel();
+				int childCount = model.getChildCount(state._cell);
 
 				for (int i = 0; i < childCount; i++)
 				{
 					Rect bounds = getBoundingBox(
-							getState(model.getChildAt(state.cell, i)), true);
+							getState(model.getChildAt(state._cell, i)), true);
 
 					if (bounds != null)
 					{
@@ -526,7 +526,7 @@ public class GraphView extends EventSource
 	{
 		if (cell != null)
 		{
-			visible = visible && graph.isCellVisible(cell);
+			visible = visible && _graph.isCellVisible(cell);
 			CellState state = getState(cell, visible);
 
 			if (state != null && !visible)
@@ -535,7 +535,7 @@ public class GraphView extends EventSource
 			}
 			else
 			{
-				IGraphModel model = graph.getModel();
+				IGraphModel model = _graph.getModel();
 				int childCount = model.getChildCount(cell);
 
 				for (int i = 0; i < childCount; i++)
@@ -543,7 +543,7 @@ public class GraphView extends EventSource
 					validateCell(
 							model.getChildAt(cell, i),
 							visible
-									&& (!graph.isCellCollapsed(cell) || cell == currentRoot));
+									&& (!_graph.isCellCollapsed(cell) || cell == _currentRoot));
 				}
 			}
 		}
@@ -576,13 +576,13 @@ public class GraphView extends EventSource
 
 			if (state != null)
 			{
-				IGraphModel model = graph.getModel();
+				IGraphModel model = _graph.getModel();
 
 				if (state.isInvalid())
 				{
 					state.setInvalid(false);
 
-					if (cell != currentRoot)
+					if (cell != _currentRoot)
 					{
 						validateCellState(model.getParent(cell), false);
 					}
@@ -631,12 +631,12 @@ public class GraphView extends EventSource
 		state.getOrigin().setY(0);
 		state.setLength(0);
 
-		if (state.getCell() != currentRoot)
+		if (state.getCell() != _currentRoot)
 		{
-			IGraphModel model = graph.getModel();
+			IGraphModel model = _graph.getModel();
 			CellState pState = getState(model.getParent(state.getCell()));
 
-			if (pState != null && pState.getCell() != currentRoot)
+			if (pState != null && pState.getCell() != _currentRoot)
 			{
 				state.getOrigin().setX(
 						state.getOrigin().getX() + pState.getOrigin().getX());
@@ -644,7 +644,7 @@ public class GraphView extends EventSource
 						state.getOrigin().getY() + pState.getOrigin().getY());
 			}
 
-			Point2d offset = graph.getChildOffsetForCell(state.getCell());
+			Point2d offset = _graph.getChildOffsetForCell(state.getCell());
 
 			if (offset != null)
 			{
@@ -654,60 +654,60 @@ public class GraphView extends EventSource
 						.setY(state.getOrigin().getY() + offset.getY());
 			}
 
-			Geometry geo = graph.getCellGeometry(state.getCell());
+			Geometry geo = _graph.getCellGeometry(state.getCell());
 
 			if (geo != null)
 			{
-				if (!model.isEdge(state.cell))
+				if (!model.isEdge(state._cell))
 				{
 					Point2d origin = state.getOrigin();
 					offset = geo.getOffset();
 
 					if (offset == null)
 					{
-						offset = EMPTY_POINT;
+						offset = _EMPTY_POINT;
 					}
 
 					if (geo.isRelative() && pState != null)
 					{
-						if (model.isEdge(pState.cell))
+						if (model.isEdge(pState._cell))
 						{
 							Point2d orig = getPoint(pState, geo);
 
 							if (orig != null)
 							{
 								origin.setX(origin.getX()
-										+ (orig.getX() / scale)
-										- translate.getX());
+										+ (orig.getX() / _scale)
+										- _translate.getX());
 								origin.setY(origin.getY()
-										+ (orig.getY() / scale)
-										- translate.getY());
+										+ (orig.getY() / _scale)
+										- _translate.getY());
 							}
 						}
 						else
 						{
 							origin.setX(origin.getX() + geo.getX()
-									* pState.getWidth() / scale + offset.getX());
+									* pState.getWidth() / _scale + offset.getX());
 							origin.setY(origin.getY() + geo.getY()
-									* pState.getHeight() / scale
+									* pState.getHeight() / _scale
 									+ offset.getY());
 						}
 					}
 					else
 					{
-						state.setAbsoluteOffset(new Point2d(scale
-								* offset.getX(), scale * offset.getY()));
+						state.setAbsoluteOffset(new Point2d(_scale
+								* offset.getX(), _scale * offset.getY()));
 						origin.setX(origin.getX() + geo.getX());
 						origin.setY(origin.getY() + geo.getY());
 					}
 				}
 
-				state.setX(scale
-						* (translate.getX() + state.getOrigin().getX()));
-				state.setY(scale
-						* (translate.getY() + state.getOrigin().getY()));
-				state.setWidth(scale * geo.getWidth());
-				state.setHeight(scale * geo.getHeight());
+				state.setX(_scale
+						* (_translate.getX() + state.getOrigin().getX()));
+				state.setY(_scale
+						* (_translate.getY() + state.getOrigin().getY()));
+				state.setWidth(_scale * geo.getWidth());
+				state.setHeight(_scale * geo.getHeight());
 
 				if (model.isVertex(state.getCell()))
 				{
@@ -745,12 +745,12 @@ public class GraphView extends EventSource
 		// This will remove edges with no terminals and no terminal points
 		// as such edges are invalid and produce NPEs in the edge styles.
 		// Also removes connected edges that have no visible terminals.
-		if ((graph.getModel().getTerminal(state.getCell(), true) != null && source == null)
+		if ((_graph.getModel().getTerminal(state.getCell(), true) != null && source == null)
 				|| (source == null && geo.getTerminalPoint(true) == null)
-				|| (graph.getModel().getTerminal(state.getCell(), false) != null && target == null)
+				|| (_graph.getModel().getTerminal(state.getCell(), false) != null && target == null)
 				|| (target == null && geo.getTerminalPoint(false) == null))
 		{
-			clear(state.cell, true, true);
+			clear(state._cell, true, true);
 		}
 		else
 		{
@@ -788,12 +788,12 @@ public class GraphView extends EventSource
 
 		if (horizontal.equals(Constants.ALIGN_LEFT))
 		{
-			state.absoluteOffset.setX(state.absoluteOffset.getX()
+			state._absoluteOffset.setX(state._absoluteOffset.getX()
 					- state.getWidth());
 		}
 		else if (horizontal.equals(Constants.ALIGN_RIGHT))
 		{
-			state.absoluteOffset.setX(state.absoluteOffset.getX()
+			state._absoluteOffset.setX(state._absoluteOffset.getX()
 					+ state.getWidth());
 		}
 
@@ -803,12 +803,12 @@ public class GraphView extends EventSource
 
 		if (vertical.equals(Constants.ALIGN_TOP))
 		{
-			state.absoluteOffset.setY(state.absoluteOffset.getY()
+			state._absoluteOffset.setY(state._absoluteOffset.getY()
 					- state.getHeight());
 		}
 		else if (vertical.equals(Constants.ALIGN_BOTTOM))
 		{
-			state.absoluteOffset.setY(state.absoluteOffset.getY()
+			state._absoluteOffset.setY(state._absoluteOffset.getY()
 					+ state.getHeight());
 		}
 	}
@@ -818,14 +818,14 @@ public class GraphView extends EventSource
 	 */
 	public void updateLabel(CellState state)
 	{
-		String label = graph.getLabel(state.getCell());
+		String label = _graph.getLabel(state.getCell());
 		Map<String, Object> style = state.getStyle();
 
 		// Applies word wrapping to non-HTML labels and stores the result in the state
 		if (label != null
 				&& label.length() > 0
-				&& !graph.isHtmlLabel(state.getCell())
-				&& !graph.getModel().isEdge(state.getCell())
+				&& !_graph.isHtmlLabel(state.getCell())
+				&& !_graph.getModel().isEdge(state.getCell())
 				&& Utils.getString(style, Constants.STYLE_WHITE_SPACE,
 						"nowrap").equals("wrap"))
 		{
@@ -872,14 +872,14 @@ public class GraphView extends EventSource
 		// Computes the available width for the wrapped label
 		if (horizontal)
 		{
-			w = (state.getWidth() / scale) - 2 * Constants.LABEL_INSET - 2
+			w = (state.getWidth() / _scale) - 2 * Constants.LABEL_INSET - 2
 					* Utils.getDouble(style, Constants.STYLE_SPACING)
 					- Utils.getDouble(style, Constants.STYLE_SPACING_LEFT)
 					- Utils.getDouble(style, Constants.STYLE_SPACING_RIGHT);
 		}
 		else
 		{
-			w = (state.getHeight() / scale)
+			w = (state.getHeight() / _scale)
 					- 2
 					* Constants.LABEL_INSET
 					- 2
@@ -912,9 +912,9 @@ public class GraphView extends EventSource
 			// labels or no wrapping is applied if the width is set to 0
 			Rect vertexBounds = state;
 
-			if (graph.getModel().isEdge(cell))
+			if (_graph.getModel().isEdge(cell))
 			{
-				Geometry geo = graph.getCellGeometry(cell);
+				Geometry geo = _graph.getCellGeometry(cell);
 
 				if (geo != null && geo.getWidth() > 0)
 				{
@@ -928,8 +928,8 @@ public class GraphView extends EventSource
 			}
 
 			state.setLabelBounds(Utils.getLabelPaintBounds(state.getLabel(),
-					style, graph.isHtmlLabel(cell), state.getAbsoluteOffset(),
-					vertexBounds, scale, graph.getModel().isEdge(cell)));
+					style, _graph.isHtmlLabel(cell), state.getAbsoluteOffset(),
+					vertexBounds, _scale, _graph.getModel().isEdge(cell)));
 
 			if (overflow.equals("width"))
 			{
@@ -957,17 +957,17 @@ public class GraphView extends EventSource
 		double strokeWidth = Math.max(
 				1,
 				Math.round(Utils.getInt(style, Constants.STYLE_STROKEWIDTH,
-						1) * scale));
+						1) * _scale));
 		strokeWidth -= Math.max(1, strokeWidth / 2);
 
-		if (graph.getModel().isEdge(state.getCell()))
+		if (_graph.getModel().isEdge(state.getCell()))
 		{
 			int ms = 0;
 
 			if (style.containsKey(Constants.STYLE_ENDARROW)
 					|| style.containsKey(Constants.STYLE_STARTARROW))
 			{
-				ms = (int) Math.round(Constants.DEFAULT_MARKERSIZE * scale);
+				ms = (int) Math.round(Constants.DEFAULT_MARKERSIZE * _scale);
 			}
 
 			// Adds the strokewidth
@@ -999,11 +999,11 @@ public class GraphView extends EventSource
 			if (Utils.getString(style, Constants.STYLE_IMAGE) != null)
 			{
 				double w = Utils.getInt(style, Constants.STYLE_IMAGE_WIDTH,
-						Constants.DEFAULT_IMAGESIZE) * scale;
+						Constants.DEFAULT_IMAGESIZE) * _scale;
 				double h = Utils.getInt(style,
 						Constants.STYLE_IMAGE_HEIGHT,
 						Constants.DEFAULT_IMAGESIZE)
-						* scale;
+						* _scale;
 
 				double x = state.getX();
 				double y = 0;
@@ -1051,7 +1051,7 @@ public class GraphView extends EventSource
 		rect.add(bbox);
 
 		// Unifies the cell bounds and the label bounds
-		if (!graph.isLabelClipped(state.getCell()))
+		if (!_graph.isLabelClipped(state.getCell()))
 		{
 			rect.add(state.getLabelBounds());
 		}
@@ -1073,9 +1073,9 @@ public class GraphView extends EventSource
 			CellState target)
 	{
 		updateFixedTerminalPoint(edge, source, true,
-				graph.getConnectionConstraint(edge, source, true));
+				_graph.getConnectionConstraint(edge, source, true));
 		updateFixedTerminalPoint(edge, target, false,
-				graph.getConnectionConstraint(edge, target, false));
+				_graph.getConnectionConstraint(edge, target, false));
 	}
 
 	/**
@@ -1092,20 +1092,20 @@ public class GraphView extends EventSource
 
 		if (constraint != null)
 		{
-			pt = graph.getConnectionPoint(terminal, constraint);
+			pt = _graph.getConnectionPoint(terminal, constraint);
 		}
 
 		if (pt == null && terminal == null)
 		{
 			Point2d orig = edge.getOrigin();
-			Geometry geo = graph.getCellGeometry(edge.cell);
+			Geometry geo = _graph.getCellGeometry(edge._cell);
 			pt = geo.getTerminalPoint(source);
 
 			if (pt != null)
 			{
-				pt = new Point2d(scale
-						* (translate.getX() + pt.getX() + orig.getX()), scale
-						* (translate.getY() + pt.getY() + orig.getY()));
+				pt = new Point2d(_scale
+						* (_translate.getX() + pt.getX() + orig.getX()), _scale
+						* (_translate.getY() + pt.getY() + orig.getY()));
 			}
 		}
 
@@ -1158,9 +1158,9 @@ public class GraphView extends EventSource
 	{
 		Point2d origin = state.getOrigin();
 
-		return new Point2d(scale
-				* (pt.getX() + translate.getX() + origin.getX()), scale
-				* (pt.getY() + translate.getY() + origin.getY()));
+		return new Point2d(_scale
+				* (pt.getX() + _translate.getX() + origin.getX()), _scale
+				* (pt.getY() + _translate.getY() + origin.getY()));
 	}
 
 	/**
@@ -1178,7 +1178,7 @@ public class GraphView extends EventSource
 
 			if (edgeStyle == null)
 			{
-				edgeStyle = graph.getDefaultLoopStyle();
+				edgeStyle = _graph.getDefaultLoopStyle();
 			}
 		}
 		else if (!Utils.isTrue(edge.getStyle(),
@@ -1253,7 +1253,7 @@ public class GraphView extends EventSource
 		border += Utils.getDouble(edge.getStyle(),
 				(source) ? Constants.STYLE_SOURCE_PERIMETER_SPACING
 						: Constants.STYLE_TARGET_PERIMETER_SPACING);
-		Point2d pt = getPerimeterPoint(start, next, graph.isOrthogonal(edge),
+		Point2d pt = getPerimeterPoint(start, next, _graph.isOrthogonal(edge),
 				border);
 		edge.setAbsoluteTerminalPoint(pt, source);
 	}
@@ -1267,11 +1267,11 @@ public class GraphView extends EventSource
 	{
 		String key = (source) ? Constants.STYLE_SOURCE_PORT
 				: Constants.STYLE_TARGET_PORT;
-		String id = Utils.getString(state.style, key);
+		String id = Utils.getString(state._style, key);
 
-		if (id != null && graph.getModel() instanceof GraphModel)
+		if (id != null && _graph.getModel() instanceof GraphModel)
 		{
-			CellState tmp = getState(((GraphModel) graph.getModel())
+			CellState tmp = getState(((GraphModel) _graph.getModel())
 					.getCell(id));
 
 			// Only uses ports where a cell state exists
@@ -1371,7 +1371,7 @@ public class GraphView extends EventSource
 					Constants.STYLE_PERIMETER_SPACING);
 		}
 
-		return terminal.getPerimeterBounds(border * scale);
+		return terminal.getPerimeterBounds(border * _scale);
 	}
 
 	/**
@@ -1446,13 +1446,13 @@ public class GraphView extends EventSource
 	 */
 	public Object getVisibleTerminal(Object edge, boolean source)
 	{
-		IGraphModel model = graph.getModel();
+		IGraphModel model = _graph.getModel();
 		Object result = model.getTerminal(edge, source);
 		Object best = result;
 
-		while (result != null && result != currentRoot)
+		while (result != null && result != _currentRoot)
 		{
-			if (!graph.isCellVisible(best) || graph.isCellCollapsed(result))
+			if (!_graph.isCellVisible(best) || _graph.isCellCollapsed(result))
 			{
 				best = result;
 			}
@@ -1598,8 +1598,8 @@ public class GraphView extends EventSource
 				double nx = (segment == 0) ? 0 : dy / segment;
 				double ny = (segment == 0) ? 0 : dx / segment;
 
-				x = p0.getX() + dx * factor + (nx * gy + offsetX) * scale;
-				y = p0.getY() + dy * factor - (ny * gy - offsetY) * scale;
+				x = p0.getX() + dx * factor + (nx * gy + offsetX) * _scale;
+				y = p0.getY() + dy * factor - (ny * gy - offsetY) * _scale;
 			}
 		}
 		else if (geometry != null)
@@ -1622,7 +1622,7 @@ public class GraphView extends EventSource
 	 */
 	public Point2d getRelativePoint(CellState edgeState, double x, double y)
 	{
-		IGraphModel model = graph.getModel();
+		IGraphModel model = _graph.getModel();
 		Geometry geometry = model.getGeometry(edgeState.getCell());
 
 		if (geometry != null)
@@ -1716,7 +1716,7 @@ public class GraphView extends EventSource
 				// Constructs the relative point for the label
 				return new Point2d(
 						Math.round(((totalLength / 2 - length - projlen) / totalLength)
-								* -2), Math.round(yDistance / scale));
+								* -2), Math.round(yDistance / _scale));
 			}
 		}
 
@@ -1773,12 +1773,12 @@ public class GraphView extends EventSource
 
 		if (cell != null)
 		{
-			state = states.get(cell);
+			state = _states.get(cell);
 
-			if (state == null && create && graph.isCellVisible(cell))
+			if (state == null && create && _graph.isCellVisible(cell))
 			{
 				state = createState(cell);
-				states.put(cell, state);
+				_states.put(cell, state);
 			}
 		}
 
@@ -1793,7 +1793,7 @@ public class GraphView extends EventSource
 	 */
 	public CellState removeState(Object cell)
 	{
-		return (cell != null) ? (CellState) states.remove(cell) : null;
+		return (cell != null) ? (CellState) _states.remove(cell) : null;
 	}
 
 	/**
@@ -1804,7 +1804,7 @@ public class GraphView extends EventSource
 	 */
 	public CellState createState(Object cell)
 	{
-		return new CellState(this, cell, graph.getCellStyle(cell));
+		return new CellState(this, cell, _graph.getCellStyle(cell));
 	}
 
 	/**
@@ -1841,7 +1841,7 @@ public class GraphView extends EventSource
 			if (!up)
 			{
 				Object tmp = view.getCurrentRoot();
-				IGraphModel model = view.graph.getModel();
+				IGraphModel model = view._graph.getModel();
 
 				while (tmp != null)
 				{
@@ -1894,15 +1894,15 @@ public class GraphView extends EventSource
 		public void execute()
 		{
 			Object tmp = view.getCurrentRoot();
-			view.currentRoot = previous;
+			view._currentRoot = previous;
 			previous = tmp;
 
-			Point2d translate = view.graph.getTranslateForRoot(view
+			Point2d translate = view._graph.getTranslateForRoot(view
 					.getCurrentRoot());
 
 			if (translate != null)
 			{
-				view.translate = new Point2d(-translate.getX(),
+				view._translate = new Point2d(-translate.getX(),
 						translate.getY());
 			}
 
@@ -1912,7 +1912,7 @@ public class GraphView extends EventSource
 
 			String eventName = (up) ? Event.UP : Event.DOWN;
 			view.fireEvent(new EventObj(eventName, "root",
-					view.currentRoot, "previous", previous));
+					view._currentRoot, "previous", previous));
 		}
 
 	}

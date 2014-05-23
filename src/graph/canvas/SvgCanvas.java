@@ -35,29 +35,29 @@ public class SvgCanvas extends BasicCanvas
 	/**
 	 * Holds the HTML document that represents the canvas.
 	 */
-	protected Document document;
+	protected Document _document;
 
 	/**
 	 * Used internally for looking up elements. Workaround for getElementById
 	 * not working.
 	 */
-	private Map<String, Element> gradients = new Hashtable<String, Element>();
+	private Map<String, Element> _gradients = new Hashtable<String, Element>();
 
 	/**
 	 * Used internally for looking up images.
 	 */
-	private Map<String, Element> images = new Hashtable<String, Element>();
+	private Map<String, Element> _images = new Hashtable<String, Element>();
 
 	/**
 	 * 
 	 */
-	protected Element defs = null;
+	protected Element _defs = null;
 
 	/**
 	 * Specifies if images should be embedded as base64 encoded strings.
 	 * Default is false.
 	 */
-	protected boolean embedded = false;
+	protected boolean _embedded = false;
 
 	/**
 	 * Constructs a new SVG canvas for the specified dimension and scale.
@@ -81,34 +81,34 @@ public class SvgCanvas extends BasicCanvas
 	 */
 	public void appendSvgElement(Element node)
 	{
-		if (document != null)
+		if (_document != null)
 		{
-			document.getDocumentElement().appendChild(node);
+			_document.getDocumentElement().appendChild(node);
 		}
 	}
 
 	/**
 	 * 
 	 */
-	protected Element getDefsElement()
+	protected Element _getDefsElement()
 	{
-		if (defs == null)
+		if (_defs == null)
 		{
-			defs = document.createElement("defs");
+			_defs = _document.createElement("defs");
 
-			Element svgNode = document.getDocumentElement();
+			Element svgNode = _document.getDocumentElement();
 
 			if (svgNode.hasChildNodes())
 			{
-				svgNode.insertBefore(defs, svgNode.getFirstChild());
+				svgNode.insertBefore(_defs, svgNode.getFirstChild());
 			}
 			else
 			{
-				svgNode.appendChild(defs);
+				svgNode.appendChild(_defs);
 			}
 		}
 
-		return defs;
+		return _defs;
 	}
 
 	/**
@@ -117,14 +117,14 @@ public class SvgCanvas extends BasicCanvas
 	public Element getGradientElement(String start, String end, String direction)
 	{
 		String id = getGradientId(start, end, direction);
-		Element gradient = gradients.get(id);
+		Element gradient = _gradients.get(id);
 
 		if (gradient == null)
 		{
-			gradient = createGradientElement(start, end, direction);
-			gradient.setAttribute("id", "g" + (gradients.size() + 1));
-			getDefsElement().appendChild(gradient);
-			gradients.put(id, gradient);
+			gradient = _createGradientElement(start, end, direction);
+			gradient.setAttribute("id", "g" + (_gradients.size() + 1));
+			_getDefsElement().appendChild(gradient);
+			_gradients.put(id, gradient);
 		}
 
 		return gradient;
@@ -137,29 +137,29 @@ public class SvgCanvas extends BasicCanvas
 	{
 		String id = "mx-glass-gradient";
 
-		Element glassGradient = gradients.get(id);
+		Element glassGradient = _gradients.get(id);
 
 		if (glassGradient == null)
 		{
-			glassGradient = document.createElement("linearGradient");
+			glassGradient = _document.createElement("linearGradient");
 			glassGradient.setAttribute("x1", "0%");
 			glassGradient.setAttribute("y1", "0%");
 			glassGradient.setAttribute("x2", "0%");
 			glassGradient.setAttribute("y2", "100%");
 
-			Element stop1 = document.createElement("stop");
+			Element stop1 = _document.createElement("stop");
 			stop1.setAttribute("offset", "0%");
 			stop1.setAttribute("style", "stop-color:#ffffff;stop-opacity:0.9");
 			glassGradient.appendChild(stop1);
 
-			Element stop2 = document.createElement("stop");
+			Element stop2 = _document.createElement("stop");
 			stop2.setAttribute("offset", "100%");
 			stop2.setAttribute("style", "stop-color:#ffffff;stop-opacity:0.1");
 			glassGradient.appendChild(stop2);
 
-			glassGradient.setAttribute("id", "g" + (gradients.size() + 1));
-			getDefsElement().appendChild(glassGradient);
-			gradients.put(id, glassGradient);
+			glassGradient.setAttribute("id", "g" + (_gradients.size() + 1));
+			_getDefsElement().appendChild(glassGradient);
+			_gradients.put(id, glassGradient);
 		}
 
 		return glassGradient;
@@ -168,10 +168,10 @@ public class SvgCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	protected Element createGradientElement(String start, String end,
+	protected Element _createGradientElement(String start, String end,
 			String direction)
 	{
-		Element gradient = document.createElement("linearGradient");
+		Element gradient = _document.createElement("linearGradient");
 		gradient.setAttribute("x1", "0%");
 		gradient.setAttribute("y1", "0%");
 		gradient.setAttribute("x2", "0%");
@@ -194,12 +194,12 @@ public class SvgCanvas extends BasicCanvas
 			gradient.setAttribute("x1", "100%");
 		}
 
-		Element stop = document.createElement("stop");
+		Element stop = _document.createElement("stop");
 		stop.setAttribute("offset", "0%");
 		stop.setAttribute("style", "stop-color:" + start);
 		gradient.appendChild(stop);
 
-		stop = document.createElement("stop");
+		stop = _document.createElement("stop");
 		stop.setAttribute("offset", "100%");
 		stop.setAttribute("style", "stop-color:" + end);
 		gradient.appendChild(stop);
@@ -260,7 +260,7 @@ public class SvgCanvas extends BasicCanvas
 	/**
 	 * Returns true if the given string ends with .png, .jpg or .gif.
 	 */
-	protected boolean isImageResource(String src)
+	protected boolean _isImageResource(String src)
 	{
 		return src != null
 				&& (src.toLowerCase().endsWith(".png")
@@ -271,7 +271,7 @@ public class SvgCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	protected InputStream getResource(String src)
+	protected InputStream _getResource(String src)
 	{
 		InputStream stream = null;
 
@@ -291,10 +291,10 @@ public class SvgCanvas extends BasicCanvas
 	 * @throws IOException 
 	 * 
 	 */
-	protected String createDataUrl(String src) throws IOException
+	protected String _createDataUrl(String src) throws IOException
 	{
 		String result = null;
-		InputStream inputStream = isImageResource(src) ? getResource(src) : null;
+		InputStream inputStream = _isImageResource(src) ? _getResource(src) : null;
 
 		if (inputStream != null)
 		{
@@ -331,28 +331,28 @@ public class SvgCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	protected Element getEmbeddedImageElement(String src)
+	protected Element _getEmbeddedImageElement(String src)
 	{
-		Element img = images.get(src);
+		Element img = _images.get(src);
 
 		if (img == null)
 		{
-			img = document.createElement("svg");
+			img = _document.createElement("svg");
 			img.setAttribute("width", "100%");
 			img.setAttribute("height", "100%");
 
-			Element inner = document.createElement("image");
+			Element inner = _document.createElement("image");
 			inner.setAttribute("width", "100%");
 			inner.setAttribute("height", "100%");
 
 			// Store before transforming to DataURL
-			images.put(src, img);
+			_images.put(src, img);
 
 			if (!src.startsWith("data:image/"))
 			{
 				try
 				{
-					String tmp = createDataUrl(src);
+					String tmp = _createDataUrl(src);
 					
 					if (tmp != null)
 					{
@@ -367,8 +367,8 @@ public class SvgCanvas extends BasicCanvas
 
 			inner.setAttributeNS(Constants.NS_XLINK, "xlink:href", src);
 			img.appendChild(inner);
-			img.setAttribute("id", "i" + (images.size()));
-			getDefsElement().appendChild(img);
+			img.setAttribute("id", "i" + (_images.size()));
+			_getDefsElement().appendChild(img);
 		}
 
 		return img;
@@ -377,7 +377,7 @@ public class SvgCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	protected Element createImageElement(double x, double y, double w,
+	protected Element _createImageElement(double x, double y, double w,
 			double h, String src, boolean aspect, boolean flipH, boolean flipV,
 			boolean embedded)
 	{
@@ -385,15 +385,15 @@ public class SvgCanvas extends BasicCanvas
 
 		if (embedded)
 		{
-			elem = document.createElement("use");
+			elem = _document.createElement("use");
 
-			Element img = getEmbeddedImageElement(src);
+			Element img = _getEmbeddedImageElement(src);
 			elem.setAttributeNS(Constants.NS_XLINK, "xlink:href",
 					"#" + img.getAttribute("id"));
 		}
 		else
 		{
-			elem = document.createElement("image");
+			elem = _document.createElement("image");
 
 			elem.setAttributeNS(Constants.NS_XLINK, "xlink:href", src);
 		}
@@ -456,7 +456,7 @@ public class SvgCanvas extends BasicCanvas
 	 */
 	public void setDocument(Document document)
 	{
-		this.document = document;
+		this._document = document;
 	}
 
 	/**
@@ -466,7 +466,7 @@ public class SvgCanvas extends BasicCanvas
 	 */
 	public Document getDocument()
 	{
-		return document;
+		return _document;
 	}
 
 	/**
@@ -474,7 +474,7 @@ public class SvgCanvas extends BasicCanvas
 	 */
 	public void setEmbedded(boolean value)
 	{
-		embedded = value;
+		_embedded = value;
 	}
 
 	/**
@@ -482,7 +482,7 @@ public class SvgCanvas extends BasicCanvas
 	 */
 	public boolean isEmbedded()
 	{
-		return embedded;
+		return _embedded;
 	}
 
 	/*
@@ -499,7 +499,7 @@ public class SvgCanvas extends BasicCanvas
 			List<Point2d> pts = state.getAbsolutePoints();
 
 			// Transpose all points by cloning into a new array
-			pts = Utils.translatePoints(pts, translate.x, translate.y);
+			pts = Utils.translatePoints(pts, _translate.x, _translate.y);
 
 			// Draws the line
 			elem = drawLine(pts, style);
@@ -517,8 +517,8 @@ public class SvgCanvas extends BasicCanvas
 		}
 		else
 		{
-			int x = (int) state.getX() + translate.x;
-			int y = (int) state.getY() + translate.y;
+			int x = (int) state.getX() + _translate.x;
+			int y = (int) state.getY() + _translate.y;
 			int w = (int) state.getWidth();
 			int h = (int) state.getHeight();
 
@@ -532,7 +532,7 @@ public class SvgCanvas extends BasicCanvas
 				int start = (int) Math.round(Utils.getInt(style,
 						Constants.STYLE_STARTSIZE,
 						Constants.DEFAULT_STARTSIZE)
-						* scale);
+						* _scale);
 
 				// Removes some styles to draw the content area
 				Map<String, Object> cloned = new Hashtable<String, Object>(
@@ -564,10 +564,10 @@ public class SvgCanvas extends BasicCanvas
 	{
 		Rect bounds = state.getLabelBounds();
 
-		if (drawLabels && bounds != null)
+		if (_drawLabels && bounds != null)
 		{
-			int x = (int) bounds.getX() + translate.x;
-			int y = (int) bounds.getY() + translate.y;
+			int x = (int) bounds.getX() + _translate.x;
+			int y = (int) bounds.getY() + _translate.y;
 			int w = (int) bounds.getWidth();
 			int h = (int) bounds.getHeight();
 			Map<String, Object> style = state.getStyle();
@@ -597,7 +597,7 @@ public class SvgCanvas extends BasicCanvas
 		String strokeColor = Utils.getString(style,
 				Constants.STYLE_STROKECOLOR, "none");
 		float strokeWidth = (float) (Utils.getFloat(style,
-				Constants.STYLE_STROKEWIDTH, 1) * scale);
+				Constants.STYLE_STROKEWIDTH, 1) * _scale);
 		float opacity = Utils.getFloat(style, Constants.STYLE_OPACITY, 100);
 
 		// Draws the shape
@@ -617,7 +617,7 @@ public class SvgCanvas extends BasicCanvas
 				boolean flipV = Utils.isTrue(style,
 						Constants.STYLE_IMAGE_FLIPV, false);
 
-				elem = createImageElement(x, y, w, h, img,
+				elem = _createImageElement(x, y, w, h, img,
 						PRESERVE_IMAGE_ASPECT, flipH, flipV, isEmbedded());
 			}
 		}
@@ -639,12 +639,12 @@ public class SvgCanvas extends BasicCanvas
 				d = "M " + mid + " " + y + " L " + mid + " " + (y + h);
 			}
 
-			elem = document.createElement("path");
+			elem = _document.createElement("path");
 			elem.setAttribute("d", d + " Z");
 		}
 		else if (shape.equals(Constants.SHAPE_ELLIPSE))
 		{
-			elem = document.createElement("ellipse");
+			elem = _document.createElement("ellipse");
 
 			elem.setAttribute("cx", String.valueOf(x + w / 2));
 			elem.setAttribute("cy", String.valueOf(y + h / 2));
@@ -653,17 +653,17 @@ public class SvgCanvas extends BasicCanvas
 		}
 		else if (shape.equals(Constants.SHAPE_DOUBLE_ELLIPSE))
 		{
-			elem = document.createElement("g");
-			background = document.createElement("ellipse");
+			elem = _document.createElement("g");
+			background = _document.createElement("ellipse");
 			background.setAttribute("cx", String.valueOf(x + w / 2));
 			background.setAttribute("cy", String.valueOf(y + h / 2));
 			background.setAttribute("rx", String.valueOf(w / 2));
 			background.setAttribute("ry", String.valueOf(h / 2));
 			elem.appendChild(background);
 
-			int inset = (int) ((3 + strokeWidth) * scale);
+			int inset = (int) ((3 + strokeWidth) * _scale);
 
-			Element foreground = document.createElement("ellipse");
+			Element foreground = _document.createElement("ellipse");
 			foreground.setAttribute("fill", "none");
 			foreground.setAttribute("stroke", strokeColor);
 			foreground
@@ -677,7 +677,7 @@ public class SvgCanvas extends BasicCanvas
 		}
 		else if (shape.equals(Constants.SHAPE_RHOMBUS))
 		{
-			elem = document.createElement("path");
+			elem = _document.createElement("path");
 
 			String d = "M " + (x + w / 2) + " " + y + " L " + (x + w) + " "
 					+ (y + h / 2) + " L " + (x + w / 2) + " " + (y + h) + " L "
@@ -687,7 +687,7 @@ public class SvgCanvas extends BasicCanvas
 		}
 		else if (shape.equals(Constants.SHAPE_TRIANGLE))
 		{
-			elem = document.createElement("path");
+			elem = _document.createElement("path");
 			String direction = Utils.getString(style,
 					Constants.STYLE_DIRECTION, "");
 			String d = null;
@@ -718,7 +718,7 @@ public class SvgCanvas extends BasicCanvas
 		}
 		else if (shape.equals(Constants.SHAPE_HEXAGON))
 		{
-			elem = document.createElement("path");
+			elem = _document.createElement("path");
 			String direction = Utils.getString(style,
 					Constants.STYLE_DIRECTION, "");
 			String d = null;
@@ -745,7 +745,7 @@ public class SvgCanvas extends BasicCanvas
 		}
 		else if (shape.equals(Constants.SHAPE_CLOUD))
 		{
-			elem = document.createElement("path");
+			elem = _document.createElement("path");
 
 			String d = "M " + (x + 0.25 * w) + " " + (y + 0.25 * h) + " C "
 					+ (x + 0.05 * w) + " " + (y + 0.25 * h) + " " + x + " "
@@ -768,7 +768,7 @@ public class SvgCanvas extends BasicCanvas
 		}
 		else if (shape.equals(Constants.SHAPE_ACTOR))
 		{
-			elem = document.createElement("path");
+			elem = _document.createElement("path");
 			double width3 = w / 3;
 
 			String d = " M " + x + " " + (y + h) + " C " + x + " "
@@ -786,8 +786,8 @@ public class SvgCanvas extends BasicCanvas
 		}
 		else if (shape.equals(Constants.SHAPE_CYLINDER))
 		{
-			elem = document.createElement("g");
-			background = document.createElement("path");
+			elem = _document.createElement("g");
+			background = _document.createElement("path");
 
 			double dy = Math.min(40, Math.floor(h / 5));
 			String d = " M " + x + " " + (y + dy) + " C " + x + " "
@@ -799,7 +799,7 @@ public class SvgCanvas extends BasicCanvas
 			background.setAttribute("d", d + " Z");
 			elem.appendChild(background);
 
-			Element foreground = document.createElement("path");
+			Element foreground = _document.createElement("path");
 			d = "M " + x + " " + (y + dy) + " C " + x + " " + (y + 2 * dy)
 					+ " " + (x + w) + " " + (y + 2 * dy) + " " + (x + w) + " "
 					+ (y + dy);
@@ -814,7 +814,7 @@ public class SvgCanvas extends BasicCanvas
 		}
 		else
 		{
-			background = document.createElement("rect");
+			background = _document.createElement("rect");
 			elem = background;
 
 			elem.setAttribute("x", String.valueOf(x));
@@ -847,12 +847,12 @@ public class SvgCanvas extends BasicCanvas
 							Constants.ALIGN_MIDDLE);
 					int imgWidth = (int) (Utils.getInt(style,
 							Constants.STYLE_IMAGE_WIDTH,
-							Constants.DEFAULT_IMAGESIZE) * scale);
+							Constants.DEFAULT_IMAGESIZE) * _scale);
 					int imgHeight = (int) (Utils.getInt(style,
 							Constants.STYLE_IMAGE_HEIGHT,
-							Constants.DEFAULT_IMAGESIZE) * scale);
+							Constants.DEFAULT_IMAGESIZE) * _scale);
 					int spacing = (int) (Utils.getInt(style,
-							Constants.STYLE_SPACING, 2) * scale);
+							Constants.STYLE_SPACING, 2) * _scale);
 
 					Rect imageBounds = new Rect(x, y, w, h);
 
@@ -894,10 +894,10 @@ public class SvgCanvas extends BasicCanvas
 					imageBounds.setWidth(imgWidth);
 					imageBounds.setHeight(imgHeight);
 
-					elem = document.createElement("g");
+					elem = _document.createElement("g");
 					elem.appendChild(background);
 
-					Element imageElement = createImageElement(
+					Element imageElement = _createImageElement(
 							imageBounds.getX(), imageBounds.getY(),
 							imageBounds.getWidth(), imageBounds.getHeight(),
 							img, false, false, false, isEmbedded());
@@ -918,7 +918,7 @@ public class SvgCanvas extends BasicCanvas
 
 					// TODO: Mask with rectangle or rounded rectangle of label
 					// Creates glass overlay
-					Element glassOverlay = document.createElement("path");
+					Element glassOverlay = _document.createElement("path");
 
 					// LATER: Not sure what the behaviour is for mutiple SVG elements in page.
 					// Probably its possible that this points to an element in another SVG
@@ -1046,8 +1046,8 @@ public class SvgCanvas extends BasicCanvas
 	 */
 	public Element drawLine(List<Point2d> pts, Map<String, Object> style)
 	{
-		Element group = document.createElement("g");
-		Element path = document.createElement("path");
+		Element group = _document.createElement("g");
+		Element path = _document.createElement("path");
 
 		boolean rounded = Utils.isTrue(style, Constants.STYLE_ROUNDED,
 				false);
@@ -1055,7 +1055,7 @@ public class SvgCanvas extends BasicCanvas
 				Constants.STYLE_STROKECOLOR);
 		float tmpStroke = (Utils.getFloat(style,
 				Constants.STYLE_STROKEWIDTH, 1));
-		float strokeWidth = (float) (tmpStroke * scale);
+		float strokeWidth = (float) (tmpStroke * _scale);
 
 		if (strokeColor != null && strokeWidth > 0)
 		{
@@ -1133,7 +1133,7 @@ public class SvgCanvas extends BasicCanvas
 			}
 
 			// Draws the line segments
-			double arcSize = Constants.LINE_ARCSIZE * scale;
+			double arcSize = Constants.LINE_ARCSIZE * _scale;
 			pt = p0;
 			String d = "M " + pt.getX() + " " + pt.getY();
 
@@ -1215,7 +1215,7 @@ public class SvgCanvas extends BasicCanvas
 		double dy = pe.getY() - p0.getY();
 
 		double dist = Math.max(1, Math.sqrt(dx * dx + dy * dy));
-		double absSize = size * scale;
+		double absSize = size * _scale;
 		double nx = dx * absSize / dist;
 		double ny = dy * absSize / dist;
 
@@ -1226,8 +1226,8 @@ public class SvgCanvas extends BasicCanvas
 		nx *= 0.5 + strokeWidth / 2;
 		ny *= 0.5 + strokeWidth / 2;
 
-		Element path = document.createElement("path");
-		path.setAttribute("stroke-width", String.valueOf(strokeWidth * scale));
+		Element path = _document.createElement("path");
+		path.setAttribute("stroke-width", String.valueOf(strokeWidth * _scale));
 		path.setAttribute("stroke", color);
 		path.setAttribute("fill", color);
 
@@ -1310,12 +1310,12 @@ public class SvgCanvas extends BasicCanvas
 		String fontFamily = Utils.getString(style,
 				Constants.STYLE_FONTFAMILY, Constants.DEFAULT_FONTFAMILIES);
 		int fontSize = (int) (Utils.getInt(style, Constants.STYLE_FONTSIZE,
-				Constants.DEFAULT_FONTSIZE) * scale);
+				Constants.DEFAULT_FONTSIZE) * _scale);
 
 		if (text != null && text.length() > 0)
 		{
 			float strokeWidth = (float) (Utils.getFloat(style,
-					Constants.STYLE_STROKEWIDTH, 1) * scale);
+					Constants.STYLE_STROKEWIDTH, 1) * _scale);
 
 			// Applies the opacity
 			float opacity = Utils.getFloat(style,
@@ -1338,7 +1338,7 @@ public class SvgCanvas extends BasicCanvas
 
 			if (bg != null || border != null)
 			{
-				Element background = document.createElement("rect");
+				Element background = _document.createElement("rect");
 
 				background.setAttribute("x", String.valueOf(x));
 				background.setAttribute("y", String.valueOf(y));
@@ -1381,7 +1381,7 @@ public class SvgCanvas extends BasicCanvas
 				appendSvgElement(background);
 			}
 
-			elem = document.createElement("text");
+			elem = _document.createElement("text");
 
 			int fontStyle = Utils.getInt(style, Constants.STYLE_FONTSTYLE);
 			String weight = ((fontStyle & Constants.FONT_BOLD) == Constants.FONT_BOLD) ? "bold"
@@ -1424,7 +1424,7 @@ public class SvgCanvas extends BasicCanvas
 			if (align.equals(Constants.ALIGN_RIGHT))
 			{
 				anchor = "end";
-				x += w - Constants.LABEL_INSET * scale;
+				x += w - Constants.LABEL_INSET * _scale;
 			}
 			else if (align.equals(Constants.ALIGN_CENTER))
 			{
@@ -1433,19 +1433,19 @@ public class SvgCanvas extends BasicCanvas
 			}
 			else
 			{
-				x += Constants.LABEL_INSET * scale;
+				x += Constants.LABEL_INSET * _scale;
 			}
 
 			elem.setAttribute("text-anchor", anchor);
 
 			for (int i = 0; i < lines.length; i++)
 			{
-				Element tspan = document.createElement("tspan");
+				Element tspan = _document.createElement("tspan");
 
 				tspan.setAttribute("x", String.valueOf(x));
 				tspan.setAttribute("y", String.valueOf(y));
 
-				tspan.appendChild(document.createTextNode(lines[i]));
+				tspan.appendChild(_document.createTextNode(lines[i]));
 				elem.appendChild(tspan);
 
 				y += fontSize + Constants.LINESPACING;

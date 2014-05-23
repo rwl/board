@@ -41,17 +41,17 @@ public class SharedState extends EventSource
 	/**
 	 * Holds a list of diagram change listeners.
 	 */
-	protected List<DiagramChangeListener> diagramChangeListeners;
+	protected List<DiagramChangeListener> _diagramChangeListeners;
 
 	/**
 	 * Holds the initial state of the diagram.
 	 */
-	protected String state;
+	protected String _state;
 
 	/**
 	 * Holds the history of all changes of initial state.
 	 */
-	protected StringBuffer delta = new StringBuffer();
+	protected StringBuffer _delta = new StringBuffer();
 
 	/**
 	 * Constructs a new diagram with the given state.
@@ -60,7 +60,7 @@ public class SharedState extends EventSource
 	 */
 	public SharedState(String state)
 	{
-		this.state = state;
+		this._state = state;
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class SharedState extends EventSource
 	 */
 	public String getState()
 	{
-		return state;
+		return _state;
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class SharedState extends EventSource
 	 */
 	public synchronized String getDelta()
 	{
-		return delta.toString();
+		return _delta.toString();
 	}
 
 	/**
@@ -98,7 +98,7 @@ public class SharedState extends EventSource
 			{
 				if (edit.getNodeName().equals("edit"))
 				{
-					edits.append(processEdit(edit));
+					edits.append(_processEdit(edit));
 				}
 
 				edit = edit.getNextSibling();
@@ -113,7 +113,7 @@ public class SharedState extends EventSource
 	/**
 	 * 
 	 */
-	protected String processEdit(Node node)
+	protected String _processEdit(Node node)
 	{
 		return XmlUtils.getXml(node);
 	}
@@ -124,7 +124,7 @@ public class SharedState extends EventSource
 	public synchronized void addDelta(String xml)
 	{
 		// TODO: Clear delta if xml contains RootChange
-		delta.append(xml);
+		_delta.append(xml);
 	}
 
 	/**
@@ -132,7 +132,7 @@ public class SharedState extends EventSource
 	 */
 	public synchronized void resetDelta()
 	{
-		delta = new StringBuffer();
+		_delta = new StringBuffer();
 	}
 
 	/**
@@ -142,12 +142,12 @@ public class SharedState extends EventSource
 	 */
 	public void addDiagramChangeListener(DiagramChangeListener listener)
 	{
-		if (diagramChangeListeners == null)
+		if (_diagramChangeListeners == null)
 		{
-			diagramChangeListeners = new ArrayList<DiagramChangeListener>();
+			_diagramChangeListeners = new ArrayList<DiagramChangeListener>();
 		}
 
-		diagramChangeListeners.add(listener);
+		_diagramChangeListeners.add(listener);
 	}
 
 	/**
@@ -157,9 +157,9 @@ public class SharedState extends EventSource
 	 */
 	public void removeDiagramChangeListener(DiagramChangeListener listener)
 	{
-		if (diagramChangeListeners != null)
+		if (_diagramChangeListeners != null)
 		{
-			diagramChangeListeners.remove(listener);
+			_diagramChangeListeners.remove(listener);
 		}
 	}
 
@@ -171,9 +171,9 @@ public class SharedState extends EventSource
 	 */
 	void dispatchDiagramChangeEvent(Object sender, String edits)
 	{
-		if (diagramChangeListeners != null)
+		if (_diagramChangeListeners != null)
 		{
-			Iterator<DiagramChangeListener> it = diagramChangeListeners
+			Iterator<DiagramChangeListener> it = _diagramChangeListeners
 					.iterator();
 
 			while (it.hasNext())

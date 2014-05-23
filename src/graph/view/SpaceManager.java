@@ -14,42 +14,42 @@ public class SpaceManager extends EventSource
 	 * Defines the type of the source or target terminal. The type is a string
 	 * passed to Cell.is to check if the rule applies to a cell.
 	 */
-	protected Graph graph;
+	protected Graph _graph;
 
 	/**
 	 * Optional string that specifies the value of the attribute to be passed
 	 * to Cell.is to check if the rule applies to a cell.
 	 */
-	protected boolean enabled;
+	protected boolean _enabled;
 
 	/**
 	 * Optional string that specifies the attributename to be passed to
 	 * Cell.is to check if the rule applies to a cell.
 	 */
-	protected boolean shiftRightwards;
+	protected boolean _shiftRightwards;
 
 	/**
 	 * Optional string that specifies the attributename to be passed to
 	 * Cell.is to check if the rule applies to a cell.
 	 */
-	protected boolean shiftDownwards;
+	protected boolean _shiftDownwards;
 
 	/**
 	 * Optional string that specifies the attributename to be passed to
 	 * Cell.is to check if the rule applies to a cell.
 	 */
-	protected boolean extendParents;
+	protected boolean _extendParents;
 
 	/**
 	 * 
 	 */
-	protected IEventListener resizeHandler = new IEventListener()
+	protected IEventListener _resizeHandler = new IEventListener()
 	{
 		public void invoke(Object source, EventObj evt)
 		{
 			if (isEnabled())
 			{
-				cellsResized((Object[]) evt.getProperty("cells"));
+				_cellsResized((Object[]) evt.getProperty("cells"));
 			}
 		}
 	};
@@ -84,7 +84,7 @@ public class SpaceManager extends EventSource
 	 */
 	public boolean isEnabled()
 	{
-		return enabled;
+		return _enabled;
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class SpaceManager extends EventSource
 	 */
 	public void setEnabled(boolean value)
 	{
-		enabled = value;
+		_enabled = value;
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class SpaceManager extends EventSource
 	 */
 	public boolean isShiftRightwards()
 	{
-		return shiftRightwards;
+		return _shiftRightwards;
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class SpaceManager extends EventSource
 	 */
 	public void setShiftRightwards(boolean shiftRightwards)
 	{
-		this.shiftRightwards = shiftRightwards;
+		this._shiftRightwards = shiftRightwards;
 	}
 
 	/**
@@ -116,7 +116,7 @@ public class SpaceManager extends EventSource
 	 */
 	public boolean isShiftDownwards()
 	{
-		return shiftDownwards;
+		return _shiftDownwards;
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class SpaceManager extends EventSource
 	 */
 	public void setShiftDownwards(boolean shiftDownwards)
 	{
-		this.shiftDownwards = shiftDownwards;
+		this._shiftDownwards = shiftDownwards;
 	}
 
 	/**
@@ -132,7 +132,7 @@ public class SpaceManager extends EventSource
 	 */
 	public boolean isExtendParents()
 	{
-		return extendParents;
+		return _extendParents;
 	}
 
 	/**
@@ -140,7 +140,7 @@ public class SpaceManager extends EventSource
 	 */
 	public void setExtendParents(boolean extendParents)
 	{
-		this.extendParents = extendParents;
+		this._extendParents = extendParents;
 	}
 
 	/**
@@ -148,7 +148,7 @@ public class SpaceManager extends EventSource
 	 */
 	public Graph getGraph()
 	{
-		return graph;
+		return _graph;
 	}
 
 	/**
@@ -156,24 +156,24 @@ public class SpaceManager extends EventSource
 	 */
 	public void setGraph(Graph graph)
 	{
-		if (this.graph != null)
+		if (this._graph != null)
 		{
-			this.graph.removeListener(resizeHandler);
+			this._graph.removeListener(_resizeHandler);
 		}
 
-		this.graph = graph;
+		this._graph = graph;
 
-		if (this.graph != null)
+		if (this._graph != null)
 		{
-			this.graph.addListener(Event.RESIZE_CELLS, resizeHandler);
-			this.graph.addListener(Event.FOLD_CELLS, resizeHandler);
+			this._graph.addListener(Event.RESIZE_CELLS, _resizeHandler);
+			this._graph.addListener(Event.FOLD_CELLS, _resizeHandler);
 		}
 	}
 
 	/**
 	 * 
 	 */
-	protected void cellsResized(Object[] cells)
+	protected void _cellsResized(Object[] cells)
 	{
 		if (cells != null)
 		{
@@ -186,7 +186,7 @@ public class SpaceManager extends EventSource
 				{
 					if (!isCellIgnored(cells[i]))
 					{
-						cellResized(cells[i]);
+						_cellResized(cells[i]);
 						break;
 					}
 				}
@@ -201,7 +201,7 @@ public class SpaceManager extends EventSource
 	/**
 	 * 
 	 */
-	protected void cellResized(Object cell)
+	protected void _cellResized(Object cell)
 	{
 		Graph graph = getGraph();
 		GraphView view = graph.getView();
@@ -212,7 +212,7 @@ public class SpaceManager extends EventSource
 
 		if (state != null && pstate != null)
 		{
-			Object[] cells = getCellsToShift(state);
+			Object[] cells = _getCellsToShift(state);
 			Geometry geo = model.getGeometry(cell);
 
 			if (cells != null && geo != null)
@@ -242,7 +242,7 @@ public class SpaceManager extends EventSource
 					{
 						if (cells[i] != cell && isCellShiftable(cells[i]))
 						{
-							shiftCell(cells[i], dx, dy, x0, y0, right, bottom,
+							_shiftCell(cells[i], dx, dy, x0, y0, right, bottom,
 									fx, fy, isExtendParents()
 											&& graph.isExtendParent(cells[i]));
 						}
@@ -259,7 +259,7 @@ public class SpaceManager extends EventSource
 	/**
 	 * 
 	 */
-	protected void shiftCell(Object cell, double dx, double dy, double x0,
+	protected void _shiftCell(Object cell, double dx, double dy, double x0,
 			double y0, double right, double bottom, double fx, double fy,
 			boolean extendParent)
 	{
@@ -329,7 +329,7 @@ public class SpaceManager extends EventSource
 	/**
 	 * 
 	 */
-	protected Object[] getCellsToShift(CellState state)
+	protected Object[] _getCellsToShift(CellState state)
 	{
 		Graph graph = this.getGraph();
 		Object parent = graph.getModel().getParent(state.getCell());

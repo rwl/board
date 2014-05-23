@@ -28,28 +28,28 @@ public class KeyboardHandler
 	 */
 	public KeyboardHandler(GraphComponent graphComponent)
 	{
-		installKeyboardActions(graphComponent);
+		_installKeyboardActions(graphComponent);
 	}
 
 	/**
 	 * Invoked as part from the boilerplate install block.
 	 */
-	protected void installKeyboardActions(GraphComponent graphComponent)
+	protected void _installKeyboardActions(GraphComponent graphComponent)
 	{
-		InputMap inputMap = getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+		InputMap inputMap = _getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 		SwingUtilities.replaceUIInputMap(graphComponent,
 				JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT, inputMap);
 
-		inputMap = getInputMap(JComponent.WHEN_FOCUSED);
+		inputMap = _getInputMap(JComponent.WHEN_FOCUSED);
 		SwingUtilities.replaceUIInputMap(graphComponent,
 				JComponent.WHEN_FOCUSED, inputMap);
-		SwingUtilities.replaceUIActionMap(graphComponent, createActionMap());
+		SwingUtilities.replaceUIActionMap(graphComponent, _createActionMap());
 	}
 
 	/**
 	 * Return JTree's input map.
 	 */
-	protected InputMap getInputMap(int condition)
+	protected InputMap _getInputMap(int condition)
 	{
 		InputMap map = null;
 
@@ -92,7 +92,7 @@ public class KeyboardHandler
 	/**
 	 * Return the mapping between JTree's input map and JGraph's actions.
 	 */
-	protected ActionMap createActionMap()
+	protected ActionMap _createActionMap()
 	{
 		ActionMap map = (ActionMap) UIManager.get("ScrollPane.actionMap");
 

@@ -50,51 +50,51 @@ public class RotationHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	private static double PI4 = Math.PI / 4;
+	private static double _PI4 = Math.PI / 4;
 
 	/**
 	 * Reference to the enclosing graph component.
 	 */
-	protected GraphComponent graphComponent;
+	protected GraphComponent _graphComponent;
 
 	/**
 	 * Specifies if this handler is enabled. Default is true.
 	 */
-	protected boolean enabled = true;
+	protected boolean _enabled = true;
 
 	/**
 	 * 
 	 */
-	protected JComponent handle;
+	protected JComponent _handle;
 
 	/**
 	 * 
 	 */
-	protected CellState currentState;
+	protected CellState _currentState;
 
 	/**
 	 * 
 	 */
-	protected double initialAngle;
+	protected double _initialAngle;
 
 	/**
 	 * 
 	 */
-	protected double currentAngle;
+	protected double _currentAngle;
 
 	/**
 	 * 
 	 */
-	protected Point first;
+	protected Point _first;
 
 	/**
 	 * Constructs a new rotation handler.
 	 */
 	public RotationHandler(GraphComponent graphComponent)
 	{
-		this.graphComponent = graphComponent;
+		this._graphComponent = graphComponent;
 		graphComponent.addMouseListener(this);
-		handle = createHandle();
+		_handle = _createHandle();
 
 		// Installs the paint handler
 		graphComponent.addListener(Event.AFTER_PAINT, new IEventListener()
@@ -111,8 +111,8 @@ public class RotationHandler extends MouseAdapter
 		graphComponent.getGraphControl().addMouseMotionListener(this);
 
 		// Needs to catch events because these are consumed
-		handle.addMouseListener(this);
-		handle.addMouseMotionListener(this);
+		_handle.addMouseListener(this);
+		_handle.addMouseMotionListener(this);
 	}
 
 	/**
@@ -120,7 +120,7 @@ public class RotationHandler extends MouseAdapter
 	 */
 	public GraphComponent getGraphComponent()
 	{
-		return graphComponent;
+		return _graphComponent;
 	}
 
 	/**
@@ -128,7 +128,7 @@ public class RotationHandler extends MouseAdapter
 	 */
 	public boolean isEnabled()
 	{
-		return enabled;
+		return _enabled;
 	}
 
 	/**
@@ -136,13 +136,13 @@ public class RotationHandler extends MouseAdapter
 	 */
 	public void setEnabled(boolean value)
 	{
-		enabled = value;
+		_enabled = value;
 	}
 
 	/**
 	 * 
 	 */
-	protected JComponent createHandle()
+	protected JComponent _createHandle()
 	{
 		JLabel label = new JLabel(ROTATE_ICON);
 		label.setSize(ROTATE_ICON.getIconWidth(), ROTATE_ICON.getIconHeight());
@@ -156,7 +156,7 @@ public class RotationHandler extends MouseAdapter
 	 */
 	public boolean isStateHandled(CellState state)
 	{
-		return graphComponent.getGraph().getModel().isVertex(state.getCell());
+		return _graphComponent.getGraph().getModel().isVertex(state.getCell());
 	}
 
 	/**
@@ -164,8 +164,8 @@ public class RotationHandler extends MouseAdapter
 	 */
 	public void mousePressed(MouseEvent e)
 	{
-		if (currentState != null && handle.getParent() != null
-				&& e.getSource() == handle /* mouse hits handle */)
+		if (_currentState != null && _handle.getParent() != null
+				&& e.getSource() == _handle /* mouse hits handle */)
 		{
 			start(e);
 			e.consume();
@@ -177,15 +177,15 @@ public class RotationHandler extends MouseAdapter
 	 */
 	public void start(MouseEvent e)
 	{
-		initialAngle = Utils.getDouble(currentState.getStyle(),
+		_initialAngle = Utils.getDouble(_currentState.getStyle(),
 				Constants.STYLE_ROTATION) * Constants.RAD_PER_DEG;
-		currentAngle = initialAngle;
-		first = SwingUtilities.convertPoint(e.getComponent(), e.getPoint(),
-				graphComponent.getGraphControl());
+		_currentAngle = _initialAngle;
+		_first = SwingUtilities.convertPoint(e.getComponent(), e.getPoint(),
+				_graphComponent.getGraphControl());
 
-		if (!graphComponent.getGraph().isCellSelected(currentState.getCell()))
+		if (!_graphComponent.getGraph().isCellSelected(_currentState.getCell()))
 		{
-			graphComponent.selectCellForEvent(currentState.getCell(), e);
+			_graphComponent.selectCellForEvent(_currentState.getCell(), e);
 		}
 	}
 
@@ -194,22 +194,22 @@ public class RotationHandler extends MouseAdapter
 	 */
 	public void mouseMoved(MouseEvent e)
 	{
-		if (graphComponent.isEnabled() && isEnabled())
+		if (_graphComponent.isEnabled() && isEnabled())
 		{
-			if (handle.getParent() != null && e.getSource() == handle /* mouse hits handle */)
+			if (_handle.getParent() != null && e.getSource() == _handle /* mouse hits handle */)
 			{
-				graphComponent.getGraphControl().setCursor(
+				_graphComponent.getGraphControl().setCursor(
 						new Cursor(Cursor.HAND_CURSOR));
 				e.consume();
 			}
-			else if (currentState == null
-					|| !currentState.getRectangle().contains(e.getPoint()))
+			else if (_currentState == null
+					|| !_currentState.getRectangle().contains(e.getPoint()))
 			{
-				CellState eventState = graphComponent
+				CellState eventState = _graphComponent
 						.getGraph()
 						.getView()
 						.getState(
-								graphComponent.getCellAt(e.getX(), e.getY(),
+								_graphComponent.getCellAt(e.getX(), e.getY(),
 										false));
 
 				CellState state = null;
@@ -219,31 +219,31 @@ public class RotationHandler extends MouseAdapter
 					state = eventState;
 				}
 
-				if (currentState != state)
+				if (_currentState != state)
 				{
-					currentState = state;
+					_currentState = state;
 
-					if (currentState == null && handle.getParent() != null)
+					if (_currentState == null && _handle.getParent() != null)
 					{
-						handle.setVisible(false);
-						handle.getParent().remove(handle);
+						_handle.setVisible(false);
+						_handle.getParent().remove(_handle);
 					}
-					else if (currentState != null)
+					else if (_currentState != null)
 					{
-						if (handle.getParent() == null)
+						if (_handle.getParent() == null)
 						{
 							// Adds component for rendering the handles (preview is separate)
-							graphComponent.getGraphControl().add(handle, 0);
-							handle.setVisible(true);
+							_graphComponent.getGraphControl().add(_handle, 0);
+							_handle.setVisible(true);
 						}
 
-						handle.setLocation(
-								(int) (currentState.getX()
-										+ currentState.getWidth()
-										- handle.getWidth() - 4),
-								(int) (currentState.getY()
-										+ currentState.getHeight()
-										- handle.getWidth() - 4));
+						_handle.setLocation(
+								(int) (_currentState.getX()
+										+ _currentState.getWidth()
+										- _handle.getWidth() - 4),
+								(int) (_currentState.getY()
+										+ _currentState.getHeight()
+										- _handle.getWidth() - 4));
 					}
 				}
 			}
@@ -255,34 +255,34 @@ public class RotationHandler extends MouseAdapter
 	 */
 	public void mouseDragged(MouseEvent e)
 	{
-		if (graphComponent.isEnabled() && isEnabled() && !e.isConsumed()
-				&& first != null)
+		if (_graphComponent.isEnabled() && isEnabled() && !e.isConsumed()
+				&& _first != null)
 		{
-			Rect dirty = Utils.getBoundingBox(currentState,
-					currentAngle * Constants.DEG_PER_RAD);
+			Rect dirty = Utils.getBoundingBox(_currentState,
+					_currentAngle * Constants.DEG_PER_RAD);
 			Point pt = SwingUtilities.convertPoint(e.getComponent(),
-					e.getPoint(), graphComponent.getGraphControl());
+					e.getPoint(), _graphComponent.getGraphControl());
 
-			double cx = currentState.getCenterX();
-			double cy = currentState.getCenterY();
+			double cx = _currentState.getCenterX();
+			double cy = _currentState.getCenterY();
 			double dx = pt.getX() - cx;
 			double dy = pt.getY() - cy;
 			double c = Math.sqrt(dx * dx + dy * dy);
 
-			currentAngle = ((pt.getX() > cx) ? -1 : 1) * Math.acos(dy / c)
-					+ PI4 + initialAngle;
+			_currentAngle = ((pt.getX() > cx) ? -1 : 1) * Math.acos(dy / c)
+					+ _PI4 + _initialAngle;
 
-			dirty.add(Utils.getBoundingBox(currentState, currentAngle
+			dirty.add(Utils.getBoundingBox(_currentState, _currentAngle
 					* Constants.DEG_PER_RAD));
 			dirty.grow(1);
 
 			// TODO: Compute dirty rectangle and repaint
-			graphComponent.getGraphControl().repaint(dirty.getRectangle());
+			_graphComponent.getGraphControl().repaint(dirty.getRectangle());
 			e.consume();
 		}
-		else if (handle.getParent() != null)
+		else if (_handle.getParent() != null)
 		{
-			handle.getParent().remove(handle);
+			_handle.getParent().remove(_handle);
 		}
 	}
 
@@ -291,40 +291,40 @@ public class RotationHandler extends MouseAdapter
 	 */
 	public void mouseReleased(MouseEvent e)
 	{
-		if (graphComponent.isEnabled() && isEnabled() && !e.isConsumed()
-				&& first != null)
+		if (_graphComponent.isEnabled() && isEnabled() && !e.isConsumed()
+				&& _first != null)
 		{
 			double deg = 0;
 			Object cell = null;
 
-			if (currentState != null)
+			if (_currentState != null)
 			{
-				cell = currentState.getCell();
+				cell = _currentState.getCell();
 				/*deg = Utils.getDouble(currentState.getStyle(),
 						Constants.STYLE_ROTATION);*/
 			}
 
-			deg += currentAngle * Constants.DEG_PER_RAD;
-			boolean willExecute = cell != null && first != null;
+			deg += _currentAngle * Constants.DEG_PER_RAD;
+			boolean willExecute = cell != null && _first != null;
 
 			// TODO: Call reset before execute in all handlers that
 			// offer an execute method
 			reset();
 
-			if (graphComponent.isEnabled() && isEnabled() && !e.isConsumed()
+			if (_graphComponent.isEnabled() && isEnabled() && !e.isConsumed()
 					&& willExecute)
 			{
-				graphComponent.getGraph().setCellStyles(
+				_graphComponent.getGraph().setCellStyles(
 						Constants.STYLE_ROTATION, String.valueOf(deg),
 						new Object[] { cell });
 
-				graphComponent.getGraphControl().repaint();
+				_graphComponent.getGraphControl().repaint();
 
 				e.consume();
 			}
 		}
 
-		currentState = null;
+		_currentState = null;
 	}
 
 	/**
@@ -332,27 +332,27 @@ public class RotationHandler extends MouseAdapter
 	 */
 	public void reset()
 	{
-		if (handle.getParent() != null)
+		if (_handle.getParent() != null)
 		{
-			handle.getParent().remove(handle);
+			_handle.getParent().remove(_handle);
 		}
 
 		Rect dirty = null;
 
-		if (currentState != null && first != null)
+		if (_currentState != null && _first != null)
 		{
-			dirty = Utils.getBoundingBox(currentState, currentAngle
+			dirty = Utils.getBoundingBox(_currentState, _currentAngle
 					* Constants.DEG_PER_RAD);
 			dirty.grow(1);
 		}
 
-		currentState = null;
-		currentAngle = 0;
-		first = null;
+		_currentState = null;
+		_currentAngle = 0;
+		_first = null;
 
 		if (dirty != null)
 		{
-			graphComponent.getGraphControl().repaint(dirty.getRectangle());
+			_graphComponent.getGraphControl().repaint(dirty.getRectangle());
 		}
 	}
 
@@ -361,15 +361,15 @@ public class RotationHandler extends MouseAdapter
 	 */
 	public void paint(Graphics g)
 	{
-		if (currentState != null && first != null)
+		if (_currentState != null && _first != null)
 		{
-			Rectangle rect = currentState.getRectangle();
-			double deg = currentAngle * Constants.DEG_PER_RAD;
+			Rectangle rect = _currentState.getRectangle();
+			double deg = _currentAngle * Constants.DEG_PER_RAD;
 
 			if (deg != 0)
 			{
 				((Graphics2D) g).rotate(Math.toRadians(deg),
-						currentState.getCenterX(), currentState.getCenterY());
+						_currentState.getCenterX(), _currentState.getCenterY());
 			}
 
 			Utils.setAntiAlias((Graphics2D) g, true, false);

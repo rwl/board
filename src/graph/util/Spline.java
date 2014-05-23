@@ -13,16 +13,16 @@ public class Spline
 	 *	of each point in the line ( i.e. first point is 0.0, end point is
 	 *	1.0, a point halfway on line is 0.5 ).
 	 */
-	private double[] t;
+	private double[] _t;
 
-	private Spline1D splineX;
+	private Spline1D _splineX;
 
-	private Spline1D splineY;
+	private Spline1D _splineY;
 
 	/**
 	 * Total length tracing the points on the spline
 	 */
-	private double length;
+	private double _length;
 
 	public Spline(List<Point2d> points)
 	{
@@ -38,7 +38,7 @@ public class Spline
 				y[i++] = point.getY();
 			}
 
-			init(x, y);
+			_init(x, y);
 		}
 	}
 
@@ -49,10 +49,10 @@ public class Spline
 	 */
 	public void Spline2D(double[] x, double[] y)
 	{
-		init(x, y);
+		_init(x, y);
 	}
 
-	protected void init(double[] x, double[] y)
+	protected void _init(double[] x, double[] y)
 	{
 		if (x.length != y.length)
 		{
@@ -68,13 +68,13 @@ public class Spline
 			return;
 		}
 
-		t = new double[x.length];
-		t[0] = 0.0; // start point is always 0.0
-		length = 0.0;
+		_t = new double[x.length];
+		_t[0] = 0.0; // start point is always 0.0
+		_length = 0.0;
 
 		// Calculate the partial proportions of each section between each set
 		// of points and the total length of sum of all sections
-		for (int i = 1; i < t.length; i++)
+		for (int i = 1; i < _t.length; i++)
 		{
 			double lx = x[i] - x[i - 1];
 			double ly = y[i] - y[i - 1];
@@ -82,30 +82,30 @@ public class Spline
 			// If either diff is zero there is no point performing the square root
 			if (0.0 == lx)
 			{
-				t[i] = Math.abs(ly);
+				_t[i] = Math.abs(ly);
 			}
 			else if (0.0 == ly)
 			{
-				t[i] = Math.abs(lx);
+				_t[i] = Math.abs(lx);
 			}
 			else
 			{
-				t[i] = Math.sqrt(lx * lx + ly * ly);
+				_t[i] = Math.sqrt(lx * lx + ly * ly);
 			}
 
-			length += t[i];
-			t[i] += t[i - 1];
+			_length += _t[i];
+			_t[i] += _t[i - 1];
 		}
 
-		for (int j = 1; j < (t.length) - 1; j++)
+		for (int j = 1; j < (_t.length) - 1; j++)
 		{
-			t[j] = t[j] / length;
+			_t[j] = _t[j] / _length;
 		}
 
-		t[(t.length) - 1] = 1.0; // end point is always 1.0
+		_t[(_t.length) - 1] = 1.0; // end point is always 1.0
 
-		splineX = new Spline1D(t, x);
-		splineY = new Spline1D(t, y);
+		_splineX = new Spline1D(_t, x);
+		_splineY = new Spline1D(_t, y);
 	}
 
 	/**
@@ -113,7 +113,7 @@ public class Spline
 	 */
 	public Point2d getPoint(double t)
 	{
-		Point2d result = new Point2d(splineX.getValue(t), splineY.getValue(t));
+		Point2d result = new Point2d(_splineX.getValue(t), _splineY.getValue(t));
 
 		return result;
 	}
@@ -123,31 +123,31 @@ public class Spline
 	 */
 	public boolean checkValues()
 	{
-		return (splineX.len.length > 1 && splineY.len.length > 1);
+		return (_splineX._len.length > 1 && _splineY._len.length > 1);
 	}
 
 	public double getDx(double t)
 	{
-		return splineX.getDx(t);
+		return _splineX.getDx(t);
 	}
 
 	public double getDy(double t)
 	{
-		return splineY.getDx(t);
+		return _splineY.getDx(t);
 	}
 
 	public Spline1D getSplineX()
 	{
-		return splineX;
+		return _splineX;
 	}
 
 	public Spline1D getSplineY()
 	{
-		return splineY;
+		return _splineY;
 	}
 
 	public double getLength()
 	{
-		return length;
+		return _length;
 	}
 }

@@ -5,7 +5,7 @@
 package graph.swing.handler;
 
 import graph.swing.GraphComponent;
-import graph.swing.GraphComponent.GraphControl;
+import graph.swing.GraphControl;
 import graph.swing.util.SwingConstants;
 import graph.util.Event;
 import graph.util.EventObj;
@@ -32,33 +32,33 @@ public class Rubberband implements MouseListener, MouseMotionListener
 	 * Defines the border color for drawing the rubberband selection.
 	 * Default is Constants.RUBBERBAND_BORDERCOLOR.
 	 */
-	protected Color borderColor = SwingConstants.RUBBERBAND_BORDERCOLOR;
+	protected Color _borderColor = SwingConstants.RUBBERBAND_BORDERCOLOR;
 
 	/**
 	 * Defines the color to be used for filling the rubberband selection.
 	 * Default is Constants.RUBBERBAND_FILLCOLOR.
 	 */
-	protected Color fillColor = SwingConstants.RUBBERBAND_FILLCOLOR;
+	protected Color _fillColor = SwingConstants.RUBBERBAND_FILLCOLOR;
 
 	/**
 	 * Reference to the enclosing graph container.
 	 */
-	protected GraphComponent graphComponent;
+	protected GraphComponent _graphComponent;
 
 	/**
 	 * Specifies if the rubberband is enabled.
 	 */
-	protected boolean enabled = true;
+	protected boolean _enabled = true;
 
 	/**
 	 * Holds the point where the selection has started.
 	 */
-	protected transient Point first;
+	protected transient Point _first;
 
 	/**
 	 * Holds the current rubberband bounds.
 	 */
-	protected transient Rectangle bounds;
+	protected transient Rectangle _bounds;
 
 	/**
 	 * Constructs a new rubberband selection for the given graph component.
@@ -67,7 +67,7 @@ public class Rubberband implements MouseListener, MouseMotionListener
 	 */
 	public Rubberband(final GraphComponent graphComponent)
 	{
-		this.graphComponent = graphComponent;
+		this._graphComponent = graphComponent;
 
 		// Adds the required listeners
 		graphComponent.getGraphControl().addMouseListener(this);
@@ -109,7 +109,7 @@ public class Rubberband implements MouseListener, MouseMotionListener
 	 */
 	public boolean isEnabled()
 	{
-		return enabled;
+		return _enabled;
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class Rubberband implements MouseListener, MouseMotionListener
 	 */
 	public void setEnabled(boolean enabled)
 	{
-		this.enabled = enabled;
+		this._enabled = enabled;
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class Rubberband implements MouseListener, MouseMotionListener
 	 */
 	public Color getBorderColor()
 	{
-		return borderColor;
+		return _borderColor;
 	}
 
 	/**
@@ -133,7 +133,7 @@ public class Rubberband implements MouseListener, MouseMotionListener
 	 */
 	public void setBorderColor(Color value)
 	{
-		borderColor = value;
+		_borderColor = value;
 	}
 
 	/**
@@ -141,7 +141,7 @@ public class Rubberband implements MouseListener, MouseMotionListener
 	 */
 	public Color getFillColor()
 	{
-		return fillColor;
+		return _fillColor;
 	}
 
 	/**
@@ -149,7 +149,7 @@ public class Rubberband implements MouseListener, MouseMotionListener
 	 */
 	public void setFillColor(Color value)
 	{
-		fillColor = value;
+		_fillColor = value;
 	}
 
 	/**
@@ -165,8 +165,8 @@ public class Rubberband implements MouseListener, MouseMotionListener
 	 */
 	public void start(Point point)
 	{
-		first = point;
-		bounds = new Rectangle(first);
+		_first = point;
+		_bounds = new Rectangle(_first);
 	}
 
 	/**
@@ -174,12 +174,12 @@ public class Rubberband implements MouseListener, MouseMotionListener
 	 */
 	public void reset()
 	{
-		first = null;
+		_first = null;
 
-		if (bounds != null)
+		if (_bounds != null)
 		{
-			graphComponent.getGraphControl().repaint(bounds);
-			bounds = null;
+			_graphComponent.getGraphControl().repaint(_bounds);
+			_bounds = null;
 		}
 	}
 
@@ -190,7 +190,7 @@ public class Rubberband implements MouseListener, MouseMotionListener
 	 */
 	public Object[] select(Rectangle rect, MouseEvent e)
 	{
-		return graphComponent.selectRegion(rect, e);
+		return _graphComponent.selectRegion(rect, e);
 	}
 
 	/**
@@ -198,13 +198,13 @@ public class Rubberband implements MouseListener, MouseMotionListener
 	 */
 	public void paintRubberband(Graphics g)
 	{
-		if (first != null && bounds != null
-				&& graphComponent.isSignificant(bounds.width, bounds.height))
+		if (_first != null && _bounds != null
+				&& _graphComponent.isSignificant(_bounds.width, _bounds.height))
 		{
-			Rectangle rect = new Rectangle(bounds);
-			g.setColor(fillColor);
+			Rectangle rect = new Rectangle(_bounds);
+			g.setColor(_fillColor);
 			Utils.fillClippedRect(g, rect.x, rect.y, rect.width, rect.height);
-			g.setColor(borderColor);
+			g.setColor(_borderColor);
 			rect.width -= 1;
 			rect.height -= 1;
 			g.drawRect(rect.x, rect.y, rect.width, rect.height);
@@ -229,58 +229,58 @@ public class Rubberband implements MouseListener, MouseMotionListener
 	 */
 	public void mouseDragged(MouseEvent e)
 	{
-		if (!e.isConsumed() && first != null)
+		if (!e.isConsumed() && _first != null)
 		{
-			Rectangle oldBounds = new Rectangle(bounds);
-			bounds = new Rectangle(first);
-			bounds.add(e.getPoint());
+			Rectangle oldBounds = new Rectangle(_bounds);
+			_bounds = new Rectangle(_first);
+			_bounds.add(e.getPoint());
 
-			if (graphComponent.isSignificant(bounds.width, bounds.height))
+			if (_graphComponent.isSignificant(_bounds.width, _bounds.height))
 			{
-				GraphControl control = graphComponent.getGraphControl();
+				GraphControl control = _graphComponent.getGraphControl();
 
 				// Repaints exact difference between old and new bounds
 				Rectangle union = new Rectangle(oldBounds);
-				union.add(bounds);
+				union.add(_bounds);
 
-				if (bounds.x != oldBounds.x)
+				if (_bounds.x != oldBounds.x)
 				{
-					int maxleft = Math.max(bounds.x, oldBounds.x);
+					int maxleft = Math.max(_bounds.x, oldBounds.x);
 					Rectangle tmp = new Rectangle(union.x - 1, union.y, maxleft
 							- union.x + 2, union.height);
 					control.repaint(tmp);
 				}
 
-				if (bounds.x + bounds.width != oldBounds.x + oldBounds.width)
+				if (_bounds.x + _bounds.width != oldBounds.x + oldBounds.width)
 				{
-					int minright = Math.min(bounds.x + bounds.width,
+					int minright = Math.min(_bounds.x + _bounds.width,
 							oldBounds.x + oldBounds.width);
 					Rectangle tmp = new Rectangle(minright - 1, union.y,
 							union.x + union.width - minright + 1, union.height);
 					control.repaint(tmp);
 				}
 
-				if (bounds.y != oldBounds.y)
+				if (_bounds.y != oldBounds.y)
 				{
-					int maxtop = Math.max(bounds.y, oldBounds.y);
+					int maxtop = Math.max(_bounds.y, oldBounds.y);
 					Rectangle tmp = new Rectangle(union.x, union.y - 1,
 							union.width, maxtop - union.y + 2);
 					control.repaint(tmp);
 				}
 
-				if (bounds.y + bounds.height != oldBounds.y + oldBounds.height)
+				if (_bounds.y + _bounds.height != oldBounds.y + oldBounds.height)
 				{
-					int minbottom = Math.min(bounds.y + bounds.height,
+					int minbottom = Math.min(_bounds.y + _bounds.height,
 							oldBounds.y + oldBounds.height);
 					Rectangle tmp = new Rectangle(union.x, minbottom - 1,
 							union.width, union.y + union.height - minbottom + 1);
 					control.repaint(tmp);
 				}
 
-				if (!graphComponent.isToggleEvent(e)
-						&& !graphComponent.getGraph().isSelectionEmpty())
+				if (!_graphComponent.isToggleEvent(e)
+						&& !_graphComponent.getGraph().isSelectionEmpty())
 				{
-					graphComponent.getGraph().clearSelection();
+					_graphComponent.getGraph().clearSelection();
 				}
 			}
 
@@ -293,11 +293,11 @@ public class Rubberband implements MouseListener, MouseMotionListener
 	 */
 	public void mouseReleased(MouseEvent e)
 	{
-		Rectangle rect = bounds;
+		Rectangle rect = _bounds;
 		reset();
 
 		if (!e.isConsumed() && rect != null
-				&& graphComponent.isSignificant(rect.width, rect.height))
+				&& _graphComponent.isSignificant(rect.width, rect.height))
 		{
 			select(rect, e);
 			e.consume();

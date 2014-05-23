@@ -10,11 +10,9 @@ import graph.util.Point2d;
 import graph.util.Rect;
 import graph.util.Utils;
 import graph.util.EventSource.IEventListener;
-import graph.view.GraphView;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -26,14 +24,10 @@ import java.awt.event.AdjustmentListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JComponent;
-import javax.swing.JScrollBar;
 
 /**
  * An outline view for a specific graph component.
@@ -54,73 +48,73 @@ public class GraphOutline extends JComponent
 	/**
 	 * 
 	 */
-	protected GraphComponent graphComponent;
+	protected GraphComponent _graphComponent;
 
 	/**
 	 * TODO: Not yet implemented.
 	 */
-	protected BufferedImage tripleBuffer;
+	protected BufferedImage _tripleBuffer;
 
 	/**
 	 * Holds the graphics of the triple buffer.
 	 */
-	protected Graphics2D tripleBufferGraphics;
+	protected Graphics2D _tripleBufferGraphics;
 
 	/**
 	 * True if the triple buffer needs a full repaint.
 	 */
-	protected boolean repaintBuffer = false;
+	protected boolean _repaintBuffer = false;
 
 	/**
 	 * Clip of the triple buffer to be repainted.
 	 */
-	protected Rect repaintClip = null;
+	protected Rect _repaintClip = null;
 
 	/**
 	 * 
 	 */
-	protected boolean tripleBuffered = true;
+	protected boolean _tripleBuffered = true;
 
 	/**
 	 * 
 	 */
-	protected Rectangle finderBounds = new Rectangle();
+	protected Rectangle _finderBounds = new Rectangle();
 
 	/**
 	 * 
 	 */
-	protected Point zoomHandleLocation = null;
+	protected Point _zoomHandleLocation = null;
 
 	/**
 	 * 
 	 */
-	protected boolean finderVisible = true;
+	protected boolean _finderVisible = true;
 
 	/**
 	 * 
 	 */
-	protected boolean zoomHandleVisible = true;
+	protected boolean _zoomHandleVisible = true;
 
 	/**
 	 * 
 	 */
-	protected boolean useScaledInstance = false;
+	protected boolean _useScaledInstance = false;
 
 	/**
 	 * 
 	 */
-	protected boolean antiAlias = false;
+	protected boolean _antiAlias = false;
 
 	/**
 	 * 
 	 */
-	protected boolean drawLabels = false;
+	protected boolean _drawLabels = false;
 
 	/**
 	 * Specifies if the outline should be zoomed to the page if the graph
 	 * component is in page layout mode. Default is true.
 	 */
-	protected boolean fitPage = true;
+	protected boolean _fitPage = true;
 
 	/**
 	 * Not yet implemented.
@@ -128,32 +122,32 @@ public class GraphOutline extends JComponent
 	 * Border to add around the page bounds if wholePage is true.
 	 * Default is 4.
 	 */
-	protected int outlineBorder = 10;
+	protected int _outlineBorder = 10;
 
 	/**
 	 * 
 	 */
-	protected MouseTracker tracker = new MouseTracker();
+	protected MouseTracker _tracker = new MouseTracker(this);
 
 	/**
 	 * 
 	 */
-	protected double scale = 1;
+	protected double _scale = 1;
 
 	/**
 	 * 
 	 */
-	protected Point translate = new Point();
+	protected Point _translate = new Point();
 
 	/**
 	 * 
 	 */
-	protected transient boolean zoomGesture = false;
+	protected transient boolean _zoomGesture = false;
 
 	/**
 	 * 
 	 */
-	protected IEventListener repaintHandler = new IEventListener()
+	protected IEventListener _repaintHandler = new IEventListener()
 	{
 		public void invoke(Object source, EventObj evt)
 		{
@@ -162,23 +156,23 @@ public class GraphOutline extends JComponent
 
 			if (dirty != null)
 			{
-				repaintClip = new Rect(dirty);
+				_repaintClip = new Rect(dirty);
 			}
 			else
 			{
-				repaintBuffer = true;
+				_repaintBuffer = true;
 			}
 
 			if (dirty != null)
 			{
 				updateFinder(true);
 
-				dirty.grow(1 / scale);
+				dirty.grow(1 / _scale);
 
-				dirty.setX(dirty.getX() * scale + translate.x);
-				dirty.setY(dirty.getY() * scale + translate.y);
-				dirty.setWidth(dirty.getWidth() * scale);
-				dirty.setHeight(dirty.getHeight() * scale);
+				dirty.setX(dirty.getX() * _scale + _translate.x);
+				dirty.setY(dirty.getY() * _scale + _translate.y);
+				dirty.setWidth(dirty.getWidth() * _scale);
+				dirty.setHeight(dirty.getHeight() * _scale);
 
 				repaint(dirty.getRectangle());
 			}
@@ -193,13 +187,13 @@ public class GraphOutline extends JComponent
 	/**
 	 * 
 	 */
-	protected ComponentListener componentHandler = new ComponentAdapter()
+	protected ComponentListener _componentHandler = new ComponentAdapter()
 	{
 		public void componentResized(ComponentEvent e)
 		{
 			if (updateScaleAndTranslate())
 			{
-				repaintBuffer = true;
+				_repaintBuffer = true;
 				updateFinder(false);
 				repaint();
 			}
@@ -213,7 +207,7 @@ public class GraphOutline extends JComponent
 	/**
 	 * 
 	 */
-	protected AdjustmentListener adjustmentHandler = new AdjustmentListener()
+	protected AdjustmentListener _adjustmentHandler = new AdjustmentListener()
 	{
 
 		/**
@@ -223,7 +217,7 @@ public class GraphOutline extends JComponent
 		{
 			if (updateScaleAndTranslate())
 			{
-				repaintBuffer = true;
+				_repaintBuffer = true;
 				updateFinder(false);
 				repaint();
 			}
@@ -240,9 +234,9 @@ public class GraphOutline extends JComponent
 	 */
 	public GraphOutline(GraphComponent graphComponent)
 	{
-		addComponentListener(componentHandler);
-		addMouseMotionListener(tracker);
-		addMouseListener(tracker);
+		addComponentListener(_componentHandler);
+		addMouseMotionListener(_tracker);
+		addMouseListener(_tracker);
 		setGraphComponent(graphComponent);
 		setEnabled(true);
 		setOpaque(true);
@@ -255,8 +249,8 @@ public class GraphOutline extends JComponent
 	 */
 	public void setTripleBuffered(boolean tripleBuffered)
 	{
-		boolean oldValue = this.tripleBuffered;
-		this.tripleBuffered = tripleBuffered;
+		boolean oldValue = this._tripleBuffered;
+		this._tripleBuffered = tripleBuffered;
 
 		if (!tripleBuffered)
 		{
@@ -271,7 +265,7 @@ public class GraphOutline extends JComponent
 	 */
 	public boolean isTripleBuffered()
 	{
-		return tripleBuffered;
+		return _tripleBuffered;
 	}
 
 	/**
@@ -281,8 +275,8 @@ public class GraphOutline extends JComponent
 	 */
 	public void setDrawLabels(boolean drawLabels)
 	{
-		boolean oldValue = this.drawLabels;
-		this.drawLabels = drawLabels;
+		boolean oldValue = this._drawLabels;
+		this._drawLabels = drawLabels;
 		repaintTripleBuffer(null);
 
 		firePropertyChange("drawLabels", oldValue, drawLabels);
@@ -293,7 +287,7 @@ public class GraphOutline extends JComponent
 	 */
 	public boolean isDrawLabels()
 	{
-		return drawLabels;
+		return _drawLabels;
 	}
 
 	/**
@@ -303,8 +297,8 @@ public class GraphOutline extends JComponent
 	 */
 	public void setAntiAlias(boolean antiAlias)
 	{
-		boolean oldValue = this.antiAlias;
-		this.antiAlias = antiAlias;
+		boolean oldValue = this._antiAlias;
+		this._antiAlias = antiAlias;
 		repaintTripleBuffer(null);
 
 		firePropertyChange("antiAlias", oldValue, antiAlias);
@@ -315,7 +309,7 @@ public class GraphOutline extends JComponent
 	 */
 	public boolean isAntiAlias()
 	{
-		return antiAlias;
+		return _antiAlias;
 	}
 
 	/**
@@ -337,7 +331,7 @@ public class GraphOutline extends JComponent
 	 */
 	public void setFinderVisible(boolean visible)
 	{
-		finderVisible = visible;
+		_finderVisible = visible;
 	}
 
 	/**
@@ -345,7 +339,7 @@ public class GraphOutline extends JComponent
 	 */
 	public void setZoomHandleVisible(boolean visible)
 	{
-		zoomHandleVisible = visible;
+		_zoomHandleVisible = visible;
 	}
 
 	/**
@@ -355,12 +349,12 @@ public class GraphOutline extends JComponent
 	 */
 	public void setFitPage(boolean fitPage)
 	{
-		boolean oldValue = this.fitPage;
-		this.fitPage = fitPage;
+		boolean oldValue = this._fitPage;
+		this._fitPage = fitPage;
 
 		if (updateScaleAndTranslate())
 		{
-			repaintBuffer = true;
+			_repaintBuffer = true;
 			updateFinder(false);
 		}
 
@@ -372,7 +366,7 @@ public class GraphOutline extends JComponent
 	 */
 	public boolean isFitPage()
 	{
-		return fitPage;
+		return _fitPage;
 	}
 
 	/**
@@ -380,7 +374,7 @@ public class GraphOutline extends JComponent
 	 */
 	public GraphComponent getGraphComponent()
 	{
-		return graphComponent;
+		return _graphComponent;
 	}
 
 	/**
@@ -390,36 +384,36 @@ public class GraphOutline extends JComponent
 	 */
 	public void setGraphComponent(GraphComponent graphComponent)
 	{
-		GraphComponent oldValue = this.graphComponent;
+		GraphComponent oldValue = this._graphComponent;
 
-		if (this.graphComponent != null)
+		if (this._graphComponent != null)
 		{
-			this.graphComponent.getGraph().removeListener(repaintHandler);
-			this.graphComponent.getGraphControl().removeComponentListener(
-					componentHandler);
-			this.graphComponent.getHorizontalScrollBar()
-					.removeAdjustmentListener(adjustmentHandler);
-			this.graphComponent.getVerticalScrollBar()
-					.removeAdjustmentListener(adjustmentHandler);
+			this._graphComponent.getGraph().removeListener(_repaintHandler);
+			this._graphComponent.getGraphControl().removeComponentListener(
+					_componentHandler);
+			this._graphComponent.getHorizontalScrollBar()
+					.removeAdjustmentListener(_adjustmentHandler);
+			this._graphComponent.getVerticalScrollBar()
+					.removeAdjustmentListener(_adjustmentHandler);
 		}
 
-		this.graphComponent = graphComponent;
+		this._graphComponent = graphComponent;
 
-		if (this.graphComponent != null)
+		if (this._graphComponent != null)
 		{
-			this.graphComponent.getGraph().addListener(Event.REPAINT,
-					repaintHandler);
-			this.graphComponent.getGraphControl().addComponentListener(
-					componentHandler);
-			this.graphComponent.getHorizontalScrollBar().addAdjustmentListener(
-					adjustmentHandler);
-			this.graphComponent.getVerticalScrollBar().addAdjustmentListener(
-					adjustmentHandler);
+			this._graphComponent.getGraph().addListener(Event.REPAINT,
+					_repaintHandler);
+			this._graphComponent.getGraphControl().addComponentListener(
+					_componentHandler);
+			this._graphComponent.getHorizontalScrollBar().addAdjustmentListener(
+					_adjustmentHandler);
+			this._graphComponent.getVerticalScrollBar().addAdjustmentListener(
+					_adjustmentHandler);
 		}
 
 		if (updateScaleAndTranslate())
 		{
-			repaintBuffer = true;
+			_repaintBuffer = true;
 			repaint();
 		}
 
@@ -434,19 +428,19 @@ public class GraphOutline extends JComponent
 	 */
 	public void checkTripleBuffer()
 	{
-		if (tripleBuffer != null)
+		if (_tripleBuffer != null)
 		{
-			if (tripleBuffer.getWidth() != getWidth()
-					|| tripleBuffer.getHeight() != getHeight())
+			if (_tripleBuffer.getWidth() != getWidth()
+					|| _tripleBuffer.getHeight() != getHeight())
 			{
 				// Resizes the buffer (destroys existing and creates new)
 				destroyTripleBuffer();
 			}
 		}
 
-		if (tripleBuffer == null)
+		if (_tripleBuffer == null)
 		{
-			createTripleBuffer(getWidth(), getHeight());
+			_createTripleBuffer(getWidth(), getHeight());
 		}
 	}
 
@@ -457,12 +451,12 @@ public class GraphOutline extends JComponent
 	 * @param width
 	 * @param height
 	 */
-	protected void createTripleBuffer(int width, int height)
+	protected void _createTripleBuffer(int width, int height)
 	{
 		try
 		{
-			tripleBuffer = Utils.createBufferedImage(width, height, null);
-			tripleBufferGraphics = tripleBuffer.createGraphics();
+			_tripleBuffer = Utils.createBufferedImage(width, height, null);
+			_tripleBufferGraphics = _tripleBuffer.createGraphics();
 
 			// Repaints the complete buffer
 			repaintTripleBuffer(null);
@@ -478,11 +472,11 @@ public class GraphOutline extends JComponent
 	 */
 	public void destroyTripleBuffer()
 	{
-		if (tripleBuffer != null)
+		if (_tripleBuffer != null)
 		{
-			tripleBuffer = null;
-			tripleBufferGraphics.dispose();
-			tripleBufferGraphics = null;
+			_tripleBuffer = null;
+			_tripleBufferGraphics.dispose();
+			_tripleBufferGraphics = null;
 		}
 	}
 
@@ -494,23 +488,23 @@ public class GraphOutline extends JComponent
 	 */
 	public void repaintTripleBuffer(Rectangle clip)
 	{
-		if (tripleBuffered && tripleBufferGraphics != null)
+		if (_tripleBuffered && _tripleBufferGraphics != null)
 		{
 			if (clip == null)
 			{
-				clip = new Rectangle(tripleBuffer.getWidth(),
-						tripleBuffer.getHeight());
+				clip = new Rectangle(_tripleBuffer.getWidth(),
+						_tripleBuffer.getHeight());
 			}
 
 			// Clears and repaints the dirty rectangle using the
 			// graphics canvas of the graph component as a renderer
-			Utils.clearRect(tripleBufferGraphics, clip, null);
-			tripleBufferGraphics.setClip(clip);
-			paintGraph(tripleBufferGraphics);
-			tripleBufferGraphics.setClip(null);
+			Utils.clearRect(_tripleBufferGraphics, clip, null);
+			_tripleBufferGraphics.setClip(clip);
+			paintGraph(_tripleBufferGraphics);
+			_tripleBufferGraphics.setClip(null);
 
-			repaintBuffer = false;
-			repaintClip = null;
+			_repaintBuffer = false;
+			_repaintClip = null;
 		}
 	}
 
@@ -519,14 +513,14 @@ public class GraphOutline extends JComponent
 	 */
 	public void updateFinder(boolean repaint)
 	{
-		Rectangle rect = graphComponent.getViewport().getViewRect();
+		Rectangle rect = _graphComponent.getViewport().getViewRect();
 
-		int x = (int) Math.round(rect.x * scale);
-		int y = (int) Math.round(rect.y * scale);
-		int w = (int) Math.round((rect.x + rect.width) * scale) - x;
-		int h = (int) Math.round((rect.y + rect.height) * scale) - y;
+		int x = (int) Math.round(rect.x * _scale);
+		int y = (int) Math.round(rect.y * _scale);
+		int w = (int) Math.round((rect.x + rect.width) * _scale) - x;
+		int h = (int) Math.round((rect.y + rect.height) * _scale) - y;
 
-		updateFinderBounds(new Rectangle(x + translate.x, y + translate.y,
+		updateFinderBounds(new Rectangle(x + _translate.x, y + _translate.y,
 				w + 1, h + 1), repaint);
 	}
 
@@ -535,15 +529,15 @@ public class GraphOutline extends JComponent
 	 */
 	public void updateFinderBounds(Rectangle bounds, boolean repaint)
 	{
-		if (bounds != null && !bounds.equals(finderBounds))
+		if (bounds != null && !bounds.equals(_finderBounds))
 		{
-			Rectangle old = new Rectangle(finderBounds);
-			finderBounds = bounds;
+			Rectangle old = new Rectangle(_finderBounds);
+			_finderBounds = bounds;
 
 			// LATER: Fix repaint region to be smaller
 			if (repaint)
 			{
-				old = old.union(finderBounds);
+				old = old.union(_finderBounds);
 				old.grow(3, 3);
 				repaint(old);
 			}
@@ -556,40 +550,40 @@ public class GraphOutline extends JComponent
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
-		paintBackground(g);
+		_paintBackground(g);
 
-		if (graphComponent != null)
+		if (_graphComponent != null)
 		{
 			// Creates or destroys the triple buffer as needed
-			if (tripleBuffered)
+			if (_tripleBuffered)
 			{
 				checkTripleBuffer();
 			}
-			else if (tripleBuffer != null)
+			else if (_tripleBuffer != null)
 			{
 				destroyTripleBuffer();
 			}
 
 			// Updates the dirty region from the buffered graph image
-			if (tripleBuffer != null)
+			if (_tripleBuffer != null)
 			{
-				if (repaintBuffer)
+				if (_repaintBuffer)
 				{
 					repaintTripleBuffer(null);
 				}
-				else if (repaintClip != null)
+				else if (_repaintClip != null)
 				{
-					repaintClip.grow(1 / scale);
+					_repaintClip.grow(1 / _scale);
 
-					repaintClip.setX(repaintClip.getX() * scale + translate.x);
-					repaintClip.setY(repaintClip.getY() * scale + translate.y);
-					repaintClip.setWidth(repaintClip.getWidth() * scale);
-					repaintClip.setHeight(repaintClip.getHeight() * scale);
+					_repaintClip.setX(_repaintClip.getX() * _scale + _translate.x);
+					_repaintClip.setY(_repaintClip.getY() * _scale + _translate.y);
+					_repaintClip.setWidth(_repaintClip.getWidth() * _scale);
+					_repaintClip.setHeight(_repaintClip.getHeight() * _scale);
 
-					repaintTripleBuffer(repaintClip.getRectangle());
+					repaintTripleBuffer(_repaintClip.getRectangle());
 				}
 
-				Utils.drawImageClip(g, tripleBuffer, this);
+				Utils.drawImageClip(g, _tripleBuffer, this);
 			}
 
 			// Paints the graph directly onto the graphics
@@ -598,16 +592,16 @@ public class GraphOutline extends JComponent
 				paintGraph(g);
 			}
 
-			paintForeground(g);
+			_paintForeground(g);
 		}
 	}
 
 	/**
 	 * Paints the background.
 	 */
-	protected void paintBackground(Graphics g)
+	protected void _paintBackground(Graphics g)
 	{
-		if (graphComponent != null)
+		if (_graphComponent != null)
 		{
 			Graphics2D g2 = (Graphics2D) g;
 			AffineTransform tx = g2.getTransform();
@@ -615,24 +609,24 @@ public class GraphOutline extends JComponent
 			try
 			{
 				// Draws the background of the outline if a graph exists 
-				g.setColor(graphComponent.getPageBackgroundColor());
+				g.setColor(_graphComponent.getPageBackgroundColor());
 				Utils.fillClippedRect(g, 0, 0, getWidth(), getHeight());
 
-				g2.translate(translate.x, translate.y);
-				g2.scale(scale, scale);
+				g2.translate(_translate.x, _translate.y);
+				g2.scale(_scale, _scale);
 
 				// Draws the scaled page background
-				if (!graphComponent.isPageVisible())
+				if (!_graphComponent.isPageVisible())
 				{
-					Color bg = graphComponent.getBackground();
+					Color bg = _graphComponent.getBackground();
 
-					if (graphComponent.getViewport().isOpaque())
+					if (_graphComponent.getViewport().isOpaque())
 					{
-						bg = graphComponent.getViewport().getBackground();
+						bg = _graphComponent.getViewport().getBackground();
 					}
 
 					g.setColor(bg);
-					Dimension size = graphComponent.getGraphControl().getSize();
+					Dimension size = _graphComponent.getGraphControl().getSize();
 
 					// Paints the background of the drawing surface
 					Utils.fillClippedRect(g, 0, 0, size.width, size.height);
@@ -642,7 +636,7 @@ public class GraphOutline extends JComponent
 				else
 				{
 					// Paints the page background using the graphics scaling
-					graphComponent.paintBackgroundPage(g);
+					_graphComponent._paintBackgroundPage(g);
 				}
 			}
 			finally
@@ -663,20 +657,20 @@ public class GraphOutline extends JComponent
 	 */
 	public void paintGraph(Graphics g)
 	{
-		if (graphComponent != null)
+		if (_graphComponent != null)
 		{
 			Graphics2D g2 = (Graphics2D) g;
 			AffineTransform tx = g2.getTransform();
 
 			try
 			{
-				Point tr = graphComponent.getGraphControl().getTranslate();
-				g2.translate(translate.x + tr.getX() * scale,
-						translate.y + tr.getY() * scale);
-				g2.scale(scale, scale);
+				Point tr = _graphComponent.getGraphControl().getTranslate();
+				g2.translate(_translate.x + tr.getX() * _scale,
+						_translate.y + tr.getY() * _scale);
+				g2.scale(_scale, _scale);
 
 				// Draws the scaled graph
-				graphComponent.getGraphControl().drawGraph(g2, drawLabels);
+				_graphComponent.getGraphControl().drawGraph(g2, _drawLabels);
 			}
 			finally
 			{
@@ -689,27 +683,27 @@ public class GraphOutline extends JComponent
 	 * Paints the foreground. Foreground is dynamic and should never be made
 	 * part of the triple buffer. It is painted on top of the buffer.
 	 */
-	protected void paintForeground(Graphics g)
+	protected void _paintForeground(Graphics g)
 	{
-		if (graphComponent != null)
+		if (_graphComponent != null)
 		{
 			Graphics2D g2 = (Graphics2D) g;
 
 			Stroke stroke = g2.getStroke();
 			g.setColor(Color.BLUE);
 			g2.setStroke(new BasicStroke(3));
-			g.drawRect(finderBounds.x, finderBounds.y, finderBounds.width,
-					finderBounds.height);
+			g.drawRect(_finderBounds.x, _finderBounds.y, _finderBounds.width,
+					_finderBounds.height);
 
-			if (zoomHandleVisible)
+			if (_zoomHandleVisible)
 			{
 				g2.setStroke(stroke);
 				g.setColor(DEFAULT_ZOOMHANDLE_FILL);
-				g.fillRect(finderBounds.x + finderBounds.width - 6, finderBounds.y
-						+ finderBounds.height - 6, 8, 8);
+				g.fillRect(_finderBounds.x + _finderBounds.width - 6, _finderBounds.y
+						+ _finderBounds.height - 6, 8, 8);
 				g.setColor(Color.BLACK);
-				g.drawRect(finderBounds.x + finderBounds.width - 6, finderBounds.y
-						+ finderBounds.height - 6, 8, 8);
+				g.drawRect(_finderBounds.x + _finderBounds.width - 6, _finderBounds.y
+						+ _finderBounds.height - 6, 8, 8);
 			}
 		}
 	}
@@ -723,9 +717,9 @@ public class GraphOutline extends JComponent
 		int dx = 0;
 		int dy = 0;
 
-		if (this.graphComponent != null)
+		if (this._graphComponent != null)
 		{
-			Dimension graphSize = graphComponent.getGraphControl().getSize();
+			Dimension graphSize = _graphComponent.getGraphControl().getSize();
 			Dimension outlineSize = getSize();
 
 			int gw = (int) graphSize.getWidth();
@@ -733,17 +727,17 @@ public class GraphOutline extends JComponent
 
 			if (gw > 0 && gh > 0)
 			{
-				boolean magnifyPage = graphComponent.isPageVisible()
+				boolean magnifyPage = _graphComponent.isPageVisible()
 						&& isFitPage()
-						&& graphComponent.getHorizontalScrollBar().isVisible()
-						&& graphComponent.getVerticalScrollBar().isVisible();
-				double graphScale = graphComponent.getGraph().getView()
+						&& _graphComponent.getHorizontalScrollBar().isVisible()
+						&& _graphComponent.getVerticalScrollBar().isVisible();
+				double graphScale = _graphComponent.getGraph().getView()
 						.getScale();
-				Point2d trans = graphComponent.getGraph().getView()
+				Point2d trans = _graphComponent.getGraph().getView()
 						.getTranslate();
 
-				int w = (int) outlineSize.getWidth() - 2 * outlineBorder;
-				int h = (int) outlineSize.getHeight() - 2 * outlineBorder;
+				int w = (int) outlineSize.getWidth() - 2 * _outlineBorder;
+				int h = (int) outlineSize.getHeight() - 2 * _outlineBorder;
 
 				if (magnifyPage)
 				{
@@ -766,10 +760,10 @@ public class GraphOutline extends JComponent
 			}
 		}
 
-		if (newScale != scale || translate.x != dx || translate.y != dy)
+		if (newScale != _scale || _translate.x != dx || _translate.y != dy)
 		{
-			scale = newScale;
-			translate.setLocation(dx, dy);
+			_scale = newScale;
+			_translate.setLocation(dx, dy);
 
 			return true;
 		}
@@ -777,197 +771,6 @@ public class GraphOutline extends JComponent
 		{
 			return false;
 		}
-	}
-
-	/**
-	 *
-	 */
-	public class MouseTracker implements MouseListener, MouseMotionListener
-	{
-		/**
-		 * 
-		 */
-		protected Point start = null;
-
-		/*
-		 * (non-Javadoc)
-		 * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
-		 */
-		public void mousePressed(MouseEvent e)
-		{
-			zoomGesture = hitZoomHandle(e.getX(), e.getY());
-
-			if (graphComponent != null && !e.isConsumed()
-					&& !e.isPopupTrigger()
-					&& (finderBounds.contains(e.getPoint()) || zoomGesture))
-			{
-				start = e.getPoint();
-			}
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * @see java.awt.event.MouseMotionListener#mouseDragged(java.awt.event.MouseEvent)
-		 */
-		public void mouseDragged(MouseEvent e)
-		{
-			if (isEnabled() && start != null)
-			{
-				if (zoomGesture)
-				{
-					Rectangle bounds = graphComponent.getViewport()
-							.getViewRect();
-					double viewRatio = bounds.getWidth() / bounds.getHeight();
-
-					bounds = new Rectangle(finderBounds);
-					bounds.width = (int) Math
-							.max(0, (e.getX() - bounds.getX()));
-					bounds.height = (int) Math.max(0,
-							(bounds.getWidth() / viewRatio));
-
-					updateFinderBounds(bounds, true);
-				}
-				else
-				{
-					// TODO: To enable constrained moving, that is, moving
-					// into only x- or y-direction when shift is pressed,
-					// we need the location of the first mouse event, since
-					// the movement can not be constrained for incremental
-					// steps as used below.
-					int dx = (int) ((e.getX() - start.getX()) / scale);
-					int dy = (int) ((e.getY() - start.getY()) / scale);
-
-					// Keeps current location as start for delta movement
-					// of the scrollbars
-					start = e.getPoint();
-
-					graphComponent.getHorizontalScrollBar().setValue(
-							graphComponent.getHorizontalScrollBar().getValue()
-									+ dx);
-					graphComponent.getVerticalScrollBar().setValue(
-							graphComponent.getVerticalScrollBar().getValue()
-									+ dy);
-				}
-			}
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
-		 */
-		public void mouseReleased(MouseEvent e)
-		{
-			if (start != null)
-			{
-				if (zoomGesture)
-				{
-					double dx = e.getX() - start.getX();
-					double w = finderBounds.getWidth();
-
-					final JScrollBar hs = graphComponent
-							.getHorizontalScrollBar();
-					final double sx;
-
-					if (hs != null)
-					{
-						sx = (double) hs.getValue() / hs.getMaximum();
-					}
-					else
-					{
-						sx = 0;
-					}
-
-					final JScrollBar vs = graphComponent.getVerticalScrollBar();
-					final double sy;
-
-					if (vs != null)
-					{
-						sy = (double) vs.getValue() / vs.getMaximum();
-					}
-					else
-					{
-						sy = 0;
-					}
-
-					GraphView view = graphComponent.getGraph().getView();
-					double scale = view.getScale();
-					double newScale = scale - (dx * scale) / w;
-					double factor = newScale / scale;
-					view.setScale(newScale);
-
-					if (hs != null)
-					{
-						hs.setValue((int) (sx * hs.getMaximum() * factor));
-					}
-
-					if (vs != null)
-					{
-						vs.setValue((int) (sy * vs.getMaximum() * factor));
-					}
-				}
-
-				zoomGesture = false;
-				start = null;
-			}
-		}
-
-		/**
-		 * 
-		 */
-		public boolean hitZoomHandle(int x, int y)
-		{
-			return new Rectangle(finderBounds.x + finderBounds.width - 6,
-					finderBounds.y + finderBounds.height - 6, 8, 8).contains(x,
-					y);
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * @see java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent)
-		 */
-		public void mouseMoved(MouseEvent e)
-		{
-			if (hitZoomHandle(e.getX(), e.getY()))
-			{
-				setCursor(new Cursor(Cursor.HAND_CURSOR));
-			}
-			else if (finderBounds.contains(e.getPoint()))
-			{
-				setCursor(new Cursor(Cursor.MOVE_CURSOR));
-			}
-			else
-			{
-				setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-			}
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
-		 */
-		public void mouseClicked(MouseEvent e)
-		{
-			// ignore
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
-		 */
-		public void mouseEntered(MouseEvent e)
-		{
-			// ignore
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
-		 */
-		public void mouseExited(MouseEvent e)
-		{
-			// ignore
-		}
-
 	}
 
 }

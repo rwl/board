@@ -15,13 +15,13 @@ public class ConnectionConstraint
 	/**
 	 * Point that specifies the fixed location of the connection point.
 	 */
-	protected Point2d point;
+	protected Point2d _point;
 
 	/**
 	 * Boolean that specifies if the point should be projected onto the perimeter
 	 * of the terminal.
 	 */
-	protected boolean perimeter;
+	protected boolean _perimeter;
 
 	/**
 	 * Constructs an empty connection constraint.
@@ -59,7 +59,7 @@ public class ConnectionConstraint
 	 */
 	public Point2d getPoint()
 	{
-		return point;
+		return _point;
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class ConnectionConstraint
 	 */
 	public void setPoint(Point2d value)
 	{
-		point = value;
+		_point = value;
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class ConnectionConstraint
 	 */
 	public boolean isPerimeter()
 	{
-		return perimeter;
+		return _perimeter;
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class ConnectionConstraint
 	 */
 	public void setPerimeter(boolean value)
 	{
-		perimeter = value;
+		_perimeter = value;
 	}
 
 }

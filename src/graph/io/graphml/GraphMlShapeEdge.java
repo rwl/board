@@ -12,13 +12,13 @@ import org.w3c.dom.Element;
  */
 public class GraphMlShapeEdge
 {
-	private String text = "";
+	private String _text = "";
 
-	private String style = "";
+	private String _style = "";
 
-	private String edgeSource;
+	private String _edgeSource;
 
-	private String edgeTarget;
+	private String _edgeTarget;
 
 	/**
 	 * Construct a Shape Edge with text and style.
@@ -27,8 +27,8 @@ public class GraphMlShapeEdge
 	 */
 	public GraphMlShapeEdge(String text, String style)
 	{
-		this.text = text;
-		this.style = style;
+		this._text = text;
+		this._style = style;
 	}
 
 	/**
@@ -42,7 +42,7 @@ public class GraphMlShapeEdge
 		
 		if (labelElement != null)
 		{
-			this.text = labelElement.getAttribute(GraphMlConstants.TEXT);
+			this._text = labelElement.getAttribute(GraphMlConstants.TEXT);
 		}
 
 		Element styleElement = GraphMlUtils.childsTag(shapeEdgeElement,
@@ -50,7 +50,7 @@ public class GraphMlShapeEdge
 		
 		if (styleElement != null)
 		{
-			this.style = styleElement.getAttribute(GraphMlConstants.PROPERTIES);
+			this._style = styleElement.getAttribute(GraphMlConstants.PROPERTIES);
 
 		}
 	}
@@ -72,22 +72,22 @@ public class GraphMlShapeEdge
 		Element dataEdge = document.createElementNS(GraphMlConstants.JGRAPH_URL,
 				GraphMlConstants.JGRAPH + GraphMlConstants.SHAPEEDGE);
 
-		if (!this.text.equals(""))
+		if (!this._text.equals(""))
 		{
 			Element dataEdgeLabel = document.createElementNS(
 					GraphMlConstants.JGRAPH_URL, GraphMlConstants.JGRAPH
 							+ GraphMlConstants.LABEL);
-			dataEdgeLabel.setAttribute(GraphMlConstants.TEXT, this.text);
+			dataEdgeLabel.setAttribute(GraphMlConstants.TEXT, this._text);
 			dataEdge.appendChild(dataEdgeLabel);
 		}
 		
-		if (!this.style.equals(""))
+		if (!this._style.equals(""))
 		{
 			Element dataEdgeStyle = document.createElementNS(
 					GraphMlConstants.JGRAPH_URL, GraphMlConstants.JGRAPH
 							+ GraphMlConstants.STYLE);
 
-			dataEdgeStyle.setAttribute(GraphMlConstants.PROPERTIES, this.style);
+			dataEdgeStyle.setAttribute(GraphMlConstants.PROPERTIES, this._style);
 			dataEdge.appendChild(dataEdgeStyle);
 		}
 
@@ -96,41 +96,41 @@ public class GraphMlShapeEdge
 
 	public String getText()
 	{
-		return text;
+		return _text;
 	}
 
 	public void setText(String text)
 	{
-		this.text = text;
+		this._text = text;
 	}
 
 	public String getStyle()
 	{
-		return style;
+		return _style;
 	}
 
 	public void setStyle(String style)
 	{
-		this.style = style;
+		this._style = style;
 	}
 
 	public String getEdgeSource()
 	{
-		return edgeSource;
+		return _edgeSource;
 	}
 
 	public void setEdgeSource(String edgeSource)
 	{
-		this.edgeSource = edgeSource;
+		this._edgeSource = edgeSource;
 	}
 
 	public String getEdgeTarget()
 	{
-		return edgeTarget;
+		return _edgeTarget;
 	}
 
 	public void setEdgeTarget(String edgeTarget)
 	{
-		this.edgeTarget = edgeTarget;
+		this._edgeTarget = edgeTarget;
 	}
 }

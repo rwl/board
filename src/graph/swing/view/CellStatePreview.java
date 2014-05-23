@@ -33,32 +33,32 @@ public class CellStatePreview
 	/**
 	 * 
 	 */
-	protected Map<CellState, Point2d> deltas = new LinkedHashMap<CellState, Point2d>();
+	protected Map<CellState, Point2d> _deltas = new LinkedHashMap<CellState, Point2d>();
 
 	/**
 	 * 
 	 */
-	protected int count = 0;
+	protected int _count = 0;
 
 	/**
 	 * 
 	 */
-	protected GraphComponent graphComponent;
+	protected GraphComponent _graphComponent;
 
 	/**
 	 * Specifies if cell states should be cloned or changed in-place.
 	 */
-	protected boolean cloned;
+	protected boolean _cloned;
 
 	/**
 	 * 
 	 */
-	protected float opacity = 1;
+	protected float _opacity = 1;
 
 	/**
 	 * 
 	 */
-	protected List<CellState> cellStates;
+	protected List<CellState> _cellStates;
 
 	/**
 	 * Constructs a new state preview. The paint handler to invoke the paint
@@ -66,8 +66,8 @@ public class CellStatePreview
 	 */
 	public CellStatePreview(GraphComponent graphComponent, boolean cloned)
 	{
-		this.graphComponent = graphComponent;
-		this.cloned = cloned;
+		this._graphComponent = graphComponent;
+		this._cloned = cloned;
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class CellStatePreview
 	 */
 	public boolean isCloned()
 	{
-		return cloned;
+		return _cloned;
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class CellStatePreview
 	 */
 	public void setCloned(boolean value)
 	{
-		cloned = value;
+		_cloned = value;
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class CellStatePreview
 	 */
 	public boolean isEmpty()
 	{
-		return count == 0;
+		return _count == 0;
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class CellStatePreview
 	 */
 	public int getCount()
 	{
-		return count;
+		return _count;
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class CellStatePreview
 	 */
 	public Map<CellState, Point2d> getDeltas()
 	{
-		return deltas;
+		return _deltas;
 	}
 
 	/**
@@ -115,7 +115,7 @@ public class CellStatePreview
 	 */
 	public void setOpacity(float value)
 	{
-		opacity = value;
+		_opacity = value;
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class CellStatePreview
 	 */
 	public float getOpacity()
 	{
-		return opacity;
+		return _opacity;
 	}
 
 	/**
@@ -140,13 +140,13 @@ public class CellStatePreview
 	public Point2d moveState(CellState state, double dx, double dy,
 			boolean add, boolean includeEdges)
 	{
-		Point2d delta = deltas.get(state);
+		Point2d delta = _deltas.get(state);
 
 		if (delta == null)
 		{
 			delta = new Point2d(dx, dy);
-			deltas.put(state, delta);
-			count++;
+			_deltas.put(state, delta);
+			_count++;
 		}
 		else
 		{
@@ -175,7 +175,7 @@ public class CellStatePreview
 	 */
 	public Rect show()
 	{
-		Graph graph = graphComponent.getGraph();
+		Graph graph = _graphComponent.getGraph();
 		IGraphModel model = graph.getModel();
 
 		// Stores a copy of the cell states
@@ -184,7 +184,7 @@ public class CellStatePreview
 		if (isCloned())
 		{
 			previousStates = new LinkedList<CellState>();
-			Iterator<CellState> it = deltas.keySet().iterator();
+			Iterator<CellState> it = _deltas.keySet().iterator();
 
 			while (it.hasNext())
 			{
@@ -194,28 +194,28 @@ public class CellStatePreview
 		}
 
 		// Translates the states in step
-		Iterator<CellState> it = deltas.keySet().iterator();
+		Iterator<CellState> it = _deltas.keySet().iterator();
 
 		while (it.hasNext())
 		{
 			CellState state = it.next();
-			Point2d delta = deltas.get(state);
+			Point2d delta = _deltas.get(state);
 			CellState parentState = graph.getView().getState(
 					model.getParent(state.getCell()));
-			translateState(parentState, state, delta.getX(), delta.getY());
+			_translateState(parentState, state, delta.getX(), delta.getY());
 		}
 
 		// Revalidates the states in step
 		Rect dirty = null;
-		it = deltas.keySet().iterator();
+		it = _deltas.keySet().iterator();
 
 		while (it.hasNext())
 		{
 			CellState state = it.next();
-			Point2d delta = deltas.get(state);
+			Point2d delta = _deltas.get(state);
 			CellState parentState = graph.getView().getState(
 					model.getParent(state.getCell()));
-			Rect tmp = revalidateState(parentState, state, delta.getX(),
+			Rect tmp = _revalidateState(parentState, state, delta.getX(),
 					delta.getY());
 
 			if (dirty != null)
@@ -233,13 +233,13 @@ public class CellStatePreview
 		// of the dirty rectangle.
 		if (previousStates != null)
 		{
-			cellStates = new LinkedList<CellState>();
-			it = deltas.keySet().iterator();
+			_cellStates = new LinkedList<CellState>();
+			it = _deltas.keySet().iterator();
 
 			while (it.hasNext())
 			{
 				CellState state = it.next();
-				cellStates.addAll(snapshot(state));
+				_cellStates.addAll(snapshot(state));
 			}
 
 			// Restores the previous states
@@ -259,7 +259,7 @@ public class CellStatePreview
 	 */
 	public void restore(List<CellState> snapshot)
 	{
-		Graph graph = graphComponent.getGraph();
+		Graph graph = _graphComponent.getGraph();
 		Iterator<CellState> it = snapshot.iterator();
 
 		while (it.hasNext())
@@ -304,7 +304,7 @@ public class CellStatePreview
 		{
 			result.add((CellState) state.clone());
 
-			Graph graph = graphComponent.getGraph();
+			Graph graph = _graphComponent.getGraph();
 			IGraphModel model = graph.getModel();
 			Object cell = state.getCell();
 			int childCount = model.getChildCount(cell);
@@ -322,12 +322,12 @@ public class CellStatePreview
 	/**
 	 *
 	 */
-	protected void translateState(CellState parentState, CellState state,
+	protected void _translateState(CellState parentState, CellState state,
 			double dx, double dy)
 	{
 		if (state != null)
 		{
-			Graph graph = graphComponent.getGraph();
+			Graph graph = _graphComponent.getGraph();
 			IGraphModel model = graph.getModel();
 			Object cell = state.getCell();
 
@@ -340,7 +340,7 @@ public class CellStatePreview
 				// the first phase so that edge terminal points will
 				// be updated in the second phase
 				if ((dx != 0 || dy != 0) && geo != null
-						&& (!geo.isRelative() || deltas.get(state) != null))
+						&& (!geo.isRelative() || _deltas.get(state) != null))
 				{
 					state.setX(state.getX() + dx);
 					state.setY(state.getY() + dy);
@@ -351,7 +351,7 @@ public class CellStatePreview
 
 			for (int i = 0; i < childCount; i++)
 			{
-				translateState(state,
+				_translateState(state,
 						graph.getView().getState(model.getChildAt(cell, i)),
 						dx, dy);
 			}
@@ -361,14 +361,14 @@ public class CellStatePreview
 	/**
 	 *
 	 */
-	protected Rect revalidateState(CellState parentState,
+	protected Rect _revalidateState(CellState parentState,
 			CellState state, double dx, double dy)
 	{
 		Rect dirty = null;
 
 		if (state != null)
 		{
-			Graph graph = graphComponent.getGraph();
+			Graph graph = _graphComponent.getGraph();
 			IGraphModel model = graph.getModel();
 			Object cell = state.getCell();
 			
@@ -389,7 +389,7 @@ public class CellStatePreview
 					&& geo.isRelative()
 					&& model.isVertex(cell)
 					&& (parentState == null
-							|| model.isVertex(parentState.getCell()) || deltas
+							|| model.isVertex(parentState.getCell()) || _deltas
 							.get(state) != null))
 			{
 				state.setX(state.getX() + dx);
@@ -406,7 +406,7 @@ public class CellStatePreview
 
 			for (int i = 0; i < childCount; i++)
 			{
-				Rect tmp = revalidateState(state, graph.getView()
+				Rect tmp = _revalidateState(state, graph.getView()
 						.getState(model.getChildAt(cell, i)), dx, dy);
 
 				if (dirty != null)
@@ -428,7 +428,7 @@ public class CellStatePreview
 	 */
 	public void addEdges(CellState state)
 	{
-		Graph graph = graphComponent.getGraph();
+		Graph graph = _graphComponent.getGraph();
 		IGraphModel model = graph.getModel();
 		Object cell = state.getCell();
 		int edgeCount = model.getEdgeCount(cell);
@@ -450,12 +450,12 @@ public class CellStatePreview
 	 */
 	public void paint(Graphics g)
 	{
-		if (cellStates != null && cellStates.size() > 0)
+		if (_cellStates != null && _cellStates.size() > 0)
 		{
-			Graphics2DCanvas canvas = graphComponent.getCanvas();
+			Graphics2DCanvas canvas = _graphComponent.getCanvas();
 
 			// Sets antialiasing
-			if (graphComponent.isAntiAlias())
+			if (_graphComponent.isAntiAlias())
 			{
 				Utils.setAntiAlias((Graphics2D) g, true, true);
 			}
@@ -466,11 +466,11 @@ public class CellStatePreview
 
 			try
 			{
-				canvas.setScale(graphComponent.getGraph().getView().getScale());
+				canvas.setScale(_graphComponent.getGraph().getView().getScale());
 				canvas.setTranslate(0, 0);
 				canvas.setGraphics((Graphics2D) g);
 
-				paintPreview(canvas);
+				_paintPreview(canvas);
 			}
 			finally
 			{
@@ -484,28 +484,28 @@ public class CellStatePreview
 	/**
 	 * 
 	 */
-	protected float getOpacityForCell(Object cell)
+	protected float _getOpacityForCell(Object cell)
 	{
-		return opacity;
+		return _opacity;
 	}
 
 	/**
 	 * Draws the preview using the graphics canvas.
 	 */
-	protected void paintPreview(Graphics2DCanvas canvas)
+	protected void _paintPreview(Graphics2DCanvas canvas)
 	{
 		Composite previousComposite = canvas.getGraphics().getComposite();
 
 		// Paints the preview states
-		Iterator<CellState> it = cellStates.iterator();
+		Iterator<CellState> it = _cellStates.iterator();
 
 		while (it.hasNext())
 		{
 			CellState state = it.next();
 			canvas.getGraphics().setComposite(
 					AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
-							getOpacityForCell(state.getCell())));
-			paintPreviewState(canvas, state);
+							_getOpacityForCell(state.getCell())));
+			_paintPreviewState(canvas, state);
 		}
 
 		canvas.getGraphics().setComposite(previousComposite);
@@ -514,13 +514,13 @@ public class CellStatePreview
 	/**
 	 * Draws the preview using the graphics canvas.
 	 */
-	protected void paintPreviewState(Graphics2DCanvas canvas,
+	protected void _paintPreviewState(Graphics2DCanvas canvas,
 			CellState state)
 	{
-		graphComponent.getGraph().drawState(
+		_graphComponent.getGraph().drawState(
 				canvas,
 				state,
-				state.getCell() != graphComponent.getCellEditor()
+				state.getCell() != _graphComponent.getCellEditor()
 						.getEditingCell());
 	}
 }

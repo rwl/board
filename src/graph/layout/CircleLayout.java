@@ -13,37 +13,37 @@ public class CircleLayout extends GraphLayout
 	/**
 	 * Integer specifying the size of the radius. Default is 100.
 	 */
-	protected double radius;
+	protected double _radius;
 
 	/**
 	 * Boolean specifying if the circle should be moved to the top,
 	 * left corner specified by x0 and y0. Default is false.
 	 */
-	protected boolean moveCircle = true;
+	protected boolean _moveCircle = true;
 
 	/**
 	 * Integer specifying the left coordinate of the circle.
 	 * Default is 0.
 	 */
-	protected double x0 = 0;
+	protected double _x0 = 0;
 
 	/**
 	 * Integer specifying the top coordinate of the circle.
 	 * Default is 0.
 	 */
-	protected double y0 = 0;
+	protected double _y0 = 0;
 
 	/**
 	 * Specifies if all edge points of traversed edges should be removed.
 	 * Default is true.
 	 */
-	protected boolean resetEdges = false;
+	protected boolean _resetEdges = false;
 
 	/**
 	 *  Specifies if the STYLE_NOEDGESTYLE flag should be set on edges that are
 	 * modified by the result. Default is true.
 	 */
-	protected boolean disableEdgeStyle = true;
+	protected boolean _disableEdgeStyle = true;
 
 	/**
 	 * Constructs a new stack layout layout for the specified graph,
@@ -61,7 +61,7 @@ public class CircleLayout extends GraphLayout
 	public CircleLayout(Graph graph, double radius)
 	{
 		super(graph);
-		this.radius = radius;
+		this._radius = radius;
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class CircleLayout extends GraphLayout
 	 */
 	public double getRadius()
 	{
-		return radius;
+		return _radius;
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class CircleLayout extends GraphLayout
 	 */
 	public void setRadius(double radius)
 	{
-		this.radius = radius;
+		this._radius = radius;
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class CircleLayout extends GraphLayout
 	 */
 	public boolean isMoveCircle()
 	{
-		return moveCircle;
+		return _moveCircle;
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class CircleLayout extends GraphLayout
 	 */
 	public void setMoveCircle(boolean moveCircle)
 	{
-		this.moveCircle = moveCircle;
+		this._moveCircle = moveCircle;
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class CircleLayout extends GraphLayout
 	 */
 	public double getX0()
 	{
-		return x0;
+		return _x0;
 	}
 
 	/**
@@ -109,7 +109,7 @@ public class CircleLayout extends GraphLayout
 	 */
 	public void setX0(double x0)
 	{
-		this.x0 = x0;
+		this._x0 = x0;
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class CircleLayout extends GraphLayout
 	 */
 	public double getY0()
 	{
-		return y0;
+		return _y0;
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class CircleLayout extends GraphLayout
 	 */
 	public void setY0(double y0)
 	{
-		this.y0 = y0;
+		this._y0 = y0;
 	}
 
 	/**
@@ -133,7 +133,7 @@ public class CircleLayout extends GraphLayout
 	 */
 	public boolean isResetEdges()
 	{
-		return resetEdges;
+		return _resetEdges;
 	}
 
 	/**
@@ -141,7 +141,7 @@ public class CircleLayout extends GraphLayout
 	 */
 	public void setResetEdges(boolean resetEdges)
 	{
-		this.resetEdges = resetEdges;
+		this._resetEdges = resetEdges;
 	}
 
 	/**
@@ -149,7 +149,7 @@ public class CircleLayout extends GraphLayout
 	 */
 	public boolean isDisableEdgeStyle()
 	{
-		return disableEdgeStyle;
+		return _disableEdgeStyle;
 	}
 
 	/**
@@ -157,7 +157,7 @@ public class CircleLayout extends GraphLayout
 	 */
 	public void setDisableEdgeStyle(boolean disableEdgeStyle)
 	{
-		this.disableEdgeStyle = disableEdgeStyle;
+		this._disableEdgeStyle = disableEdgeStyle;
 	}
 
 	/*
@@ -227,13 +227,13 @@ public class CircleLayout extends GraphLayout
 			}
 
 			int vertexCount = vertices.size();
-			double r = Math.max(vertexCount * max / Math.PI, radius);
+			double r = Math.max(vertexCount * max / Math.PI, _radius);
 
 			// Moves the circle to the specified origin
-			if (moveCircle)
+			if (_moveCircle)
 			{
-				left = x0;
-				top = y0;
+				left = _x0;
+				top = _y0;
 			}
 
 			circle(vertices.toArray(), r, left.doubleValue(), top.doubleValue());

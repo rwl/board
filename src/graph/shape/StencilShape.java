@@ -24,9 +24,7 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
-import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.List;
 import java.util.Map;
 
 import org.w3c.dom.Document;
@@ -47,26 +45,26 @@ public class StencilShape extends BasicShape
 		super();
 	}
 
-	protected GeneralPath shapePath;
+	protected GeneralPath _shapePath;
 
 	/**
 	 * Reference to the root node of the Dia shape description.
 	 */
-	protected Node root;
+	protected Node _root;
 
-	protected svgShape rootShape;
+	protected _svgShape _rootShape;
 
-	protected Rectangle2D boundingBox;
+	protected Rectangle2D _boundingBox;
 
-	protected String name;
+	protected String _name;
 
-	protected String iconPath;
+	protected String _iconPath;
 
 	/**
 	 * Transform cached to save instance created. Used to scale the internal
 	 * path of shapes where possible
 	 */
-	protected AffineTransform cachedTransform = new AffineTransform();
+	protected AffineTransform _cachedTransform = new AffineTransform();
 
 	/**
 	 * Constructs a new stencil for the given Dia shape description.
@@ -84,21 +82,21 @@ public class StencilShape extends BasicShape
 
 			if (nameList != null && nameList.getLength() > 0)
 			{
-				this.name = nameList.item(0).getTextContent();
+				this._name = nameList.item(0).getTextContent();
 			}
 
 			NodeList iconList = document.getElementsByTagName("icon");
 
 			if (iconList != null && iconList.getLength() > 0)
 			{
-				this.iconPath = iconList.item(0).getTextContent();
+				this._iconPath = iconList.item(0).getTextContent();
 			}
 
 			NodeList svgList = document.getElementsByTagName("svg:svg");
 
 			if (svgList != null && svgList.getLength() > 0)
 			{
-				this.root = svgList.item(0);
+				this._root = svgList.item(0);
 			}
 			else
 			{
@@ -106,14 +104,14 @@ public class StencilShape extends BasicShape
 
 				if (svgList != null && svgList.getLength() > 0)
 				{
-					this.root = svgList.item(0);
+					this._root = svgList.item(0);
 				}
 			}
 
-			if (this.root != null)
+			if (this._root != null)
 			{
-				rootShape = new svgShape(null, null);
-				createShape(this.root, rootShape);
+				_rootShape = new _svgShape(null, null);
+				createShape(this._root, _rootShape);
 			}
 		}
 	}
@@ -133,13 +131,13 @@ public class StencilShape extends BasicShape
 		double widthRatio = 1;
 		double heightRatio = 1;
 
-		if (boundingBox != null)
+		if (_boundingBox != null)
 		{
-			widthRatio = w / boundingBox.getWidth();
-			heightRatio = h / boundingBox.getHeight();
+			widthRatio = w / _boundingBox.getWidth();
+			heightRatio = h / _boundingBox.getHeight();
 		}
 
-		this.paintNode(canvas, state, rootShape, widthRatio, heightRatio);
+		this.paintNode(canvas, state, _rootShape, widthRatio, heightRatio);
 
 		canvas.getGraphics().translate(-x, -y);
 	}
@@ -148,7 +146,7 @@ public class StencilShape extends BasicShape
 	 * 
 	 */
 	public void paintNode(Graphics2DCanvas canvas, CellState state,
-			svgShape shape, double widthRatio, double heightRatio)
+			_svgShape shape, double widthRatio, double heightRatio)
 	{
 		Shape associatedShape = shape.shape;
 
@@ -207,13 +205,13 @@ public class StencilShape extends BasicShape
 
 			if (widthRatio != 1 || heightRatio != 1)
 			{
-				transformShape(associatedShape, 0.0, 0.0, widthRatio,
+				_transformShape(associatedShape, 0.0, 0.0, widthRatio,
 						heightRatio);
 				wasScaled = true;
 			}
 
 			// Paints the background
-			if (fill && configureGraphics(canvas, state, true))
+			if (fill && _configureGraphics(canvas, state, true))
 			{
 				if (fillColor != null)
 				{
@@ -224,7 +222,7 @@ public class StencilShape extends BasicShape
 			}
 
 			// Paints the foreground
-			if (stroke && configureGraphics(canvas, state, false))
+			if (stroke && _configureGraphics(canvas, state, false))
 			{
 				if (strokeColor != null)
 				{
@@ -236,7 +234,7 @@ public class StencilShape extends BasicShape
 
 			if (wasScaled)
 			{
-				transformShape(associatedShape, 0.0, 0.0, 1.0 / widthRatio,
+				_transformShape(associatedShape, 0.0, 0.0, 1.0 / widthRatio,
 						1.0 / heightRatio);
 			}
 		}
@@ -245,7 +243,7 @@ public class StencilShape extends BasicShape
 		 * If root is a group element, then we should add it's styles to the
 		 * children.
 		 */
-		for (svgShape subShape : shape.subShapes)
+		for (_svgShape subShape : shape.subShapes)
 		{
 			paintNode(canvas, state, subShape, widthRatio, heightRatio);
 		}
@@ -265,7 +263,7 @@ public class StencilShape extends BasicShape
 	 * @param heightRatio
 	 *            the y co-ordinate scale
 	 */
-	protected void transformShape(Shape shape, double transX, double transY,
+	protected void _transformShape(Shape shape, double transX, double transY,
 			double widthRatio, double heightRatio)
 	{
 		if (shape instanceof Rectangle2D)
@@ -302,16 +300,16 @@ public class StencilShape extends BasicShape
 		else if (shape instanceof GeneralPath)
 		{
 			GeneralPath path = (GeneralPath) shape;
-			cachedTransform.setToScale(widthRatio, heightRatio);
-			cachedTransform.translate(transX, transY);
-			path.transform(cachedTransform);
+			_cachedTransform.setToScale(widthRatio, heightRatio);
+			_cachedTransform.translate(transX, transY);
+			path.transform(_cachedTransform);
 		}
 		else if (shape instanceof ExtendedGeneralPath)
 		{
 			ExtendedGeneralPath path = (ExtendedGeneralPath) shape;
-			cachedTransform.setToScale(widthRatio, heightRatio);
-			cachedTransform.translate(transX, transY);
-			path.transform(cachedTransform);
+			_cachedTransform.setToScale(widthRatio, heightRatio);
+			_cachedTransform.translate(transX, transY);
+			path.transform(_cachedTransform);
 		}
 		else if (shape instanceof Ellipse2D)
 		{
@@ -333,7 +331,7 @@ public class StencilShape extends BasicShape
 	/**
 	 * 
 	 */
-	public void createShape(Node root, svgShape shape)
+	public void createShape(Node root, _svgShape shape)
 	{
 		Node child = root.getFirstChild();
 		/*
@@ -342,16 +340,16 @@ public class StencilShape extends BasicShape
 		 */
 		while (child != null)
 		{
-			if (isGroup(child.getNodeName()))
+			if (_isGroup(child.getNodeName()))
 			{
 				String style = ((Element) root).getAttribute("style");
 				Map<String, Object> styleMap = StencilShape
 						.getStylenames(style);
-				svgShape subShape = new svgShape(null, styleMap);
+				_svgShape subShape = new _svgShape(null, styleMap);
 				createShape(child, subShape);
 			}
 
-			svgShape subShape = createElement(child);
+			_svgShape subShape = createElement(child);
 
 			if (subShape != null)
 			{
@@ -360,32 +358,32 @@ public class StencilShape extends BasicShape
 			child = child.getNextSibling();
 		}
 
-		for (svgShape subShape : shape.subShapes)
+		for (_svgShape subShape : shape.subShapes)
 		{
 			if (subShape != null && subShape.shape != null)
 			{
-				if (boundingBox == null)
+				if (_boundingBox == null)
 				{
-					boundingBox = subShape.shape.getBounds2D();
+					_boundingBox = subShape.shape.getBounds2D();
 				}
 				else
 				{
-					boundingBox.add(subShape.shape.getBounds2D());
+					_boundingBox.add(subShape.shape.getBounds2D());
 				}
 			}
 		}
 
 		// If the shape does not butt up against either or both axis,
 		// ensure it is flush against both
-		if (boundingBox != null
-				&& (boundingBox.getX() != 0 || boundingBox.getY() != 0))
+		if (_boundingBox != null
+				&& (_boundingBox.getX() != 0 || _boundingBox.getY() != 0))
 		{
-			for (svgShape subShape : shape.subShapes)
+			for (_svgShape subShape : shape.subShapes)
 			{
 				if (subShape != null && subShape.shape != null)
 				{
-					transformShape(subShape.shape, -boundingBox.getX(),
-							-boundingBox.getY(), 1.0, 1.0);
+					_transformShape(subShape.shape, -_boundingBox.getX(),
+							-_boundingBox.getY(), 1.0, 1.0);
 				}
 			}
 		}
@@ -400,7 +398,7 @@ public class StencilShape extends BasicShape
 	 * @return the internal representation of the element, or null if an error
 	 *         occurs
 	 */
-	public svgShape createElement(Node root)
+	public _svgShape createElement(Node root)
 	{
 		Element element = null;
 
@@ -410,9 +408,9 @@ public class StencilShape extends BasicShape
 			String style = element.getAttribute("style");
 			Map<String, Object> styleMap = StencilShape.getStylenames(style);
 
-			if (isRectangle(root.getNodeName()))
+			if (_isRectangle(root.getNodeName()))
 			{
-				svgShape rectShape = null;
+				_svgShape rectShape = null;
 
 				try
 				{
@@ -494,12 +492,12 @@ public class StencilShape extends BasicShape
 							ry = height / 2.0;
 						}
 
-						rectShape = new svgShape(new RoundRectangle2D.Double(x,
+						rectShape = new _svgShape(new RoundRectangle2D.Double(x,
 								y, width, height, rx, ry), styleMap);
 					}
 					else
 					{
-						rectShape = new svgShape(new Rectangle2D.Double(x, y,
+						rectShape = new _svgShape(new Rectangle2D.Double(x, y,
 								width, height), styleMap);
 					}
 				}
@@ -510,7 +508,7 @@ public class StencilShape extends BasicShape
 
 				return rectShape;
 			}
-			else if (isLine(root.getNodeName()))
+			else if (_isLine(root.getNodeName()))
 			{
 				String x1String = element.getAttribute("x1");
 				String x2String = element.getAttribute("x2");
@@ -539,17 +537,17 @@ public class StencilShape extends BasicShape
 					y2 = Double.valueOf(y2String);
 				}
 
-				svgShape lineShape = new svgShape(new Line2D.Double(x1, y1, x2,
+				_svgShape lineShape = new _svgShape(new Line2D.Double(x1, y1, x2,
 						y2), styleMap);
 				return lineShape;
 			}
-			else if (isPolyline(root.getNodeName())
-					|| isPolygon(root.getNodeName()))
+			else if (_isPolyline(root.getNodeName())
+					|| _isPolygon(root.getNodeName()))
 			{
 				String pointsString = element.getAttribute("points");
 				Shape shape;
 
-				if (isPolygon(root.getNodeName()))
+				if (_isPolygon(root.getNodeName()))
 				{
 					shape = AWTPolygonProducer.createShape(pointsString,
 							GeneralPath.WIND_NON_ZERO);
@@ -562,12 +560,12 @@ public class StencilShape extends BasicShape
 
 				if (shape != null)
 				{
-					return new svgShape(shape, styleMap);
+					return new _svgShape(shape, styleMap);
 				}
 
 				return null;
 			}
-			else if (isCircle(root.getNodeName()))
+			else if (_isCircle(root.getNodeName()))
 			{
 				double cx = 0;
 				double cy = 0;
@@ -595,10 +593,10 @@ public class StencilShape extends BasicShape
 					}
 				}
 
-				return new svgShape(new Ellipse2D.Double(cx - r, cy - r, r * 2,
+				return new _svgShape(new Ellipse2D.Double(cx - r, cy - r, r * 2,
 						r * 2), styleMap);
 			}
-			else if (isEllipse(root.getNodeName()))
+			else if (_isEllipse(root.getNodeName()))
 			{
 				double cx = 0;
 				double cy = 0;
@@ -637,15 +635,15 @@ public class StencilShape extends BasicShape
 					}
 				}
 
-				return new svgShape(new Ellipse2D.Double(cx - rx, cy - ry,
+				return new _svgShape(new Ellipse2D.Double(cx - rx, cy - ry,
 						rx * 2, ry * 2), styleMap);
 			}
-			else if (isPath(root.getNodeName()))
+			else if (_isPath(root.getNodeName()))
 			{
 				String d = element.getAttribute("d");
 				Shape pathShape = AWTPathProducer.createShape(d,
 						GeneralPath.WIND_NON_ZERO);
-				return new svgShape(pathShape, styleMap);
+				return new _svgShape(pathShape, styleMap);
 			}
 		}
 
@@ -655,7 +653,7 @@ public class StencilShape extends BasicShape
 	/*
 	 *
 	 */
-	private boolean isRectangle(String tag)
+	private boolean _isRectangle(String tag)
 	{
 		return tag.equals("svg:rect") || tag.equals("rect");
 	}
@@ -663,7 +661,7 @@ public class StencilShape extends BasicShape
 	/*
 	 *
 	 */
-	private boolean isPath(String tag)
+	private boolean _isPath(String tag)
 	{
 		return tag.equals("svg:path") || tag.equals("path");
 	}
@@ -671,7 +669,7 @@ public class StencilShape extends BasicShape
 	/*
 	 *
 	 */
-	private boolean isEllipse(String tag)
+	private boolean _isEllipse(String tag)
 	{
 		return tag.equals("svg:ellipse") || tag.equals("ellipse");
 	}
@@ -679,7 +677,7 @@ public class StencilShape extends BasicShape
 	/*
 	 *
 	 */
-	private boolean isLine(String tag)
+	private boolean _isLine(String tag)
 	{
 		return tag.equals("svg:line") || tag.equals("line");
 	}
@@ -687,7 +685,7 @@ public class StencilShape extends BasicShape
 	/*
 	 *
 	 */
-	private boolean isPolyline(String tag)
+	private boolean _isPolyline(String tag)
 	{
 		return tag.equals("svg:polyline") || tag.equals("polyline");
 	}
@@ -695,7 +693,7 @@ public class StencilShape extends BasicShape
 	/*
 	 *
 	 */
-	private boolean isCircle(String tag)
+	private boolean _isCircle(String tag)
 	{
 		return tag.equals("svg:circle") || tag.equals("circle");
 	}
@@ -703,64 +701,14 @@ public class StencilShape extends BasicShape
 	/*
 	 *
 	 */
-	private boolean isPolygon(String tag)
+	private boolean _isPolygon(String tag)
 	{
 		return tag.equals("svg:polygon") || tag.equals("polygon");
 	}
 
-	private boolean isGroup(String tag)
+	private boolean _isGroup(String tag)
 	{
 		return tag.equals("svg:g") || tag.equals("g");
-	}
-
-	protected class svgShape
-	{
-		public Shape shape;
-
-		/**
-		 * Contains an array of key, value pairs that represent the style of the
-		 * cell.
-		 */
-		protected Map<String, Object> style;
-
-		public List<svgShape> subShapes;
-
-		/**
-		 * Holds the current value to which the shape is scaled in X
-		 */
-		protected double currentXScale;
-
-		/**
-		 * Holds the current value to which the shape is scaled in Y
-		 */
-		protected double currentYScale;
-
-		public svgShape(Shape shape, Map<String, Object> style)
-		{
-			this.shape = shape;
-			this.style = style;
-			subShapes = new ArrayList<svgShape>();
-		}
-
-		public double getCurrentXScale()
-		{
-			return currentXScale;
-		}
-
-		public void setCurrentXScale(double currentXScale)
-		{
-			this.currentXScale = currentXScale;
-		}
-
-		public double getCurrentYScale()
-		{
-			return currentYScale;
-		}
-
-		public void setCurrentYScale(double currentYScale)
-		{
-			this.currentYScale = currentYScale;
-		}
 	}
 
 	/**
@@ -799,31 +747,31 @@ public class StencilShape extends BasicShape
 
 	public String getName()
 	{
-		return name;
+		return _name;
 	}
 
 	public void setName(String name)
 	{
-		this.name = name;
+		this._name = name;
 	}
 
 	public String getIconPath()
 	{
-		return iconPath;
+		return _iconPath;
 	}
 
 	public void setIconPath(String iconPath)
 	{
-		this.iconPath = iconPath;
+		this._iconPath = iconPath;
 	}
 
 	public Rectangle2D getBoundingBox()
 	{
-		return boundingBox;
+		return _boundingBox;
 	}
 
 	public void setBoundingBox(Rectangle2D boundingBox)
 	{
-		this.boundingBox = boundingBox;
+		this._boundingBox = boundingBox;
 	}
 }

@@ -27,44 +27,44 @@ public class Morphing extends Animation
 	/**
 	 * Reference to the enclosing graph instance.
 	 */
-	protected GraphComponent graphComponent;
+	protected GraphComponent _graphComponent;
 
 	/**
 	 * Specifies the maximum number of steps for the morphing. Default is
 	 * 6.
 	 */
-	protected int steps;
+	protected int _steps;
 
 	/**
 	 * Counts the current number of steps of the animation.
 	 */
-	protected int step;
+	protected int _step;
 
 	/**
 	 * Ease-off for movement towards the given vector. Larger values are
 	 * slower and smoother. Default is 1.5.
 	 */
-	protected double ease;
+	protected double _ease;
 
 	/**
 	 * Maps from cells to origins. 
 	 */
-	protected Map<Object, Point2d> origins = new HashMap<Object, Point2d>();
+	protected Map<Object, Point2d> _origins = new HashMap<Object, Point2d>();
 
 	/**
 	 * Optional array of cells to limit the animation to. 
 	 */
-	protected Object[] cells;
+	protected Object[] _cells;
 
 	/**
 	 * 
 	 */
-	protected transient Rect dirty;
+	protected transient Rect _dirty;
 
 	/**
 	 * 
 	 */
-	protected transient CellStatePreview preview;
+	protected transient CellStatePreview _preview;
 
 	/**
 	 * Constructs a new morphing instance for the given graph.
@@ -91,9 +91,9 @@ public class Morphing extends Animation
 			int delay)
 	{
 		super(delay);
-		this.graphComponent = graphComponent;
-		this.steps = steps;
-		this.ease = ease;
+		this._graphComponent = graphComponent;
+		this._steps = steps;
+		this._ease = ease;
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class Morphing extends Animation
 	 */
 	public int getSteps()
 	{
-		return steps;
+		return _steps;
 	}
 
 	/**
@@ -109,7 +109,7 @@ public class Morphing extends Animation
 	 */
 	public void setSteps(int value)
 	{
-		steps = value;
+		_steps = value;
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class Morphing extends Animation
 	 */
 	public double getEase()
 	{
-		return ease;
+		return _ease;
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class Morphing extends Animation
 	 */
 	public void setEase(double value)
 	{
-		ease = value;
+		_ease = value;
 	}
 
 	/**
@@ -135,7 +135,7 @@ public class Morphing extends Animation
 	 */
 	public void setCells(Object[] value)
 	{
-		cells = value;
+		_cells = value;
 	}
 
 	/**
@@ -143,27 +143,27 @@ public class Morphing extends Animation
 	 */
 	public void updateAnimation()
 	{
-		preview = new CellStatePreview(graphComponent, false);
+		_preview = new CellStatePreview(_graphComponent, false);
 
-		if (cells != null)
+		if (_cells != null)
 		{
 			// Animates the given cells individually without recursion
-			for (Object cell : cells)
+			for (Object cell : _cells)
 			{
-				animateCell(cell, preview, false);
+				_animateCell(cell, _preview, false);
 			}
 		}
 		else
 		{
 			// Animates all changed cells by using recursion to find
 			// the changed cells but not for the animation itself
-			Object root = graphComponent.getGraph().getModel().getRoot();
-			animateCell(root, preview, true);
+			Object root = _graphComponent.getGraph().getModel().getRoot();
+			_animateCell(root, _preview, true);
 		}
 
-		show(preview);
+		_show(_preview);
 
-		if (preview.isEmpty() || step++ >= steps)
+		if (_preview.isEmpty() || _step++ >= _steps)
 		{
 			stopAnimation();
 		}
@@ -174,46 +174,46 @@ public class Morphing extends Animation
 	 */
 	public void stopAnimation()
 	{
-		graphComponent.getGraph().getView().revalidate();
+		_graphComponent.getGraph().getView().revalidate();
 		super.stopAnimation();
 
-		preview = null;
+		_preview = null;
 
-		if (dirty != null)
+		if (_dirty != null)
 		{
-			graphComponent.getGraphControl().repaint(dirty.getRectangle());
+			_graphComponent.getGraphControl().repaint(_dirty.getRectangle());
 		}
 	}
 
 	/**
 	 * Shows the changes in the given CellStatePreview.
 	 */
-	protected void show(CellStatePreview preview)
+	protected void _show(CellStatePreview preview)
 	{
-		if (dirty != null)
+		if (_dirty != null)
 		{
-			graphComponent.getGraphControl().repaint(dirty.getRectangle());
+			_graphComponent.getGraphControl().repaint(_dirty.getRectangle());
 		}
 		else
 		{
-			graphComponent.getGraphControl().repaint();
+			_graphComponent.getGraphControl().repaint();
 		}
 
-		dirty = preview.show();
+		_dirty = preview.show();
 
-		if (dirty != null)
+		if (_dirty != null)
 		{
-			graphComponent.getGraphControl().repaint(dirty.getRectangle());
+			_graphComponent.getGraphControl().repaint(_dirty.getRectangle());
 		}
 	}
 
 	/**
 	 * Animates the given cell state using moveState.
 	 */
-	protected void animateCell(Object cell, CellStatePreview move,
+	protected void _animateCell(Object cell, CellStatePreview move,
 			boolean recurse)
 	{
-		Graph graph = graphComponent.getGraph();
+		Graph graph = _graphComponent.getGraph();
 		CellState state = graph.getView().getState(cell);
 		Point2d delta = null;
 
@@ -221,7 +221,7 @@ public class Morphing extends Animation
 		{
 			// Moves the animated state from where it will be after the model
 			// change by subtracting the given delta vector from that location
-			delta = getDelta(state);
+			delta = _getDelta(state);
 
 			if (graph.getModel().isVertex(cell)
 					&& (delta.getX() != 0 || delta.getY() != 0))
@@ -233,18 +233,18 @@ public class Morphing extends Animation
 				delta.setX(delta.getX() + translate.getX() * scale);
 				delta.setY(delta.getY() + translate.getY() * scale);
 
-				move.moveState(state, -delta.getX() / ease, -delta.getY()
-						/ ease);
+				move.moveState(state, -delta.getX() / _ease, -delta.getY()
+						/ _ease);
 			}
 		}
 
-		if (recurse && !stopRecursion(state, delta))
+		if (recurse && !_stopRecursion(state, delta))
 		{
 			int childCount = graph.getModel().getChildCount(cell);
 
 			for (int i = 0; i < childCount; i++)
 			{
-				animateCell(graph.getModel().getChildAt(cell, i), move, recurse);
+				_animateCell(graph.getModel().getChildAt(cell, i), move, recurse);
 			}
 		}
 	}
@@ -253,7 +253,7 @@ public class Morphing extends Animation
 	 * Returns true if the animation should not recursively find more
 	 * deltas for children if the given parent state has been animated.
 	 */
-	protected boolean stopRecursion(CellState state, Point2d delta)
+	protected boolean _stopRecursion(CellState state, Point2d delta)
 	{
 		return delta != null && (delta.getX() != 0 || delta.getY() != 0);
 	}
@@ -262,10 +262,10 @@ public class Morphing extends Animation
 	 * Returns the vector between the current rendered state and the future
 	 * location of the state after the display will be updated.
 	 */
-	protected Point2d getDelta(CellState state)
+	protected Point2d _getDelta(CellState state)
 	{
-		Graph graph = graphComponent.getGraph();
-		Point2d origin = getOriginForCell(state.getCell());
+		Graph graph = _graphComponent.getGraph();
+		Point2d origin = _getOriginForCell(state.getCell());
 		Point2d translate = graph.getView().getTranslate();
 		double scale = graph.getView().getScale();
 		Point2d current = new Point2d(state.getX() / scale - translate.getX(),
@@ -279,17 +279,17 @@ public class Morphing extends Animation
 	/**
 	 * Returns the top, left corner of the given cell.
 	 */
-	protected Point2d getOriginForCell(Object cell)
+	protected Point2d _getOriginForCell(Object cell)
 	{
-		Point2d result = origins.get(cell);
+		Point2d result = _origins.get(cell);
 
 		if (result == null)
 		{
-			Graph graph = graphComponent.getGraph();
+			Graph graph = _graphComponent.getGraph();
 
 			if (cell != null)
 			{
-				result = new Point2d(getOriginForCell(graph.getModel()
+				result = new Point2d(_getOriginForCell(graph.getModel()
 						.getParent(cell)));
 				Geometry geo = graph.getCellGeometry(cell);
 
@@ -307,7 +307,7 @@ public class Morphing extends Animation
 				result = new Point2d(-t.getX(), -t.getY());
 			}
 
-			origins.put(cell, result);
+			_origins.put(cell, result);
 		}
 
 		return result;
@@ -318,9 +318,9 @@ public class Morphing extends Animation
 	 */
 	public void paint(Graphics g)
 	{
-		if (preview != null)
+		if (_preview != null)
 		{
-			preview.paint(g);
+			_preview.paint(g);
 		}
 	}
 

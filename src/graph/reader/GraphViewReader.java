@@ -28,25 +28,25 @@ public abstract class GraphViewReader extends DefaultHandler
 	/**
 	 * Holds the canvas to be used for rendering the graph.
 	 */
-	protected ICanvas canvas;
+	protected ICanvas _canvas;
 
 	/**
 	 * Holds the global scale of the graph. This is set just before
 	 * createCanvas is called.
 	 */
-	protected double scale = 1;
+	protected double _scale = 1;
 
 	/**
 	 * Specifies if labels should be rendered as HTML markup.
 	 */
-	protected boolean htmlLabels = false;
+	protected boolean _htmlLabels = false;
 
 	/**
 	 * Sets the htmlLabels switch.
 	 */
 	public void setHtmlLabels(boolean value)
 	{
-		htmlLabels = value;
+		_htmlLabels = value;
 	}
 
 	/**
@@ -54,7 +54,7 @@ public abstract class GraphViewReader extends DefaultHandler
 	 */
 	public boolean isHtmlLabels()
 	{
-		return htmlLabels;
+		return _htmlLabels;
 	}
 
 	/**
@@ -72,7 +72,7 @@ public abstract class GraphViewReader extends DefaultHandler
 	 */
 	public ICanvas getCanvas()
 	{
-		return canvas;
+		return _canvas;
 	}
 
 	/* (non-Javadoc)
@@ -108,17 +108,17 @@ public abstract class GraphViewReader extends DefaultHandler
 	 */
 	public void parseElement(String tagName, Map<String, Object> attrs)
 	{
-		if (canvas == null && tagName.equalsIgnoreCase("graph"))
+		if (_canvas == null && tagName.equalsIgnoreCase("graph"))
 		{
-			scale = Utils.getDouble(attrs, "scale", 1);
-			canvas = createCanvas(attrs);
+			_scale = Utils.getDouble(attrs, "scale", 1);
+			_canvas = createCanvas(attrs);
 
-			if (canvas != null)
+			if (_canvas != null)
 			{
-				canvas.setScale(scale);
+				_canvas.setScale(_scale);
 			}
 		}
-		else if (canvas != null)
+		else if (_canvas != null)
 		{
 			boolean edge = tagName.equalsIgnoreCase("edge");
 			boolean group = tagName.equalsIgnoreCase("group");
@@ -133,8 +133,8 @@ public abstract class GraphViewReader extends DefaultHandler
 				CellState state = new CellState(null, null, attrs);
 
 				String label = parseState(state, edge);
-				canvas.drawCell(state);
-				canvas.drawLabel(label, state, isHtmlLabels());
+				_canvas.drawCell(state);
+				_canvas.drawLabel(label, state, isHtmlLabels());
 			}
 		}
 	}
@@ -172,7 +172,7 @@ public abstract class GraphViewReader extends DefaultHandler
 			Rect vertexBounds = (!edge) ? state : null;
 			state.setLabelBounds(Utils.getLabelPaintBounds(label, state
 					.getStyle(), Utils.isTrue(style, "html", false), offset,
-					vertexBounds, scale));
+					vertexBounds, _scale));
 		}
 
 		return label;

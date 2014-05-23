@@ -53,9 +53,9 @@ public class ElbowEdgeHandler extends EdgeHandler
 	/**
 	 * 
 	 */
-	protected boolean isFlipEvent(MouseEvent e)
+	protected boolean _isFlipEvent(MouseEvent e)
 	{
-		return e.getClickCount() == 2 && index == 1;
+		return e.getClickCount() == 2 && _index == 1;
 	}
 
 	/**
@@ -69,20 +69,20 @@ public class ElbowEdgeHandler extends EdgeHandler
 	/**
 	 * 
 	 */
-	protected Rectangle[] createHandles()
+	protected Rectangle[] _createHandles()
 	{
-		p = createPoints(state);
+		_p = _createPoints(_state);
 		Rectangle[] h = new Rectangle[4];
 
-		Point2d p0 = state.getAbsolutePoint(0);
-		Point2d pe = state.getAbsolutePoint(state.getAbsolutePointCount() - 1);
+		Point2d p0 = _state.getAbsolutePoint(0);
+		Point2d pe = _state.getAbsolutePoint(_state.getAbsolutePointCount() - 1);
 
-		h[0] = createHandle(p0.getPoint());
-		h[2] = createHandle(pe.getPoint());
+		h[0] = _createHandle(p0.getPoint());
+		h[2] = _createHandle(pe.getPoint());
 
 		// Creates the middle green edge handle
-		Geometry geometry = graphComponent.getGraph().getModel().getGeometry(
-				state.getCell());
+		Geometry geometry = _graphComponent.getGraph().getModel().getGeometry(
+				_state.getCell());
 		List<Point2d> points = geometry.getPoints();
 		Point pt = null;
 
@@ -94,23 +94,23 @@ public class ElbowEdgeHandler extends EdgeHandler
 		}
 		else
 		{
-			GraphView view = graphComponent.getGraph().getView();
-			pt = view.transformControlPoint(state, points.get(0))
+			GraphView view = _graphComponent.getGraph().getView();
+			pt = view.transformControlPoint(_state, points.get(0))
 					.getPoint();
 		}
 
 		// Create the green middle handle
-		h[1] = createHandle(pt);
+		h[1] = _createHandle(pt);
 
 		// Creates the yellow label handle
-		h[3] = createHandle(state.getAbsoluteOffset().getPoint(),
+		h[3] = _createHandle(_state.getAbsoluteOffset().getPoint(),
 				Constants.LABEL_HANDLE_SIZE);
 
 		// Makes handle slightly bigger if the yellow label handle
 		// exists and intersects this green handle
-		if (isHandleVisible(3) && h[1].intersects(h[3]))
+		if (_isHandleVisible(3) && h[1].intersects(h[3]))
 		{
-			h[1] = createHandle(pt, Constants.HANDLE_SIZE + 3);
+			h[1] = _createHandle(pt, Constants.HANDLE_SIZE + 3);
 		}
 
 		return h;

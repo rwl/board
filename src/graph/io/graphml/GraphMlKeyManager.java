@@ -20,9 +20,9 @@ public class GraphMlKeyManager
 	 * Map with the key elements of the document.<br/>
 	 * The key is the key's ID.
 	 */
-	private HashMap<String, GraphMlKey> keyMap = new HashMap<String, GraphMlKey>();
+	private HashMap<String, GraphMlKey> _keyMap = new HashMap<String, GraphMlKey>();
 
-	private static GraphMlKeyManager keyManager = null;
+	private static GraphMlKeyManager _keyManager = null;
 
 	/**
 	 * Singleton pattern requires private constructor.
@@ -40,11 +40,11 @@ public class GraphMlKeyManager
 	 */
 	public static GraphMlKeyManager getInstance()
 	{
-		if (keyManager == null)
+		if (_keyManager == null)
 		{
-			keyManager = new GraphMlKeyManager();
+			_keyManager = new GraphMlKeyManager();
 		}
-		return keyManager;
+		return _keyManager;
 	}
 
 	/**
@@ -63,17 +63,17 @@ public class GraphMlKeyManager
 			Element key = (Element) gmlKeys.item(i);
 			String keyId = key.getAttribute(GraphMlConstants.ID);
 			GraphMlKey keyElement = new GraphMlKey(key);
-			keyMap.put(keyId, keyElement);
+			_keyMap.put(keyId, keyElement);
 		}
 	}
 
 	public HashMap<String, GraphMlKey> getKeyMap()
 	{
-		return keyMap;
+		return _keyMap;
 	}
 
 	public void setKeyMap(HashMap<String, GraphMlKey> keyMap)
 	{
-		this.keyMap = keyMap;
+		this._keyMap = keyMap;
 	}
 }

@@ -21,7 +21,7 @@ public class CurveShape extends ConnectorShape
 	 * Cache of the points between which drawing straight lines views as a
 	 * curve
 	 */
-	protected Curve curve;
+	protected Curve _curve;
 
 	/**
 	 * 
@@ -36,7 +36,7 @@ public class CurveShape extends ConnectorShape
 	 */
 	public CurveShape(Curve curve)
 	{
-		this.curve = curve;
+		this._curve = curve;
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class CurveShape extends ConnectorShape
 	 */
 	public Curve getCurve()
 	{
-		return curve;
+		return _curve;
 	}
 
 	/**
@@ -67,13 +67,13 @@ public class CurveShape extends ConnectorShape
 	/**
 	 * 
 	 */
-	protected void paintPolyline(Graphics2DCanvas canvas,
+	protected void _paintPolyline(Graphics2DCanvas canvas,
 			List<Point2d> points, Map<String, Object> style)
 	{
 		double scale = canvas.getScale();
 		validateCurve(points, scale, style);
 
-		canvas.paintPolyline(curve.getCurvePoints(Curve.CORE_CURVE), false);
+		canvas.paintPolyline(_curve.getCurvePoints(Curve.CORE_CURVE), false);
 	}
 
 	/**
@@ -83,16 +83,16 @@ public class CurveShape extends ConnectorShape
 	public void validateCurve(List<Point2d> points, double scale,
 			Map<String, Object> style)
 	{
-		if (curve == null)
+		if (_curve == null)
 		{
-			curve = new Curve(points);
+			_curve = new Curve(points);
 		}
 		else
 		{
-			curve.updateCurve(points);
+			_curve.updateCurve(points);
 		}
 
-		curve.setLabelBuffer(scale * Constants.DEFAULT_LABEL_BUFFER);
+		_curve.setLabelBuffer(scale * Constants.DEFAULT_LABEL_BUFFER);
 	}
 
 	/**
@@ -104,10 +104,10 @@ public class CurveShape extends ConnectorShape
 	 * @param markerSize the scaled maximum length of the marker
 	 * @return a line describing the vector the marker should be drawn along
 	 */
-	protected Line getMarkerVector(List<Point2d> points, boolean source,
+	protected Line _getMarkerVector(List<Point2d> points, boolean source,
 			double markerSize)
 	{
-		double curveLength = curve.getCurveLength(Curve.CORE_CURVE);
+		double curveLength = _curve.getCurveLength(Curve.CORE_CURVE);
 		double markerRatio = markerSize / curveLength;
 		if (markerRatio >= 1.0)
 		{
@@ -116,14 +116,14 @@ public class CurveShape extends ConnectorShape
 
 		if (source)
 		{
-			Line sourceVector = curve.getCurveParallel(Curve.CORE_CURVE,
+			Line sourceVector = _curve.getCurveParallel(Curve.CORE_CURVE,
 					markerRatio);
 			return new Line(sourceVector.getX(), sourceVector.getY(),
 					points.get(0));
 		}
 		else
 		{
-			Line targetVector = curve.getCurveParallel(Curve.CORE_CURVE,
+			Line targetVector = _curve.getCurveParallel(Curve.CORE_CURVE,
 					1.0 - markerRatio);
 			int pointCount = points.size();
 			return new Line(targetVector.getX(), targetVector.getY(),

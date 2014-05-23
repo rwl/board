@@ -31,15 +31,15 @@ public class Stylesheet
 	/**
 	 * Maps from names to styles.
 	 */
-	protected Map<String, Map<String, Object>> styles = new Hashtable<String, Map<String, Object>>();
+	protected Map<String, Map<String, Object>> _styles = new Hashtable<String, Map<String, Object>>();
 
 	/**
 	 * Constructs a new stylesheet and assigns default styles.
 	 */
 	public Stylesheet()
 	{
-		setDefaultVertexStyle(createDefaultVertexStyle());
-		setDefaultEdgeStyle(createDefaultEdgeStyle());
+		setDefaultVertexStyle(_createDefaultVertexStyle());
+		setDefaultEdgeStyle(_createDefaultEdgeStyle());
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class Stylesheet
 	 */
 	public Map<String, Map<String, Object>> getStyles()
 	{
-		return styles;
+		return _styles;
 	}
 
 	/**
@@ -57,7 +57,7 @@ public class Stylesheet
 	 */
 	public void setStyles(Map<String, Map<String, Object>> styles)
 	{
-		this.styles = styles;
+		this._styles = styles;
 	}
 
 	/**
@@ -65,7 +65,7 @@ public class Stylesheet
 	 * 
 	 * @return Returns the default vertex style.
 	 */
-	protected Map<String, Object> createDefaultVertexStyle()
+	protected Map<String, Object> _createDefaultVertexStyle()
 	{
 		Map<String, Object> style = new Hashtable<String, Object>();
 
@@ -85,7 +85,7 @@ public class Stylesheet
 	 * 
 	 * @return Returns the default edge style.
 	 */
-	protected Map<String, Object> createDefaultEdgeStyle()
+	protected Map<String, Object> _createDefaultEdgeStyle()
 	{
 		Map<String, Object> style = new Hashtable<String, Object>();
 
@@ -106,7 +106,7 @@ public class Stylesheet
 	 */
 	public Map<String, Object> getDefaultVertexStyle()
 	{
-		return styles.get("defaultVertex");
+		return _styles.get("defaultVertex");
 	}
 
 	/**
@@ -126,7 +126,7 @@ public class Stylesheet
 	 */
 	public Map<String, Object> getDefaultEdgeStyle()
 	{
-		return styles.get("defaultEdge");
+		return _styles.get("defaultEdge");
 	}
 
 	/**
@@ -147,7 +147,7 @@ public class Stylesheet
 	 */
 	public void putCellStyle(String name, Map<String, Object> style)
 	{
-		styles.put(name, style);
+		_styles.put(name, style);
 	}
 
 	/**
@@ -198,7 +198,7 @@ public class Stylesheet
 				}
 				else
 				{
-					Map<String, Object> tmpStyle = styles.get(tmp);
+					Map<String, Object> tmpStyle = _styles.get(tmp);
 
 					if (tmpStyle != null)
 					{

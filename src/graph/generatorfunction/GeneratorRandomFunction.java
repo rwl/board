@@ -9,11 +9,11 @@ import graph.view.CellState;
  */
 public class GeneratorRandomFunction extends GeneratorFunction
 {
-	private double maxWeight = 1;
+	private double _maxWeight = 1;
 
-	private double minWeight = 0;
+	private double _minWeight = 0;
 
-	private int roundToDecimals = 2;
+	private int _roundToDecimals = 2;
 
 	public GeneratorRandomFunction(double minWeight, double maxWeight, int roundToDecimals)
 	{
@@ -25,7 +25,7 @@ public class GeneratorRandomFunction extends GeneratorFunction
 	{
 		Double edgeWeight = null;
 
-		edgeWeight = Math.random() * (maxWeight - minWeight) + minWeight;
+		edgeWeight = Math.random() * (_maxWeight - _minWeight) + _minWeight;
 		edgeWeight = (double) Math.round(edgeWeight * Math.pow(10, getRoundToDecimals())) / Math.pow(10, getRoundToDecimals());
 
 		return edgeWeight;
@@ -33,27 +33,27 @@ public class GeneratorRandomFunction extends GeneratorFunction
 
 	public double getMaxWeight()
 	{
-		return maxWeight;
+		return _maxWeight;
 	};
 
 	public void setWeightRange(double minWeight, double maxWeight)
 	{
-		this.maxWeight = Math.max(minWeight, maxWeight);
-		this.minWeight = Math.min(minWeight, maxWeight);
+		this._maxWeight = Math.max(minWeight, maxWeight);
+		this._minWeight = Math.min(minWeight, maxWeight);
 	};
 
 	public double getMinWeight()
 	{
-		return minWeight;
+		return _minWeight;
 	};
 
 	public int getRoundToDecimals()
 	{
-		return roundToDecimals;
+		return _roundToDecimals;
 	};
 
 	public void setRoundToDecimals(int roundToDecimals)
 	{
-		this.roundToDecimals = roundToDecimals;
+		this._roundToDecimals = roundToDecimals;
 	};
 };

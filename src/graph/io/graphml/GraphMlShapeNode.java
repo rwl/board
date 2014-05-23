@@ -9,17 +9,17 @@ import org.w3c.dom.Element;
 
 public class GraphMlShapeNode
 {
-	private String dataHeight = "";
+	private String _dataHeight = "";
 
-	private String dataWidth = "";
+	private String _dataWidth = "";
 
-	private String dataX = "";
+	private String _dataX = "";
 
-	private String dataY = "";
+	private String _dataY = "";
 
-	private String dataLabel = "";
+	private String _dataLabel = "";
 
-	private String dataStyle = "";
+	private String _dataStyle = "";
 
 	/**
 	 * Construct a shape Node with the given parameters
@@ -32,11 +32,11 @@ public class GraphMlShapeNode
 	public GraphMlShapeNode(String dataHeight, String dataWidth, String dataX,
 			String dataY, String dataStyle)
 	{
-		this.dataHeight = dataHeight;
-		this.dataWidth = dataWidth;
-		this.dataX = dataX;
-		this.dataY = dataY;
-		this.dataStyle = dataStyle;
+		this._dataHeight = dataHeight;
+		this._dataWidth = dataWidth;
+		this._dataX = dataX;
+		this._dataY = dataY;
+		this._dataStyle = dataStyle;
 	}
 
 	/**
@@ -55,17 +55,17 @@ public class GraphMlShapeNode
 		//Defines Geometry
 		Element geometryElement = GraphMlUtils.childsTag(shapeNodeElement,
 				GraphMlConstants.JGRAPH + GraphMlConstants.GEOMETRY);
-		this.dataHeight = geometryElement.getAttribute(GraphMlConstants.HEIGHT);
-		this.dataWidth = geometryElement.getAttribute(GraphMlConstants.WIDTH);
-		this.dataX = geometryElement.getAttribute(GraphMlConstants.X);
-		this.dataY = geometryElement.getAttribute(GraphMlConstants.Y);
+		this._dataHeight = geometryElement.getAttribute(GraphMlConstants.HEIGHT);
+		this._dataWidth = geometryElement.getAttribute(GraphMlConstants.WIDTH);
+		this._dataX = geometryElement.getAttribute(GraphMlConstants.X);
+		this._dataY = geometryElement.getAttribute(GraphMlConstants.Y);
 
 		Element styleElement = GraphMlUtils.childsTag(shapeNodeElement,
 				GraphMlConstants.JGRAPH + GraphMlConstants.STYLE);
 		
 		if (styleElement != null)
 		{
-			this.dataStyle = styleElement
+			this._dataStyle = styleElement
 					.getAttribute(GraphMlConstants.PROPERTIES);
 		}
 		//Defines Label
@@ -74,7 +74,7 @@ public class GraphMlShapeNode
 		
 		if (labelElement != null)
 		{
-			this.dataLabel = labelElement.getAttribute(GraphMlConstants.TEXT);
+			this._dataLabel = labelElement.getAttribute(GraphMlConstants.TEXT);
 		}
 	}
 
@@ -91,30 +91,30 @@ public class GraphMlShapeNode
 		Element dataShapeGeometry = document.createElementNS(
 				GraphMlConstants.JGRAPH_URL, GraphMlConstants.JGRAPH
 						+ GraphMlConstants.GEOMETRY);
-		dataShapeGeometry.setAttribute(GraphMlConstants.HEIGHT, dataHeight);
-		dataShapeGeometry.setAttribute(GraphMlConstants.WIDTH, dataWidth);
-		dataShapeGeometry.setAttribute(GraphMlConstants.X, dataX);
-		dataShapeGeometry.setAttribute(GraphMlConstants.Y, dataY);
+		dataShapeGeometry.setAttribute(GraphMlConstants.HEIGHT, _dataHeight);
+		dataShapeGeometry.setAttribute(GraphMlConstants.WIDTH, _dataWidth);
+		dataShapeGeometry.setAttribute(GraphMlConstants.X, _dataX);
+		dataShapeGeometry.setAttribute(GraphMlConstants.Y, _dataY);
 
 		dataShape.appendChild(dataShapeGeometry);
 
-		if (!this.dataStyle.equals(""))
+		if (!this._dataStyle.equals(""))
 		{
 			Element dataShapeStyle = document.createElementNS(
 					GraphMlConstants.JGRAPH_URL, GraphMlConstants.JGRAPH
 							+ GraphMlConstants.STYLE);
-			dataShapeStyle.setAttribute(GraphMlConstants.PROPERTIES, dataStyle);
+			dataShapeStyle.setAttribute(GraphMlConstants.PROPERTIES, _dataStyle);
 			dataShape.appendChild(dataShapeStyle);
 		}
 
 		//Sets Label
-		if (!this.dataLabel.equals(""))
+		if (!this._dataLabel.equals(""))
 		{
 
 			Element dataShapeLabel = document.createElementNS(
 					GraphMlConstants.JGRAPH_URL, GraphMlConstants.JGRAPH
 							+ GraphMlConstants.LABEL);
-			dataShapeLabel.setAttribute(GraphMlConstants.TEXT, dataLabel);
+			dataShapeLabel.setAttribute(GraphMlConstants.TEXT, _dataLabel);
 
 			dataShape.appendChild(dataShapeLabel);
 		}
@@ -124,61 +124,61 @@ public class GraphMlShapeNode
 
 	public String getDataHeight()
 	{
-		return dataHeight;
+		return _dataHeight;
 	}
 
 	public void setDataHeight(String dataHeight)
 	{
-		this.dataHeight = dataHeight;
+		this._dataHeight = dataHeight;
 	}
 
 	public String getDataWidth()
 	{
-		return dataWidth;
+		return _dataWidth;
 	}
 
 	public void setDataWidth(String dataWidth)
 	{
-		this.dataWidth = dataWidth;
+		this._dataWidth = dataWidth;
 	}
 
 	public String getDataX()
 	{
-		return dataX;
+		return _dataX;
 	}
 
 	public void setDataX(String dataX)
 	{
-		this.dataX = dataX;
+		this._dataX = dataX;
 	}
 
 	public String getDataY()
 	{
-		return dataY;
+		return _dataY;
 	}
 
 	public void setDataY(String dataY)
 	{
-		this.dataY = dataY;
+		this._dataY = dataY;
 	}
 
 	public String getDataLabel()
 	{
-		return dataLabel;
+		return _dataLabel;
 	}
 
 	public void setDataLabel(String dataLabel)
 	{
-		this.dataLabel = dataLabel;
+		this._dataLabel = dataLabel;
 	}
 
 	public String getDataStyle()
 	{
-		return dataStyle;
+		return _dataStyle;
 	}
 
 	public void setDataStyle(String dataStyle)
 	{
-		this.dataStyle = dataStyle;
+		this._dataStyle = dataStyle;
 	}
 }

@@ -31,14 +31,14 @@ public class MinimumCycleRemover implements HierarchicalLayoutStage
 	/**
 	 * Reference to the enclosing layout algorithm
 	 */
-	protected HierarchicalLayout layout;
+	protected HierarchicalLayout _layout;
 
 	/**
 	 * Constructor that has the roots specified
 	 */
 	public MinimumCycleRemover(HierarchicalLayout layout)
 	{
-		this.layout = layout;
+		this._layout = layout;
 	}
 
 	/**
@@ -46,7 +46,7 @@ public class MinimumCycleRemover implements HierarchicalLayoutStage
 	 */
 	public void execute(Object parent)
 	{
-		GraphHierarchyModel model = layout.getModel();
+		GraphHierarchyModel model = _layout.getModel();
 		final Set<GraphHierarchyNode> seenNodes = new HashSet<GraphHierarchyNode>();
 		final Set<GraphHierarchyNode> unseenNodes = new HashSet<GraphHierarchyNode>(
 				model.getVertexMapper().values());
@@ -132,7 +132,7 @@ public class MinimumCycleRemover implements HierarchicalLayoutStage
 			}
 		}, unseenNodesArray, true, seenNodesCopy);
 
-		Graph graph = layout.getGraph();
+		Graph graph = _layout.getGraph();
 
 		if (possibleNewRoots != null && possibleNewRoots.size() > 0)
 		{

@@ -26,34 +26,34 @@ public abstract class BasicCanvas implements ICanvas
 	 * Defines the base path for images with relative paths. Trailing slash
 	 * is required. Default value is DEFAULT_IMAGEBASEPATH.
 	 */
-	protected String imageBasePath = DEFAULT_IMAGEBASEPATH;
+	protected String _imageBasePath = DEFAULT_IMAGEBASEPATH;
 
 	/**
 	 * Specifies the current translation. Default is (0,0).
 	 */
-	protected Point translate = new Point();
+	protected Point _translate = new Point();
 
 	/**
 	 * Specifies the current scale. Default is 1.
 	 */
-	protected double scale = 1;
+	protected double _scale = 1;
 
 	/**
 	 * Specifies whether labels should be painted. Default is true.
 	 */
-	protected boolean drawLabels = true;
+	protected boolean _drawLabels = true;
 
 	/**
 	 * Cache for images.
 	 */
-	protected Hashtable<String, BufferedImage> imageCache = new Hashtable<String, BufferedImage>();
+	protected Hashtable<String, BufferedImage> _imageCache = new Hashtable<String, BufferedImage>();
 
 	/**
 	 * Sets the current translate.
 	 */
 	public void setTranslate(int dx, int dy)
 	{
-		translate = new Point(dx, dy);
+		_translate = new Point(dx, dy);
 	}
 
 	/**
@@ -61,7 +61,7 @@ public abstract class BasicCanvas implements ICanvas
 	 */
 	public Point getTranslate()
 	{
-		return translate;
+		return _translate;
 	}
 
 	/**
@@ -69,7 +69,7 @@ public abstract class BasicCanvas implements ICanvas
 	 */
 	public void setScale(double scale)
 	{
-		this.scale = scale;
+		this._scale = scale;
 	}
 
 	/**
@@ -77,7 +77,7 @@ public abstract class BasicCanvas implements ICanvas
 	 */
 	public double getScale()
 	{
-		return scale;
+		return _scale;
 	}
 
 	/**
@@ -85,7 +85,7 @@ public abstract class BasicCanvas implements ICanvas
 	 */
 	public void setDrawLabels(boolean drawLabels)
 	{
-		this.drawLabels = drawLabels;
+		this._drawLabels = drawLabels;
 	}
 
 	/**
@@ -93,7 +93,7 @@ public abstract class BasicCanvas implements ICanvas
 	 */
 	public String getImageBasePath()
 	{
-		return imageBasePath;
+		return _imageBasePath;
 	}
 
 	/**
@@ -101,7 +101,7 @@ public abstract class BasicCanvas implements ICanvas
 	 */
 	public void setImageBasePath(String imageBasePath)
 	{
-		this.imageBasePath = imageBasePath;
+		this._imageBasePath = imageBasePath;
 	}
 
 	/**
@@ -109,7 +109,7 @@ public abstract class BasicCanvas implements ICanvas
 	 */
 	public boolean isDrawLabels()
 	{
-		return drawLabels;
+		return _drawLabels;
 	}
 
 	/**
@@ -119,7 +119,7 @@ public abstract class BasicCanvas implements ICanvas
 	 */
 	public BufferedImage loadImage(String image)
 	{
-		BufferedImage img = imageCache.get(image);
+		BufferedImage img = _imageCache.get(image);
 
 		if (img == null)
 		{
@@ -127,7 +127,7 @@ public abstract class BasicCanvas implements ICanvas
 
 			if (img != null)
 			{
-				imageCache.put(image, img);
+				_imageCache.put(image, img);
 			}
 		}
 
@@ -139,7 +139,7 @@ public abstract class BasicCanvas implements ICanvas
 	 */
 	public void flushImageCache()
 	{
-		imageCache.clear();
+		_imageCache.clear();
 	}
 
 	/**
@@ -152,7 +152,7 @@ public abstract class BasicCanvas implements ICanvas
 
 		if (filename != null && !filename.startsWith("/") && !filename.startsWith("file:/"))
 		{
-			filename = imageBasePath + filename;
+			filename = _imageBasePath + filename;
 		}
 
 		return filename;

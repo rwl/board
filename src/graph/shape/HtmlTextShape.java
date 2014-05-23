@@ -40,14 +40,14 @@ public class HtmlTextShape implements ITextShape
 	 * Specifies if linefeeds should be replaced with breaks in HTML markup.
 	 * Default is true.
 	 */
-	protected boolean replaceHtmlLinefeeds = true;
+	protected boolean _replaceHtmlLinefeeds = true;
 
 	/**
 	 * Returns replaceHtmlLinefeeds
 	 */
 	public boolean isReplaceHtmlLinefeeds()
 	{
-		return replaceHtmlLinefeeds;
+		return _replaceHtmlLinefeeds;
 	}
 
 	/**
@@ -55,13 +55,13 @@ public class HtmlTextShape implements ITextShape
 	 */
 	public void setReplaceHtmlLinefeeds(boolean value)
 	{
-		replaceHtmlLinefeeds = value;
+		_replaceHtmlLinefeeds = value;
 	}
 
 	/**
 	 * 
 	 */
-	protected String createHtmlDocument(Map<String, Object> style, String text,
+	protected String _createHtmlDocument(Map<String, Object> style, String text,
 			int w, int h)
 	{
 		String overflow = Utils.getString(style, Constants.STYLE_OVERFLOW, "");
@@ -120,7 +120,7 @@ public class HtmlTextShape implements ITextShape
 			}
 
 			// Renders the scaled text
-			textRenderer.setText(createHtmlDocument(style, text,
+			textRenderer.setText(_createHtmlDocument(style, text,
 					(int) Math.round(w / state.getView().getScale()),
 					(int) Math.round(h / state.getView().getScale())));
 			textRenderer.setFont(Utils.getFont(style, canvas.getScale()));

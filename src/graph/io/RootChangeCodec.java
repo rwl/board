@@ -5,7 +5,7 @@
 package graph.io;
 
 import graph.model.ICell;
-import graph.model.GraphModel.RootChange;
+import graph.model.RootChange;
 
 import java.util.Map;
 

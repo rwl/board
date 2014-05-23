@@ -24,72 +24,72 @@ public class CellState extends Rect
 	/**
 	 * Reference to the enclosing graph view.
 	 */
-	protected GraphView view;
+	protected GraphView _view;
 
 	/**
 	 * Reference to the cell that is represented by this state.
 	 */
-	protected Object cell;
+	protected Object _cell;
 
 	/**
 	 * Holds the current label value, including newlines which result from
 	 * word wrapping.
 	 */
-	protected String label;
+	protected String _label;
 
 	/**
 	 * Contains an array of key, value pairs that represent the style of the
 	 * cell.
 	 */
-	protected Map<String, Object> style;
+	protected Map<String, Object> _style;
 
 	/**
 	 * Holds the origin for all child cells.
 	 */
-	protected Point2d origin = new Point2d();
+	protected Point2d _origin = new Point2d();
 
 	/**
 	 * List of mxPoints that represent the absolute points of an edge.
 	 */
-	protected List<Point2d> absolutePoints;
+	protected List<Point2d> _absolutePoints;
 
 	/**
 	 * Holds the absolute offset. For edges, this is the absolute coordinates
 	 * of the label position. For vertices, this is the offset of the label
 	 * relative to the top, left corner of the vertex.
 	 */
-	protected Point2d absoluteOffset = new Point2d();
+	protected Point2d _absoluteOffset = new Point2d();
 
 	/**
 	 * Caches the distance between the end points and the length of an edge.
 	 */
-	protected double terminalDistance, length;
+	protected double _terminalDistance, _length;
 
 	/**
 	 * Array of numbers that represent the cached length of each segment of the
 	 * edge.
 	 */
-	protected double[] segments;
+	protected double[] _segments;
 
 	/**
 	 * Holds the rectangle which contains the label.
 	 */
-	protected Rect labelBounds;
+	protected Rect _labelBounds;
 
 	/**
 	 * Holds the largest rectangle which contains all rendering for this cell.
 	 */
-	protected Rect boundingBox;
+	protected Rect _boundingBox;
 
 	/**
 	 * Specifies if the state is invalid. Default is true.
 	 */
-	protected boolean invalid = true;
+	protected boolean _invalid = true;
 
 	/**
 	 * Caches the visible source and target terminal states.
 	 */
-	protected CellState visibleSourceState, visibleTargetState;
+	protected CellState _visibleSourceState, _visibleTargetState;
 
 	/**
 	 * Constructs an empty cell state.
@@ -119,7 +119,7 @@ public class CellState extends Rect
 	 */
 	public boolean isInvalid()
 	{
-		return invalid;
+		return _invalid;
 	}
 
 	/**
@@ -127,7 +127,7 @@ public class CellState extends Rect
 	 */
 	public void setInvalid(boolean invalid)
 	{
-		this.invalid = invalid;
+		this._invalid = invalid;
 	}
 
 	/**
@@ -137,7 +137,7 @@ public class CellState extends Rect
 	 */
 	public GraphView getView()
 	{
-		return view;
+		return _view;
 	}
 
 	/**
@@ -147,7 +147,7 @@ public class CellState extends Rect
 	 */
 	public void setView(GraphView view)
 	{
-		this.view = view;
+		this._view = view;
 	}
 
 	/**
@@ -155,7 +155,7 @@ public class CellState extends Rect
 	 */
 	public String getLabel()
 	{
-		return label;
+		return _label;
 	}
 
 	/**
@@ -163,7 +163,7 @@ public class CellState extends Rect
 	 */
 	public void setLabel(String value)
 	{
-		label = value;
+		_label = value;
 	}
 
 	/**
@@ -173,7 +173,7 @@ public class CellState extends Rect
 	 */
 	public Object getCell()
 	{
-		return cell;
+		return _cell;
 	}
 
 	/**
@@ -183,7 +183,7 @@ public class CellState extends Rect
 	 */
 	public void setCell(Object cell)
 	{
-		this.cell = cell;
+		this._cell = cell;
 	}
 
 	/**
@@ -193,7 +193,7 @@ public class CellState extends Rect
 	 */
 	public Map<String, Object> getStyle()
 	{
-		return style;
+		return _style;
 	}
 
 	/**
@@ -203,7 +203,7 @@ public class CellState extends Rect
 	 */
 	public void setStyle(Map<String, Object> style)
 	{
-		this.style = style;
+		this._style = style;
 	}
 
 	/**
@@ -213,7 +213,7 @@ public class CellState extends Rect
 	 */
 	public Point2d getOrigin()
 	{
-		return origin;
+		return _origin;
 	}
 
 	/**
@@ -223,7 +223,7 @@ public class CellState extends Rect
 	 */
 	public void setOrigin(Point2d origin)
 	{
-		this.origin = origin;
+		this._origin = origin;
 	}
 
 	/**
@@ -233,7 +233,7 @@ public class CellState extends Rect
 	 */
 	public Point2d getAbsolutePoint(int index)
 	{
-		return absolutePoints.get(index);
+		return _absolutePoints.get(index);
 	}
 
 	/**
@@ -243,7 +243,7 @@ public class CellState extends Rect
 	 */
 	public Point2d setAbsolutePoint(int index, Point2d point)
 	{
-		return absolutePoints.set(index, point);
+		return _absolutePoints.set(index, point);
 	}
 
 	/**
@@ -253,7 +253,7 @@ public class CellState extends Rect
 	 */
 	public int getAbsolutePointCount()
 	{
-		return (absolutePoints != null) ? absolutePoints.size() : 0;
+		return (_absolutePoints != null) ? _absolutePoints.size() : 0;
 	}
 
 	/**
@@ -263,7 +263,7 @@ public class CellState extends Rect
 	 */
 	public List<Point2d> getAbsolutePoints()
 	{
-		return absolutePoints;
+		return _absolutePoints;
 	}
 
 	/**
@@ -273,7 +273,7 @@ public class CellState extends Rect
 	 */
 	public void setAbsolutePoints(List<Point2d> absolutePoints)
 	{
-		this.absolutePoints = absolutePoints;
+		this._absolutePoints = absolutePoints;
 	}
 
 	/**
@@ -283,7 +283,7 @@ public class CellState extends Rect
 	 */
 	public Point2d getAbsoluteOffset()
 	{
-		return absoluteOffset;
+		return _absoluteOffset;
 	}
 
 	/**
@@ -293,7 +293,7 @@ public class CellState extends Rect
 	 */
 	public void setAbsoluteOffset(Point2d absoluteOffset)
 	{
-		this.absoluteOffset = absoluteOffset;
+		this._absoluteOffset = absoluteOffset;
 	}
 
 	/**
@@ -303,7 +303,7 @@ public class CellState extends Rect
 	 */
 	public double getTerminalDistance()
 	{
-		return terminalDistance;
+		return _terminalDistance;
 	}
 
 	/**
@@ -313,7 +313,7 @@ public class CellState extends Rect
 	 */
 	public void setTerminalDistance(double terminalDistance)
 	{
-		this.terminalDistance = terminalDistance;
+		this._terminalDistance = terminalDistance;
 	}
 
 	/**
@@ -323,7 +323,7 @@ public class CellState extends Rect
 	 */
 	public double getLength()
 	{
-		return length;
+		return _length;
 	}
 
 	/**
@@ -333,7 +333,7 @@ public class CellState extends Rect
 	 */
 	public void setLength(double length)
 	{
-		this.length = length;
+		this._length = length;
 	}
 
 	/**
@@ -343,7 +343,7 @@ public class CellState extends Rect
 	 */
 	public double[] getSegments()
 	{
-		return segments;
+		return _segments;
 	}
 
 	/**
@@ -353,7 +353,7 @@ public class CellState extends Rect
 	 */
 	public void setSegments(double[] segments)
 	{
-		this.segments = segments;
+		this._segments = segments;
 	}
 
 	/**
@@ -363,7 +363,7 @@ public class CellState extends Rect
 	 */
 	public Rect getLabelBounds()
 	{
-		return labelBounds;
+		return _labelBounds;
 	}
 
 	/**
@@ -373,7 +373,7 @@ public class CellState extends Rect
 	 */
 	public void setLabelBounds(Rect labelBounds)
 	{
-		this.labelBounds = labelBounds;
+		this._labelBounds = labelBounds;
 	}
 
 	/**
@@ -383,7 +383,7 @@ public class CellState extends Rect
 	 */
 	public Rect getBoundingBox()
 	{
-		return boundingBox;
+		return _boundingBox;
 	}
 
 	/**
@@ -393,7 +393,7 @@ public class CellState extends Rect
 	 */
 	public void setBoundingBox(Rect boundingBox)
 	{
-		this.boundingBox = boundingBox;
+		this._boundingBox = boundingBox;
 	}
 
 	/**
@@ -436,35 +436,35 @@ public class CellState extends Rect
 	{
 		if (isSource)
 		{
-			if (absolutePoints == null)
+			if (_absolutePoints == null)
 			{
-				absolutePoints = new ArrayList<Point2d>();
+				_absolutePoints = new ArrayList<Point2d>();
 			}
 
-			if (absolutePoints.size() == 0)
+			if (_absolutePoints.size() == 0)
 			{
-				absolutePoints.add(point);
+				_absolutePoints.add(point);
 			}
 			else
 			{
-				absolutePoints.set(0, point);
+				_absolutePoints.set(0, point);
 			}
 		}
 		else
 		{
-			if (absolutePoints == null)
+			if (_absolutePoints == null)
 			{
-				absolutePoints = new ArrayList<Point2d>();
-				absolutePoints.add(null);
-				absolutePoints.add(point);
+				_absolutePoints = new ArrayList<Point2d>();
+				_absolutePoints.add(null);
+				_absolutePoints.add(point);
 			}
-			else if (absolutePoints.size() == 1)
+			else if (_absolutePoints.size() == 1)
 			{
-				absolutePoints.add(point);
+				_absolutePoints.add(point);
 			}
 			else
 			{
-				absolutePoints.set(absolutePoints.size() - 1, point);
+				_absolutePoints.set(_absolutePoints.size() - 1, point);
 			}
 		}
 	}
@@ -490,7 +490,7 @@ public class CellState extends Rect
 	 */
 	public CellState getVisibleTerminalState(boolean source)
 	{
-		return (source) ? visibleSourceState : visibleTargetState;
+		return (source) ? _visibleSourceState : _visibleTargetState;
 	}
 
 	/**
@@ -504,11 +504,11 @@ public class CellState extends Rect
 	{
 		if (source)
 		{
-			visibleSourceState = terminalState;
+			_visibleSourceState = terminalState;
 		}
 		else
 		{
-			visibleTargetState = terminalState;
+			_visibleTargetState = terminalState;
 		}
 	}
 
@@ -519,51 +519,51 @@ public class CellState extends Rect
 	 */
 	public Object clone()
 	{
-		CellState clone = new CellState(view, cell, style);
+		CellState clone = new CellState(_view, _cell, _style);
 		
-		if (label != null)
+		if (_label != null)
 		{
-			clone.label = label;
+			clone._label = _label;
 		}
 
-		if (absolutePoints != null)
+		if (_absolutePoints != null)
 		{
-			clone.absolutePoints = new ArrayList<Point2d>();
+			clone._absolutePoints = new ArrayList<Point2d>();
 
-			for (int i = 0; i < absolutePoints.size(); i++)
+			for (int i = 0; i < _absolutePoints.size(); i++)
 			{
-				clone.absolutePoints.add((Point2d) absolutePoints.get(i)
+				clone._absolutePoints.add((Point2d) _absolutePoints.get(i)
 						.clone());
 			}
 		}
 
-		if (origin != null)
+		if (_origin != null)
 		{
-			clone.origin = (Point2d) origin.clone();
+			clone._origin = (Point2d) _origin.clone();
 		}
 
-		if (absoluteOffset != null)
+		if (_absoluteOffset != null)
 		{
-			clone.absoluteOffset = (Point2d) absoluteOffset.clone();
+			clone._absoluteOffset = (Point2d) _absoluteOffset.clone();
 		}
 
-		if (labelBounds != null)
+		if (_labelBounds != null)
 		{
-			clone.labelBounds = (Rect) labelBounds.clone();
+			clone._labelBounds = (Rect) _labelBounds.clone();
 		}
 
-		if (boundingBox != null)
+		if (_boundingBox != null)
 		{
-			clone.boundingBox = (Rect) boundingBox.clone();
+			clone._boundingBox = (Rect) _boundingBox.clone();
 		}
 
-		clone.terminalDistance = terminalDistance;
-		clone.segments = segments;
-		clone.length = length;
-		clone.x = x;
-		clone.y = y;
-		clone.width = width;
-		clone.height = height;
+		clone._terminalDistance = _terminalDistance;
+		clone._segments = _segments;
+		clone._length = _length;
+		clone._x = _x;
+		clone._y = _y;
+		clone._width = _width;
+		clone._height = _height;
 
 		return clone;
 	}

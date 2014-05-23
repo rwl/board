@@ -48,14 +48,14 @@ public class ImageBundle
 	/**
 	 * Maps from keys to images.
 	 */
-	protected Map<String, String> images = new Hashtable<String, String>();
+	protected Map<String, String> _images = new Hashtable<String, String>();
 
 	/**
 	 * Returns the images.
 	 */
 	public Map<String, String> getImages()
 	{
-		return images;
+		return _images;
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class ImageBundle
 	 */
 	public void putImage(String key, String value)
 	{
-		images.put(key, value);
+		_images.put(key, value);
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class ImageBundle
 	{
 		if (key != null)
 		{
-			return images.get(key);
+			return _images.get(key);
 		}
 		
 		return null;

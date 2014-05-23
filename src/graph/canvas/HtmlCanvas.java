@@ -27,7 +27,7 @@ public class HtmlCanvas extends BasicCanvas
 	/**
 	 * Holds the HTML document that represents the canvas.
 	 */
-	protected Document document;
+	protected Document _document;
 
 	/**
 	 * Constructs a new HTML canvas for the specified dimension and scale.
@@ -51,9 +51,9 @@ public class HtmlCanvas extends BasicCanvas
 	 */
 	public void appendHtmlElement(Element node)
 	{
-		if (document != null)
+		if (_document != null)
 		{
-			Node body = document.getDocumentElement().getFirstChild()
+			Node body = _document.getDocumentElement().getFirstChild()
 					.getNextSibling();
 
 			if (body != null)
@@ -68,7 +68,7 @@ public class HtmlCanvas extends BasicCanvas
 	 */
 	public void setDocument(Document document)
 	{
-		this.document = document;
+		this._document = document;
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class HtmlCanvas extends BasicCanvas
 	 */
 	public Document getDocument()
 	{
-		return document;
+		return _document;
 	}
 
 	/*
@@ -94,13 +94,13 @@ public class HtmlCanvas extends BasicCanvas
 			List<Point2d> pts = state.getAbsolutePoints();
 
 			// Transpose all points by cloning into a new array
-			pts = Utils.translatePoints(pts, translate.x, translate.y);
+			pts = Utils.translatePoints(pts, _translate.x, _translate.y);
 			drawLine(pts, style);
 		}
 		else
 		{
-			int x = (int) state.getX() + translate.x;
-			int y = (int) state.getY() + translate.y;
+			int x = (int) state.getX() + _translate.x;
+			int y = (int) state.getY() + _translate.y;
 			int w = (int) state.getWidth();
 			int h = (int) state.getHeight();
 
@@ -114,7 +114,7 @@ public class HtmlCanvas extends BasicCanvas
 				int start = (int) Math.round(Utils.getInt(style,
 						Constants.STYLE_STARTSIZE,
 						Constants.DEFAULT_STARTSIZE)
-						* scale);
+						* _scale);
 
 				// Removes some styles to draw the content area
 				Map<String, Object> cloned = new Hashtable<String, Object>(
@@ -146,10 +146,10 @@ public class HtmlCanvas extends BasicCanvas
 	{
 		Rect bounds = state.getLabelBounds();
 
-		if (drawLabels && bounds != null)
+		if (_drawLabels && bounds != null)
 		{
-			int x = (int) bounds.getX() + translate.x;
-			int y = (int) bounds.getY() + translate.y;
+			int x = (int) bounds.getX() + _translate.x;
+			int y = (int) bounds.getY() + _translate.y;
 			int w = (int) bounds.getWidth();
 			int h = (int) bounds.getHeight();
 			Map<String, Object> style = state.getStyle();
@@ -177,12 +177,12 @@ public class HtmlCanvas extends BasicCanvas
 		String strokeColor = Utils.getString(style,
 				Constants.STYLE_STROKECOLOR);
 		float strokeWidth = (float) (Utils.getFloat(style,
-				Constants.STYLE_STROKEWIDTH, 1) * scale);
+				Constants.STYLE_STROKEWIDTH, 1) * _scale);
 
 		// Draws the shape
 		String shape = Utils.getString(style, Constants.STYLE_SHAPE);
 
-		Element elem = document.createElement("div");
+		Element elem = _document.createElement("div");
 
 		if (shape.equals(Constants.SHAPE_LINE))
 		{
@@ -227,7 +227,7 @@ public class HtmlCanvas extends BasicCanvas
 
 			if (img != null)
 			{
-				elem = document.createElement("img");
+				elem = _document.createElement("img");
 				elem.setAttribute("border", "0");
 				elem.setAttribute("src", img);
 			}
@@ -261,7 +261,7 @@ public class HtmlCanvas extends BasicCanvas
 		String strokeColor = Utils.getString(style,
 				Constants.STYLE_STROKECOLOR);
 		int strokeWidth = (int) (Utils.getInt(style,
-				Constants.STYLE_STROKEWIDTH, 1) * scale);
+				Constants.STYLE_STROKEWIDTH, 1) * _scale);
 
 		if (strokeColor != null && strokeWidth > 0)
 		{
@@ -272,7 +272,7 @@ public class HtmlCanvas extends BasicCanvas
 			{
 				Point2d pt = pts.get(i);
 
-				drawSegment((int) last.getX(), (int) last.getY(), (int) pt
+				_drawSegment((int) last.getX(), (int) last.getY(), (int) pt
 						.getX(), (int) pt.getY(), strokeColor, strokeWidth);
 
 				last = pt;
@@ -290,7 +290,7 @@ public class HtmlCanvas extends BasicCanvas
 	 * @param strokeColor Color of the stroke to be painted.
 	 * @param strokeWidth Width of the stroke to be painted.
 	 */
-	protected void drawSegment(int x0, int y0, int x1, int y1,
+	protected void _drawSegment(int x0, int y0, int x1, int y1,
 			String strokeColor, int strokeWidth)
 	{
 		int tmpX = Math.min(x0, x1);
@@ -311,7 +311,7 @@ public class HtmlCanvas extends BasicCanvas
 					+ "border-color:" + strokeColor + ";"
 					+ "border-style:solid;" + "border-width:1 1 0 0px;";
 
-			Element elem = document.createElement("div");
+			Element elem = _document.createElement("div");
 			elem.setAttribute("style", s);
 
 			appendHtmlElement(elem);
@@ -320,9 +320,9 @@ public class HtmlCanvas extends BasicCanvas
 		{
 			int x = x0 + (x1 - x0) / 2;
 
-			drawSegment(x0, y0, x, y0, strokeColor, strokeWidth);
-			drawSegment(x, y0, x, y1, strokeColor, strokeWidth);
-			drawSegment(x, y1, x1, y1, strokeColor, strokeWidth);
+			_drawSegment(x0, y0, x, y0, strokeColor, strokeWidth);
+			_drawSegment(x, y0, x, y1, strokeColor, strokeWidth);
+			_drawSegment(x, y1, x1, y1, strokeColor, strokeWidth);
 		}
 	}
 
@@ -339,7 +339,7 @@ public class HtmlCanvas extends BasicCanvas
 	public Element drawText(String text, int x, int y, int w, int h,
 			Map<String, Object> style)
 	{
-		Element table = Utils.createTable(document, text, x, y, w, h, scale,
+		Element table = Utils.createTable(_document, text, x, y, w, h, _scale,
 				style);
 		appendHtmlElement(table);
 

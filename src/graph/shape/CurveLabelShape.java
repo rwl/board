@@ -40,49 +40,49 @@ public class CurveLabelShape implements ITextShape
 	/**
 	 * Cache of the label text
 	 */
-	protected String lastValue;
+	protected String _lastValue;
 
 	/**
 	 * Cache of the label font
 	 */
-	protected Font lastFont;
+	protected Font _lastFont;
 
 	/**
 	 * Cache of the last set of guide points that this label was calculated for
 	 */
-	protected List<Point2d> lastPoints;
+	protected List<Point2d> _lastPoints;
 
 	/**
 	 * Cache of the points between which drawing straight lines views as a
 	 * curve
 	 */
-	protected Curve curve;
+	protected Curve _curve;
 
 	/**
 	 * Cache the state associated with this shape
 	 */
-	protected CellState state;
+	protected CellState _state;
 
 	/**
 	 * Cache of information describing characteristics relating to drawing 
 	 * each glyph of this label
 	 */
-	protected LabelGlyphCache[] labelGlyphs;
+	protected LabelGlyphCache[] _labelGlyphs;
 
 	/**
 	 * Cache of the total length of the branch label
 	 */
-	protected double labelSize;
+	protected double _labelSize;
 
 	/**
 	 * Cache of the bounds of the label
 	 */
-	protected Rect labelBounds;
+	protected Rect _labelBounds;
 
 	/**
 	 * ADT to encapsulate label positioning information
 	 */
-	protected LabelPosition labelPosition = new LabelPosition();
+	protected LabelPosition _labelPosition = new LabelPosition();
 
 	/**
 	 * Buffer at both ends of the label
@@ -124,12 +124,12 @@ public class CurveLabelShape implements ITextShape
 	/**
 	 *
 	 */
-	protected boolean rotationEnabled = true;
+	protected boolean _rotationEnabled = true;
 
 	public CurveLabelShape(CellState state, Curve value)
 	{
-		this.state = state;
-		this.curve = value;
+		this._state = state;
+		this._curve = value;
 	}
 
 	/**
@@ -137,7 +137,7 @@ public class CurveLabelShape implements ITextShape
 	 */
 	public boolean getRotationEnabled()
 	{
-		return rotationEnabled;
+		return _rotationEnabled;
 	}
 
 	/**
@@ -145,7 +145,7 @@ public class CurveLabelShape implements ITextShape
 	 */
 	public void setRotationEnabled(boolean value)
 	{
-		rotationEnabled = value;
+		_rotationEnabled = value;
 	}
 
 	/**
@@ -157,12 +157,12 @@ public class CurveLabelShape implements ITextShape
 		Rectangle rect = state.getLabelBounds().getRectangle();
 		Graphics2D g = canvas.getGraphics();
 
-		if (labelGlyphs == null)
+		if (_labelGlyphs == null)
 		{
 			updateLabelBounds(text, style);
 		}
 
-		if (labelGlyphs != null
+		if (_labelGlyphs != null
 				&& (g.getClipBounds() == null || g.getClipBounds().intersects(
 						rect)))
 		{
@@ -185,11 +185,11 @@ public class CurveLabelShape implements ITextShape
 			g.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS,
 					FONT_FRACTIONALMETRICS);
 
-			for (int j = 0; j < labelGlyphs.length; j++)
+			for (int j = 0; j < _labelGlyphs.length; j++)
 			{
-				Line parallel = labelGlyphs[j].glyphGeometry;
+				Line parallel = _labelGlyphs[j].glyphGeometry;
 
-				if (labelGlyphs[j].visible && parallel != null
+				if (_labelGlyphs[j].visible && parallel != null
 						&& parallel != Curve.INVALID_POSITION)
 				{
 					Point2d parallelEnd = parallel.getEndPoint();
@@ -206,7 +206,7 @@ public class CurveLabelShape implements ITextShape
 					final AffineTransform old = g.getTransform();
 					g.translate(parallel.getX(), parallel.getY());
 					g.rotate(rotation);
-					Shape letter = labelGlyphs[j].glyphShape;
+					Shape letter = _labelGlyphs[j].glyphShape;
 					g.fill(letter);
 					g.setTransform(old);
 				}
@@ -224,7 +224,7 @@ public class CurveLabelShape implements ITextShape
 	 */
 	public Rect updateLabelBounds(String label, Map<String, Object> style)
 	{
-		double scale = state.getView().getScale();
+		double scale = _state.getView().getScale();
 		Font font = Utils.getFont(style, scale);
 		FontMetrics fm = Utils.getFontMetrics(font);
 		int descent = 0;
@@ -238,19 +238,19 @@ public class CurveLabelShape implements ITextShape
 
 		// Check that the size of the widths array matches 
 		// that of the label size
-		if (labelGlyphs == null || (!label.equals(lastValue)))
+		if (_labelGlyphs == null || (!label.equals(_lastValue)))
 		{
-			labelGlyphs = new LabelGlyphCache[label.length()];
+			_labelGlyphs = new LabelGlyphCache[label.length()];
 		}
 
-		if (!label.equals(lastValue) || !font.equals(lastFont))
+		if (!label.equals(_lastValue) || !font.equals(_lastFont))
 		{
 			char[] labelChars = label.toCharArray();
 			ArrayList<LabelGlyphCache> glyphList = new ArrayList<LabelGlyphCache>();
 			boolean bidiRequired = Bidi.requiresBidi(labelChars, 0,
 					labelChars.length);
 
-			labelSize = 0;
+			_labelSize = 0;
 
 			if (bidiRequired)
 			{
@@ -291,7 +291,7 @@ public class CurveLabelShape implements ITextShape
 						qlyph.glyphShape = shape;
 						Rect size = new Rect(gv.getGlyphLogicalBounds(j).getBounds2D());
 						qlyph.labelGlyphBounds = size;
-						labelSize += size.getWidth();
+						_labelSize += size.getWidth();
 						vectorOffset += size.getWidth();
 
 						charCount++;
@@ -331,14 +331,14 @@ public class CurveLabelShape implements ITextShape
 								font.getStringBounds(glyph,
 										CurveLabelShape.frc));
 						labelGlyph.labelGlyphBounds = size;
-						labelSize += size.getWidth();
+						_labelSize += size.getWidth();
 					}
 					else
 					{
 						double width = fm.stringWidth(glyph);
 						labelGlyph.labelGlyphBounds = new Rect(0, 0,
 								width, ascent);
-						labelSize += width;
+						_labelSize += width;
 					}
 
 					i += characterLen;
@@ -349,10 +349,10 @@ public class CurveLabelShape implements ITextShape
 
 			// Update values used to determine whether or not the label cache 
 			// is valid or not
-			lastValue = label;
-			lastFont = font;
-			lastPoints = curve.getGuidePoints();
-			this.labelGlyphs = glyphList.toArray(new LabelGlyphCache[glyphList.size()]);
+			_lastValue = label;
+			_lastFont = font;
+			_lastPoints = _curve.getGuidePoints();
+			this._labelGlyphs = glyphList.toArray(new LabelGlyphCache[glyphList.size()]);
 		}
 
 		// Store the start/end buffers that pad out the ends of the branch so the label is
@@ -360,21 +360,21 @@ public class CurveLabelShape implements ITextShape
 		// branch and the end at the end of the branch. Note that the actual label curve
 		// might be reversed, so we allow for this after completing the buffer calculations,
 		// otherwise they'd need to be constant isReversed() checks throughout
-		labelPosition.startBuffer = LABEL_BUFFER * scale;
-		labelPosition.endBuffer = LABEL_BUFFER * scale;
+		_labelPosition.startBuffer = LABEL_BUFFER * scale;
+		_labelPosition.endBuffer = LABEL_BUFFER * scale;
 
-		calculationLabelPosition(style, label);
+		_calculationLabelPosition(style, label);
 
-		if (curve.isLabelReversed())
+		if (_curve.isLabelReversed())
 		{
-			double temp = labelPosition.startBuffer;
-			labelPosition.startBuffer = labelPosition.endBuffer;
-			labelPosition.endBuffer = temp;
+			double temp = _labelPosition.startBuffer;
+			_labelPosition.startBuffer = _labelPosition.endBuffer;
+			_labelPosition.endBuffer = temp;
 		}
 
-		double curveLength = curve.getCurveLength(Curve.LABEL_CURVE);
-		double currentPos = labelPosition.startBuffer / curveLength;
-		double endPos = 1.0 - (labelPosition.endBuffer / curveLength);
+		double curveLength = _curve.getCurveLength(Curve.LABEL_CURVE);
+		double currentPos = _labelPosition.startBuffer / curveLength;
+		double endPos = 1.0 - (_labelPosition.endBuffer / curveLength);
 
 		Rect overallLabelBounds = null;
 		centerVisibleIndex = 0;
@@ -388,11 +388,11 @@ public class CurveLabelShape implements ITextShape
 		// Might be better than the curve is the only thing updated and
 		// the curve shapes listen to curve events
 		// !lastPoints.equals(curve.getGuidePoints())
-		for (int j = 0; j < labelGlyphs.length; j++)
+		for (int j = 0; j < _labelGlyphs.length; j++)
 		{
 			if (currentPos > endPos)
 			{
-				labelGlyphs[j].visible = false;
+				_labelGlyphs[j].visible = false;
 				continue;
 			}
 
@@ -401,14 +401,14 @@ public class CurveLabelShape implements ITextShape
 			if (currentCurveDelta > curveDeltaSignificant
 					|| nextParallel == null)
 			{
-				parallel = curve.getCurveParallel(Curve.LABEL_CURVE,
+				parallel = _curve.getCurveParallel(Curve.LABEL_CURVE,
 						currentPos);
 
 				currentCurveDelta = 0.0;
 				nextParallel = null;
 			}
 
-			labelGlyphs[j].glyphGeometry = parallel;
+			_labelGlyphs[j].glyphGeometry = parallel;
 
 			if (parallel == Curve.INVALID_POSITION)
 			{
@@ -418,8 +418,8 @@ public class CurveLabelShape implements ITextShape
 			// Get the four corners of the rotated rectangle bounding the glyph
 			// The drawing bounds of the glyph is the unrotated rect that
 			// just bounds those four corners
-			final double w = labelGlyphs[j].labelGlyphBounds.getWidth();
-			final double h = labelGlyphs[j].labelGlyphBounds.getHeight();
+			final double w = _labelGlyphs[j].labelGlyphBounds.getWidth();
+			final double h = _labelGlyphs[j].labelGlyphBounds.getHeight();
 			final double x = parallel.getEndPoint().getX();
 			final double y = parallel.getEndPoint().getY();
 			// Bottom left
@@ -455,17 +455,17 @@ public class CurveLabelShape implements ITextShape
 			maxY += 2 * scale;
 
 			// Hook for sub-classers
-			postprocessGlyph(curve, label, j, currentPos);
+			_postprocessGlyph(_curve, label, j, currentPos);
 
 			// Need to allow for text on inside of curve bends. Need to get the 
 			// parallel for the next section, if there is an excessive
 			// inner curve, advance the current position accordingly
 
 			double currentPosCandidate = currentPos
-					+ (labelGlyphs[j].labelGlyphBounds.getWidth() + labelPosition.defaultInterGlyphSpace)
+					+ (_labelGlyphs[j].labelGlyphBounds.getWidth() + _labelPosition.defaultInterGlyphSpace)
 					/ curveLength;
 
-			nextParallel = curve.getCurveParallel(Curve.LABEL_CURVE,
+			nextParallel = _curve.getCurveParallel(Curve.LABEL_CURVE,
 					currentPosCandidate);
 
 			currentPos = currentPosCandidate;
@@ -511,28 +511,28 @@ public class CurveLabelShape implements ITextShape
 				}
 			}
 
-			if (labelGlyphs[j].drawingBounds != null)
+			if (_labelGlyphs[j].drawingBounds != null)
 			{
-				labelGlyphs[j].drawingBounds.setRect(minX, minY, maxX - minX,
+				_labelGlyphs[j].drawingBounds.setRect(minX, minY, maxX - minX,
 						maxY - minY);
 			}
 			else
 			{
-				labelGlyphs[j].drawingBounds = new Rect(minX, minY, maxX
+				_labelGlyphs[j].drawingBounds = new Rect(minX, minY, maxX
 						- minX, maxY - minY);
 			}
 
 			if (overallLabelBounds == null)
 			{
-				overallLabelBounds = (Rect) labelGlyphs[j].drawingBounds
+				overallLabelBounds = (Rect) _labelGlyphs[j].drawingBounds
 						.clone();
 			}
 			else
 			{
-				overallLabelBounds.add(labelGlyphs[j].drawingBounds);
+				overallLabelBounds.add(_labelGlyphs[j].drawingBounds);
 			}
 
-			labelGlyphs[j].visible = true;
+			_labelGlyphs[j].visible = true;
 			centerVisibleIndex++;
 		}
 
@@ -542,13 +542,13 @@ public class CurveLabelShape implements ITextShape
 		{
 			// Return a small rectangle in the center of the label curve
 			// Null label bounds causes NPE when editing
-			Line labelCenter = curve.getCurveParallel(Curve.LABEL_CURVE,
+			Line labelCenter = _curve.getCurveParallel(Curve.LABEL_CURVE,
 					0.5);
 			overallLabelBounds = new Rect(labelCenter.getX(),
 					labelCenter.getY(), 1, 1);
 		}
 
-		this.labelBounds = overallLabelBounds;
+		this._labelBounds = overallLabelBounds;
 		return overallLabelBounds;
 	}
 
@@ -560,7 +560,7 @@ public class CurveLabelShape implements ITextShape
 	 * @param j the index of the label
 	 * @param currentPos the distance along the label curve the glyph is
 	 */
-	protected void postprocessGlyph(Curve curve, String label, int j,
+	protected void _postprocessGlyph(Curve curve, String label, int j,
 			double currentPos)
 	{
 	}
@@ -575,17 +575,17 @@ public class CurveLabelShape implements ITextShape
 	{
 		// To save CPU, we can test if the rectangle intersects the entire
 		// bounds of this label
-		if ( (labelBounds != null
-				&& (!labelBounds.getRectangle().intersects(rect)) )
-				|| labelGlyphs == null )
+		if ( (_labelBounds != null
+				&& (!_labelBounds.getRectangle().intersects(rect)) )
+				|| _labelGlyphs == null )
 		{
 			return false;
 		}
 
-		for (int i = 0; i < labelGlyphs.length; i++)
+		for (int i = 0; i < _labelGlyphs.length; i++)
 		{
-			if (labelGlyphs[i].visible
-					&& rect.intersects(labelGlyphs[i].drawingBounds
+			if (_labelGlyphs[i].visible
+					&& rect.intersects(_labelGlyphs[i].drawingBounds
 							.getRectangle()))
 			{
 				return true;
@@ -600,17 +600,17 @@ public class CurveLabelShape implements ITextShape
 	 * @param style the style of the curve
 	 * @param label the string label to be displayed on the curve
 	 */
-	protected void calculationLabelPosition(Map<String, Object> style,
+	protected void _calculationLabelPosition(Map<String, Object> style,
 			String label)
 	{
-		double curveLength = curve.getCurveLength(Curve.LABEL_CURVE);
-		double availableLabelSpace = curveLength - labelPosition.startBuffer
-				- labelPosition.endBuffer;
-		labelPosition.startBuffer = Math.max(labelPosition.startBuffer,
-				labelPosition.startBuffer + availableLabelSpace / 2 - labelSize
+		double curveLength = _curve.getCurveLength(Curve.LABEL_CURVE);
+		double availableLabelSpace = curveLength - _labelPosition.startBuffer
+				- _labelPosition.endBuffer;
+		_labelPosition.startBuffer = Math.max(_labelPosition.startBuffer,
+				_labelPosition.startBuffer + availableLabelSpace / 2 - _labelSize
 						/ 2);
-		labelPosition.endBuffer = Math.max(labelPosition.endBuffer,
-				labelPosition.endBuffer + availableLabelSpace / 2 - labelSize
+		_labelPosition.endBuffer = Math.max(_labelPosition.endBuffer,
+				_labelPosition.endBuffer + availableLabelSpace / 2 - _labelSize
 						/ 2);
 	}
 
@@ -619,7 +619,7 @@ public class CurveLabelShape implements ITextShape
 	 */
 	public Curve getCurve()
 	{
-		return curve;
+		return _curve;
 	}
 
 	/**
@@ -627,7 +627,7 @@ public class CurveLabelShape implements ITextShape
 	 */
 	public void setCurve(Curve curve)
 	{
-		this.curve = curve;
+		this._curve = curve;
 	}
 
 	/**
@@ -686,7 +686,7 @@ public class CurveLabelShape implements ITextShape
 
 	public Rect getLabelBounds()
 	{
-		return labelBounds;
+		return _labelBounds;
 	}
 
 	/**
@@ -695,6 +695,6 @@ public class CurveLabelShape implements ITextShape
 	 */
 	public Rect getCenterVisiblePosition()
 	{
-		return labelGlyphs[centerVisibleIndex].drawingBounds;
+		return _labelGlyphs[centerVisibleIndex].drawingBounds;
 	}
 }

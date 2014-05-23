@@ -25,17 +25,17 @@ public class PanningHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	protected GraphComponent graphComponent;
+	protected GraphComponent _graphComponent;
 	
 	/**
 	 * 
 	 */
-	protected boolean enabled = true;
+	protected boolean _enabled = true;
 
 	/**
 	 * 
 	 */
-	protected transient Point start;
+	protected transient Point _start;
 
 	/**
 	 * 
@@ -43,7 +43,7 @@ public class PanningHandler extends MouseAdapter
 	 */
 	public PanningHandler(GraphComponent graphComponent)
 	{
-		this.graphComponent = graphComponent;
+		this._graphComponent = graphComponent;
 
 		graphComponent.getGraphControl().addMouseListener(this);
 		graphComponent.getGraphControl().addMouseMotionListener(this);
@@ -54,7 +54,7 @@ public class PanningHandler extends MouseAdapter
 	 */
 	public boolean isEnabled()
 	{
-		return enabled;
+		return _enabled;
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class PanningHandler extends MouseAdapter
 	 */
 	public void setEnabled(boolean value)
 	{
-		enabled = value;
+		_enabled = value;
 	}
 
 	/**
@@ -70,10 +70,10 @@ public class PanningHandler extends MouseAdapter
 	 */
 	public void mousePressed(MouseEvent e)
 	{
-		if (isEnabled() && !e.isConsumed() && graphComponent.isPanningEvent(e)
+		if (isEnabled() && !e.isConsumed() && _graphComponent.isPanningEvent(e)
 				&& !e.isPopupTrigger())
 		{
-			start = e.getPoint();
+			_start = e.getPoint();
 		}
 	}
 
@@ -82,17 +82,17 @@ public class PanningHandler extends MouseAdapter
 	 */
 	public void mouseDragged(MouseEvent e)
 	{
-		if (!e.isConsumed() && start != null)
+		if (!e.isConsumed() && _start != null)
 		{
-			int dx = e.getX() - start.x;
-			int dy = e.getY() - start.y;
+			int dx = e.getX() - _start.x;
+			int dy = e.getY() - _start.y;
 
-			Rectangle r = graphComponent.getViewport().getViewRect();
+			Rectangle r = _graphComponent.getViewport().getViewRect();
 
 			int right = r.x + ((dx > 0) ? 0 : r.width) - dx;
 			int bottom = r.y + ((dy > 0) ? 0 : r.height) - dy;
 
-			graphComponent.getGraphControl().scrollRectToVisible(
+			_graphComponent.getGraphControl().scrollRectToVisible(
 					new Rectangle(right, bottom, 0, 0));
 
 			e.consume();
@@ -104,18 +104,18 @@ public class PanningHandler extends MouseAdapter
 	 */
 	public void mouseReleased(MouseEvent e)
 	{
-		if (!e.isConsumed() && start != null)
+		if (!e.isConsumed() && _start != null)
 		{
-			int dx = Math.abs(start.x - e.getX());
-			int dy = Math.abs(start.y - e.getY());
+			int dx = Math.abs(_start.x - e.getX());
+			int dy = Math.abs(_start.y - e.getY());
 
-			if (graphComponent.isSignificant(dx, dy))
+			if (_graphComponent.isSignificant(dx, dy))
 			{
 				e.consume();
 			}
 		}
 
-		start = null;
+		_start = null;
 	}
 
 	/**
@@ -124,6 +124,6 @@ public class PanningHandler extends MouseAdapter
 	 */
 	public boolean isActive()
 	{
-		return (start != null);
+		return (_start != null);
 	}
 }

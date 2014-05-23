@@ -29,7 +29,7 @@ public class GdCodec
 	/**
 	 * Map with the vertex cells added in the addNode method.
 	 */
-	protected static HashMap<String, Object> cellsMap = new HashMap<String, Object>();
+	protected static HashMap<String, Object> _cellsMap = new HashMap<String, Object>();
 
 	/**
 	 * Parses simple GD format and populate the specified graph
@@ -74,7 +74,7 @@ public class GdCodec
 								Object vertex = graph.insertVertex(parent, label, label,
 										0, 0, 10, 10);
 								
-								cellsMap.put(label, vertex);
+								_cellsMap.put(label, vertex);
 							}
 						}
 						else
@@ -113,7 +113,7 @@ public class GdCodec
 										x - width / 2.0, y - height / 2.0, width,
 										height);
 								
-								cellsMap.put(label, vertex);
+								_cellsMap.put(label, vertex);
 							}
 						}
 						break;
@@ -129,8 +129,8 @@ public class GdCodec
 							}
 							else
 							{
-								Object source = cellsMap.get(items[0]);
-								Object target = cellsMap.get(items[1]);
+								Object source = _cellsMap.get(items[0]);
+								Object target = _cellsMap.get(items[1]);
 
 								graph.insertEdge(parent, null, "", source, target);
 							}

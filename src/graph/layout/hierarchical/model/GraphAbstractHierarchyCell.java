@@ -45,12 +45,12 @@ public abstract class GraphAbstractHierarchyCell
 	/**
 	 * A cached version of the cells this cell connects to on the next layer up
 	 */
-	protected List<GraphAbstractHierarchyCell>[] nextLayerConnectedCells = null;
+	protected List<GraphAbstractHierarchyCell>[] _nextLayerConnectedCells = null;
 
 	/**
 	 * A cached version of the cells this cell connects to on the next layer down
 	 */
-	protected List<GraphAbstractHierarchyCell>[] previousLayerConnectedCells = null;
+	protected List<GraphAbstractHierarchyCell>[] _previousLayerConnectedCells = null;
 
 	/**
 	 * Temporary variable for general use. Generally, try to avoid

@@ -28,12 +28,12 @@ public class Animation extends EventSource
 	/**
 	 * Default is DEFAULT_DELAY.
 	 */
-	protected int delay;
+	protected int _delay;
 
 	/**
 	 * Time instance that is used for timing the animation.
 	 */
-	protected Timer timer;
+	protected Timer _timer;
 
 	/**
 	 * Constructs a new animation instance with the given repaint delay.
@@ -48,7 +48,7 @@ public class Animation extends EventSource
 	 */
 	public Animation(int delay)
 	{
-		this.delay = delay;
+		this._delay = delay;
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class Animation extends EventSource
 	 */
 	public int getDelay()
 	{
-		return delay;
+		return _delay;
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class Animation extends EventSource
 	 */
 	public void setDelay(int value)
 	{
-		delay = value;
+		_delay = value;
 	}
 	
 	/**
@@ -72,7 +72,7 @@ public class Animation extends EventSource
 	 */
 	public boolean isRunning()
 	{
-		return timer != null;
+		return _timer != null;
 	}
 
 	/**
@@ -80,9 +80,9 @@ public class Animation extends EventSource
 	 */
 	public void startAnimation()
 	{
-		if (timer == null)
+		if (_timer == null)
 		{
-			timer = new Timer(delay, new ActionListener()
+			_timer = new Timer(_delay, new ActionListener()
 			{
 
 				public void actionPerformed(ActionEvent e)
@@ -92,7 +92,7 @@ public class Animation extends EventSource
 
 			});
 
-			timer.start();
+			_timer.start();
 		}
 	}
 
@@ -111,10 +111,10 @@ public class Animation extends EventSource
 	 */
 	public void stopAnimation()
 	{
-		if (timer != null)
+		if (_timer != null)
 		{
-			timer.stop();
-			timer = null;
+			_timer.stop();
+			_timer = null;
 			fireEvent(new EventObj(Event.DONE));
 		}
 	}

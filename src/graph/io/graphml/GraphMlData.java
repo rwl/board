@@ -15,15 +15,15 @@ import org.w3c.dom.NodeList;
  */
 public class GraphMlData
 {
-	private String dataId = "";
+	private String _dataId = "";
 
-	private String dataKey = "";
+	private String _dataKey = "";
 
-	private String dataValue = "";//not using
+	private String _dataValue = "";//not using
 
-	private GraphMlShapeNode dataShapeNode;
+	private GraphMlShapeNode _dataShapeNode;
 
-	private GraphMlShapeEdge dataShapeEdge;
+	private GraphMlShapeEdge _dataShapeEdge;
 
 	/**
 	 * Construct a data with the params values.
@@ -36,11 +36,11 @@ public class GraphMlData
 	public GraphMlData(String dataId, String dataKey, String dataValue,
 			GraphMlShapeEdge dataShapeEdge, GraphMlShapeNode dataShapeNode)
 	{
-		this.dataId = dataId;
-		this.dataKey = dataKey;
-		this.dataValue = dataValue;
-		this.dataShapeNode = dataShapeNode;
-		this.dataShapeEdge = dataShapeEdge;
+		this._dataId = dataId;
+		this._dataKey = dataKey;
+		this._dataValue = dataValue;
+		this._dataShapeNode = dataShapeNode;
+		this._dataShapeEdge = dataShapeEdge;
 	}
 
 	/**
@@ -49,10 +49,10 @@ public class GraphMlData
 	 */
 	public GraphMlData(Element dataElement)
 	{
-		this.dataId = dataElement.getAttribute(GraphMlConstants.ID);
-		this.dataKey = dataElement.getAttribute(GraphMlConstants.KEY);
+		this._dataId = dataElement.getAttribute(GraphMlConstants.ID);
+		this._dataKey = dataElement.getAttribute(GraphMlConstants.KEY);
 
-		this.dataValue = "";
+		this._dataValue = "";
 
 		Element shapeNodeElement = GraphMlUtils.childsTag(dataElement,
 				GraphMlConstants.JGRAPH + GraphMlConstants.SHAPENODE);
@@ -61,11 +61,11 @@ public class GraphMlData
 		
 		if (shapeNodeElement != null)
 		{
-			this.dataShapeNode = new GraphMlShapeNode(shapeNodeElement);
+			this._dataShapeNode = new GraphMlShapeNode(shapeNodeElement);
 		}
 		else if (shapeEdgeElement != null)
 		{
-			this.dataShapeEdge = new GraphMlShapeEdge(shapeEdgeElement);
+			this._dataShapeEdge = new GraphMlShapeEdge(shapeEdgeElement);
 		}
 		else
 		{
@@ -77,10 +77,10 @@ public class GraphMlData
 				if (n.getNodeName().equals("#text"))
 				{
 
-					this.dataValue += n.getNodeValue();
+					this._dataValue += n.getNodeValue();
 				}
 			}
-			this.dataValue = this.dataValue.trim();
+			this._dataValue = this._dataValue.trim();
 		}
 	}
 
@@ -93,52 +93,52 @@ public class GraphMlData
 
 	public String getDataId()
 	{
-		return dataId;
+		return _dataId;
 	}
 
 	public void setDataId(String dataId)
 	{
-		this.dataId = dataId;
+		this._dataId = dataId;
 	}
 
 	public String getDataKey()
 	{
-		return dataKey;
+		return _dataKey;
 	}
 
 	public void setDataKey(String dataKey)
 	{
-		this.dataKey = dataKey;
+		this._dataKey = dataKey;
 	}
 
 	public String getDataValue()
 	{
-		return dataValue;
+		return _dataValue;
 	}
 
 	public void setDataValue(String dataValue)
 	{
-		this.dataValue = dataValue;
+		this._dataValue = dataValue;
 	}
 
 	public GraphMlShapeNode getDataShapeNode()
 	{
-		return dataShapeNode;
+		return _dataShapeNode;
 	}
 
 	public void setDataShapeNode(GraphMlShapeNode dataShapeNode)
 	{
-		this.dataShapeNode = dataShapeNode;
+		this._dataShapeNode = dataShapeNode;
 	}
 
 	public GraphMlShapeEdge getDataShapeEdge()
 	{
-		return dataShapeEdge;
+		return _dataShapeEdge;
 	}
 
 	public void setDataShapeEdge(GraphMlShapeEdge dataShapeEdge)
 	{
-		this.dataShapeEdge = dataShapeEdge;
+		this._dataShapeEdge = dataShapeEdge;
 	}
 
 	/**
@@ -149,9 +149,9 @@ public class GraphMlData
 	public Element generateNodeElement(Document document)
 	{
 		Element data = document.createElement(GraphMlConstants.DATA);
-		data.setAttribute(GraphMlConstants.KEY, dataKey);
+		data.setAttribute(GraphMlConstants.KEY, _dataKey);
 
-		Element shapeNodeElement = dataShapeNode.generateElement(document);
+		Element shapeNodeElement = _dataShapeNode.generateElement(document);
 		data.appendChild(shapeNodeElement);
 
 		return data;
@@ -165,9 +165,9 @@ public class GraphMlData
 	public Element generateEdgeElement(Document document)
 	{
 		Element data = document.createElement(GraphMlConstants.DATA);
-		data.setAttribute(GraphMlConstants.KEY, dataKey);
+		data.setAttribute(GraphMlConstants.KEY, _dataKey);
 
-		Element shapeEdgeElement = dataShapeEdge.generateElement(document);
+		Element shapeEdgeElement = _dataShapeEdge.generateElement(document);
 		data.appendChild(shapeEdgeElement);
 
 		return data;

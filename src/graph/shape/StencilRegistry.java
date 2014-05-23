@@ -8,14 +8,14 @@ public class StencilRegistry
 	/**
 	 * 
 	 */
-	protected static Map<String, Stencil> stencils = new HashMap<String, Stencil>();
+	protected static Map<String, Stencil> _stencils = new HashMap<String, Stencil>();
 
 	/**
 	 * Adds the given stencil.
 	 */
 	public static void addStencil(String name, Stencil stencil)
 	{
-		stencils.put(name, stencil);
+		_stencils.put(name, stencil);
 	}
 
 	/**
@@ -23,7 +23,7 @@ public class StencilRegistry
 	 */
 	public static Stencil getStencil(String name)
 	{
-		return stencils.get(name);
+		return _stencils.get(name);
 	}
 
 }

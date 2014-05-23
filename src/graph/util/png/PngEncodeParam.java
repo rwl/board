@@ -120,7 +120,7 @@ public abstract class PngEncodeParam
 		ColorModel colorModel = im.getColorModel();
 		if (colorModel instanceof IndexColorModel)
 		{
-			return new PngEncodeParam.Palette();
+			return new Palette();
 		}
 
 		SampleModel sampleModel = im.getSampleModel();
@@ -128,509 +128,17 @@ public abstract class PngEncodeParam
 
 		if (numBands == 1 || numBands == 2)
 		{
-			return new PngEncodeParam.Gray();
+			return new Gray();
 		}
 		else
 		{
-			return new PngEncodeParam.RGB();
+			return new RGB();
 		}
 	}
 
-	public static class Palette extends PngEncodeParam
-	{
+	protected int _bitDepth;
 
-		/** Constructs an instance of <code>PNGEncodeParam.Palette</code>. */
-		public Palette()
-		{
-		}
-
-		// bKGD chunk
-
-		private boolean backgroundSet = false;
-
-		/**
-		 * Suppresses the 'bKGD' chunk from being output.
-		 */
-		public void unsetBackground()
-		{
-			backgroundSet = false;
-		}
-
-		/**
-		 * Returns true if a 'bKGD' chunk will be output.
-		 */
-		public boolean isBackgroundSet()
-		{
-			return backgroundSet;
-		}
-
-		/**
-		 * Sets the desired bit depth for a palette image.  The bit
-		 * depth must be one of 1, 2, 4, or 8, or else an
-		 * <code>IllegalArgumentException</code> will be thrown.
-		 */
-		public void setBitDepth(int bitDepth)
-		{
-			if (bitDepth != 1 && bitDepth != 2 && bitDepth != 4
-					&& bitDepth != 8)
-			{
-				throw new IllegalArgumentException("PNGEncodeParam2");
-			}
-			this.bitDepth = bitDepth;
-			bitDepthSet = true;
-		}
-
-		// PLTE chunk
-
-		private int[] palette = null;
-
-		private boolean paletteSet = false;
-
-		/**
-		 * Sets the RGB palette of the image to be encoded.
-		 * The <code>rgb</code> parameter contains alternating
-		 * R, G, B values for each color index used in the image.
-		 * The number of elements must be a multiple of 3 between
-		 * 3 and 3*256.
-		 *
-		 * <p> The 'PLTE' chunk will encode this information.
-		 *
-		 * @param rgb An array of <code>int</code>s.
-		 */
-		public void setPalette(int[] rgb)
-		{
-			if (rgb.length < 1 * 3 || rgb.length > 256 * 3)
-			{
-				throw new IllegalArgumentException("PNGEncodeParam0");
-			}
-			if ((rgb.length % 3) != 0)
-			{
-				throw new IllegalArgumentException("PNGEncodeParam1");
-			}
-
-			palette = (rgb.clone());
-			paletteSet = true;
-		}
-
-		/**
-		 * Returns the current RGB palette.
-		 *
-		 * <p> If the palette has not previously been set, or has been
-		 * unset, an <code>IllegalStateException</code> will be thrown.
-		 *
-		 * @throws IllegalStateException if the palette is not set.
-		 *
-		 * @return An array of <code>int</code>s.
-		 */
-		public int[] getPalette()
-		{
-			if (!paletteSet)
-			{
-				throw new IllegalStateException("PNGEncodeParam3");
-			}
-			return (palette.clone());
-		}
-
-		/**
-		 * Suppresses the 'PLTE' chunk from being output.
-		 */
-		public void unsetPalette()
-		{
-			palette = null;
-			paletteSet = false;
-		}
-
-		/**
-		 * Returns true if a 'PLTE' chunk will be output.
-		 */
-		public boolean isPaletteSet()
-		{
-			return paletteSet;
-		}
-
-		// bKGD chunk
-
-		private int backgroundPaletteIndex;
-
-		/**
-		 * Sets the palette index of the suggested background color.
-		 *
-		 * <p> The 'bKGD' chunk will encode this information.
-		 */
-		public void setBackgroundPaletteIndex(int index)
-		{
-			backgroundPaletteIndex = index;
-			backgroundSet = true;
-		}
-
-		/**
-		 * Returns the palette index of the suggested background color.
-		 *
-		 * <p> If the background palette index has not previously been
-		 * set, or has been unset, an
-		 * <code>IllegalStateException</code> will be thrown.
-		 *
-		 * @throws IllegalStateException if the palette index is not set.
-		 */
-		public int getBackgroundPaletteIndex()
-		{
-			if (!backgroundSet)
-			{
-				throw new IllegalStateException("PNGEncodeParam4");
-			}
-			return backgroundPaletteIndex;
-		}
-
-		// tRNS chunk
-
-		private int[] transparency;
-
-		/**
-		 * Sets the alpha values associated with each palette entry.
-		 * The <code>alpha</code> parameter should have as many entries
-		 * as there are RGB triples in the palette.
-		 *
-		 * <p> The 'tRNS' chunk will encode this information.
-		 */
-		public void setPaletteTransparency(byte[] alpha)
-		{
-			transparency = new int[alpha.length];
-			for (int i = 0; i < alpha.length; i++)
-			{
-				transparency[i] = alpha[i] & 0xff;
-			}
-			transparencySet = true;
-		}
-
-		/**
-		 * Returns the alpha values associated with each palette entry.
-		 *
-		 * <p> If the palette transparency has not previously been
-		 * set, or has been unset, an
-		 * <code>IllegalStateException</code> will be thrown.
-		 *
-		 * @throws IllegalStateException if the palette transparency is
-		 *        not set.
-		 */
-		public byte[] getPaletteTransparency()
-		{
-			if (!transparencySet)
-			{
-				throw new IllegalStateException("PNGEncodeParam5");
-			}
-			byte[] alpha = new byte[transparency.length];
-			for (int i = 0; i < alpha.length; i++)
-			{
-				alpha[i] = (byte) transparency[i];
-			}
-			return alpha;
-		}
-	}
-
-	public static class Gray extends PngEncodeParam
-	{
-
-		/** Constructs an instance of <code>PNGEncodeParam.Gray</code>. */
-		public Gray()
-		{
-		}
-
-		// bKGD chunk
-
-		private boolean backgroundSet = false;
-
-		/**
-		 * Suppresses the 'bKGD' chunk from being output.
-		 */
-		public void unsetBackground()
-		{
-			backgroundSet = false;
-		}
-
-		/**
-		 * Returns true if a 'bKGD' chunk will be output.
-		 */
-		public boolean isBackgroundSet()
-		{
-			return backgroundSet;
-		}
-
-		/**
-		 * Sets the desired bit depth for a grayscale image.  The bit
-		 * depth must be one of 1, 2, 4, 8, or 16.
-		 *
-		 * <p> When encoding a source image of a greater bit depth,
-		 * pixel values will be clamped to the smaller range after
-		 * shifting by the value given by <code>getBitShift()</code>.
-		 * When encoding a source image of a smaller bit depth, pixel
-		 * values will be shifted and left-filled with zeroes.
-		 */
-		public void setBitDepth(int bitDepth)
-		{
-			if (bitDepth != 1 && bitDepth != 2 && bitDepth != 4
-					&& bitDepth != 8 && bitDepth != 16)
-			{
-				throw new IllegalArgumentException();
-			}
-			this.bitDepth = bitDepth;
-			bitDepthSet = true;
-		}
-
-		// bKGD chunk
-
-		private int backgroundPaletteGray;
-
-		/**
-		 * Sets the suggested gray level of the background.
-		 *
-		 * <p> The 'bKGD' chunk will encode this information.
-		 */
-		public void setBackgroundGray(int gray)
-		{
-			backgroundPaletteGray = gray;
-			backgroundSet = true;
-		}
-
-		/**
-		 * Returns the suggested gray level of the background.
-		 *
-		 * <p> If the background gray level has not previously been
-		 * set, or has been unset, an
-		 * <code>IllegalStateException</code> will be thrown.
-		 *
-		 * @throws IllegalStateException if the background gray level
-		 *        is not set.
-		 */
-		public int getBackgroundGray()
-		{
-			if (!backgroundSet)
-			{
-				throw new IllegalStateException("PNGEncodeParam6");
-			}
-			return backgroundPaletteGray;
-		}
-
-		// tRNS chunk
-
-		private int[] transparency;
-
-		/**
-		 * Sets the gray value to be used to denote transparency.
-		 *
-		 * <p> Setting this attribute will cause the alpha channel
-		 * of the input image to be ignored.
-		 *
-		 * <p> The 'tRNS' chunk will encode this information.
-		 */
-		public void setTransparentGray(int transparentGray)
-		{
-			transparency = new int[1];
-			transparency[0] = transparentGray;
-			transparencySet = true;
-		}
-
-		/**
-		 * Returns the gray value to be used to denote transparency.
-		 *
-		 * <p> If the transparent gray value has not previously been
-		 * set, or has been unset, an
-		 * <code>IllegalStateException</code> will be thrown.
-		 *
-		 * @throws IllegalStateException if the transparent gray value
-		 *        is not set.
-		 */
-		public int getTransparentGray()
-		{
-			if (!transparencySet)
-			{
-				throw new IllegalStateException("PNGEncodeParam7");
-			}
-			int gray = transparency[0];
-			return gray;
-		}
-
-		private int bitShift;
-
-		private boolean bitShiftSet = false;
-
-		/**
-		 * Sets the desired bit shift for a grayscale image.
-		 * Pixels in the source image will be shifted right by
-		 * the given amount prior to being clamped to the maximum
-		 * value given by the encoded image's bit depth.
-		 */
-		public void setBitShift(int bitShift)
-		{
-			if (bitShift < 0)
-			{
-				throw new RuntimeException();
-			}
-			this.bitShift = bitShift;
-			bitShiftSet = true;
-		}
-
-		/**
-		 * Returns the desired bit shift for a grayscale image.
-		 *
-		 * <p> If the bit shift has not previously been set, or has been
-		 * unset, an <code>IllegalStateException</code> will be thrown.
-		 *
-		 * @throws IllegalStateException if the bit shift is not set.
-		 */
-		public int getBitShift()
-		{
-			if (!bitShiftSet)
-			{
-				throw new IllegalStateException("PNGEncodeParam8");
-			}
-			return bitShift;
-		}
-
-		/**
-		 * Suppresses the setting of the bit shift of a grayscale image.
-		 * Pixels in the source image will not be shifted prior to encoding.
-		 */
-		public void unsetBitShift()
-		{
-			bitShiftSet = false;
-		}
-
-		/**
-		 * Returns true if the bit shift has been set.
-		 */
-		public boolean isBitShiftSet()
-		{
-			return bitShiftSet;
-		}
-
-		/**
-		 * Returns true if the bit depth has been set.
-		 */
-		public boolean isBitDepthSet()
-		{
-			return bitDepthSet;
-		}
-	}
-
-	public static class RGB extends PngEncodeParam
-	{
-
-		/** Constructs an instance of <code>PNGEncodeParam.RGB</code>. */
-		public RGB()
-		{
-		}
-
-		// bKGD chunk
-
-		private boolean backgroundSet = false;
-
-		/**
-		 * Suppresses the 'bKGD' chunk from being output.
-		 */
-		public void unsetBackground()
-		{
-			backgroundSet = false;
-		}
-
-		/**
-		 * Returns true if a 'bKGD' chunk will be output.
-		 */
-		public boolean isBackgroundSet()
-		{
-			return backgroundSet;
-		}
-
-		/**
-		 * Sets the desired bit depth for an RGB image.  The bit
-		 * depth must be 8 or 16.
-		 */
-		public void setBitDepth(int bitDepth)
-		{
-			if (bitDepth != 8 && bitDepth != 16)
-			{
-				throw new RuntimeException();
-			}
-			this.bitDepth = bitDepth;
-			bitDepthSet = true;
-		}
-
-		// bKGD chunk
-
-		private int[] backgroundRGB;
-
-		/**
-		 * Sets the RGB value of the suggested background color.
-		 * The <code>rgb</code> parameter should have 3 entries.
-		 *
-		 * <p> The 'bKGD' chunk will encode this information.
-		 */
-		public void setBackgroundRGB(int[] rgb)
-		{
-			if (rgb.length != 3)
-			{
-				throw new RuntimeException();
-			}
-			backgroundRGB = rgb;
-			backgroundSet = true;
-		}
-
-		/**
-		 * Returns the RGB value of the suggested background color.
-		 *
-		 * <p> If the background color has not previously been set, or has been
-		 * unset, an <code>IllegalStateException</code> will be thrown.
-		 *
-		 * @throws IllegalStateException if the background color is not set.
-		 */
-		public int[] getBackgroundRGB()
-		{
-			if (!backgroundSet)
-			{
-				throw new IllegalStateException("PNGEncodeParam9");
-			}
-			return backgroundRGB;
-		}
-
-		// tRNS chunk
-
-		private int[] transparency;
-
-		/**
-		 * Sets the RGB value to be used to denote transparency.
-		 *
-		 * <p> Setting this attribute will cause the alpha channel
-		 * of the input image to be ignored.
-		 *
-		 * <p> The 'tRNS' chunk will encode this information.
-		 */
-		public void setTransparentRGB(int[] transparentRGB)
-		{
-			transparency = (transparentRGB.clone());
-			transparencySet = true;
-		}
-
-		/**
-		 * Returns the RGB value to be used to denote transparency.
-		 *
-		 * <p> If the transparent color has not previously been set,
-		 * or has been unset, an <code>IllegalStateException</code>
-		 * will be thrown.
-		 *
-		 * @throws IllegalStateException if the transparent color is not set.
-		 */
-		public int[] getTransparentRGB()
-		{
-			if (!transparencySet)
-			{
-				throw new IllegalStateException("PNGEncodeParam10");
-			}
-			return (transparency.clone());
-		}
-	}
-
-	protected int bitDepth;
-
-	protected boolean bitDepthSet = false;
+	protected boolean _bitDepthSet = false;
 
 	/**
 	 * Sets the desired bit depth of an image.
@@ -647,11 +155,11 @@ public abstract class PngEncodeParam
 	 */
 	public int getBitDepth()
 	{
-		if (!bitDepthSet)
+		if (!_bitDepthSet)
 		{
 			throw new IllegalStateException("PNGEncodeParam11");
 		}
-		return bitDepth;
+		return _bitDepth;
 	}
 
 	/**
@@ -662,17 +170,17 @@ public abstract class PngEncodeParam
 	 */
 	public void unsetBitDepth()
 	{
-		bitDepthSet = false;
+		_bitDepthSet = false;
 	}
 
-	private boolean useInterlacing = false;
+	private boolean _useInterlacing = false;
 
 	/**
 	 * Turns Adam7 interlacing on or off.
 	 */
 	public void setInterlacing(boolean useInterlacing)
 	{
-		this.useInterlacing = useInterlacing;
+		this._useInterlacing = useInterlacing;
 	}
 
 	/**
@@ -680,7 +188,7 @@ public abstract class PngEncodeParam
 	 */
 	public boolean getInterlacing()
 	{
-		return useInterlacing;
+		return _useInterlacing;
 	}
 
 	// bKGD chunk - delegate to subclasses
@@ -720,9 +228,9 @@ public abstract class PngEncodeParam
 
 	// cHRM chunk
 
-	private float[] chromaticity = null;
+	private float[] _chromaticity = null;
 
-	private boolean chromaticitySet = false;
+	private boolean _chromaticitySet = false;
 
 	/**
 	 * Sets the white point and primary chromaticities in CIE (x, y)
@@ -741,8 +249,8 @@ public abstract class PngEncodeParam
 		{
 			throw new IllegalArgumentException();
 		}
-		this.chromaticity = (chromaticity.clone());
-		chromaticitySet = true;
+		this._chromaticity = (chromaticity.clone());
+		_chromaticitySet = true;
 	}
 
 	/**
@@ -778,11 +286,11 @@ public abstract class PngEncodeParam
 	 */
 	public float[] getChromaticity()
 	{
-		if (!chromaticitySet)
+		if (!_chromaticitySet)
 		{
 			throw new IllegalStateException("PNGEncodeParam12");
 		}
-		return (chromaticity.clone());
+		return (_chromaticity.clone());
 	}
 
 	/**
@@ -790,8 +298,8 @@ public abstract class PngEncodeParam
 	 */
 	public void unsetChromaticity()
 	{
-		chromaticity = null;
-		chromaticitySet = false;
+		_chromaticity = null;
+		_chromaticitySet = false;
 	}
 
 	/**
@@ -799,14 +307,14 @@ public abstract class PngEncodeParam
 	 */
 	public boolean isChromaticitySet()
 	{
-		return chromaticitySet;
+		return _chromaticitySet;
 	}
 
 	// gAMA chunk
 
-	private float gamma;
+	private float _gamma;
 
-	private boolean gammaSet = false;
+	private boolean _gammaSet = false;
 
 	/**
 	 * Sets the file gamma value for the image.
@@ -815,8 +323,8 @@ public abstract class PngEncodeParam
 	 */
 	public void setGamma(float gamma)
 	{
-		this.gamma = gamma;
-		gammaSet = true;
+		this._gamma = gamma;
+		_gammaSet = true;
 	}
 
 	/**
@@ -829,11 +337,11 @@ public abstract class PngEncodeParam
 	 */
 	public float getGamma()
 	{
-		if (!gammaSet)
+		if (!_gammaSet)
 		{
 			throw new IllegalStateException("PNGEncodeParam13");
 		}
-		return gamma;
+		return _gamma;
 	}
 
 	/**
@@ -841,7 +349,7 @@ public abstract class PngEncodeParam
 	 */
 	public void unsetGamma()
 	{
-		gammaSet = false;
+		_gammaSet = false;
 	}
 
 	/**
@@ -849,14 +357,14 @@ public abstract class PngEncodeParam
 	 */
 	public boolean isGammaSet()
 	{
-		return gammaSet;
+		return _gammaSet;
 	}
 
 	// hIST chunk
 
-	private int[] paletteHistogram = null;
+	private int[] _paletteHistogram = null;
 
-	private boolean paletteHistogramSet = false;
+	private boolean _paletteHistogramSet = false;
 
 	/**
 	 * Sets the palette histogram to be stored with this image.
@@ -867,8 +375,8 @@ public abstract class PngEncodeParam
 	 */
 	public void setPaletteHistogram(int[] paletteHistogram)
 	{
-		this.paletteHistogram = (paletteHistogram.clone());
-		paletteHistogramSet = true;
+		this._paletteHistogram = (paletteHistogram.clone());
+		_paletteHistogramSet = true;
 	}
 
 	/**
@@ -881,11 +389,11 @@ public abstract class PngEncodeParam
 	 */
 	public int[] getPaletteHistogram()
 	{
-		if (!paletteHistogramSet)
+		if (!_paletteHistogramSet)
 		{
 			throw new IllegalStateException("PNGEncodeParam14");
 		}
-		return paletteHistogram;
+		return _paletteHistogram;
 	}
 
 	/**
@@ -893,8 +401,8 @@ public abstract class PngEncodeParam
 	 */
 	public void unsetPaletteHistogram()
 	{
-		paletteHistogram = null;
-		paletteHistogramSet = false;
+		_paletteHistogram = null;
+		_paletteHistogramSet = false;
 	}
 
 	/**
@@ -902,14 +410,14 @@ public abstract class PngEncodeParam
 	 */
 	public boolean isPaletteHistogramSet()
 	{
-		return paletteHistogramSet;
+		return _paletteHistogramSet;
 	}
 
 	// iCCP chunk
 
-	private byte[] ICCProfileData = null;
+	private byte[] _ICCProfileData = null;
 
-	private boolean ICCProfileDataSet = false;
+	private boolean _ICCProfileDataSet = false;
 
 	/**
 	 * Sets the ICC profile data to be stored with this image.
@@ -919,8 +427,8 @@ public abstract class PngEncodeParam
 	 */
 	public void setICCProfileData(byte[] ICCProfileData)
 	{
-		this.ICCProfileData = (ICCProfileData.clone());
-		ICCProfileDataSet = true;
+		this._ICCProfileData = (ICCProfileData.clone());
+		_ICCProfileDataSet = true;
 	}
 
 	/**
@@ -933,11 +441,11 @@ public abstract class PngEncodeParam
 	 */
 	public byte[] getICCProfileData()
 	{
-		if (!ICCProfileDataSet)
+		if (!_ICCProfileDataSet)
 		{
 			throw new IllegalStateException("PNGEncodeParam15");
 		}
-		return (ICCProfileData.clone());
+		return (_ICCProfileData.clone());
 	}
 
 	/**
@@ -945,8 +453,8 @@ public abstract class PngEncodeParam
 	 */
 	public void unsetICCProfileData()
 	{
-		ICCProfileData = null;
-		ICCProfileDataSet = false;
+		_ICCProfileData = null;
+		_ICCProfileDataSet = false;
 	}
 
 	/**
@@ -954,14 +462,14 @@ public abstract class PngEncodeParam
 	 */
 	public boolean isICCProfileDataSet()
 	{
-		return ICCProfileDataSet;
+		return _ICCProfileDataSet;
 	}
 
 	// pHYS chunk
 
-	private int[] physicalDimension = null;
+	private int[] _physicalDimension = null;
 
-	private boolean physicalDimensionSet = false;
+	private boolean _physicalDimensionSet = false;
 
 	/**
 	 * Sets the physical dimension information to be stored with this
@@ -974,8 +482,8 @@ public abstract class PngEncodeParam
 	 */
 	public void setPhysicalDimension(int[] physicalDimension)
 	{
-		this.physicalDimension = (physicalDimension.clone());
-		physicalDimensionSet = true;
+		this._physicalDimension = (physicalDimension.clone());
+		_physicalDimensionSet = true;
 	}
 
 	/**
@@ -1005,11 +513,11 @@ public abstract class PngEncodeParam
 	 */
 	public int[] getPhysicalDimension()
 	{
-		if (!physicalDimensionSet)
+		if (!_physicalDimensionSet)
 		{
 			throw new IllegalStateException("PNGEncodeParam16");
 		}
-		return (physicalDimension.clone());
+		return (_physicalDimension.clone());
 	}
 
 	/**
@@ -1017,8 +525,8 @@ public abstract class PngEncodeParam
 	 */
 	public void unsetPhysicalDimension()
 	{
-		physicalDimension = null;
-		physicalDimensionSet = false;
+		_physicalDimension = null;
+		_physicalDimensionSet = false;
 	}
 
 	/**
@@ -1026,14 +534,14 @@ public abstract class PngEncodeParam
 	 */
 	public boolean isPhysicalDimensionSet()
 	{
-		return physicalDimensionSet;
+		return _physicalDimensionSet;
 	}
 
 	// sPLT chunk
 
-	private PngSuggestedPaletteEntry[] suggestedPalette = null;
+	private PngSuggestedPaletteEntry[] _suggestedPalette = null;
 
-	private boolean suggestedPaletteSet = false;
+	private boolean _suggestedPaletteSet = false;
 
 	/**
 	 * Sets the suggested palette information to be stored with this
@@ -1044,8 +552,8 @@ public abstract class PngEncodeParam
 	 */
 	public void setSuggestedPalette(PngSuggestedPaletteEntry[] palette)
 	{
-		suggestedPalette = (palette.clone());
-		suggestedPaletteSet = true;
+		_suggestedPalette = (palette.clone());
+		_suggestedPaletteSet = true;
 	}
 
 	/**
@@ -1061,11 +569,11 @@ public abstract class PngEncodeParam
 	 */
 	PngSuggestedPaletteEntry[] getSuggestedPalette()
 	{
-		if (!suggestedPaletteSet)
+		if (!_suggestedPaletteSet)
 		{
 			throw new IllegalStateException("PNGEncodeParam17");
 		}
-		return (suggestedPalette.clone());
+		return (_suggestedPalette.clone());
 	}
 
 	/**
@@ -1073,8 +581,8 @@ public abstract class PngEncodeParam
 	 */
 	public void unsetSuggestedPalette()
 	{
-		suggestedPalette = null;
-		suggestedPaletteSet = false;
+		_suggestedPalette = null;
+		_suggestedPaletteSet = false;
 	}
 
 	/**
@@ -1082,14 +590,14 @@ public abstract class PngEncodeParam
 	 */
 	public boolean isSuggestedPaletteSet()
 	{
-		return suggestedPaletteSet;
+		return _suggestedPaletteSet;
 	}
 
 	// sBIT chunk
 
-	private int[] significantBits = null;
+	private int[] _significantBits = null;
 
-	private boolean significantBitsSet = false;
+	private boolean _significantBitsSet = false;
 
 	/**
 	 * Sets the number of significant bits for each band of the image.
@@ -1103,8 +611,8 @@ public abstract class PngEncodeParam
 	 */
 	public void setSignificantBits(int[] significantBits)
 	{
-		this.significantBits = (significantBits.clone());
-		significantBitsSet = true;
+		this._significantBits = (significantBits.clone());
+		_significantBitsSet = true;
 	}
 
 	/**
@@ -1119,11 +627,11 @@ public abstract class PngEncodeParam
 	 */
 	public int[] getSignificantBits()
 	{
-		if (!significantBitsSet)
+		if (!_significantBitsSet)
 		{
 			throw new IllegalStateException("PNGEncodeParam18");
 		}
-		return significantBits.clone();
+		return _significantBits.clone();
 	}
 
 	/**
@@ -1131,8 +639,8 @@ public abstract class PngEncodeParam
 	 */
 	public void unsetSignificantBits()
 	{
-		significantBits = null;
-		significantBitsSet = false;
+		_significantBits = null;
+		_significantBitsSet = false;
 	}
 
 	/**
@@ -1140,14 +648,14 @@ public abstract class PngEncodeParam
 	 */
 	public boolean isSignificantBitsSet()
 	{
-		return significantBitsSet;
+		return _significantBitsSet;
 	}
 
 	// sRGB chunk
 
-	private int SRGBIntent;
+	private int _SRGBIntent;
 
-	private boolean SRGBIntentSet = false;
+	private boolean _SRGBIntentSet = false;
 
 	/**
 	 * Sets the sRGB rendering intent to be stored with this image.
@@ -1159,8 +667,8 @@ public abstract class PngEncodeParam
 	 */
 	public void setSRGBIntent(int SRGBIntent)
 	{
-		this.SRGBIntent = SRGBIntent;
-		SRGBIntentSet = true;
+		this._SRGBIntent = SRGBIntent;
+		_SRGBIntentSet = true;
 	}
 
 	/**
@@ -1173,11 +681,11 @@ public abstract class PngEncodeParam
 	 */
 	public int getSRGBIntent()
 	{
-		if (!SRGBIntentSet)
+		if (!_SRGBIntentSet)
 		{
 			throw new IllegalStateException("PNGEncodeParam19");
 		}
-		return SRGBIntent;
+		return _SRGBIntent;
 	}
 
 	/**
@@ -1185,7 +693,7 @@ public abstract class PngEncodeParam
 	 */
 	public void unsetSRGBIntent()
 	{
-		SRGBIntentSet = false;
+		_SRGBIntentSet = false;
 	}
 
 	/**
@@ -1193,14 +701,14 @@ public abstract class PngEncodeParam
 	 */
 	public boolean isSRGBIntentSet()
 	{
-		return SRGBIntentSet;
+		return _SRGBIntentSet;
 	}
 
 	// tEXt chunk
 
-	private String[] text = null;
+	private String[] _text = null;
 
-	private boolean textSet = false;
+	private boolean _textSet = false;
 
 	/**
 	 * Sets the textual data to be stored in uncompressed form with this
@@ -1211,8 +719,8 @@ public abstract class PngEncodeParam
 	 */
 	public void setText(String[] text)
 	{
-		this.text = text;
-		textSet = true;
+		this._text = text;
+		_textSet = true;
 	}
 
 	/**
@@ -1226,11 +734,11 @@ public abstract class PngEncodeParam
 	 */
 	public String[] getText()
 	{
-		if (!textSet)
+		if (!_textSet)
 		{
 			throw new IllegalStateException("PNGEncodeParam20");
 		}
-		return text;
+		return _text;
 	}
 
 	/**
@@ -1238,8 +746,8 @@ public abstract class PngEncodeParam
 	 */
 	public void unsetText()
 	{
-		text = null;
-		textSet = false;
+		_text = null;
+		_textSet = false;
 	}
 
 	/**
@@ -1247,14 +755,14 @@ public abstract class PngEncodeParam
 	 */
 	public boolean isTextSet()
 	{
-		return textSet;
+		return _textSet;
 	}
 
 	// tIME chunk
 
-	private Date modificationTime;
+	private Date _modificationTime;
 
-	private boolean modificationTimeSet = false;
+	private boolean _modificationTimeSet = false;
 
 	/**
 	 * Sets the modification time, as a <code>Date</code>, to be
@@ -1266,8 +774,8 @@ public abstract class PngEncodeParam
 	 */
 	public void setModificationTime(Date modificationTime)
 	{
-		this.modificationTime = modificationTime;
-		modificationTimeSet = true;
+		this._modificationTime = modificationTime;
+		_modificationTimeSet = true;
 	}
 
 	/**
@@ -1280,11 +788,11 @@ public abstract class PngEncodeParam
 	 */
 	public Date getModificationTime()
 	{
-		if (!modificationTimeSet)
+		if (!_modificationTimeSet)
 		{
 			throw new IllegalStateException("PNGEncodeParam21");
 		}
-		return modificationTime;
+		return _modificationTime;
 	}
 
 	/**
@@ -1292,8 +800,8 @@ public abstract class PngEncodeParam
 	 */
 	public void unsetModificationTime()
 	{
-		modificationTime = null;
-		modificationTimeSet = false;
+		_modificationTime = null;
+		_modificationTimeSet = false;
 	}
 
 	/**
@@ -1301,7 +809,7 @@ public abstract class PngEncodeParam
 	 */
 	public boolean isModificationTimeSet()
 	{
-		return modificationTimeSet;
+		return _modificationTimeSet;
 	}
 
 	// tRNS chunk
@@ -1326,9 +834,9 @@ public abstract class PngEncodeParam
 
 	// zTXT chunk
 
-	private String[] zText = null;
+	private String[] _zText = null;
 
-	private boolean zTextSet = false;
+	private boolean _zTextSet = false;
 
 	/**
 	 * Sets the text strings to be stored in compressed form with this
@@ -1339,8 +847,8 @@ public abstract class PngEncodeParam
 	 */
 	public void setCompressedText(String[] text)
 	{
-		this.zText = text;
-		zTextSet = true;
+		this._zText = text;
+		_zTextSet = true;
 	}
 
 	/**
@@ -1356,11 +864,11 @@ public abstract class PngEncodeParam
 	 */
 	public String[] getCompressedText()
 	{
-		if (!zTextSet)
+		if (!_zTextSet)
 		{
 			throw new IllegalStateException("PNGEncodeParam22");
 		}
-		return zText;
+		return _zText;
 	}
 
 	/**
@@ -1368,8 +876,8 @@ public abstract class PngEncodeParam
 	 */
 	public void unsetCompressedText()
 	{
-		zText = null;
-		zTextSet = false;
+		_zText = null;
+		_zTextSet = false;
 	}
 
 	/**
@@ -1377,7 +885,7 @@ public abstract class PngEncodeParam
 	 */
 	public boolean isCompressedTextSet()
 	{
-		return zTextSet;
+		return _zTextSet;
 	}
 
 	// Other chunk types
@@ -1468,7 +976,7 @@ public abstract class PngEncodeParam
 	/**
 	 * An abs() function for use by the Paeth predictor.
 	 */
-	private static final int abs(int x)
+	private static final int _abs(int x)
 	{
 		return (x < 0) ? -x : x;
 	}
@@ -1481,9 +989,9 @@ public abstract class PngEncodeParam
 	public static final int paethPredictor(int a, int b, int c)
 	{
 		int p = a + b - c;
-		int pa = abs(p - a);
-		int pb = abs(p - b);
-		int pc = abs(p - c);
+		int pa = _abs(p - a);
+		int pb = _abs(p - b);
+		int pc = _abs(p - c);
 
 		if ((pa <= pb) && (pa <= pc))
 		{

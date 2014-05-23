@@ -11,16 +11,16 @@ import java.util.Arrays;
  */
 public class Spline1D
 {
-	protected double[] len;
-	protected double[] pos1D;
+	protected double[] _len;
+	protected double[] _pos1D;
 
-	protected double[] a;
-	protected double[] b;
-	protected double[] c;
-	protected double[] d;
+	protected double[] _a;
+	protected double[] _b;
+	protected double[] _c;
+	protected double[] _d;
 
 	/** tracks the last index found since that is mostly commonly the next one used */
-	private int storageIndex = 0;
+	private int _storageIndex = 0;
 	
 	/**
 	 * Creates a new Spline.
@@ -43,12 +43,12 @@ public class Spline1D
 	 */
 	public void setValues(double[] controlPointProportions, double[] positions1D)
 	{
-		this.len = controlPointProportions;
-		this.pos1D = positions1D;
+		this._len = controlPointProportions;
+		this._pos1D = positions1D;
 		
-		if (len.length > 1)
+		if (_len.length > 1)
 		{
-			calculateCoefficients();
+			_calculateCoefficients();
 		}
 	}
 
@@ -59,16 +59,16 @@ public class Spline1D
 	 */
 	public double getValue(double x)
 	{
-		if (len.length == 0)
+		if (_len.length == 0)
 		{
 			return Double.NaN;
 		}
 
-		if (len.length == 1)
+		if (_len.length == 1)
 		{
-			if (len[0] == x)
+			if (_len[0] == x)
 			{
-				return pos1D[0];
+				return _pos1D[0];
 			}
 			else
 			{
@@ -76,22 +76,22 @@ public class Spline1D
 			}
 		}
 
-		int index = Arrays.binarySearch(len, x);
+		int index = Arrays.binarySearch(_len, x);
 		if (index > 0)
 		{
-			return pos1D[index];
+			return _pos1D[index];
 		}
 
 		index = - (index + 1) - 1;
 		//TODO linear interpolation or extrapolation
 		if (index < 0) {
-			return pos1D[0];
+			return _pos1D[0];
 		}
 
-		return a[index]
-			+ b[index] * (x - len[index])
-			+ c[index] * Math.pow(x - len[index], 2)
-			+ d[index] * Math.pow(x - len[index], 3);
+		return _a[index]
+			+ _b[index] * (x - _len[index])
+			+ _c[index] * Math.pow(x - _len[index], 2)
+			+ _d[index] * Math.pow(x - _len[index], 3);
 	}
 
 	/**
@@ -104,31 +104,31 @@ public class Spline1D
 	public double getFastValue(double x)
 	{
 		// Fast check to see if previous index is still valid
-		if (storageIndex > -1 && storageIndex < len.length-1 && x > len[storageIndex] && x < len[storageIndex + 1])
+		if (_storageIndex > -1 && _storageIndex < _len.length-1 && x > _len[_storageIndex] && x < _len[_storageIndex + 1])
 		{
 
 		}
 		else
 		{
-			int index = Arrays.binarySearch(len, x);
+			int index = Arrays.binarySearch(_len, x);
 			if (index > 0)
 			{
-				return pos1D[index];
+				return _pos1D[index];
 			}
 			index = - (index + 1) - 1;
-			storageIndex = index;
+			_storageIndex = index;
 		}
 	
 		//TODO linear interpolation or extrapolation
-		if (storageIndex < 0)
+		if (_storageIndex < 0)
 		{
-			return pos1D[0];
+			return _pos1D[0];
 		}
-		double value = x - len[storageIndex];
-		return a[storageIndex]
-					+ b[storageIndex] * value
-					+ c[storageIndex] * (value * value)
-					+ d[storageIndex] * (value * value * value);
+		double value = x - _len[_storageIndex];
+		return _a[_storageIndex]
+					+ _b[_storageIndex] * value
+					+ _c[_storageIndex] * (value * value)
+					+ _d[_storageIndex] * (value * value * value);
 	}
 
 	/**
@@ -138,36 +138,36 @@ public class Spline1D
 	 */
 	public double getDx(double x)
 	{
-		if (len.length == 0 || len.length == 1)
+		if (_len.length == 0 || _len.length == 1)
 		{
 			return 0;
 		}
 
-		int index = Arrays.binarySearch(len, x);
+		int index = Arrays.binarySearch(_len, x);
 		if (index < 0)
 		{
 			index = - (index + 1) - 1;
 		}
 
-		return b[index]
-			+ 2 * c[index] * (x - len[index])
-			+ 3 * d[index] * Math.pow(x - len[index], 2);
+		return _b[index]
+			+ 2 * _c[index] * (x - _len[index])
+			+ 3 * _d[index] * Math.pow(x - _len[index], 2);
 	}
 
 	/**
 	 * Calculates the Spline coefficients.
 	 */
-	private void calculateCoefficients()
+	private void _calculateCoefficients()
 	{
-		int N = pos1D.length;
-		a = new double[N];
-		b = new double[N];
-		c = new double[N];
-		d = new double[N];
+		int N = _pos1D.length;
+		_a = new double[N];
+		_b = new double[N];
+		_c = new double[N];
+		_d = new double[N];
 		
 		if (N == 2) {
-			a[0] = pos1D[0];
-			b[0] = pos1D[1] - pos1D[0];
+			_a[0] = _pos1D[0];
+			_b[0] = _pos1D[1] - _pos1D[0];
 			return;
 		}
 
@@ -175,8 +175,8 @@ public class Spline1D
 		
 		for (int i = 0; i < N - 1; i++)
 		{
-			a[i] = pos1D[i];
-			h[i] = len[i + 1] - len[i];
+			_a[i] = _pos1D[i];
+			h[i] = _len[i + 1] - _len[i];
 			
 			// h[i] is used for division later, avoid a NaN
 			if (h[i] == 0.0)
@@ -184,7 +184,7 @@ public class Spline1D
 				h[i] = 0.01;
 			}
 		}
-		a[N - 1] = pos1D[N - 1];
+		_a[N - 1] = _pos1D[N - 1];
 
 		double[][] A = new double[N - 2][N - 2];
 		double[] y = new double[N - 2];
@@ -192,9 +192,9 @@ public class Spline1D
 		{
 			y[i] =
 				3
-					* ((pos1D[i + 2] - pos1D[i + 1]) / h[i
+					* ((_pos1D[i + 2] - _pos1D[i + 1]) / h[i
 						+ 1]
-						- (pos1D[i + 1] - pos1D[i]) / h[i]);
+						- (_pos1D[i + 1] - _pos1D[i]) / h[i]);
 
 			A[i][i] = 2 * (h[i] + h[i + 1]);
 
@@ -213,18 +213,18 @@ public class Spline1D
 
 		for (int i = 0; i < N - 2; i++)
 		{
-			c[i + 1] = y[i];
-			b[i] = (a[i + 1] - a[i]) / h[i] - (2 * c[i] + c[i + 1]) / 3 * h[i];
-			d[i] = (c[i + 1] - c[i]) / (3 * h[i]);
+			_c[i + 1] = y[i];
+			_b[i] = (_a[i + 1] - _a[i]) / h[i] - (2 * _c[i] + _c[i + 1]) / 3 * h[i];
+			_d[i] = (_c[i + 1] - _c[i]) / (3 * h[i]);
 		}
 		
-		b[N - 2] =
-			(a[N - 1] - a[N - 2]) / h[N
+		_b[N - 2] =
+			(_a[N - 1] - _a[N - 2]) / h[N
 				- 2]
-				- (2 * c[N - 2] + c[N - 1]) / 3 * h[N
+				- (2 * _c[N - 2] + _c[N - 1]) / 3 * h[N
 				- 2];
 		
-		d[N - 2] = (c[N - 1] - c[N - 2]) / (3 * h[N - 2]);
+		_d[N - 2] = (_c[N - 1] - _c[N - 2]) / (3 * h[N - 2]);
 	}
 
 	/**

@@ -52,7 +52,7 @@ public class StylesheetCodec extends ObjectCodec
 	 */
 	public Node encode(Codec enc, Object obj)
 	{
-		Element node = enc.document.createElement(getName());
+		Element node = enc._document.createElement(getName());
 
 		if (obj instanceof Stylesheet)
 		{
@@ -64,7 +64,7 @@ public class StylesheetCodec extends ObjectCodec
 			{
 				Map.Entry<String, Map<String, Object>> entry = it.next();
 
-				Element styleNode = enc.document.createElement("add");
+				Element styleNode = enc._document.createElement("add");
 				String stylename = entry.getKey();
 				styleNode.setAttribute("as", stylename);
 
@@ -75,10 +75,10 @@ public class StylesheetCodec extends ObjectCodec
 				while (it2.hasNext())
 				{
 					Map.Entry<String, Object> entry2 = it2.next();
-					Element entryNode = enc.document.createElement("add");
+					Element entryNode = enc._document.createElement("add");
 					entryNode.setAttribute("as",
 							String.valueOf(entry2.getKey()));
-					entryNode.setAttribute("value", getStringValue(entry2));
+					entryNode.setAttribute("value", _getStringValue(entry2));
 					styleNode.appendChild(entryNode);
 				}
 
@@ -95,7 +95,7 @@ public class StylesheetCodec extends ObjectCodec
 	/**
 	 * Returns the string for encoding the given value.
 	 */
-	protected String getStringValue(Map.Entry<String, Object> entry)
+	protected String _getStringValue(Map.Entry<String, Object> entry)
 	{
 		if (entry.getValue() instanceof Boolean)
 		{
@@ -115,7 +115,7 @@ public class StylesheetCodec extends ObjectCodec
 		if (node instanceof Element)
 		{
 			String id = ((Element) node).getAttribute("id");
-			obj = dec.objects.get(id);
+			obj = dec._objects.get(id);
 
 			if (obj == null)
 			{
@@ -123,7 +123,7 @@ public class StylesheetCodec extends ObjectCodec
 
 				if (obj == null)
 				{
-					obj = cloneTemplate(node);
+					obj = _cloneTemplate(node);
 				}
 
 				if (id != null && id.length() > 0)

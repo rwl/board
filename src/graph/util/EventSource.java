@@ -34,17 +34,17 @@ public class EventSource
 	 * contains the event name followed by the respective listener for each
 	 * registered listener.
 	 */
-	protected transient List<Object> eventListeners = null;
+	protected transient List<Object> _eventListeners = null;
 
 	/**
 	 * Holds the source object for this event source.
 	 */
-	protected Object eventSource;
+	protected Object _eventSource;
 
 	/**
 	 * Specifies if events can be fired. Default is true.
 	 */
-	protected boolean eventsEnabled = true;
+	protected boolean _eventsEnabled = true;
 
 	/**
 	 * Constructs a new event source using this as the source object.
@@ -67,7 +67,7 @@ public class EventSource
 	 */
 	public Object getEventSource()
 	{
-		return eventSource;
+		return _eventSource;
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class EventSource
 	 */
 	public void setEventSource(Object value)
 	{
-		this.eventSource = value;
+		this._eventSource = value;
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class EventSource
 	 */
 	public boolean isEventsEnabled()
 	{
-		return eventsEnabled;
+		return _eventsEnabled;
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class EventSource
 	 */
 	public void setEventsEnabled(boolean eventsEnabled)
 	{
-		this.eventsEnabled = eventsEnabled;
+		this._eventsEnabled = eventsEnabled;
 	}
 
 	/**
@@ -100,13 +100,13 @@ public class EventSource
 	 */
 	public void addListener(String eventName, IEventListener listener)
 	{
-		if (eventListeners == null)
+		if (_eventListeners == null)
 		{
-			eventListeners = new ArrayList<Object>();
+			_eventListeners = new ArrayList<Object>();
 		}
 
-		eventListeners.add(eventName);
-		eventListeners.add(listener);
+		_eventListeners.add(eventName);
+		_eventListeners.add(listener);
 	}
 
 	/**
@@ -126,16 +126,16 @@ public class EventSource
 	 */
 	public void removeListener(IEventListener listener, String eventName)
 	{
-		if (eventListeners != null)
+		if (_eventListeners != null)
 		{
-			for (int i = eventListeners.size() - 2; i > -1; i -= 2)
+			for (int i = _eventListeners.size() - 2; i > -1; i -= 2)
 			{
-				if (eventListeners.get(i + 1) == listener
+				if (_eventListeners.get(i + 1) == listener
 						&& (eventName == null || String.valueOf(
-								eventListeners.get(i)).equals(eventName)))
+								_eventListeners.get(i)).equals(eventName)))
 				{
-					eventListeners.remove(i + 1);
-					eventListeners.remove(i);
+					_eventListeners.remove(i + 1);
+					_eventListeners.remove(i);
 				}
 			}
 		}
@@ -157,7 +157,7 @@ public class EventSource
 	 */
 	public void fireEvent(EventObj evt, Object sender)
 	{
-		if (eventListeners != null && !eventListeners.isEmpty()
+		if (_eventListeners != null && !_eventListeners.isEmpty()
 				&& isEventsEnabled())
 		{
 			if (sender == null)
@@ -170,13 +170,13 @@ public class EventSource
 				sender = this;
 			}
 
-			for (int i = 0; i < eventListeners.size(); i += 2)
+			for (int i = 0; i < _eventListeners.size(); i += 2)
 			{
-				String listen = (String) eventListeners.get(i);
+				String listen = (String) _eventListeners.get(i);
 
 				if (listen == null || listen.equals(evt.getName()))
 				{
-					((IEventListener) eventListeners.get(i + 1)).invoke(
+					((IEventListener) _eventListeners.get(i + 1)).invoke(
 							sender, evt);
 				}
 			}

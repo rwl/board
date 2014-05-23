@@ -28,15 +28,15 @@ public class GraphMlKey
 		BOOLEAN, INT, LONG, FLOAT, DOUBLE, STRING
 	}
 
-	private String keyDefault;
+	private String _keyDefault;
 
-	private String keyId;
+	private String _keyId;
 
-	private keyForValues keyFor;
+	private keyForValues _keyFor;
 
-	private String keyName;
+	private String _keyName;
 
-	private keyTypeValues keyType;
+	private keyTypeValues _keyType;
 
 	/**
 	 * Construct a key with the given parameters.
@@ -48,11 +48,11 @@ public class GraphMlKey
 	public GraphMlKey(String keyId, keyForValues keyFor, String keyName,
 			keyTypeValues keyType)
 	{
-		this.keyId = keyId;
-		this.keyFor = keyFor;
-		this.keyName = keyName;
-		this.keyType = keyType;
-		this.keyDefault = defaultValue();
+		this._keyId = keyId;
+		this._keyFor = keyFor;
+		this._keyName = keyName;
+		this._keyType = keyType;
+		this._keyDefault = _defaultValue();
 	}
 
 	/**
@@ -61,73 +61,73 @@ public class GraphMlKey
 	 */
 	public GraphMlKey(Element keyElement)
 	{
-		this.keyId = keyElement.getAttribute(GraphMlConstants.ID);
-		this.keyFor = enumForValue(keyElement
+		this._keyId = keyElement.getAttribute(GraphMlConstants.ID);
+		this._keyFor = enumForValue(keyElement
 				.getAttribute(GraphMlConstants.KEY_FOR));
-		this.keyName = keyElement.getAttribute(GraphMlConstants.KEY_NAME);
-		this.keyType = enumTypeValue(keyElement
+		this._keyName = keyElement.getAttribute(GraphMlConstants.KEY_NAME);
+		this._keyType = enumTypeValue(keyElement
 				.getAttribute(GraphMlConstants.KEY_TYPE));
-		this.keyDefault = defaultValue();
+		this._keyDefault = _defaultValue();
 	}
 
 	public String getKeyDefault()
 	{
-		return keyDefault;
+		return _keyDefault;
 	}
 
 	public void setKeyDefault(String keyDefault)
 	{
-		this.keyDefault = keyDefault;
+		this._keyDefault = keyDefault;
 	}
 
 	public keyForValues getKeyFor()
 	{
-		return keyFor;
+		return _keyFor;
 	}
 
 	public void setKeyFor(keyForValues keyFor)
 	{
-		this.keyFor = keyFor;
+		this._keyFor = keyFor;
 	}
 
 	public String getKeyId()
 	{
-		return keyId;
+		return _keyId;
 	}
 
 	public void setKeyId(String keyId)
 	{
-		this.keyId = keyId;
+		this._keyId = keyId;
 	}
 
 	public String getKeyName()
 	{
-		return keyName;
+		return _keyName;
 	}
 
 	public void setKeyName(String keyName)
 	{
-		this.keyName = keyName;
+		this._keyName = keyName;
 	}
 
 	public keyTypeValues getKeyType()
 	{
-		return keyType;
+		return _keyType;
 	}
 
 	public void setKeyType(keyTypeValues keyType)
 	{
-		this.keyType = keyType;
+		this._keyType = keyType;
 	}
 
 	/**
 	 * Returns the default value of the keyDefault attribute according
 	 * the keyType.
 	 */
-	private String defaultValue()
+	private String _defaultValue()
 	{
 		String val = "";
-		switch (this.keyType)
+		switch (this._keyType)
 		{
 			case BOOLEAN:
 			{
@@ -172,25 +172,25 @@ public class GraphMlKey
 	{
 		Element key = document.createElement(GraphMlConstants.KEY);
 		
-		if (!keyName.equals(""))
+		if (!_keyName.equals(""))
 		{
-			key.setAttribute(GraphMlConstants.KEY_NAME, keyName);
+			key.setAttribute(GraphMlConstants.KEY_NAME, _keyName);
 		}
-		key.setAttribute(GraphMlConstants.ID, keyId);
+		key.setAttribute(GraphMlConstants.ID, _keyId);
 		
-		if (!keyName.equals(""))
+		if (!_keyName.equals(""))
 		{
-			key.setAttribute(GraphMlConstants.KEY_FOR, stringForValue(keyFor));
-		}
-		
-		if (!keyName.equals(""))
-		{
-			key.setAttribute(GraphMlConstants.KEY_TYPE, stringTypeValue(keyType));
+			key.setAttribute(GraphMlConstants.KEY_FOR, stringForValue(_keyFor));
 		}
 		
-		if (!keyName.equals(""))
+		if (!_keyName.equals(""))
 		{
-			key.setTextContent(keyDefault);
+			key.setAttribute(GraphMlConstants.KEY_TYPE, stringTypeValue(_keyType));
+		}
+		
+		if (!_keyName.equals(""))
+		{
+			key.setTextContent(_keyDefault);
 		}
 		
 		return key;

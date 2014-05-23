@@ -9,15 +9,15 @@ import graph.view.CellState;
  */
 public class GeneratorConstFunction extends GeneratorFunction
 {
-	private double cost;
+	private double _cost;
 	
 	public GeneratorConstFunction(double cost)
 	{
-		this.cost = cost;
+		this._cost = cost;
 	};
 	
 	public double getCost(CellState state)
 	{
-		return cost;
+		return _cost;
 	};
 }

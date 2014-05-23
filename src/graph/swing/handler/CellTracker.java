@@ -39,8 +39,8 @@ public class CellTracker extends CellMarker implements MouseListener,
 	 */
 	public void destroy()
 	{
-		graphComponent.getGraphControl().removeMouseListener(this);
-		graphComponent.getGraphControl().removeMouseMotionListener(this);
+		_graphComponent.getGraphControl().removeMouseListener(this);
+		_graphComponent.getGraphControl().removeMouseMotionListener(this);
 	}
 
 	/*

@@ -18,7 +18,7 @@ public class MarkerRegistry
 	/**
 	 * 
 	 */
-	protected static Map<String, IMarker> markers = new Hashtable<String, IMarker>();
+	protected static Map<String, IMarker> _markers = new Hashtable<String, IMarker>();
 
 	static
 	{
@@ -135,7 +135,7 @@ public class MarkerRegistry
 	 */
 	public static IMarker getMarker(String name)
 	{
-		return markers.get(name);
+		return _markers.get(name);
 	}
 
 	/**
@@ -143,7 +143,7 @@ public class MarkerRegistry
 	 */
 	public static void registerMarker(String name, IMarker marker)
 	{
-		markers.put(name, marker);
+		_markers.put(name, marker);
 	}
 
 }

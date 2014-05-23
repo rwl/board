@@ -48,52 +48,52 @@ public class GraphTransferHandler extends TransferHandler
 	/**
 	 * Reference to the original cells for removal after a move.
 	 */
-	protected Object[] originalCells;
+	protected Object[] _originalCells;
 
 	/**
 	 * Reference to the last imported cell array.
 	 */
-	protected Transferable lastImported;
+	protected Transferable _lastImported;
 
 	/**
 	 * Sets the value for the initialImportCount. Default is 1. Updated in
 	 * exportDone to contain 0 after a cut and 1 after a copy.
 	 */
-	protected int initialImportCount = 1;
+	protected int _initialImportCount = 1;
 
 	/**
 	 * Counter for the last imported cell array.
 	 */
-	protected int importCount = 0;
+	protected int _importCount = 0;
 
 	/**
 	 * Specifies if a transfer image should be created for the transferable.
 	 * Default is DEFAULT_TRANSFER_IMAGE.
 	 */
-	protected boolean transferImageEnabled = DEFAULT_TRANSFER_IMAGE_ENABLED;
+	protected boolean _transferImageEnabled = DEFAULT_TRANSFER_IMAGE_ENABLED;
 
 	/**
 	 * Specifies the background color for the transfer image. Default is
 	 * DEFAULT_BACKGROUNDCOLOR.
 	 */
-	protected Color transferImageBackground = DEFAULT_BACKGROUNDCOLOR;
+	protected Color _transferImageBackground = DEFAULT_BACKGROUNDCOLOR;
 
 	/**
 	 * 
 	 */
-	protected Point location;
+	protected Point _location;
 
 	/**
 	 * 
 	 */
-	protected Point offset;
+	protected Point _offset;
 
 	/**
 	 * 
 	 */
 	public int getImportCount()
 	{
-		return importCount;
+		return _importCount;
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class GraphTransferHandler extends TransferHandler
 	 */
 	public void setImportCount(int value)
 	{
-		importCount = value;
+		_importCount = value;
 	}
 
 	/**
@@ -109,7 +109,7 @@ public class GraphTransferHandler extends TransferHandler
 	 */
 	public void setTransferImageEnabled(boolean transferImageEnabled)
 	{
-		this.transferImageEnabled = transferImageEnabled;
+		this._transferImageEnabled = transferImageEnabled;
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class GraphTransferHandler extends TransferHandler
 	 */
 	public boolean isTransferImageEnabled()
 	{
-		return this.transferImageEnabled;
+		return this._transferImageEnabled;
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class GraphTransferHandler extends TransferHandler
 	 */
 	public void setTransferImageBackground(Color transferImageBackground)
 	{
-		this.transferImageBackground = transferImageBackground;
+		this._transferImageBackground = transferImageBackground;
 	}
 
 	/**
@@ -133,7 +133,7 @@ public class GraphTransferHandler extends TransferHandler
 	 */
 	public Color getTransferImageBackground()
 	{
-		return this.transferImageBackground;
+		return this._transferImageBackground;
 	}
 
 	/**
@@ -141,7 +141,7 @@ public class GraphTransferHandler extends TransferHandler
 	 */
 	public boolean isLocalDrag()
 	{
-		return originalCells != null;
+		return _originalCells != null;
 	}
 
 	/**
@@ -149,7 +149,7 @@ public class GraphTransferHandler extends TransferHandler
 	 */
 	public void setLocation(Point value)
 	{
-		location = value;
+		_location = value;
 	}
 
 	/**
@@ -157,7 +157,7 @@ public class GraphTransferHandler extends TransferHandler
 	 */
 	public void setOffset(Point value)
 	{
-		offset = value;
+		_offset = value;
 	}
 
 	/**
@@ -191,16 +191,16 @@ public class GraphTransferHandler extends TransferHandler
 
 			if (!graph.isSelectionEmpty())
 			{
-				originalCells = graphComponent.getExportableCells(graph
+				_originalCells = graphComponent.getExportableCells(graph
 						.getSelectionCells());
 
-				if (originalCells.length > 0)
+				if (_originalCells.length > 0)
 				{
-					ImageIcon icon = (transferImageEnabled) ? createTransferableImage(
-							graphComponent, originalCells) : null;
+					ImageIcon icon = (_transferImageEnabled) ? createTransferableImage(
+							graphComponent, _originalCells) : null;
 
 					return createGraphTransferable(graphComponent,
-							originalCells, icon);
+							_originalCells, icon);
 				}
 			}
 		}
@@ -247,7 +247,7 @@ public class GraphTransferHandler extends TransferHandler
 			Object[] cells)
 	{
 		ImageIcon icon = null;
-		Color bg = (transferImageBackground != null) ? transferImageBackground
+		Color bg = (_transferImageBackground != null) ? _transferImageBackground
 				: graphComponent.getBackground();
 		Image img = CellRenderer.createBufferedImage(
 				graphComponent.getGraph(), cells, 1, bg,
@@ -266,31 +266,31 @@ public class GraphTransferHandler extends TransferHandler
 	 */
 	public void exportDone(JComponent c, Transferable data, int action)
 	{
-		initialImportCount = 1;
+		_initialImportCount = 1;
 		
 		if (c instanceof GraphComponent
 				&& data instanceof GraphTransferable)
 		{
 			// Requires that the graph handler resets the location to null if the drag leaves the
 			// component. This is the condition to identify a cross-component move.
-			boolean isLocalDrop = location != null;
+			boolean isLocalDrop = _location != null;
 
 			if (action == TransferHandler.MOVE && !isLocalDrop)
 			{
-				removeCells((GraphComponent) c, originalCells);
-				initialImportCount = 0;
+				_removeCells((GraphComponent) c, _originalCells);
+				_initialImportCount = 0;
 			}
 		}
 
-		originalCells = null;
-		location = null;
-		offset = null;
+		_originalCells = null;
+		_location = null;
+		_offset = null;
 	}
 
 	/**
 	 * 
 	 */
-	protected void removeCells(GraphComponent graphComponent, Object[] cells)
+	protected void _removeCells(GraphComponent graphComponent, Object[] cells)
 	{
 		graphComponent.getGraph().removeCells(cells);
 	}
@@ -320,7 +320,7 @@ public class GraphTransferHandler extends TransferHandler
 		{
 			try
 			{
-				updateImportCount(t);
+				_updateImportCount(t);
 
 				if (c instanceof GraphComponent)
 				{
@@ -334,7 +334,7 @@ public class GraphTransferHandler extends TransferHandler
 
 						if (gt.getCells() != null)
 						{
-							result = importGraphTransferable(graphComponent, gt);
+							result = _importGraphTransferable(graphComponent, gt);
 						}
 
 					}
@@ -352,24 +352,24 @@ public class GraphTransferHandler extends TransferHandler
 	/**
 	 * Counts the number of times that the given transferable has been imported.
 	 */
-	protected void updateImportCount(Transferable t)
+	protected void _updateImportCount(Transferable t)
 	{
-		if (lastImported != t)
+		if (_lastImported != t)
 		{
-			importCount = initialImportCount;
+			_importCount = _initialImportCount;
 		}
 		else
 		{
-			importCount++;
+			_importCount++;
 		}
 
-		lastImported = t;
+		_lastImported = t;
 	}
 
 	/**
 	 * Returns true if the cells have been imported using importCells.
 	 */
-	protected boolean importGraphTransferable(GraphComponent graphComponent,
+	protected boolean _importGraphTransferable(GraphComponent graphComponent,
 			GraphTransferable gt)
 	{
 		boolean result = false;
@@ -382,13 +382,13 @@ public class GraphTransferHandler extends TransferHandler
 			double dx = 0, dy = 0;
 
 			// Computes the offset for the placement of the imported cells
-			if (location != null && bounds != null)
+			if (_location != null && bounds != null)
 			{
 				Point2d translate = graph.getView().getTranslate();
 
-				dx = location.getX() - (bounds.getX() + translate.getX())
+				dx = _location.getX() - (bounds.getX() + translate.getX())
 						* scale;
-				dy = location.getY() - (bounds.getY() + translate.getY())
+				dy = _location.getY() - (bounds.getY() + translate.getY())
 						* scale;
 
 				// Keeps the cells aligned to the grid
@@ -399,19 +399,19 @@ public class GraphTransferHandler extends TransferHandler
 			{
 				int gs = graph.getGridSize();
 
-				dx = importCount * gs;
-				dy = importCount * gs;
+				dx = _importCount * gs;
+				dy = _importCount * gs;
 			}
 
-			if (offset != null)
+			if (_offset != null)
 			{
-				dx += offset.x;
-				dy += offset.y;
+				dx += _offset.x;
+				dy += _offset.y;
 			}
 
-			importCells(graphComponent, gt, dx, dy);
-			location = null;
-			offset = null;
+			_importCells(graphComponent, gt, dx, dy);
+			_location = null;
+			_offset = null;
 			result = true;
 
 			// Requests the focus after an import
@@ -428,7 +428,7 @@ public class GraphTransferHandler extends TransferHandler
 	/**
 	 * Returns the drop target for the given transferable and location.
 	 */
-	protected Object getDropTarget(GraphComponent graphComponent,
+	protected Object _getDropTarget(GraphComponent graphComponent,
 			GraphTransferable gt)
 	{
 		Object[] cells = gt.getCells();
@@ -436,10 +436,10 @@ public class GraphTransferHandler extends TransferHandler
 
 		// Finds the target cell at the given location and checks if the
 		// target is not already the parent of the first imported cell
-		if (location != null)
+		if (_location != null)
 		{
-			target = graphComponent.getGraph().getDropTarget(cells, location,
-					graphComponent.getCellAt(location.x, location.y));
+			target = graphComponent.getGraph().getDropTarget(cells, _location,
+					graphComponent.getCellAt(_location.x, _location.y));
 
 			if (cells.length > 0
 					&& graphComponent.getGraph().getModel().getParent(cells[0]) == target)
@@ -458,10 +458,10 @@ public class GraphTransferHandler extends TransferHandler
 	 * Graph.isSplitTarget. Selects and returns the cells that have been
 	 * imported.
 	 */
-	protected Object[] importCells(GraphComponent graphComponent,
+	protected Object[] _importCells(GraphComponent graphComponent,
 			GraphTransferable gt, double dx, double dy)
 	{
-		Object target = getDropTarget(graphComponent, gt);
+		Object target = _getDropTarget(graphComponent, gt);
 		Graph graph = graphComponent.getGraph();
 		Object[] cells = gt.getCells();
 
@@ -473,7 +473,7 @@ public class GraphTransferHandler extends TransferHandler
 		}
 		else
 		{
-			cells = graphComponent.importCells(cells, dx, dy, target, location);
+			cells = graphComponent.importCells(cells, dx, dy, target, _location);
 			graph.setSelectionCells(cells);
 		}
 

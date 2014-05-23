@@ -25,7 +25,7 @@ public class CylinderShape extends BasicShape
 		int r = w;
 
 		// Paints the background
-		if (configureGraphics(canvas, state, true))
+		if (_configureGraphics(canvas, state, true))
 		{
 			Area area = new Area(new Rectangle(x, y + h4 / 2, r, h - h4));
 			area.add(new Area(new Rectangle(x, y + h4 / 2, r, h - h4)));
@@ -36,7 +36,7 @@ public class CylinderShape extends BasicShape
 		}
 
 		// Paints the foreground
-		if (configureGraphics(canvas, state, false))
+		if (_configureGraphics(canvas, state, false))
 		{
 			canvas.getGraphics().drawOval(x, y, r, h4);
 			canvas.getGraphics().drawLine(x, y + h2, x, y + h - h2);

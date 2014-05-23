@@ -73,10 +73,10 @@ public class GraphHierarchyNode extends GraphAbstractHierarchyCell
 	@SuppressWarnings("unchecked")
 	public List<GraphAbstractHierarchyCell> getNextLayerConnectedCells(int layer)
 	{
-		if (nextLayerConnectedCells == null)
+		if (_nextLayerConnectedCells == null)
 		{
-			nextLayerConnectedCells = new ArrayList[1];
-			nextLayerConnectedCells[0] = new ArrayList<GraphAbstractHierarchyCell>(connectsAsTarget.size());
+			_nextLayerConnectedCells = new ArrayList[1];
+			_nextLayerConnectedCells[0] = new ArrayList<GraphAbstractHierarchyCell>(connectsAsTarget.size());
 			Iterator<GraphHierarchyEdge> iter = connectsAsTarget.iterator();
 			
 			while (iter.hasNext())
@@ -87,17 +87,17 @@ public class GraphHierarchyNode extends GraphAbstractHierarchyCell
 				{
 					// Either edge is not in any rank or
 					// no dummy nodes in edge, add node of other side of edge
-					nextLayerConnectedCells[0].add(edge.source);
+					_nextLayerConnectedCells[0].add(edge.source);
 				}
 				else
 				{
 					// Edge spans at least two layers, add edge
-					nextLayerConnectedCells[0].add(edge);
+					_nextLayerConnectedCells[0].add(edge);
 				}
 			}
 		}
 
-		return nextLayerConnectedCells[0];
+		return _nextLayerConnectedCells[0];
 	}
 
 	/**
@@ -108,10 +108,10 @@ public class GraphHierarchyNode extends GraphAbstractHierarchyCell
 	@SuppressWarnings("unchecked")
 	public List<GraphAbstractHierarchyCell> getPreviousLayerConnectedCells(int layer)
 	{
-		if (previousLayerConnectedCells == null)
+		if (_previousLayerConnectedCells == null)
 		{
-			previousLayerConnectedCells = new ArrayList[1];
-			previousLayerConnectedCells[0] = new ArrayList<GraphAbstractHierarchyCell>(connectsAsSource
+			_previousLayerConnectedCells = new ArrayList[1];
+			_previousLayerConnectedCells[0] = new ArrayList<GraphAbstractHierarchyCell>(connectsAsSource
 					.size());
 			Iterator<GraphHierarchyEdge> iter = connectsAsSource.iterator();
 
@@ -122,17 +122,17 @@ public class GraphHierarchyNode extends GraphAbstractHierarchyCell
 				if (edge.minRank == -1 || edge.minRank == layer - 1)
 				{
 					// No dummy nodes in edge, add node of other side of edge
-					previousLayerConnectedCells[0].add(edge.target);
+					_previousLayerConnectedCells[0].add(edge.target);
 				}
 				else
 				{
 					// Edge spans at least two layers, add edge
-					previousLayerConnectedCells[0].add(edge);
+					_previousLayerConnectedCells[0].add(edge);
 				}
 			}
 		}
 
-		return previousLayerConnectedCells[0];
+		return _previousLayerConnectedCells[0];
 	}
 
 	/**

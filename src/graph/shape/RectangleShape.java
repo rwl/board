@@ -51,14 +51,14 @@ public class RectangleShape extends BasicShape
 				}
 
 				// Paints the background
-				if (configureGraphics(canvas, state, true))
+				if (_configureGraphics(canvas, state, true))
 				{
 					canvas.getGraphics().fillRoundRect(x, y, w, h, radius,
 							radius);
 				}
 
 				// Paints the foreground
-				if (configureGraphics(canvas, state, false))
+				if (_configureGraphics(canvas, state, false))
 				{
 					canvas.getGraphics().drawRoundRect(x, y, w, h, radius,
 							radius);
@@ -70,13 +70,13 @@ public class RectangleShape extends BasicShape
 			Rectangle rect = state.getRectangle();
 
 			// Paints the background
-			if (configureGraphics(canvas, state, true))
+			if (_configureGraphics(canvas, state, true))
 			{
 				canvas.fillShape(rect, hasShadow(canvas, state));
 			}
 
 			// Paints the foreground
-			if (configureGraphics(canvas, state, false))
+			if (_configureGraphics(canvas, state, false))
 			{
 				canvas.getGraphics().drawRect(rect.x, rect.y, rect.width,
 						rect.height);

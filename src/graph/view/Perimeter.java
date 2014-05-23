@@ -345,7 +345,7 @@ public class Perimeter
 				Point2d next, boolean orthogonal)
 		{
 			Object direction = (vertex != null) ? Utils.getString(
-					vertex.style, Constants.STYLE_DIRECTION,
+					vertex._style, Constants.STYLE_DIRECTION,
 					Constants.DIRECTION_EAST) : Constants.DIRECTION_EAST;
 			boolean vertical = direction.equals(Constants.DIRECTION_NORTH)
 					|| direction.equals(Constants.DIRECTION_SOUTH);
@@ -523,7 +523,7 @@ public class Perimeter
 			Point2d result = new Point2d(cx, cy);
 
 			Object direction = (vertex != null) ? Utils.getString(
-					vertex.style, Constants.STYLE_DIRECTION,
+					vertex._style, Constants.STYLE_DIRECTION,
 					Constants.DIRECTION_EAST) : Constants.DIRECTION_EAST;
 			boolean vertical = direction.equals(Constants.DIRECTION_NORTH)
 					|| direction.equals(Constants.DIRECTION_SOUTH);

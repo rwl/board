@@ -46,12 +46,12 @@ public class VertexHandler extends CellHandler
 	/**
 	 * Workaround for alt-key-state not correct in mouseReleased.
 	 */
-	protected transient boolean gridEnabledEvent = false;
+	protected transient boolean _gridEnabledEvent = false;
 
 	/**
 	 * Workaround for shift-key-state not correct in mouseReleased.
 	 */
-	protected transient boolean constrainedEvent = false;
+	protected transient boolean _constrainedEvent = false;
 
 	/**
 	 * 
@@ -66,11 +66,11 @@ public class VertexHandler extends CellHandler
 	/**
 	 * 
 	 */
-	protected Rectangle[] createHandles()
+	protected Rectangle[] _createHandles()
 	{
 		Rectangle[] h = null;
 
-		if (graphComponent.getGraph().isCellResizable(getState().getCell()))
+		if (_graphComponent.getGraph().isCellResizable(getState().getCell()))
 		{
 			Rectangle bounds = getState().getRectangle();
 			int half = Constants.HANDLE_SIZE / 2;
@@ -102,7 +102,7 @@ public class VertexHandler extends CellHandler
 		}
 
 		int s = Constants.LABEL_HANDLE_SIZE;
-		Rect bounds = state.getLabelBounds();
+		Rect bounds = _state.getLabelBounds();
 		h[h.length - 1] = new Rectangle((int) (bounds.getX()
 				+ bounds.getWidth() / 2 - s), (int) (bounds.getY()
 				+ bounds.getHeight() / 2 - s), 2 * s, 2 * s);
@@ -113,7 +113,7 @@ public class VertexHandler extends CellHandler
 	/**
 	 * 
 	 */
-	protected JComponent createPreview()
+	protected JComponent _createPreview()
 	{
 		JPanel preview = new JPanel();
 		preview.setBorder(SwingConstants.PREVIEW_BORDER);
@@ -128,27 +128,27 @@ public class VertexHandler extends CellHandler
 	 */
 	public void mouseDragged(MouseEvent e)
 	{
-		if (!e.isConsumed() && first != null)
+		if (!e.isConsumed() && _first != null)
 		{
-			gridEnabledEvent = graphComponent.isGridEnabledEvent(e);
-			constrainedEvent = graphComponent.isConstrainedEvent(e);
+			_gridEnabledEvent = _graphComponent.isGridEnabledEvent(e);
+			_constrainedEvent = _graphComponent.isConstrainedEvent(e);
 
-			double dx = e.getX() - first.x;
-			double dy = e.getY() - first.y;
+			double dx = e.getX() - _first.x;
+			double dy = e.getY() - _first.y;
 
-			if (isLabel(index))
+			if (isLabel(_index))
 			{
 				Point2d pt = new Point2d(e.getPoint());
 
-				if (gridEnabledEvent)
+				if (_gridEnabledEvent)
 				{
-					pt = graphComponent.snapScaledPoint(pt);
+					pt = _graphComponent.snapScaledPoint(pt);
 				}
 
-				int idx = (int) Math.round(pt.getX() - first.x);
-				int idy = (int) Math.round(pt.getY() - first.y);
+				int idx = (int) Math.round(pt.getX() - _first.x);
+				int idy = (int) Math.round(pt.getY() - _first.y);
 
-				if (constrainedEvent)
+				if (_constrainedEvent)
 				{
 					if (Math.abs(idx) > Math.abs(idy))
 					{
@@ -160,30 +160,30 @@ public class VertexHandler extends CellHandler
 					}
 				}
 
-				Rectangle rect = state.getLabelBounds().getRectangle();
+				Rectangle rect = _state.getLabelBounds().getRectangle();
 				rect.translate(idx, idy);
-				preview.setBounds(rect);
+				_preview.setBounds(rect);
 			}
 			else
 			{
-				Graph graph = graphComponent.getGraph();
+				Graph graph = _graphComponent.getGraph();
 				double scale = graph.getView().getScale();
 
-				if (gridEnabledEvent)
+				if (_gridEnabledEvent)
 				{
 					dx = graph.snap(dx / scale) * scale;
 					dy = graph.snap(dy / scale) * scale;
 				}
 
-				Rect bounds = union(getState(), dx, dy, index);
+				Rect bounds = _union(getState(), dx, dy, _index);
 				bounds.setWidth(bounds.getWidth() + 1);
 				bounds.setHeight(bounds.getHeight() + 1);
-				preview.setBounds(bounds.getRectangle());
+				_preview.setBounds(bounds.getRectangle());
 			}
 
-			if (!preview.isVisible() && graphComponent.isSignificant(dx, dy))
+			if (!_preview.isVisible() && _graphComponent.isSignificant(dx, dy))
 			{
-				preview.setVisible(true);
+				_preview.setVisible(true);
 			}
 
 			e.consume();
@@ -195,17 +195,17 @@ public class VertexHandler extends CellHandler
 	 */
 	public void mouseReleased(MouseEvent e)
 	{
-		if (!e.isConsumed() && first != null)
+		if (!e.isConsumed() && _first != null)
 		{
-			if (preview != null && preview.isVisible())
+			if (_preview != null && _preview.isVisible())
 			{
-				if (isLabel(index))
+				if (isLabel(_index))
 				{
-					moveLabel(e);
+					_moveLabel(e);
 				}
 				else
 				{
-					resizeCell(e);
+					_resizeCell(e);
 				}
 			}
 
@@ -218,25 +218,25 @@ public class VertexHandler extends CellHandler
 	/**
 	 * 
 	 */
-	protected void moveLabel(MouseEvent e)
+	protected void _moveLabel(MouseEvent e)
 	{
-		Graph graph = graphComponent.getGraph();
-		Geometry geometry = graph.getModel().getGeometry(state.getCell());
+		Graph graph = _graphComponent.getGraph();
+		Geometry geometry = graph.getModel().getGeometry(_state.getCell());
 
 		if (geometry != null)
 		{
 			double scale = graph.getView().getScale();
 			Point2d pt = new Point2d(e.getPoint());
 
-			if (gridEnabledEvent)
+			if (_gridEnabledEvent)
 			{
-				pt = graphComponent.snapScaledPoint(pt);
+				pt = _graphComponent.snapScaledPoint(pt);
 			}
 
-			double dx = (pt.getX() - first.x) / scale;
-			double dy = (pt.getY() - first.y) / scale;
+			double dx = (pt.getX() - _first.x) / scale;
+			double dy = (pt.getY() - _first.y) / scale;
 
-			if (constrainedEvent)
+			if (_constrainedEvent)
 			{
 				if (Math.abs(dx) > Math.abs(dy))
 				{
@@ -260,7 +260,7 @@ public class VertexHandler extends CellHandler
 
 			geometry = (Geometry) geometry.clone();
 			geometry.setOffset(new Point2d(Math.round(dx), Math.round(dy)));
-			graph.getModel().setGeometry(state.getCell(), geometry);
+			graph.getModel().setGeometry(_state.getCell(), geometry);
 		}
 	}
 
@@ -268,20 +268,20 @@ public class VertexHandler extends CellHandler
 	 * 
 	 * @param e
 	 */
-	protected void resizeCell(MouseEvent e)
+	protected void _resizeCell(MouseEvent e)
 	{
-		Graph graph = graphComponent.getGraph();
+		Graph graph = _graphComponent.getGraph();
 		double scale = graph.getView().getScale();
 
-		Object cell = state.getCell();
+		Object cell = _state.getCell();
 		Geometry geometry = graph.getModel().getGeometry(cell);
 
 		if (geometry != null)
 		{
-			double dx = (e.getX() - first.x) / scale;
-			double dy = (e.getY() - first.y) / scale;
+			double dx = (e.getX() - _first.x) / scale;
+			double dy = (e.getY() - _first.y) / scale;
 
-			if (isLabel(index))
+			if (isLabel(_index))
 			{
 				geometry = (Geometry) geometry.clone();
 
@@ -291,7 +291,7 @@ public class VertexHandler extends CellHandler
 					dy += geometry.getOffset().getY();
 				}
 
-				if (gridEnabledEvent)
+				if (_gridEnabledEvent)
 				{
 					dx = graph.snap(dx);
 					dy = graph.snap(dy);
@@ -302,11 +302,11 @@ public class VertexHandler extends CellHandler
 			}
 			else
 			{
-				Rect bounds = union(geometry, dx, dy, index);
+				Rect bounds = _union(geometry, dx, dy, _index);
 				Rectangle rect = bounds.getRectangle();
 
 				// Snaps new bounds to grid (unscaled)
-				if (gridEnabledEvent)
+				if (_gridEnabledEvent)
 				{
 					int x = (int) graph.snap(rect.x);
 					int y = (int) graph.snap(rect.y);
@@ -324,7 +324,7 @@ public class VertexHandler extends CellHandler
 	/**
 	 * 
 	 */
-	protected Cursor getCursor(MouseEvent e, int index)
+	protected Cursor _getCursor(MouseEvent e, int index)
 	{
 		if (index >= 0 && index <= CURSORS.length)
 		{
@@ -341,7 +341,7 @@ public class VertexHandler extends CellHandler
 	 * @param dy
 	 * @param index
 	 */
-	protected Rect union(Rect bounds, double dx, double dy,
+	protected Rect _union(Rect bounds, double dx, double dy,
 			int index)
 	{
 		double left = bounds.getX();

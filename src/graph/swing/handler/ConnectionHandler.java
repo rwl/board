@@ -7,7 +7,7 @@ package graph.swing.handler;
 import graph.model.Geometry;
 import graph.model.IGraphModel;
 import graph.swing.GraphComponent;
-import graph.swing.GraphComponent.GraphControl;
+import graph.swing.GraphControl;
 import graph.swing.util.MouseAdapter;
 import graph.util.Constants;
 import graph.util.Event;
@@ -56,29 +56,29 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	protected GraphComponent graphComponent;
+	protected GraphComponent _graphComponent;
 
 	/**
 	 * Holds the event source.
 	 */
-	protected EventSource eventSource = new EventSource(this);
+	protected EventSource _eventSource = new EventSource(this);
 
 	/**
 	 * 
 	 */
-	protected ConnectPreview connectPreview;
+	protected ConnectPreview _connectPreview;
 
 	/**
 	 * Specifies the icon to be used for creating new connections. If this is
 	 * specified then it is used instead of the handle. Default is null.
 	 */
-	protected ImageIcon connectIcon = null;
+	protected ImageIcon _connectIcon = null;
 
 	/**
 	 * Specifies the size of the handle to be used for creating new
 	 * connections. Default is Constants.CONNECT_HANDLE_SIZE. 
 	 */
-	protected int handleSize = Constants.CONNECT_HANDLE_SIZE;
+	protected int _handleSize = Constants.CONNECT_HANDLE_SIZE;
 
 	/**
 	 * Specifies if a handle should be used for creating new connections. This
@@ -86,63 +86,63 @@ public class ConnectionHandler extends MouseAdapter
 	 * source cell will be highlighted when the mouse is over the hotspot given
 	 * in the marker. Default is Constants.CONNECT_HANDLE_ENABLED.
 	 */
-	protected boolean handleEnabled = Constants.CONNECT_HANDLE_ENABLED;
+	protected boolean _handleEnabled = Constants.CONNECT_HANDLE_ENABLED;
 
 	/**
 	 * 
 	 */
-	protected boolean select = true;
+	protected boolean _select = true;
 
 	/**
 	 * Specifies if the source should be cloned and used as a target if no
 	 * target was selected. Default is false.
 	 */
-	protected boolean createTarget = false;
+	protected boolean _createTarget = false;
 
 	/**
 	 * Appearance and event handling order wrt subhandles.
 	 */
-	protected boolean keepOnTop = true;
+	protected boolean _keepOnTop = true;
 
 	/**
 	 * 
 	 */
-	protected boolean enabled = true;
+	protected boolean _enabled = true;
 
 	/**
 	 * 
 	 */
-	protected transient Point first;
+	protected transient Point _first;
 
 	/**
 	 * 
 	 */
-	protected transient boolean active = false;
+	protected transient boolean _active = false;
 
 	/**
 	 * 
 	 */
-	protected transient Rectangle bounds;
+	protected transient Rectangle _bounds;
 
 	/**
 	 * 
 	 */
-	protected transient CellState source;
+	protected transient CellState _source;
 
 	/**
 	 * 
 	 */
-	protected transient CellMarker marker;
+	protected transient CellMarker _marker;
 
 	/**
 	 * 
 	 */
-	protected transient String error;
+	protected transient String _error;
 
 	/**
 	 * 
 	 */
-	protected transient IEventListener resetHandler = new IEventListener()
+	protected transient IEventListener _resetHandler = new IEventListener()
 	{
 		public void invoke(Object source, EventObj evt)
 		{
@@ -156,7 +156,7 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public ConnectionHandler(GraphComponent graphComponent)
 	{
-		this.graphComponent = graphComponent;
+		this._graphComponent = graphComponent;
 
 		// Installs the paint handler
 		graphComponent.addListener(Event.AFTER_PAINT, new IEventListener()
@@ -168,14 +168,14 @@ public class ConnectionHandler extends MouseAdapter
 			}
 		});
 
-		connectPreview = createConnectPreview();
+		_connectPreview = _createConnectPreview();
 
 		GraphControl graphControl = graphComponent.getGraphControl();
 		graphControl.addMouseListener(this);
 		graphControl.addMouseMotionListener(this);
 
 		// Installs the graph listeners and keeps them in sync
-		addGraphListeners(graphComponent.getGraph());
+		_addGraphListeners(graphComponent.getGraph());
 
 		graphComponent.addPropertyChangeListener(new PropertyChangeListener()
 		{
@@ -183,13 +183,13 @@ public class ConnectionHandler extends MouseAdapter
 			{
 				if (evt.getPropertyName().equals("graph"))
 				{
-					removeGraphListeners((Graph) evt.getOldValue());
-					addGraphListeners((Graph) evt.getNewValue());
+					_removeGraphListeners((Graph) evt.getOldValue());
+					_addGraphListeners((Graph) evt.getNewValue());
 				}
 			}
 		});
 
-		marker = new CellMarker(graphComponent)
+		_marker = new CellMarker(graphComponent)
 		{
 			/**
 			 * 
@@ -199,24 +199,24 @@ public class ConnectionHandler extends MouseAdapter
 			// Overrides to return cell at location only if valid (so that
 			// there is no highlight for invalid cells that have no error
 			// message when the mouse is released)
-			protected Object getCell(MouseEvent e)
+			protected Object _getCell(MouseEvent e)
 			{
-				Object cell = super.getCell(e);
+				Object cell = super._getCell(e);
 
 				if (isConnecting())
 				{
-					if (source != null)
+					if (_source != null)
 					{
-						error = validateConnection(source.getCell(), cell);
+						_error = validateConnection(_source.getCell(), cell);
 
-						if (error != null && error.length() == 0)
+						if (_error != null && _error.length() == 0)
 						{
 							cell = null;
 
 							// Enables create target inside groups
-							if (createTarget)
+							if (_createTarget)
 							{
-								error = null;
+								_error = null;
 							}
 						}
 					}
@@ -230,82 +230,82 @@ public class ConnectionHandler extends MouseAdapter
 			}
 
 			// Sets the highlight color according to isValidConnection
-			protected boolean isValidState(CellState state)
+			protected boolean _isValidState(CellState state)
 			{
 				if (isConnecting())
 				{
-					return error == null;
+					return _error == null;
 				}
 				else
 				{
-					return super.isValidState(state);
+					return super._isValidState(state);
 				}
 			}
 
 			// Overrides to use marker color only in highlight mode or for
 			// target selection
-			protected Color getMarkerColor(MouseEvent e, CellState state,
+			protected Color _getMarkerColor(MouseEvent e, CellState state,
 					boolean isValid)
 			{
 				return (isHighlighting() || isConnecting()) ? super
-						.getMarkerColor(e, state, isValid) : null;
+						._getMarkerColor(e, state, isValid) : null;
 			}
 
 			// Overrides to use hotspot only for source selection otherwise
 			// intersects always returns true when over a cell
-			protected boolean intersects(CellState state, MouseEvent e)
+			protected boolean _intersects(CellState state, MouseEvent e)
 			{
 				if (!isHighlighting() || isConnecting())
 				{
 					return true;
 				}
 
-				return super.intersects(state, e);
+				return super._intersects(state, e);
 			}
 		};
 
-		marker.setHotspotEnabled(true);
+		_marker.setHotspotEnabled(true);
 	}
 
 	/**
 	 * Installs the listeners to update the handles after any changes.
 	 */
-	protected void addGraphListeners(Graph graph)
+	protected void _addGraphListeners(Graph graph)
 	{
 		// LATER: Install change listener for graph model, view
 		if (graph != null)
 		{
 			GraphView view = graph.getView();
-			view.addListener(Event.SCALE, resetHandler);
-			view.addListener(Event.TRANSLATE, resetHandler);
-			view.addListener(Event.SCALE_AND_TRANSLATE, resetHandler);
+			view.addListener(Event.SCALE, _resetHandler);
+			view.addListener(Event.TRANSLATE, _resetHandler);
+			view.addListener(Event.SCALE_AND_TRANSLATE, _resetHandler);
 
-			graph.getModel().addListener(Event.CHANGE, resetHandler);
+			graph.getModel().addListener(Event.CHANGE, _resetHandler);
 		}
 	}
 
 	/**
 	 * Removes all installed listeners.
 	 */
-	protected void removeGraphListeners(Graph graph)
+	protected void _removeGraphListeners(Graph graph)
 	{
 		if (graph != null)
 		{
 			GraphView view = graph.getView();
-			view.removeListener(resetHandler, Event.SCALE);
-			view.removeListener(resetHandler, Event.TRANSLATE);
-			view.removeListener(resetHandler, Event.SCALE_AND_TRANSLATE);
+			view.removeListener(_resetHandler, Event.SCALE);
+			view.removeListener(_resetHandler, Event.TRANSLATE);
+			view.removeListener(_resetHandler, Event.SCALE_AND_TRANSLATE);
 
-			graph.getModel().removeListener(resetHandler, Event.CHANGE);
+			graph.getModel().removeListener(_resetHandler, Event.CHANGE);
 		}
 	}
 
 	/**
 	 * 
 	 */
-	protected ConnectPreview createConnectPreview()
+	protected ConnectPreview _createConnectPreview()
 	{
-		return new ConnectPreview(graphComponent);
+		return new ConnectPreview(_graphComponent);
 	}
 
 	/**
@@ -313,7 +313,7 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public ConnectPreview getConnectPreview()
 	{
-		return connectPreview;
+		return _connectPreview;
 	}
 
 	/**
@@ -321,7 +321,7 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public void setConnectPreview(ConnectPreview value)
 	{
-		connectPreview = value;
+		_connectPreview = value;
 	}
 
 	/**
@@ -330,7 +330,7 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public boolean isConnecting()
 	{
-		return connectPreview.isActive();
+		return _connectPreview.isActive();
 	}
 
 	/**
@@ -338,7 +338,7 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public boolean isActive()
 	{
-		return active;
+		return _active;
 	}
 	
 	/**
@@ -346,7 +346,7 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public boolean isHighlighting()
 	{
-		return connectIcon == null && !handleEnabled;
+		return _connectIcon == null && !_handleEnabled;
 	}
 
 	/**
@@ -354,7 +354,7 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public boolean isEnabled()
 	{
-		return enabled;
+		return _enabled;
 	}
 
 	/**
@@ -362,7 +362,7 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public void setEnabled(boolean value)
 	{
-		enabled = value;
+		_enabled = value;
 	}
 
 	/**
@@ -370,7 +370,7 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public boolean isKeepOnTop()
 	{
-		return keepOnTop;
+		return _keepOnTop;
 	}
 
 	/**
@@ -378,7 +378,7 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public void setKeepOnTop(boolean value)
 	{
-		keepOnTop = value;
+		_keepOnTop = value;
 	}
 
 	/**
@@ -386,7 +386,7 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public void setConnectIcon(ImageIcon value)
 	{
-		connectIcon = value;
+		_connectIcon = value;
 	}
 
 	/**
@@ -394,7 +394,7 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public ImageIcon getConnecIcon()
 	{
-		return connectIcon;
+		return _connectIcon;
 	}
 
 	/**
@@ -402,7 +402,7 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public void setHandleEnabled(boolean value)
 	{
-		handleEnabled = value;
+		_handleEnabled = value;
 	}
 
 	/**
@@ -410,7 +410,7 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public boolean isHandleEnabled()
 	{
-		return handleEnabled;
+		return _handleEnabled;
 	}
 
 	/**
@@ -418,7 +418,7 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public void setHandleSize(int value)
 	{
-		handleSize = value;
+		_handleSize = value;
 	}
 
 	/**
@@ -426,7 +426,7 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public int getHandleSize()
 	{
-		return handleSize;
+		return _handleSize;
 	}
 
 	/**
@@ -434,7 +434,7 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public CellMarker getMarker()
 	{
-		return marker;
+		return _marker;
 	}
 
 	/**
@@ -442,7 +442,7 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public void setMarker(CellMarker value)
 	{
-		marker = value;
+		_marker = value;
 	}
 
 	/**
@@ -450,7 +450,7 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public void setCreateTarget(boolean value)
 	{
-		createTarget = value;
+		_createTarget = value;
 	}
 
 	/**
@@ -458,7 +458,7 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public boolean isCreateTarget()
 	{
-		return createTarget;
+		return _createTarget;
 	}
 
 	/**
@@ -466,7 +466,7 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public void setSelect(boolean value)
 	{
-		select = value;
+		_select = value;
 	}
 
 	/**
@@ -474,7 +474,7 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public boolean isSelect()
 	{
-		return select;
+		return _select;
 	}
 
 	/**
@@ -482,13 +482,13 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public void reset()
 	{
-		connectPreview.stop(false);
+		_connectPreview.stop(false);
 		setBounds(null);
-		marker.reset();
-		active = false;
-		source = null;
-		first = null;
-		error = null;
+		_marker.reset();
+		_active = false;
+		_source = null;
+		_first = null;
+		_error = null;
 	}
 
 	/**
@@ -496,14 +496,14 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public Object createTargetVertex(MouseEvent e, Object source)
 	{
-		Graph graph = graphComponent.getGraph();
+		Graph graph = _graphComponent.getGraph();
 		Object clone = graph.cloneCells(new Object[] { source })[0];
 		IGraphModel model = graph.getModel();
 		Geometry geo = model.getGeometry(clone);
 
 		if (geo != null)
 		{
-			Point2d point = graphComponent.getPointForEvent(e);
+			Point2d point = _graphComponent.getPointForEvent(e);
 			geo.setX(graph.snap(point.getX() - geo.getWidth() / 2));
 			geo.setY(graph.snap(point.getY() - geo.getHeight() / 2));
 		}
@@ -516,7 +516,7 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public boolean isValidSource(Object cell)
 	{
-		return graphComponent.getGraph().isValidSource(cell);
+		return _graphComponent.getGraph().isValidSource(cell);
 	}
 
 	/**
@@ -535,7 +535,7 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public String validateConnection(Object source, Object target)
 	{
-		if (target == null && createTarget)
+		if (target == null && _createTarget)
 		{
 			return null;
 		}
@@ -545,8 +545,8 @@ public class ConnectionHandler extends MouseAdapter
 			return "";
 		}
 
-		return graphComponent.getGraph().getEdgeValidationError(
-				connectPreview.getPreviewState().getCell(), source, target);
+		return _graphComponent.getGraph().getEdgeValidationError(
+				_connectPreview.getPreviewState().getCell(), source, target);
 	}
 
 	/**
@@ -554,16 +554,16 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public void mousePressed(MouseEvent e)
 	{
-		if (!graphComponent.isForceMarqueeEvent(e)
-				&& !graphComponent.isPanningEvent(e)
+		if (!_graphComponent.isForceMarqueeEvent(e)
+				&& !_graphComponent.isPanningEvent(e)
 				&& !e.isPopupTrigger()
-				&& graphComponent.isEnabled()
+				&& _graphComponent.isEnabled()
 				&& isEnabled()
 				&& !e.isConsumed()
-				&& ((isHighlighting() && marker.hasValidState()) || (!isHighlighting()
-						&& bounds != null && bounds.contains(e.getPoint()))))
+				&& ((isHighlighting() && _marker.hasValidState()) || (!isHighlighting()
+						&& _bounds != null && _bounds.contains(e.getPoint()))))
 		{
-			start(e, marker.getValidState());
+			start(e, _marker.getValidState());
 			e.consume();
 		}
 	}
@@ -573,8 +573,8 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public void start(MouseEvent e, CellState state)
 	{
-		first = e.getPoint();
-		connectPreview.start(e, state, "");
+		_first = e.getPoint();
+		_connectPreview.start(e, state, "");
 	}
 
 	/**
@@ -584,37 +584,37 @@ public class ConnectionHandler extends MouseAdapter
 	{
 		mouseDragged(e);
 
-		if (isHighlighting() && !marker.hasValidState())
+		if (isHighlighting() && !_marker.hasValidState())
 		{
-			source = null;
+			_source = null;
 		}
 
-		if (!isHighlighting() && source != null)
+		if (!isHighlighting() && _source != null)
 		{
-			int imgWidth = handleSize;
-			int imgHeight = handleSize;
+			int imgWidth = _handleSize;
+			int imgHeight = _handleSize;
 
-			if (connectIcon != null)
+			if (_connectIcon != null)
 			{
-				imgWidth = connectIcon.getIconWidth();
-				imgHeight = connectIcon.getIconHeight();
+				imgWidth = _connectIcon.getIconWidth();
+				imgHeight = _connectIcon.getIconHeight();
 			}
 
-			int x = (int) source.getCenterX() - imgWidth / 2;
-			int y = (int) source.getCenterY() - imgHeight / 2;
+			int x = (int) _source.getCenterX() - imgWidth / 2;
+			int y = (int) _source.getCenterY() - imgHeight / 2;
 
-			if (graphComponent.getGraph().isSwimlane(source.getCell()))
+			if (_graphComponent.getGraph().isSwimlane(_source.getCell()))
 			{
-				Rect size = graphComponent.getGraph().getStartSize(
-						source.getCell());
+				Rect size = _graphComponent.getGraph().getStartSize(
+						_source.getCell());
 
 				if (size.getWidth() > 0)
 				{
-					x = (int) (source.getX() + size.getWidth() / 2 - imgWidth / 2);
+					x = (int) (_source.getX() + size.getWidth() / 2 - imgWidth / 2);
 				}
 				else
 				{
-					y = (int) (source.getY() + size.getHeight() / 2 - imgHeight / 2);
+					y = (int) (_source.getY() + size.getHeight() / 2 - imgHeight / 2);
 				}
 			}
 
@@ -625,9 +625,9 @@ public class ConnectionHandler extends MouseAdapter
 			setBounds(null);
 		}
 
-		if (source != null && (bounds == null || bounds.contains(e.getPoint())))
+		if (_source != null && (_bounds == null || _bounds.contains(e.getPoint())))
 		{
-			graphComponent.getGraphControl().setCursor(CONNECT_CURSOR);
+			_graphComponent.getGraphControl().setCursor(CONNECT_CURSOR);
 			e.consume();
 		}
 	}
@@ -637,35 +637,35 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public void mouseDragged(MouseEvent e)
 	{
-		if (!e.isConsumed() && graphComponent.isEnabled() && isEnabled())
+		if (!e.isConsumed() && _graphComponent.isEnabled() && isEnabled())
 		{
 			// Activates the handler
-			if (!active && first != null)
+			if (!_active && _first != null)
 			{
-				double dx = Math.abs(first.getX() - e.getX());
-				double dy = Math.abs(first.getY() - e.getY());
-				int tol = graphComponent.getTolerance();
+				double dx = Math.abs(_first.getX() - e.getX());
+				double dy = Math.abs(_first.getY() - e.getY());
+				int tol = _graphComponent.getTolerance();
 				
 				if (dx > tol || dy > tol)
 				{
-					active = true;
+					_active = true;
 				}
 			}
 			
-			if (e.getButton() == 0 || (isActive() && connectPreview.isActive()))
+			if (e.getButton() == 0 || (isActive() && _connectPreview.isActive()))
 			{
-				CellState state = marker.process(e);
+				CellState state = _marker.process(e);
 	
-				if (connectPreview.isActive())
+				if (_connectPreview.isActive())
 				{
-					connectPreview.update(e, marker.getValidState(), e.getX(),
+					_connectPreview.update(e, _marker.getValidState(), e.getX(),
 							e.getY());
 					setBounds(null);
 					e.consume();
 				}
 				else
 				{
-					source = state;
+					_source = state;
 				}
 			}
 		}
@@ -678,21 +678,21 @@ public class ConnectionHandler extends MouseAdapter
 	{
 		if (isActive())
 		{
-			if (error != null)
+			if (_error != null)
 			{
-				if (error.length() > 0)
+				if (_error.length() > 0)
 				{
-					JOptionPane.showMessageDialog(graphComponent, error);
+					JOptionPane.showMessageDialog(_graphComponent, _error);
 				}
 			}
-			else if (first != null)
+			else if (_first != null)
 			{
-				Graph graph = graphComponent.getGraph();
-				double dx = first.getX() - e.getX();
-				double dy = first.getY() - e.getY();
+				Graph graph = _graphComponent.getGraph();
+				double dx = _first.getX() - e.getX();
+				double dy = _first.getY() - e.getY();
 	
-				if (connectPreview.isActive()
-						&& (marker.hasValidState() || isCreateTarget() || graph
+				if (_connectPreview.isActive()
+						&& (_marker.hasValidState() || isCreateTarget() || graph
 								.isAllowDanglingEdges()))
 				{
 					graph.getModel().beginUpdate();
@@ -701,12 +701,12 @@ public class ConnectionHandler extends MouseAdapter
 					{
 						Object dropTarget = null;
 	
-						if (!marker.hasValidState() && isCreateTarget())
+						if (!_marker.hasValidState() && isCreateTarget())
 						{
-							Object vertex = createTargetVertex(e, source.getCell());
+							Object vertex = createTargetVertex(e, _source.getCell());
 							dropTarget = graph.getDropTarget(
 									new Object[] { vertex }, e.getPoint(),
-									graphComponent.getCellAt(e.getX(), e.getY()));
+									_graphComponent.getCellAt(e.getX(), e.getY()));
 	
 							if (vertex != null)
 							{
@@ -741,17 +741,17 @@ public class ConnectionHandler extends MouseAdapter
 							// after the model.update, so this should be fixed.
 							CellState targetState = graph.getView().getState(
 									vertex, true);
-							connectPreview.update(e, targetState, e.getX(),
+							_connectPreview.update(e, targetState, e.getX(),
 									e.getY());
 						}
 	
-						Object cell = connectPreview.stop(
-								graphComponent.isSignificant(dx, dy), e);
+						Object cell = _connectPreview.stop(
+								_graphComponent.isSignificant(dx, dy), e);
 	
 						if (cell != null)
 						{
-							graphComponent.getGraph().setSelectionCell(cell);
-							eventSource.fireEvent(new EventObj(
+							_graphComponent.getGraph().setSelectionCell(cell);
+							_eventSource.fireEvent(new EventObj(
 									Event.CONNECT, "cell", cell, "event", e,
 									"target", dropTarget));
 						}
@@ -774,11 +774,11 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public void setBounds(Rectangle value)
 	{
-		if ((bounds == null && value != null)
-				|| (bounds != null && value == null)
-				|| (bounds != null && value != null && !bounds.equals(value)))
+		if ((_bounds == null && value != null)
+				|| (_bounds != null && value == null)
+				|| (_bounds != null && value != null && !_bounds.equals(value)))
 		{
-			Rectangle tmp = bounds;
+			Rectangle tmp = _bounds;
 
 			if (tmp != null)
 			{
@@ -792,11 +792,11 @@ public class ConnectionHandler extends MouseAdapter
 				tmp = value;
 			}
 
-			bounds = value;
+			_bounds = value;
 
 			if (tmp != null)
 			{
-				graphComponent.getGraphControl().repaint(tmp);
+				_graphComponent.getGraphControl().repaint(tmp);
 			}
 		}
 	}
@@ -806,7 +806,7 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public void addListener(String eventName, IEventListener listener)
 	{
-		eventSource.addListener(eventName, listener);
+		_eventSource.addListener(eventName, listener);
 	}
 
 	/**
@@ -814,7 +814,7 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public void removeListener(IEventListener listener)
 	{
-		eventSource.removeListener(listener);
+		_eventSource.removeListener(listener);
 	}
 
 	/**
@@ -822,7 +822,7 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public void removeListener(IEventListener listener, String eventName)
 	{
-		eventSource.removeListener(listener, eventName);
+		_eventSource.removeListener(listener, eventName);
 	}
 
 	/**
@@ -830,24 +830,24 @@ public class ConnectionHandler extends MouseAdapter
 	 */
 	public void paint(Graphics g)
 	{
-		if (bounds != null)
+		if (_bounds != null)
 		{
-			if (connectIcon != null)
+			if (_connectIcon != null)
 			{
-				g.drawImage(connectIcon.getImage(), bounds.x, bounds.y,
-						bounds.width, bounds.height, null);
+				g.drawImage(_connectIcon.getImage(), _bounds.x, _bounds.y,
+						_bounds.width, _bounds.height, null);
 			}
-			else if (handleEnabled)
+			else if (_handleEnabled)
 			{
 				g.setColor(Color.BLACK);
-				g.draw3DRect(bounds.x, bounds.y, bounds.width - 1,
-						bounds.height - 1, true);
+				g.draw3DRect(_bounds.x, _bounds.y, _bounds.width - 1,
+						_bounds.height - 1, true);
 				g.setColor(Color.GREEN);
-				g.fill3DRect(bounds.x + 1, bounds.y + 1, bounds.width - 2,
-						bounds.height - 2, true);
+				g.fill3DRect(_bounds.x + 1, _bounds.y + 1, _bounds.width - 2,
+						_bounds.height - 2, true);
 				g.setColor(Color.BLUE);
-				g.drawRect(bounds.x + bounds.width / 2 - 1, bounds.y
-						+ bounds.height / 2 - 1, 1, 1);
+				g.drawRect(_bounds.x + _bounds.width / 2 - 1, _bounds.y
+						+ _bounds.height / 2 - 1, 1, 1);
 			}
 		}
 	}

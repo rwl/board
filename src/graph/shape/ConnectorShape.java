@@ -25,7 +25,7 @@ public class ConnectorShape extends BasicShape
 	public void paintShape(Graphics2DCanvas canvas, CellState state)
 	{
 		if (state.getAbsolutePointCount() > 1
-				&& configureGraphics(canvas, state, false))
+				&& _configureGraphics(canvas, state, false))
 		{
 			List<Point2d> pts = new ArrayList<Point2d>(
 					state.getAbsolutePoints());
@@ -42,9 +42,9 @@ public class ConnectorShape extends BasicShape
 				canvas.getGraphics().setStroke(canvas.createStroke(style));
 			}
 
-			translatePoint(pts, 0,
+			_translatePoint(pts, 0,
 					paintMarker(canvas, state, true));
-			translatePoint(
+			_translatePoint(
 					pts,
 					pts.size() - 1,
 					paintMarker(canvas, state, false));
@@ -56,14 +56,14 @@ public class ConnectorShape extends BasicShape
 				canvas.getGraphics().setStroke(canvas.createStroke(style));
 			}
 
-			paintPolyline(canvas, pts, state.getStyle());
+			_paintPolyline(canvas, pts, state.getStyle());
 		}
 	}
 
 	/**
 	 * 
 	 */
-	protected void paintPolyline(Graphics2DCanvas canvas,
+	protected void _paintPolyline(Graphics2DCanvas canvas,
 			List<Point2d> points, Map<String, Object> style)
 	{
 		boolean rounded = isRounded(style)
@@ -84,7 +84,7 @@ public class ConnectorShape extends BasicShape
 	/**
 	 * 
 	 */
-	private void translatePoint(List<Point2d> points, int index, Point2d offset)
+	private void _translatePoint(List<Point2d> points, int index, Point2d offset)
 	{
 		if (offset != null)
 		{
@@ -118,7 +118,7 @@ public class ConnectorShape extends BasicShape
 		double absSize = size * canvas.getScale();
 
 		List<Point2d> points = state.getAbsolutePoints();
-		Line markerVector = getMarkerVector(points, source, absSize);
+		Line markerVector = _getMarkerVector(points, source, absSize);
 		Point2d p0 = new Point2d(markerVector.getX(), markerVector.getY());
 		Point2d pe = markerVector.getEndPoint();
 
@@ -176,7 +176,7 @@ public class ConnectorShape extends BasicShape
 	 * @param markerSize the scaled maximum length of the marker
 	 * @return a line describing the vector the marker should be drawn along
 	 */
-	protected Line getMarkerVector(List<Point2d> points, boolean source,
+	protected Line _getMarkerVector(List<Point2d> points, boolean source,
 			double markerSize)
 	{
 		int n = points.size();

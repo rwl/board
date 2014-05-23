@@ -29,73 +29,73 @@ public class MovePreview extends EventSource
 	/**
 	 * 
 	 */
-	protected GraphComponent graphComponent;
+	protected GraphComponent _graphComponent;
 
 	/**
 	 * Maximum number of cells to preview individually. Default is 200.
 	 */
-	protected int threshold = 200;
+	protected int _threshold = 200;
 
 	/**
 	 * Specifies if the placeholder rectangle should be used for all
 	 * previews. Default is false. This overrides all other preview
 	 * settings if true.
 	 */
-	protected boolean placeholderPreview = false;
+	protected boolean _placeholderPreview = false;
 
 	/**
 	 * Specifies if the preview should use clones of the original shapes.
 	 * Default is true.
 	 */
-	protected boolean clonePreview = true;
+	protected boolean _clonePreview = true;
 
 	/**
 	 * Specifies if connected, unselected edges should be included in the
 	 * preview. Default is true. This should not be used if cloning is
 	 * enabled.
 	 */
-	protected boolean contextPreview = true;
+	protected boolean _contextPreview = true;
 
 	/**
 	 * Specifies if the selection cells handler should be hidden while the
 	 * preview is visible. Default is false.
 	 */
-	protected boolean hideSelectionHandler = false;
+	protected boolean _hideSelectionHandler = false;
 
 	/**
 	 * 
 	 */
-	protected transient CellState startState;
+	protected transient CellState _startState;
 
 	/**
 	 * 
 	 */
-	protected transient CellState[] previewStates;
+	protected transient CellState[] _previewStates;
 
 	/**
 	 * 
 	 */
-	protected transient Object[] movingCells;
+	protected transient Object[] _movingCells;
 
 	/**
 	 * 
 	 */
-	protected transient Rectangle initialPlaceholder;
+	protected transient Rectangle _initialPlaceholder;
 
 	/**
 	 * 
 	 */
-	protected transient Rectangle placeholder;
+	protected transient Rectangle _placeholder;
 
 	/**
 	 * 
 	 */
-	protected transient Rect lastDirty;
+	protected transient Rect _lastDirty;
 
 	/**
 	 * 
 	 */
-	protected transient CellStatePreview preview;
+	protected transient CellStatePreview _preview;
 
 	/**
 	 * Constructs a new rubberband selection for the given graph component.
@@ -104,7 +104,7 @@ public class MovePreview extends EventSource
 	 */
 	public MovePreview(GraphComponent graphComponent)
 	{
-		this.graphComponent = graphComponent;
+		this._graphComponent = graphComponent;
 
 		// Installs the paint handler
 		graphComponent.addListener(Event.AFTER_PAINT, new IEventListener()
@@ -122,7 +122,7 @@ public class MovePreview extends EventSource
 	 */
 	public int getThreshold()
 	{
-		return threshold;
+		return _threshold;
 	}
 
 	/**
@@ -130,7 +130,7 @@ public class MovePreview extends EventSource
 	 */
 	public void setThreshold(int value)
 	{
-		threshold = value;
+		_threshold = value;
 	}
 
 	/**
@@ -138,7 +138,7 @@ public class MovePreview extends EventSource
 	 */
 	public boolean isPlaceholderPreview()
 	{
-		return placeholderPreview;
+		return _placeholderPreview;
 	}
 
 	/**
@@ -146,7 +146,7 @@ public class MovePreview extends EventSource
 	 */
 	public void setPlaceholderPreview(boolean value)
 	{
-		placeholderPreview = value;
+		_placeholderPreview = value;
 	}
 
 	/**
@@ -154,7 +154,7 @@ public class MovePreview extends EventSource
 	 */
 	public boolean isClonePreview()
 	{
-		return clonePreview;
+		return _clonePreview;
 	}
 
 	/**
@@ -162,7 +162,7 @@ public class MovePreview extends EventSource
 	 */
 	public void setClonePreview(boolean value)
 	{
-		clonePreview = value;
+		_clonePreview = value;
 	}
 
 	/**
@@ -170,7 +170,7 @@ public class MovePreview extends EventSource
 	 */
 	public boolean isContextPreview()
 	{
-		return contextPreview;
+		return _contextPreview;
 	}
 
 	/**
@@ -178,7 +178,7 @@ public class MovePreview extends EventSource
 	 */
 	public void setContextPreview(boolean value)
 	{
-		contextPreview = value;
+		_contextPreview = value;
 	}
 
 	/**
@@ -186,7 +186,7 @@ public class MovePreview extends EventSource
 	 */
 	public boolean isHideSelectionHandler()
 	{
-		return hideSelectionHandler;
+		return _hideSelectionHandler;
 	}
 
 	/**
@@ -194,7 +194,7 @@ public class MovePreview extends EventSource
 	 */
 	public void setHideSelectionHandler(boolean value)
 	{
-		hideSelectionHandler = value;
+		_hideSelectionHandler = value;
 	}
 
 	/**
@@ -202,7 +202,7 @@ public class MovePreview extends EventSource
 	 */
 	public boolean isActive()
 	{
-		return startState != null;
+		return _startState != null;
 	}
 
 	/**
@@ -210,7 +210,7 @@ public class MovePreview extends EventSource
 	 */
 	public Object[] getMovingCells()
 	{
-		return movingCells;
+		return _movingCells;
 	}
 
 	/**
@@ -218,7 +218,7 @@ public class MovePreview extends EventSource
 	 */
 	public Object[] getCells(CellState initialState)
 	{
-		Graph graph = graphComponent.getGraph();
+		Graph graph = _graphComponent.getGraph();
 
 		return graph.getMovableCells(graph.getSelectionCells());
 	}
@@ -226,12 +226,12 @@ public class MovePreview extends EventSource
 	/**
 	 * Returns the states that are affected by the move operation.
 	 */
-	protected CellState[] getPreviewStates()
+	protected CellState[] _getPreviewStates()
 	{
-		Graph graph = graphComponent.getGraph();
+		Graph graph = _graphComponent.getGraph();
 		Collection<CellState> result = new LinkedList<CellState>();
 
-		for (Object cell : movingCells)
+		for (Object cell : _movingCells)
 		{
 			CellState cellState = graph.getView().getState(cell);
 
@@ -240,7 +240,7 @@ public class MovePreview extends EventSource
 				result.add(cellState);
 
 				// Terminates early if too many cells
-				if (result.size() >= threshold)
+				if (result.size() >= _threshold)
 				{
 					return null;
 				}
@@ -259,7 +259,7 @@ public class MovePreview extends EventSource
 							if (edgeState != null)
 							{
 								// Terminates early if too many cells
-								if (result.size() >= threshold)
+								if (result.size() >= _threshold)
 								{
 									return null;
 								}
@@ -278,9 +278,9 @@ public class MovePreview extends EventSource
 	/**
 	 * 
 	 */
-	protected boolean isCellOpaque(Object cell)
+	protected boolean _isCellOpaque(Object cell)
 	{
-		return startState != null && startState.getCell() == cell;
+		return _startState != null && _startState.getCell() == cell;
 	}
 
 	/**
@@ -288,27 +288,27 @@ public class MovePreview extends EventSource
 	 */
 	public void start(MouseEvent e, CellState state)
 	{
-		startState = state;
-		movingCells = getCells(state);
-		previewStates = (!placeholderPreview) ? getPreviewStates() : null;
+		_startState = state;
+		_movingCells = getCells(state);
+		_previewStates = (!_placeholderPreview) ? _getPreviewStates() : null;
 
-		if (previewStates == null || previewStates.length >= threshold)
+		if (_previewStates == null || _previewStates.length >= _threshold)
 		{
-			placeholder = getPlaceholderBounds(startState).getRectangle();
-			initialPlaceholder = new Rectangle(placeholder);
-			graphComponent.getGraphControl().repaint(placeholder);
+			_placeholder = _getPlaceholderBounds(_startState).getRectangle();
+			_initialPlaceholder = new Rectangle(_placeholder);
+			_graphComponent.getGraphControl().repaint(_placeholder);
 		}
 
 		fireEvent(new EventObj(Event.START, "event", e, "state",
-				startState));
+				_startState));
 	}
 
 	/**
 	 * 
 	 */
-	protected Rect getPlaceholderBounds(CellState startState)
+	protected Rect _getPlaceholderBounds(CellState startState)
 	{
-		Graph graph = graphComponent.getGraph();
+		Graph graph = _graphComponent.getGraph();
 
 		return graph.getView().getBounds(graph.getSelectionCells());
 	}
@@ -318,16 +318,16 @@ public class MovePreview extends EventSource
 	 */
 	public CellStatePreview createCellStatePreview()
 	{
-		return new CellStatePreview(graphComponent, isClonePreview())
+		return new CellStatePreview(_graphComponent, isClonePreview())
 		{
-			protected float getOpacityForCell(Object cell)
+			protected float _getOpacityForCell(Object cell)
 			{
-				if (isCellOpaque(cell))
+				if (_isCellOpaque(cell))
 				{
 					return 1;
 				}
 
-				return super.getOpacityForCell(cell);
+				return super._getOpacityForCell(cell);
 			}
 		};
 	}
@@ -337,25 +337,25 @@ public class MovePreview extends EventSource
 	 */
 	public void update(MouseEvent e, double dx, double dy, boolean clone)
 	{
-		Graph graph = graphComponent.getGraph();
+		Graph graph = _graphComponent.getGraph();
 
-		if (placeholder != null)
+		if (_placeholder != null)
 		{
-			Rectangle tmp = new Rectangle(placeholder);
-			placeholder.x = initialPlaceholder.x + (int) dx;
-			placeholder.y = initialPlaceholder.x + (int) dy;
-			tmp.add(placeholder);
-			graphComponent.getGraphControl().repaint(tmp);
+			Rectangle tmp = new Rectangle(_placeholder);
+			_placeholder.x = _initialPlaceholder.x + (int) dx;
+			_placeholder.y = _initialPlaceholder.x + (int) dy;
+			tmp.add(_placeholder);
+			_graphComponent.getGraphControl().repaint(tmp);
 		}
-		else if (previewStates != null)
+		else if (_previewStates != null)
 		{
-			preview = createCellStatePreview();
-			preview.setOpacity(graphComponent.getPreviewAlpha());
+			_preview = createCellStatePreview();
+			_preview.setOpacity(_graphComponent.getPreviewAlpha());
 
 			// Combines the layout result with the move preview
-			for (CellState previewState : previewStates)
+			for (CellState previewState : _previewStates)
 			{
-				preview.moveState(previewState, dx, dy, false, false);
+				_preview.moveState(previewState, dx, dy, false, false);
 
 				// FIXME: Move into show-handler?
 				boolean visible = true;
@@ -373,28 +373,28 @@ public class MovePreview extends EventSource
 				}
 			}
 
-			Rect dirty = lastDirty;
+			Rect dirty = _lastDirty;
 
-			lastDirty = preview.show();
+			_lastDirty = _preview.show();
 
 			if (dirty != null)
 			{
-				dirty.add(lastDirty);
+				dirty.add(_lastDirty);
 			}
 			else
 			{
-				dirty = lastDirty;
+				dirty = _lastDirty;
 			}
 
 			if (dirty != null)
 			{
-				repaint(dirty);
+				_repaint(dirty);
 			}
 		}
 
 		if (isHideSelectionHandler())
 		{
-			graphComponent.getSelectionCellsHandler().setVisible(false);
+			_graphComponent.getSelectionCellsHandler().setVisible(false);
 		}
 
 		fireEvent(new EventObj(Event.CONTINUE, "event", e, "dx", dx,
@@ -404,53 +404,53 @@ public class MovePreview extends EventSource
 	/**
 	 * 
 	 */
-	protected void repaint(Rect dirty)
+	protected void _repaint(Rect dirty)
 	{
 		if (dirty != null)
 		{
-			graphComponent.getGraphControl().repaint(dirty.getRectangle());
+			_graphComponent.getGraphControl().repaint(dirty.getRectangle());
 		}
 		else
 		{
-			graphComponent.getGraphControl().repaint();
+			_graphComponent.getGraphControl().repaint();
 		}
 	}
 
 	/**
 	 * 
 	 */
-	protected void reset()
+	protected void _reset()
 	{
-		Graph graph = graphComponent.getGraph();
+		Graph graph = _graphComponent.getGraph();
 
-		if (placeholder != null)
+		if (_placeholder != null)
 		{
-			Rectangle tmp = placeholder;
-			placeholder = null;
-			graphComponent.getGraphControl().repaint(tmp);
+			Rectangle tmp = _placeholder;
+			_placeholder = null;
+			_graphComponent.getGraphControl().repaint(tmp);
 		}
 
 		if (isHideSelectionHandler())
 		{
-			graphComponent.getSelectionCellsHandler().setVisible(true);
+			_graphComponent.getSelectionCellsHandler().setVisible(true);
 		}
 
 		// Revalidates the screen
 		// TODO: Should only revalidate moved cells
-		if (!isClonePreview() && previewStates != null)
+		if (!isClonePreview() && _previewStates != null)
 		{
 			graph.getView().revalidate();
 		}
 
-		previewStates = null;
-		movingCells = null;
-		startState = null;
-		preview = null;
+		_previewStates = null;
+		_movingCells = null;
+		_startState = null;
+		_preview = null;
 
-		if (lastDirty != null)
+		if (_lastDirty != null)
 		{
-			graphComponent.getGraphControl().repaint(lastDirty.getRectangle());
-			lastDirty = null;
+			_graphComponent.getGraphControl().repaint(_lastDirty.getRectangle());
+			_lastDirty = null;
 		}
 	}
 
@@ -460,10 +460,10 @@ public class MovePreview extends EventSource
 	public Object[] stop(boolean commit, MouseEvent e, double dx, double dy,
 			boolean clone, Object target)
 	{
-		Object[] cells = movingCells;
-		reset();
+		Object[] cells = _movingCells;
+		_reset();
 
-		Graph graph = graphComponent.getGraph();
+		Graph graph = _graphComponent.getGraph();
 		graph.getModel().beginUpdate();
 		try
 		{
@@ -490,16 +490,16 @@ public class MovePreview extends EventSource
 	 */
 	public void paint(Graphics g)
 	{
-		if (placeholder != null)
+		if (_placeholder != null)
 		{
-			SwingConstants.PREVIEW_BORDER.paintBorder(graphComponent, g,
-					placeholder.x, placeholder.y, placeholder.width,
-					placeholder.height);
+			SwingConstants.PREVIEW_BORDER.paintBorder(_graphComponent, g,
+					_placeholder.x, _placeholder.y, _placeholder.width,
+					_placeholder.height);
 		}
 
-		if (preview != null)
+		if (_preview != null)
 		{
-			preview.paint(g);
+			_preview.paint(g);
 		}
 	}
 

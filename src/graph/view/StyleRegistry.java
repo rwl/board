@@ -20,7 +20,7 @@ public class StyleRegistry
 	/**
 	 * Maps from strings to objects.
 	 */
-	protected static Map<String, Object> values = new Hashtable<String, Object>();
+	protected static Map<String, Object> _values = new Hashtable<String, Object>();
 
 	// Registers the known object styles
 	static
@@ -47,7 +47,7 @@ public class StyleRegistry
 	 */
 	public static void putValue(String name, Object value)
 	{
-		values.put(name, value);
+		_values.put(name, value);
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class StyleRegistry
 	 */
 	public static Object getValue(String name)
 	{
-		return values.get(name);
+		return _values.get(name);
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class StyleRegistry
 	 */
 	public static String getName(Object value)
 	{
-		Iterator<Map.Entry<String, Object>> it = values.entrySet().iterator();
+		Iterator<Map.Entry<String, Object>> it = _values.entrySet().iterator();
 
 		while (it.hasNext())
 		{

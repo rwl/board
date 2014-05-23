@@ -67,37 +67,37 @@ public class GraphTransferable implements Transferable, UIResource,
 	/**
 	 * 
 	 */
-	private static DataFlavor[] htmlFlavors;
+	private static DataFlavor[] _htmlFlavors;
 
 	/**
 	 * 
 	 */
-	private static DataFlavor[] stringFlavors;
+	private static DataFlavor[] _stringFlavors;
 
 	/**
 	 * 
 	 */
-	private static DataFlavor[] plainFlavors;
+	private static DataFlavor[] _plainFlavors;
 
 	/**
 	 * 
 	 */
-	private static DataFlavor[] imageFlavors;
+	private static DataFlavor[] _imageFlavors;
 
 	/**
 	 * 
 	 */
-	protected Object[] cells;
+	protected Object[] _cells;
 
 	/**
 	 * 
 	 */
-	protected Rect bounds;
+	protected Rect _bounds;
 
 	/**
 	 * 
 	 */
-	protected ImageIcon image;
+	protected ImageIcon _image;
 
 	/**
 	 * 
@@ -113,9 +113,9 @@ public class GraphTransferable implements Transferable, UIResource,
 	public GraphTransferable(Object[] cells, Rect bounds,
 			ImageIcon image)
 	{
-		this.cells = cells;
-		this.bounds = bounds;
-		this.image = image;
+		this._cells = cells;
+		this._bounds = bounds;
+		this._image = image;
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class GraphTransferable implements Transferable, UIResource,
 	 */
 	public Object[] getCells()
 	{
-		return cells;
+		return _cells;
 	}
 
 	/**
@@ -131,7 +131,7 @@ public class GraphTransferable implements Transferable, UIResource,
 	 */
 	public Rect getBounds()
 	{
-		return bounds;
+		return _bounds;
 	}
 
 	/**
@@ -139,7 +139,7 @@ public class GraphTransferable implements Transferable, UIResource,
 	 */
 	public ImageIcon getImage()
 	{
-		return image;
+		return _image;
 	}
 
 	/**
@@ -147,13 +147,13 @@ public class GraphTransferable implements Transferable, UIResource,
 	 */
 	public DataFlavor[] getTransferDataFlavors()
 	{
-		DataFlavor[] richerFlavors = getRicherFlavors();
+		DataFlavor[] richerFlavors = _getRicherFlavors();
 
 		int nRicher = (richerFlavors != null) ? richerFlavors.length : 0;
-		int nHtml = (isHtmlSupported()) ? htmlFlavors.length : 0;
-		int nPlain = (isPlainSupported()) ? plainFlavors.length : 0;
-		int nString = (isPlainSupported()) ? stringFlavors.length : 0;
-		int nImage = (isImageSupported()) ? imageFlavors.length : 0;
+		int nHtml = (_isHtmlSupported()) ? _htmlFlavors.length : 0;
+		int nPlain = (_isPlainSupported()) ? _plainFlavors.length : 0;
+		int nString = (_isPlainSupported()) ? _stringFlavors.length : 0;
+		int nImage = (isImageSupported()) ? _imageFlavors.length : 0;
 		int nFlavors = nRicher + nHtml + nPlain + nString + nImage;
 
 		DataFlavor[] flavors = new DataFlavor[nFlavors];
@@ -169,25 +169,25 @@ public class GraphTransferable implements Transferable, UIResource,
 
 		if (nHtml > 0)
 		{
-			System.arraycopy(htmlFlavors, 0, flavors, nDone, nHtml);
+			System.arraycopy(_htmlFlavors, 0, flavors, nDone, nHtml);
 			nDone += nHtml;
 		}
 
 		if (nPlain > 0)
 		{
-			System.arraycopy(plainFlavors, 0, flavors, nDone, nPlain);
+			System.arraycopy(_plainFlavors, 0, flavors, nDone, nPlain);
 			nDone += nPlain;
 		}
 
 		if (nString > 0)
 		{
-			System.arraycopy(stringFlavors, 0, flavors, nDone, nString);
+			System.arraycopy(_stringFlavors, 0, flavors, nDone, nString);
 			nDone += nString;
 		}
 
 		if (nImage > 0)
 		{
-			System.arraycopy(imageFlavors, 0, flavors, nDone, nImage);
+			System.arraycopy(_imageFlavors, 0, flavors, nDone, nImage);
 			nDone += nImage;
 		}
 
@@ -199,7 +199,7 @@ public class GraphTransferable implements Transferable, UIResource,
 	 * plain text. If this method returns a non-null value, it will be placed at
 	 * the start of the array of supported flavors.
 	 */
-	protected DataFlavor[] getRicherFlavors()
+	protected DataFlavor[] _getRicherFlavors()
 	{
 		return new DataFlavor[] { dataFlavor };
 	}
@@ -244,31 +244,31 @@ public class GraphTransferable implements Transferable, UIResource,
 	public Object getTransferData(DataFlavor flavor)
 			throws UnsupportedFlavorException, IOException
 	{
-		if (isRicherFlavor(flavor))
+		if (_isRicherFlavor(flavor))
 		{
 			return getRicherData(flavor);
 		}
-		else if (isImageFlavor(flavor))
+		else if (_isImageFlavor(flavor))
 		{
-			if (image != null && image.getImage() instanceof RenderedImage)
+			if (_image != null && _image.getImage() instanceof RenderedImage)
 			{
 				if (flavor.equals(DataFlavor.imageFlavor))
 				{
-					return image.getImage();
+					return _image.getImage();
 				}
 				else
 				{
 					ByteArrayOutputStream stream = new ByteArrayOutputStream();
-					ImageIO.write((RenderedImage) image.getImage(), "bmp",
+					ImageIO.write((RenderedImage) _image.getImage(), "bmp",
 							stream);
 
 					return new ByteArrayInputStream(stream.toByteArray());
 				}
 			}
 		}
-		else if (isHtmlFlavor(flavor))
+		else if (_isHtmlFlavor(flavor))
 		{
-			String data = getHtmlData();
+			String data = _getHtmlData();
 			data = (data == null) ? "" : data;
 
 			if (String.class.equals(flavor.getRepresentationClass()))
@@ -285,9 +285,9 @@ public class GraphTransferable implements Transferable, UIResource,
 			}
 			// fall through to unsupported
 		}
-		else if (isPlainFlavor(flavor))
+		else if (_isPlainFlavor(flavor))
 		{
-			String data = getPlainData();
+			String data = _getPlainData();
 			data = (data == null) ? "" : data;
 
 			if (String.class.equals(flavor.getRepresentationClass()))
@@ -305,9 +305,9 @@ public class GraphTransferable implements Transferable, UIResource,
 			// fall through to unsupported
 
 		}
-		else if (isStringFlavor(flavor))
+		else if (_isStringFlavor(flavor))
 		{
-			String data = getPlainData();
+			String data = _getPlainData();
 			data = (data == null) ? "" : data;
 
 			return data;
@@ -322,9 +322,9 @@ public class GraphTransferable implements Transferable, UIResource,
 	 * @return Returns true if the given flavor is a richer flavor of this
 	 * transferable.
 	 */
-	protected boolean isRicherFlavor(DataFlavor flavor)
+	protected boolean _isRicherFlavor(DataFlavor flavor)
 	{
-		DataFlavor[] richerFlavors = getRicherFlavors();
+		DataFlavor[] richerFlavors = _getRicherFlavors();
 		int nFlavors = (richerFlavors != null) ? richerFlavors.length : 0;
 
 		for (int i = 0; i < nFlavors; i++)
@@ -365,9 +365,9 @@ public class GraphTransferable implements Transferable, UIResource,
 	 *            the requested flavor for the data
 	 * @return boolean indicating whether or not the data flavor is supported
 	 */
-	protected boolean isHtmlFlavor(DataFlavor flavor)
+	protected boolean _isHtmlFlavor(DataFlavor flavor)
 	{
-		DataFlavor[] flavors = htmlFlavors;
+		DataFlavor[] flavors = _htmlFlavors;
 
 		for (int i = 0; i < flavors.length; i++)
 		{
@@ -384,7 +384,7 @@ public class GraphTransferable implements Transferable, UIResource,
 	 * Whether the HTML flavors are offered. If so, the method getHTMLData
 	 * should be implemented to provide something reasonable.
 	 */
-	protected boolean isHtmlSupported()
+	protected boolean _isHtmlSupported()
 	{
 		return false;
 	}
@@ -392,7 +392,7 @@ public class GraphTransferable implements Transferable, UIResource,
 	/**
 	 * Fetch the data in a text/html format
 	 */
-	protected String getHtmlData()
+	protected String _getHtmlData()
 	{
 		return null;
 	}
@@ -403,13 +403,13 @@ public class GraphTransferable implements Transferable, UIResource,
 	 * @return Returns true if the given flavor is an image flavor of this
 	 * transferable.
 	 */
-	protected boolean isImageFlavor(DataFlavor flavor)
+	protected boolean _isImageFlavor(DataFlavor flavor)
 	{
-		int nFlavors = (imageFlavors != null) ? imageFlavors.length : 0;
+		int nFlavors = (_imageFlavors != null) ? _imageFlavors.length : 0;
 
 		for (int i = 0; i < nFlavors; i++)
 		{
-			if (imageFlavors[i].equals(flavor))
+			if (_imageFlavors[i].equals(flavor))
 			{
 				return true;
 			}
@@ -423,7 +423,7 @@ public class GraphTransferable implements Transferable, UIResource,
 	 */
 	public boolean isImageSupported()
 	{
-		return enableImageSupport && image != null;
+		return enableImageSupport && _image != null;
 	}
 
 	/**
@@ -434,9 +434,9 @@ public class GraphTransferable implements Transferable, UIResource,
 	 *            the requested flavor for the data
 	 * @return boolean indicating whether or not the data flavor is supported
 	 */
-	protected boolean isPlainFlavor(DataFlavor flavor)
+	protected boolean _isPlainFlavor(DataFlavor flavor)
 	{
-		DataFlavor[] flavors = plainFlavors;
+		DataFlavor[] flavors = _plainFlavors;
 
 		for (int i = 0; i < flavors.length; i++)
 		{
@@ -453,7 +453,7 @@ public class GraphTransferable implements Transferable, UIResource,
 	 * Whether the plain text flavors are offered. If so, the method
 	 * getPlainData should be implemented to provide something reasonable.
 	 */
-	protected boolean isPlainSupported()
+	protected boolean _isPlainSupported()
 	{
 		return false;
 	}
@@ -461,7 +461,7 @@ public class GraphTransferable implements Transferable, UIResource,
 	/**
 	 * Fetch the data in a text/plain format.
 	 */
-	protected String getPlainData()
+	protected String _getPlainData()
 	{
 		return null;
 	}
@@ -474,9 +474,9 @@ public class GraphTransferable implements Transferable, UIResource,
 	 *            the requested flavor for the data
 	 * @return boolean indicating whether or not the data flavor is supported
 	 */
-	protected boolean isStringFlavor(DataFlavor flavor)
+	protected boolean _isStringFlavor(DataFlavor flavor)
 	{
-		DataFlavor[] flavors = stringFlavors;
+		DataFlavor[] flavors = _stringFlavors;
 
 		for (int i = 0; i < flavors.length; i++)
 		{
@@ -496,28 +496,28 @@ public class GraphTransferable implements Transferable, UIResource,
 	{
 		try
 		{
-			htmlFlavors = new DataFlavor[3];
-			htmlFlavors[0] = new DataFlavor("text/html;class=java.lang.String");
-			htmlFlavors[1] = new DataFlavor("text/html;class=java.io.Reader");
-			htmlFlavors[2] = new DataFlavor(
+			_htmlFlavors = new DataFlavor[3];
+			_htmlFlavors[0] = new DataFlavor("text/html;class=java.lang.String");
+			_htmlFlavors[1] = new DataFlavor("text/html;class=java.io.Reader");
+			_htmlFlavors[2] = new DataFlavor(
 					"text/html;charset=unicode;class=java.io.InputStream");
 
-			plainFlavors = new DataFlavor[3];
-			plainFlavors[0] = new DataFlavor(
+			_plainFlavors = new DataFlavor[3];
+			_plainFlavors[0] = new DataFlavor(
 					"text/plain;class=java.lang.String");
-			plainFlavors[1] = new DataFlavor("text/plain;class=java.io.Reader");
-			plainFlavors[2] = new DataFlavor(
+			_plainFlavors[1] = new DataFlavor("text/plain;class=java.io.Reader");
+			_plainFlavors[2] = new DataFlavor(
 					"text/plain;charset=unicode;class=java.io.InputStream");
 
-			stringFlavors = new DataFlavor[2];
-			stringFlavors[0] = new DataFlavor(
+			_stringFlavors = new DataFlavor[2];
+			_stringFlavors[0] = new DataFlavor(
 					DataFlavor.javaJVMLocalObjectMimeType
 							+ ";class=java.lang.String");
-			stringFlavors[1] = DataFlavor.stringFlavor;
+			_stringFlavors[1] = DataFlavor.stringFlavor;
 
-			imageFlavors = new DataFlavor[2];
-			imageFlavors[0] = DataFlavor.imageFlavor;
-			imageFlavors[1] = new DataFlavor("image/png");
+			_imageFlavors = new DataFlavor[2];
+			_imageFlavors[0] = DataFlavor.imageFlavor;
+			_imageFlavors[1] = new DataFlavor("image/png");
 		}
 		catch (ClassNotFoundException cle)
 		{

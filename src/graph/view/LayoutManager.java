@@ -1,12 +1,12 @@
 package graph.view;
 
 import graph.layout.IGraphLayout;
+import graph.model.ChildChange;
+import graph.model.GeometryChange;
 import graph.model.GraphModel;
 import graph.model.IGraphModel;
-import graph.model.GraphModel.ChildChange;
-import graph.model.GraphModel.GeometryChange;
-import graph.model.GraphModel.RootChange;
-import graph.model.GraphModel.TerminalChange;
+import graph.model.RootChange;
+import graph.model.TerminalChange;
 import graph.util.Event;
 import graph.util.EventObj;
 import graph.util.EventSource;
@@ -54,30 +54,30 @@ public class LayoutManager extends EventSource
 	 * Defines the type of the source or target terminal. The type is a string
 	 * passed to Cell.is to check if the rule applies to a cell.
 	 */
-	protected Graph graph;
+	protected Graph _graph;
 
 	/**
 	 * Optional string that specifies the value of the attribute to be passed
 	 * to Cell.is to check if the rule applies to a cell. Default is true.
 	 */
-	protected boolean enabled = true;
+	protected boolean _enabled = true;
 
 	/**
 	 * Optional string that specifies the attributename to be passed to
 	 * Cell.is to check if the rule applies to a cell. Default is true.
 	 */
-	protected boolean bubbling = true;
+	protected boolean _bubbling = true;
 
 	/**
 	 * 
 	 */
-	protected IEventListener undoHandler = new IEventListener()
+	protected IEventListener _undoHandler = new IEventListener()
 	{
 		public void invoke(Object source, EventObj evt)
 		{
 			if (isEnabled())
 			{
-				beforeUndo((UndoableEdit) evt.getProperty("edit"));
+				_beforeUndo((UndoableEdit) evt.getProperty("edit"));
 			}
 		}
 	};
@@ -85,13 +85,13 @@ public class LayoutManager extends EventSource
 	/**
 	 * 
 	 */
-	protected IEventListener moveHandler = new IEventListener()
+	protected IEventListener _moveHandler = new IEventListener()
 	{
 		public void invoke(Object source, EventObj evt)
 		{
 			if (isEnabled())
 			{
-				cellsMoved((Object[]) evt.getProperty("cells"), (Point) evt
+				_cellsMoved((Object[]) evt.getProperty("cells"), (Point) evt
 						.getProperty("location"));
 			}
 		}
@@ -110,7 +110,7 @@ public class LayoutManager extends EventSource
 	 */
 	public boolean isEnabled()
 	{
-		return enabled;
+		return _enabled;
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class LayoutManager extends EventSource
 	 */
 	public void setEnabled(boolean value)
 	{
-		enabled = value;
+		_enabled = value;
 	}
 
 	/**
@@ -126,7 +126,7 @@ public class LayoutManager extends EventSource
 	 */
 	public boolean isBubbling()
 	{
-		return bubbling;
+		return _bubbling;
 	}
 
 	/**
@@ -134,7 +134,7 @@ public class LayoutManager extends EventSource
 	 */
 	public void setBubbling(boolean value)
 	{
-		bubbling = value;
+		_bubbling = value;
 	}
 
 	/**
@@ -142,7 +142,7 @@ public class LayoutManager extends EventSource
 	 */
 	public Graph getGraph()
 	{
-		return graph;
+		return _graph;
 	}
 
 	/**
@@ -150,27 +150,27 @@ public class LayoutManager extends EventSource
 	 */
 	public void setGraph(Graph value)
 	{
-		if (graph != null)
+		if (_graph != null)
 		{
-			IGraphModel model = graph.getModel();
-			model.removeListener(undoHandler);
-			graph.removeListener(moveHandler);
+			IGraphModel model = _graph.getModel();
+			model.removeListener(_undoHandler);
+			_graph.removeListener(_moveHandler);
 		}
 
-		graph = value;
+		_graph = value;
 
-		if (graph != null)
+		if (_graph != null)
 		{
-			IGraphModel model = graph.getModel();
-			model.addListener(Event.BEFORE_UNDO, undoHandler);
-			graph.addListener(Event.MOVE_CELLS, moveHandler);
+			IGraphModel model = _graph.getModel();
+			model.addListener(Event.BEFORE_UNDO, _undoHandler);
+			_graph.addListener(Event.MOVE_CELLS, _moveHandler);
 		}
 	}
 
 	/**
 	 * 
 	 */
-	protected IGraphLayout getLayout(Object parent)
+	protected IGraphLayout _getLayout(Object parent)
 	{
 		return null;
 	}
@@ -178,7 +178,7 @@ public class LayoutManager extends EventSource
 	/**
 	 * 
 	 */
-	protected void cellsMoved(Object[] cells, Point location)
+	protected void _cellsMoved(Object[] cells, Point location)
 	{
 		if (cells != null && location != null)
 		{
@@ -187,7 +187,7 @@ public class LayoutManager extends EventSource
 			// Checks if a layout exists to take care of the moving
 			for (int i = 0; i < cells.length; i++)
 			{
-				IGraphLayout layout = getLayout(model.getParent(cells[i]));
+				IGraphLayout layout = _getLayout(model.getParent(cells[i]));
 
 				if (layout != null)
 				{
@@ -200,9 +200,9 @@ public class LayoutManager extends EventSource
 	/**
 	 * 
 	 */
-	protected void beforeUndo(UndoableEdit edit)
+	protected void _beforeUndo(UndoableEdit edit)
 	{
-		Collection<Object> cells = getCellsForChanges(edit.getChanges());
+		Collection<Object> cells = _getCellsForChanges(edit.getChanges());
 		IGraphModel model = getGraph().getModel();
 
 		if (isBubbling())
@@ -216,13 +216,13 @@ public class LayoutManager extends EventSource
 			}
 		}
 
-		layoutCells(Utils.sortCells(cells, false).toArray());
+		_layoutCells(Utils.sortCells(cells, false).toArray());
 	}
 
 	/**
 	 * 
 	 */
-	protected Collection<Object> getCellsForChanges(
+	protected Collection<Object> _getCellsForChanges(
 			List<UndoableChange> changes)
 	{
 		Set<Object> result = new HashSet<Object>();
@@ -238,7 +238,7 @@ public class LayoutManager extends EventSource
 			}
 			else
 			{
-				result.addAll(getCellsForChange(change));
+				result.addAll(_getCellsForChange(change));
 			}
 		}
 
@@ -248,7 +248,7 @@ public class LayoutManager extends EventSource
 	/**
 	 * 
 	 */
-	protected Collection<Object> getCellsForChange(UndoableChange change)
+	protected Collection<Object> _getCellsForChange(UndoableChange change)
 	{
 		IGraphModel model = getGraph().getModel();
 		Set<Object> result = new HashSet<Object>();
@@ -298,7 +298,7 @@ public class LayoutManager extends EventSource
 	/**
 	 * 
 	 */
-	protected void layoutCells(Object[] cells)
+	protected void _layoutCells(Object[] cells)
 	{
 		if (cells.length > 0)
 		{
@@ -312,7 +312,7 @@ public class LayoutManager extends EventSource
 				{
 					if (cells[i] != model.getRoot())
 					{
-						executeLayout(getLayout(cells[i]), cells[i]);
+						_executeLayout(_getLayout(cells[i]), cells[i]);
 					}
 				}
 
@@ -329,7 +329,7 @@ public class LayoutManager extends EventSource
 	/**
 	 * 
 	 */
-	protected void executeLayout(IGraphLayout layout, Object parent)
+	protected void _executeLayout(IGraphLayout layout, Object parent)
 	{
 		if (layout != null && parent != null)
 		{

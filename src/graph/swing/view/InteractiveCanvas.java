@@ -24,7 +24,7 @@ public class InteractiveCanvas extends Graphics2DCanvas
 	/**
 	 * 
 	 */
-	protected ImageObserver imageObserver = null;
+	protected ImageObserver _imageObserver = null;
 
 	/**
 	 * 
@@ -47,7 +47,7 @@ public class InteractiveCanvas extends Graphics2DCanvas
 	 */
 	public void setImageObserver(ImageObserver value)
 	{
-		imageObserver = value;
+		_imageObserver = value;
 	}
 
 	/**
@@ -55,24 +55,24 @@ public class InteractiveCanvas extends Graphics2DCanvas
 	 */
 	public ImageObserver getImageObserver()
 	{
-		return imageObserver;
+		return _imageObserver;
 	}
 
 	/**
 	 * Overrides graphics call to use image observer.
 	 */
-	protected void drawImageImpl(Image image, int x, int y)
+	protected void _drawImageImpl(Image image, int x, int y)
 	{
-		g.drawImage(image, x, y, imageObserver);
+		_g.drawImage(image, x, y, _imageObserver);
 	}
 
 	/**
 	 * Returns the size for the given image.
 	 */
-	protected Dimension getImageSize(Image image)
+	protected Dimension _getImageSize(Image image)
 	{
-		return new Dimension(image.getWidth(imageObserver),
-				image.getHeight(imageObserver));
+		return new Dimension(image.getWidth(_imageObserver),
+				image.getHeight(_imageObserver));
 	}
 
 	/**

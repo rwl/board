@@ -17,7 +17,7 @@ public class Resources
 	/**
 	 * Ordered list of the inserted resource bundles.
 	 */
-	protected static LinkedList<ResourceBundle> bundles = new LinkedList<ResourceBundle>();
+	protected static LinkedList<ResourceBundle> _bundles = new LinkedList<ResourceBundle>();
 
 	/**
 	 * Returns the bundles.
@@ -26,7 +26,7 @@ public class Resources
 	 */
 	public static LinkedList<ResourceBundle> getBundles()
 	{
-		return bundles;
+		return _bundles;
 	}
 
 	/**
@@ -37,7 +37,7 @@ public class Resources
 	 */
 	public static void setBundles(LinkedList<ResourceBundle> value)
 	{
-		bundles = value;
+		_bundles = value;
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class Resources
 	 */
 	public static void add(String basename)
 	{
-		bundles.addFirst(PropertyResourceBundle.getBundle(basename));
+		_bundles.addFirst(PropertyResourceBundle.getBundle(basename));
 	}
 	
 	/**
@@ -61,7 +61,7 @@ public class Resources
 	 */
 	public static void add(String basename, Locale locale)
 	{
-		bundles.addFirst(PropertyResourceBundle.getBundle(basename, locale));
+		_bundles.addFirst(PropertyResourceBundle.getBundle(basename, locale));
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class Resources
 	 */
 	public static String get(String key, String[] params, String defaultValue)
 	{
-		String value = getResource(key);
+		String value = _getResource(key);
 
 		// Applies default value if required
 		if (value == null)
@@ -147,9 +147,9 @@ public class Resources
 	 * bundles in inverse order or <code>null</code> if no value can be found
 	 * for <code>key</code>.
 	 */
-	protected static String getResource(String key)
+	protected static String _getResource(String key)
 	{
-		Iterator<ResourceBundle> it = bundles.iterator();
+		Iterator<ResourceBundle> it = _bundles.iterator();
 
 		while (it.hasNext())
 		{

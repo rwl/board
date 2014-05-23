@@ -57,20 +57,20 @@ public class DomOutputParser
 	/**
 	 * 
 	 */
-	protected ICanvas2D canvas;
+	protected ICanvas2D _canvas;
 
 	/**
 	 * 
 	 */
-	protected transient Map<String, IElementHandler> handlers = new Hashtable<String, IElementHandler>();
+	protected transient Map<String, IElementHandler> _handlers = new Hashtable<String, IElementHandler>();
 
 	/**
 	 * 
 	 */
 	public DomOutputParser(ICanvas2D canvas)
 	{
-		this.canvas = canvas;
-		initHandlers();
+		this._canvas = canvas;
+		_initHandlers();
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class DomOutputParser
 			if (node instanceof Element)
 			{
 				Element elt = (Element) node;
-				IElementHandler handler = handlers.get(elt.getNodeName());
+				IElementHandler handler = _handlers.get(elt.getNodeName());
 
 				if (handler != null)
 				{
@@ -98,46 +98,46 @@ public class DomOutputParser
 	/**
 	 * 
 	 */
-	protected void initHandlers()
+	protected void _initHandlers()
 	{
-		handlers.put("save", new IElementHandler()
+		_handlers.put("save", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.save();
+				_canvas.save();
 			}
 		});
 
-		handlers.put("restore", new IElementHandler()
+		_handlers.put("restore", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.restore();
+				_canvas.restore();
 			}
 		});
 
-		handlers.put("scale", new IElementHandler()
+		_handlers.put("scale", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.scale(Double.parseDouble(elt.getAttribute("scale")));
+				_canvas.scale(Double.parseDouble(elt.getAttribute("scale")));
 			}
 		});
 
-		handlers.put("translate", new IElementHandler()
+		_handlers.put("translate", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.translate(Double.parseDouble(elt.getAttribute("dx")),
+				_canvas.translate(Double.parseDouble(elt.getAttribute("dx")),
 						Double.parseDouble(elt.getAttribute("dy")));
 			}
 		});
 
-		handlers.put("rotate", new IElementHandler()
+		_handlers.put("rotate", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.rotate(Double.parseDouble(elt.getAttribute("theta")),
+				_canvas.rotate(Double.parseDouble(elt.getAttribute("theta")),
 						elt.getAttribute("flipH").equals("1"), elt
 								.getAttribute("flipV").equals("1"), Double
 								.parseDouble(elt.getAttribute("cx")), Double
@@ -145,193 +145,193 @@ public class DomOutputParser
 			}
 		});
 
-		handlers.put("strokewidth", new IElementHandler()
+		_handlers.put("strokewidth", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.setStrokeWidth(Double.parseDouble(elt
+				_canvas.setStrokeWidth(Double.parseDouble(elt
 						.getAttribute("width")));
 			}
 		});
 
-		handlers.put("strokecolor", new IElementHandler()
+		_handlers.put("strokecolor", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.setStrokeColor(elt.getAttribute("color"));
+				_canvas.setStrokeColor(elt.getAttribute("color"));
 			}
 		});
 
-		handlers.put("dashed", new IElementHandler()
+		_handlers.put("dashed", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.setDashed(elt.getAttribute("dashed").equals("1"));
+				_canvas.setDashed(elt.getAttribute("dashed").equals("1"));
 			}
 		});
 
-		handlers.put("dashpattern", new IElementHandler()
+		_handlers.put("dashpattern", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.setDashPattern(elt.getAttribute("pattern"));
+				_canvas.setDashPattern(elt.getAttribute("pattern"));
 			}
 		});
 
-		handlers.put("linecap", new IElementHandler()
+		_handlers.put("linecap", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.setLineCap(elt.getAttribute("cap"));
+				_canvas.setLineCap(elt.getAttribute("cap"));
 			}
 		});
 
-		handlers.put("linejoin", new IElementHandler()
+		_handlers.put("linejoin", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.setLineJoin(elt.getAttribute("join"));
+				_canvas.setLineJoin(elt.getAttribute("join"));
 			}
 		});
 
-		handlers.put("miterlimit", new IElementHandler()
+		_handlers.put("miterlimit", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.setMiterLimit(Double.parseDouble(elt
+				_canvas.setMiterLimit(Double.parseDouble(elt
 						.getAttribute("limit")));
 			}
 		});
 
-		handlers.put("fontsize", new IElementHandler()
+		_handlers.put("fontsize", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.setFontSize(Double.parseDouble(elt.getAttribute("size")));
+				_canvas.setFontSize(Double.parseDouble(elt.getAttribute("size")));
 			}
 		});
 
-		handlers.put("fontcolor", new IElementHandler()
+		_handlers.put("fontcolor", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.setFontColor(elt.getAttribute("color"));
+				_canvas.setFontColor(elt.getAttribute("color"));
 			}
 		});
 
-		handlers.put("fontbackgroundcolor", new IElementHandler()
+		_handlers.put("fontbackgroundcolor", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.setFontBackgroundColor(elt.getAttribute("color"));
+				_canvas.setFontBackgroundColor(elt.getAttribute("color"));
 			}
 		});
 
-		handlers.put("fontbordercolor", new IElementHandler()
+		_handlers.put("fontbordercolor", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.setFontBorderColor(elt.getAttribute("color"));
+				_canvas.setFontBorderColor(elt.getAttribute("color"));
 			}
 		});
 
-		handlers.put("fontfamily", new IElementHandler()
+		_handlers.put("fontfamily", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.setFontFamily(elt.getAttribute("family"));
+				_canvas.setFontFamily(elt.getAttribute("family"));
 			}
 		});
 
-		handlers.put("fontstyle", new IElementHandler()
+		_handlers.put("fontstyle", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.setFontStyle(Integer.parseInt(elt.getAttribute("style")));
+				_canvas.setFontStyle(Integer.parseInt(elt.getAttribute("style")));
 			}
 		});
 
-		handlers.put("alpha", new IElementHandler()
+		_handlers.put("alpha", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.setAlpha(Double.parseDouble(elt.getAttribute("alpha")));
+				_canvas.setAlpha(Double.parseDouble(elt.getAttribute("alpha")));
 			}
 		});
 
-		handlers.put("fillcolor", new IElementHandler()
+		_handlers.put("fillcolor", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.setFillColor(elt.getAttribute("color"));
+				_canvas.setFillColor(elt.getAttribute("color"));
 			}
 		});
 		
-		handlers.put("shadowcolor", new IElementHandler()
+		_handlers.put("shadowcolor", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.setShadowColor(elt.getAttribute("color"));
+				_canvas.setShadowColor(elt.getAttribute("color"));
 			}
 		});
 		
-		handlers.put("shadowalpha", new IElementHandler()
+		_handlers.put("shadowalpha", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.setShadowAlpha(Double.parseDouble(elt.getAttribute("alpha")));
+				_canvas.setShadowAlpha(Double.parseDouble(elt.getAttribute("alpha")));
 			}
 		});
 		
-		handlers.put("shadowoffset", new IElementHandler()
+		_handlers.put("shadowoffset", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.setShadowOffset(Double.parseDouble(elt.getAttribute("dx")),
+				_canvas.setShadowOffset(Double.parseDouble(elt.getAttribute("dx")),
 						Double.parseDouble(elt.getAttribute("dy")));
 			}
 		});
 
-		handlers.put("shadow", new IElementHandler()
+		_handlers.put("shadow", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.setShadow(elt.getAttribute("enabled").equals("1"));
+				_canvas.setShadow(elt.getAttribute("enabled").equals("1"));
 			}
 		});
 		
-		handlers.put("gradient", new IElementHandler()
+		_handlers.put("gradient", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.setGradient(elt.getAttribute("c1"),
+				_canvas.setGradient(elt.getAttribute("c1"),
 						elt.getAttribute("c2"),
 						Double.parseDouble(elt.getAttribute("x")),
 						Double.parseDouble(elt.getAttribute("y")),
 						Double.parseDouble(elt.getAttribute("w")),
 						Double.parseDouble(elt.getAttribute("h")),
 						elt.getAttribute("direction"),
-						Double.parseDouble(getValue(elt, "alpha1", "1")),
-						Double.parseDouble(getValue(elt, "alpha2", "1")));
+						Double.parseDouble(_getValue(elt, "alpha1", "1")),
+						Double.parseDouble(_getValue(elt, "alpha2", "1")));
 			}
 		});
 
-		handlers.put("rect", new IElementHandler()
+		_handlers.put("rect", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.rect(Double.parseDouble(elt.getAttribute("x")),
+				_canvas.rect(Double.parseDouble(elt.getAttribute("x")),
 						Double.parseDouble(elt.getAttribute("y")),
 						Double.parseDouble(elt.getAttribute("w")),
 						Double.parseDouble(elt.getAttribute("h")));
 			}
 		});
 
-		handlers.put("roundrect", new IElementHandler()
+		_handlers.put("roundrect", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.roundrect(Double.parseDouble(elt.getAttribute("x")),
+				_canvas.roundrect(Double.parseDouble(elt.getAttribute("x")),
 						Double.parseDouble(elt.getAttribute("y")),
 						Double.parseDouble(elt.getAttribute("w")),
 						Double.parseDouble(elt.getAttribute("h")),
@@ -340,22 +340,22 @@ public class DomOutputParser
 			}
 		});
 
-		handlers.put("ellipse", new IElementHandler()
+		_handlers.put("ellipse", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.ellipse(Double.parseDouble(elt.getAttribute("x")),
+				_canvas.ellipse(Double.parseDouble(elt.getAttribute("x")),
 						Double.parseDouble(elt.getAttribute("y")),
 						Double.parseDouble(elt.getAttribute("w")),
 						Double.parseDouble(elt.getAttribute("h")));
 			}
 		});
 
-		handlers.put("image", new IElementHandler()
+		_handlers.put("image", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.image(Double.parseDouble(elt.getAttribute("x")), Double
+				_canvas.image(Double.parseDouble(elt.getAttribute("x")), Double
 						.parseDouble(elt.getAttribute("y")), Double
 						.parseDouble(elt.getAttribute("w")), Double
 						.parseDouble(elt.getAttribute("h")), elt
@@ -365,67 +365,67 @@ public class DomOutputParser
 			}
 		});
 
-		handlers.put("text", new IElementHandler()
+		_handlers.put("text", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.text(Double.parseDouble(elt.getAttribute("x")),
+				_canvas.text(Double.parseDouble(elt.getAttribute("x")),
 						Double.parseDouble(elt.getAttribute("y")),
 						Double.parseDouble(elt.getAttribute("w")),
 						Double.parseDouble(elt.getAttribute("h")),
 						elt.getAttribute("str"),
 						elt.getAttribute("align"),
 						elt.getAttribute("valign"),
-						getValue(elt, "wrap", "").equals("1"),
+						_getValue(elt, "wrap", "").equals("1"),
 						elt.getAttribute("format"),
 						elt.getAttribute("overflow"),
-						getValue(elt, "clip", "").equals("1"),
-						Double.parseDouble(getValue(elt, "rotation", "0")));
+						_getValue(elt, "clip", "").equals("1"),
+						Double.parseDouble(_getValue(elt, "rotation", "0")));
 			}
 		});
 
-		handlers.put("begin", new IElementHandler()
+		_handlers.put("begin", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.begin();
+				_canvas.begin();
 			}
 		});
 
-		handlers.put("move", new IElementHandler()
+		_handlers.put("move", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.moveTo(Double.parseDouble(elt.getAttribute("x")),
+				_canvas.moveTo(Double.parseDouble(elt.getAttribute("x")),
 						Double.parseDouble(elt.getAttribute("y")));
 			}
 		});
 
-		handlers.put("line", new IElementHandler()
+		_handlers.put("line", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.lineTo(Double.parseDouble(elt.getAttribute("x")),
+				_canvas.lineTo(Double.parseDouble(elt.getAttribute("x")),
 						Double.parseDouble(elt.getAttribute("y")));
 			}
 		});
 
-		handlers.put("quad", new IElementHandler()
+		_handlers.put("quad", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.quadTo(Double.parseDouble(elt.getAttribute("x1")),
+				_canvas.quadTo(Double.parseDouble(elt.getAttribute("x1")),
 						Double.parseDouble(elt.getAttribute("y1")),
 						Double.parseDouble(elt.getAttribute("x2")),
 						Double.parseDouble(elt.getAttribute("y2")));
 			}
 		});
 
-		handlers.put("curve", new IElementHandler()
+		_handlers.put("curve", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.curveTo(Double.parseDouble(elt.getAttribute("x1")),
+				_canvas.curveTo(Double.parseDouble(elt.getAttribute("x1")),
 						Double.parseDouble(elt.getAttribute("y1")),
 						Double.parseDouble(elt.getAttribute("x2")),
 						Double.parseDouble(elt.getAttribute("y2")),
@@ -434,35 +434,35 @@ public class DomOutputParser
 			}
 		});
 
-		handlers.put("close", new IElementHandler()
+		_handlers.put("close", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.close();
+				_canvas.close();
 			}
 		});
 
-		handlers.put("stroke", new IElementHandler()
+		_handlers.put("stroke", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.stroke();
+				_canvas.stroke();
 			}
 		});
 
-		handlers.put("fill", new IElementHandler()
+		_handlers.put("fill", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.fill();
+				_canvas.fill();
 			}
 		});
 
-		handlers.put("fillstroke", new IElementHandler()
+		_handlers.put("fillstroke", new IElementHandler()
 		{
 			public void parseElement(Element elt)
 			{
-				canvas.fillAndStroke();
+				_canvas.fillAndStroke();
 			}
 		});
 	}
@@ -470,7 +470,7 @@ public class DomOutputParser
 	/**
 	 * Returns the given attribute value or an empty string.
 	 */
-	protected String getValue(Element elt, String name, String defaultValue)
+	protected String _getValue(Element elt, String name, String defaultValue)
 	{
 		String value = elt.getAttribute(name);
 

@@ -122,7 +122,7 @@ public class DefaultTextShape implements ITextShape
 				}
 
 				g.drawString(lines[i], x + dx, y);
-				postProcessLine(text, lines[i], fm, canvas, x + dx, y);
+				_postProcessLine(text, lines[i], fm, canvas, x + dx, y);
 				y += fm.getHeight() + Constants.LINESPACING;
 			}
 		}
@@ -137,5 +137,5 @@ public class DefaultTextShape implements ITextShape
 	 * @param x the x co-ord of the baseline of the text line
 	 * @param y the y co-ord of the baseline of the text line
 	 */
-	protected void postProcessLine(String text, String line, FontMetrics fm, Graphics2DCanvas canvas, int x, int y){}
+	protected void _postProcessLine(String text, String line, FontMetrics fm, Graphics2DCanvas canvas, int x, int y){}
 }

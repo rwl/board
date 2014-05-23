@@ -27,22 +27,22 @@ public class Session implements DiagramChangeListener
 	/**
 	 * Holds the session ID.
 	 */
-	protected String id;
+	protected String _id;
 
 	/**
 	 * Reference to the shared diagram.
 	 */
-	protected SharedState diagram;
+	protected SharedState _diagram;
 
 	/**
 	 * Holds the send buffer for this session.
 	 */
-	protected StringBuffer buffer = new StringBuffer();
+	protected StringBuffer _buffer = new StringBuffer();
 
 	/**
 	 * Holds the last active time millis.
 	 */
-	protected long lastTimeMillis = 0;
+	protected long _lastTimeMillis = 0;
 
 	/**
 	 * Constructs a new session with the given ID.
@@ -52,11 +52,11 @@ public class Session implements DiagramChangeListener
 	 */
 	public Session(String id, SharedState diagram)
 	{
-		this.id = id;
-		this.diagram = diagram;
-		this.diagram.addDiagramChangeListener(this);
+		this._id = id;
+		this._diagram = diagram;
+		this._diagram.addDiagramChangeListener(this);
 
-		lastTimeMillis = System.currentTimeMillis();
+		_lastTimeMillis = System.currentTimeMillis();
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class Session implements DiagramChangeListener
 	 */
 	public String getId()
 	{
-		return id;
+		return _id;
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class Session implements DiagramChangeListener
 	{
 		synchronized (this)
 		{
-			buffer = new StringBuffer();
+			_buffer = new StringBuffer();
 			notify();
 		}
 
@@ -92,15 +92,15 @@ public class Session implements DiagramChangeListener
 	 */
 	public String getInitialMessage()
 	{
-		String ns = Utils.getMd5Hash(id);
+		String ns = Utils.getMd5Hash(_id);
 
 		StringBuffer result = new StringBuffer("<message namespace=\"" + ns
 				+ "\">");
 		result.append("<state>");
-		result.append(diagram.getState());
+		result.append(_diagram.getState());
 		result.append("</state>");
 		result.append("<delta>");
-		result.append(diagram.getDelta());
+		result.append(_diagram.getDelta());
 		result.append("</delta>");
 		result.append("</message>");
 
@@ -121,7 +121,7 @@ public class Session implements DiagramChangeListener
 		{
 			if (child.getNodeName().equals("delta"))
 			{
-				diagram.processDelta(this, child);
+				_diagram.processDelta(this, child);
 			}
 
 			child = child.getNextSibling();
@@ -152,23 +152,23 @@ public class Session implements DiagramChangeListener
 	 */
 	public String poll(long timeout) throws InterruptedException
 	{
-		lastTimeMillis = System.currentTimeMillis();
+		_lastTimeMillis = System.currentTimeMillis();
 		StringBuffer result = new StringBuffer("<message>");
 
 		synchronized (this)
 		{
-			if (buffer.length() == 0)
+			if (_buffer.length() == 0)
 			{
 				wait(timeout);
 			}
 
-			if (buffer.length() > 0)
+			if (_buffer.length() > 0)
 			{
 				result.append("<delta>");
-				result.append(buffer.toString());
+				result.append(_buffer.toString());
 				result.append("</delta>");
 				
-				buffer = new StringBuffer();
+				_buffer = new StringBuffer();
 			}
 
 			notify();
@@ -189,7 +189,7 @@ public class Session implements DiagramChangeListener
 		{
 			synchronized (this)
 			{
-				buffer.append(edits);
+				_buffer.append(edits);
 				notify();
 			}
 		}
@@ -200,7 +200,7 @@ public class Session implements DiagramChangeListener
 	 */
 	public long inactiveTimeMillis()
 	{
-		return System.currentTimeMillis() - lastTimeMillis;
+		return System.currentTimeMillis() - _lastTimeMillis;
 	}
 
 	/**
@@ -208,7 +208,7 @@ public class Session implements DiagramChangeListener
 	 */
 	public void destroy()
 	{
-		diagram.removeDiagramChangeListener(this);
+		_diagram.removeDiagramChangeListener(this);
 	}
 
 }

@@ -9,9 +9,9 @@ import graph.view.CellState;
  */
 public class GeneratorRandomIntFunction extends GeneratorFunction
 {
-	private double maxWeight = 10;
+	private double _maxWeight = 10;
 
-	private double minWeight = 0;
+	private double _minWeight = 0;
 
 	public GeneratorRandomIntFunction(double minWeight, double maxWeight)
 	{
@@ -24,28 +24,28 @@ public class GeneratorRandomIntFunction extends GeneratorFunction
 		//		Graph graph = state.getView().getGraph();
 		//		Object cell = state.getCell();
 
-		if (minWeight == maxWeight)
+		if (_minWeight == _maxWeight)
 		{
-			return minWeight;
+			return _minWeight;
 		}
 
-		double currValue = minWeight + Math.round((Math.random() * (maxWeight - minWeight)));
+		double currValue = _minWeight + Math.round((Math.random() * (_maxWeight - _minWeight)));
 		return currValue;
 	};
 
 	public double getMaxWeight()
 	{
-		return maxWeight;
+		return _maxWeight;
 	};
 
 	public void setWeightRange(double minWeight, double maxWeight)
 	{
-		this.maxWeight = Math.round(Math.max(minWeight, maxWeight));
-		this.minWeight = Math.round(Math.min(minWeight, maxWeight));
+		this._maxWeight = Math.round(Math.max(minWeight, maxWeight));
+		this._minWeight = Math.round(Math.min(minWeight, maxWeight));
 	};
 
 	public double getMinWeight()
 	{
-		return minWeight;
+		return _minWeight;
 	};
 };

@@ -21,77 +21,77 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * Specifies the orientation of the layout. Default is true.
 	 */
-	protected boolean horizontal;
+	protected boolean _horizontal;
 
 	/**
 	 * Specifies if edge directions should be inverted. Default is false.
 	 */
-	protected boolean invert;
+	protected boolean _invert;
 
 	/**
 	 * If the parents should be resized to match the width/height of the
 	 * children. Default is true.
 	 */
-	protected boolean resizeParent = true;
+	protected boolean _resizeParent = true;
 
 	/**
 	 * Padding added to resized parents
 	 */
-	protected int groupPadding = 10;
+	protected int _groupPadding = 10;
 
 	/**
 	 * A set of the parents that need updating based on children
 	 * process as part of the layout
 	 */
-	protected Set<Object> parentsChanged = null;
+	protected Set<Object> _parentsChanged = null;
 
 	/**
 	 * Specifies if the tree should be moved to the top, left corner
 	 * if it is inside a top-level layer. Default is false.
 	 */
-	protected boolean moveTree = false;
+	protected boolean _moveTree = false;
 
 	/**
 	 * Specifies if all edge points of traversed edges should be removed.
 	 * Default is true.
 	 */
-	protected boolean resetEdges = true;
+	protected boolean _resetEdges = true;
 
 	/**
 	 * Holds the levelDistance. Default is 10.
 	 */
-	protected int levelDistance = 10;
+	protected int _levelDistance = 10;
 
 	/**
 	 * Holds the nodeDistance. Default is 20.
 	 */
-	protected int nodeDistance = 20;
+	protected int _nodeDistance = 20;
 
 	/**
 	 * The preferred horizontal distance between edges exiting a vertex
 	 */
-	protected int prefHozEdgeSep = 5;
+	protected int _prefHozEdgeSep = 5;
 
 	/**
 	 * The preferred vertical offset between edges exiting a vertex
 	 */
-	protected int prefVertEdgeOff = 2;
+	protected int _prefVertEdgeOff = 2;
 
 	/**
 	 * The minimum distance for an edge jetty from a vertex
 	 */
-	protected int minEdgeJetty = 12;
+	protected int _minEdgeJetty = 12;
 
 	/**
 	 * The size of the vertical buffer in the center of inter-rank channels
 	 * where edge control points should not be placed
 	 */
-	protected int channelBuffer = 4;
+	protected int _channelBuffer = 4;
 
 	/**
 	 * Whether or not to apply the internal tree edge routing
 	 */
-	protected boolean edgeRouting = true;
+	protected boolean _edgeRouting = true;
 
 	/**
 	 * 
@@ -121,8 +121,8 @@ public class CompactTreeLayout extends GraphLayout
 	public CompactTreeLayout(Graph graph, boolean horizontal, boolean invert)
 	{
 		super(graph);
-		this.horizontal = horizontal;
-		this.invert = invert;
+		this._horizontal = horizontal;
+		this._invert = invert;
 	}
 
 	/**
@@ -143,7 +143,7 @@ public class CompactTreeLayout extends GraphLayout
 	 */
 	public boolean isHorizontal()
 	{
-		return horizontal;
+		return _horizontal;
 	}
 
 	/**
@@ -151,7 +151,7 @@ public class CompactTreeLayout extends GraphLayout
 	 */
 	public void setHorizontal(boolean horizontal)
 	{
-		this.horizontal = horizontal;
+		this._horizontal = horizontal;
 	}
 
 	/**
@@ -159,7 +159,7 @@ public class CompactTreeLayout extends GraphLayout
 	 */
 	public boolean isInvert()
 	{
-		return invert;
+		return _invert;
 	}
 
 	/**
@@ -167,7 +167,7 @@ public class CompactTreeLayout extends GraphLayout
 	 */
 	public void setInvert(boolean invert)
 	{
-		this.invert = invert;
+		this._invert = invert;
 	}
 
 	/**
@@ -175,7 +175,7 @@ public class CompactTreeLayout extends GraphLayout
 	 */
 	public boolean isResizeParent()
 	{
-		return resizeParent;
+		return _resizeParent;
 	}
 
 	/**
@@ -183,7 +183,7 @@ public class CompactTreeLayout extends GraphLayout
 	 */
 	public void setResizeParent(boolean resizeParent)
 	{
-		this.resizeParent = resizeParent;
+		this._resizeParent = resizeParent;
 	}
 
 	/**
@@ -191,7 +191,7 @@ public class CompactTreeLayout extends GraphLayout
 	 */
 	public boolean isMoveTree()
 	{
-		return moveTree;
+		return _moveTree;
 	}
 
 	/**
@@ -199,7 +199,7 @@ public class CompactTreeLayout extends GraphLayout
 	 */
 	public void setMoveTree(boolean moveTree)
 	{
-		this.moveTree = moveTree;
+		this._moveTree = moveTree;
 	}
 
 	/**
@@ -207,7 +207,7 @@ public class CompactTreeLayout extends GraphLayout
 	 */
 	public boolean isResetEdges()
 	{
-		return resetEdges;
+		return _resetEdges;
 	}
 
 	/**
@@ -215,17 +215,17 @@ public class CompactTreeLayout extends GraphLayout
 	 */
 	public void setResetEdges(boolean resetEdges)
 	{
-		this.resetEdges = resetEdges;
+		this._resetEdges = resetEdges;
 	}
 
 	public boolean isEdgeRouting()
 	{
-		return edgeRouting;
+		return _edgeRouting;
 	}
 
 	public void setEdgeRouting(boolean edgeRouting)
 	{
-		this.edgeRouting = edgeRouting;
+		this._edgeRouting = edgeRouting;
 	}
 
 	/**
@@ -233,7 +233,7 @@ public class CompactTreeLayout extends GraphLayout
 	 */
 	public int getLevelDistance()
 	{
-		return levelDistance;
+		return _levelDistance;
 	}
 
 	/**
@@ -241,7 +241,7 @@ public class CompactTreeLayout extends GraphLayout
 	 */
 	public void setLevelDistance(int levelDistance)
 	{
-		this.levelDistance = levelDistance;
+		this._levelDistance = levelDistance;
 	}
 
 	/**
@@ -249,7 +249,7 @@ public class CompactTreeLayout extends GraphLayout
 	 */
 	public int getNodeDistance()
 	{
-		return nodeDistance;
+		return _nodeDistance;
 	}
 
 	/**
@@ -257,17 +257,17 @@ public class CompactTreeLayout extends GraphLayout
 	 */
 	public void setNodeDistance(int nodeDistance)
 	{
-		this.nodeDistance = nodeDistance;
+		this._nodeDistance = nodeDistance;
 	}
 
 	public double getGroupPadding()
 	{
-		return groupPadding;
+		return _groupPadding;
 	}
 
 	public void setGroupPadding(int groupPadding)
 	{
-		this.groupPadding = groupPadding;
+		this._groupPadding = groupPadding;
 	}
 
 	/*
@@ -294,8 +294,8 @@ public class CompactTreeLayout extends GraphLayout
 		if (root == null)
 		{
 			// Takes the parent as the root if it has outgoing edges
-			if (graph.getEdges(parent, model.getParent(parent), invert,
-					!invert, false).length > 0)
+			if (graph.getEdges(parent, model.getParent(parent), _invert,
+					!_invert, false).length > 0)
 			{
 				root = parent;
 			}
@@ -304,15 +304,15 @@ public class CompactTreeLayout extends GraphLayout
 			// children
 			else
 			{
-				List<Object> roots = findTreeRoots(parent, invert);
+				List<Object> roots = findTreeRoots(parent, _invert);
 
 				if (roots.size() > 0)
 				{
 					for (int i = 0; i < roots.size(); i++)
 					{
 						if (!isVertexIgnored(roots.get(i))
-								&& graph.getEdges(roots.get(i), null, invert,
-										!invert, false).length > 0)
+								&& graph.getEdges(roots.get(i), null, _invert,
+										!_invert, false).length > 0)
 						{
 							root = roots.get(i);
 							break;
@@ -324,29 +324,29 @@ public class CompactTreeLayout extends GraphLayout
 
 		if (root != null)
 		{
-			if (resizeParent)
+			if (_resizeParent)
 			{
-				parentsChanged = new HashSet<Object>();
+				_parentsChanged = new HashSet<Object>();
 			}
 			else
 			{
-				parentsChanged = null;
+				_parentsChanged = null;
 			}
 
 			model.beginUpdate();
 
 			try
 			{
-				TreeNode node = dfs(root, parent, null);
+				_TreeNode node = _dfs(root, parent, null);
 
 				if (node != null)
 				{
-					layout(node);
+					_layout(node);
 
 					double x0 = graph.getGridSize();
 					double y0 = x0;
 
-					if (!moveTree)
+					if (!_moveTree)
 					{
 						Rect g = getVertexBounds(root);
 
@@ -359,13 +359,13 @@ public class CompactTreeLayout extends GraphLayout
 
 					Rect bounds = null;
 
-					if (horizontal)
+					if (_horizontal)
 					{
-						bounds = horizontalLayout(node, x0, y0, null);
+						bounds = _horizontalLayout(node, x0, y0, null);
 					}
 					else
 					{
-						bounds = verticalLayout(node, null, x0, y0, null);
+						bounds = _verticalLayout(node, null, x0, y0, null);
 					}
 
 					if (bounds != null)
@@ -385,18 +385,18 @@ public class CompactTreeLayout extends GraphLayout
 
 						if (dx != 0 || dy != 0)
 						{
-							moveNode(node, dx, dy);
+							_moveNode(node, dx, dy);
 						}
 
-						if (resizeParent)
+						if (_resizeParent)
 						{
-							adjustParents();
+							_adjustParents();
 						}
 
-						if (edgeRouting)
+						if (_edgeRouting)
 						{
 							// Iterate through all edges setting their positions
-							localEdgeProcessing(node);
+							_localEdgeProcessing(node);
 						}
 					}
 				}
@@ -484,17 +484,17 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * Moves the specified node and all of its children by the given amount.
 	 */
-	protected void moveNode(TreeNode node, double dx, double dy)
+	protected void _moveNode(_TreeNode node, double dx, double dy)
 	{
 		node.x += dx;
 		node.y += dy;
-		apply(node, null);
+		_apply(node, null);
 
-		TreeNode child = node.child;
+		_TreeNode child = node.child;
 
 		while (child != null)
 		{
-			moveNode(child, dx, dy);
+			_moveNode(child, dx, dy);
 			child = child.next;
 		}
 	}
@@ -504,23 +504,23 @@ public class CompactTreeLayout extends GraphLayout
 	 * Makes sure the specified parent is never left by the
 	 * algorithm.
 	 */
-	protected TreeNode dfs(Object cell, Object parent, Set<Object> visited)
+	protected _TreeNode _dfs(Object cell, Object parent, Set<Object> visited)
 	{
 		if (visited == null)
 		{
 			visited = new HashSet<Object>();
 		}
 
-		TreeNode node = null;
+		_TreeNode node = null;
 
 		if (cell != null && !visited.contains(cell) && !isVertexIgnored(cell))
 		{
 			visited.add(cell);
-			node = createNode(cell);
+			node = _createNode(cell);
 
 			IGraphModel model = graph.getModel();
-			TreeNode prev = null;
-			Object[] out = graph.getEdges(cell, parent, invert, !invert, false,
+			_TreeNode prev = null;
+			Object[] out = graph.getEdges(cell, parent, _invert, !_invert, false,
 					true);
 			GraphView view = graph.getView();
 
@@ -531,12 +531,12 @@ public class CompactTreeLayout extends GraphLayout
 				if (!isEdgeIgnored(edge))
 				{
 					// Resets the points on the traversed edge
-					if (resetEdges)
+					if (_resetEdges)
 					{
 						setEdgePoints(edge, null);
 					}
 
-					if (edgeRouting)
+					if (_edgeRouting)
 					{
 						setEdgeStyleEnabled(edge, false);
 						setEdgePoints(edge, null);
@@ -545,9 +545,9 @@ public class CompactTreeLayout extends GraphLayout
 					// Checks if terminal in same swimlane
 					CellState state = view.getState(edge);
 					Object target = (state != null) ? state
-							.getVisibleTerminal(invert) : view
-							.getVisibleTerminal(edge, invert);
-					TreeNode tmp = dfs(target, parent, visited);
+							.getVisibleTerminal(_invert) : view
+							.getVisibleTerminal(edge, _invert);
+					_TreeNode tmp = _dfs(target, parent, visited);
 
 					if (tmp != null && model.getGeometry(target) != null)
 					{
@@ -573,25 +573,25 @@ public class CompactTreeLayout extends GraphLayout
 	 * Starts the actual compact tree layout algorithm
 	 * at the given node.
 	 */
-	protected void layout(TreeNode node)
+	protected void _layout(_TreeNode node)
 	{
 		if (node != null)
 		{
-			TreeNode child = node.child;
+			_TreeNode child = node.child;
 
 			while (child != null)
 			{
-				layout(child);
+				_layout(child);
 				child = child.next;
 			}
 
 			if (node.child != null)
 			{
-				attachParent(node, join(node));
+				_attachParent(node, _join(node));
 			}
 			else
 			{
-				layoutLeaf(node);
+				_layoutLeaf(node);
 			}
 		}
 	}
@@ -599,23 +599,23 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * 
 	 */
-	protected Rect horizontalLayout(TreeNode node, double x0, double y0,
+	protected Rect _horizontalLayout(_TreeNode node, double x0, double y0,
 			Rect bounds)
 	{
 		node.x += x0 + node.offsetX;
 		node.y += y0 + node.offsetY;
-		bounds = apply(node, bounds);
-		TreeNode child = node.child;
+		bounds = _apply(node, bounds);
+		_TreeNode child = node.child;
 
 		if (child != null)
 		{
-			bounds = horizontalLayout(child, node.x, node.y, bounds);
+			bounds = _horizontalLayout(child, node.x, node.y, bounds);
 			double siblingOffset = node.y + child.offsetY;
-			TreeNode s = child.next;
+			_TreeNode s = child.next;
 
 			while (s != null)
 			{
-				bounds = horizontalLayout(s, node.x + child.offsetX,
+				bounds = _horizontalLayout(s, node.x + child.offsetX,
 						siblingOffset, bounds);
 				siblingOffset += s.offsetY;
 				s = s.next;
@@ -628,23 +628,23 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * 
 	 */
-	protected Rect verticalLayout(TreeNode node, Object parent,
+	protected Rect _verticalLayout(_TreeNode node, Object parent,
 			double x0, double y0, Rect bounds)
 	{
 		node.x += x0 + node.offsetY;
 		node.y += y0 + node.offsetX;
-		bounds = apply(node, bounds);
-		TreeNode child = node.child;
+		bounds = _apply(node, bounds);
+		_TreeNode child = node.child;
 
 		if (child != null)
 		{
-			bounds = verticalLayout(child, node, node.x, node.y, bounds);
+			bounds = _verticalLayout(child, node, node.x, node.y, bounds);
 			double siblingOffset = node.x + child.offsetY;
-			TreeNode s = child.next;
+			_TreeNode s = child.next;
 
 			while (s != null)
 			{
-				bounds = verticalLayout(s, node, siblingOffset, node.y
+				bounds = _verticalLayout(s, node, siblingOffset, node.y
 						+ child.offsetX, bounds);
 				siblingOffset += s.offsetY;
 				s = s.next;
@@ -657,43 +657,43 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * 
 	 */
-	protected void attachParent(TreeNode node, double height)
+	protected void _attachParent(_TreeNode node, double height)
 	{
-		double x = nodeDistance + levelDistance;
-		double y2 = (height - node.width) / 2 - nodeDistance;
-		double y1 = y2 + node.width + 2 * nodeDistance - height;
+		double x = _nodeDistance + _levelDistance;
+		double y2 = (height - node.width) / 2 - _nodeDistance;
+		double y1 = y2 + node.width + 2 * _nodeDistance - height;
 
 		node.child.offsetX = x + node.height;
 		node.child.offsetY = y1;
 
-		node.contour.upperHead = createLine(node.height, 0,
-				createLine(x, y1, node.contour.upperHead));
-		node.contour.lowerHead = createLine(node.height, 0,
-				createLine(x, y2, node.contour.lowerHead));
+		node.contour.upperHead = _createLine(node.height, 0,
+				_createLine(x, y1, node.contour.upperHead));
+		node.contour.lowerHead = _createLine(node.height, 0,
+				_createLine(x, y2, node.contour.lowerHead));
 	}
 
 	/**
 	 * 
 	 */
-	protected void layoutLeaf(TreeNode node)
+	protected void _layoutLeaf(_TreeNode node)
 	{
-		double dist = 2 * nodeDistance;
+		double dist = 2 * _nodeDistance;
 
-		node.contour.upperTail = createLine(node.height + dist, 0, null);
+		node.contour.upperTail = _createLine(node.height + dist, 0, null);
 		node.contour.upperHead = node.contour.upperTail;
-		node.contour.lowerTail = createLine(0, -node.width - dist, null);
-		node.contour.lowerHead = createLine(node.height + dist, 0,
+		node.contour.lowerTail = _createLine(0, -node.width - dist, null);
+		node.contour.lowerHead = _createLine(node.height + dist, 0,
 				node.contour.lowerTail);
 	}
 
 	/**
 	 * 
 	 */
-	protected double join(TreeNode node)
+	protected double _join(_TreeNode node)
 	{
-		double dist = 2 * nodeDistance;
+		double dist = 2 * _nodeDistance;
 
-		TreeNode child = node.child;
+		_TreeNode child = node.child;
 		node.contour = child.contour;
 		double h = child.width + dist;
 		double sum = h;
@@ -701,7 +701,7 @@ public class CompactTreeLayout extends GraphLayout
 
 		while (child != null)
 		{
-			double d = merge(node.contour, child.contour);
+			double d = _merge(node.contour, child.contour);
 			child.offsetY = d + h;
 			child.offsetX = 0;
 			h = child.width + dist;
@@ -715,18 +715,18 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * 
 	 */
-	protected double merge(Polygon p1, Polygon p2)
+	protected double _merge(_Polygon p1, _Polygon p2)
 	{
 		double x = 0;
 		double y = 0;
 		double total = 0;
 
-		Polyline upper = p1.lowerHead;
-		Polyline lower = p2.upperHead;
+		_Polyline upper = p1.lowerHead;
+		_Polyline lower = p2.upperHead;
 
 		while (lower != null && upper != null)
 		{
-			double d = offset(x, y, lower.dx, lower.dy, upper.dx, upper.dy);
+			double d = _offset(x, y, lower.dx, lower.dy, upper.dx, upper.dy);
 			y += d;
 			total += d;
 
@@ -746,13 +746,13 @@ public class CompactTreeLayout extends GraphLayout
 
 		if (lower != null)
 		{
-			Polyline b = bridge(p1.upperTail, 0, 0, lower, x, y);
+			_Polyline b = _bridge(p1.upperTail, 0, 0, lower, x, y);
 			p1.upperTail = (b.next != null) ? p2.upperTail : b;
 			p1.lowerTail = p2.lowerTail;
 		}
 		else
 		{
-			Polyline b = bridge(p2.lowerTail, x, y, upper, 0, 0);
+			_Polyline b = _bridge(p2.lowerTail, x, y, upper, 0, 0);
 
 			if (b.next == null)
 			{
@@ -768,7 +768,7 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * 
 	 */
-	protected double offset(double p1, double p2, double a1, double a2,
+	protected double _offset(double p1, double p2, double a1, double a2,
 			double b1, double b2)
 	{
 		double d = 0;
@@ -823,8 +823,8 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * 
 	 */
-	protected Polyline bridge(Polyline line1, double x1, double y1,
-			Polyline line2, double x2, double y2)
+	protected _Polyline _bridge(_Polyline line1, double x1, double y1,
+			_Polyline line2, double x2, double y2)
 	{
 		double dx = x2 + line2.dx - x1;
 		double dy = 0;
@@ -840,8 +840,8 @@ public class CompactTreeLayout extends GraphLayout
 			dy = s / line2.dx;
 		}
 
-		Polyline r = createLine(dx, dy, line2.next);
-		line1.next = createLine(0, y2 + line2.dy - dy - y1, r);
+		_Polyline r = _createLine(dx, dy, line2.next);
+		line1.next = _createLine(0, y2 + line2.dy - dy - y1, r);
 
 		return r;
 	}
@@ -849,15 +849,15 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * 
 	 */
-	protected TreeNode createNode(Object cell)
+	protected _TreeNode _createNode(Object cell)
 	{
-		TreeNode node = new TreeNode(cell);
+		_TreeNode node = new _TreeNode(cell);
 
 		Rect geo = getVertexBounds(cell);
 
 		if (geo != null)
 		{
-			if (horizontal)
+			if (_horizontal)
 			{
 				node.width = geo.getHeight();
 				node.height = geo.getWidth();
@@ -878,7 +878,7 @@ public class CompactTreeLayout extends GraphLayout
 	 * @param bounds
 	 * @return
 	 */
-	protected Rect apply(TreeNode node, Rect bounds)
+	protected Rect _apply(_TreeNode node, Rect bounds)
 	{
 		IGraphModel model = graph.getModel();
 		Object cell = node.cell;
@@ -890,9 +890,9 @@ public class CompactTreeLayout extends GraphLayout
 			{
 				g = setVertexLocation(cell, node.x, node.y);
 
-				if (resizeParent)
+				if (_resizeParent)
 				{
-					parentsChanged.add(model.getParent(cell));
+					_parentsChanged.add(model.getParent(cell));
 				}
 			}
 
@@ -918,9 +918,9 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * 
 	 */
-	protected Polyline createLine(double dx, double dy, Polyline next)
+	protected _Polyline _createLine(double dx, double dy, _Polyline next)
 	{
-		return new Polyline(dx, dy, next);
+		return new _Polyline(dx, dy, next);
 	}
 
 	/**
@@ -928,22 +928,22 @@ public class CompactTreeLayout extends GraphLayout
 	 * implementation adjusts the group to just fit around the children with 
 	 * a padding.
 	 */
-	protected void adjustParents()
+	protected void _adjustParents()
 	{
-		arrangeGroups(Utils.sortCells(this.parentsChanged, true).toArray(), groupPadding);
+		arrangeGroups(Utils.sortCells(this._parentsChanged, true).toArray(), _groupPadding);
 	}
 
 	/**
 	 * Moves the specified node and all of its children by the given amount.
 	 */
-	protected void localEdgeProcessing(TreeNode node)
+	protected void _localEdgeProcessing(_TreeNode node)
 	{
-		processNodeOutgoing(node);
-		TreeNode child = node.child;
+		_processNodeOutgoing(node);
+		_TreeNode child = node.child;
 
 		while (child != null)
 		{
-			localEdgeProcessing(child);
+			_localEdgeProcessing(child);
 			child = child.next;
 		}
 	}
@@ -954,15 +954,15 @@ public class CompactTreeLayout extends GraphLayout
 	 * @param node
 	 *            the root node of the tree
 	 */
-	protected void processNodeOutgoing(TreeNode node)
+	protected void _processNodeOutgoing(_TreeNode node)
 	{
 		IGraphModel model = graph.getModel();
 
-		TreeNode child = node.child;
+		_TreeNode child = node.child;
 		Object parentCell = node.cell;
 
 		int childCount = 0;
-		List<WeightedCellSorter> sortedCells = new ArrayList<WeightedCellSorter>();
+		List<_WeightedCellSorter> sortedCells = new ArrayList<_WeightedCellSorter>();
 
 		while (child != null)
 		{
@@ -970,40 +970,40 @@ public class CompactTreeLayout extends GraphLayout
 
 			double sortingCriterion = child.x;
 
-			if (this.horizontal)
+			if (this._horizontal)
 			{
 				sortingCriterion = child.y;
 			}
 
-			sortedCells.add(new WeightedCellSorter(child,
+			sortedCells.add(new _WeightedCellSorter(child,
 					(int) sortingCriterion));
 			child = child.next;
 		}
 
-		WeightedCellSorter[] sortedCellsArray = sortedCells
-				.toArray(new WeightedCellSorter[sortedCells.size()]);
+		_WeightedCellSorter[] sortedCellsArray = sortedCells
+				.toArray(new _WeightedCellSorter[sortedCells.size()]);
 		Arrays.sort(sortedCellsArray);
 
 		double availableWidth = node.width;
 
-		double requiredWidth = (childCount + 1) * prefHozEdgeSep;
+		double requiredWidth = (childCount + 1) * _prefHozEdgeSep;
 
 		// Add a buffer on the edges of the vertex if the edge count allows
-		if (availableWidth > requiredWidth + (2 * prefHozEdgeSep))
+		if (availableWidth > requiredWidth + (2 * _prefHozEdgeSep))
 		{
-			availableWidth -= 2 * prefHozEdgeSep;
+			availableWidth -= 2 * _prefHozEdgeSep;
 		}
 
 		double edgeSpacing = availableWidth / childCount;
 
 		double currentXOffset = edgeSpacing / 2.0;
 
-		if (availableWidth > requiredWidth + (2 * prefHozEdgeSep))
+		if (availableWidth > requiredWidth + (2 * _prefHozEdgeSep))
 		{
-			currentXOffset += prefHozEdgeSep;
+			currentXOffset += _prefHozEdgeSep;
 		}
 
-		double currentYOffset = minEdgeJetty - prefVertEdgeOff;
+		double currentYOffset = _minEdgeJetty - _prefVertEdgeOff;
 		double maxYOffset = 0;
 
 		Rect parentBounds = getVertexBounds(parentCell);
@@ -1023,7 +1023,7 @@ public class CompactTreeLayout extends GraphLayout
 
 			for (int i = 0; i < edges.length; i++)
 			{
-				if (this.horizontal)
+				if (this._horizontal)
 				{
 					// Use opposite co-ords, calculation was done for 
 					// 
@@ -1053,11 +1053,11 @@ public class CompactTreeLayout extends GraphLayout
 
 			if (j < (float) childCount / 2.0f)
 			{
-				currentYOffset += prefVertEdgeOff;
+				currentYOffset += _prefVertEdgeOff;
 			}
 			else if (j > (float) childCount / 2.0f)
 			{
-				currentYOffset -= prefVertEdgeOff;
+				currentYOffset -= _prefVertEdgeOff;
 			}
 			// Ignore the case if equals, this means the second of 2
 			// jettys with the same y (even number of edges)
@@ -1068,147 +1068,6 @@ public class CompactTreeLayout extends GraphLayout
 
 			maxYOffset = Math.max(maxYOffset, currentYOffset);
 		}
-	}
-
-	/**
-	 * A utility class used to track cells whilst sorting occurs on the weighted
-	 * sum of their connected edges. Does not violate (x.compareTo(y)==0) ==
-	 * (x.equals(y))
-	 */
-	protected class WeightedCellSorter implements Comparable<Object>
-	{
-
-		/**
-		 * The weighted value of the cell stored
-		 */
-		public int weightedValue = 0;
-
-		/**
-		 * Whether or not to flip equal weight values.
-		 */
-		public boolean nudge = false;
-
-		/**
-		 * Whether or not this cell has been visited in the current assignment
-		 */
-		public boolean visited = false;
-
-		/**
-		 * The cell whose median value is being calculated
-		 */
-		public TreeNode cell = null;
-
-		public WeightedCellSorter()
-		{
-			this(null, 0);
-		}
-
-		public WeightedCellSorter(TreeNode cell, int weightedValue)
-		{
-			this.cell = cell;
-			this.weightedValue = weightedValue;
-		}
-
-		/**
-		 * comparator on the medianValue
-		 * 
-		 * @param arg0
-		 *            the object to be compared to
-		 * @return the standard return you would expect when comparing two
-		 *         double
-		 */
-		public int compareTo(Object arg0)
-		{
-			if (arg0 instanceof WeightedCellSorter)
-			{
-				if (weightedValue > ((WeightedCellSorter) arg0).weightedValue)
-				{
-					return 1;
-				}
-				else if (weightedValue < ((WeightedCellSorter) arg0).weightedValue)
-				{
-					return -1;
-				}
-			}
-
-			return 0;
-		}
-	}
-
-	/**
-	 * 
-	 */
-	protected static class TreeNode
-	{
-		/**
-		 * 
-		 */
-		protected Object cell;
-
-		/**
-		 * 
-		 */
-		protected double x, y, width, height, offsetX, offsetY;
-
-		/**
-		 * 
-		 */
-		protected TreeNode child, next; // parent, sibling
-
-		/**
-		 * 
-		 */
-		protected Polygon contour = new Polygon();
-
-		/**
-		 * 
-		 */
-		public TreeNode(Object cell)
-		{
-			this.cell = cell;
-		}
-
-	}
-
-	/**
-	 * 
-	 */
-	protected static class Polygon
-	{
-
-		/**
-		 * 
-		 */
-		protected Polyline lowerHead, lowerTail, upperHead, upperTail;
-
-	}
-
-	/**
-	 * 
-	 */
-	protected static class Polyline
-	{
-
-		/**
-		 * 
-		 */
-		protected double dx, dy;
-
-		/**
-		 * 
-		 */
-		protected Polyline next;
-
-		/**
-		 * 
-		 */
-		protected Polyline(double dx, double dy, Polyline next)
-		{
-			this.dx = dx;
-			this.dy = dy;
-			this.next = next;
-		}
-
 	}
 
 }

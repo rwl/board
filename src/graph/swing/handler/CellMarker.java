@@ -138,17 +138,17 @@ public class CellMarker extends JComponent
 	/**
 	 * Holds the event source.
 	 */
-	protected EventSource eventSource = new EventSource(this);
+	protected EventSource _eventSource = new EventSource(this);
 
 	/**
 	 * Holds the enclosing graph component.
 	 */
-	protected GraphComponent graphComponent;
+	protected GraphComponent _graphComponent;
 
 	/**
 	 * Specifies if the marker is enabled. Default is true.
 	 */
-	protected boolean enabled = true;
+	protected boolean _enabled = true;
 
 	/**
 	 * Specifies the portion of the width and height that should trigger
@@ -156,38 +156,38 @@ public class CellMarker extends JComponent
 	 * as the hotspot. Possible values are between 0 and 1. Default is
 	 * Constants.DEFAULT_HOTSPOT.
 	 */
-	protected double hotspot;
+	protected double _hotspot;
 
 	/**
 	 * Specifies if the hotspot is enabled. Default is false.
 	 */
-	protected boolean hotspotEnabled = false;
+	protected boolean _hotspotEnabled = false;
 
 	/**
 	 * Specifies if the the content area of swimlane should be non-transparent
 	 * to mouse events. Default is false.
 	 */
-	protected boolean swimlaneContentEnabled = false;
+	protected boolean _swimlaneContentEnabled = false;
 
 	/**
 	 * Specifies the valid- and invalidColor for the marker.
 	 */
-	protected Color validColor, invalidColor;
+	protected Color _validColor, _invalidColor;
 
 	/**
 	 * Holds the current marker color.
 	 */
-	protected transient Color currentColor;
+	protected transient Color _currentColor;
 
 	/**
 	 * Holds the marked state if it is valid.
 	 */
-	protected transient CellState validState;
+	protected transient CellState _validState;
 
 	/**
 	 * Holds the marked state.
 	 */
-	protected transient CellState markedState;
+	protected transient CellState _markedState;
 
 	/**
 	 * Constructs a new marker for the given graph component.
@@ -223,10 +223,10 @@ public class CellMarker extends JComponent
 	public CellMarker(GraphComponent graphComponent, Color validColor,
 			Color invalidColor, double hotspot)
 	{
-		this.graphComponent = graphComponent;
-		this.validColor = validColor;
-		this.invalidColor = invalidColor;
-		this.hotspot = hotspot;
+		this._graphComponent = graphComponent;
+		this._validColor = validColor;
+		this._invalidColor = invalidColor;
+		this._hotspot = hotspot;
 	}
 
 	/**
@@ -234,7 +234,7 @@ public class CellMarker extends JComponent
 	 */
 	public void setEnabled(boolean enabled)
 	{
-		this.enabled = enabled;
+		this._enabled = enabled;
 	}
 
 	/**
@@ -243,7 +243,7 @@ public class CellMarker extends JComponent
 	 */
 	public boolean isEnabled()
 	{
-		return enabled;
+		return _enabled;
 	}
 
 	/**
@@ -251,7 +251,7 @@ public class CellMarker extends JComponent
 	 */
 	public void setHotspot(double hotspot)
 	{
-		this.hotspot = hotspot;
+		this._hotspot = hotspot;
 	}
 
 	/**
@@ -259,7 +259,7 @@ public class CellMarker extends JComponent
 	 */
 	public double getHotspot()
 	{
-		return hotspot;
+		return _hotspot;
 	}
 
 	/**
@@ -267,7 +267,7 @@ public class CellMarker extends JComponent
 	 */
 	public void setHotspotEnabled(boolean enabled)
 	{
-		this.hotspotEnabled = enabled;
+		this._hotspotEnabled = enabled;
 	}
 
 	/**
@@ -275,7 +275,7 @@ public class CellMarker extends JComponent
 	 */
 	public boolean isHotspotEnabled()
 	{
-		return hotspotEnabled;
+		return _hotspotEnabled;
 	}
 
 	/**
@@ -284,7 +284,7 @@ public class CellMarker extends JComponent
 	 */
 	public void setSwimlaneContentEnabled(boolean swimlaneContentEnabled)
 	{
-		this.swimlaneContentEnabled = swimlaneContentEnabled;
+		this._swimlaneContentEnabled = swimlaneContentEnabled;
 	}
 
 	/**
@@ -293,7 +293,7 @@ public class CellMarker extends JComponent
 	 */
 	public boolean isSwimlaneContentEnabled()
 	{
-		return swimlaneContentEnabled;
+		return _swimlaneContentEnabled;
 	}
 
 	/**
@@ -301,7 +301,7 @@ public class CellMarker extends JComponent
 	 */
 	public void setValidColor(Color value)
 	{
-		validColor = value;
+		_validColor = value;
 	}
 
 	/**
@@ -309,7 +309,7 @@ public class CellMarker extends JComponent
 	 */
 	public Color getValidColor()
 	{
-		return validColor;
+		return _validColor;
 	}
 
 	/**
@@ -317,7 +317,7 @@ public class CellMarker extends JComponent
 	 */
 	public void setInvalidColor(Color value)
 	{
-		invalidColor = value;
+		_invalidColor = value;
 	}
 
 	/**
@@ -325,7 +325,7 @@ public class CellMarker extends JComponent
 	 */
 	public Color getInvalidColor()
 	{
-		return invalidColor;
+		return _invalidColor;
 	}
 
 	/**
@@ -333,7 +333,7 @@ public class CellMarker extends JComponent
 	 */
 	public boolean hasValidState()
 	{
-		return (validState != null);
+		return (_validState != null);
 	}
 
 	/**
@@ -341,7 +341,7 @@ public class CellMarker extends JComponent
 	 */
 	public CellState getValidState()
 	{
-		return validState;
+		return _validState;
 	}
 
 	/**
@@ -349,7 +349,7 @@ public class CellMarker extends JComponent
 	 */
 	public void setCurrentColor(Color value)
 	{
-		currentColor = value;
+		_currentColor = value;
 	}
 
 	/**
@@ -357,7 +357,7 @@ public class CellMarker extends JComponent
 	 */
 	public Color getCurrentColor()
 	{
-		return currentColor;
+		return _currentColor;
 	}
 
 	/**
@@ -365,7 +365,7 @@ public class CellMarker extends JComponent
 	 */
 	public void setMarkedState(CellState value)
 	{
-		markedState = value;
+		_markedState = value;
 	}
 
 	/**
@@ -373,7 +373,7 @@ public class CellMarker extends JComponent
 	 */
 	public CellState getMarkedState()
 	{
-		return markedState;
+		return _markedState;
 	}
 
 	/**
@@ -381,11 +381,11 @@ public class CellMarker extends JComponent
 	 */
 	public void reset()
 	{
-		validState = null;
+		_validState = null;
 
-		if (markedState != null)
+		if (_markedState != null)
 		{
-			markedState = null;
+			_markedState = null;
 			unmark();
 		}
 	}
@@ -404,9 +404,9 @@ public class CellMarker extends JComponent
 
 		if (isEnabled())
 		{
-			state = getState(e);
-			boolean valid = (state != null) ? isValidState(state) : false;
-			Color color = getMarkerColor(e, state, valid);
+			state = _getState(e);
+			boolean valid = (state != null) ? _isValidState(state) : false;
+			Color color = _getMarkerColor(e, state, valid);
 			
 			highlight(state, color, valid);
 		}
@@ -429,25 +429,25 @@ public class CellMarker extends JComponent
 	{
 		if (valid)
 		{
-			validState = state;
+			_validState = state;
 		}
 		else
 		{
-			validState = null;
+			_validState = null;
 		}
 
-		if (state != markedState || color != currentColor)
+		if (state != _markedState || color != _currentColor)
 		{
-			currentColor = color;
+			_currentColor = color;
 
-			if (state != null && currentColor != null)
+			if (state != null && _currentColor != null)
 			{
-				markedState = state;
+				_markedState = state;
 				mark();
 			}
-			else if (markedState != null)
+			else if (_markedState != null)
 			{
-				markedState = null;
+				_markedState = null;
 				unmark();
 			}
 		}
@@ -458,9 +458,9 @@ public class CellMarker extends JComponent
 	 */
 	public void mark()
 	{
-		if (markedState != null)
+		if (_markedState != null)
 		{
-			Rectangle bounds = markedState.getRectangle();
+			Rectangle bounds = _markedState.getRectangle();
 			bounds.grow(3, 3);
 			bounds.width += 1;
 			bounds.height += 1;
@@ -472,17 +472,17 @@ public class CellMarker extends JComponent
 
 				if (KEEP_ON_TOP)
 				{
-					graphComponent.getGraphControl().add(this, 0);
+					_graphComponent.getGraphControl().add(this, 0);
 				}
 				else
 				{
-					graphComponent.getGraphControl().add(this);
+					_graphComponent.getGraphControl().add(this);
 				}
 			}
 
 			repaint();
-			eventSource.fireEvent(new EventObj(Event.MARK, "state",
-					markedState));
+			_eventSource.fireEvent(new EventObj(Event.MARK, "state",
+					_markedState));
 		}
 	}
 
@@ -495,7 +495,7 @@ public class CellMarker extends JComponent
 		{
 			setVisible(false);
 			getParent().remove(this);
-			eventSource.fireEvent(new EventObj(Event.MARK));
+			_eventSource.fireEvent(new EventObj(Event.MARK));
 		}
 	}
 
@@ -504,7 +504,7 @@ public class CellMarker extends JComponent
 	 * then the state is stored in validState. The return value of this method
 	 * is used as the argument for getMarkerColor.
 	 */
-	protected boolean isValidState(CellState state)
+	protected boolean _isValidState(CellState state)
 	{
 		return true;
 	}
@@ -513,39 +513,39 @@ public class CellMarker extends JComponent
 	 * Returns the valid- or invalidColor depending on the value of isValid.
 	 * The given state is ignored by this implementation.
 	 */
-	protected Color getMarkerColor(MouseEvent e, CellState state,
+	protected Color _getMarkerColor(MouseEvent e, CellState state,
 			boolean isValid)
 	{
-		return (isValid) ? validColor : invalidColor;
+		return (isValid) ? _validColor : _invalidColor;
 	}
 
 	/**
 	 * Uses getCell, getMarkedState and intersects to return the state for
 	 * the given event.
 	 */
-	protected CellState getState(MouseEvent e)
+	protected CellState _getState(MouseEvent e)
 	{
-		Object cell = getCell(e);
-		GraphView view = graphComponent.getGraph().getView();
-		CellState state = getStateToMark(view.getState(cell));
+		Object cell = _getCell(e);
+		GraphView view = _graphComponent.getGraph().getView();
+		CellState state = _getStateToMark(view.getState(cell));
 
-		return (state != null && intersects(state, e)) ? state : null;
+		return (state != null && _intersects(state, e)) ? state : null;
 	}
 
 	/**
 	 * Returns the state at the given location. This uses Graph.getCellAt.
 	 */
-	protected Object getCell(MouseEvent e)
+	protected Object _getCell(MouseEvent e)
 	{
-		return graphComponent.getCellAt(e.getX(), e.getY(),
-				swimlaneContentEnabled);
+		return _graphComponent.getCellAt(e.getX(), e.getY(),
+				_swimlaneContentEnabled);
 	}
 
 	/**
 	 * Returns the state to be marked for the given state under the mouse. This
 	 * returns the given state.
 	 */
-	protected CellState getStateToMark(CellState state)
+	protected CellState _getStateToMark(CellState state)
 	{
 		return state;
 	}
@@ -555,12 +555,12 @@ public class CellMarker extends JComponent
 	 * returns true if the hotspot is 0 or the event is inside the hotspot for
 	 * the given cell state.
 	 */
-	protected boolean intersects(CellState state, MouseEvent e)
+	protected boolean _intersects(CellState state, MouseEvent e)
 	{
 		if (isHotspotEnabled())
 		{
 			return Utils.intersectsHotspot(state, e.getX(), e.getY(),
-					hotspot, Constants.MIN_HOTSPOT_SIZE,
+					_hotspot, Constants.MIN_HOTSPOT_SIZE,
 					Constants.MAX_HOTSPOT_SIZE);
 		}
 
@@ -572,7 +572,7 @@ public class CellMarker extends JComponent
 	 */
 	public void addListener(String eventName, IEventListener listener)
 	{
-		eventSource.addListener(eventName, listener);
+		_eventSource.addListener(eventName, listener);
 	}
 
 	/**
@@ -580,7 +580,7 @@ public class CellMarker extends JComponent
 	 */
 	public void removeListener(IEventListener listener)
 	{
-		eventSource.removeListener(listener);
+		_eventSource.removeListener(listener);
 	}
 
 	/**
@@ -588,7 +588,7 @@ public class CellMarker extends JComponent
 	 */
 	public void removeListener(IEventListener listener, String eventName)
 	{
-		eventSource.removeListener(listener, eventName);
+		_eventSource.removeListener(listener, eventName);
 	}
 
 	/**
@@ -596,18 +596,18 @@ public class CellMarker extends JComponent
 	 */
 	public void paint(Graphics g)
 	{
-		if (markedState != null && currentColor != null)
+		if (_markedState != null && _currentColor != null)
 		{
 			((Graphics2D) g).setStroke(DEFAULT_STROKE);
-			g.setColor(currentColor);
+			g.setColor(_currentColor);
 
-			if (markedState.getAbsolutePointCount() > 0)
+			if (_markedState.getAbsolutePointCount() > 0)
 			{
-				Point last = markedState.getAbsolutePoint(0).getPoint();
+				Point last = _markedState.getAbsolutePoint(0).getPoint();
 
-				for (int i = 1; i < markedState.getAbsolutePointCount(); i++)
+				for (int i = 1; i < _markedState.getAbsolutePointCount(); i++)
 				{
-					Point current = markedState.getAbsolutePoint(i).getPoint();
+					Point current = _markedState.getAbsolutePoint(i).getPoint();
 					g.drawLine(last.x - getX(), last.y - getY(), current.x
 							- getX(), current.y - getY());
 					last = current;

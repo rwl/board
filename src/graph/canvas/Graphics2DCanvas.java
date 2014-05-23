@@ -74,13 +74,13 @@ public class Graphics2DCanvas extends BasicCanvas
 	/**
 	 * Maps from names to mxIVertexShape instances.
 	 */
-	protected static Map<String, IShape> shapes = new HashMap<String, IShape>();
+	protected static Map<String, IShape> _shapes = new HashMap<String, IShape>();
 
 	/**
 	 * Maps from names to ITextShape instances. There are currently three different
 	 * hardcoded text shapes available here: default, html and wrapped.
 	 */
-	protected static Map<String, ITextShape> textShapes = new HashMap<String, ITextShape>();
+	protected static Map<String, ITextShape> _textShapes = new HashMap<String, ITextShape>();
 
 	/**
 	 * Static initializer.
@@ -111,12 +111,12 @@ public class Graphics2DCanvas extends BasicCanvas
 	/**
 	 * Optional renderer pane to be used for HTML label rendering.
 	 */
-	protected CellRendererPane rendererPane;
+	protected CellRendererPane _rendererPane;
 
 	/**
 	 * Global graphics handle to the image.
 	 */
-	protected Graphics2D g;
+	protected Graphics2D _g;
 
 	/**
 	 * Constructs a new graphics canvas with an empty graphics object.
@@ -131,12 +131,12 @@ public class Graphics2DCanvas extends BasicCanvas
 	 */
 	public Graphics2DCanvas(Graphics2D g)
 	{
-		this.g = g;
+		this._g = g;
 
 		// Initializes the cell renderer pane for drawing HTML markup
 		try
 		{
-			rendererPane = new CellRendererPane();
+			_rendererPane = new CellRendererPane();
 		}
 		catch (Exception e)
 		{
@@ -149,7 +149,7 @@ public class Graphics2DCanvas extends BasicCanvas
 	 */
 	public static void putShape(String name, IShape shape)
 	{
-		shapes.put(name, shape);
+		_shapes.put(name, shape);
 	}
 
 	/**
@@ -158,7 +158,7 @@ public class Graphics2DCanvas extends BasicCanvas
 	public IShape getShape(Map<String, Object> style)
 	{
 		String name = Utils.getString(style, Constants.STYLE_SHAPE, null);
-		IShape shape = shapes.get(name);
+		IShape shape = _shapes.get(name);
 
 		if (shape == null && name != null)
 		{
@@ -173,7 +173,7 @@ public class Graphics2DCanvas extends BasicCanvas
 	 */
 	public static void putTextShape(String name, ITextShape shape)
 	{
-		textShapes.put(name, shape);
+		_textShapes.put(name, shape);
 	}
 
 	/**
@@ -192,7 +192,7 @@ public class Graphics2DCanvas extends BasicCanvas
 			name = TEXT_SHAPE_DEFAULT;
 		}
 
-		return textShapes.get(name);
+		return _textShapes.get(name);
 	}
 
 	/**
@@ -200,7 +200,7 @@ public class Graphics2DCanvas extends BasicCanvas
 	 */
 	public CellRendererPane getRendererPane()
 	{
-		return rendererPane;
+		return _rendererPane;
 	}
 
 	/**
@@ -208,7 +208,7 @@ public class Graphics2DCanvas extends BasicCanvas
 	 */
 	public Graphics2D getGraphics()
 	{
-		return g;
+		return _g;
 	}
 
 	/**
@@ -216,7 +216,7 @@ public class Graphics2DCanvas extends BasicCanvas
 	 */
 	public void setGraphics(Graphics2D g)
 	{
-		this.g = g;
+		this._g = g;
 	}
 
 	/*
@@ -228,18 +228,18 @@ public class Graphics2DCanvas extends BasicCanvas
 		Map<String, Object> style = state.getStyle();
 		IShape shape = getShape(style);
 
-		if (g != null && shape != null)
+		if (_g != null && shape != null)
 		{
 			// Creates a temporary graphics instance for drawing this shape
 			float opacity = Utils.getFloat(style, Constants.STYLE_OPACITY,
 					100);
-			Graphics2D previousGraphics = g;
-			g = createTemporaryGraphics(style, opacity, state);
+			Graphics2D previousGraphics = _g;
+			_g = createTemporaryGraphics(style, opacity, state);
 
 			// Paints the shape and restores the graphics object
 			shape.paintShape(this, state);
-			g.dispose();
-			g = previousGraphics;
+			_g.dispose();
+			_g = previousGraphics;
 		}
 
 		return shape;
@@ -254,14 +254,14 @@ public class Graphics2DCanvas extends BasicCanvas
 		Map<String, Object> style = state.getStyle();
 		ITextShape shape = getTextShape(style, html);
 
-		if (g != null && shape != null && drawLabels && text != null
+		if (_g != null && shape != null && _drawLabels && text != null
 				&& text.length() > 0)
 		{
 			// Creates a temporary graphics instance for drawing this shape
 			float opacity = Utils.getFloat(style,
 					Constants.STYLE_TEXT_OPACITY, 100);
-			Graphics2D previousGraphics = g;
-			g = createTemporaryGraphics(style, opacity, null);
+			Graphics2D previousGraphics = _g;
+			_g = createTemporaryGraphics(style, opacity, null);
 
 			// Draws the label background and border
 			Color bg = Utils.getColor(style,
@@ -272,8 +272,8 @@ public class Graphics2DCanvas extends BasicCanvas
 
 			// Paints the label and restores the graphics object
 			shape.paintShape(this, text, state, style);
-			g.dispose();
-			g = previousGraphics;
+			_g.dispose();
+			_g = previousGraphics;
 		}
 
 		return shape;
@@ -302,7 +302,7 @@ public class Graphics2DCanvas extends BasicCanvas
 				int w, h;
 				int x = bounds.x;
 				int y = bounds.y;
-				Dimension size = getImageSize(img);
+				Dimension size = _getImageSize(img);
 
 				if (preserveAspect)
 				{
@@ -328,7 +328,7 @@ public class Graphics2DCanvas extends BasicCanvas
 
 					if (flipH || flipV)
 					{
-						af = g.getTransform();
+						af = _g.getTransform();
 						int sx = 1;
 						int sy = 1;
 						int dx = 0;
@@ -346,16 +346,16 @@ public class Graphics2DCanvas extends BasicCanvas
 							dy = -h - 2 * y;
 						}
 
-						g.scale(sx, sy);
-						g.translate(dx, dy);
+						_g.scale(sx, sy);
+						_g.translate(dx, dy);
 					}
 
-					drawImageImpl(scaledImage, x, y);
+					_drawImageImpl(scaledImage, x, y);
 
 					// Restores the previous transform
 					if (af != null)
 					{
-						g.setTransform(af);
+						_g.setTransform(af);
 					}
 				}
 			}
@@ -365,15 +365,15 @@ public class Graphics2DCanvas extends BasicCanvas
 	/**
 	 * Implements the actual graphics call.
 	 */
-	protected void drawImageImpl(Image image, int x, int y)
+	protected void _drawImageImpl(Image image, int x, int y)
 	{
-		g.drawImage(image, x, y, null);
+		_g.drawImage(image, x, y, null);
 	}
 
 	/**
 	 * Returns the size for the given image.
 	 */
-	protected Dimension getImageSize(Image image)
+	protected Dimension _getImageSize(Image image)
 	{
 		return new Dimension(image.getWidth(null), image.getHeight(null));
 	}
@@ -388,7 +388,7 @@ public class Graphics2DCanvas extends BasicCanvas
 			Point2d pt = points[0];
 			Point2d pe = points[points.length - 1];
 
-			double arcSize = Constants.LINE_ARCSIZE * scale;
+			double arcSize = Constants.LINE_ARCSIZE * _scale;
 
 			GeneralPath path = new GeneralPath();
 			path.moveTo((float) pt.getX(), (float) pt.getY());
@@ -448,7 +448,7 @@ public class Graphics2DCanvas extends BasicCanvas
 			}
 
 			path.lineTo((float) pe.getX(), (float) pe.getY());
-			g.draw(path);
+			_g.draw(path);
 		}
 	}
 
@@ -459,14 +459,14 @@ public class Graphics2DCanvas extends BasicCanvas
 	{
 		if (background != null)
 		{
-			g.setColor(background);
+			_g.setColor(background);
 			fillShape(bounds);
 		}
 
 		if (border != null)
 		{
-			g.setColor(border);
-			g.draw(bounds);
+			_g.setColor(border);
+			_g.draw(bounds);
 		}
 	}
 
@@ -489,21 +489,21 @@ public class Graphics2DCanvas extends BasicCanvas
 		if (shadow)
 		{
 			// Saves the state and configures the graphics object
-			Paint p = g.getPaint();
-			Color previousColor = g.getColor();
-			g.setColor(SwingConstants.SHADOW_COLOR);
-			g.translate(shadowOffsetX, shadowOffsetY);
+			Paint p = _g.getPaint();
+			Color previousColor = _g.getColor();
+			_g.setColor(SwingConstants.SHADOW_COLOR);
+			_g.translate(shadowOffsetX, shadowOffsetY);
 
 			// Paints the shadow
 			fillShape(shape, false);
 
 			// Restores the state of the graphics object
-			g.translate(-shadowOffsetX, -shadowOffsetY);
-			g.setColor(previousColor);
-			g.setPaint(p);
+			_g.translate(-shadowOffsetX, -shadowOffsetY);
+			_g.setColor(previousColor);
+			_g.setPaint(p);
 		}
 
-		g.fill(shape);
+		_g.fill(shape);
 	}
 
 	/**
@@ -512,7 +512,7 @@ public class Graphics2DCanvas extends BasicCanvas
 	public Stroke createStroke(Map<String, Object> style)
 	{
 		double width = Utils
-				.getFloat(style, Constants.STYLE_STROKEWIDTH, 1) * scale;
+				.getFloat(style, Constants.STYLE_STROKEWIDTH, 1) * _scale;
 		boolean dashed = Utils.isTrue(style, Constants.STYLE_DASHED);
 		if (dashed)
 		{
@@ -523,7 +523,7 @@ public class Graphics2DCanvas extends BasicCanvas
 
 			for (int i = 0; i < dashPattern.length; i++)
 			{
-				scaledDashPattern[i] = (float) (dashPattern[i] * scale * width);
+				scaledDashPattern[i] = (float) (dashPattern[i] * _scale * width);
 			}
 
 			return new BasicStroke((float) width, BasicStroke.CAP_BUTT,
@@ -591,10 +591,10 @@ public class Graphics2DCanvas extends BasicCanvas
 	public Graphics2D createTemporaryGraphics(Map<String, Object> style,
 			float opacity, Rect bounds)
 	{
-		Graphics2D temporaryGraphics = (Graphics2D) g.create();
+		Graphics2D temporaryGraphics = (Graphics2D) _g.create();
 
 		// Applies the default translate
-		temporaryGraphics.translate(translate.x, translate.y);
+		temporaryGraphics.translate(_translate.x, _translate.y);
 
 		// Applies the rotation on the graphics object
 		if (bounds != null)

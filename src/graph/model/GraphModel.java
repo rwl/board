@@ -77,36 +77,36 @@ public class GraphModel extends EventSource implements IGraphModel,
 	 * layers of the diagram as child cells. That is, the actual element of the
 	 * diagram are supposed to live in the third generation of cells and below.
 	 */
-	protected ICell root;
+	protected ICell _root;
 
 	/**
 	 * Maps from Ids to cells.
 	 */
-	protected Map<String, Object> cells;
+	protected Map<String, Object> _cells;
 
 	/**
 	 * Specifies if edges should automatically be moved into the nearest common
 	 * ancestor of their terminals. Default is true.
 	 */
-	protected boolean maintainEdgeParent = true;
+	protected boolean _maintainEdgeParent = true;
 
 	/**
 	 * Specifies if the model should automatically create Ids for new cells.
 	 * Default is true.
 	 */
-	protected boolean createIds = true;
+	protected boolean _createIds = true;
 
 	/**
 	 * Specifies the next Id to be created. Initial value is 0.
 	 */
-	protected int nextId = 0;
+	protected int _nextId = 0;
 
 	/**
 	 * Holds the changes for the current transaction. If the transaction is
 	 * closed then a new object is created for this variable using
 	 * createUndoableEdit.
 	 */
-	protected transient UndoableEdit currentEdit;
+	protected transient UndoableEdit _currentEdit;
 
 	/**
 	 * Counter for the depth of nested transactions. Each call to beginUpdate
@@ -114,12 +114,12 @@ public class GraphModel extends EventSource implements IGraphModel,
 	 * the counter reaches 0, the transaction is closed and the respective
 	 * events are fired. Initial value is 0.
 	 */
-	protected transient int updateLevel = 0;
+	protected transient int _updateLevel = 0;
 
 	/**
 	 * 
 	 */
-	protected transient boolean endingUpdate = false;
+	protected transient boolean _endingUpdate = false;
 
 	/**
 	 * Constructs a new empty graph model.
@@ -137,7 +137,7 @@ public class GraphModel extends EventSource implements IGraphModel,
 	 */
 	public GraphModel(Object root)
 	{
-		currentEdit = createUndoableEdit();
+		_currentEdit = _createUndoableEdit();
 
 		if (root != null)
 		{
@@ -162,7 +162,7 @@ public class GraphModel extends EventSource implements IGraphModel,
 	 */
 	public int getUpdateLevel()
 	{
-		return updateLevel;
+		return _updateLevel;
 	}
 
 	/**
@@ -181,7 +181,7 @@ public class GraphModel extends EventSource implements IGraphModel,
 	 */
 	public Map<String, Object> getCells()
 	{
-		return cells;
+		return _cells;
 	}
 
 	/**
@@ -195,9 +195,9 @@ public class GraphModel extends EventSource implements IGraphModel,
 	{
 		Object result = null;
 
-		if (cells != null)
+		if (_cells != null)
 		{
-			result = cells.get(id);
+			result = _cells.get(id);
 		}
 		return result;
 	}
@@ -210,7 +210,7 @@ public class GraphModel extends EventSource implements IGraphModel,
 	 */
 	public boolean isMaintainEdgeParent()
 	{
-		return maintainEdgeParent;
+		return _maintainEdgeParent;
 	}
 
 	/**
@@ -222,7 +222,7 @@ public class GraphModel extends EventSource implements IGraphModel,
 	 */
 	public void setMaintainEdgeParent(boolean maintainEdgeParent)
 	{
-		this.maintainEdgeParent = maintainEdgeParent;
+		this._maintainEdgeParent = maintainEdgeParent;
 	}
 
 	/**
@@ -233,7 +233,7 @@ public class GraphModel extends EventSource implements IGraphModel,
 	 */
 	public boolean isCreateIds()
 	{
-		return createIds;
+		return _createIds;
 	}
 
 	/**
@@ -244,7 +244,7 @@ public class GraphModel extends EventSource implements IGraphModel,
 	 */
 	public void setCreateIds(boolean value)
 	{
-		createIds = value;
+		_createIds = value;
 	}
 
 	/* (non-Javadoc)
@@ -252,7 +252,7 @@ public class GraphModel extends EventSource implements IGraphModel,
 	 */
 	public Object getRoot()
 	{
-		return root;
+		return _root;
 	}
 
 	/* (non-Javadoc)
@@ -269,15 +269,15 @@ public class GraphModel extends EventSource implements IGraphModel,
 	 * Inner callback to change the root of the model and update the internal
 	 * datastructures, such as cells and nextId. Returns the previous root.
 	 */
-	protected Object rootChanged(Object root)
+	protected Object _rootChanged(Object root)
 	{
-		Object oldRoot = this.root;
-		this.root = (ICell) root;
+		Object oldRoot = this._root;
+		this._root = (ICell) root;
 
 		// Resets counters and datastructures
-		nextId = 0;
-		cells = null;
-		cellAdded(root);
+		_nextId = 0;
+		_cells = null;
+		_cellAdded(root);
 
 		return oldRoot;
 	}
@@ -285,15 +285,15 @@ public class GraphModel extends EventSource implements IGraphModel,
 	/**
 	 * Creates a new undoable edit.
 	 */
-	protected UndoableEdit createUndoableEdit()
+	protected UndoableEdit _createUndoableEdit()
 	{
 		return new UndoableEdit(this)
 		{
 			public void dispatch()
 			{
 				// LATER: Remove changes property (deprecated)
-				((GraphModel) source).fireEvent(new EventObj(
-						Event.CHANGE, "edit", this, "changes", changes));
+				((GraphModel) _source).fireEvent(new EventObj(
+						Event.CHANGE, "edit", this, "changes", _changes));
 			}
 		};
 	}
@@ -310,7 +310,7 @@ public class GraphModel extends EventSource implements IGraphModel,
 		{
 			try
 			{
-				clones[i] = cloneCell(cells[i], mapping, includeChildren);
+				clones[i] = _cloneCell(cells[i], mapping, includeChildren);
 			}
 			catch (CloneNotSupportedException e)
 			{
@@ -320,7 +320,7 @@ public class GraphModel extends EventSource implements IGraphModel,
 
 		for (int i = 0; i < cells.length; i++)
 		{
-			restoreClone(clones[i], cells[i], mapping);
+			_restoreClone(clones[i], cells[i], mapping);
 		}
 
 		return clones;
@@ -329,7 +329,7 @@ public class GraphModel extends EventSource implements IGraphModel,
 	/**
 	 * Inner helper method for cloning cells recursively.
 	 */
-	protected Object cloneCell(Object cell, Map<Object, Object> mapping,
+	protected Object _cloneCell(Object cell, Map<Object, Object> mapping,
 			boolean includeChildren) throws CloneNotSupportedException
 	{
 		if (cell instanceof ICell)
@@ -343,7 +343,7 @@ public class GraphModel extends EventSource implements IGraphModel,
 
 				for (int i = 0; i < childCount; i++)
 				{
-					Object clone = cloneCell(getChildAt(cell, i), mapping, true);
+					Object clone = _cloneCell(getChildAt(cell, i), mapping, true);
 					mxc.insert((ICell) clone);
 				}
 			}
@@ -358,7 +358,7 @@ public class GraphModel extends EventSource implements IGraphModel,
 	 * Inner helper method for restoring the connections in
 	 * a network of cloned cells.
 	 */
-	protected void restoreClone(Object clone, Object cell,
+	protected void _restoreClone(Object clone, Object cell,
 			Map<Object, Object> mapping)
 	{
 		if (clone instanceof ICell)
@@ -393,7 +393,7 @@ public class GraphModel extends EventSource implements IGraphModel,
 
 		for (int i = 0; i < childCount; i++)
 		{
-			restoreClone(getChildAt(clone, i), getChildAt(cell, i), mapping);
+			_restoreClone(getChildAt(clone, i), getChildAt(cell, i), mapping);
 		}
 	}
 
@@ -440,7 +440,7 @@ public class GraphModel extends EventSource implements IGraphModel,
 			// Maintains the edges parents by moving the edges
 			// into the nearest common ancestor of its
 			// terminals
-			if (maintainEdgeParent && parentChanged)
+			if (_maintainEdgeParent && parentChanged)
 			{
 				updateEdgeParents(child);
 			}
@@ -455,7 +455,7 @@ public class GraphModel extends EventSource implements IGraphModel,
 	 * 
 	 * @param cell Cell that has been added.
 	 */
-	protected void cellAdded(Object cell)
+	protected void _cellAdded(Object cell)
 	{
 		if (cell instanceof ICell)
 		{
@@ -478,12 +478,12 @@ public class GraphModel extends EventSource implements IGraphModel,
 						collision = getCell(mxc.getId());
 					}
 
-					if (cells == null)
+					if (_cells == null)
 					{
-						cells = new Hashtable<String, Object>();
+						_cells = new Hashtable<String, Object>();
 					}
 
-					cells.put(mxc.getId(), cell);
+					_cells.put(mxc.getId(), cell);
 				}
 			}
 
@@ -491,7 +491,7 @@ public class GraphModel extends EventSource implements IGraphModel,
 			try
 			{
 				int id = Integer.parseInt(mxc.getId());
-				nextId = Math.max(nextId, id + 1);
+				_nextId = Math.max(_nextId, id + 1);
 			}
 			catch (NumberFormatException e)
 			{
@@ -502,7 +502,7 @@ public class GraphModel extends EventSource implements IGraphModel,
 
 			for (int i = 0; i < childCount; i++)
 			{
-				cellAdded(mxc.getChildAt(i));
+				_cellAdded(mxc.getChildAt(i));
 			}
 		}
 	}
@@ -516,8 +516,8 @@ public class GraphModel extends EventSource implements IGraphModel,
 	 */
 	public String createId(Object cell)
 	{
-		String id = String.valueOf(nextId);
-		nextId++;
+		String id = String.valueOf(_nextId);
+		_nextId++;
 
 		return id;
 	}
@@ -527,7 +527,7 @@ public class GraphModel extends EventSource implements IGraphModel,
 	 */
 	public Object remove(Object cell)
 	{
-		if (cell == root)
+		if (cell == _root)
 		{
 			setRoot(null);
 		}
@@ -546,7 +546,7 @@ public class GraphModel extends EventSource implements IGraphModel,
 	 * 
 	 * @param cell Cell that has been removed.
 	 */
-	protected void cellRemoved(Object cell)
+	protected void _cellRemoved(Object cell)
 	{
 		if (cell instanceof ICell)
 		{
@@ -555,12 +555,12 @@ public class GraphModel extends EventSource implements IGraphModel,
 
 			for (int i = 0; i < childCount; i++)
 			{
-				cellRemoved(mxc.getChildAt(i));
+				_cellRemoved(mxc.getChildAt(i));
 			}
 
-			if (cells != null && mxc.getId() != null)
+			if (_cells != null && mxc.getId() != null)
 			{
-				cells.remove(mxc.getId());
+				_cells.remove(mxc.getId());
 			}
 		}
 	}
@@ -569,7 +569,7 @@ public class GraphModel extends EventSource implements IGraphModel,
 	 * Inner callback to update the parent of a cell using Cell.insert
 	 * on the parent and return the previous parent.
 	 */
-	protected Object parentForCellChanged(Object cell, Object parent, int index)
+	protected Object _parentForCellChanged(Object cell, Object parent, int index)
 	{
 		ICell child = (ICell) cell;
 		ICell previous = (ICell) getParent(cell);
@@ -591,11 +591,11 @@ public class GraphModel extends EventSource implements IGraphModel,
 		// model and avoids calling cellAdded if it was.
 		if (!contains(previous) && parent != null)
 		{
-			cellAdded(cell);
+			_cellAdded(cell);
 		}
 		else if (parent == null)
 		{
-			cellRemoved(cell);
+			_cellRemoved(cell);
 		}
 
 		return previous;
@@ -635,7 +635,7 @@ public class GraphModel extends EventSource implements IGraphModel,
 		boolean terminalChanged = terminal != getTerminal(edge, isSource);
 		execute(new TerminalChange(this, edge, terminal, isSource));
 
-		if (maintainEdgeParent && terminalChanged)
+		if (_maintainEdgeParent && terminalChanged)
 		{
 			updateEdgeParent(edge, getRoot());
 		}
@@ -647,7 +647,7 @@ public class GraphModel extends EventSource implements IGraphModel,
 	 * Inner helper function to update the terminal of the edge using
 	 * Cell.insertEdge and return the previous terminal.
 	 */
-	protected Object terminalForCellChanged(Object edge, Object terminal,
+	protected Object _terminalForCellChanged(Object edge, Object terminal,
 			boolean isSource)
 	{
 		ICell previous = (ICell) getTerminal(edge, isSource);
@@ -920,7 +920,7 @@ public class GraphModel extends EventSource implements IGraphModel,
 	 * using Cell.setValue and return the previous value,
 	 * that is, the return value of Cell.getValue.
 	 */
-	protected Object valueForCellChanged(Object cell, Object value)
+	protected Object _valueForCellChanged(Object cell, Object value)
 	{
 		Object oldValue = ((ICell) cell).getValue();
 		((ICell) cell).setValue(value);
@@ -954,7 +954,7 @@ public class GraphModel extends EventSource implements IGraphModel,
 	 * Inner callback to update the Geometry of the given Cell using
 	 * Cell.setGeometry and return the previous Geometry.
 	 */
-	protected Geometry geometryForCellChanged(Object cell, Geometry geometry)
+	protected Geometry _geometryForCellChanged(Object cell, Geometry geometry)
 	{
 		Geometry previous = getGeometry(cell);
 		((ICell) cell).setGeometry(geometry);
@@ -987,7 +987,7 @@ public class GraphModel extends EventSource implements IGraphModel,
 	 * Inner callback to update the style of the given Cell
 	 * using Cell.setStyle and return the previous style.
 	 */
-	protected String styleForCellChanged(Object cell, String style)
+	protected String _styleForCellChanged(Object cell, String style)
 	{
 		String previous = getStyle(cell);
 		((ICell) cell).setStyle(style);
@@ -1022,7 +1022,7 @@ public class GraphModel extends EventSource implements IGraphModel,
 	 * given Cell using Cell.setCollapsed and return
 	 * the previous collapsed state.
 	 */
-	protected boolean collapsedStateForCellChanged(Object cell,
+	protected boolean _collapsedStateForCellChanged(Object cell,
 			boolean collapsed)
 	{
 		boolean previous = isCollapsed(cell);
@@ -1056,7 +1056,7 @@ public class GraphModel extends EventSource implements IGraphModel,
 	 * Sets the visible state of the given Cell using VisibleChange and
 	 * adds the change to the current transaction.
 	 */
-	protected boolean visibleStateForCellChanged(Object cell, boolean visible)
+	protected boolean _visibleStateForCellChanged(Object cell, boolean visible)
 	{
 		boolean previous = isVisible(cell);
 		((ICell) cell).setVisible(visible);
@@ -1073,7 +1073,7 @@ public class GraphModel extends EventSource implements IGraphModel,
 	{
 		change.execute();
 		beginUpdate();
-		currentEdit.add(change);
+		_currentEdit.add(change);
 		fireEvent(new EventObj(Event.EXECUTE, "change", change));
 		endUpdate();
 	}
@@ -1083,7 +1083,7 @@ public class GraphModel extends EventSource implements IGraphModel,
 	 */
 	public void beginUpdate()
 	{
-		updateLevel++;
+		_updateLevel++;
 		fireEvent(new EventObj(Event.BEGIN_UPDATE));
 	}
 
@@ -1092,28 +1092,28 @@ public class GraphModel extends EventSource implements IGraphModel,
 	 */
 	public void endUpdate()
 	{
-		updateLevel--;
+		_updateLevel--;
 
-		if (!endingUpdate)
+		if (!_endingUpdate)
 		{
-			endingUpdate = updateLevel == 0;
-			fireEvent(new EventObj(Event.END_UPDATE, "edit", currentEdit));
+			_endingUpdate = _updateLevel == 0;
+			fireEvent(new EventObj(Event.END_UPDATE, "edit", _currentEdit));
 
 			try
 			{
-				if (endingUpdate && !currentEdit.isEmpty())
+				if (_endingUpdate && !_currentEdit.isEmpty())
 				{
 					fireEvent(new EventObj(Event.BEFORE_UNDO, "edit",
-							currentEdit));
-					UndoableEdit tmp = currentEdit;
-					currentEdit = createUndoableEdit();
+							_currentEdit));
+					UndoableEdit tmp = _currentEdit;
+					_currentEdit = _createUndoableEdit();
 					tmp.dispatch();
 					fireEvent(new EventObj(Event.UNDO, "edit", tmp));
 				}
 			}
 			finally
 			{
-				endingUpdate = false;
+				_endingUpdate = false;
 			}
 		}
 	}
@@ -1139,7 +1139,7 @@ public class GraphModel extends EventSource implements IGraphModel,
 		try
 		{
 			Hashtable<Object, Object> mapping = new Hashtable<Object, Object>();
-			mergeChildrenImpl(from, to, cloneAllEdges, mapping);
+			_mergeChildrenImpl(from, to, cloneAllEdges, mapping);
 
 			// Post-processes all edges in the mapping and
 			// reconnects the terminals to the corresponding
@@ -1179,7 +1179,7 @@ public class GraphModel extends EventSource implements IGraphModel,
 	 * cell to the target cell with the same id or the clone of the source cell
 	 * that was inserted into this model.
 	 */
-	protected void mergeChildrenImpl(ICell from, ICell to,
+	protected void _mergeChildrenImpl(ICell from, ICell to,
 			boolean cloneAllEdges, Hashtable<Object, Object> mapping)
 			throws CloneNotSupportedException
 	{
@@ -1205,14 +1205,14 @@ public class GraphModel extends EventSource implements IGraphModel,
 					// from the parent in updateEdgeParent if maintainEdgeParent
 					// is enabled in the target model
 					target = to.insert(clone);
-					cellAdded(target);
+					_cellAdded(target);
 				}
 
 				// Stores the mapping for later reconnecting edges
 				mapping.put(cell, target);
 
 				// Recurses
-				mergeChildrenImpl(cell, target, cloneAllEdges, mapping);
+				_mergeChildrenImpl(cell, target, cloneAllEdges, mapping);
 			}
 		}
 		finally
@@ -1224,11 +1224,11 @@ public class GraphModel extends EventSource implements IGraphModel,
 	/**
 	 * Initializes the currentEdit field if the model is deserialized.
 	 */
-	private void readObject(ObjectInputStream ois) throws IOException,
+	private void _readObject(ObjectInputStream ois) throws IOException,
 			ClassNotFoundException
 	{
 		ois.defaultReadObject();
-		currentEdit = createUndoableEdit();
+		_currentEdit = _createUndoableEdit();
 	}
 
 	/**
@@ -1710,885 +1710,11 @@ public class GraphModel extends EventSource implements IGraphModel,
 	// Visitor patterns
 	//
 
-	/**
-	 * 
-	 */
-	public static interface Filter
-	{
-
-		/**
-		 * 
-		 */
-		boolean filter(Object cell);
-	}
+	
 
 	//
 	// Atomic changes
 	//
 
-	public static class RootChange extends AtomicGraphModelChange
-	{
-
-		/**
-		 * Holds the new and previous root cell.
-		 */
-		protected Object root, previous;
-
-		/**
-		 * 
-		 */
-		public RootChange()
-		{
-			this(null, null);
-		}
-
-		/**
-		 * 
-		 */
-		public RootChange(GraphModel model, Object root)
-		{
-			super(model);
-			this.root = root;
-			previous = root;
-		}
-
-		/**
-		 * 
-		 */
-		public void setRoot(Object value)
-		{
-			root = value;
-		}
-
-		/**
-		 * @return the root
-		 */
-		public Object getRoot()
-		{
-			return root;
-		}
-
-		/**
-		 * 
-		 */
-		public void setPrevious(Object value)
-		{
-			previous = value;
-		}
-
-		/**
-		 * @return the previous
-		 */
-		public Object getPrevious()
-		{
-			return previous;
-		}
-
-		/**
-		 * Changes the root of the model.
-		 */
-		public void execute()
-		{
-			root = previous;
-			previous = ((GraphModel) model).rootChanged(previous);
-		}
-
-	}
-
-	public static class ChildChange extends AtomicGraphModelChange
-	{
-
-		/**
-		 *
-		 */
-		protected Object parent, previous, child;
-
-		/**
-		 * 
-		 */
-		protected int index, previousIndex;
-
-		/**
-		 * 
-		 */
-		public ChildChange()
-		{
-			this(null, null, null, 0);
-		}
-
-		/**
-		 * 
-		 */
-		public ChildChange(GraphModel model, Object parent, Object child)
-		{
-			this(model, parent, child, 0);
-		}
-
-		/**
-		 * 
-		 */
-		public ChildChange(GraphModel model, Object parent, Object child,
-				int index)
-		{
-			super(model);
-			this.parent = parent;
-			previous = this.parent;
-			this.child = child;
-			this.index = index;
-			previousIndex = index;
-		}
-
-		/**
-		 *
-		 */
-		public void setParent(Object value)
-		{
-			parent = value;
-		}
-
-		/**
-		 * @return the parent
-		 */
-		public Object getParent()
-		{
-			return parent;
-		}
-
-		/**
-		 *
-		 */
-		public void setPrevious(Object value)
-		{
-			previous = value;
-		}
-
-		/**
-		 * @return the previous
-		 */
-		public Object getPrevious()
-		{
-			return previous;
-		}
-
-		/**
-		 *
-		 */
-		public void setChild(Object value)
-		{
-			child = value;
-		}
-
-		/**
-		 * @return the child
-		 */
-		public Object getChild()
-		{
-			return child;
-		}
-
-		/**
-		 *
-		 */
-		public void setIndex(int value)
-		{
-			index = value;
-		}
-
-		/**
-		 * @return the index
-		 */
-		public int getIndex()
-		{
-			return index;
-		}
-
-		/**
-		 *
-		 */
-		public void setPreviousIndex(int value)
-		{
-			previousIndex = value;
-		}
-
-		/**
-		 * @return the previousIndex
-		 */
-		public int getPreviousIndex()
-		{
-			return previousIndex;
-		}
-
-		/**
-		 * Gets the source or target terminal field for the given
-		 * edge even if the edge is not stored as an incoming or
-		 * outgoing edge in the respective terminal.
-		 */
-		protected Object getTerminal(Object edge, boolean source)
-		{
-			return model.getTerminal(edge, source);
-		}
-
-		/**
-		 * Sets the source or target terminal field for the given edge
-		 * without inserting an incoming or outgoing edge in the
-		 * respective terminal.
-		 */
-		protected void setTerminal(Object edge, Object terminal, boolean source)
-		{
-			((ICell) edge).setTerminal((ICell) terminal, source);
-		}
-
-		/**
-		 * 
-		 */
-		protected void connect(Object cell, boolean isConnect)
-		{
-			Object source = getTerminal(cell, true);
-			Object target = getTerminal(cell, false);
-
-			if (source != null)
-			{
-				if (isConnect)
-				{
-					((GraphModel) model).terminalForCellChanged(cell, source,
-							true);
-				}
-				else
-				{
-					((GraphModel) model).terminalForCellChanged(cell, null,
-							true);
-				}
-			}
-
-			if (target != null)
-			{
-				if (isConnect)
-				{
-					((GraphModel) model).terminalForCellChanged(cell, target,
-							false);
-				}
-				else
-				{
-					((GraphModel) model).terminalForCellChanged(cell, null,
-							false);
-				}
-			}
-
-			// Stores the previous terminals in the edge
-			setTerminal(cell, source, true);
-			setTerminal(cell, target, false);
-
-			int childCount = model.getChildCount(cell);
-
-			for (int i = 0; i < childCount; i++)
-			{
-				connect(model.getChildAt(cell, i), isConnect);
-			}
-		}
-
-		/**
-		 * Returns the index of the given child inside the given parent.
-		 */
-		protected int getChildIndex(Object parent, Object child)
-		{
-			return (parent instanceof ICell && child instanceof ICell) ? ((ICell) parent)
-					.getIndex((ICell) child) : 0;
-		}
-
-		/**
-		 * Changes the root of the model.
-		 */
-		public void execute()
-		{
-			Object tmp = model.getParent(child);
-			int tmp2 = getChildIndex(tmp, child);
-
-			if (previous == null)
-			{
-				connect(child, false);
-			}
-
-			tmp = ((GraphModel) model).parentForCellChanged(child, previous,
-					previousIndex);
-
-			if (previous != null)
-			{
-				connect(child, true);
-			}
-
-			parent = previous;
-			previous = tmp;
-			index = previousIndex;
-			previousIndex = tmp2;
-		}
-
-	}
-
-	public static class TerminalChange extends AtomicGraphModelChange
-	{
-
-		/**
-		 *
-		 */
-		protected Object cell, terminal, previous;
-
-		/**
-		 * 
-		 */
-		protected boolean source;
-
-		/**
-		 * 
-		 */
-		public TerminalChange()
-		{
-			this(null, null, null, false);
-		}
-
-		/**
-		 * 
-		 */
-		public TerminalChange(GraphModel model, Object cell,
-				Object terminal, boolean source)
-		{
-			super(model);
-			this.cell = cell;
-			this.terminal = terminal;
-			this.previous = this.terminal;
-			this.source = source;
-		}
-
-		/**
-		 * 
-		 */
-		public void setCell(Object value)
-		{
-			cell = value;
-		}
-
-		/**
-		 * @return the cell
-		 */
-		public Object getCell()
-		{
-			return cell;
-		}
-
-		/**
-		 * 
-		 */
-		public void setTerminal(Object value)
-		{
-			terminal = value;
-		}
-
-		/**
-		 * @return the terminal
-		 */
-		public Object getTerminal()
-		{
-			return terminal;
-		}
-
-		/**
-		 * 
-		 */
-		public void setPrevious(Object value)
-		{
-			previous = value;
-		}
-
-		/**
-		 * @return the previous
-		 */
-		public Object getPrevious()
-		{
-			return previous;
-		}
-
-		/**
-		 * 
-		 */
-		public void setSource(boolean value)
-		{
-			source = value;
-		}
-
-		/**
-		 * @return the isSource
-		 */
-		public boolean isSource()
-		{
-			return source;
-		}
-
-		/**
-		 * Changes the root of the model.
-		 */
-		public void execute()
-		{
-			terminal = previous;
-			previous = ((GraphModel) model).terminalForCellChanged(cell,
-					previous, source);
-		}
-
-	}
-
-	public static class ValueChange extends AtomicGraphModelChange
-	{
-
-		/**
-		 *
-		 */
-		protected Object cell, value, previous;
-
-		/**
-		 * 
-		 */
-		public ValueChange()
-		{
-			this(null, null, null);
-		}
-
-		/**
-		 * 
-		 */
-		public ValueChange(GraphModel model, Object cell, Object value)
-		{
-			super(model);
-			this.cell = cell;
-			this.value = value;
-			this.previous = this.value;
-		}
-
-		/**
-		 * 
-		 */
-		public void setCell(Object value)
-		{
-			cell = value;
-		}
-
-		/**
-		 * @return the cell
-		 */
-		public Object getCell()
-		{
-			return cell;
-		}
-
-		/**
-		 * 
-		 */
-		public void setValue(Object value)
-		{
-			this.value = value;
-		}
-
-		/**
-		 * @return the value
-		 */
-		public Object getValue()
-		{
-			return value;
-		}
-
-		/**
-		 * 
-		 */
-		public void setPrevious(Object value)
-		{
-			previous = value;
-		}
-
-		/**
-		 * @return the previous
-		 */
-		public Object getPrevious()
-		{
-			return previous;
-		}
-
-		/**
-		 * Changes the root of the model.
-		 */
-		public void execute()
-		{
-			value = previous;
-			previous = ((GraphModel) model).valueForCellChanged(cell,
-					previous);
-		}
-
-	}
-
-	public static class StyleChange extends AtomicGraphModelChange
-	{
-
-		/**
-		 *
-		 */
-		protected Object cell;
-
-		/**
-		 * 
-		 */
-		protected String style, previous;
-
-		/**
-		 * 
-		 */
-		public StyleChange()
-		{
-			this(null, null, null);
-		}
-
-		/**
-		 * 
-		 */
-		public StyleChange(GraphModel model, Object cell, String style)
-		{
-			super(model);
-			this.cell = cell;
-			this.style = style;
-			this.previous = this.style;
-		}
-
-		/**
-		 * 
-		 */
-		public void setCell(Object value)
-		{
-			cell = value;
-		}
-
-		/**
-		 * @return the cell
-		 */
-		public Object getCell()
-		{
-			return cell;
-		}
-
-		/**
-		 * 
-		 */
-		public void setStyle(String value)
-		{
-			style = value;
-		}
-
-		/**
-		 * @return the style
-		 */
-		public String getStyle()
-		{
-			return style;
-		}
-
-		/**
-		 * 
-		 */
-		public void setPrevious(String value)
-		{
-			previous = value;
-		}
-
-		/**
-		 * @return the previous
-		 */
-		public String getPrevious()
-		{
-			return previous;
-		}
-
-		/**
-		 * Changes the root of the model.
-		 */
-		public void execute()
-		{
-			style = previous;
-			previous = ((GraphModel) model).styleForCellChanged(cell,
-					previous);
-		}
-
-	}
-
-	public static class GeometryChange extends AtomicGraphModelChange
-	{
-
-		/**
-		 *
-		 */
-		protected Object cell;
-
-		/**
-		 * 
-		 */
-		protected Geometry geometry, previous;
-
-		/**
-		 * 
-		 */
-		public GeometryChange()
-		{
-			this(null, null, null);
-		}
-
-		/**
-		 * 
-		 */
-		public GeometryChange(GraphModel model, Object cell,
-				Geometry geometry)
-		{
-			super(model);
-			this.cell = cell;
-			this.geometry = geometry;
-			this.previous = this.geometry;
-		}
-
-		/**
-		 * 
-		 */
-		public void setCell(Object value)
-		{
-			cell = value;
-		}
-
-		/**
-		 * @return the cell
-		 */
-		public Object getCell()
-		{
-			return cell;
-		}
-
-		/**
-		 *
-		 */
-		public void setGeometry(Geometry value)
-		{
-			geometry = value;
-		}
-
-		/**
-		 * @return the geometry
-		 */
-		public Geometry getGeometry()
-		{
-			return geometry;
-		}
-
-		/**
-		 *
-		 */
-		public void setPrevious(Geometry value)
-		{
-			previous = value;
-		}
-
-		/**
-		 * @return the previous
-		 */
-		public Geometry getPrevious()
-		{
-			return previous;
-		}
-
-		/**
-		 * Changes the root of the model.
-		 */
-		public void execute()
-		{
-			geometry = previous;
-			previous = ((GraphModel) model).geometryForCellChanged(cell,
-					previous);
-		}
-
-	}
-
-	public static class CollapseChange extends AtomicGraphModelChange
-	{
-
-		/**
-		 *
-		 */
-		protected Object cell;
-
-		/**
-		 * 
-		 */
-		protected boolean collapsed, previous;
-
-		/**
-		 * 
-		 */
-		public CollapseChange()
-		{
-			this(null, null, false);
-		}
-
-		/**
-		 * 
-		 */
-		public CollapseChange(GraphModel model, Object cell,
-				boolean collapsed)
-		{
-			super(model);
-			this.cell = cell;
-			this.collapsed = collapsed;
-			this.previous = this.collapsed;
-		}
-
-		/**
-		 * 
-		 */
-		public void setCell(Object value)
-		{
-			cell = value;
-		}
-
-		/**
-		 * @return the cell
-		 */
-		public Object getCell()
-		{
-			return cell;
-		}
-
-		/**
-		 * 
-		 */
-		public void setCollapsed(boolean value)
-		{
-			collapsed = value;
-		}
-
-		/**
-		 * @return the collapsed
-		 */
-		public boolean isCollapsed()
-		{
-			return collapsed;
-		}
-
-		/**
-		 * 
-		 */
-		public void setPrevious(boolean value)
-		{
-			previous = value;
-		}
-
-		/**
-		 * @return the previous
-		 */
-		public boolean getPrevious()
-		{
-			return previous;
-		}
-
-		/**
-		 * Changes the root of the model.
-		 */
-		public void execute()
-		{
-			collapsed = previous;
-			previous = ((GraphModel) model).collapsedStateForCellChanged(
-					cell, previous);
-		}
-
-	}
-
-	public static class VisibleChange extends AtomicGraphModelChange
-	{
-
-		/**
-		 *
-		 */
-		protected Object cell;
-
-		/**
-		 * 
-		 */
-		protected boolean visible, previous;
-
-		/**
-		 * 
-		 */
-		public VisibleChange()
-		{
-			this(null, null, false);
-		}
-
-		/**
-		 * 
-		 */
-		public VisibleChange(GraphModel model, Object cell, boolean visible)
-		{
-			super(model);
-			this.cell = cell;
-			this.visible = visible;
-			this.previous = this.visible;
-		}
-
-		/**
-		 * 
-		 */
-		public void setCell(Object value)
-		{
-			cell = value;
-		}
-
-		/**
-		 * @return the cell
-		 */
-		public Object getCell()
-		{
-			return cell;
-		}
-
-		/**
-		 * 
-		 */
-		public void setVisible(boolean value)
-		{
-			visible = value;
-		}
-
-		/**
-		 * @return the visible
-		 */
-		public boolean isVisible()
-		{
-			return visible;
-		}
-
-		/**
-		 * 
-		 */
-		public void setPrevious(boolean value)
-		{
-			previous = value;
-		}
-
-		/**
-		 * @return the previous
-		 */
-		public boolean getPrevious()
-		{
-			return previous;
-		}
-
-		/**
-		 * Changes the root of the model.
-		 */
-		public void execute()
-		{
-			visible = previous;
-			previous = ((GraphModel) model).visibleStateForCellChanged(cell,
-					previous);
-		}
-
-	}
 
 }

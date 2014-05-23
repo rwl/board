@@ -16,17 +16,17 @@ public class EventObj
 	/**
 	 * Holds the name of the event.
 	 */
-	protected String name;
+	protected String _name;
 	
 	/**
 	 * Holds the properties of the event.
 	 */
-	protected Map<String, Object> properties;
+	protected Map<String, Object> _properties;
 	
 	/**
 	 * Holds the consumed state of the event. Default is false.
 	 */
-	protected boolean consumed = false;
+	protected boolean _consumed = false;
 
 	/**
 	 * Constructs a new event for the given name.
@@ -43,8 +43,8 @@ public class EventObj
 	 */
 	public EventObj(String name, Object... args)
 	{
-		this.name = name;
-		properties = new Hashtable<String, Object>();
+		this._name = name;
+		_properties = new Hashtable<String, Object>();
 		
 		if (args != null)
 		{
@@ -52,7 +52,7 @@ public class EventObj
 			{
 				if (args[i + 1] != null)
 				{
-					properties.put(String.valueOf(args[i]), args[i + 1]);
+					_properties.put(String.valueOf(args[i]), args[i + 1]);
 				}
 			}
 		}
@@ -63,7 +63,7 @@ public class EventObj
 	 */
 	public String getName()
 	{
-		return name;
+		return _name;
 	}
 	
 	/**
@@ -71,7 +71,7 @@ public class EventObj
 	 */
 	public Map<String, Object> getProperties()
 	{
-		return properties;
+		return _properties;
 	}
 
 	/**
@@ -79,7 +79,7 @@ public class EventObj
 	 */
 	public Object getProperty(String key)
 	{
-		return properties.get(key);
+		return _properties.get(key);
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class EventObj
 	 */
 	public boolean isConsumed()
 	{
-		return consumed;
+		return _consumed;
 	}
 
 	/**
@@ -95,7 +95,7 @@ public class EventObj
 	 */
 	public void consume()
 	{
-		consumed = true;
+		_consumed = true;
 	}
 
 }

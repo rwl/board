@@ -33,35 +33,35 @@ public class MedianHybridCrossingReduction implements
 	/**
 	 * Reference to the enclosing layout algorithm
 	 */
-	protected HierarchicalLayout layout;
+	protected HierarchicalLayout _layout;
 
 	/**
 	 * The maximum number of iterations to perform whilst reducing edge
 	 * crossings
 	 */
-	protected int maxIterations = 24;
+	protected int _maxIterations = 24;
 
 	/**
 	 * Stores each rank as a collection of cells in the best order found for
 	 * each layer so far
 	 */
-	protected GraphAbstractHierarchyCell[][] nestedBestRanks = null;
+	protected GraphAbstractHierarchyCell[][] _nestedBestRanks = null;
 
 	/**
 	 * The total number of crossings found in the best configuration so far
 	 */
-	protected int currentBestCrossings = 0;
+	protected int _currentBestCrossings = 0;
 
-	protected int iterationsWithoutImprovement = 0;
+	protected int _iterationsWithoutImprovement = 0;
 
-	protected int maxNoImprovementIterations = 2;
+	protected int _maxNoImprovementIterations = 2;
 
 	/**
 	 * Constructor that has the roots specified
 	 */
 	public MedianHybridCrossingReduction(HierarchicalLayout layout)
 	{
-		this.layout = layout;
+		this._layout = layout;
 	}
 
 	/**
@@ -70,35 +70,35 @@ public class MedianHybridCrossingReduction implements
 	 */
 	public void execute(Object parent)
 	{
-		GraphHierarchyModel model = layout.getModel();
+		GraphHierarchyModel model = _layout.getModel();
 
 		// Stores initial ordering as being the best one found so far
-		nestedBestRanks = new GraphAbstractHierarchyCell[model.ranks.size()][];
+		_nestedBestRanks = new GraphAbstractHierarchyCell[model.ranks.size()][];
 
-		for (int i = 0; i < nestedBestRanks.length; i++)
+		for (int i = 0; i < _nestedBestRanks.length; i++)
 		{
 			GraphHierarchyRank rank = model.ranks.get(new Integer(i));
-			nestedBestRanks[i] = new GraphAbstractHierarchyCell[rank.size()];
-			rank.toArray(nestedBestRanks[i]);
+			_nestedBestRanks[i] = new GraphAbstractHierarchyCell[rank.size()];
+			rank.toArray(_nestedBestRanks[i]);
 		}
 
-		iterationsWithoutImprovement = 0;
-		currentBestCrossings = calculateCrossings(model);
+		_iterationsWithoutImprovement = 0;
+		_currentBestCrossings = _calculateCrossings(model);
 
-		for (int i = 0; i < maxIterations
-				&& iterationsWithoutImprovement < maxNoImprovementIterations; i++)
+		for (int i = 0; i < _maxIterations
+				&& _iterationsWithoutImprovement < _maxNoImprovementIterations; i++)
 		{
-			weightedMedian(i, model);
-			transpose(i, model);
-			int candidateCrossings = calculateCrossings(model);
+			_weightedMedian(i, model);
+			_transpose(i, model);
+			int candidateCrossings = _calculateCrossings(model);
 
-			if (candidateCrossings < currentBestCrossings)
+			if (candidateCrossings < _currentBestCrossings)
 			{
-				currentBestCrossings = candidateCrossings;
-				iterationsWithoutImprovement = 0;
+				_currentBestCrossings = candidateCrossings;
+				_iterationsWithoutImprovement = 0;
 
 				// Store the current rankings as the best ones
-				for (int j = 0; j < nestedBestRanks.length; j++)
+				for (int j = 0; j < _nestedBestRanks.length; j++)
 				{
 					GraphHierarchyRank rank = model.ranks.get(new Integer(j));
 					Iterator<GraphAbstractHierarchyCell> iter = rank
@@ -108,7 +108,7 @@ public class MedianHybridCrossingReduction implements
 					{
 						GraphAbstractHierarchyCell cell = iter
 								.next();
-						nestedBestRanks[j][cell.getGeneralPurposeVariable(j)] = cell;
+						_nestedBestRanks[j][cell.getGeneralPurposeVariable(j)] = cell;
 					}
 				}
 			}
@@ -116,10 +116,10 @@ public class MedianHybridCrossingReduction implements
 			{
 				// Increase count of iterations where we haven't improved the
 				// layout
-				iterationsWithoutImprovement++;
+				_iterationsWithoutImprovement++;
 
 				// Restore the best values to the cells
-				for (int j = 0; j < nestedBestRanks.length; j++)
+				for (int j = 0; j < _nestedBestRanks.length; j++)
 				{
 					GraphHierarchyRank rank = model.ranks.get(new Integer(j));
 					Iterator<GraphAbstractHierarchyCell> iter = rank
@@ -134,7 +134,7 @@ public class MedianHybridCrossingReduction implements
 				}
 			}
 
-			if (currentBestCrossings == 0)
+			if (_currentBestCrossings == 0)
 			{
 				// Do nothing further
 				break;
@@ -152,11 +152,11 @@ public class MedianHybridCrossingReduction implements
 			ranks.put(new Integer(i), rankList[i]);
 		}
 
-		for (int i = 0; i < nestedBestRanks.length; i++)
+		for (int i = 0; i < _nestedBestRanks.length; i++)
 		{
-			for (int j = 0; j < nestedBestRanks[i].length; j++)
+			for (int j = 0; j < _nestedBestRanks[i].length; j++)
 			{
-				rankList[i].add(nestedBestRanks[i][j]);
+				rankList[i].add(_nestedBestRanks[i][j]);
 			}
 		}
 
@@ -171,7 +171,7 @@ public class MedianHybridCrossingReduction implements
 	 * @return the current number of edge crossings in the hierarchy graph model
 	 *         in the current candidate layout
 	 */
-	private int calculateCrossings(GraphHierarchyModel model)
+	private int _calculateCrossings(GraphHierarchyModel model)
 	{
 		// The intra-rank order of cells are stored within the temp variables
 		// on cells
@@ -180,7 +180,7 @@ public class MedianHybridCrossingReduction implements
 
 		for (int i = 1; i < numRanks; i++)
 		{
-			totalCrossings += calculateRankCrossing(i, model);
+			totalCrossings += _calculateRankCrossing(i, model);
 		}
 
 		return totalCrossings;
@@ -196,7 +196,7 @@ public class MedianHybridCrossingReduction implements
 	 *            the internal hierarchy model of the graph
 	 * @return the number of edges crossings with the rank beneath
 	 */
-	protected int calculateRankCrossing(int i, GraphHierarchyModel model)
+	protected int _calculateRankCrossing(int i, GraphHierarchyModel model)
 	{
 		int totalCrossings = 0;
 		GraphHierarchyRank rank = model.ranks.get(new Integer(i));
@@ -277,7 +277,7 @@ public class MedianHybridCrossingReduction implements
 	 * @param model
 	 *            the internal model describing the hierarchy
 	 */
-	private void transpose(int mainLoopIteration, GraphHierarchyModel model)
+	private void _transpose(int mainLoopIteration, GraphHierarchyModel model)
 	{
 		boolean improved = true;
 
@@ -459,7 +459,7 @@ public class MedianHybridCrossingReduction implements
 	 * @param model
 	 *            the internal model describing the hierarchy
 	 */
-	private void weightedMedian(int iteration, GraphHierarchyModel model)
+	private void _weightedMedian(int iteration, GraphHierarchyModel model)
 	{
 		// Reverse sweep direction each time through this method
 		boolean downwardSweep = (iteration % 2 == 0);
@@ -468,14 +468,14 @@ public class MedianHybridCrossingReduction implements
 		{
 			for (int j = model.maxRank - 1; j >= 0; j--)
 			{
-				medianRank(j, downwardSweep);
+				_medianRank(j, downwardSweep);
 			}
 		}
 		else
 		{
 			for (int j = 1; j < model.maxRank; j++)
 			{
-				medianRank(j, downwardSweep);
+				_medianRank(j, downwardSweep);
 			}
 		}
 	}
@@ -489,16 +489,16 @@ public class MedianHybridCrossingReduction implements
 	 * @param downwardSweep
 	 *            whether or not this is a downward sweep through the graph
 	 */
-	private void medianRank(int rankValue, boolean downwardSweep)
+	private void _medianRank(int rankValue, boolean downwardSweep)
 	{
-		int numCellsForRank = nestedBestRanks[rankValue].length;
-		ArrayList<MedianCellSorter> medianValues = new ArrayList<MedianCellSorter>(numCellsForRank);
+		int numCellsForRank = _nestedBestRanks[rankValue].length;
+		ArrayList<_MedianCellSorter> medianValues = new ArrayList<_MedianCellSorter>(numCellsForRank);
 		boolean[] reservedPositions = new boolean[numCellsForRank];
 
 		for (int i = 0; i < numCellsForRank; i++)
 		{
-			GraphAbstractHierarchyCell cell = nestedBestRanks[rankValue][i];
-			MedianCellSorter sorterEntry = new MedianCellSorter();
+			GraphAbstractHierarchyCell cell = _nestedBestRanks[rankValue][i];
+			_MedianCellSorter sorterEntry = new _MedianCellSorter();
 			sorterEntry.cell = cell;
 
 			// Flip whether or not equal medians are flipped on up and down
@@ -532,7 +532,7 @@ public class MedianHybridCrossingReduction implements
 			if (nextLevelConnectedCells != null
 					&& nextLevelConnectedCells.size() != 0)
 			{
-				sorterEntry.medianValue = medianValue(
+				sorterEntry.medianValue = _medianValue(
 						nextLevelConnectedCells, nextRankValue);
 				medianValues.add(sorterEntry);
 			}
@@ -544,7 +544,7 @@ public class MedianHybridCrossingReduction implements
 			}
 		}
 
-		MedianCellSorter[] medianArray = medianValues.toArray(new MedianCellSorter[medianValues.size()]);
+		_MedianCellSorter[] medianArray = medianValues.toArray(new _MedianCellSorter[medianValues.size()]);
 		Arrays.sort(medianArray);
 
 		// Set the new position of each node within the rank using
@@ -555,7 +555,7 @@ public class MedianHybridCrossingReduction implements
 		{
 			if (!reservedPositions[i])
 			{
-				MedianCellSorter wrapper = medianArray[index++];
+				_MedianCellSorter wrapper = medianArray[index++];
 				wrapper.cell.setGeneralPurposeVariable(rankValue, i);
 			}
 		}
@@ -572,7 +572,7 @@ public class MedianHybridCrossingReduction implements
 	 *            the rank that the connected cell lie upon
 	 * @return the median rank ordering value of the connected cells
 	 */
-	private double medianValue(
+	private double _medianValue(
 			Collection<GraphAbstractHierarchyCell> connectedCells,
 			int rankValue)
 	{
@@ -607,49 +607,6 @@ public class MedianHybridCrossingReduction implements
 			return (medianValues[medianPoint - 1] * rightMedian + medianValues[medianPoint]
 					* leftMedian)
 					/ (leftMedian + rightMedian);
-		}
-	}
-
-	/**
-	 * A utility class used to track cells whilst sorting occurs on the median
-	 * values. Does not violate (x.compareTo(y)==0) == (x.equals(y))
-	 */
-	protected class MedianCellSorter implements Comparable<Object>
-	{
-
-		/**
-		 * The median value of the cell stored
-		 */
-		public double medianValue = 0.0;
-
-		/**
-		 * The cell whose median value is being calculated
-		 */
-		GraphAbstractHierarchyCell cell = null;
-
-		/**
-		 * comparator on the medianValue
-		 * 
-		 * @param arg0
-		 *            the object to be compared to
-		 * @return the standard return you would expect when comparing two
-		 *         double
-		 */
-		public int compareTo(Object arg0)
-		{
-			if (arg0 instanceof MedianCellSorter)
-			{
-				if (medianValue < ((MedianCellSorter) arg0).medianValue)
-				{
-					return -1;
-				}
-				else if (medianValue > ((MedianCellSorter) arg0).medianValue)
-				{
-					return 1;
-				}
-			}
-			
-			return 0;
 		}
 	}
 }

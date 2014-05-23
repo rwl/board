@@ -29,22 +29,22 @@ public class UndoableEdit
 	/**
 	 * Holds the source of the undoable edit.
 	 */
-	protected Object source;
+	protected Object _source;
 
 	/**
 	 * Holds the list of changes that make up this undoable edit.
 	 */
-	protected List<UndoableChange> changes = new ArrayList<UndoableChange>();
+	protected List<UndoableChange> _changes = new ArrayList<UndoableChange>();
 
 	/**
 	 * Specifies this undoable edit is significant. Default is true.
 	 */
-	protected boolean significant = true;
+	protected boolean _significant = true;
 
 	/**
 	 * Specifies the state of the undoable edit.
 	 */
-	protected boolean undone, redone;
+	protected boolean _undone, _redone;
 
 	/**
 	 * Constructs a new undoable edit for the given source.
@@ -59,8 +59,8 @@ public class UndoableEdit
 	 */
 	public UndoableEdit(Object source, boolean significant)
 	{
-		this.source = source;
-		this.significant = significant;
+		this._source = source;
+		this._significant = significant;
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class UndoableEdit
 	 */
 	public Object getSource()
 	{
-		return source;
+		return _source;
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class UndoableEdit
 	 */
 	public List<UndoableChange> getChanges()
 	{
-		return changes;
+		return _changes;
 	}
 
 	/**
@@ -102,7 +102,7 @@ public class UndoableEdit
 	 */
 	public boolean isSignificant()
 	{
-		return significant;
+		return _significant;
 	}
 
 	/**
@@ -110,7 +110,7 @@ public class UndoableEdit
 	 */
 	public boolean isUndone()
 	{
-		return undone;
+		return _undone;
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class UndoableEdit
 	 */
 	public boolean isRedone()
 	{
-		return redone;
+		return _redone;
 	}
 
 	/**
@@ -126,7 +126,7 @@ public class UndoableEdit
 	 */
 	public boolean isEmpty()
 	{
-		return changes.isEmpty();
+		return _changes.isEmpty();
 	}
 
 	/**
@@ -135,7 +135,7 @@ public class UndoableEdit
 	 */
 	public void add(UndoableChange change)
 	{
-		changes.add(change);
+		_changes.add(change);
 	}
 
 	/**
@@ -143,18 +143,18 @@ public class UndoableEdit
 	 */
 	public void undo()
 	{
-		if (!undone)
+		if (!_undone)
 		{
-			int count = changes.size();
+			int count = _changes.size();
 
 			for (int i = count - 1; i >= 0; i--)
 			{
-				UndoableChange change = changes.get(i);
+				UndoableChange change = _changes.get(i);
 				change.execute();
 			}
 
-			undone = true;
-			redone = false;
+			_undone = true;
+			_redone = false;
 		}
 
 		dispatch();
@@ -165,18 +165,18 @@ public class UndoableEdit
 	 */
 	public void redo()
 	{
-		if (!redone)
+		if (!_redone)
 		{
-			int count = changes.size();
+			int count = _changes.size();
 
 			for (int i = 0; i < count; i++)
 			{
-				UndoableChange change = changes.get(i);
+				UndoableChange change = _changes.get(i);
 				change.execute();
 			}
 
-			undone = false;
-			redone = true;
+			_undone = false;
+			_redone = true;
 		}
 
 		dispatch();

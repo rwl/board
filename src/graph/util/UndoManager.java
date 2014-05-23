@@ -29,17 +29,17 @@ public class UndoManager extends EventSource
 	/**
 	 * Maximum command history size. 0 means unlimited history. Default is 100.
 	 */
-	protected int size;
+	protected int _size;
 
 	/**
 	 * List that contains the steps of the command history.
 	 */
-	protected List<UndoableEdit> history;
+	protected List<UndoableEdit> _history;
 
 	/**
 	 * Index of the element to be added next.
 	 */
-	protected int indexOfNextAdd;
+	protected int _indexOfNextAdd;
 
 	/**
 	 * Constructs a new undo manager with a default history size.
@@ -54,7 +54,7 @@ public class UndoManager extends EventSource
 	 */
 	public UndoManager(int size)
 	{
-		this.size = size;
+		this._size = size;
 		clear();
 	}
 
@@ -63,7 +63,7 @@ public class UndoManager extends EventSource
 	 */
 	public boolean isEmpty()
 	{
-		return history.isEmpty();
+		return _history.isEmpty();
 	}
 
 	/**
@@ -71,8 +71,8 @@ public class UndoManager extends EventSource
 	 */
 	public void clear()
 	{
-		history = new ArrayList<UndoableEdit>(size);
-		indexOfNextAdd = 0;
+		_history = new ArrayList<UndoableEdit>(_size);
+		_indexOfNextAdd = 0;
 		fireEvent(new EventObj(Event.CLEAR));
 	}
 
@@ -81,7 +81,7 @@ public class UndoManager extends EventSource
 	 */
 	public boolean canUndo()
 	{
-		return indexOfNextAdd > 0;
+		return _indexOfNextAdd > 0;
 	}
 
 	/**
@@ -89,9 +89,9 @@ public class UndoManager extends EventSource
 	 */
 	public void undo()
 	{
-		while (indexOfNextAdd > 0)
+		while (_indexOfNextAdd > 0)
 		{
-			UndoableEdit edit = history.get(--indexOfNextAdd);
+			UndoableEdit edit = _history.get(--_indexOfNextAdd);
 			edit.undo();
 
 			if (edit.isSignificant())
@@ -107,7 +107,7 @@ public class UndoManager extends EventSource
 	 */
 	public boolean canRedo()
 	{
-		return indexOfNextAdd < history.size();
+		return _indexOfNextAdd < _history.size();
 	}
 
 	/**
@@ -115,11 +115,11 @@ public class UndoManager extends EventSource
 	 */
 	public void redo()
 	{
-		int n = history.size();
+		int n = _history.size();
 
-		while (indexOfNextAdd < n)
+		while (_indexOfNextAdd < n)
 		{
-			UndoableEdit edit = history.get(indexOfNextAdd++);
+			UndoableEdit edit = _history.get(_indexOfNextAdd++);
 			edit.redo();
 
 			if (edit.isSignificant())
@@ -135,15 +135,15 @@ public class UndoManager extends EventSource
 	 */
 	public void undoableEditHappened(UndoableEdit undoableEdit)
 	{
-		trim();
+		_trim();
 
-		if (size > 0 && size == history.size())
+		if (_size > 0 && _size == _history.size())
 		{
-			history.remove(0);
+			_history.remove(0);
 		}
 
-		history.add(undoableEdit);
-		indexOfNextAdd = history.size();
+		_history.add(undoableEdit);
+		_indexOfNextAdd = _history.size();
 		fireEvent(new EventObj(Event.ADD, "edit", undoableEdit));
 	}
 
@@ -151,12 +151,12 @@ public class UndoManager extends EventSource
 	 * Removes all pending steps after indexOfNextAdd from the history,
 	 * invoking die on each edit. This is called from undoableEditHappened.
 	 */
-	protected void trim()
+	protected void _trim()
 	{
-		while (history.size() > indexOfNextAdd)
+		while (_history.size() > _indexOfNextAdd)
 		{
-			UndoableEdit edit = history
-					.remove(indexOfNextAdd);
+			UndoableEdit edit = _history
+					.remove(_indexOfNextAdd);
 			edit.die();
 		}
 	}

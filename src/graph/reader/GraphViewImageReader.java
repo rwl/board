@@ -35,29 +35,29 @@ public class GraphViewImageReader extends GraphViewReader
 	/**
 	 * Specifies the background color. Default is null.
 	 */
-	protected Color background;
+	protected Color _background;
 
 	/**
 	 * Specifies if the image should be anti-aliased. Default is true.
 	 */
-	protected boolean antiAlias;
+	protected boolean _antiAlias;
 
 	/**
 	 * Specifies the border which is added to the size of the graph. Default is
 	 * 0.
 	 */
-	protected int border;
+	protected int _border;
 
 	/**
 	 * Specifies the border which is added to the size of the graph. Default is
 	 * true.
 	 */
-	protected boolean cropping;
+	protected boolean _cropping;
 
 	/**
 	 * Defines the clip to be drawn. Default is null.
 	 */
-	protected Rect clip;
+	protected Rect _clip;
 
 	/**
 	 * Constructs a new reader with a transparent background.
@@ -109,7 +109,7 @@ public class GraphViewImageReader extends GraphViewReader
 	 */
 	public Color getBackground()
 	{
-		return background;
+		return _background;
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class GraphViewImageReader extends GraphViewReader
 	 */
 	public void setBackground(Color background)
 	{
-		this.background = background;
+		this._background = background;
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class GraphViewImageReader extends GraphViewReader
 	 */
 	public int getBorder()
 	{
-		return border;
+		return _border;
 	}
 
 	/**
@@ -133,7 +133,7 @@ public class GraphViewImageReader extends GraphViewReader
 	 */
 	public void setBorder(int border)
 	{
-		this.border = border;
+		this._border = border;
 	}
 
 	/**
@@ -141,7 +141,7 @@ public class GraphViewImageReader extends GraphViewReader
 	 */
 	public boolean isAntiAlias()
 	{
-		return antiAlias;
+		return _antiAlias;
 	}
 
 	/**
@@ -149,7 +149,7 @@ public class GraphViewImageReader extends GraphViewReader
 	 */
 	public void setAntiAlias(boolean antiAlias)
 	{
-		this.antiAlias = antiAlias;
+		this._antiAlias = antiAlias;
 	}
 
 	/**
@@ -157,7 +157,7 @@ public class GraphViewImageReader extends GraphViewReader
 	 */
 	public boolean isCropping()
 	{
-		return cropping;
+		return _cropping;
 	}
 
 	/**
@@ -165,7 +165,7 @@ public class GraphViewImageReader extends GraphViewReader
 	 */
 	public void setCropping(boolean value)
 	{
-		this.cropping = value;
+		this._cropping = value;
 	}
 
 	/**
@@ -173,7 +173,7 @@ public class GraphViewImageReader extends GraphViewReader
 	 */
 	public Rect getClip()
 	{
-		return clip;
+		return _clip;
 	}
 
 	/**
@@ -181,7 +181,7 @@ public class GraphViewImageReader extends GraphViewReader
 	 */
 	public void setClip(Rect value)
 	{
-		this.clip = value;
+		this._clip = value;
 	}
 
 	/*
@@ -211,9 +211,9 @@ public class GraphViewImageReader extends GraphViewReader
 			int x = (int) Math.round(Utils.getDouble(attrs, "x"));
 			int y = (int) Math.round(Utils.getDouble(attrs, "y"));
 			width = (int) (Math.round(Utils.getDouble(attrs, "width")))
-					+ border + 3;
+					+ _border + 3;
 			height = (int) (Math.round(Utils.getDouble(attrs, "height")))
-					+ border + 3;
+					+ _border + 3;
 
 			if (isCropping())
 			{
@@ -227,7 +227,7 @@ public class GraphViewImageReader extends GraphViewReader
 			}
 		}
 
-		ImageCanvas canvas = new ImageCanvas(createGraphicsCanvas(), width,
+		ImageCanvas canvas = new ImageCanvas(_createGraphicsCanvas(), width,
 				height, getBackground(), isAntiAlias());
 		canvas.setTranslate(dx, dy);
 
@@ -237,7 +237,7 @@ public class GraphViewImageReader extends GraphViewReader
 	/**
 	 * Hook that creates the graphics canvas.
 	 */
-	protected Graphics2DCanvas createGraphicsCanvas()
+	protected Graphics2DCanvas _createGraphicsCanvas()
 	{
 		return new Graphics2DCanvas();
 	}

@@ -67,13 +67,13 @@ public class GraphMlCodec
 		}
 
 		graph.getModel().endUpdate();
-		cleanMaps();
+		_cleanMaps();
 	}
 
 	/**
 	 * Remove all the elements in the Defined Maps.
 	 */
-	private static void cleanMaps()
+	private static void _cleanMaps()
 	{
 		GraphMlKeyManager.getInstance().getKeyMap().clear();
 	}
@@ -112,7 +112,7 @@ public class GraphMlCodec
 		graphml.appendChild(graphE);
 
 		doc.appendChild(graphml);
-		cleanMaps();
+		_cleanMaps();
 		return doc;
 
 	}
@@ -127,7 +127,7 @@ public class GraphMlCodec
 		GraphMlGraph gmlGraph = new GraphMlGraph();
 		Object parent = graph.getDefaultParent();
 
-		createKeyElements();
+		_createKeyElements();
 
 		gmlGraph = decodeGraph(graph, parent, gmlGraph);
 		gmlGraph.setEdgedefault(GraphMlConstants.EDGE_DIRECTED);
@@ -140,7 +140,7 @@ public class GraphMlCodec
 	/**
 	 * Creates the key elements for the encode.
 	 */
-	private static void createKeyElements()
+	private static void _createKeyElements()
 	{
 		HashMap<String, GraphMlKey> keyMap = GraphMlKeyManager.getInstance()
 				.getKeyMap();
@@ -167,7 +167,7 @@ public class GraphMlCodec
 	{
 		Object[] vertexes = graph.getChildVertices(parent);
 		List<GraphMlEdge> gmlEdges = gmlGraph.getEdges();
-		gmlEdges = encodeEdges(gmlEdges, parent, graph);
+		gmlEdges = _encodeEdges(gmlEdges, parent, graph);
 		gmlGraph.setEdges(gmlEdges);
 
 		for (Object vertex : vertexes)
@@ -247,7 +247,7 @@ public class GraphMlCodec
 	 * @param point Point2d
 	 * @return Name of the port
 	 */
-	private static String pointToPortString(Point2d point)
+	private static String _pointToPortString(Point2d point)
 	{
 		String port = "";
 		if (point != null)
@@ -302,7 +302,7 @@ public class GraphMlCodec
 	 * @param graph Graph that contains the edges.
 	 * @return Returns the list Gmledges with the elements added.
 	 */
-	private static List<GraphMlEdge> encodeEdges(List<GraphMlEdge> Gmledges,
+	private static List<GraphMlEdge> _encodeEdges(List<GraphMlEdge> Gmledges,
 			Object parent, Graph graph)
 	{
 		Object[] edges = graph.getChildEdges(parent);
@@ -344,8 +344,8 @@ public class GraphMlCodec
 			}
 
 			//gets the port names
-			targetPort = pointToPortString(targetConstraint);
-			sourcePort = pointToPortString(sourceConstraint);
+			targetPort = _pointToPortString(targetConstraint);
+			sourcePort = _pointToPortString(sourceConstraint);
 
 			GraphMlEdge Gmledge = new GraphMlEdge(sourceName, targetName,
 					sourcePort, targetPort);

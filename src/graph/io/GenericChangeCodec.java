@@ -18,7 +18,7 @@ public class GenericChangeCodec extends ObjectCodec
 	/**
 	 * 
 	 */
-	protected String fieldname;
+	protected String _fieldname;
 
 	/**
 	 * Constructs a new model codec.
@@ -37,7 +37,7 @@ public class GenericChangeCodec extends ObjectCodec
 	{
 		super(template, exclude, idrefs, mapping);
 
-		this.fieldname = fieldname;
+		this._fieldname = fieldname;
 	}
 
 	/* (non-Javadoc)
@@ -46,14 +46,14 @@ public class GenericChangeCodec extends ObjectCodec
 	@Override
 	public Object afterDecode(Codec dec, Node node, Object obj)
 	{
-		Object cell = getFieldValue(obj, "cell");
+		Object cell = _getFieldValue(obj, "cell");
 
 		if (cell instanceof Node)
 		{
-			setFieldValue(obj, "cell", dec.decodeCell((Node) cell, false));
+			_setFieldValue(obj, "cell", dec.decodeCell((Node) cell, false));
 		}
 
-		setFieldValue(obj, "previous", getFieldValue(obj, fieldname));
+		_setFieldValue(obj, "previous", _getFieldValue(obj, _fieldname));
 
 		return obj;
 	}

@@ -72,16 +72,16 @@ import java.util.Arrays;
 
 public class Base64
 {
-	private static final char[] CA = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+	private static final char[] _CA = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
 			.toCharArray();
 
-	private static final int[] IA = new int[256];
+	private static final int[] _IA = new int[256];
 	static
 	{
-		Arrays.fill(IA, -1);
-		for (int i = 0, iS = CA.length; i < iS; i++)
-			IA[CA[i]] = i;
-		IA['='] = 0;
+		Arrays.fill(_IA, -1);
+		for (int i = 0, iS = _CA.length; i < iS; i++)
+			_IA[_CA[i]] = i;
+		_IA['='] = 0;
 	}
 
 	// ****************************************************************************************
@@ -115,10 +115,10 @@ public class Base64
 					| (sArr[s++] & 0xff);
 
 			// Encode the int into four chars
-			dArr[d++] = CA[(i >>> 18) & 0x3f];
-			dArr[d++] = CA[(i >>> 12) & 0x3f];
-			dArr[d++] = CA[(i >>> 6) & 0x3f];
-			dArr[d++] = CA[i & 0x3f];
+			dArr[d++] = _CA[(i >>> 18) & 0x3f];
+			dArr[d++] = _CA[(i >>> 12) & 0x3f];
+			dArr[d++] = _CA[(i >>> 6) & 0x3f];
+			dArr[d++] = _CA[i & 0x3f];
 
 			// Add optional line separator
 			if (lineSep && ++cc == 19 && d < dLen - 2)
@@ -138,9 +138,9 @@ public class Base64
 					| (left == 2 ? ((sArr[sLen - 1] & 0xff) << 2) : 0);
 
 			// Set last four chars
-			dArr[dLen - 4] = CA[i >> 12];
-			dArr[dLen - 3] = CA[(i >>> 6) & 0x3f];
-			dArr[dLen - 2] = left == 2 ? CA[i & 0x3f] : '=';
+			dArr[dLen - 4] = _CA[i >> 12];
+			dArr[dLen - 3] = _CA[(i >>> 6) & 0x3f];
+			dArr[dLen - 2] = left == 2 ? _CA[i & 0x3f] : '=';
 			dArr[dLen - 1] = '=';
 		}
 		return dArr;
@@ -164,7 +164,7 @@ public class Base64
 		int sepCnt = 0; // Number of separator characters. (Actually illegal characters, but that's a bonus...)
 		for (int i = 0; i < sLen; i++)
 			// If input is "pure" (I.e. no line separators or illegal chars) base64 this loop can be commented out.
-			if (IA[sArr[i]] < 0)
+			if (_IA[sArr[i]] < 0)
 				sepCnt++;
 
 		// Check so that legal chars (including '=') are evenly divideable by 4 as specified in RFC 2045.
@@ -172,7 +172,7 @@ public class Base64
 			return null;
 
 		int pad = 0;
-		for (int i = sLen; i > 1 && IA[sArr[--i]] <= 0;)
+		for (int i = sLen; i > 1 && _IA[sArr[--i]] <= 0;)
 			if (sArr[i] == '=')
 				pad++;
 
@@ -186,7 +186,7 @@ public class Base64
 			int i = 0;
 			for (int j = 0; j < 4; j++)
 			{ // j only increased if a valid char was found.
-				int c = IA[sArr[s++]];
+				int c = _IA[sArr[s++]];
 				if (c >= 0)
 					i |= c << (18 - j * 6);
 				else
@@ -223,11 +223,11 @@ public class Base64
 		int sIx = 0, eIx = sLen - 1; // Start and end index after trimming.
 
 		// Trim illegal chars from start
-		while (sIx < eIx && IA[sArr[sIx]] < 0)
+		while (sIx < eIx && _IA[sArr[sIx]] < 0)
 			sIx++;
 
 		// Trim illegal chars from end
-		while (eIx > 0 && IA[sArr[eIx]] < 0)
+		while (eIx > 0 && _IA[sArr[eIx]] < 0)
 			eIx--;
 
 		// get the padding count (=) (0, 1 or 2)
@@ -243,8 +243,8 @@ public class Base64
 		for (int cc = 0, eLen = (len / 3) * 3; d < eLen;)
 		{
 			// Assemble three bytes into an int from four "valid" characters.
-			int i = IA[sArr[sIx++]] << 18 | IA[sArr[sIx++]] << 12
-					| IA[sArr[sIx++]] << 6 | IA[sArr[sIx++]];
+			int i = _IA[sArr[sIx++]] << 18 | _IA[sArr[sIx++]] << 12
+					| _IA[sArr[sIx++]] << 6 | _IA[sArr[sIx++]];
 
 			// Add the bytes
 			dArr[d++] = (byte) (i >> 16);
@@ -264,7 +264,7 @@ public class Base64
 			// Decode last 1-3 bytes (incl '=') into 1-3 bytes
 			int i = 0;
 			for (int j = 0; sIx <= eIx - pad; j++)
-				i |= IA[sArr[sIx++]] << (18 - j * 6);
+				i |= _IA[sArr[sIx++]] << (18 - j * 6);
 
 			for (int r = 16; d < len; r -= 8)
 				dArr[d++] = (byte) (i >> r);
@@ -304,10 +304,10 @@ public class Base64
 					| (sArr[s++] & 0xff);
 
 			// Encode the int into four chars
-			dArr[d++] = (byte) CA[(i >>> 18) & 0x3f];
-			dArr[d++] = (byte) CA[(i >>> 12) & 0x3f];
-			dArr[d++] = (byte) CA[(i >>> 6) & 0x3f];
-			dArr[d++] = (byte) CA[i & 0x3f];
+			dArr[d++] = (byte) _CA[(i >>> 18) & 0x3f];
+			dArr[d++] = (byte) _CA[(i >>> 12) & 0x3f];
+			dArr[d++] = (byte) _CA[(i >>> 6) & 0x3f];
+			dArr[d++] = (byte) _CA[i & 0x3f];
 
 			// Add optional line separator
 			if (lineSep && ++cc == 19 && d < dLen - 2)
@@ -327,9 +327,9 @@ public class Base64
 					| (left == 2 ? ((sArr[sLen - 1] & 0xff) << 2) : 0);
 
 			// Set last four chars
-			dArr[dLen - 4] = (byte) CA[i >> 12];
-			dArr[dLen - 3] = (byte) CA[(i >>> 6) & 0x3f];
-			dArr[dLen - 2] = left == 2 ? (byte) CA[i & 0x3f] : (byte) '=';
+			dArr[dLen - 4] = (byte) _CA[i >> 12];
+			dArr[dLen - 3] = (byte) _CA[(i >>> 6) & 0x3f];
+			dArr[dLen - 2] = left == 2 ? (byte) _CA[i & 0x3f] : (byte) '=';
 			dArr[dLen - 1] = '=';
 		}
 		return dArr;
@@ -351,7 +351,7 @@ public class Base64
 		int sepCnt = 0; // Number of separator characters. (Actually illegal characters, but that's a bonus...)
 		for (int i = 0; i < sLen; i++)
 			// If input is "pure" (I.e. no line separators or illegal chars) base64 this loop can be commented out.
-			if (IA[sArr[i] & 0xff] < 0)
+			if (_IA[sArr[i] & 0xff] < 0)
 				sepCnt++;
 
 		// Check so that legal chars (including '=') are evenly divideable by 4 as specified in RFC 2045.
@@ -359,7 +359,7 @@ public class Base64
 			return null;
 
 		int pad = 0;
-		for (int i = sLen; i > 1 && IA[sArr[--i] & 0xff] <= 0;)
+		for (int i = sLen; i > 1 && _IA[sArr[--i] & 0xff] <= 0;)
 			if (sArr[i] == '=')
 				pad++;
 
@@ -373,7 +373,7 @@ public class Base64
 			int i = 0;
 			for (int j = 0; j < 4; j++)
 			{ // j only increased if a valid char was found.
-				int c = IA[sArr[s++] & 0xff];
+				int c = _IA[sArr[s++] & 0xff];
 				if (c >= 0)
 					i |= c << (18 - j * 6);
 				else
@@ -412,11 +412,11 @@ public class Base64
 		int sIx = 0, eIx = sLen - 1; // Start and end index after trimming.
 
 		// Trim illegal chars from start
-		while (sIx < eIx && IA[sArr[sIx] & 0xff] < 0)
+		while (sIx < eIx && _IA[sArr[sIx] & 0xff] < 0)
 			sIx++;
 
 		// Trim illegal chars from end
-		while (eIx > 0 && IA[sArr[eIx] & 0xff] < 0)
+		while (eIx > 0 && _IA[sArr[eIx] & 0xff] < 0)
 			eIx--;
 
 		// get the padding count (=) (0, 1 or 2)
@@ -432,8 +432,8 @@ public class Base64
 		for (int cc = 0, eLen = (len / 3) * 3; d < eLen;)
 		{
 			// Assemble three bytes into an int from four "valid" characters.
-			int i = IA[sArr[sIx++]] << 18 | IA[sArr[sIx++]] << 12
-					| IA[sArr[sIx++]] << 6 | IA[sArr[sIx++]];
+			int i = _IA[sArr[sIx++]] << 18 | _IA[sArr[sIx++]] << 12
+					| _IA[sArr[sIx++]] << 6 | _IA[sArr[sIx++]];
 
 			// Add the bytes
 			dArr[d++] = (byte) (i >> 16);
@@ -453,7 +453,7 @@ public class Base64
 			// Decode last 1-3 bytes (incl '=') into 1-3 bytes
 			int i = 0;
 			for (int j = 0; sIx <= eIx - pad; j++)
-				i |= IA[sArr[sIx++]] << (18 - j * 6);
+				i |= _IA[sArr[sIx++]] << (18 - j * 6);
 
 			for (int r = 16; d < len; r -= 8)
 				dArr[d++] = (byte) (i >> r);
@@ -499,7 +499,7 @@ public class Base64
 		int sepCnt = 0; // Number of separator characters. (Actually illegal characters, but that's a bonus...)
 		for (int i = 0; i < sLen; i++)
 			// If input is "pure" (I.e. no line separators or illegal chars) base64 this loop can be commented out.
-			if (IA[str.charAt(i)] < 0)
+			if (_IA[str.charAt(i)] < 0)
 				sepCnt++;
 
 		// Check so that legal chars (including '=') are evenly divideable by 4 as specified in RFC 2045.
@@ -508,7 +508,7 @@ public class Base64
 
 		// Count '=' at end
 		int pad = 0;
-		for (int i = sLen; i > 1 && IA[str.charAt(--i)] <= 0;)
+		for (int i = sLen; i > 1 && _IA[str.charAt(--i)] <= 0;)
 			if (str.charAt(i) == '=')
 				pad++;
 
@@ -522,7 +522,7 @@ public class Base64
 			int i = 0;
 			for (int j = 0; j < 4; j++)
 			{ // j only increased if a valid char was found.
-				int c = IA[str.charAt(s++)];
+				int c = _IA[str.charAt(s++)];
 				if (c >= 0)
 					i |= c << (18 - j * 6);
 				else
@@ -559,11 +559,11 @@ public class Base64
 		int sIx = 0, eIx = sLen - 1; // Start and end index after trimming.
 
 		// Trim illegal chars from start
-		while (sIx < eIx && IA[s.charAt(sIx) & 0xff] < 0)
+		while (sIx < eIx && _IA[s.charAt(sIx) & 0xff] < 0)
 			sIx++;
 
 		// Trim illegal chars from end
-		while (eIx > 0 && IA[s.charAt(eIx) & 0xff] < 0)
+		while (eIx > 0 && _IA[s.charAt(eIx) & 0xff] < 0)
 			eIx--;
 
 		// get the padding count (=) (0, 1 or 2)
@@ -580,8 +580,8 @@ public class Base64
 		for (int cc = 0, eLen = (len / 3) * 3; d < eLen;)
 		{
 			// Assemble three bytes into an int from four "valid" characters.
-			int i = IA[s.charAt(sIx++)] << 18 | IA[s.charAt(sIx++)] << 12
-					| IA[s.charAt(sIx++)] << 6 | IA[s.charAt(sIx++)];
+			int i = _IA[s.charAt(sIx++)] << 18 | _IA[s.charAt(sIx++)] << 12
+					| _IA[s.charAt(sIx++)] << 6 | _IA[s.charAt(sIx++)];
 
 			// Add the bytes
 			dArr[d++] = (byte) (i >> 16);
@@ -601,7 +601,7 @@ public class Base64
 			// Decode last 1-3 bytes (incl '=') into 1-3 bytes
 			int i = 0;
 			for (int j = 0; sIx <= eIx - pad; j++)
-				i |= IA[s.charAt(sIx++)] << (18 - j * 6);
+				i |= _IA[s.charAt(sIx++)] << (18 - j * 6);
 
 			for (int r = 16; d < len; r -= 8)
 				dArr[d++] = (byte) (i >> r);

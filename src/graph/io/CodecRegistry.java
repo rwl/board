@@ -4,11 +4,11 @@
  */
 package graph.io;
 
-import graph.model.GraphModel.CollapseChange;
-import graph.model.GraphModel.GeometryChange;
-import graph.model.GraphModel.StyleChange;
-import graph.model.GraphModel.ValueChange;
-import graph.model.GraphModel.VisibleChange;
+import graph.model.CollapseChange;
+import graph.model.GeometryChange;
+import graph.model.StyleChange;
+import graph.model.ValueChange;
+import graph.model.VisibleChange;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,18 +26,18 @@ public class CodecRegistry
 	/**
 	 * Maps from constructor names to codecs.
 	 */
-	protected static Hashtable<String, ObjectCodec> codecs = new Hashtable<String, ObjectCodec>();
+	protected static Hashtable<String, ObjectCodec> _codecs = new Hashtable<String, ObjectCodec>();
 
 	/**
 	 * Maps from classnames to codecnames.
 	 */
-	protected static Hashtable<String, String> aliases = new Hashtable<String, String>();
+	protected static Hashtable<String, String> _aliases = new Hashtable<String, String>();
 
 	/**
 	 * Holds the list of known packages. Packages are used to prefix short
 	 * class names (eg. Cell) in XML markup.
 	 */
-	protected static List<String> packages = new ArrayList<String>();
+	protected static List<String> _packages = new ArrayList<String>();
 
 	// Registers the known codecs and package names
 	static
@@ -74,7 +74,7 @@ public class CodecRegistry
 		if (codec != null)
 		{
 			String name = codec.getName();
-			codecs.put(name, codec);
+			_codecs.put(name, codec);
 
 			String classname = getName(codec.getTemplate());
 
@@ -92,7 +92,7 @@ public class CodecRegistry
 	 */
 	public static void addAlias(String classname, String codecname)
 	{
-		aliases.put(classname, codecname);
+		_aliases.put(classname, codecname);
 	}
 
 	/**
@@ -103,14 +103,14 @@ public class CodecRegistry
 	 */
 	public static ObjectCodec getCodec(String name)
 	{
-		String tmp = aliases.get(name);
+		String tmp = _aliases.get(name);
 
 		if (tmp != null)
 		{
 			name = tmp;
 		}
 
-		ObjectCodec codec = codecs.get(name);
+		ObjectCodec codec = _codecs.get(name);
 
 		// Registers a new default codec for the given name
 		// if no codec has been previously defined.
@@ -142,7 +142,7 @@ public class CodecRegistry
 	 */
 	public static void addPackage(String packagename)
 	{
-		packages.add(packagename);
+		_packages.add(packagename);
 	}
 
 	/**
@@ -195,11 +195,11 @@ public class CodecRegistry
 			// ignore
 		}
 
-		for (int i = 0; i < packages.size(); i++)
+		for (int i = 0; i < _packages.size(); i++)
 		{
 			try
 			{
-				String s = packages.get(i);
+				String s = _packages.get(i);
 
 				return Class.forName(s + "." + name);
 			}
@@ -234,7 +234,7 @@ public class CodecRegistry
 		}
 		else
 		{
-			if (packages.contains(type.getPackage().getName()))
+			if (_packages.contains(type.getPackage().getName()))
 			{
 				return type.getSimpleName();
 			}

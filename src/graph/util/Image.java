@@ -20,21 +20,21 @@ public class Image implements Serializable, Cloneable
 	/**
 	 * Holds the path or URL for the image.
 	 */
-	protected String src;
+	protected String _src;
 
 	/**
 	 * Holds the image width and height.
 	 */
-	protected int width, height;
+	protected int _width, _height;
 
 	/**
 	 * Constructs a new point at (0, 0).
 	 */
 	public Image(String src, int width, int height)
 	{
-		this.src = src;
-		this.width = width;
-		this.height = height;
+		this._src = src;
+		this._width = width;
+		this._height = height;
 	}
 
 	/**
@@ -42,7 +42,7 @@ public class Image implements Serializable, Cloneable
 	 */
 	public String getSrc()
 	{
-		return src;
+		return _src;
 	}
 
 	/**
@@ -50,7 +50,7 @@ public class Image implements Serializable, Cloneable
 	 */
 	public void setSrc(String src)
 	{
-		this.src = src;
+		this._src = src;
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class Image implements Serializable, Cloneable
 	 */
 	public int getWidth()
 	{
-		return width;
+		return _width;
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class Image implements Serializable, Cloneable
 	 */
 	public void setWidth(int width)
 	{
-		this.width = width;
+		this._width = width;
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class Image implements Serializable, Cloneable
 	 */
 	public int getHeight()
 	{
-		return height;
+		return _height;
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class Image implements Serializable, Cloneable
 	 */
 	public void setHeight(int height)
 	{
-		this.height = height;
+		this._height = height;
 	}
 
 }

@@ -4,8 +4,8 @@
  */
 package graph.io;
 
+import graph.model.ChildChange;
 import graph.model.ICell;
-import graph.model.GraphModel.ChildChange;
 
 import java.util.Map;
 
@@ -51,7 +51,7 @@ public class ChildChangeCodec extends ObjectCodec
 			return true;
 		}
 
-		return idrefs.contains(attr);
+		return _idrefs.contains(attr);
 	}
 
 	/* (non-Javadoc)

@@ -18,24 +18,24 @@ import org.w3c.dom.Element;
  */
 public class GraphMlEdge
 {
-	private String edgeId;
+	private String _edgeId;
 
-	private String edgeSource;
+	private String _edgeSource;
 
-	private String edgeSourcePort;
+	private String _edgeSourcePort;
 
-	private String edgeTarget;
+	private String _edgeTarget;
 
-	private String edgeTargetPort;
+	private String _edgeTargetPort;
 
-	private String edgeDirected;
+	private String _edgeDirected;
 
-	private GraphMlData edgeData;
+	private GraphMlData _edgeData;
 
 	/**
 	 * Map with the data. The key is the key attribute
 	 */
-	private HashMap<String, GraphMlData> edgeDataMap = new HashMap<String, GraphMlData>();
+	private HashMap<String, GraphMlData> _edgeDataMap = new HashMap<String, GraphMlData>();
 
 	/**
 	 * Construct an edge with source and target.
@@ -45,12 +45,12 @@ public class GraphMlEdge
 	public GraphMlEdge(String edgeSource, String edgeTarget,
 			String edgeSourcePort, String edgeTargetPort)
 	{
-		this.edgeId = "";
-		this.edgeSource = edgeSource;
-		this.edgeSourcePort = edgeSourcePort;
-		this.edgeTarget = edgeTarget;
-		this.edgeTargetPort = edgeTargetPort;
-		this.edgeDirected = "";
+		this._edgeId = "";
+		this._edgeSource = edgeSource;
+		this._edgeSourcePort = edgeSourcePort;
+		this._edgeTarget = edgeTarget;
+		this._edgeTargetPort = edgeTargetPort;
+		this._edgeDirected = "";
 	}
 
 	/**
@@ -59,14 +59,14 @@ public class GraphMlEdge
 	 */
 	public GraphMlEdge(Element edgeElement)
 	{
-		this.edgeId = edgeElement.getAttribute(GraphMlConstants.ID);
-		this.edgeSource = edgeElement.getAttribute(GraphMlConstants.EDGE_SOURCE);
-		this.edgeSourcePort = edgeElement
+		this._edgeId = edgeElement.getAttribute(GraphMlConstants.ID);
+		this._edgeSource = edgeElement.getAttribute(GraphMlConstants.EDGE_SOURCE);
+		this._edgeSourcePort = edgeElement
 				.getAttribute(GraphMlConstants.EDGE_SOURCE_PORT);
-		this.edgeTarget = edgeElement.getAttribute(GraphMlConstants.EDGE_TARGET);
-		this.edgeTargetPort = edgeElement
+		this._edgeTarget = edgeElement.getAttribute(GraphMlConstants.EDGE_TARGET);
+		this._edgeTargetPort = edgeElement
 				.getAttribute(GraphMlConstants.EDGE_TARGET_PORT);
-		this.edgeDirected = edgeElement
+		this._edgeDirected = edgeElement
 				.getAttribute(GraphMlConstants.EDGE_DIRECTED);
 
 		List<Element> dataList = GraphMlUtils.childsTags(edgeElement,
@@ -76,88 +76,88 @@ public class GraphMlEdge
 		{
 			GraphMlData data = new GraphMlData(dataElem);
 			String key = data.getDataKey();
-			edgeDataMap.put(key, data);
+			_edgeDataMap.put(key, data);
 		}
 	}
 
 	public String getEdgeDirected()
 	{
-		return edgeDirected;
+		return _edgeDirected;
 	}
 
 	public void setEdgeDirected(String edgeDirected)
 	{
-		this.edgeDirected = edgeDirected;
+		this._edgeDirected = edgeDirected;
 	}
 
 	public String getEdgeId()
 	{
-		return edgeId;
+		return _edgeId;
 	}
 
 	public void setEdgeId(String edgeId)
 	{
-		this.edgeId = edgeId;
+		this._edgeId = edgeId;
 	}
 
 	public String getEdgeSource()
 	{
-		return edgeSource;
+		return _edgeSource;
 	}
 
 	public void setEdgeSource(String edgeSource)
 	{
-		this.edgeSource = edgeSource;
+		this._edgeSource = edgeSource;
 	}
 
 	public String getEdgeSourcePort()
 	{
-		return edgeSourcePort;
+		return _edgeSourcePort;
 	}
 
 	public void setEdgeSourcePort(String edgeSourcePort)
 	{
-		this.edgeSourcePort = edgeSourcePort;
+		this._edgeSourcePort = edgeSourcePort;
 	}
 
 	public String getEdgeTarget()
 	{
-		return edgeTarget;
+		return _edgeTarget;
 	}
 
 	public void setEdgeTarget(String edgeTarget)
 	{
-		this.edgeTarget = edgeTarget;
+		this._edgeTarget = edgeTarget;
 	}
 
 	public String getEdgeTargetPort()
 	{
-		return edgeTargetPort;
+		return _edgeTargetPort;
 	}
 
 	public void setEdgeTargetPort(String edgeTargetPort)
 	{
-		this.edgeTargetPort = edgeTargetPort;
+		this._edgeTargetPort = edgeTargetPort;
 	}
 
 	public HashMap<String, GraphMlData> getEdgeDataMap()
 	{
-		return edgeDataMap;
+		return _edgeDataMap;
 	}
 
 	public void setEdgeDataMap(HashMap<String, GraphMlData> nodeEdgeMap)
 	{
-		this.edgeDataMap = nodeEdgeMap;
+		this._edgeDataMap = nodeEdgeMap;
 	}
 
 	public GraphMlData getEdgeData()
 	{
-		return edgeData;
+		return _edgeData;
 	}
 
 	public void setEdgeData(GraphMlData egdeData)
 	{
-		this.edgeData = egdeData;
+		this._edgeData = egdeData;
 	}
 
 	/**
@@ -169,29 +169,29 @@ public class GraphMlEdge
 	{
 		Element edge = document.createElement(GraphMlConstants.EDGE);
 		
-		if (!edgeId.equals(""))
+		if (!_edgeId.equals(""))
 		{
-			edge.setAttribute(GraphMlConstants.ID, edgeId);
+			edge.setAttribute(GraphMlConstants.ID, _edgeId);
 		}
-		edge.setAttribute(GraphMlConstants.EDGE_SOURCE, edgeSource);
-		edge.setAttribute(GraphMlConstants.EDGE_TARGET, edgeTarget);
+		edge.setAttribute(GraphMlConstants.EDGE_SOURCE, _edgeSource);
+		edge.setAttribute(GraphMlConstants.EDGE_TARGET, _edgeTarget);
 
-		if (!edgeSourcePort.equals(""))
+		if (!_edgeSourcePort.equals(""))
 		{
-			edge.setAttribute(GraphMlConstants.EDGE_SOURCE_PORT, edgeSourcePort);
+			edge.setAttribute(GraphMlConstants.EDGE_SOURCE_PORT, _edgeSourcePort);
 		}
 		
-		if (!edgeTargetPort.equals(""))
+		if (!_edgeTargetPort.equals(""))
 		{
-			edge.setAttribute(GraphMlConstants.EDGE_TARGET_PORT, edgeTargetPort);
+			edge.setAttribute(GraphMlConstants.EDGE_TARGET_PORT, _edgeTargetPort);
 		}
 		
-		if (!edgeDirected.equals(""))
+		if (!_edgeDirected.equals(""))
 		{
-			edge.setAttribute(GraphMlConstants.EDGE_DIRECTED, edgeDirected);
+			edge.setAttribute(GraphMlConstants.EDGE_DIRECTED, _edgeDirected);
 		}
 
-		Element dataElement = edgeData.generateEdgeElement(document);
+		Element dataElement = _edgeData.generateEdgeElement(document);
 		edge.appendChild(dataElement);
 
 		return edge;
@@ -207,13 +207,13 @@ public class GraphMlEdge
 		Hashtable<String, Object> styleMap = new Hashtable<String, Object>();
 
 		//Defines style of the edge.
-		if (edgeDirected.equals("true"))
+		if (_edgeDirected.equals("true"))
 		{
 			styleMap.put(Constants.STYLE_ENDARROW, Constants.ARROW_CLASSIC);
 
 			style = GraphMlUtils.getStyleString(styleMap, "=");
 		}
-		else if (edgeDirected.equals("false"))
+		else if (_edgeDirected.equals("false"))
 		{
 			styleMap.put(Constants.STYLE_ENDARROW, Constants.NONE);
 

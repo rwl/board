@@ -39,7 +39,7 @@ public class GraphHierarchyEdge extends GraphAbstractHierarchyCell
 	 * Whether or not the direction of this edge has been reversed
 	 * internally to create a DAG for the hierarchical layout
 	 */
-	protected boolean isReversed = false;
+	protected boolean _isReversed = false;
 
 	/**
 	 * Constructs a hierarchy edge
@@ -58,7 +58,7 @@ public class GraphHierarchyEdge extends GraphAbstractHierarchyCell
 		GraphHierarchyNode temp = source;
 		source = target;
 		target = temp;
-		isReversed = !isReversed;
+		_isReversed = !_isReversed;
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class GraphHierarchyEdge extends GraphAbstractHierarchyCell
 	 */
 	public boolean isReversed()
 	{
-		return isReversed;
+		return _isReversed;
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class GraphHierarchyEdge extends GraphAbstractHierarchyCell
 	 */
 	public void setReversed(boolean isReversed)
 	{
-		this.isReversed = isReversed;
+		this._isReversed = isReversed;
 	}
 
 	/**
@@ -85,26 +85,26 @@ public class GraphHierarchyEdge extends GraphAbstractHierarchyCell
 	@SuppressWarnings("unchecked")
 	public List<GraphAbstractHierarchyCell> getNextLayerConnectedCells(int layer)
 	{
-		if (nextLayerConnectedCells == null)
+		if (_nextLayerConnectedCells == null)
 		{
-			nextLayerConnectedCells = new ArrayList[temp.length];
+			_nextLayerConnectedCells = new ArrayList[temp.length];
 			
-			for (int i = 0; i < nextLayerConnectedCells.length; i++)
+			for (int i = 0; i < _nextLayerConnectedCells.length; i++)
 			{
-				nextLayerConnectedCells[i] = new ArrayList<GraphAbstractHierarchyCell>(2);
+				_nextLayerConnectedCells[i] = new ArrayList<GraphAbstractHierarchyCell>(2);
 				
-				if (i == nextLayerConnectedCells.length - 1)
+				if (i == _nextLayerConnectedCells.length - 1)
 				{
-					nextLayerConnectedCells[i].add(source);
+					_nextLayerConnectedCells[i].add(source);
 				}
 				else
 				{
-					nextLayerConnectedCells[i].add(this);
+					_nextLayerConnectedCells[i].add(this);
 				}
 			}
 		}
 		
-		return nextLayerConnectedCells[layer - minRank - 1];
+		return _nextLayerConnectedCells[layer - minRank - 1];
 	}
 
 	/**
@@ -115,26 +115,26 @@ public class GraphHierarchyEdge extends GraphAbstractHierarchyCell
 	@SuppressWarnings("unchecked")
 	public List<GraphAbstractHierarchyCell> getPreviousLayerConnectedCells(int layer)
 	{
-		if (previousLayerConnectedCells == null)
+		if (_previousLayerConnectedCells == null)
 		{
-			previousLayerConnectedCells = new ArrayList[temp.length];
+			_previousLayerConnectedCells = new ArrayList[temp.length];
 			
-			for (int i = 0; i < previousLayerConnectedCells.length; i++)
+			for (int i = 0; i < _previousLayerConnectedCells.length; i++)
 			{
-				previousLayerConnectedCells[i] = new ArrayList<GraphAbstractHierarchyCell>(2);
+				_previousLayerConnectedCells[i] = new ArrayList<GraphAbstractHierarchyCell>(2);
 				
 				if (i == 0)
 				{
-					previousLayerConnectedCells[i].add(target);
+					_previousLayerConnectedCells[i].add(target);
 				}
 				else
 				{
-					previousLayerConnectedCells[i].add(this);
+					_previousLayerConnectedCells[i].add(this);
 				}
 			}
 		}
 		
-		return previousLayerConnectedCells[layer - minRank - 1];
+		return _previousLayerConnectedCells[layer - minRank - 1];
 	}
 
 	/**

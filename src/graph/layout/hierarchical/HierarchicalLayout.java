@@ -35,88 +35,88 @@ public class HierarchicalLayout extends GraphLayout/*,
 JGraphLayout.Stoppable*/
 {
 	/** The root nodes of the layout */
-	protected List<Object> roots = null;
+	protected List<Object> _roots = null;
 
 	/**
 	 * Specifies if the parent should be resized after the layout so that it
 	 * contains all the child cells. Default is false. @See parentBorder.
 	 */
-	protected boolean resizeParent = true;
+	protected boolean _resizeParent = true;
 
 	/**
 	 * Specifies if the parnent should be moved if resizeParent is enabled.
 	 * Default is false. @See resizeParent.
 	 */
-	protected boolean moveParent = false;
+	protected boolean _moveParent = false;
 
 	/**
 	 * The border to be added around the children if the parent is to be
 	 * resized using resizeParent. Default is 0. @See resizeParent.
 	 */
-	protected int parentBorder = 0;
+	protected int _parentBorder = 0;
 
 	/**
 	 * The spacing buffer added between cells on the same layer
 	 */
-	protected double intraCellSpacing = 30.0;
+	protected double _intraCellSpacing = 30.0;
 
 	/**
 	 * The spacing buffer added between cell on adjacent layers
 	 */
-	protected double interRankCellSpacing = 50.0;
+	protected double _interRankCellSpacing = 50.0;
 
 	/**
 	 * The spacing buffer between unconnected hierarchies
 	 */
-	protected double interHierarchySpacing = 60.0;
+	protected double _interHierarchySpacing = 60.0;
 
 	/**
 	 * The distance between each parallel edge on each ranks for long edges
 	 */
-	protected double parallelEdgeSpacing = 10.0;
+	protected double _parallelEdgeSpacing = 10.0;
 
 	/**
 	 * The position of the root node(s) relative to the laid out graph in. 
 	 * Default is <code>SwingConstants.NORTH</code>, i.e. top-down.
 	 */
-	protected int orientation = SwingConstants.NORTH;
+	protected int _orientation = SwingConstants.NORTH;
 
 	/**
 	 *  Specifies if the STYLE_NOEDGESTYLE flag should be set on edges that are
 	 * modified by the result. Default is true.
 	 */
-	protected boolean disableEdgeStyle = true;
+	protected boolean _disableEdgeStyle = true;
 
 	/**
 	 * Whether or not to perform local optimisations and iterate multiple times
 	 * through the algorithm
 	 */
-	protected boolean fineTuning = true;
+	protected boolean _fineTuning = true;
 
 	/**
 	 * Whether or not to promote edges that terminate on vertices with
 	 * different but common ancestry to appear connected to the highest
 	 * siblings in the ancestry chains
 	 */
-	protected boolean promoteEdges = true;
+	protected boolean _promoteEdges = true;
 
 	/**
 	 * Whether or not to navigate edges whose terminal vertices 
 	 * have different parents but are in the same ancestry chain
 	 */
-	protected boolean traverseAncestors = true;
+	protected boolean _traverseAncestors = true;
 
 	/**
 	 * The internal model formed of the layout
 	 */
-	protected GraphHierarchyModel model = null;
+	protected GraphHierarchyModel _model = null;
 
 	/**
 	 * The layout progress bar
 	 */
 	//protected JGraphLayoutProgress progress = new JGraphLayoutProgress();
 	/** The logger for this class */
-	private static Logger logger = Logger
+	private static Logger _logger = Logger
 			.getLogger("com.jgraph.layout.hierarchical.JGraphHierarchicalLayout");
 
 	/**
@@ -138,7 +138,7 @@ JGraphLayout.Stoppable*/
 	public HierarchicalLayout(Graph graph, int orientation)
 	{
 		super(graph);
-		this.orientation = orientation;
+		this._orientation = orientation;
 	}
 
 	/**
@@ -146,7 +146,7 @@ JGraphLayout.Stoppable*/
 	 */
 	public GraphHierarchyModel getModel()
 	{
-		return model;
+		return _model;
 	}
 
 	/**
@@ -194,7 +194,7 @@ JGraphLayout.Stoppable*/
 			}
 		}
 
-		this.roots = roots;
+		this._roots = roots;
 
 		model.beginUpdate();
 		try
@@ -315,8 +315,8 @@ JGraphLayout.Stoppable*/
 					: graph.getView().getVisibleTerminal(edge, false);
 
 			if (((source != target) && ((target == cell && (parent == null || graph
-					.isValidAncestor(source, parent, traverseAncestors))) || (source == cell && (parent == null || graph
-					.isValidAncestor(target, parent, traverseAncestors))))))
+					.isValidAncestor(source, parent, _traverseAncestors))) || (source == cell && (parent == null || graph
+					.isValidAncestor(target, parent, _traverseAncestors))))))
 			{
 				result.add(edge);
 			}
@@ -336,11 +336,11 @@ JGraphLayout.Stoppable*/
 		List<Set<Object>> hierarchyVertices = new ArrayList<Set<Object>>();
 		Set<Object> allVertexSet = new LinkedHashSet<Object>();
 
-		if (this.roots == null && parent != null)
+		if (this._roots == null && parent != null)
 		{
 			Set<Object> filledVertexSet = filterDescendants(parent);
 
-			this.roots = new ArrayList<Object>();
+			this._roots = new ArrayList<Object>();
 
 			while (!filledVertexSet.isEmpty())
 			{
@@ -351,23 +351,23 @@ JGraphLayout.Stoppable*/
 					Set<Object> vertexSet = new LinkedHashSet<Object>();
 					hierarchyVertices.add(vertexSet);
 
-					traverse(root, true, null, allVertexSet, vertexSet,
+					_traverse(root, true, null, allVertexSet, vertexSet,
 							hierarchyVertices, filledVertexSet);
 				}
 
-				this.roots.addAll(candidateRoots);
+				this._roots.addAll(candidateRoots);
 			}
 		}
 		else
 		{
 			// Find vertex set as directed traversal from roots
 
-			for (int i = 0; i < roots.size(); i++)
+			for (int i = 0; i < _roots.size(); i++)
 			{
 				Set<Object> vertexSet = new LinkedHashSet<Object>();
 				hierarchyVertices.add(vertexSet);
 
-				traverse(roots.get(i), true, null, allVertexSet, vertexSet,
+				_traverse(_roots.get(i), true, null, allVertexSet, vertexSet,
 						hierarchyVertices, null);
 			}
 		}
@@ -384,8 +384,8 @@ JGraphLayout.Stoppable*/
 		{
 			Set<Object> vertexSet = iter.next();
 
-			this.model = new GraphHierarchyModel(this, vertexSet.toArray(),
-					roots, parent);
+			this._model = new GraphHierarchyModel(this, vertexSet.toArray(),
+					_roots, parent);
 
 			cycleStage(parent);
 			layeringStage();
@@ -409,7 +409,7 @@ JGraphLayout.Stoppable*/
 			result.add(cell);
 		}
 
-		if (this.traverseAncestors || cell == this.parent
+		if (this._traverseAncestors || cell == this.parent
 				&& model.isVisible(cell))
 		{
 			int childCount = model.getChildCount(cell);
@@ -438,7 +438,7 @@ JGraphLayout.Stoppable*/
 	 * null for the first step of the traversal.
 	 * @param allVertices Array of cell paths for the visited cells.
 	 */
-	protected void traverse(Object vertex, boolean directed, Object edge,
+	protected void _traverse(Object vertex, boolean directed, Object edge,
 			Set<Object> allVertices, Set<Object> currentComp,
 			List<Set<Object>> hierarchyVertices, Set<Object> filledVertexSet)
 	{
@@ -474,7 +474,7 @@ JGraphLayout.Stoppable*/
 						if (!directed || isSource)
 						{
 							Object next = view.getVisibleTerminal(e, !isSource);
-							traverse(next, directed, e, allVertices,
+							_traverse(next, directed, e, allVertices,
 									currentComp, hierarchyVertices,
 									filledVertexSet);
 						}
@@ -523,8 +523,8 @@ JGraphLayout.Stoppable*/
 	 */
 	public void layeringStage()
 	{
-		model.initialRank();
-		model.fixRanks();
+		_model.initialRank();
+		_model.fixRanks();
 	}
 
 	/**
@@ -543,12 +543,12 @@ JGraphLayout.Stoppable*/
 	public double placementStage(double initialX, Object parent)
 	{
 		CoordinateAssignment placementStage = new CoordinateAssignment(
-				this, intraCellSpacing, interRankCellSpacing, orientation,
-				initialX, parallelEdgeSpacing);
-		placementStage.setFineTuning(fineTuning);
+				this, _intraCellSpacing, _interRankCellSpacing, _orientation,
+				initialX, _parallelEdgeSpacing);
+		placementStage.setFineTuning(_fineTuning);
 		placementStage.execute(parent);
 
-		return placementStage.getLimitX() + interHierarchySpacing;
+		return placementStage.getLimitX() + _interHierarchySpacing;
 	}
 
 	/**
@@ -556,7 +556,7 @@ JGraphLayout.Stoppable*/
 	 */
 	public boolean isResizeParent()
 	{
-		return resizeParent;
+		return _resizeParent;
 	}
 
 	/**
@@ -564,7 +564,7 @@ JGraphLayout.Stoppable*/
 	 */
 	public void setResizeParent(boolean value)
 	{
-		resizeParent = value;
+		_resizeParent = value;
 	}
 
 	/**
@@ -572,7 +572,7 @@ JGraphLayout.Stoppable*/
 	 */
 	public boolean isMoveParent()
 	{
-		return moveParent;
+		return _moveParent;
 	}
 
 	/**
@@ -580,7 +580,7 @@ JGraphLayout.Stoppable*/
 	 */
 	public void setMoveParent(boolean value)
 	{
-		moveParent = value;
+		_moveParent = value;
 	}
 
 	/**
@@ -588,7 +588,7 @@ JGraphLayout.Stoppable*/
 	 */
 	public int getParentBorder()
 	{
-		return parentBorder;
+		return _parentBorder;
 	}
 
 	/**
@@ -596,7 +596,7 @@ JGraphLayout.Stoppable*/
 	 */
 	public void setParentBorder(int value)
 	{
-		parentBorder = value;
+		_parentBorder = value;
 	}
 
 	/**
@@ -604,7 +604,7 @@ JGraphLayout.Stoppable*/
 	 */
 	public double getIntraCellSpacing()
 	{
-		return intraCellSpacing;
+		return _intraCellSpacing;
 	}
 
 	/**
@@ -613,7 +613,7 @@ JGraphLayout.Stoppable*/
 	 */
 	public void setIntraCellSpacing(double intraCellSpacing)
 	{
-		this.intraCellSpacing = intraCellSpacing;
+		this._intraCellSpacing = intraCellSpacing;
 	}
 
 	/**
@@ -621,7 +621,7 @@ JGraphLayout.Stoppable*/
 	 */
 	public double getInterRankCellSpacing()
 	{
-		return interRankCellSpacing;
+		return _interRankCellSpacing;
 	}
 
 	/**
@@ -630,7 +630,7 @@ JGraphLayout.Stoppable*/
 	 */
 	public void setInterRankCellSpacing(double interRankCellSpacing)
 	{
-		this.interRankCellSpacing = interRankCellSpacing;
+		this._interRankCellSpacing = interRankCellSpacing;
 	}
 
 	/**
@@ -638,7 +638,7 @@ JGraphLayout.Stoppable*/
 	 */
 	public int getOrientation()
 	{
-		return orientation;
+		return _orientation;
 	}
 
 	/**
@@ -647,7 +647,7 @@ JGraphLayout.Stoppable*/
 	 */
 	public void setOrientation(int orientation)
 	{
-		this.orientation = orientation;
+		this._orientation = orientation;
 	}
 
 	/**
@@ -655,7 +655,7 @@ JGraphLayout.Stoppable*/
 	 */
 	public double getInterHierarchySpacing()
 	{
-		return interHierarchySpacing;
+		return _interHierarchySpacing;
 	}
 
 	/**
@@ -664,17 +664,17 @@ JGraphLayout.Stoppable*/
 	 */
 	public void setInterHierarchySpacing(double interHierarchySpacing)
 	{
-		this.interHierarchySpacing = interHierarchySpacing;
+		this._interHierarchySpacing = interHierarchySpacing;
 	}
 
 	public double getParallelEdgeSpacing()
 	{
-		return parallelEdgeSpacing;
+		return _parallelEdgeSpacing;
 	}
 
 	public void setParallelEdgeSpacing(double parallelEdgeSpacing)
 	{
-		this.parallelEdgeSpacing = parallelEdgeSpacing;
+		this._parallelEdgeSpacing = parallelEdgeSpacing;
 	}
 
 	/**
@@ -682,7 +682,7 @@ JGraphLayout.Stoppable*/
 	 */
 	public boolean isFineTuning()
 	{
-		return fineTuning;
+		return _fineTuning;
 	}
 
 	/**
@@ -691,7 +691,7 @@ JGraphLayout.Stoppable*/
 	 */
 	public void setFineTuning(boolean fineTuning)
 	{
-		this.fineTuning = fineTuning;
+		this._fineTuning = fineTuning;
 	}
 
 	/**
@@ -699,7 +699,7 @@ JGraphLayout.Stoppable*/
 	 */
 	public boolean isDisableEdgeStyle()
 	{
-		return disableEdgeStyle;
+		return _disableEdgeStyle;
 	}
 
 	/**
@@ -708,7 +708,7 @@ JGraphLayout.Stoppable*/
 	 */
 	public void setDisableEdgeStyle(boolean disableEdgeStyle)
 	{
-		this.disableEdgeStyle = disableEdgeStyle;
+		this._disableEdgeStyle = disableEdgeStyle;
 	}
 
 	/**
@@ -719,7 +719,7 @@ JGraphLayout.Stoppable*/
 	{
 		try
 		{
-			logger.setLevel(level);
+			_logger.setLevel(level);
 		}
 		catch (SecurityException e)
 		{

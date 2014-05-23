@@ -58,18 +58,18 @@ public class GraphSelectionModel extends EventSource
 	/**
 	 * Reference to the enclosing graph.
 	 */
-	protected Graph graph;
+	protected Graph _graph;
 
 	/**
 	 * Specifies if only one selected item at a time is allowed.
 	 * Default is false.
 	 */
-	protected boolean singleSelection = false;
+	protected boolean _singleSelection = false;
 
 	/**
 	 * Holds the selection cells.
 	 */
-	protected Set<Object> cells = new LinkedHashSet<Object>();
+	protected Set<Object> _cells = new LinkedHashSet<Object>();
 
 	/**
 	 * Constructs a new selection model for the specified graph.
@@ -78,7 +78,7 @@ public class GraphSelectionModel extends EventSource
 	 */
 	public GraphSelectionModel(Graph graph)
 	{
-		this.graph = graph;
+		this._graph = graph;
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class GraphSelectionModel extends EventSource
 	 */
 	public boolean isSingleSelection()
 	{
-		return singleSelection;
+		return _singleSelection;
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class GraphSelectionModel extends EventSource
 	 */
 	public void setSingleSelection(boolean singleSelection)
 	{
-		this.singleSelection = singleSelection;
+		this._singleSelection = singleSelection;
 	}
 
 	/**
@@ -105,7 +105,7 @@ public class GraphSelectionModel extends EventSource
 	 */
 	public boolean isSelected(Object cell)
 	{
-		return (cell == null) ? false : cells.contains(cell);
+		return (cell == null) ? false : _cells.contains(cell);
 	}
 
 	/**
@@ -113,7 +113,7 @@ public class GraphSelectionModel extends EventSource
 	 */
 	public boolean isEmpty()
 	{
-		return cells.isEmpty();
+		return _cells.isEmpty();
 	}
 
 	/**
@@ -121,7 +121,7 @@ public class GraphSelectionModel extends EventSource
 	 */
 	public int size()
 	{
-		return cells.size();
+		return _cells.size();
 	}
 
 	/**
@@ -129,7 +129,7 @@ public class GraphSelectionModel extends EventSource
 	 */
 	public void clear()
 	{
-		changeSelection(null, cells);
+		_changeSelection(null, _cells);
 	}
 
 	/**
@@ -137,7 +137,7 @@ public class GraphSelectionModel extends EventSource
 	 */
 	public Object getCell()
 	{
-		return (cells.isEmpty()) ? null : cells.iterator().next();
+		return (_cells.isEmpty()) ? null : _cells.iterator().next();
 	}
 
 	/**
@@ -145,7 +145,7 @@ public class GraphSelectionModel extends EventSource
 	 */
 	public Object[] getCells()
 	{
-		return cells.toArray();
+		return _cells.toArray();
 	}
 
 	/**
@@ -170,22 +170,22 @@ public class GraphSelectionModel extends EventSource
 	{
 		if (cells != null)
 		{
-			if (singleSelection)
+			if (_singleSelection)
 			{
-				cells = new Object[] { getFirstSelectableCell(cells) };
+				cells = new Object[] { _getFirstSelectableCell(cells) };
 			}
 
 			List<Object> tmp = new ArrayList<Object>(cells.length);
 
 			for (int i = 0; i < cells.length; i++)
 			{
-				if (graph.isCellSelectable(cells[i]))
+				if (_graph.isCellSelectable(cells[i]))
 				{
 					tmp.add(cells[i]);
 				}
 			}
 
-			changeSelection(tmp, this.cells);
+			_changeSelection(tmp, this._cells);
 		}
 		else
 		{
@@ -199,13 +199,13 @@ public class GraphSelectionModel extends EventSource
 	 * @param cells Array of cells to return the first selectable cell for.
 	 * @return Returns the first cell that may be selected.
 	 */
-	protected Object getFirstSelectableCell(Object[] cells)
+	protected Object _getFirstSelectableCell(Object[] cells)
 	{
 		if (cells != null)
 		{
 			for (int i = 0; i < cells.length; i++)
 			{
-				if (graph.isCellSelectable(cells[i]))
+				if (_graph.isCellSelectable(cells[i]))
 				{
 					return cells[i];
 				}
@@ -235,23 +235,23 @@ public class GraphSelectionModel extends EventSource
 		{
 			Collection<Object> remove = null;
 
-			if (singleSelection)
+			if (_singleSelection)
 			{
-				remove = this.cells;
-				cells = new Object[] { getFirstSelectableCell(cells) };
+				remove = this._cells;
+				cells = new Object[] { _getFirstSelectableCell(cells) };
 			}
 
 			List<Object> tmp = new ArrayList<Object>(cells.length);
 
 			for (int i = 0; i < cells.length; i++)
 			{
-				if (!isSelected(cells[i]) && graph.isCellSelectable(cells[i]))
+				if (!isSelected(cells[i]) && _graph.isCellSelectable(cells[i]))
 				{
 					tmp.add(cells[i]);
 				}
 			}
 
-			changeSelection(tmp, remove);
+			_changeSelection(tmp, remove);
 		}
 	}
 
@@ -283,14 +283,14 @@ public class GraphSelectionModel extends EventSource
 				}
 			}
 
-			changeSelection(null, tmp);
+			_changeSelection(null, tmp);
 		}
 	}
 
 	/**
 	 * 
 	 */
-	protected void changeSelection(Collection<Object> added,
+	protected void _changeSelection(Collection<Object> added,
 			Collection<Object> removed)
 	{
 		if ((added != null && !added.isEmpty())
@@ -308,22 +308,22 @@ public class GraphSelectionModel extends EventSource
 	/**
 	 * 
 	 */
-	protected void cellAdded(Object cell)
+	protected void _cellAdded(Object cell)
 	{
 		if (cell != null)
 		{
-			cells.add(cell);
+			_cells.add(cell);
 		}
 	}
 
 	/**
 	 * 
 	 */
-	protected void cellRemoved(Object cell)
+	protected void _cellRemoved(Object cell)
 	{
 		if (cell != null)
 		{
-			cells.remove(cell);
+			_cells.remove(cell);
 		}
 	}
 
@@ -369,7 +369,7 @@ public class GraphSelectionModel extends EventSource
 
 				while (it.hasNext())
 				{
-					model.cellRemoved(it.next());
+					model._cellRemoved(it.next());
 				}
 			}
 
@@ -379,7 +379,7 @@ public class GraphSelectionModel extends EventSource
 
 				while (it.hasNext())
 				{
-					model.cellAdded(it.next());
+					model._cellAdded(it.next());
 				}
 			}
 

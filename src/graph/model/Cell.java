@@ -51,36 +51,36 @@ public class Cell implements ICell, Cloneable, Serializable
 	/**
 	 * Holds the user object. Default is null.
 	 */
-	protected Object value;
+	protected Object _value;
 
 	/**
 	 * Holds the geometry. Default is null.
 	 */
-	protected Geometry geometry;
+	protected Geometry _geometry;
 
 	/**
 	 * Holds the style as a string of the form
 	 * stylename[;key=value]. Default is null.
 	 */
-	protected String style;
+	protected String _style;
 
 	/**
 	 * Specifies whether the cell is a vertex or edge and whether it is
 	 * connectable, visible and collapsed. Default values are false, false,
 	 * true, true and false respectively.
 	 */
-	protected boolean vertex = false, edge = false, connectable = true,
-			visible = true, collapsed = false;
+	protected boolean _vertex = false, _edge = false, _connectable = true,
+			_visible = true, _collapsed = false;
 
 	/**
 	 * Reference to the parent cell and source and target terminals for edges.
 	 */
-	protected ICell parent, source, target;
+	protected ICell _parent, _source, _target;
 
 	/**
 	 * Holds the child cells and connected edges.
 	 */
-	protected List<Object> children, edges;
+	protected List<Object> _children, _edges;
 
 	/**
 	 * Constructs a new cell with an empty user object.
@@ -136,7 +136,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 */
 	public Object getValue()
 	{
-		return value;
+		return _value;
 	}
 
 	/* (non-Javadoc)
@@ -144,7 +144,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 */
 	public void setValue(Object value)
 	{
-		this.value = value;
+		this._value = value;
 	}
 
 	/* (non-Javadoc)
@@ -152,7 +152,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 */
 	public Geometry getGeometry()
 	{
-		return geometry;
+		return _geometry;
 	}
 
 	/* (non-Javadoc)
@@ -160,7 +160,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 */
 	public void setGeometry(Geometry geometry)
 	{
-		this.geometry = geometry;
+		this._geometry = geometry;
 	}
 
 	/* (non-Javadoc)
@@ -168,7 +168,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 */
 	public String getStyle()
 	{
-		return style;
+		return _style;
 	}
 
 	/* (non-Javadoc)
@@ -176,7 +176,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 */
 	public void setStyle(String style)
 	{
-		this.style = style;
+		this._style = style;
 	}
 
 	/* (non-Javadoc)
@@ -184,7 +184,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 */
 	public boolean isVertex()
 	{
-		return vertex;
+		return _vertex;
 	}
 
 	/* (non-Javadoc)
@@ -192,7 +192,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 */
 	public void setVertex(boolean vertex)
 	{
-		this.vertex = vertex;
+		this._vertex = vertex;
 	}
 
 	/* (non-Javadoc)
@@ -200,7 +200,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 */
 	public boolean isEdge()
 	{
-		return edge;
+		return _edge;
 	}
 
 	/* (non-Javadoc)
@@ -208,7 +208,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 */
 	public void setEdge(boolean edge)
 	{
-		this.edge = edge;
+		this._edge = edge;
 	}
 
 	/* (non-Javadoc)
@@ -216,7 +216,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 */
 	public boolean isConnectable()
 	{
-		return connectable;
+		return _connectable;
 	}
 
 	/* (non-Javadoc)
@@ -224,7 +224,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 */
 	public void setConnectable(boolean connectable)
 	{
-		this.connectable = connectable;
+		this._connectable = connectable;
 	}
 
 	/* (non-Javadoc)
@@ -232,7 +232,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 */
 	public boolean isVisible()
 	{
-		return visible;
+		return _visible;
 	}
 
 	/* (non-Javadoc)
@@ -240,7 +240,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 */
 	public void setVisible(boolean visible)
 	{
-		this.visible = visible;
+		this._visible = visible;
 	}
 
 	/* (non-Javadoc)
@@ -248,7 +248,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 */
 	public boolean isCollapsed()
 	{
-		return collapsed;
+		return _collapsed;
 	}
 
 	/* (non-Javadoc)
@@ -256,7 +256,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 */
 	public void setCollapsed(boolean collapsed)
 	{
-		this.collapsed = collapsed;
+		this._collapsed = collapsed;
 	}
 
 	/* (non-Javadoc)
@@ -264,7 +264,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 */
 	public ICell getParent()
 	{
-		return parent;
+		return _parent;
 	}
 
 	/* (non-Javadoc)
@@ -272,7 +272,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 */
 	public void setParent(ICell parent)
 	{
-		this.parent = parent;
+		this._parent = parent;
 	}
 
 	/**
@@ -280,7 +280,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 */
 	public ICell getSource()
 	{
-		return source;
+		return _source;
 	}
 
 	/**
@@ -290,7 +290,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 */
 	public void setSource(ICell source)
 	{
-		this.source = source;
+		this._source = source;
 	}
 
 	/**
@@ -298,7 +298,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 */
 	public ICell getTarget()
 	{
-		return target;
+		return _target;
 	}
 
 	/**
@@ -308,7 +308,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 */
 	public void setTarget(ICell target)
 	{
-		this.target = target;
+		this._target = target;
 	}
 
 	/* (non-Javadoc)
@@ -341,7 +341,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 */
 	public int getChildCount()
 	{
-		return (children != null) ? children.size() : 0;
+		return (_children != null) ? _children.size() : 0;
 	}
 
 	/* (non-Javadoc)
@@ -349,7 +349,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 */
 	public int getIndex(ICell child)
 	{
-		return (children != null) ? children.indexOf(child) : -1;
+		return (_children != null) ? _children.indexOf(child) : -1;
 	}
 
 	/* (non-Javadoc)
@@ -357,7 +357,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 */
 	public ICell getChildAt(int index)
 	{
-		return (children != null) ? (ICell) children.get(index) : null;
+		return (_children != null) ? (ICell) _children.get(index) : null;
 	}
 
 	/* (non-Javadoc)
@@ -385,14 +385,14 @@ public class Cell implements ICell, Cloneable, Serializable
 			child.removeFromParent();
 			child.setParent(this);
 
-			if (children == null)
+			if (_children == null)
 			{
-				children = new ArrayList<Object>();
-				children.add(child);
+				_children = new ArrayList<Object>();
+				_children.add(child);
 			}
 			else
 			{
-				children.add(index, child);
+				_children.add(index, child);
 			}
 		}
 
@@ -406,7 +406,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	{
 		ICell child = null;
 
-		if (children != null && index >= 0)
+		if (_children != null && index >= 0)
 		{
 			child = getChildAt(index);
 			remove(child);
@@ -420,9 +420,9 @@ public class Cell implements ICell, Cloneable, Serializable
 	 */
 	public ICell remove(ICell child)
 	{
-		if (child != null && children != null)
+		if (child != null && _children != null)
 		{
-			children.remove(child);
+			_children.remove(child);
 			child.setParent(null);
 		}
 
@@ -434,9 +434,9 @@ public class Cell implements ICell, Cloneable, Serializable
 	 */
 	public void removeFromParent()
 	{
-		if (parent != null)
+		if (_parent != null)
 		{
-			parent.remove(this);
+			_parent.remove(this);
 		}
 	}
 
@@ -445,7 +445,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 */
 	public int getEdgeCount()
 	{
-		return (edges != null) ? edges.size() : 0;
+		return (_edges != null) ? _edges.size() : 0;
 	}
 
 	/* (non-Javadoc)
@@ -453,7 +453,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 */
 	public int getEdgeIndex(ICell edge)
 	{
-		return (edges != null) ? edges.indexOf(edge) : -1;
+		return (_edges != null) ? _edges.indexOf(edge) : -1;
 	}
 
 	/* (non-Javadoc)
@@ -461,7 +461,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 */
 	public ICell getEdgeAt(int index)
 	{
-		return (edges != null) ? (ICell) edges.get(index) : null;
+		return (_edges != null) ? (ICell) _edges.get(index) : null;
 	}
 
 	/* (non-Javadoc)
@@ -474,15 +474,15 @@ public class Cell implements ICell, Cloneable, Serializable
 			edge.removeFromTerminal(isOutgoing);
 			edge.setTerminal(this, isOutgoing);
 
-			if (edges == null || edge.getTerminal(!isOutgoing) != this
-					|| !edges.contains(edge))
+			if (_edges == null || edge.getTerminal(!isOutgoing) != this
+					|| !_edges.contains(edge))
 			{
-				if (edges == null)
+				if (_edges == null)
 				{
-					edges = new ArrayList<Object>();
+					_edges = new ArrayList<Object>();
 				}
 
-				edges.add(edge);
+				_edges.add(edge);
 			}
 		}
 
@@ -496,9 +496,9 @@ public class Cell implements ICell, Cloneable, Serializable
 	{
 		if (edge != null)
 		{
-			if (edge.getTerminal(!isOutgoing) != this && edges != null)
+			if (edge.getTerminal(!isOutgoing) != this && _edges != null)
 			{
-				edges.remove(edge);
+				_edges.remove(edge);
 			}
 			
 			edge.setTerminal(null, isOutgoing);
@@ -593,8 +593,8 @@ public class Cell implements ICell, Cloneable, Serializable
 		clone.setParent(null);
 		clone.setSource(null);
 		clone.setTarget(null);
-		clone.children = null;
-		clone.edges = null;
+		clone._children = null;
+		clone._edges = null;
 
 		Geometry geometry = getGeometry();
 

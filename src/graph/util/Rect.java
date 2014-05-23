@@ -21,7 +21,7 @@ public class Rect extends Point2d
 	/**
 	 * Holds the width and the height. Default is 0.
 	 */
-	protected double width, height;
+	protected double _width, _height;
 
 	/**
 	 * Constructs a new rectangle at (0, 0) with the width and height set to 0.
@@ -74,7 +74,7 @@ public class Rect extends Point2d
 	 */
 	public double getWidth()
 	{
-		return width;
+		return _width;
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class Rect extends Point2d
 	 */
 	public void setWidth(double value)
 	{
-		width = value;
+		_width = value;
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class Rect extends Point2d
 	 */
 	public double getHeight()
 	{
-		return height;
+		return _height;
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class Rect extends Point2d
 	 */
 	public void setHeight(double value)
 	{
-		height = value;
+		_height = value;
 	}
 
 	/**
@@ -117,10 +117,10 @@ public class Rect extends Point2d
 	 */
 	public void setRect(double x, double y, double w, double h)
 	{
-	    this.x = x;
-	    this.y = y;
-	    this.width = w;
-	    this.height = h;
+	    this._x = x;
+	    this._y = y;
+	    this._width = w;
+	    this._height = h;
 	}
 
 	/**
@@ -130,15 +130,15 @@ public class Rect extends Point2d
 	{
 		if (rect != null)
 		{
-			double minX = Math.min(x, rect.x);
-			double minY = Math.min(y, rect.y);
-			double maxX = Math.max(x + width, rect.x + rect.width);
-			double maxY = Math.max(y + height, rect.y + rect.height);
+			double minX = Math.min(_x, rect._x);
+			double minY = Math.min(_y, rect._y);
+			double maxX = Math.max(_x + _width, rect._x + rect._width);
+			double maxY = Math.max(_y + _height, rect._y + rect._height);
 
-			x = minX;
-			y = minY;
-			width = maxX - minX;
-			height = maxY - minY;
+			_x = minX;
+			_y = minY;
+			_width = maxX - minX;
+			_height = maxY - minY;
 		}
 	}
 
@@ -171,10 +171,10 @@ public class Rect extends Point2d
 	 */
 	public void grow(double amount)
 	{
-		x -= amount;
-		y -= amount;
-		width += 2 * amount;
-		height += 2 * amount;
+		_x -= amount;
+		_y -= amount;
+		_width += 2 * amount;
+		_height += 2 * amount;
 	}
 
 	/**
@@ -186,8 +186,8 @@ public class Rect extends Point2d
 	 */
 	public boolean contains(double x, double y)
 	{
-		return (this.x <= x && this.x + width >= x && this.y <= y && this.y
-				+ height >= y);
+		return (this._x <= x && this._x + _width >= x && this._y <= y && this._y
+				+ _height >= y);
 	}
 
 	/**
@@ -205,23 +205,23 @@ public class Rect extends Point2d
 	{
 		Point2d result = null;
 
-		result = Utils.intersection(x, y, x + width, y, x0, y0, x1, y1);
+		result = Utils.intersection(_x, _y, _x + _width, _y, x0, y0, x1, y1);
 
 		if (result == null)
 		{
-			result = Utils.intersection(x + width, y, x + width, y + height,
+			result = Utils.intersection(_x + _width, _y, _x + _width, _y + _height,
 					x0, y0, x1, y1);
 		}
 
 		if (result == null)
 		{
-			result = Utils.intersection(x + width, y + height, x, y + height,
+			result = Utils.intersection(_x + _width, _y + _height, _x, _y + _height,
 					x0, y0, x1, y1);
 		}
 
 		if (result == null)
 		{
-			result = Utils.intersection(x, y, x, y + height, x0, y0, x1, y1);
+			result = Utils.intersection(_x, _y, _x, _y + _height, x0, y0, x1, y1);
 		}
 
 		return result;
@@ -234,10 +234,10 @@ public class Rect extends Point2d
 	 */
 	public Rectangle getRectangle()
 	{
-		int ix = (int) Math.round(x);
-		int iy = (int) Math.round(y);
-		int iw = (int) Math.round(width - ix + x);
-		int ih = (int) Math.round(height - iy + y);
+		int ix = (int) Math.round(_x);
+		int iy = (int) Math.round(_y);
+		int iw = (int) Math.round(_width - ix + _x);
+		int ih = (int) Math.round(_height - iy + _y);
 
 		return new Rectangle(ix, iy, iw, ih);
 	}
@@ -281,7 +281,7 @@ public class Rect extends Point2d
 	 */
 	public String toString()
 	{
-		return getClass().getName() + "[x=" + x + ",y=" + y + ",w=" + width
-				+ ",h=" + height + "]";
+		return getClass().getName() + "[x=" + _x + ",y=" + _y + ",w=" + _width
+				+ ",h=" + _height + "]";
 	}
 }

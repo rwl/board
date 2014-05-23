@@ -16,27 +16,27 @@ public class Curve
 	/**
 	 * A collection of arrays of curve points
 	 */
-	protected Map<String, Point2d[]> points;
+	protected Map<String, Point2d[]> _points;
 
 	// Rectangle just completely enclosing branch and label/
-	protected double minXBounds = 10000000;
+	protected double _minXBounds = 10000000;
 
-	protected double maxXBounds = 0;
+	protected double _maxXBounds = 0;
 
-	protected double minYBounds = 10000000;
+	protected double _minYBounds = 10000000;
 
-	protected double maxYBounds = 0;
+	protected double _maxYBounds = 0;
 
 	/**
 	 * An array of arrays of intervals. These intervals define the distance
 	 * along the edge (0 to 1) that each point lies
 	 */
-	protected Map<String, double[]> intervals;
+	protected Map<String, double[]> _intervals;
 
 	/**
 	 * The curve lengths of the curves
 	 */
-	protected Map<String, Double> curveLengths;
+	protected Map<String, Double> _curveLengths;
 
 	/**
 	 * Defines the key for the central curve index
@@ -61,7 +61,7 @@ public class Curve
 	 * whatever value is contained in this variable. Changes to it after that point 
 	 * will have no effect.
 	 */
-	protected double labelBuffer = Constants.DEFAULT_LABEL_BUFFER;
+	protected double _labelBuffer = Constants.DEFAULT_LABEL_BUFFER;
 
 	/**
 	 * The points this curve is drawn through. These are typically control
@@ -75,14 +75,14 @@ public class Curve
 	/**
 	 * Whether or not the curve currently holds valid values
 	 */
-	protected boolean valid = false;
+	protected boolean _valid = false;
 
 	/**
 	 * 
 	 */
 	public void setLabelBuffer(double buffer)
 	{
-		labelBuffer = buffer;
+		_labelBuffer = buffer;
 	}
 
 	/**
@@ -90,12 +90,12 @@ public class Curve
 	 */
 	public Rect getBounds()
 	{
-		if (!valid)
+		if (!_valid)
 		{
-			createCoreCurve();
+			_createCoreCurve();
 		}
-		return new Rect(minXBounds, minYBounds, maxXBounds - minXBounds,
-				maxYBounds - minYBounds);
+		return new Rect(_minXBounds, _minYBounds, _maxXBounds - _minXBounds,
+				_maxYBounds - _minYBounds);
 	}
 
 	/**
@@ -131,7 +131,7 @@ public class Curve
 	 * Calculates the index of the lower point on the segment
 	 * that contains the point <i>distance</i> along the 
 	 */
-	protected int getLowerIndexOfSegment(String index, double distance)
+	protected int _getLowerIndexOfSegment(String index, double distance)
 	{
 		double[] curveIntervals = getIntervals(index);
 
@@ -250,7 +250,7 @@ public class Curve
 				return new Line(point.getX(), point.getY(), new Point2d(1, 0));
 			}
 
-			int lowerLimit = getLowerIndexOfSegment(index, distance);
+			int lowerLimit = _getLowerIndexOfSegment(index, distance);
 			Point2d firstPointOfSeg = pointsCurve[lowerLimit];
 			double segVectorX = pointsCurve[lowerLimit + 1].getX()
 					- firstPointOfSeg.getX();
@@ -299,7 +299,7 @@ public class Curve
 				return new Point2d[] { new Point2d(point.getX(), point.getY()) };
 			}
 
-			int lowerLimit = getLowerIndexOfSegment(index, start);
+			int lowerLimit = _getLowerIndexOfSegment(index, start);
 			Point2d firstPointOfSeg = pointsCurve[lowerLimit];
 			double segVectorX = pointsCurve[lowerLimit + 1].getX()
 					- firstPointOfSeg.getX();
@@ -419,11 +419,11 @@ public class Curve
 
 		if (pointsCurve != null && pointsCurve.length > 1)
 		{
-			int crossingSeg = intersectRectPerimeterSeg(index, rect);
+			int crossingSeg = _intersectRectPerimeterSeg(index, rect);
 
 			if (crossingSeg != -1)
 			{
-				result = intersectRectPerimeterPoint(index, rect, crossingSeg);
+				result = _intersectRectPerimeterPoint(index, rect, crossingSeg);
 			}
 		}
 
@@ -451,12 +451,12 @@ public class Curve
 
 		if (pointsCurve != null && pointsCurve.length > 1)
 		{
-			int segIndex = intersectRectPerimeterSeg(index, rect);
+			int segIndex = _intersectRectPerimeterSeg(index, rect);
 			Point2d intersectPoint = null;
 
 			if (segIndex != -1)
 			{
-				intersectPoint = intersectRectPerimeterPoint(index, rect,
+				intersectPoint = _intersectRectPerimeterPoint(index, rect,
 						segIndex);
 			}
 
@@ -491,7 +491,7 @@ public class Curve
 	 */
 	public Point2d collisionMove(String index, Rect rect, double buffer)
 	{
-		int hitSeg = intersectRectPerimeterSeg(index, rect);
+		int hitSeg = _intersectRectPerimeterSeg(index, rect);
 
 		// Could test for a second hit (the rect exit, unless the same 
 		// segment is entry and exit) and allow for that in movement.
@@ -565,9 +565,9 @@ public class Curve
 	 * the given rectangle, if it does so. If it does not intersect, 
 	 * -1 is returned
 	 */
-	protected int intersectRectPerimeterSeg(String index, Rect rect)
+	protected int _intersectRectPerimeterSeg(String index, Rect rect)
 	{
-		return intersectRectPerimeterSeg(index, rect, 1);
+		return _intersectRectPerimeterSeg(index, rect, 1);
 	}
 
 	/**
@@ -584,7 +584,7 @@ public class Curve
 	 * the given rectangle, if it does so. If it does not intersect, 
 	 * -1 is returned
 	 */
-	protected int intersectRectPerimeterSeg(String index, Rect rect,
+	protected int _intersectRectPerimeterSeg(String index, Rect rect,
 			int startSegment)
 	{
 		Point2d[] pointsCurve = getCurvePoints(index);
@@ -618,7 +618,7 @@ public class Curve
 	 * of the given rectangle, if it does so. If it does not intersect, 
 	 * null is returned.
 	 */
-	protected Point2d intersectRectPerimeterPoint(String curveIndex,
+	protected Point2d _intersectRectPerimeterPoint(String curveIndex,
 			Rect rect, int indexSeg)
 	{
 		Point2d result = null;
@@ -784,11 +784,11 @@ public class Curve
 	 * Creates the core curve that is based on the guide points passed into
 	 * this class instance
 	 */
-	protected void createCoreCurve()
+	protected void _createCoreCurve()
 	{
 		// Curve is marked invalid until all of the error situations have
 		// been checked
-		valid = false;
+		_valid = false;
 
 		if (guidePoints == null || guidePoints.isEmpty())
 		{
@@ -804,8 +804,8 @@ public class Curve
 		}
 
 		// Reset the cached bounds value
-		minXBounds = minYBounds = 10000000;
-		maxXBounds = maxYBounds = 0;
+		_minXBounds = _minYBounds = 10000000;
+		_maxXBounds = _maxYBounds = 0;
 
 		Spline spline = new Spline(guidePoints);
 
@@ -868,7 +868,7 @@ public class Curve
 						endControlPoint.getY());
 				coreCurve.add(finalPoint);
 				coreIntervals.add(t);
-				updateBounds(endControlPoint.getX(), endControlPoint.getY());
+				_updateBounds(endControlPoint.getX(), endControlPoint.getY());
 				break;
 			}
 			// Whether or not the accuracy of the current point is acceptable
@@ -963,7 +963,7 @@ public class Curve
 				Point2d newPoint = new Point2d(newX, newY);
 				coreCurve.add(newPoint);
 				coreIntervals.add(t);
-				updateBounds(newX, newY);
+				_updateBounds(newX, newY);
 			}
 		}
 
@@ -981,10 +981,10 @@ public class Curve
 			corePoints[count++] = point;
 		}
 
-		points = new Hashtable<String, Point2d[]>();
-		curveLengths = new Hashtable<String, Double>();
-		points.put(CORE_CURVE, corePoints);
-		curveLengths.put(CORE_CURVE, lengthSpline);
+		_points = new Hashtable<String, Point2d[]>();
+		_curveLengths = new Hashtable<String, Double>();
+		_points.put(CORE_CURVE, corePoints);
+		_curveLengths.put(CORE_CURVE, lengthSpline);
 
 		double[] coreIntervalsArray = new double[coreIntervals.size()];
 		count = 0;
@@ -994,10 +994,10 @@ public class Curve
 			coreIntervalsArray[count++] = tempInterval.doubleValue();
 		}
 
-		intervals = new Hashtable<String, double[]>();
-		intervals.put(CORE_CURVE, coreIntervalsArray);
+		_intervals = new Hashtable<String, double[]>();
+		_intervals.put(CORE_CURVE, coreIntervalsArray);
 
-		valid = true;
+		_valid = true;
 	}
 
 	/** Whether or not the label curve starts from the end target
@@ -1006,7 +1006,7 @@ public class Curve
 	 */
 	public boolean isLabelReversed()
 	{
-		if (valid)
+		if (_valid)
 		{
 			Point2d[] centralCurve = getCurvePoints(CORE_CURVE);
 
@@ -1025,11 +1025,11 @@ public class Curve
 		return false;
 	}
 
-	protected void createLabelCurve()
+	protected void _createLabelCurve()
 	{
 		// Place the label on the "high" side of the vector
 		// joining the start and end points of the curve
-		Point2d[] currentCurve = getBaseLabelCurve();
+		Point2d[] currentCurve = _getBaseLabelCurve();
 
 		boolean labelReversed = isLabelReversed();
 
@@ -1068,16 +1068,16 @@ public class Curve
 				// Special case to work out the very end points at
 				// the start of the curve
 				Point2d startPoint = new Point2d(segEndPoint.getX()
-						- (normSegVectorY * labelBuffer), segEndPoint.getY()
-						+ (normSegVectorX * labelBuffer));
+						- (normSegVectorY * _labelBuffer), segEndPoint.getY()
+						+ (normSegVectorX * _labelBuffer));
 				labelCurvePoints.add(startPoint);
-				updateBounds(startPoint.getX(), startPoint.getY());
+				_updateBounds(startPoint.getX(), startPoint.getY());
 			}
 
-			double pointX = centerSegX - (normSegVectorY * labelBuffer);
-			double pointY = centerSegY + (normSegVectorX * labelBuffer);
+			double pointX = centerSegX - (normSegVectorY * _labelBuffer);
+			double pointY = centerSegY + (normSegVectorX * _labelBuffer);
 			Point2d labelCurvePoint = new Point2d(pointX, pointY);
-			updateBounds(pointX, pointY);
+			_updateBounds(pointX, pointY);
 			labelCurvePoints.add(labelCurvePoint);
 
 			if (i == currentCurve.length - 1)
@@ -1085,29 +1085,29 @@ public class Curve
 				// Special case to work out the very end points at
 				// the start of the curve
 				Point2d endPoint = new Point2d(segStartPoint.getX()
-						- (normSegVectorY * labelBuffer), segStartPoint.getY()
-						+ (normSegVectorX * labelBuffer));
+						- (normSegVectorY * _labelBuffer), segStartPoint.getY()
+						+ (normSegVectorX * _labelBuffer));
 				labelCurvePoints.add(endPoint);
-				updateBounds(endPoint.getX(), endPoint.getY());
+				_updateBounds(endPoint.getX(), endPoint.getY());
 			}
 		}
 
 		Point2d[] tmpPoints = new Point2d[labelCurvePoints.size()];
-		points.put(LABEL_CURVE, labelCurvePoints.toArray(tmpPoints));
-		populateIntervals(LABEL_CURVE);
+		_points.put(LABEL_CURVE, labelCurvePoints.toArray(tmpPoints));
+		_populateIntervals(LABEL_CURVE);
 	}
 
 	/**
 	 * Returns the curve the label curve is too be based on
 	 */
-	protected Point2d[] getBaseLabelCurve()
+	protected Point2d[] _getBaseLabelCurve()
 	{
 		return getCurvePoints(CORE_CURVE);
 	}
 
-	protected void populateIntervals(String index)
+	protected void _populateIntervals(String index)
 	{
-		Point2d[] currentCurve = points.get(index);
+		Point2d[] currentCurve = _points.get(index);
 
 		double[] newIntervals = new double[currentCurve.length];
 
@@ -1143,8 +1143,8 @@ public class Curve
 			}
 		}
 
-		intervals.put(index, newIntervals);
-		curveLengths.put(index, totalLength);
+		_intervals.put(index, newIntervals);
+		_curveLengths.put(index, totalLength);
 	}
 
 	/**
@@ -1216,7 +1216,7 @@ public class Curve
 				{
 					pointsChanged = false;
 					// Translate all stored points by the translation amounts
-					Collection<Point2d[]> curves = points.values();
+					Collection<Point2d[]> curves = _points.values();
 
 					// Update all geometry information held by the curve
 					// That is, all the curve points, the guide points
@@ -1231,10 +1231,10 @@ public class Curve
 					}
 
 					guidePoints = new ArrayList<Point2d>(newPoints);
-					minXBounds += transX;
-					minYBounds += transY;
-					maxXBounds += transX;
-					maxYBounds += transY;
+					_minXBounds += transX;
+					_minYBounds += transY;
+					_maxXBounds += transX;
+					_maxYBounds += transY;
 				}
 				else
 				{
@@ -1246,8 +1246,8 @@ public class Curve
 		if (pointsChanged)
 		{
 			guidePoints = new ArrayList<Point2d>(newPoints);
-			points = new Hashtable<String, Point2d[]>();
-			valid = false;
+			_points = new Hashtable<String, Point2d[]>();
+			_valid = false;
 		}
 	}
 
@@ -1261,14 +1261,14 @@ public class Curve
 	 */
 	public Point2d[] getCurvePoints(String index)
 	{
-		if (validateCurve())
+		if (_validateCurve())
 		{
-			if (points.get(LABEL_CURVE) == null && index == LABEL_CURVE)
+			if (_points.get(LABEL_CURVE) == null && index == LABEL_CURVE)
 			{
-				createLabelCurve();
+				_createLabelCurve();
 			}
 
-			return points.get(index);
+			return _points.get(index);
 		}
 
 		return null;
@@ -1276,14 +1276,14 @@ public class Curve
 
 	public double[] getIntervals(String index)
 	{
-		if (validateCurve())
+		if (_validateCurve())
 		{
-			if (points.get(LABEL_CURVE) == null && index == LABEL_CURVE)
+			if (_points.get(LABEL_CURVE) == null && index == LABEL_CURVE)
 			{
-				createLabelCurve();
+				_createLabelCurve();
 			}
 
-			return intervals.get(index);
+			return _intervals.get(index);
 		}
 
 		return null;
@@ -1291,14 +1291,14 @@ public class Curve
 
 	public double getCurveLength(String index)
 	{
-		if (validateCurve())
+		if (_validateCurve())
 		{
-			if (intervals.get(index) == null)
+			if (_intervals.get(index) == null)
 			{
-				createLabelCurve();
+				_createLabelCurve();
 			}
 
-			return curveLengths.get(index);
+			return _curveLengths.get(index);
 		}
 
 		return 0;
@@ -1308,26 +1308,26 @@ public class Curve
 	 * Method must be called before any attempt to access curve information
 	 * @return whether or not the curve may be used
 	 */
-	protected boolean validateCurve()
+	protected boolean _validateCurve()
 	{
-		if (!valid)
+		if (!_valid)
 		{
-			createCoreCurve();
+			_createCoreCurve();
 		}
 
-		return valid;
+		return _valid;
 	}
 
 	/**
 	 * Updates the total bounds of this curve, increasing any dimensions,
 	 * if necessary, to fit in the specified point
 	 */
-	protected void updateBounds(double pointX, double pointY)
+	protected void _updateBounds(double pointX, double pointY)
 	{
-		minXBounds = Math.min(minXBounds, pointX);
-		maxXBounds = Math.max(maxXBounds, pointX);
-		minYBounds = Math.min(minYBounds, pointY);
-		maxYBounds = Math.max(maxYBounds, pointY);
+		_minXBounds = Math.min(_minXBounds, pointX);
+		_maxXBounds = Math.max(_maxXBounds, pointX);
+		_minYBounds = Math.min(_minYBounds, pointY);
+		_maxYBounds = Math.max(_maxYBounds, pointY);
 	}
 
 	/**

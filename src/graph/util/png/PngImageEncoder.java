@@ -72,7 +72,7 @@ import java.util.zip.DeflaterOutputStream;
 class CRC
 {
 
-	private static int[] crcTable = new int[256];
+	private static int[] _crcTable = new int[256];
 
 	static
 	{
@@ -91,7 +91,7 @@ class CRC
 					c >>>= 1;
 				}
 
-				crcTable[n] = c;
+				_crcTable[n] = c;
 			}
 		}
 	}
@@ -102,7 +102,7 @@ class CRC
 
 		for (int n = 0; n < len; n++)
 		{
-			c = crcTable[(c ^ data[off + n]) & 0xff] ^ (c >>> 8);
+			c = _crcTable[(c ^ data[off + n]) & 0xff] ^ (c >>> 8);
 		}
 
 		return c;
@@ -112,102 +112,102 @@ class CRC
 class ChunkStream extends OutputStream implements DataOutput
 {
 
-	private String type;
+	private String _type;
 
-	private ByteArrayOutputStream baos;
+	private ByteArrayOutputStream _baos;
 
-	private DataOutputStream dos;
+	private DataOutputStream _dos;
 
 	ChunkStream(String type)
 	{
-		this.type = type;
+		this._type = type;
 
-		this.baos = new ByteArrayOutputStream();
-		this.dos = new DataOutputStream(baos);
+		this._baos = new ByteArrayOutputStream();
+		this._dos = new DataOutputStream(_baos);
 	}
 
 	public void write(byte[] b) throws IOException
 	{
-		dos.write(b);
+		_dos.write(b);
 	}
 
 	public void write(byte[] b, int off, int len) throws IOException
 	{
-		dos.write(b, off, len);
+		_dos.write(b, off, len);
 	}
 
 	public void write(int b) throws IOException
 	{
-		dos.write(b);
+		_dos.write(b);
 	}
 
 	public void writeBoolean(boolean v) throws IOException
 	{
-		dos.writeBoolean(v);
+		_dos.writeBoolean(v);
 	}
 
 	public void writeByte(int v) throws IOException
 	{
-		dos.writeByte(v);
+		_dos.writeByte(v);
 	}
 
 	public void writeBytes(String s) throws IOException
 	{
-		dos.writeBytes(s);
+		_dos.writeBytes(s);
 	}
 
 	public void writeChar(int v) throws IOException
 	{
-		dos.writeChar(v);
+		_dos.writeChar(v);
 	}
 
 	public void writeChars(String s) throws IOException
 	{
-		dos.writeChars(s);
+		_dos.writeChars(s);
 	}
 
 	public void writeDouble(double v) throws IOException
 	{
-		dos.writeDouble(v);
+		_dos.writeDouble(v);
 	}
 
 	public void writeFloat(float v) throws IOException
 	{
-		dos.writeFloat(v);
+		_dos.writeFloat(v);
 	}
 
 	public void writeInt(int v) throws IOException
 	{
-		dos.writeInt(v);
+		_dos.writeInt(v);
 	}
 
 	public void writeLong(long v) throws IOException
 	{
-		dos.writeLong(v);
+		_dos.writeLong(v);
 	}
 
 	public void writeShort(int v) throws IOException
 	{
-		dos.writeShort(v);
+		_dos.writeShort(v);
 	}
 
 	public void writeUTF(String str) throws IOException
 	{
-		dos.writeUTF(str);
+		_dos.writeUTF(str);
 	}
 
 	public void writeToStream(DataOutputStream output) throws IOException
 	{
 		byte[] typeSignature = new byte[4];
-		typeSignature[0] = (byte) type.charAt(0);
-		typeSignature[1] = (byte) type.charAt(1);
-		typeSignature[2] = (byte) type.charAt(2);
-		typeSignature[3] = (byte) type.charAt(3);
+		typeSignature[0] = (byte) _type.charAt(0);
+		typeSignature[1] = (byte) _type.charAt(1);
+		typeSignature[2] = (byte) _type.charAt(2);
+		typeSignature[3] = (byte) _type.charAt(3);
 
-		dos.flush();
-		baos.flush();
+		_dos.flush();
+		_baos.flush();
 
-		byte[] data = baos.toByteArray();
+		byte[] data = _baos.toByteArray();
 		int len = data.length;
 
 		output.writeInt(len);
@@ -229,15 +229,15 @@ class ChunkStream extends OutputStream implements DataOutput
 	public void close() throws IOException
 	{
 
-		if (baos != null)
+		if (_baos != null)
 		{
-			baos.close();
-			baos = null;
+			_baos.close();
+			_baos = null;
 		}
-		if (dos != null)
+		if (_dos != null)
 		{
-			dos.close();
-			dos = null;
+			_dos.close();
+			_dos = null;
 		}
 	}
 }
@@ -245,19 +245,19 @@ class ChunkStream extends OutputStream implements DataOutput
 class IDATOutputStream extends FilterOutputStream
 {
 
-	private static final byte[] typeSignature = { (byte) 'I', (byte) 'D',
+	private static final byte[] _typeSignature = { (byte) 'I', (byte) 'D',
 			(byte) 'A', (byte) 'T' };
 
-	private int bytesWritten = 0;
+	private int _bytesWritten = 0;
 
-	private int segmentLength;
+	private int _segmentLength;
 
 	byte[] buffer;
 
 	public IDATOutputStream(OutputStream output, int segmentLength)
 	{
 		super(output);
-		this.segmentLength = segmentLength;
+		this._segmentLength = segmentLength;
 		this.buffer = new byte[segmentLength];
 	}
 
@@ -266,7 +266,7 @@ class IDATOutputStream extends FilterOutputStream
 		flush();
 	}
 
-	private void writeInt(int x) throws IOException
+	private void _writeInt(int x) throws IOException
 	{
 		out.write(x >> 24);
 		out.write((x >> 16) & 0xff);
@@ -277,21 +277,21 @@ class IDATOutputStream extends FilterOutputStream
 	public void flush() throws IOException
 	{
 		// Length
-		writeInt(bytesWritten);
+		_writeInt(_bytesWritten);
 		// 'IDAT' signature
-		out.write(typeSignature);
+		out.write(_typeSignature);
 		// Data
-		out.write(buffer, 0, bytesWritten);
+		out.write(buffer, 0, _bytesWritten);
 
 		int crc = 0xffffffff;
-		crc = CRC.updateCRC(crc, typeSignature, 0, 4);
-		crc = CRC.updateCRC(crc, buffer, 0, bytesWritten);
+		crc = CRC.updateCRC(crc, _typeSignature, 0, 4);
+		crc = CRC.updateCRC(crc, buffer, 0, _bytesWritten);
 
 		// CRC
-		writeInt(crc ^ 0xffffffff);
+		_writeInt(crc ^ 0xffffffff);
 
 		// Reset buffer
-		bytesWritten = 0;
+		_bytesWritten = 0;
 	}
 
 	public void write(byte[] b) throws IOException
@@ -303,13 +303,13 @@ class IDATOutputStream extends FilterOutputStream
 	{
 		while (len > 0)
 		{
-			int bytes = Math.min(segmentLength - bytesWritten, len);
-			System.arraycopy(b, off, buffer, bytesWritten, bytes);
+			int bytes = Math.min(_segmentLength - _bytesWritten, len);
+			System.arraycopy(b, off, buffer, _bytesWritten, bytes);
 			off += bytes;
 			len -= bytes;
-			bytesWritten += bytes;
+			_bytesWritten += bytes;
 
-			if (bytesWritten == segmentLength)
+			if (_bytesWritten == _segmentLength)
 			{
 				flush();
 			}
@@ -318,8 +318,8 @@ class IDATOutputStream extends FilterOutputStream
 
 	public void write(int b) throws IOException
 	{
-		buffer[bytesWritten++] = (byte) b;
-		if (bytesWritten == segmentLength)
+		buffer[_bytesWritten++] = (byte) b;
+		if (_bytesWritten == _segmentLength)
 		{
 			flush();
 		}
@@ -758,20 +758,20 @@ public class PngImageEncoder
 			{
 				case PNG_COLOR_GRAY:
 				case PNG_COLOR_GRAY_ALPHA:
-					int gray = ((PngEncodeParam.Gray) param)
+					int gray = ((Gray) param)
 							.getBackgroundGray();
 					cs.writeShort(gray);
 					break;
 
 				case PNG_COLOR_PALETTE:
-					int index = ((PngEncodeParam.Palette) param)
+					int index = ((Palette) param)
 							.getBackgroundPaletteIndex();
 					cs.writeByte(index);
 					break;
 
 				case PNG_COLOR_RGB:
 				case PNG_COLOR_RGB_ALPHA:
-					int[] rgb = ((PngEncodeParam.RGB) param)
+					int[] rgb = ((RGB) param)
 							.getBackgroundRGB();
 					cs.writeShort(rgb[0]);
 					cs.writeShort(rgb[1]);
@@ -808,23 +808,23 @@ public class PngImageEncoder
 		{
 			ChunkStream cs = new ChunkStream("tRNS");
 
-			if (param instanceof PngEncodeParam.Palette)
+			if (param instanceof Palette)
 			{
-				byte[] t = ((PngEncodeParam.Palette) param)
+				byte[] t = ((Palette) param)
 						.getPaletteTransparency();
 				for (int i = 0; i < t.length; i++)
 				{
 					cs.writeByte(t[i]);
 				}
 			}
-			else if (param instanceof PngEncodeParam.Gray)
+			else if (param instanceof Gray)
 			{
-				int t = ((PngEncodeParam.Gray) param).getTransparentGray();
+				int t = ((Gray) param).getTransparentGray();
 				cs.writeShort(t);
 			}
-			else if (param instanceof PngEncodeParam.RGB)
+			else if (param instanceof RGB)
 			{
-				int[] t = ((PngEncodeParam.RGB) param).getTransparentRGB();
+				int[] t = ((RGB) param).getTransparentRGB();
 				cs.writeShort(t[0]);
 				cs.writeShort(t[1]);
 				cs.writeShort(t[2]);
@@ -992,10 +992,10 @@ public class PngImageEncoder
 	 * a suitable instance of PNGEncodeParam.Gray; otherwise it
 	 * returns null.
 	 */
-	private PngEncodeParam.Gray createGrayParam(byte[] redPalette,
+	private Gray createGrayParam(byte[] redPalette,
 			byte[] greenPalette, byte[] bluePalette, byte[] alphaPalette)
 	{
-		PngEncodeParam.Gray param = new PngEncodeParam.Gray();
+		Gray param = new Gray();
 		int numTransparent = 0;
 
 		int grayFactor = 255 / ((1 << bitDepth) - 1);
@@ -1051,9 +1051,9 @@ public class PngImageEncoder
 		this.bitShift = 0;
 
 		// Allow user to override the bit depth of gray images
-		if (param instanceof PngEncodeParam.Gray)
+		if (param instanceof Gray)
 		{
-			PngEncodeParam.Gray paramg = (PngEncodeParam.Gray) param;
+			Gray paramg = (Gray) param;
 			if (paramg.isBitDepthSet())
 			{
 				this.bitDepth = paramg.getBitDepth();
@@ -1138,13 +1138,13 @@ public class PngImageEncoder
 			// If param is still null, it can't be expressed as gray
 			if (param == null)
 			{
-				param = new PngEncodeParam.Palette();
+				param = new Palette();
 			}
 
-			if (param instanceof PngEncodeParam.Palette)
+			if (param instanceof Palette)
 			{
 				// If palette not set in param, create one from the ColorModel.
-				PngEncodeParam.Palette parami = (PngEncodeParam.Palette) param;
+				Palette parami = (Palette) param;
 				if (parami.isPaletteSet())
 				{
 					int[] palette = parami.getPalette();
@@ -1161,7 +1161,7 @@ public class PngImageEncoder
 				}
 				this.colorType = PNG_COLOR_PALETTE;
 			}
-			else if (param instanceof PngEncodeParam.Gray)
+			else if (param instanceof Gray)
 			{
 				redPalette = greenPalette = bluePalette = alphaPalette = null;
 				this.colorType = PNG_COLOR_GRAY;
@@ -1175,7 +1175,7 @@ public class PngImageEncoder
 		{
 			if (param == null)
 			{
-				param = new PngEncodeParam.Gray();
+				param = new Gray();
 			}
 			this.colorType = PNG_COLOR_GRAY;
 		}
@@ -1183,7 +1183,7 @@ public class PngImageEncoder
 		{
 			if (param == null)
 			{
-				param = new PngEncodeParam.Gray();
+				param = new Gray();
 			}
 
 			if (param.isTransparencySet())
@@ -1210,7 +1210,7 @@ public class PngImageEncoder
 		{
 			if (param == null)
 			{
-				param = new PngEncodeParam.RGB();
+				param = new RGB();
 			}
 			this.colorType = PNG_COLOR_RGB;
 		}
@@ -1218,7 +1218,7 @@ public class PngImageEncoder
 		{
 			if (param == null)
 			{
-				param = new PngEncodeParam.RGB();
+				param = new RGB();
 			}
 			if (param.isTransparencySet())
 			{

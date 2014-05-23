@@ -14,7 +14,7 @@ public class LineShape extends BasicShape
 	 */
 	public void paintShape(Graphics2DCanvas canvas, CellState state)
 	{
-		if (configureGraphics(canvas, state, false))
+		if (_configureGraphics(canvas, state, false))
 		{
 			boolean rounded = Utils.isTrue(state.getStyle(),
 					Constants.STYLE_ROUNDED, false)

@@ -24,15 +24,15 @@ public class GraphMlGraph
 	/**
 	 * Map with the vertex cells added in the addNode method.
 	 */
-	private static HashMap<String, Object> cellsMap = new HashMap<String, Object>();
+	private static HashMap<String, Object> _cellsMap = new HashMap<String, Object>();
 
-	private String id = "";
+	private String _id = "";
 
-	private String edgedefault = "";
+	private String _edgedefault = "";
 
-	private List<GraphMlNode> nodes = new ArrayList<GraphMlNode>();
+	private List<GraphMlNode> _nodes = new ArrayList<GraphMlNode>();
 
-	private List<GraphMlEdge> edges = new ArrayList<GraphMlEdge>();
+	private List<GraphMlEdge> _edges = new ArrayList<GraphMlEdge>();
 
 	/**
 	 * Constructs a graph with id and edge default direction.
@@ -41,8 +41,8 @@ public class GraphMlGraph
 	 */
 	public GraphMlGraph(String id, String edgedefault)
 	{
-		this.id = id;
-		this.edgedefault = edgedefault;
+		this._id = id;
+		this._edgedefault = edgedefault;
 	}
 
 	/**
@@ -58,8 +58,8 @@ public class GraphMlGraph
 	 */
 	public GraphMlGraph(Element graphElement)
 	{
-		this.id = graphElement.getAttribute(GraphMlConstants.ID);
-		this.edgedefault = graphElement
+		this._id = graphElement.getAttribute(GraphMlConstants.ID);
+		this._edgedefault = graphElement
 				.getAttribute(GraphMlConstants.EDGE_DEFAULT);
 
 		//Adds node elements
@@ -70,7 +70,7 @@ public class GraphMlGraph
 		{
 			GraphMlNode node = new GraphMlNode(nodeElem);
 
-			nodes.add(node);
+			_nodes.add(node);
 		}
 
 		//Adds edge elements
@@ -83,17 +83,17 @@ public class GraphMlGraph
 
 			if (edge.getEdgeDirected().equals(""))
 			{
-				if (edgedefault.equals(GraphMlConstants.EDGE_DIRECTED))
+				if (_edgedefault.equals(GraphMlConstants.EDGE_DIRECTED))
 				{
 					edge.setEdgeDirected("true");
 				}
-				else if (edgedefault.equals(GraphMlConstants.EDGE_UNDIRECTED))
+				else if (_edgedefault.equals(GraphMlConstants.EDGE_UNDIRECTED))
 				{
 					edge.setEdgeDirected("false");
 				}
 			}
 
-			edges.add(edge);
+			_edges.add(edge);
 		}
 	}
 
@@ -108,13 +108,13 @@ public class GraphMlGraph
 
 		for (GraphMlNode node : nodeList)
 		{
-			addNode(graph, parent, node);
+			_addNode(graph, parent, node);
 		}
 		List<GraphMlEdge> edgeList = getEdges();
 
 		for (GraphMlEdge edge : edgeList)
 		{
-			addEdge(graph, parent, edge);
+			_addEdge(graph, parent, edge);
 		}
 	}
 
@@ -197,7 +197,7 @@ public class GraphMlGraph
 	 * @param node Gml Node
 	 * @return The inserted Vertex cell.
 	 */
-	private Cell addNode(Graph graph, Object parent, GraphMlNode node)
+	private Cell _addNode(Graph graph, Object parent, GraphMlNode node)
 	{
 		Cell v1;
 		String id = node.getNodeId();
@@ -220,7 +220,7 @@ public class GraphMlGraph
 			v1 = (Cell) graph.insertVertex(parent, id, "", 0, 0, 100, 100);
 		}
 
-		cellsMap.put(id, v1);
+		_cellsMap.put(id, v1);
 		List<GraphMlGraph> graphs = node.getNodeGraph();
 
 		for (GraphMlGraph gmlGraph : graphs)
@@ -238,7 +238,7 @@ public class GraphMlGraph
 	 * @param source Port Name.
 	 * @return point that represent the port value.
 	 */
-	private static Point2d portValue(String source)
+	private static Point2d _portValue(String source)
 	{
 		Point2d fromConstraint = null;
 
@@ -305,19 +305,19 @@ public class GraphMlGraph
 	 * @param edge Gml Edge
 	 * @return The inserted edge cell.
 	 */
-	private static Cell addEdge(Graph graph, Object parent, GraphMlEdge edge)
+	private static Cell _addEdge(Graph graph, Object parent, GraphMlEdge edge)
 	{
 		//Get source and target vertex
 		Point2d fromConstraint = null;
 		Point2d toConstraint = null;
-		Object source = cellsMap.get(edge.getEdgeSource());
-		Object target = cellsMap.get(edge.getEdgeTarget());
+		Object source = _cellsMap.get(edge.getEdgeSource());
+		Object target = _cellsMap.get(edge.getEdgeTarget());
 		String sourcePort = edge.getEdgeSourcePort();
 		String targetPort = edge.getEdgeTargetPort();
 
-		fromConstraint = portValue(sourcePort);
+		fromConstraint = _portValue(sourcePort);
 
-		toConstraint = portValue(targetPort);
+		toConstraint = _portValue(targetPort);
 
 		GraphMlData data = dataEdgeKey(edge);
 
@@ -347,42 +347,42 @@ public class GraphMlGraph
 
 	public String getEdgedefault()
 	{
-		return edgedefault;
+		return _edgedefault;
 	}
 
 	public void setEdgedefault(String edgedefault)
 	{
-		this.edgedefault = edgedefault;
+		this._edgedefault = edgedefault;
 	}
 
 	public String getId()
 	{
-		return id;
+		return _id;
 	}
 
 	public void setId(String id)
 	{
-		this.id = id;
+		this._id = id;
 	}
 
 	public List<GraphMlNode> getNodes()
 	{
-		return nodes;
+		return _nodes;
 	}
 
 	public void setNodes(List<GraphMlNode> node)
 	{
-		this.nodes = node;
+		this._nodes = node;
 	}
 
 	public List<GraphMlEdge> getEdges()
 	{
-		return edges;
+		return _edges;
 	}
 
 	public void setEdges(List<GraphMlEdge> edge)
 	{
-		this.edges = edge;
+		this._edges = edge;
 	}
 
 	/**
@@ -391,7 +391,7 @@ public class GraphMlGraph
 	 */
 	public boolean isEmpty()
 	{
-		return nodes.size() == 0 && edges.size() == 0;
+		return _nodes.size() == 0 && _edges.size() == 0;
 	}
 
 	/**
@@ -403,22 +403,22 @@ public class GraphMlGraph
 	{
 		Element graph = document.createElement(GraphMlConstants.GRAPH);
 
-		if (!id.equals(""))
+		if (!_id.equals(""))
 		{
-			graph.setAttribute(GraphMlConstants.ID, id);
+			graph.setAttribute(GraphMlConstants.ID, _id);
 		}
-		if (!edgedefault.equals(""))
+		if (!_edgedefault.equals(""))
 		{
-			graph.setAttribute(GraphMlConstants.EDGE_DEFAULT, edgedefault);
+			graph.setAttribute(GraphMlConstants.EDGE_DEFAULT, _edgedefault);
 		}
 
-		for (GraphMlNode node : nodes)
+		for (GraphMlNode node : _nodes)
 		{
 			Element nodeElement = node.generateElement(document);
 			graph.appendChild(nodeElement);
 		}
 
-		for (GraphMlEdge edge : edges)
+		for (GraphMlEdge edge : _edges)
 		{
 			Element edgeElement = edge.generateElement(document);
 			graph.appendChild(edgeElement);

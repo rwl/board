@@ -25,17 +25,17 @@ public class ImageCanvas implements ICanvas
 	/**
 	 * 
 	 */
-	protected Graphics2DCanvas canvas;
+	protected Graphics2DCanvas _canvas;
 
 	/**
 	 * 
 	 */
-	protected Graphics2D previousGraphics;
+	protected Graphics2D _previousGraphics;
 
 	/**
 	 * 
 	 */
-	protected BufferedImage image;
+	protected BufferedImage _image;
 
 	/**
 	 * 
@@ -43,13 +43,13 @@ public class ImageCanvas implements ICanvas
 	public ImageCanvas(Graphics2DCanvas canvas, int width, int height,
 			Color background, boolean antiAlias)
 	{
-		this.canvas = canvas;
-		previousGraphics = canvas.getGraphics();
-		image = Utils.createBufferedImage(width, height, background);
+		this._canvas = canvas;
+		_previousGraphics = canvas.getGraphics();
+		_image = Utils.createBufferedImage(width, height, background);
 
-		if (image != null)
+		if (_image != null)
 		{
-			Graphics2D g = image.createGraphics();
+			Graphics2D g = _image.createGraphics();
 			Utils.setAntiAlias(g, antiAlias, true);
 			canvas.setGraphics(g);
 		}
@@ -60,7 +60,7 @@ public class ImageCanvas implements ICanvas
 	 */
 	public Graphics2DCanvas getGraphicsCanvas()
 	{
-		return canvas;
+		return _canvas;
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class ImageCanvas implements ICanvas
 	 */
 	public BufferedImage getImage()
 	{
-		return image;
+		return _image;
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class ImageCanvas implements ICanvas
 	 */
 	public Object drawCell(CellState state)
 	{
-		return canvas.drawCell(state);
+		return _canvas.drawCell(state);
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class ImageCanvas implements ICanvas
 	 */
 	public Object drawLabel(String label, CellState state, boolean html)
 	{
-		return canvas.drawLabel(label, state, html);
+		return _canvas.drawLabel(label, state, html);
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class ImageCanvas implements ICanvas
 	 */
 	public double getScale()
 	{
-		return canvas.getScale();
+		return _canvas.getScale();
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class ImageCanvas implements ICanvas
 	 */
 	public Point getTranslate()
 	{
-		return canvas.getTranslate();
+		return _canvas.getTranslate();
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class ImageCanvas implements ICanvas
 	 */
 	public void setScale(double scale)
 	{
-		canvas.setScale(scale);
+		_canvas.setScale(scale);
 	}
 
 	/**
@@ -116,7 +116,7 @@ public class ImageCanvas implements ICanvas
 	 */
 	public void setTranslate(int dx, int dy)
 	{
-		canvas.setTranslate(dx, dy);
+		_canvas.setTranslate(dx, dy);
 	}
 
 	/**
@@ -124,18 +124,18 @@ public class ImageCanvas implements ICanvas
 	 */
 	public BufferedImage destroy()
 	{
-		BufferedImage tmp = image;
+		BufferedImage tmp = _image;
 
-		if (canvas.getGraphics() != null)
+		if (_canvas.getGraphics() != null)
 		{
-			canvas.getGraphics().dispose();
+			_canvas.getGraphics().dispose();
 		}
 		
-		canvas.setGraphics(previousGraphics);
+		_canvas.setGraphics(_previousGraphics);
 
-		previousGraphics = null;
-		canvas = null;
-		image = null;
+		_previousGraphics = null;
+		_canvas = null;
+		_image = null;
 
 		return tmp;
 	}

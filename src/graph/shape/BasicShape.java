@@ -28,13 +28,13 @@ public class BasicShape implements IShape
 		if (shape != null)
 		{
 			// Paints the background
-			if (configureGraphics(canvas, state, true))
+			if (_configureGraphics(canvas, state, true))
 			{
 				canvas.fillShape(shape, hasShadow(canvas, state));
 			}
 
 			// Paints the foreground
-			if (configureGraphics(canvas, state, false))
+			if (_configureGraphics(canvas, state, false))
 			{
 				canvas.getGraphics().draw(shape);
 			}
@@ -57,7 +57,7 @@ public class BasicShape implements IShape
 	 * 			the shape paint
 	 * @return whether or not the shape is ready to be drawn
 	 */
-	protected boolean configureGraphics(Graphics2DCanvas canvas,
+	protected boolean _configureGraphics(Graphics2DCanvas canvas,
 			CellState state, boolean background)
 	{
 		Map<String, Object> style = state.getStyle();
@@ -66,7 +66,7 @@ public class BasicShape implements IShape
 		{
 			// Paints the background of the shape
 			Paint fillPaint = hasGradient(canvas, state) ? canvas
-					.createFillPaint(getGradientBounds(canvas, state), style)
+					.createFillPaint(_getGradientBounds(canvas, state), style)
 					: null;
 
 			if (fillPaint != null)
@@ -97,7 +97,7 @@ public class BasicShape implements IShape
 	/**
 	 * 
 	 */
-	protected Rect getGradientBounds(Graphics2DCanvas canvas,
+	protected Rect _getGradientBounds(Graphics2DCanvas canvas,
 			CellState state)
 	{
 		return state;

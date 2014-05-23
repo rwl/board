@@ -16,8 +16,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
-import java.io.Writer;
 import java.util.EventObject;
 
 import javax.swing.AbstractAction;
@@ -28,14 +26,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
 import javax.swing.text.JTextComponent;
-import javax.swing.text.StyledDocument;
-import javax.swing.text.html.HTMLDocument;
-import javax.swing.text.html.HTMLEditorKit;
-import javax.swing.text.html.HTMLWriter;
-import javax.swing.text.html.MinimalHTMLWriter;
 
 /**
  * To control this editor, use Graph.invokesStopCellEditing, Graph.
@@ -47,17 +38,17 @@ public class CellEditor implements ICellEditor
 	/**
 	 * 
 	 */
-	private static final String CANCEL_EDITING = "cancel-editing";
+	private static final String _CANCEL_EDITING = "cancel-editing";
 
 	/**
 	 * 
 	 */
-	private static final String INSERT_BREAK = "insert-break";
+	private static final String _INSERT_BREAK = "insert-break";
 
 	/**
 	 * 
 	 */
-	private static final String SUBMIT_TEXT = "submit-text";
+	private static final String _SUBMIT_TEXT = "submit-text";
 
 	/**
 	 * 
@@ -77,67 +68,67 @@ public class CellEditor implements ICellEditor
 	/**
 	 * 
 	 */
-	protected GraphComponent graphComponent;
+	protected GraphComponent _graphComponent;
 
 	/**
 	 * Defines the minimum scale to be used for the editor. Set this to
 	 * 0 if the font size in the editor 
 	 */
-	protected double minimumEditorScale = DEFAULT_MINIMUM_EDITOR_SCALE;
+	protected double _minimumEditorScale = DEFAULT_MINIMUM_EDITOR_SCALE;
 
 	/**
 	 * 
 	 */
-	protected int minimumWidth = DEFAULT_MIN_WIDTH;
+	protected int _minimumWidth = DEFAULT_MIN_WIDTH;
 
 	/**
 	 * 
 	 */
-	protected int minimumHeight = DEFAULT_MIN_HEIGHT;
+	protected int _minimumHeight = DEFAULT_MIN_HEIGHT;
 
 	/**
 	 * 
 	 */
-	protected transient Object editingCell;
+	protected transient Object _editingCell;
 
 	/**
 	 * 
 	 */
-	protected transient EventObject trigger;
+	protected transient EventObject _trigger;
 
 	/**
 	 * 
 	 */
-	protected transient JScrollPane scrollPane;
+	protected transient JScrollPane _scrollPane;
 
 	/**
 	 * Holds the editor for plain text editing.
 	 */
-	protected transient JTextArea textArea;
+	protected transient JTextArea _textArea;
 
 	/**
 	 * Holds the editor for HTML editing.
 	 */
-	protected transient JEditorPane editorPane;
+	protected transient JEditorPane _editorPane;
 
 	/**
 	 * Specifies if the text content of the HTML body should be extracted
 	 * before and after editing for HTML markup. Default is true.
 	 */
-	protected boolean extractHtmlBody = true;
+	protected boolean _extractHtmlBody = true;
 
 	/**
 	 * Specifies if linefeeds should be replaced with BREAKS before editing,
 	 * and BREAKS should be replaced with linefeeds after editing. This
 	 * value is ignored if extractHtmlBody is false. Default is true.
 	 */
-	protected boolean replaceLinefeeds = true;
+	protected boolean _replaceLinefeeds = true;
 
 	/**
 	 * Specifies if shift ENTER should submit text if enterStopsCellEditing
 	 * is true. Default is false.
 	 */
-	protected boolean shiftEnterSubmitsText = false;
+	protected boolean _shiftEnterSubmitsText = false;
 
 	/**
 	 * 
@@ -168,7 +159,7 @@ public class CellEditor implements ICellEditor
 	/**
 	 * 
 	 */
-	protected AbstractAction cancelEditingAction = new AbstractAction()
+	protected AbstractAction _cancelEditingAction = new AbstractAction()
 	{
 		public void actionPerformed(ActionEvent e)
 		{
@@ -179,7 +170,7 @@ public class CellEditor implements ICellEditor
 	/**
 	 * 
 	 */
-	protected AbstractAction textSubmitAction = new AbstractAction()
+	protected AbstractAction _textSubmitAction = new AbstractAction()
 	{
 		public void actionPerformed(ActionEvent e)
 		{
@@ -192,39 +183,39 @@ public class CellEditor implements ICellEditor
 	 */
 	public CellEditor(GraphComponent graphComponent)
 	{
-		this.graphComponent = graphComponent;
+		this._graphComponent = graphComponent;
 
 		// Creates the plain text editor
-		textArea = new JTextArea();
-		textArea.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
-		textArea.setOpaque(false);
+		_textArea = new JTextArea();
+		_textArea.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
+		_textArea.setOpaque(false);
 
 		// Creates the HTML editor
-		editorPane = new JEditorPane();
-		editorPane.setOpaque(false);
-		editorPane.setContentType("text/html");
+		_editorPane = new JEditorPane();
+		_editorPane.setOpaque(false);
+		_editorPane.setContentType("text/html");
 
 		// Workaround for inserted linefeeds in HTML markup with
 		// lines that are longar than 80 chars
-		editorPane.setEditorKit(new NoLinefeedHtmlEditorKit());
+		_editorPane.setEditorKit(new NoLinefeedHtmlEditorKit());
 
 		// Creates the scollpane that contains the editor
 		// FIXME: Cursor not visible when scrolling
-		scrollPane = new JScrollPane();
-		scrollPane.setBorder(BorderFactory.createEmptyBorder());
-		scrollPane.getViewport().setOpaque(false);
-		scrollPane.setVisible(false);
-		scrollPane.setOpaque(false);
+		_scrollPane = new JScrollPane();
+		_scrollPane.setBorder(BorderFactory.createEmptyBorder());
+		_scrollPane.getViewport().setOpaque(false);
+		_scrollPane.setVisible(false);
+		_scrollPane.setOpaque(false);
 
 		// Installs custom actions
-		editorPane.getActionMap().put(CANCEL_EDITING, cancelEditingAction);
-		textArea.getActionMap().put(CANCEL_EDITING, cancelEditingAction);
-		editorPane.getActionMap().put(SUBMIT_TEXT, textSubmitAction);
-		textArea.getActionMap().put(SUBMIT_TEXT, textSubmitAction);
+		_editorPane.getActionMap().put(_CANCEL_EDITING, _cancelEditingAction);
+		_textArea.getActionMap().put(_CANCEL_EDITING, _cancelEditingAction);
+		_editorPane.getActionMap().put(_SUBMIT_TEXT, _textSubmitAction);
+		_textArea.getActionMap().put(_SUBMIT_TEXT, _textSubmitAction);
 
 		// Remembers the action map key for the enter keystroke
-		editorEnterActionMapKey = editorPane.getInputMap().get(enterKeystroke);
-		textEnterActionMapKey = editorPane.getInputMap().get(enterKeystroke);
+		editorEnterActionMapKey = _editorPane.getInputMap().get(enterKeystroke);
+		textEnterActionMapKey = _editorPane.getInputMap().get(enterKeystroke);
 	}
 
 	/**
@@ -232,7 +223,7 @@ public class CellEditor implements ICellEditor
 	 */
 	public boolean isExtractHtmlBody()
 	{
-		return extractHtmlBody;
+		return _extractHtmlBody;
 	}
 
 	/**
@@ -240,7 +231,7 @@ public class CellEditor implements ICellEditor
 	 */
 	public void setExtractHtmlBody(boolean value)
 	{
-		extractHtmlBody = value;
+		_extractHtmlBody = value;
 	}
 
 	/**
@@ -248,7 +239,7 @@ public class CellEditor implements ICellEditor
 	 */
 	public boolean isReplaceHtmlLinefeeds()
 	{
-		return replaceLinefeeds;
+		return _replaceLinefeeds;
 	}
 
 	/**
@@ -256,7 +247,7 @@ public class CellEditor implements ICellEditor
 	 */
 	public void setReplaceHtmlLinefeeds(boolean value)
 	{
-		replaceLinefeeds = value;
+		_replaceLinefeeds = value;
 	}
 
 	/**
@@ -264,7 +255,7 @@ public class CellEditor implements ICellEditor
 	 */
 	public boolean isShiftEnterSubmitsText()
 	{
-		return shiftEnterSubmitsText;
+		return _shiftEnterSubmitsText;
 	}
 
 	/**
@@ -272,30 +263,30 @@ public class CellEditor implements ICellEditor
 	 */
 	public void setShiftEnterSubmitsText(boolean value)
 	{
-		shiftEnterSubmitsText = value;
+		_shiftEnterSubmitsText = value;
 	}
 
 	/**
 	 * Installs the keyListener in the textArea and editorPane
 	 * for handling the enter keystroke and updating the modified state.
 	 */
-	protected void configureActionMaps()
+	protected void _configureActionMaps()
 	{
-		InputMap editorInputMap = editorPane.getInputMap();
-		InputMap textInputMap = textArea.getInputMap();
+		InputMap editorInputMap = _editorPane.getInputMap();
+		InputMap textInputMap = _textArea.getInputMap();
 
 		// Adds handling for the escape key to cancel editing
-		editorInputMap.put(escapeKeystroke, cancelEditingAction);
-		textInputMap.put(escapeKeystroke, cancelEditingAction);
+		editorInputMap.put(escapeKeystroke, _cancelEditingAction);
+		textInputMap.put(escapeKeystroke, _cancelEditingAction);
 
 		// Adds handling for shift-enter and redirects enter to stop editing
-		if (graphComponent.isEnterStopsCellEditing())
+		if (_graphComponent.isEnterStopsCellEditing())
 		{
 			editorInputMap.put(shiftEnterKeystroke, editorEnterActionMapKey);
 			textInputMap.put(shiftEnterKeystroke, textEnterActionMapKey);
 
-			editorInputMap.put(enterKeystroke, SUBMIT_TEXT);
-			textInputMap.put(enterKeystroke, SUBMIT_TEXT);
+			editorInputMap.put(enterKeystroke, _SUBMIT_TEXT);
+			textInputMap.put(enterKeystroke, _SUBMIT_TEXT);
 		}
 		else
 		{
@@ -304,8 +295,8 @@ public class CellEditor implements ICellEditor
 
 			if (isShiftEnterSubmitsText())
 			{
-				editorInputMap.put(shiftEnterKeystroke, SUBMIT_TEXT);
-				textInputMap.put(shiftEnterKeystroke, SUBMIT_TEXT);
+				editorInputMap.put(shiftEnterKeystroke, _SUBMIT_TEXT);
+				textInputMap.put(shiftEnterKeystroke, _SUBMIT_TEXT);
 			}
 			else
 			{
@@ -320,13 +311,13 @@ public class CellEditor implements ICellEditor
 	 */
 	public Component getEditor()
 	{
-		if (textArea.getParent() != null)
+		if (_textArea.getParent() != null)
 		{
-			return textArea;
+			return _textArea;
 		}
-		else if (editingCell != null)
+		else if (_editingCell != null)
 		{
-			return editorPane;
+			return _editorPane;
 		}
 
 		return null;
@@ -336,7 +327,7 @@ public class CellEditor implements ICellEditor
 	 * Returns true if the label bounds of the state should be used for the
 	 * editor.
 	 */
-	protected boolean useLabelBounds(CellState state)
+	protected boolean _useLabelBounds(CellState state)
 	{
 		IGraphModel model = state.getView().getGraph().getModel();
 		Geometry geometry = model.getGeometry(state.getCell());
@@ -354,7 +345,7 @@ public class CellEditor implements ICellEditor
 		IGraphModel model = state.getView().getGraph().getModel();
 		Rectangle bounds = null;
 
-		if (useLabelBounds(state))
+		if (_useLabelBounds(state))
 		{
 			bounds = state.getLabelBounds().getRectangle();
 			bounds.height += 10;
@@ -395,9 +386,9 @@ public class CellEditor implements ICellEditor
 
 		bounds.setSize(
 				(int) Math.max(bounds.getWidth(),
-						Math.round(minimumWidth * scale)),
+						Math.round(_minimumWidth * scale)),
 				(int) Math.max(bounds.getHeight(),
-						Math.round(minimumHeight * scale)));
+						Math.round(_minimumHeight * scale)));
 
 		return bounds;
 	}
@@ -408,28 +399,28 @@ public class CellEditor implements ICellEditor
 	 */
 	public void startEditing(Object cell, EventObject evt)
 	{
-		if (editingCell != null)
+		if (_editingCell != null)
 		{
 			stopEditing(true);
 		}
 
-		CellState state = graphComponent.getGraph().getView().getState(cell);
+		CellState state = _graphComponent.getGraph().getView().getState(cell);
 
 		if (state != null)
 		{
-			editingCell = cell;
-			trigger = evt;
+			_editingCell = cell;
+			_trigger = evt;
 
-			double scale = Math.max(minimumEditorScale, graphComponent
+			double scale = Math.max(_minimumEditorScale, _graphComponent
 					.getGraph().getView().getScale());
-			scrollPane.setBounds(getEditorBounds(state, scale));
-			scrollPane.setVisible(true);
+			_scrollPane.setBounds(getEditorBounds(state, scale));
+			_scrollPane.setVisible(true);
 
-			String value = getInitialValue(state, evt);
+			String value = _getInitialValue(state, evt);
 			JTextComponent currentEditor = null;
 
 			// Configures the style of the in-place editor
-			if (graphComponent.getGraph().isHtmlLabel(cell))
+			if (_graphComponent.getGraph().isHtmlLabel(cell))
 			{
 				if (isExtractHtmlBody())
 				{
@@ -437,50 +428,50 @@ public class CellEditor implements ICellEditor
 							isReplaceHtmlLinefeeds());
 				}
 
-				editorPane.setDocument(Utils.createHtmlDocumentObject(
+				_editorPane.setDocument(Utils.createHtmlDocumentObject(
 						state.getStyle(), scale));
-				editorPane.setText(value);
+				_editorPane.setText(value);
 
 				// Workaround for wordwrapping in editor pane
 				// FIXME: Cursor not visible at end of line
 				JPanel wrapper = new JPanel(new BorderLayout());
 				wrapper.setOpaque(false);
-				wrapper.add(editorPane, BorderLayout.CENTER);
-				scrollPane.setViewportView(wrapper);
+				wrapper.add(_editorPane, BorderLayout.CENTER);
+				_scrollPane.setViewportView(wrapper);
 
-				currentEditor = editorPane;
+				currentEditor = _editorPane;
 			}
 			else
 			{
-				textArea.setFont(Utils.getFont(state.getStyle(), scale));
+				_textArea.setFont(Utils.getFont(state.getStyle(), scale));
 				Color fontColor = Utils.getColor(state.getStyle(),
 						Constants.STYLE_FONTCOLOR, Color.black);
-				textArea.setForeground(fontColor);
-				textArea.setText(value);
+				_textArea.setForeground(fontColor);
+				_textArea.setText(value);
 
-				scrollPane.setViewportView(textArea);
-				currentEditor = textArea;
+				_scrollPane.setViewportView(_textArea);
+				currentEditor = _textArea;
 			}
 
-			graphComponent.getGraphControl().add(scrollPane, 0);
+			_graphComponent.getGraphControl().add(_scrollPane, 0);
 
-			if (isHideLabel(state))
+			if (_isHideLabel(state))
 			{
-				graphComponent.redraw(state);
+				_graphComponent.redraw(state);
 			}
 
 			currentEditor.revalidate();
 			currentEditor.requestFocusInWindow();
 			currentEditor.selectAll();
 
-			configureActionMaps();
+			_configureActionMaps();
 		}
 	}
 
 	/**
 	 * 
 	 */
-	protected boolean isHideLabel(CellState state)
+	protected boolean _isHideLabel(CellState state)
 	{
 		return true;
 	}
@@ -491,41 +482,41 @@ public class CellEditor implements ICellEditor
 	 */
 	public void stopEditing(boolean cancel)
 	{
-		if (editingCell != null)
+		if (_editingCell != null)
 		{
-			scrollPane.transferFocusUpCycle();
-			Object cell = editingCell;
-			editingCell = null;
+			_scrollPane.transferFocusUpCycle();
+			Object cell = _editingCell;
+			_editingCell = null;
 
 			if (!cancel)
 			{
-				EventObject trig = trigger;
-				trigger = null;
-				graphComponent.labelChanged(cell, getCurrentValue(), trig);
+				EventObject trig = _trigger;
+				_trigger = null;
+				_graphComponent.labelChanged(cell, getCurrentValue(), trig);
 			}
 			else
 			{
-				CellState state = graphComponent.getGraph().getView()
+				CellState state = _graphComponent.getGraph().getView()
 						.getState(cell);
-				graphComponent.redraw(state);
+				_graphComponent.redraw(state);
 			}
 
-			if (scrollPane.getParent() != null)
+			if (_scrollPane.getParent() != null)
 			{
-				scrollPane.setVisible(false);
-				scrollPane.getParent().remove(scrollPane);
+				_scrollPane.setVisible(false);
+				_scrollPane.getParent().remove(_scrollPane);
 			}
 
-			graphComponent.requestFocusInWindow();
+			_graphComponent.requestFocusInWindow();
 		}
 	}
 
 	/**
 	 * Gets the initial editing value for the given cell.
 	 */
-	protected String getInitialValue(CellState state, EventObject trigger)
+	protected String _getInitialValue(CellState state, EventObject trigger)
 	{
-		return graphComponent.getEditingValue(state.getCell(), trigger);
+		return _graphComponent.getEditingValue(state.getCell(), trigger);
 	}
 
 	/**
@@ -535,13 +526,13 @@ public class CellEditor implements ICellEditor
 	{
 		String result;
 
-		if (textArea.getParent() != null)
+		if (_textArea.getParent() != null)
 		{
-			result = textArea.getText();
+			result = _textArea.getText();
 		}
 		else
 		{
-			result = editorPane.getText();
+			result = _editorPane.getText();
 
 			if (isExtractHtmlBody())
 			{
@@ -559,7 +550,7 @@ public class CellEditor implements ICellEditor
 	 */
 	public Object getEditingCell()
 	{
-		return editingCell;
+		return _editingCell;
 	}
 
 	/**
@@ -567,7 +558,7 @@ public class CellEditor implements ICellEditor
 	 */
 	public double getMinimumEditorScale()
 	{
-		return minimumEditorScale;
+		return _minimumEditorScale;
 	}
 
 	/**
@@ -575,7 +566,7 @@ public class CellEditor implements ICellEditor
 	 */
 	public void setMinimumEditorScale(double minimumEditorScale)
 	{
-		this.minimumEditorScale = minimumEditorScale;
+		this._minimumEditorScale = minimumEditorScale;
 	}
 
 	/**
@@ -583,7 +574,7 @@ public class CellEditor implements ICellEditor
 	 */
 	public int getMinimumWidth()
 	{
-		return minimumWidth;
+		return _minimumWidth;
 	}
 
 	/**
@@ -591,7 +582,7 @@ public class CellEditor implements ICellEditor
 	 */
 	public void setMinimumWidth(int minimumWidth)
 	{
-		this.minimumWidth = minimumWidth;
+		this._minimumWidth = minimumWidth;
 	}
 
 	/**
@@ -599,7 +590,7 @@ public class CellEditor implements ICellEditor
 	 */
 	public int getMinimumHeight()
 	{
-		return minimumHeight;
+		return _minimumHeight;
 	}
 
 	/**
@@ -607,58 +598,7 @@ public class CellEditor implements ICellEditor
 	 */
 	public void setMinimumHeight(int minimumHeight)
 	{
-		this.minimumHeight = minimumHeight;
-	}
-
-	/**
-	 * Workaround for inserted linefeeds when getting text from HTML editor.
-	 */
-	class NoLinefeedHtmlEditorKit extends HTMLEditorKit
-	{
-		public void write(Writer out, Document doc, int pos, int len)
-				throws IOException, BadLocationException
-		{
-			if (doc instanceof HTMLDocument)
-			{
-				NoLinefeedHtmlWriter w = new NoLinefeedHtmlWriter(out,
-						(HTMLDocument) doc, pos, len);
-
-				// the default behavior of write() was to setLineLength(80) which resulted in
-				// the inserting or a CR/LF around the 80ith character in any given
-				// line. This was not good because if a merge tag was in that range, it would
-				// insert CR/LF in between the merge tag and then the replacement of
-				// merge tag with bean values was not working.
-				w.setLineLength(Integer.MAX_VALUE);
-				w.write();
-			}
-			else if (doc instanceof StyledDocument)
-			{
-				MinimalHTMLWriter w = new MinimalHTMLWriter(out,
-						(StyledDocument) doc, pos, len);
-				w.write();
-			}
-			else
-			{
-				super.write(out, doc, pos, len);
-			}
-		}
-	}
-
-	/**
-	 * Subclassed to make setLineLength visible for the custom editor kit.
-	 */
-	class NoLinefeedHtmlWriter extends HTMLWriter
-	{
-		public NoLinefeedHtmlWriter(Writer buf, HTMLDocument doc, int pos,
-				int len)
-		{
-			super(buf, doc, pos, len);
-		}
-
-		protected void setLineLength(int l)
-		{
-			super.setLineLength(l);
-		}
+		this._minimumHeight = minimumHeight;
 	}
 
 }

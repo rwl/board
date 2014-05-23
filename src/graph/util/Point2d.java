@@ -22,7 +22,7 @@ public class Point2d implements Serializable, Cloneable
 	/**
 	 * Holds the x- and y-coordinates of the point. Default is 0.
 	 */
-	protected double x, y;
+	protected double _x, _y;
 
 	/**
 	 * Constructs a new point at (0, 0).
@@ -71,7 +71,7 @@ public class Point2d implements Serializable, Cloneable
 	 */
 	public double getX()
 	{
-		return x;
+		return _x;
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class Point2d implements Serializable, Cloneable
 	 */
 	public void setX(double value)
 	{
-		x = value;
+		_x = value;
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class Point2d implements Serializable, Cloneable
 	 */
 	public double getY()
 	{
-		return y;
+		return _y;
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class Point2d implements Serializable, Cloneable
 	 */
 	public void setY(double value)
 	{
-		y = value;
+		_y = value;
 	}
 
 	/**
@@ -111,7 +111,7 @@ public class Point2d implements Serializable, Cloneable
 	 */
 	public Point getPoint()
 	{
-		return new Point((int) Math.round(x), (int) Math.round(y));
+		return new Point((int) Math.round(_x), (int) Math.round(_y));
 	}
 
 	/**
@@ -159,6 +159,6 @@ public class Point2d implements Serializable, Cloneable
 	 */
 	public String toString()
 	{
-		return getClass().getName() + "[" + x + ", " + y + "]";
+		return getClass().getName() + "[" + _x + ", " + _y + "]";
 	}
 }

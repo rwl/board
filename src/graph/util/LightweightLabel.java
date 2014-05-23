@@ -25,7 +25,7 @@ public class LightweightLabel extends JLabel
 	/**
 	 * 
 	 */
-	protected static LightweightLabel sharedInstance;
+	protected static LightweightLabel _sharedInstance;
 
 	/**
 	 * Initializes the shared instance.
@@ -34,7 +34,7 @@ public class LightweightLabel extends JLabel
 	{
 		try
 		{
-			sharedInstance = new LightweightLabel();
+			_sharedInstance = new LightweightLabel();
 		}
 		catch (Exception e)
 		{
@@ -47,7 +47,7 @@ public class LightweightLabel extends JLabel
 	 */
 	public static LightweightLabel getSharedInstance()
 	{
-		return sharedInstance;
+		return _sharedInstance;
 	}
 
 	/**

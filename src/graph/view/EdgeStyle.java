@@ -66,7 +66,7 @@ public class EdgeStyle
 			IGraphModel model = view.getGraph().getModel();
 			double segment = Utils.getDouble(state.getStyle(),
 					Constants.STYLE_SEGMENT, Constants.ENTITY_SEGMENT)
-					* state.view.getScale();
+					* state._view.getScale();
 
 			Point2d p0 = state.getAbsolutePoint(0);
 			Point2d pe = state
@@ -90,7 +90,7 @@ public class EdgeStyle
 				}
 				else
 				{
-					Geometry sourceGeometry = model.getGeometry(source.cell);
+					Geometry sourceGeometry = model.getGeometry(source._cell);
 	
 					if (sourceGeometry.isRelative())
 					{
@@ -122,7 +122,7 @@ public class EdgeStyle
 				}
 				else
 				{
-					Geometry targetGeometry = model.getGeometry(target.cell);
+					Geometry targetGeometry = model.getGeometry(target._cell);
 	
 					if (targetGeometry.isRelative())
 					{
@@ -551,7 +551,7 @@ public class EdgeStyle
 		public void apply(CellState state, CellState source, CellState target, List<Point2d> hints, List<Point2d> result)
 		{
 			// Creates array of all way- and terminalpoints
-			List<Point2d> pts = state.absolutePoints;
+			List<Point2d> pts = state._absolutePoints;
 			boolean horizontal = true;
 			Point2d hint = null;
 
@@ -560,7 +560,7 @@ public class EdgeStyle
 
 			if (pt == null && source != null)
 			{
-				pt = new Point2d(state.view.getRoutingCenterX(source), state.view.getRoutingCenterY(source));
+				pt = new Point2d(state._view.getRoutingCenterX(source), state._view.getRoutingCenterY(source));
 			}
 			else if (pt != null)
 			{
@@ -572,7 +572,7 @@ public class EdgeStyle
 			// Adds the waypoints
 			if (hints != null && hints.size() > 0)
 			{
-				hint = state.view.transformControlPoint(state, hints.get(0));
+				hint = state._view.transformControlPoint(state, hints.get(0));
 
 				CellState currentTerm = source;
 				Point2d currentPt = pts.get(0);
@@ -616,7 +616,7 @@ public class EdgeStyle
 
 					currentTerm = target;
 					currentPt = pts.get(lastInx);
-					currentHint = state.view.transformControlPoint(state, hints.get(hintsLen - 1));
+					currentHint = state._view.transformControlPoint(state, hints.get(hintsLen - 1));
 				}
 
 				if (horizontal
@@ -644,7 +644,7 @@ public class EdgeStyle
 				for (int i = 0; i < hints.size(); i++)
 				{
 					horizontal = !horizontal;
-					hint = state.view.transformControlPoint(state, hints.get(i));
+					hint = state._view.transformControlPoint(state, hints.get(i));
 
 					//				mxLog.show();
 					//				mxLog.debug('hint', i, hint.x, hint.y);
@@ -673,7 +673,7 @@ public class EdgeStyle
 
 			if (pt == null && target != null)
 			{
-				pt = new Point2d(state.view.getRoutingCenterX(target), state.view.getRoutingCenterY(target));
+				pt = new Point2d(state._view.getRoutingCenterX(target), state._view.getRoutingCenterY(target));
 			}
 
 			if (horizontal
@@ -791,9 +791,9 @@ public class EdgeStyle
 		public void apply(CellState state, CellState source,
 				CellState target, List<Point2d> points, List<Point2d> result)
 		{
-			Graph graph = state.view.graph;
-			boolean sourceEdge = source == null ? false : graph.getModel().isEdge(source.cell);
-			boolean targetEdge = target == null ? false : graph.getModel().isEdge(target.cell);
+			Graph graph = state._view._graph;
+			boolean sourceEdge = source == null ? false : graph.getModel().isEdge(source._cell);
+			boolean targetEdge = target == null ? false : graph.getModel().isEdge(target._cell);
 
 			if ((points != null && points.size() > 0) || (sourceEdge) || (targetEdge))
 			{

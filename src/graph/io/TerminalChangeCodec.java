@@ -4,7 +4,7 @@
  */
 package graph.io;
 
-import graph.model.GraphModel.TerminalChange;
+import graph.model.TerminalChange;
 
 import java.util.Map;
 
