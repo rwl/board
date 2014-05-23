@@ -1,9 +1,9 @@
-package com.mxgraph.examples.swing;
+package graph.examples.swing;
 
 import javax.swing.JFrame;
 
-import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.view.mxGraph;
+import graph.swing.GraphComponent;
+import graph.view.Graph;
 
 public class HelloWorld extends JFrame
 {
@@ -17,7 +17,7 @@ public class HelloWorld extends JFrame
 	{
 		super("Hello, World!");
 
-		mxGraph graph = new mxGraph();
+		Graph graph = new Graph();
 		Object parent = graph.getDefaultParent();
 
 		graph.getModel().beginUpdate();
@@ -34,7 +34,7 @@ public class HelloWorld extends JFrame
 			graph.getModel().endUpdate();
 		}
 
-		mxGraphComponent graphComponent = new mxGraphComponent(graph);
+		GraphComponent graphComponent = new GraphComponent(graph);
 		getContentPane().add(graphComponent);
 	}
 

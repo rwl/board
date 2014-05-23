@@ -1,4 +1,4 @@
-package com.mxgraph.examples.swing.editor;
+package graph.examples.swing.editor;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,35 +11,35 @@ import javax.swing.SwingUtilities;
 import javax.swing.TransferHandler;
 import javax.swing.UIManager;
 
-import com.mxgraph.examples.swing.editor.EditorActions.BackgroundAction;
-import com.mxgraph.examples.swing.editor.EditorActions.BackgroundImageAction;
-import com.mxgraph.examples.swing.editor.EditorActions.ExitAction;
-import com.mxgraph.examples.swing.editor.EditorActions.GridColorAction;
-import com.mxgraph.examples.swing.editor.EditorActions.GridStyleAction;
-import com.mxgraph.examples.swing.editor.EditorActions.HistoryAction;
-import com.mxgraph.examples.swing.editor.EditorActions.NewAction;
-import com.mxgraph.examples.swing.editor.EditorActions.OpenAction;
-import com.mxgraph.examples.swing.editor.EditorActions.PageBackgroundAction;
-import com.mxgraph.examples.swing.editor.EditorActions.PageSetupAction;
-import com.mxgraph.examples.swing.editor.EditorActions.PrintAction;
-import com.mxgraph.examples.swing.editor.EditorActions.PromptPropertyAction;
-import com.mxgraph.examples.swing.editor.EditorActions.SaveAction;
-import com.mxgraph.examples.swing.editor.EditorActions.ScaleAction;
-import com.mxgraph.examples.swing.editor.EditorActions.SelectShortestPathAction;
-import com.mxgraph.examples.swing.editor.EditorActions.SelectSpanningTreeAction;
-import com.mxgraph.examples.swing.editor.EditorActions.StylesheetAction;
-import com.mxgraph.examples.swing.editor.EditorActions.ToggleDirtyAction;
-import com.mxgraph.examples.swing.editor.EditorActions.ToggleGridItem;
-import com.mxgraph.examples.swing.editor.EditorActions.ToggleOutlineItem;
-import com.mxgraph.examples.swing.editor.EditorActions.TogglePropertyItem;
-import com.mxgraph.examples.swing.editor.EditorActions.ToggleRulersItem;
-import com.mxgraph.examples.swing.editor.EditorActions.WarningAction;
-import com.mxgraph.examples.swing.editor.EditorActions.ZoomPolicyAction;
-import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.swing.util.mxGraphActions;
-import com.mxgraph.util.mxPoint;
-import com.mxgraph.util.mxResources;
-import com.mxgraph.view.mxGraph;
+import graph.examples.swing.editor.EditorActions.BackgroundAction;
+import graph.examples.swing.editor.EditorActions.BackgroundImageAction;
+import graph.examples.swing.editor.EditorActions.ExitAction;
+import graph.examples.swing.editor.EditorActions.GridColorAction;
+import graph.examples.swing.editor.EditorActions.GridStyleAction;
+import graph.examples.swing.editor.EditorActions.HistoryAction;
+import graph.examples.swing.editor.EditorActions.NewAction;
+import graph.examples.swing.editor.EditorActions.OpenAction;
+import graph.examples.swing.editor.EditorActions.PageBackgroundAction;
+import graph.examples.swing.editor.EditorActions.PageSetupAction;
+import graph.examples.swing.editor.EditorActions.PrintAction;
+import graph.examples.swing.editor.EditorActions.PromptPropertyAction;
+import graph.examples.swing.editor.EditorActions.SaveAction;
+import graph.examples.swing.editor.EditorActions.ScaleAction;
+import graph.examples.swing.editor.EditorActions.SelectShortestPathAction;
+import graph.examples.swing.editor.EditorActions.SelectSpanningTreeAction;
+import graph.examples.swing.editor.EditorActions.StylesheetAction;
+import graph.examples.swing.editor.EditorActions.ToggleDirtyAction;
+import graph.examples.swing.editor.EditorActions.ToggleGridItem;
+import graph.examples.swing.editor.EditorActions.ToggleOutlineItem;
+import graph.examples.swing.editor.EditorActions.TogglePropertyItem;
+import graph.examples.swing.editor.EditorActions.ToggleRulersItem;
+import graph.examples.swing.editor.EditorActions.WarningAction;
+import graph.examples.swing.editor.EditorActions.ZoomPolicyAction;
+import graph.swing.GraphComponent;
+import graph.swing.util.GraphActions;
+import graph.util.Point;
+import graph.util.Resources;
+import graph.view.Graph;
 
 public class SchemaEditorMenuBar extends JMenuBar
 {
@@ -52,81 +52,81 @@ public class SchemaEditorMenuBar extends JMenuBar
 	@SuppressWarnings("serial")
 	public SchemaEditorMenuBar(final BasicGraphEditor editor)
 	{
-		final mxGraphComponent graphComponent = editor.getGraphComponent();
-		final mxGraph graph = graphComponent.getGraph();
+		final GraphComponent graphComponent = editor.getGraphComponent();
+		final Graph graph = graphComponent.getGraph();
 		JMenu menu = null;
 		JMenu submenu = null;
 
 		// Creates the file menu
-		menu = add(new JMenu(mxResources.get("file")));
+		menu = add(new JMenu(Resources.get("file")));
 
-		menu.add(editor.bind(mxResources.get("new"), new NewAction(),
-				"/com/mxgraph/examples/swing/images/new.gif"));
-		menu.add(editor.bind(mxResources.get("openFile"), new OpenAction(),
-				"/com/mxgraph/examples/swing/images/open.gif"));
-
-		menu.addSeparator();
-
-		menu.add(editor.bind(mxResources.get("save"), new SaveAction(false),
-				"/com/mxgraph/examples/swing/images/save.gif"));
-		menu.add(editor.bind(mxResources.get("saveAs"), new SaveAction(true),
-				"/com/mxgraph/examples/swing/images/saveas.gif"));
+		menu.add(editor.bind(Resources.get("new"), new NewAction(),
+				"/com/graph/examples/swing/images/new.gif"));
+		menu.add(editor.bind(Resources.get("openFile"), new OpenAction(),
+				"/com/graph/examples/swing/images/open.gif"));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("pageSetup"),
+		menu.add(editor.bind(Resources.get("save"), new SaveAction(false),
+				"/com/graph/examples/swing/images/save.gif"));
+		menu.add(editor.bind(Resources.get("saveAs"), new SaveAction(true),
+				"/com/graph/examples/swing/images/saveas.gif"));
+
+		menu.addSeparator();
+
+		menu.add(editor.bind(Resources.get("pageSetup"),
 				new PageSetupAction(),
-				"/com/mxgraph/examples/swing/images/pagesetup.gif"));
-		menu.add(editor.bind(mxResources.get("print"), new PrintAction(),
-				"/com/mxgraph/examples/swing/images/print.gif"));
+				"/com/graph/examples/swing/images/pagesetup.gif"));
+		menu.add(editor.bind(Resources.get("print"), new PrintAction(),
+				"/com/graph/examples/swing/images/print.gif"));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("exit"), new ExitAction()));
+		menu.add(editor.bind(Resources.get("exit"), new ExitAction()));
 
 		// Creates the edit menu
-		menu = add(new JMenu(mxResources.get("edit")));
+		menu = add(new JMenu(Resources.get("edit")));
 
-		menu.add(editor.bind(mxResources.get("undo"), new HistoryAction(true),
-				"/com/mxgraph/examples/swing/images/undo.gif"));
-		menu.add(editor.bind(mxResources.get("redo"), new HistoryAction(false),
-				"/com/mxgraph/examples/swing/images/redo.gif"));
+		menu.add(editor.bind(Resources.get("undo"), new HistoryAction(true),
+				"/com/graph/examples/swing/images/undo.gif"));
+		menu.add(editor.bind(Resources.get("redo"), new HistoryAction(false),
+				"/com/graph/examples/swing/images/redo.gif"));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("cut"), TransferHandler
-				.getCutAction(), "/com/mxgraph/examples/swing/images/cut.gif"));
+		menu.add(editor.bind(Resources.get("cut"), TransferHandler
+				.getCutAction(), "/com/graph/examples/swing/images/cut.gif"));
 		menu.add(editor
-				.bind(mxResources.get("copy"), TransferHandler.getCopyAction(),
-						"/com/mxgraph/examples/swing/images/copy.gif"));
-		menu.add(editor.bind(mxResources.get("paste"), TransferHandler
+				.bind(Resources.get("copy"), TransferHandler.getCopyAction(),
+						"/com/graph/examples/swing/images/copy.gif"));
+		menu.add(editor.bind(Resources.get("paste"), TransferHandler
 				.getPasteAction(),
-				"/com/mxgraph/examples/swing/images/paste.gif"));
+				"/com/graph/examples/swing/images/paste.gif"));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("delete"), mxGraphActions
+		menu.add(editor.bind(Resources.get("delete"), GraphActions
 				.getDeleteAction(),
-				"/com/mxgraph/examples/swing/images/delete.gif"));
+				"/com/graph/examples/swing/images/delete.gif"));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("selectAll"), mxGraphActions
+		menu.add(editor.bind(Resources.get("selectAll"), GraphActions
 				.getSelectAllAction()));
-		menu.add(editor.bind(mxResources.get("selectNone"), mxGraphActions
+		menu.add(editor.bind(Resources.get("selectNone"), GraphActions
 				.getSelectNoneAction()));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("warning"), new WarningAction()));
-		menu.add(editor.bind(mxResources.get("edit"), mxGraphActions
+		menu.add(editor.bind(Resources.get("warning"), new WarningAction()));
+		menu.add(editor.bind(Resources.get("edit"), GraphActions
 				.getEditAction()));
 
 		// Creates the view menu
-		menu = add(new JMenu(mxResources.get("view")));
+		menu = add(new JMenu(Resources.get("view")));
 
 		JMenuItem item = menu.add(new TogglePropertyItem(graphComponent,
-				mxResources.get("pageLayout"), "PageVisible", true,
+				Resources.get("pageLayout"), "PageVisible", true,
 				new ActionListener()
 				{
 					/**
@@ -152,7 +152,7 @@ public class SchemaEditorMenuBar extends JMenuBar
 			{
 				if (e.getSource() instanceof TogglePropertyItem)
 				{
-					final mxGraphComponent graphComponent = editor
+					final GraphComponent graphComponent = editor
 							.getGraphComponent();
 					TogglePropertyItem toggleItem = (TogglePropertyItem) e
 							.getSource();
@@ -176,30 +176,30 @@ public class SchemaEditorMenuBar extends JMenuBar
 					else
 					{
 						// Resets the translation of the view
-						mxPoint tr = graphComponent.getGraph().getView()
+						Point tr = graphComponent.getGraph().getView()
 								.getTranslate();
 
 						if (tr.getX() != 0 || tr.getY() != 0)
 						{
 							graphComponent.getGraph().getView().setTranslate(
-									new mxPoint());
+									new Point());
 						}
 					}
 				}
 			}
 		});
 
-		menu.add(new TogglePropertyItem(graphComponent, mxResources
+		menu.add(new TogglePropertyItem(graphComponent, Resources
 				.get("antialias"), "AntiAlias", true));
 
 		menu.addSeparator();
 
-		menu.add(new ToggleGridItem(editor, mxResources.get("grid")));
-		menu.add(new ToggleRulersItem(editor, mxResources.get("rulers")));
+		menu.add(new ToggleGridItem(editor, Resources.get("grid")));
+		menu.add(new ToggleRulersItem(editor, Resources.get("rulers")));
 
 		menu.addSeparator();
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("zoom")));
+		submenu = (JMenu) menu.add(new JMenu(Resources.get("zoom")));
 
 		submenu.add(editor.bind("400%", new ScaleAction(4)));
 		submenu.add(editor.bind("200%", new ScaleAction(2)));
@@ -210,67 +210,67 @@ public class SchemaEditorMenuBar extends JMenuBar
 
 		submenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("custom"), new ScaleAction(0)));
+		submenu.add(editor.bind(Resources.get("custom"), new ScaleAction(0)));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("zoomIn"), mxGraphActions
+		menu.add(editor.bind(Resources.get("zoomIn"), GraphActions
 				.getZoomInAction()));
-		menu.add(editor.bind(mxResources.get("zoomOut"), mxGraphActions
+		menu.add(editor.bind(Resources.get("zoomOut"), GraphActions
 				.getZoomOutAction()));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("page"), new ZoomPolicyAction(
-				mxGraphComponent.ZOOM_POLICY_PAGE)));
-		menu.add(editor.bind(mxResources.get("width"), new ZoomPolicyAction(
-				mxGraphComponent.ZOOM_POLICY_WIDTH)));
+		menu.add(editor.bind(Resources.get("page"), new ZoomPolicyAction(
+				GraphComponent.ZOOM_POLICY_PAGE)));
+		menu.add(editor.bind(Resources.get("width"), new ZoomPolicyAction(
+				GraphComponent.ZOOM_POLICY_WIDTH)));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("actualSize"), mxGraphActions
+		menu.add(editor.bind(Resources.get("actualSize"), GraphActions
 				.getZoomActualAction()));
 
 		// Creates the diagram menu
-		menu = add(new JMenu(mxResources.get("diagram")));
+		menu = add(new JMenu(Resources.get("diagram")));
 
-		menu.add(new ToggleOutlineItem(editor, mxResources.get("outline")));
+		menu.add(new ToggleOutlineItem(editor, Resources.get("outline")));
 
 		menu.addSeparator();
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("background")));
+		submenu = (JMenu) menu.add(new JMenu(Resources.get("background")));
 
-		submenu.add(editor.bind(mxResources.get("backgroundColor"),
+		submenu.add(editor.bind(Resources.get("backgroundColor"),
 				new BackgroundAction()));
-		submenu.add(editor.bind(mxResources.get("backgroundImage"),
+		submenu.add(editor.bind(Resources.get("backgroundImage"),
 				new BackgroundImageAction()));
 
 		submenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("pageBackground"),
+		submenu.add(editor.bind(Resources.get("pageBackground"),
 				new PageBackgroundAction()));
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("grid")));
+		submenu = (JMenu) menu.add(new JMenu(Resources.get("grid")));
 
-		submenu.add(editor.bind(mxResources.get("gridSize"),
+		submenu.add(editor.bind(Resources.get("gridSize"),
 				new PromptPropertyAction(graph, "Grid Size", "GridSize")));
-		submenu.add(editor.bind(mxResources.get("gridColor"),
+		submenu.add(editor.bind(Resources.get("gridColor"),
 				new GridColorAction()));
 
 		submenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("dashed"), new GridStyleAction(
-				mxGraphComponent.GRID_STYLE_DASHED)));
-		submenu.add(editor.bind(mxResources.get("dot"), new GridStyleAction(
-				mxGraphComponent.GRID_STYLE_DOT)));
-		submenu.add(editor.bind(mxResources.get("line"), new GridStyleAction(
-				mxGraphComponent.GRID_STYLE_LINE)));
-		submenu.add(editor.bind(mxResources.get("cross"), new GridStyleAction(
-				mxGraphComponent.GRID_STYLE_CROSS)));
+		submenu.add(editor.bind(Resources.get("dashed"), new GridStyleAction(
+				GraphComponent.GRID_STYLE_DASHED)));
+		submenu.add(editor.bind(Resources.get("dot"), new GridStyleAction(
+				GraphComponent.GRID_STYLE_DOT)));
+		submenu.add(editor.bind(Resources.get("line"), new GridStyleAction(
+				GraphComponent.GRID_STYLE_LINE)));
+		submenu.add(editor.bind(Resources.get("cross"), new GridStyleAction(
+				GraphComponent.GRID_STYLE_CROSS)));
 
 		menu.addSeparator();
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("layout")));
+		submenu = (JMenu) menu.add(new JMenu(Resources.get("layout")));
 
 		submenu.add(editor.graphLayout("verticalHierarchical", true));
 		submenu.add(editor.graphLayout("horizontalHierarchical", true));
@@ -298,49 +298,49 @@ public class SchemaEditorMenuBar extends JMenuBar
 
 		submenu.add(editor.graphLayout("organicLayout", true));
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("selection")));
+		submenu = (JMenu) menu.add(new JMenu(Resources.get("selection")));
 
-		submenu.add(editor.bind(mxResources.get("selectPath"),
+		submenu.add(editor.bind(Resources.get("selectPath"),
 				new SelectShortestPathAction(false)));
-		submenu.add(editor.bind(mxResources.get("selectDirectedPath"),
+		submenu.add(editor.bind(Resources.get("selectDirectedPath"),
 				new SelectShortestPathAction(true)));
 
 		submenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("selectTree"),
+		submenu.add(editor.bind(Resources.get("selectTree"),
 				new SelectSpanningTreeAction(false)));
-		submenu.add(editor.bind(mxResources.get("selectDirectedTree"),
+		submenu.add(editor.bind(Resources.get("selectDirectedTree"),
 				new SelectSpanningTreeAction(true)));
 
 		menu.addSeparator();
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("stylesheet")));
+		submenu = (JMenu) menu.add(new JMenu(Resources.get("stylesheet")));
 
 		submenu
 				.add(editor
 						.bind(
-								mxResources.get("basicStyle"),
+								Resources.get("basicStyle"),
 								new StylesheetAction(
-										"/com/mxgraph/examples/swing/resources/basic-style.xml")));
+										"/com/graph/examples/swing/resources/basic-style.xml")));
 		submenu
 				.add(editor
 						.bind(
-								mxResources.get("defaultStyle"),
+								Resources.get("defaultStyle"),
 								new StylesheetAction(
-										"/com/mxgraph/examples/swing/resources/default-style.xml")));
+										"/com/graph/examples/swing/resources/default-style.xml")));
 
 		// Creates the options menu
-		menu = add(new JMenu(mxResources.get("options")));
+		menu = add(new JMenu(Resources.get("options")));
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("display")));
-		submenu.add(new TogglePropertyItem(graphComponent, mxResources
+		submenu = (JMenu) menu.add(new JMenu(Resources.get("display")));
+		submenu.add(new TogglePropertyItem(graphComponent, Resources
 				.get("buffering"), "TripleBuffered", true));
-		submenu.add(editor.bind(mxResources.get("dirty"),
+		submenu.add(editor.bind(Resources.get("dirty"),
 				new ToggleDirtyAction()));
 
 		submenu.addSeparator();
 
-		item = submenu.add(new TogglePropertyItem(graphComponent, mxResources
+		item = submenu.add(new TogglePropertyItem(graphComponent, Resources
 				.get("centerPage"), "CenterPage", true, new ActionListener()
 		{
 			/**
@@ -356,27 +356,27 @@ public class SchemaEditorMenuBar extends JMenuBar
 			}
 		}));
 
-		submenu.add(new TogglePropertyItem(graphComponent, mxResources
+		submenu.add(new TogglePropertyItem(graphComponent, Resources
 				.get("centerZoom"), "CenterZoom", true));
-		submenu.add(new TogglePropertyItem(graphComponent, mxResources
+		submenu.add(new TogglePropertyItem(graphComponent, Resources
 				.get("zoomToSelection"), "KeepSelectionVisibleOnZoom", true));
 
 		submenu.addSeparator();
 
-		submenu.add(new TogglePropertyItem(graphComponent, mxResources
+		submenu.add(new TogglePropertyItem(graphComponent, Resources
 				.get("preferPagesize"), "PreferPageSize", true));
 
 		// This feature is not yet implemented
-		//submenu.add(new TogglePropertyItem(graphComponent, mxResources
+		//submenu.add(new TogglePropertyItem(graphComponent, Resources
 		//		.get("pageBreaks"), "PageBreaksVisible", true));
 
 		submenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("tolerance"),
+		submenu.add(editor.bind(Resources.get("tolerance"),
 				new PromptPropertyAction(graph, "Tolerance")));
 
 		// Creates the window menu
-		menu = add(new JMenu(mxResources.get("window")));
+		menu = add(new JMenu(Resources.get("window")));
 
 		UIManager.LookAndFeelInfo[] lafs = UIManager.getInstalledLookAndFeels();
 
@@ -393,9 +393,9 @@ public class SchemaEditorMenuBar extends JMenuBar
 		}
 
 		// Creates the help menu
-		menu = add(new JMenu(mxResources.get("help")));
+		menu = add(new JMenu(Resources.get("help")));
 
-		item = menu.add(new JMenuItem(mxResources.get("aboutGraphEditor")));
+		item = menu.add(new JMenuItem(Resources.get("aboutGraphEditor")));
 		item.addActionListener(new ActionListener()
 		{
 			/*

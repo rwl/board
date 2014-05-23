@@ -1,7 +1,7 @@
 /**
  * $Id: GraphEditor.java,v 1.3 2014/02/08 14:05:58 gaudenz Exp $
  * Copyright (c) 2006-2012, JGraph Ltd */
-package com.mxgraph.examples.swing;
+package graph.examples.swing;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -14,26 +14,26 @@ import javax.swing.UIManager;
 
 import org.w3c.dom.Document;
 
-import com.mxgraph.examples.swing.editor.BasicGraphEditor;
-import com.mxgraph.examples.swing.editor.EditorMenuBar;
-import com.mxgraph.examples.swing.editor.EditorPalette;
-import com.mxgraph.io.mxCodec;
-import com.mxgraph.model.mxCell;
-import com.mxgraph.model.mxGeometry;
-import com.mxgraph.model.mxICell;
-import com.mxgraph.model.mxIGraphModel;
-import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.swing.util.mxGraphTransferable;
-import com.mxgraph.swing.util.mxSwingConstants;
-import com.mxgraph.util.mxConstants;
-import com.mxgraph.util.mxEvent;
-import com.mxgraph.util.mxEventObject;
-import com.mxgraph.util.mxEventSource.mxIEventListener;
-import com.mxgraph.util.mxPoint;
-import com.mxgraph.util.mxResources;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.view.mxCellState;
-import com.mxgraph.view.mxGraph;
+import graph.examples.swing.editor.BasicGraphEditor;
+import graph.examples.swing.editor.EditorMenuBar;
+import graph.examples.swing.editor.EditorPalette;
+import graph.io.Codec;
+import graph.model.Cell;
+import graph.model.Geometry;
+import graph.model.ICell;
+import graph.model.IGraphModel;
+import graph.swing.GraphComponent;
+import graph.swing.util.GraphTransferable;
+import graph.swing.util.SwingConstants;
+import graph.util.Constants;
+import graph.util.Event;
+import graph.util.EventObject;
+import graph.util.EventSource.IEventListener;
+import graph.util.Point;
+import graph.util.Resources;
+import graph.util.Utils;
+import graph.view.CellState;
+import graph.view.Graph;
 
 public class GraphEditor extends BasicGraphEditor
 {
@@ -55,37 +55,37 @@ public class GraphEditor extends BasicGraphEditor
 	 */
 	public static URL url = null;
 
-	//GraphEditor.class.getResource("/com/mxgraph/examples/swing/images/connector.gif");
+	//GraphEditor.class.getResource("/com/graph/examples/swing/images/connector.gif");
 
 	public GraphEditor()
 	{
-		this("mxGraph Editor", new CustomGraphComponent(new CustomGraph()));
+		this("Graph Editor", new CustomGraphComponent(new CustomGraph()));
 	}
 
 	/**
 	 * 
 	 */
-	public GraphEditor(String appTitle, mxGraphComponent component)
+	public GraphEditor(String appTitle, GraphComponent component)
 	{
 		super(appTitle, component);
-		final mxGraph graph = graphComponent.getGraph();
+		final Graph graph = graphComponent.getGraph();
 
 		// Creates the shapes palette
-		EditorPalette shapesPalette = insertPalette(mxResources.get("shapes"));
-		EditorPalette imagesPalette = insertPalette(mxResources.get("images"));
-		EditorPalette symbolsPalette = insertPalette(mxResources.get("symbols"));
+		EditorPalette shapesPalette = insertPalette(Resources.get("shapes"));
+		EditorPalette imagesPalette = insertPalette(Resources.get("images"));
+		EditorPalette symbolsPalette = insertPalette(Resources.get("symbols"));
 
 		// Sets the edge template to be used for creating new edges if an edge
 		// is clicked in the shape palette
-		shapesPalette.addListener(mxEvent.SELECT, new mxIEventListener()
+		shapesPalette.addListener(Event.SELECT, new IEventListener()
 		{
-			public void invoke(Object sender, mxEventObject evt)
+			public void invoke(Object sender, EventObject evt)
 			{
 				Object tmp = evt.getProperty("transferable");
 
-				if (tmp instanceof mxGraphTransferable)
+				if (tmp instanceof GraphTransferable)
 				{
-					mxGraphTransferable t = (mxGraphTransferable) tmp;
+					GraphTransferable t = (GraphTransferable) tmp;
 					Object cell = t.getCells()[0];
 
 					if (graph.getModel().isEdge(cell))
@@ -103,107 +103,107 @@ public class GraphEditor extends BasicGraphEditor
 						"Container",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/swimlane.png")),
+										.getResource("/com/graph/examples/swing/images/swimlane.png")),
 						"swimlane", 280, 280, "Container");
 		shapesPalette
 				.addTemplate(
 						"Icon",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/rounded.png")),
-						"icon;image=/com/mxgraph/examples/swing/images/wrench.png",
+										.getResource("/com/graph/examples/swing/images/rounded.png")),
+						"icon;image=/com/graph/examples/swing/images/wrench.png",
 						70, 70, "Icon");
 		shapesPalette
 				.addTemplate(
 						"Label",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/rounded.png")),
-						"label;image=/com/mxgraph/examples/swing/images/gear.png",
+										.getResource("/com/graph/examples/swing/images/rounded.png")),
+						"label;image=/com/graph/examples/swing/images/gear.png",
 						130, 50, "Label");
 		shapesPalette
 				.addTemplate(
 						"Rectangle",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/rectangle.png")),
+										.getResource("/com/graph/examples/swing/images/rectangle.png")),
 						null, 160, 120, "");
 		shapesPalette
 				.addTemplate(
 						"Rounded Rectangle",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/rounded.png")),
+										.getResource("/com/graph/examples/swing/images/rounded.png")),
 						"rounded=1", 160, 120, "");
 		shapesPalette
 				.addTemplate(
 						"Double Rectangle",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/doublerectangle.png")),
+										.getResource("/com/graph/examples/swing/images/doublerectangle.png")),
 						"rectangle;shape=doubleRectangle", 160, 120, "");
 		shapesPalette
 				.addTemplate(
 						"Ellipse",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/ellipse.png")),
+										.getResource("/com/graph/examples/swing/images/ellipse.png")),
 						"ellipse", 160, 160, "");
 		shapesPalette
 				.addTemplate(
 						"Double Ellipse",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/doubleellipse.png")),
+										.getResource("/com/graph/examples/swing/images/doubleellipse.png")),
 						"ellipse;shape=doubleEllipse", 160, 160, "");
 		shapesPalette
 				.addTemplate(
 						"Triangle",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/triangle.png")),
+										.getResource("/com/graph/examples/swing/images/triangle.png")),
 						"triangle", 120, 160, "");
 		shapesPalette
 				.addTemplate(
 						"Rhombus",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/rhombus.png")),
+										.getResource("/com/graph/examples/swing/images/rhombus.png")),
 						"rhombus", 160, 160, "");
 		shapesPalette
 				.addTemplate(
 						"Horizontal Line",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/hline.png")),
+										.getResource("/com/graph/examples/swing/images/hline.png")),
 						"line", 160, 10, "");
 		shapesPalette
 				.addTemplate(
 						"Hexagon",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/hexagon.png")),
+										.getResource("/com/graph/examples/swing/images/hexagon.png")),
 						"shape=hexagon", 160, 120, "");
 		shapesPalette
 				.addTemplate(
 						"Cylinder",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/cylinder.png")),
+										.getResource("/com/graph/examples/swing/images/cylinder.png")),
 						"shape=cylinder", 120, 160, "");
 		shapesPalette
 				.addTemplate(
 						"Actor",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/actor.png")),
+										.getResource("/com/graph/examples/swing/images/actor.png")),
 						"shape=actor", 120, 160, "");
 		shapesPalette
 				.addTemplate(
 						"Cloud",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/cloud.png")),
+										.getResource("/com/graph/examples/swing/images/cloud.png")),
 						"ellipse;shape=cloud", 160, 120, "");
 
 		shapesPalette
@@ -211,35 +211,35 @@ public class GraphEditor extends BasicGraphEditor
 						"Straight",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/straight.png")),
+										.getResource("/com/graph/examples/swing/images/straight.png")),
 						"straight", 120, 120, "");
 		shapesPalette
 				.addEdgeTemplate(
 						"Horizontal Connector",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/connect.png")),
+										.getResource("/com/graph/examples/swing/images/connect.png")),
 						null, 100, 100, "");
 		shapesPalette
 				.addEdgeTemplate(
 						"Vertical Connector",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/vertical.png")),
+										.getResource("/com/graph/examples/swing/images/vertical.png")),
 						"vertical", 100, 100, "");
 		shapesPalette
 				.addEdgeTemplate(
 						"Entity Relation",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/entity.png")),
+										.getResource("/com/graph/examples/swing/images/entity.png")),
 						"entity", 100, 100, "");
 		shapesPalette
 				.addEdgeTemplate(
 						"Arrow",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/arrow.png")),
+										.getResource("/com/graph/examples/swing/images/arrow.png")),
 						"arrow", 120, 120, "");
 
 		imagesPalette
@@ -247,96 +247,96 @@ public class GraphEditor extends BasicGraphEditor
 						"Bell",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/bell.png")),
-						"image;image=/com/mxgraph/examples/swing/images/bell.png",
+										.getResource("/com/graph/examples/swing/images/bell.png")),
+						"image;image=/com/graph/examples/swing/images/bell.png",
 						50, 50, "Bell");
 		imagesPalette
 				.addTemplate(
 						"Box",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/box.png")),
-						"image;image=/com/mxgraph/examples/swing/images/box.png",
+										.getResource("/com/graph/examples/swing/images/box.png")),
+						"image;image=/com/graph/examples/swing/images/box.png",
 						50, 50, "Box");
 		imagesPalette
 				.addTemplate(
 						"Cube",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/cube_green.png")),
-						"image;image=/com/mxgraph/examples/swing/images/cube_green.png",
+										.getResource("/com/graph/examples/swing/images/cube_green.png")),
+						"image;image=/com/graph/examples/swing/images/cube_green.png",
 						50, 50, "Cube");
 		imagesPalette
 				.addTemplate(
 						"User",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/dude3.png")),
-						"roundImage;image=/com/mxgraph/examples/swing/images/dude3.png",
+										.getResource("/com/graph/examples/swing/images/dude3.png")),
+						"roundImage;image=/com/graph/examples/swing/images/dude3.png",
 						50, 50, "User");
 		imagesPalette
 				.addTemplate(
 						"Earth",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/earth.png")),
-						"roundImage;image=/com/mxgraph/examples/swing/images/earth.png",
+										.getResource("/com/graph/examples/swing/images/earth.png")),
+						"roundImage;image=/com/graph/examples/swing/images/earth.png",
 						50, 50, "Earth");
 		imagesPalette
 				.addTemplate(
 						"Gear",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/gear.png")),
-						"roundImage;image=/com/mxgraph/examples/swing/images/gear.png",
+										.getResource("/com/graph/examples/swing/images/gear.png")),
+						"roundImage;image=/com/graph/examples/swing/images/gear.png",
 						50, 50, "Gear");
 		imagesPalette
 				.addTemplate(
 						"Home",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/house.png")),
-						"image;image=/com/mxgraph/examples/swing/images/house.png",
+										.getResource("/com/graph/examples/swing/images/house.png")),
+						"image;image=/com/graph/examples/swing/images/house.png",
 						50, 50, "Home");
 		imagesPalette
 				.addTemplate(
 						"Package",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/package.png")),
-						"image;image=/com/mxgraph/examples/swing/images/package.png",
+										.getResource("/com/graph/examples/swing/images/package.png")),
+						"image;image=/com/graph/examples/swing/images/package.png",
 						50, 50, "Package");
 		imagesPalette
 				.addTemplate(
 						"Printer",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/printer.png")),
-						"image;image=/com/mxgraph/examples/swing/images/printer.png",
+										.getResource("/com/graph/examples/swing/images/printer.png")),
+						"image;image=/com/graph/examples/swing/images/printer.png",
 						50, 50, "Printer");
 		imagesPalette
 				.addTemplate(
 						"Server",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/server.png")),
-						"image;image=/com/mxgraph/examples/swing/images/server.png",
+										.getResource("/com/graph/examples/swing/images/server.png")),
+						"image;image=/com/graph/examples/swing/images/server.png",
 						50, 50, "Server");
 		imagesPalette
 				.addTemplate(
 						"Workplace",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/workplace.png")),
-						"image;image=/com/mxgraph/examples/swing/images/workplace.png",
+										.getResource("/com/graph/examples/swing/images/workplace.png")),
+						"image;image=/com/graph/examples/swing/images/workplace.png",
 						50, 50, "Workplace");
 		imagesPalette
 				.addTemplate(
 						"Wrench",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/wrench.png")),
-						"roundImage;image=/com/mxgraph/examples/swing/images/wrench.png",
+										.getResource("/com/graph/examples/swing/images/wrench.png")),
+						"roundImage;image=/com/graph/examples/swing/images/wrench.png",
 						50, 50, "Wrench");
 
 		symbolsPalette
@@ -344,103 +344,103 @@ public class GraphEditor extends BasicGraphEditor
 						"Cancel",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/cancel_end.png")),
-						"roundImage;image=/com/mxgraph/examples/swing/images/cancel_end.png",
+										.getResource("/com/graph/examples/swing/images/cancel_end.png")),
+						"roundImage;image=/com/graph/examples/swing/images/cancel_end.png",
 						80, 80, "Cancel");
 		symbolsPalette
 				.addTemplate(
 						"Error",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/error.png")),
-						"roundImage;image=/com/mxgraph/examples/swing/images/error.png",
+										.getResource("/com/graph/examples/swing/images/error.png")),
+						"roundImage;image=/com/graph/examples/swing/images/error.png",
 						80, 80, "Error");
 		symbolsPalette
 				.addTemplate(
 						"Event",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/event.png")),
-						"roundImage;image=/com/mxgraph/examples/swing/images/event.png",
+										.getResource("/com/graph/examples/swing/images/event.png")),
+						"roundImage;image=/com/graph/examples/swing/images/event.png",
 						80, 80, "Event");
 		symbolsPalette
 				.addTemplate(
 						"Fork",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/fork.png")),
-						"rhombusImage;image=/com/mxgraph/examples/swing/images/fork.png",
+										.getResource("/com/graph/examples/swing/images/fork.png")),
+						"rhombusImage;image=/com/graph/examples/swing/images/fork.png",
 						80, 80, "Fork");
 		symbolsPalette
 				.addTemplate(
 						"Inclusive",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/inclusive.png")),
-						"rhombusImage;image=/com/mxgraph/examples/swing/images/inclusive.png",
+										.getResource("/com/graph/examples/swing/images/inclusive.png")),
+						"rhombusImage;image=/com/graph/examples/swing/images/inclusive.png",
 						80, 80, "Inclusive");
 		symbolsPalette
 				.addTemplate(
 						"Link",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/link.png")),
-						"roundImage;image=/com/mxgraph/examples/swing/images/link.png",
+										.getResource("/com/graph/examples/swing/images/link.png")),
+						"roundImage;image=/com/graph/examples/swing/images/link.png",
 						80, 80, "Link");
 		symbolsPalette
 				.addTemplate(
 						"Merge",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/merge.png")),
-						"rhombusImage;image=/com/mxgraph/examples/swing/images/merge.png",
+										.getResource("/com/graph/examples/swing/images/merge.png")),
+						"rhombusImage;image=/com/graph/examples/swing/images/merge.png",
 						80, 80, "Merge");
 		symbolsPalette
 				.addTemplate(
 						"Message",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/message.png")),
-						"roundImage;image=/com/mxgraph/examples/swing/images/message.png",
+										.getResource("/com/graph/examples/swing/images/message.png")),
+						"roundImage;image=/com/graph/examples/swing/images/message.png",
 						80, 80, "Message");
 		symbolsPalette
 				.addTemplate(
 						"Multiple",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/multiple.png")),
-						"roundImage;image=/com/mxgraph/examples/swing/images/multiple.png",
+										.getResource("/com/graph/examples/swing/images/multiple.png")),
+						"roundImage;image=/com/graph/examples/swing/images/multiple.png",
 						80, 80, "Multiple");
 		symbolsPalette
 				.addTemplate(
 						"Rule",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/rule.png")),
-						"roundImage;image=/com/mxgraph/examples/swing/images/rule.png",
+										.getResource("/com/graph/examples/swing/images/rule.png")),
+						"roundImage;image=/com/graph/examples/swing/images/rule.png",
 						80, 80, "Rule");
 		symbolsPalette
 				.addTemplate(
 						"Terminate",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/terminate.png")),
-						"roundImage;image=/com/mxgraph/examples/swing/images/terminate.png",
+										.getResource("/com/graph/examples/swing/images/terminate.png")),
+						"roundImage;image=/com/graph/examples/swing/images/terminate.png",
 						80, 80, "Terminate");
 		symbolsPalette
 				.addTemplate(
 						"Timer",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/timer.png")),
-						"roundImage;image=/com/mxgraph/examples/swing/images/timer.png",
+										.getResource("/com/graph/examples/swing/images/timer.png")),
+						"roundImage;image=/com/graph/examples/swing/images/timer.png",
 						80, 80, "Timer");
 	}
 
 	/**
 	 * 
 	 */
-	public static class CustomGraphComponent extends mxGraphComponent
+	public static class CustomGraphComponent extends GraphComponent
 	{
 
 		/**
@@ -452,7 +452,7 @@ public class GraphEditor extends BasicGraphEditor
 		 * 
 		 * @param graph
 		 */
-		public CustomGraphComponent(mxGraph graph)
+		public CustomGraphComponent(Graph graph)
 		{
 			super(graph);
 
@@ -463,9 +463,9 @@ public class GraphEditor extends BasicGraphEditor
 			getConnectionHandler().setCreateTarget(true);
 
 			// Loads the defalt stylesheet from an external file
-			mxCodec codec = new mxCodec();
-			Document doc = mxUtils.loadDocument(GraphEditor.class.getResource(
-					"/com/mxgraph/examples/swing/resources/default-style.xml")
+			Codec codec = new Codec();
+			Document doc = Utils.loadDocument(GraphEditor.class.getResource(
+					"/com/graph/examples/swing/resources/default-style.xml")
 					.toString());
 			codec.decode(doc.getDocumentElement(), graph.getStylesheet());
 
@@ -486,15 +486,15 @@ public class GraphEditor extends BasicGraphEditor
 			{
 				target = getCellAt(location.x, location.y);
 
-				if (target instanceof mxICell && cells[0] instanceof mxICell)
+				if (target instanceof ICell && cells[0] instanceof ICell)
 				{
-					mxICell targetCell = (mxICell) target;
-					mxICell dropCell = (mxICell) cells[0];
+					ICell targetCell = (ICell) target;
+					ICell dropCell = (ICell) cells[0];
 
 					if (targetCell.isVertex() == dropCell.isVertex()
 							|| targetCell.isEdge() == dropCell.isEdge())
 					{
-						mxIGraphModel model = graph.getModel();
+						IGraphModel model = graph.getModel();
 						model.setStyle(target, model.getStyle(cells[0]));
 						graph.setSelectionCell(target);
 
@@ -511,7 +511,7 @@ public class GraphEditor extends BasicGraphEditor
 	/**
 	 * A graph that creates new edges from a given template edge.
 	 */
-	public static class CustomGraph extends mxGraph
+	public static class CustomGraph extends Graph
 	{
 		/**
 		 * Holds the edge to be used as a template for inserting new edges.
@@ -524,7 +524,7 @@ public class GraphEditor extends BasicGraphEditor
 		 */
 		public CustomGraph()
 		{
-			setAlternateEdgeStyle("edgeStyle=mxEdgeStyle.ElbowConnector;elbow=vertical");
+			setAlternateEdgeStyle("edgeStyle=EdgeStyle.ElbowConnector;elbow=vertical");
 		}
 
 		/**
@@ -541,8 +541,8 @@ public class GraphEditor extends BasicGraphEditor
 		public String getToolTipForCell(Object cell)
 		{
 			String tip = "<html>";
-			mxGeometry geo = getModel().getGeometry(cell);
-			mxCellState state = getView().getState(cell);
+			Geometry geo = getModel().getGeometry(cell);
+			CellState state = getView().getState(cell);
 
 			if (getModel().isEdge(cell))
 			{
@@ -550,15 +550,15 @@ public class GraphEditor extends BasicGraphEditor
 
 				if (geo != null)
 				{
-					List<mxPoint> points = geo.getPoints();
+					List<Point> points = geo.getPoints();
 
 					if (points != null)
 					{
-						Iterator<mxPoint> it = points.iterator();
+						Iterator<Point> it = points.iterator();
 
 						while (it.hasNext())
 						{
-							mxPoint point = it.next();
+							Point point = it.next();
 							tip += "[x=" + numberFormat.format(point.getX())
 									+ ",y=" + numberFormat.format(point.getY())
 									+ "],";
@@ -576,7 +576,7 @@ public class GraphEditor extends BasicGraphEditor
 
 					for (int i = 0; i < state.getAbsolutePointCount(); i++)
 					{
-						mxPoint point = state.getAbsolutePoint(i);
+						Point point = state.getAbsolutePoint(i);
 						tip += "[x=" + numberFormat.format(point.getX())
 								+ ",y=" + numberFormat.format(point.getY())
 								+ "],";
@@ -614,7 +614,7 @@ public class GraphEditor extends BasicGraphEditor
 				tip += "]";
 			}
 
-			mxPoint trans = getView().getTranslate();
+			Point trans = getView().getTranslate();
 
 			tip += "<br>scale=" + numberFormat.format(getView().getScale())
 					+ ", translate=[x=" + numberFormat.format(trans.getX())
@@ -642,7 +642,7 @@ public class GraphEditor extends BasicGraphEditor
 		{
 			if (edgeTemplate != null)
 			{
-				mxCell edge = (mxCell) cloneCells(new Object[] { edgeTemplate })[0];
+				Cell edge = (Cell) cloneCells(new Object[] { edgeTemplate })[0];
 				edge.setId(id);
 
 				return edge;
@@ -668,8 +668,8 @@ public class GraphEditor extends BasicGraphEditor
 			e1.printStackTrace();
 		}
 
-		mxSwingConstants.SHADOW_COLOR = Color.LIGHT_GRAY;
-		mxConstants.W3C_SHADOWCOLOR = "#D3D3D3";
+		SwingConstants.SHADOW_COLOR = Color.LIGHT_GRAY;
+		Constants.W3C_SHADOWCOLOR = "#D3D3D3";
 
 		GraphEditor editor = new GraphEditor();
 		editor.createFrame(new EditorMenuBar(editor)).setVisible(true);

@@ -1,4 +1,4 @@
-package com.mxgraph.examples.swing.editor;
+package graph.examples.swing.editor;
 
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
@@ -14,23 +14,23 @@ import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
 import javax.swing.TransferHandler;
 
-import com.mxgraph.examples.swing.editor.EditorActions.ColorAction;
-import com.mxgraph.examples.swing.editor.EditorActions.FontStyleAction;
-import com.mxgraph.examples.swing.editor.EditorActions.HistoryAction;
-import com.mxgraph.examples.swing.editor.EditorActions.KeyValueAction;
-import com.mxgraph.examples.swing.editor.EditorActions.NewAction;
-import com.mxgraph.examples.swing.editor.EditorActions.OpenAction;
-import com.mxgraph.examples.swing.editor.EditorActions.PrintAction;
-import com.mxgraph.examples.swing.editor.EditorActions.SaveAction;
-import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.swing.util.mxGraphActions;
-import com.mxgraph.util.mxConstants;
-import com.mxgraph.util.mxEvent;
-import com.mxgraph.util.mxEventObject;
-import com.mxgraph.util.mxResources;
-import com.mxgraph.util.mxEventSource.mxIEventListener;
-import com.mxgraph.view.mxGraph;
-import com.mxgraph.view.mxGraphView;
+import graph.examples.swing.editor.EditorActions.ColorAction;
+import graph.examples.swing.editor.EditorActions.FontStyleAction;
+import graph.examples.swing.editor.EditorActions.HistoryAction;
+import graph.examples.swing.editor.EditorActions.KeyValueAction;
+import graph.examples.swing.editor.EditorActions.NewAction;
+import graph.examples.swing.editor.EditorActions.OpenAction;
+import graph.examples.swing.editor.EditorActions.PrintAction;
+import graph.examples.swing.editor.EditorActions.SaveAction;
+import graph.swing.GraphComponent;
+import graph.swing.util.GraphActions;
+import graph.util.Constants;
+import graph.util.Event;
+import graph.util.EventObject;
+import graph.util.Resources;
+import graph.util.EventSource.IEventListener;
+import graph.view.Graph;
+import graph.view.GraphView;
 
 public class EditorToolBar extends JToolBar
 {
@@ -58,37 +58,37 @@ public class EditorToolBar extends JToolBar
 		setFloatable(false);
 
 		add(editor.bind("New", new NewAction(),
-				"/com/mxgraph/examples/swing/images/new.gif"));
+				"/com/graph/examples/swing/images/new.gif"));
 		add(editor.bind("Open", new OpenAction(),
-				"/com/mxgraph/examples/swing/images/open.gif"));
+				"/com/graph/examples/swing/images/open.gif"));
 		add(editor.bind("Save", new SaveAction(false),
-				"/com/mxgraph/examples/swing/images/save.gif"));
+				"/com/graph/examples/swing/images/save.gif"));
 
 		addSeparator();
 
 		add(editor.bind("Print", new PrintAction(),
-				"/com/mxgraph/examples/swing/images/print.gif"));
+				"/com/graph/examples/swing/images/print.gif"));
 
 		addSeparator();
 
 		add(editor.bind("Cut", TransferHandler.getCutAction(),
-				"/com/mxgraph/examples/swing/images/cut.gif"));
+				"/com/graph/examples/swing/images/cut.gif"));
 		add(editor.bind("Copy", TransferHandler.getCopyAction(),
-				"/com/mxgraph/examples/swing/images/copy.gif"));
+				"/com/graph/examples/swing/images/copy.gif"));
 		add(editor.bind("Paste", TransferHandler.getPasteAction(),
-				"/com/mxgraph/examples/swing/images/paste.gif"));
+				"/com/graph/examples/swing/images/paste.gif"));
 
 		addSeparator();
 
-		add(editor.bind("Delete", mxGraphActions.getDeleteAction(),
-				"/com/mxgraph/examples/swing/images/delete.gif"));
+		add(editor.bind("Delete", GraphActions.getDeleteAction(),
+				"/com/graph/examples/swing/images/delete.gif"));
 
 		addSeparator();
 
 		add(editor.bind("Undo", new HistoryAction(true),
-				"/com/mxgraph/examples/swing/images/undo.gif"));
+				"/com/graph/examples/swing/images/undo.gif"));
 		add(editor.bind("Redo", new HistoryAction(false),
-				"/com/mxgraph/examples/swing/images/redo.gif"));
+				"/com/graph/examples/swing/images/redo.gif"));
 
 		addSeparator();
 
@@ -119,8 +119,8 @@ public class EditorToolBar extends JToolBar
 
 				if (font != null && !font.equals("-"))
 				{
-					mxGraph graph = editor.getGraphComponent().getGraph();
-					graph.setCellStyles(mxConstants.STYLE_FONTFAMILY, font);
+					Graph graph = editor.getGraphComponent().getGraph();
+					graph.setCellStyles(Constants.STYLE_FONTFAMILY, font);
 				}
 			}
 		});
@@ -141,8 +141,8 @@ public class EditorToolBar extends JToolBar
 			 */
 			public void actionPerformed(ActionEvent e)
 			{
-				mxGraph graph = editor.getGraphComponent().getGraph();
-				graph.setCellStyles(mxConstants.STYLE_FONTSIZE, sizeCombo
+				Graph graph = editor.getGraphComponent().getGraph();
+				graph.setCellStyles(Constants.STYLE_FONTSIZE, sizeCombo
 						.getSelectedItem().toString().replace("pt", ""));
 			}
 		});
@@ -150,41 +150,41 @@ public class EditorToolBar extends JToolBar
 		addSeparator();
 
 		add(editor.bind("Bold", new FontStyleAction(true),
-				"/com/mxgraph/examples/swing/images/bold.gif"));
+				"/com/graph/examples/swing/images/bold.gif"));
 		add(editor.bind("Italic", new FontStyleAction(false),
-				"/com/mxgraph/examples/swing/images/italic.gif"));
+				"/com/graph/examples/swing/images/italic.gif"));
 
 		addSeparator();
 
-		add(editor.bind("Left", new KeyValueAction(mxConstants.STYLE_ALIGN,
-				mxConstants.ALIGN_LEFT),
-				"/com/mxgraph/examples/swing/images/left.gif"));
-		add(editor.bind("Center", new KeyValueAction(mxConstants.STYLE_ALIGN,
-				mxConstants.ALIGN_CENTER),
-				"/com/mxgraph/examples/swing/images/center.gif"));
-		add(editor.bind("Right", new KeyValueAction(mxConstants.STYLE_ALIGN,
-				mxConstants.ALIGN_RIGHT),
-				"/com/mxgraph/examples/swing/images/right.gif"));
+		add(editor.bind("Left", new KeyValueAction(Constants.STYLE_ALIGN,
+				Constants.ALIGN_LEFT),
+				"/com/graph/examples/swing/images/left.gif"));
+		add(editor.bind("Center", new KeyValueAction(Constants.STYLE_ALIGN,
+				Constants.ALIGN_CENTER),
+				"/com/graph/examples/swing/images/center.gif"));
+		add(editor.bind("Right", new KeyValueAction(Constants.STYLE_ALIGN,
+				Constants.ALIGN_RIGHT),
+				"/com/graph/examples/swing/images/right.gif"));
 
 		addSeparator();
 
 		add(editor.bind("Font", new ColorAction("Font",
-				mxConstants.STYLE_FONTCOLOR),
-				"/com/mxgraph/examples/swing/images/fontcolor.gif"));
+				Constants.STYLE_FONTCOLOR),
+				"/com/graph/examples/swing/images/fontcolor.gif"));
 		add(editor.bind("Stroke", new ColorAction("Stroke",
-				mxConstants.STYLE_STROKECOLOR),
-				"/com/mxgraph/examples/swing/images/linecolor.gif"));
+				Constants.STYLE_STROKECOLOR),
+				"/com/graph/examples/swing/images/linecolor.gif"));
 		add(editor.bind("Fill", new ColorAction("Fill",
-				mxConstants.STYLE_FILLCOLOR),
-				"/com/mxgraph/examples/swing/images/fillcolor.gif"));
+				Constants.STYLE_FILLCOLOR),
+				"/com/graph/examples/swing/images/fillcolor.gif"));
 
 		addSeparator();
 
-		final mxGraphView view = editor.getGraphComponent().getGraph()
+		final GraphView view = editor.getGraphComponent().getGraph()
 				.getView();
 		final JComboBox zoomCombo = new JComboBox(new Object[] { "400%",
-				"200%", "150%", "100%", "75%", "50%", mxResources.get("page"),
-				mxResources.get("width"), mxResources.get("actualSize") });
+				"200%", "150%", "100%", "75%", "50%", Resources.get("page"),
+				Resources.get("width"), Resources.get("actualSize") });
 		zoomCombo.setEditable(true);
 		zoomCombo.setMinimumSize(new Dimension(75, 0));
 		zoomCombo.setPreferredSize(new Dimension(75, 0));
@@ -193,12 +193,12 @@ public class EditorToolBar extends JToolBar
 		add(zoomCombo);
 
 		// Sets the zoom in the zoom combo the current value
-		mxIEventListener scaleTracker = new mxIEventListener()
+		IEventListener scaleTracker = new IEventListener()
 		{
 			/**
 			 * 
 			 */
-			public void invoke(Object sender, mxEventObject evt)
+			public void invoke(Object sender, EventObject evt)
 			{
 				ignoreZoomChange = true;
 
@@ -217,8 +217,8 @@ public class EditorToolBar extends JToolBar
 
 		// Installs the scale tracker to update the value in the combo box
 		// if the zoom is changed from outside the combo box
-		view.getGraph().getView().addListener(mxEvent.SCALE, scaleTracker);
-		view.getGraph().getView().addListener(mxEvent.SCALE_AND_TRANSLATE,
+		view.getGraph().getView().addListener(Event.SCALE, scaleTracker);
+		view.getGraph().getView().addListener(Event.SCALE_AND_TRANSLATE,
 				scaleTracker);
 
 		// Invokes once to sync with the actual zoom value
@@ -231,7 +231,7 @@ public class EditorToolBar extends JToolBar
 			 */
 			public void actionPerformed(ActionEvent e)
 			{
-				mxGraphComponent graphComponent = editor.getGraphComponent();
+				GraphComponent graphComponent = editor.getGraphComponent();
 
 				// Zoomcombo is changed when the scale is changed in the diagram
 				// but the change is ignored here
@@ -239,19 +239,19 @@ public class EditorToolBar extends JToolBar
 				{
 					String zoom = zoomCombo.getSelectedItem().toString();
 
-					if (zoom.equals(mxResources.get("page")))
+					if (zoom.equals(Resources.get("page")))
 					{
 						graphComponent.setPageVisible(true);
 						graphComponent
-								.setZoomPolicy(mxGraphComponent.ZOOM_POLICY_PAGE);
+								.setZoomPolicy(GraphComponent.ZOOM_POLICY_PAGE);
 					}
-					else if (zoom.equals(mxResources.get("width")))
+					else if (zoom.equals(Resources.get("width")))
 					{
 						graphComponent.setPageVisible(true);
 						graphComponent
-								.setZoomPolicy(mxGraphComponent.ZOOM_POLICY_WIDTH);
+								.setZoomPolicy(GraphComponent.ZOOM_POLICY_WIDTH);
 					}
-					else if (zoom.equals(mxResources.get("actualSize")))
+					else if (zoom.equals(Resources.get("actualSize")))
 					{
 						graphComponent.zoomActual();
 					}

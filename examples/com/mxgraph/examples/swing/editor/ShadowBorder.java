@@ -9,7 +9,7 @@
  * installation directory. If you are unable to locate this file please
  * contact JGraph sales for another copy.
  */
-package com.mxgraph.examples.swing.editor;
+package graph.examples.swing.editor;
 
 import java.awt.Color;
 import java.awt.Component;

@@ -7,7 +7,7 @@
  * See LICENSE file for license details. If you are unable to locate
  * this file please contact info (at) jgraph (dot) com.
  */
-package com.mxgraph.examples.swing.editor;
+package graph.examples.swing.editor;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -32,12 +32,12 @@ import java.util.TooManyListenersException;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 
-import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.util.mxEvent;
-import com.mxgraph.util.mxEventObject;
-import com.mxgraph.util.mxPoint;
-import com.mxgraph.util.mxEventSource.mxIEventListener;
-import com.mxgraph.view.mxGraph;
+import graph.swing.GraphComponent;
+import graph.util.Event;
+import graph.util.EventObject;
+import graph.util.Point;
+import graph.util.EventSource.IEventListener;
+import graph.view.Graph;
 
 /**
  * Component that displays a ruler for a JGraph component.
@@ -136,7 +136,7 @@ public class EditorRuler extends JComponent implements MouseMotionListener,
 	/**
 	 * Reference to the attached graph.
 	 */
-	protected mxGraphComponent graphComponent;
+	protected GraphComponent graphComponent;
 
 	/**
 	 * Holds the current and first mouse point.
@@ -151,9 +151,9 @@ public class EditorRuler extends JComponent implements MouseMotionListener,
 	/**
 	 * 
 	 */
-	protected transient mxIEventListener repaintHandler = new mxIEventListener()
+	protected transient IEventListener repaintHandler = new IEventListener()
 	{
-		public void invoke(Object source, mxEventObject evt)
+		public void invoke(Object source, EventObject evt)
 		{
 			repaint();
 		}
@@ -167,18 +167,18 @@ public class EditorRuler extends JComponent implements MouseMotionListener,
 	 * @param orientation
 	 *            The orientation to use for the ruler.
 	 */
-	public EditorRuler(mxGraphComponent graphComponent, int orientation)
+	public EditorRuler(GraphComponent graphComponent, int orientation)
 	{
 		this.orientation = orientation;
 		this.graphComponent = graphComponent;
 		updateIncrementAndUnits();
 
 		graphComponent.getGraph().getView().addListener(
-				mxEvent.SCALE, repaintHandler);
+				Event.SCALE, repaintHandler);
 		graphComponent.getGraph().getView().addListener(
-				mxEvent.TRANSLATE, repaintHandler);
+				Event.TRANSLATE, repaintHandler);
 		graphComponent.getGraph().getView().addListener(
-				mxEvent.SCALE_AND_TRANSLATE, repaintHandler);
+				Event.SCALE_AND_TRANSLATE, repaintHandler);
 
 		graphComponent.getGraphControl().addMouseMotionListener(this);
 
@@ -426,7 +426,7 @@ public class EditorRuler extends JComponent implements MouseMotionListener,
 	 */
 	public void paintComponent(Graphics g)
 	{
-		mxGraph graph = graphComponent.getGraph();
+		Graph graph = graphComponent.getGraph();
 		Rectangle clip = g.getClipBounds();
 		updateIncrementAndUnits();
 
@@ -461,7 +461,7 @@ public class EditorRuler extends JComponent implements MouseMotionListener,
 		double bottom = top + clip.getHeight();
 
 		// Fetches some global display state information
-		mxPoint trans = graph.getView().getTranslate();
+		Point trans = graph.getView().getTranslate();
 		double scale = graph.getView().getScale();
 		double tx = trans.getX() * scale;
 		double ty = trans.getY() * scale;

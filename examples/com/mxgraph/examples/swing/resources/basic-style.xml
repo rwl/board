@@ -1,4 +1,4 @@
-<mxStylesheet>
+<Stylesheet>
 	<add as="defaultVertex">
 		<add as="shape" value="label"/>
 		<add as="perimeter" value="rectanglePerimeter"/>
@@ -74,4 +74,4 @@
 	<add as="rhombusImage" extend="image">
 		<add as="perimeter" value="rhombusPerimeter"/>
 	</add>
-</mxStylesheet>
+</Stylesheet>

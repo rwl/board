@@ -2,7 +2,7 @@
  * $Id: EditorPalette.java,v 1.1 2012/11/15 13:26:46 gaudenz Exp $
  * Copyright (c) 2007-2012, JGraph Ltd
  */
-package com.mxgraph.examples.swing.editor;
+package graph.examples.swing.editor;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -27,16 +27,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.TransferHandler;
 
-import com.mxgraph.model.mxCell;
-import com.mxgraph.model.mxGeometry;
-import com.mxgraph.swing.util.mxGraphTransferable;
-import com.mxgraph.swing.util.mxSwingConstants;
-import com.mxgraph.util.mxEvent;
-import com.mxgraph.util.mxEventObject;
-import com.mxgraph.util.mxEventSource;
-import com.mxgraph.util.mxPoint;
-import com.mxgraph.util.mxRectangle;
-import com.mxgraph.util.mxEventSource.mxIEventListener;
+import graph.model.Cell;
+import graph.model.Geometry;
+import graph.swing.util.GraphTransferable;
+import graph.swing.util.SwingConstants;
+import graph.util.Event;
+import graph.util.EventObject;
+import graph.util.EventSource;
+import graph.util.Point;
+import graph.util.Rectangle;
+import graph.util.EventSource.IEventListener;
 
 public class EditorPalette extends JPanel
 {
@@ -54,7 +54,7 @@ public class EditorPalette extends JPanel
 	/**
 	 * 
 	 */
-	protected mxEventSource eventSource = new mxEventSource(this);
+	protected EventSource eventSource = new EventSource(this);
 
 	/**
 	 * 
@@ -180,7 +180,7 @@ public class EditorPalette extends JPanel
 	/**
 	 * 
 	 */
-	public void setSelectionEntry(JLabel entry, mxGraphTransferable t)
+	public void setSelectionEntry(JLabel entry, GraphTransferable t)
 	{
 		JLabel previous = selectedEntry;
 		selectedEntry = entry;
@@ -197,7 +197,7 @@ public class EditorPalette extends JPanel
 			selectedEntry.setOpaque(true);
 		}
 
-		eventSource.fireEvent(new mxEventObject(mxEvent.SELECT, "entry",
+		eventSource.fireEvent(new EventObject(Event.SELECT, "entry",
 				selectedEntry, "transferable", t, "previous", previous));
 	}
 
@@ -224,12 +224,12 @@ public class EditorPalette extends JPanel
 	public void addEdgeTemplate(final String name, ImageIcon icon,
 			String style, int width, int height, Object value)
 	{
-		mxGeometry geometry = new mxGeometry(0, 0, width, height);
-		geometry.setTerminalPoint(new mxPoint(0, height), true);
-		geometry.setTerminalPoint(new mxPoint(width, 0), false);
+		Geometry geometry = new Geometry(0, 0, width, height);
+		geometry.setTerminalPoint(new Point(0, height), true);
+		geometry.setTerminalPoint(new Point(width, 0), false);
 		geometry.setRelative(true);
 
-		mxCell cell = new mxCell(value, geometry, style);
+		Cell cell = new Cell(value, geometry, style);
 		cell.setEdge(true);
 
 		addTemplate(name, icon, cell);
@@ -247,7 +247,7 @@ public class EditorPalette extends JPanel
 	public void addTemplate(final String name, ImageIcon icon, String style,
 			int width, int height, Object value)
 	{
-		mxCell cell = new mxCell(value, new mxGeometry(0, 0, width, height),
+		Cell cell = new Cell(value, new Geometry(0, 0, width, height),
 				style);
 		cell.setVertex(true);
 
@@ -260,10 +260,10 @@ public class EditorPalette extends JPanel
 	 * @param icon
 	 * @param cell
 	 */
-	public void addTemplate(final String name, ImageIcon icon, mxCell cell)
+	public void addTemplate(final String name, ImageIcon icon, Cell cell)
 	{
-		mxRectangle bounds = (mxGeometry) cell.getGeometry().clone();
-		final mxGraphTransferable t = new mxGraphTransferable(
+		Rectangle bounds = (Geometry) cell.getGeometry().clone();
+		final GraphTransferable t = new GraphTransferable(
 				new Object[] { cell }, bounds);
 
 		// Scales the image if it's too large for the library
@@ -343,7 +343,7 @@ public class EditorPalette extends JPanel
 			public void dragGestureRecognized(DragGestureEvent e)
 			{
 				e
-						.startDrag(null, mxSwingConstants.EMPTY_IMAGE, new Point(),
+						.startDrag(null, SwingConstants.EMPTY_IMAGE, new Point(),
 								t, null);
 			}
 
@@ -359,16 +359,16 @@ public class EditorPalette extends JPanel
 	/**
 	 * @param eventName
 	 * @param listener
-	 * @see com.mxgraph.util.mxEventSource#addListener(java.lang.String, com.mxgraph.util.mxEventSource.mxIEventListener)
+	 * @see graph.util.EventSource#addListener(java.lang.String, graph.util.EventSource.IEventListener)
 	 */
-	public void addListener(String eventName, mxIEventListener listener)
+	public void addListener(String eventName, IEventListener listener)
 	{
 		eventSource.addListener(eventName, listener);
 	}
 
 	/**
 	 * @return whether or not event are enabled for this palette
-	 * @see com.mxgraph.util.mxEventSource#isEventsEnabled()
+	 * @see graph.util.EventSource#isEventsEnabled()
 	 */
 	public boolean isEventsEnabled()
 	{
@@ -377,9 +377,9 @@ public class EditorPalette extends JPanel
 
 	/**
 	 * @param listener
-	 * @see com.mxgraph.util.mxEventSource#removeListener(com.mxgraph.util.mxEventSource.mxIEventListener)
+	 * @see graph.util.EventSource#removeListener(graph.util.EventSource.IEventListener)
 	 */
-	public void removeListener(mxIEventListener listener)
+	public void removeListener(IEventListener listener)
 	{
 		eventSource.removeListener(listener);
 	}
@@ -387,16 +387,16 @@ public class EditorPalette extends JPanel
 	/**
 	 * @param eventName
 	 * @param listener
-	 * @see com.mxgraph.util.mxEventSource#removeListener(java.lang.String, com.mxgraph.util.mxEventSource.mxIEventListener)
+	 * @see graph.util.EventSource#removeListener(java.lang.String, graph.util.EventSource.IEventListener)
 	 */
-	public void removeListener(mxIEventListener listener, String eventName)
+	public void removeListener(IEventListener listener, String eventName)
 	{
 		eventSource.removeListener(listener, eventName);
 	}
 
 	/**
 	 * @param eventsEnabled
-	 * @see com.mxgraph.util.mxEventSource#setEventsEnabled(boolean)
+	 * @see graph.util.EventSource#setEventsEnabled(boolean)
 	 */
 	public void setEventsEnabled(boolean eventsEnabled)
 	{

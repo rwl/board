@@ -1,4 +1,4 @@
-package com.mxgraph.examples.swing;
+package graph.examples.swing;
 
 import java.awt.BorderLayout;
 
@@ -6,16 +6,16 @@ import javax.swing.ImageIcon;
 import javax.swing.JToolBar;
 import javax.swing.UIManager;
 
-import com.mxgraph.examples.swing.editor.BasicGraphEditor;
-import com.mxgraph.examples.swing.editor.EditorPalette;
-import com.mxgraph.examples.swing.editor.SchemaEditorMenuBar;
-import com.mxgraph.examples.swing.editor.SchemaEditorToolBar;
-import com.mxgraph.examples.swing.editor.SchemaGraphComponent;
-import com.mxgraph.model.mxCell;
-import com.mxgraph.model.mxGeometry;
-import com.mxgraph.util.mxRectangle;
-import com.mxgraph.view.mxCellState;
-import com.mxgraph.view.mxGraph;
+import graph.examples.swing.editor.BasicGraphEditor;
+import graph.examples.swing.editor.EditorPalette;
+import graph.examples.swing.editor.SchemaEditorMenuBar;
+import graph.examples.swing.editor.SchemaEditorToolBar;
+import graph.examples.swing.editor.SchemaGraphComponent;
+import graph.model.Cell;
+import graph.model.Geometry;
+import graph.util.Rectangle;
+import graph.view.CellState;
+import graph.view.Graph;
 
 public class SchemaEditor extends BasicGraphEditor
 {
@@ -30,7 +30,7 @@ public class SchemaEditor extends BasicGraphEditor
 	 */
 	public SchemaEditor()
 	{
-		super("mxGraph for JFC/Swing", new SchemaGraphComponent(new mxGraph()
+		super("Graph for JFC/Swing", new SchemaGraphComponent(new Graph()
 		{
 			/**
 			 * Allows expanding tables
@@ -50,7 +50,7 @@ public class SchemaEditor extends BasicGraphEditor
 			/**
 			 * Disables folding icons.
 			 */
-			public ImageIcon getFoldingIcon(mxCellState state)
+			public ImageIcon getFoldingIcon(CellState state)
 			{
 				return null;
 			}
@@ -61,10 +61,10 @@ public class SchemaEditor extends BasicGraphEditor
 		EditorPalette shapesPalette = insertPalette("Schema");
 		graphOutline.setVisible(false);
 
-		mxCell tableTemplate = new mxCell("New Table", new mxGeometry(0, 0,
+		Cell tableTemplate = new Cell("New Table", new Geometry(0, 0,
 				200, 280), null);
 		tableTemplate.getGeometry().setAlternateBounds(
-				new mxRectangle(0, 0, 140, 25));
+				new Rectangle(0, 0, 140, 25));
 		tableTemplate.setVertex(true);
 
 		shapesPalette
@@ -72,7 +72,7 @@ public class SchemaEditor extends BasicGraphEditor
 						"Table",
 						new ImageIcon(
 								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/rectangle.png")),
+										.getResource("/com/graph/examples/swing/images/rectangle.png")),
 						tableTemplate);
 
 		getGraphComponent().getGraph().setCellsResizable(false);
@@ -80,20 +80,20 @@ public class SchemaEditor extends BasicGraphEditor
 		getGraphComponent().getGraphHandler().setCloneEnabled(false);
 		getGraphComponent().getGraphHandler().setImagePreview(false);
 
-		// Prefers default JComponent event-handling before mxCellHandler handling
+		// Prefers default JComponent event-handling before CellHandler handling
 		//getGraphComponent().getGraphHandler().setKeepOnTop(false);
 
-		mxGraph graph = getGraphComponent().getGraph();
+		Graph graph = getGraphComponent().getGraph();
 		Object parent = graph.getDefaultParent();
 		graph.getModel().beginUpdate();
 		try
 		{
-			mxCell v1 = (mxCell) graph.insertVertex(parent, null, "Customers",
+			Cell v1 = (Cell) graph.insertVertex(parent, null, "Customers",
 					20, 20, 200, 280);
-			v1.getGeometry().setAlternateBounds(new mxRectangle(0, 0, 140, 25));
-			mxCell v2 = (mxCell) graph.insertVertex(parent, null, "Orders",
+			v1.getGeometry().setAlternateBounds(new Rectangle(0, 0, 140, 25));
+			Cell v2 = (Cell) graph.insertVertex(parent, null, "Orders",
 					280, 20, 200, 280);
-			v2.getGeometry().setAlternateBounds(new mxRectangle(0, 0, 140, 25));
+			v2.getGeometry().setAlternateBounds(new Rectangle(0, 0, 140, 25));
 		}
 		finally
 		{

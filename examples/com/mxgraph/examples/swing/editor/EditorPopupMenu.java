@@ -1,12 +1,12 @@
-package com.mxgraph.examples.swing.editor;
+package graph.examples.swing.editor;
 
 import javax.swing.JMenu;
 import javax.swing.JPopupMenu;
 import javax.swing.TransferHandler;
 
-import com.mxgraph.examples.swing.editor.EditorActions.HistoryAction;
-import com.mxgraph.swing.util.mxGraphActions;
-import com.mxgraph.util.mxResources;
+import graph.examples.swing.editor.EditorActions.HistoryAction;
+import graph.swing.util.GraphActions;
+import graph.util.Resources;
 
 public class EditorPopupMenu extends JPopupMenu
 {
@@ -21,61 +21,61 @@ public class EditorPopupMenu extends JPopupMenu
 		boolean selected = !editor.getGraphComponent().getGraph()
 				.isSelectionEmpty();
 
-		add(editor.bind(mxResources.get("undo"), new HistoryAction(true),
-				"/com/mxgraph/examples/swing/images/undo.gif"));
+		add(editor.bind(Resources.get("undo"), new HistoryAction(true),
+				"/com/graph/examples/swing/images/undo.gif"));
 
 		addSeparator();
 
 		add(
-				editor.bind(mxResources.get("cut"), TransferHandler
+				editor.bind(Resources.get("cut"), TransferHandler
 						.getCutAction(),
-						"/com/mxgraph/examples/swing/images/cut.gif"))
+						"/com/graph/examples/swing/images/cut.gif"))
 				.setEnabled(selected);
 		add(
-				editor.bind(mxResources.get("copy"), TransferHandler
+				editor.bind(Resources.get("copy"), TransferHandler
 						.getCopyAction(),
-						"/com/mxgraph/examples/swing/images/copy.gif"))
+						"/com/graph/examples/swing/images/copy.gif"))
 				.setEnabled(selected);
-		add(editor.bind(mxResources.get("paste"), TransferHandler
+		add(editor.bind(Resources.get("paste"), TransferHandler
 				.getPasteAction(),
-				"/com/mxgraph/examples/swing/images/paste.gif"));
+				"/com/graph/examples/swing/images/paste.gif"));
 
 		addSeparator();
 
 		add(
-				editor.bind(mxResources.get("delete"), mxGraphActions
+				editor.bind(Resources.get("delete"), GraphActions
 						.getDeleteAction(),
-						"/com/mxgraph/examples/swing/images/delete.gif"))
+						"/com/graph/examples/swing/images/delete.gif"))
 				.setEnabled(selected);
 
 		addSeparator();
 
 		// Creates the format menu
-		JMenu menu = (JMenu) add(new JMenu(mxResources.get("format")));
+		JMenu menu = (JMenu) add(new JMenu(Resources.get("format")));
 
 		EditorMenuBar.populateFormatMenu(menu, editor);
 
 		// Creates the shape menu
-		menu = (JMenu) add(new JMenu(mxResources.get("shape")));
+		menu = (JMenu) add(new JMenu(Resources.get("shape")));
 
 		EditorMenuBar.populateShapeMenu(menu, editor);
 
 		addSeparator();
 
 		add(
-				editor.bind(mxResources.get("edit"), mxGraphActions
+				editor.bind(Resources.get("edit"), GraphActions
 						.getEditAction())).setEnabled(selected);
 
 		addSeparator();
 
-		add(editor.bind(mxResources.get("selectVertices"), mxGraphActions
+		add(editor.bind(Resources.get("selectVertices"), GraphActions
 				.getSelectVerticesAction()));
-		add(editor.bind(mxResources.get("selectEdges"), mxGraphActions
+		add(editor.bind(Resources.get("selectEdges"), GraphActions
 				.getSelectEdgesAction()));
 
 		addSeparator();
 
-		add(editor.bind(mxResources.get("selectAll"), mxGraphActions
+		add(editor.bind(Resources.get("selectAll"), GraphActions
 				.getSelectAllAction()));
 	}
 

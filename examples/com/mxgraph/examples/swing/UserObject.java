@@ -2,7 +2,7 @@
  * $Id: UserObject.java,v 1.1 2012/11/15 13:26:47 gaudenz Exp $
  * Copyright (c) 2007-2012, JGraph Ltd
  */
-package com.mxgraph.examples.swing;
+package graph.examples.swing;
 
 import java.util.EventObject;
 
@@ -12,10 +12,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import com.mxgraph.model.mxCell;
-import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.util.mxDomUtils;
-import com.mxgraph.view.mxGraph;
+import graph.model.Cell;
+import graph.swing.GraphComponent;
+import graph.util.DomUtils;
+import graph.view.Graph;
 
 public class UserObject extends JFrame
 {
@@ -37,8 +37,8 @@ public class UserObject extends JFrame
 		// package name containg the class and register a codec for the user
 		// object class as follows:
 		//
-		// mxCodecRegistry.addPackage("com.example"); 
-		// mxCodecRegistry.register(new mxObjectCodec(
+		// CodecRegistry.addPackage("com.example"); 
+		// CodecRegistry.register(new ObjectCodec(
 		//	new com.example.CustomUserObject()));
 		//
 		// Note that the object must have an empty constructor and a setter and
@@ -46,7 +46,7 @@ public class UserObject extends JFrame
 		// a property called ID as this property is reserved for resolving cell
 		// references and will cause problems when used inside the user object.
 		//
-		Document doc = mxDomUtils.createDocument();
+		Document doc = DomUtils.createDocument();
 		Element person1 = doc.createElement("Person");
 		person1.setAttribute("firstName", "Daffy");
 		person1.setAttribute("lastName", "Duck");
@@ -58,7 +58,7 @@ public class UserObject extends JFrame
 		Element relation = doc.createElement("Knows");
 		relation.setAttribute("since", "1985");
 
-		mxGraph graph = new mxGraph()
+		Graph graph = new Graph()
 		{
 			// Overrides method to disallow edge label editing
 			public boolean isCellEditable(Object cell)
@@ -69,9 +69,9 @@ public class UserObject extends JFrame
 			// Overrides method to provide a cell label in the display
 			public String convertValueToString(Object cell)
 			{
-				if (cell instanceof mxCell)
+				if (cell instanceof Cell)
 				{
-					Object value = ((mxCell) cell).getValue();
+					Object value = ((Cell) cell).getValue();
 
 					if (value instanceof Element)
 					{
@@ -105,9 +105,9 @@ public class UserObject extends JFrame
 			public void cellLabelChanged(Object cell, Object newValue,
 					boolean autoSize)
 			{
-				if (cell instanceof mxCell && newValue != null)
+				if (cell instanceof Cell && newValue != null)
 				{
-					Object value = ((mxCell) cell).getValue();
+					Object value = ((Cell) cell).getValue();
 
 					if (value instanceof Node)
 					{
@@ -155,7 +155,7 @@ public class UserObject extends JFrame
 		}
 
 		// Overrides method to create the editing value
-		mxGraphComponent graphComponent = new mxGraphComponent(graph)
+		GraphComponent graphComponent = new GraphComponent(graph)
 		{
 			/**
 			 * 
@@ -164,9 +164,9 @@ public class UserObject extends JFrame
 
 			public String getEditingValue(Object cell, EventObject trigger)
 			{
-				if (cell instanceof mxCell)
+				if (cell instanceof Cell)
 				{
-					Object value = ((mxCell) cell).getValue();
+					Object value = ((Cell) cell).getValue();
 
 					if (value instanceof Element)
 					{

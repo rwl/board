@@ -1,5 +1,5 @@
-<mxStylesheet>
-	<include name="/com/mxgraph/examples/swing/resources/basic-style.xml"/>
+<Stylesheet>
+	<include name="/com/graph/examples/swing/resources/basic-style.xml"/>
 	<add as="defaultVertex" extend="defaultVertex">
 		<add as="fillColor" value="#adc5ff"/>
 		<add as="gradientColor" value="#7d85df"/>
@@ -101,4 +101,4 @@
 	<add as="rhombusImage" extend="image">
 		<add as="perimeter" value="rhombusPerimeter"/>
 	</add>
-</mxStylesheet>
+</Stylesheet>

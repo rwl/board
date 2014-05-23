@@ -1,18 +1,18 @@
-package com.mxgraph.examples.swing.editor;
+package graph.examples.swing.editor;
 
 import java.awt.Component;
 
 import javax.swing.JTable;
 import javax.swing.JViewport;
 
-import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.util.mxPoint;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.view.mxCellState;
-import com.mxgraph.view.mxGraph;
-import com.mxgraph.view.mxGraphView;
+import graph.swing.GraphComponent;
+import graph.util.Point;
+import graph.util.Utils;
+import graph.view.CellState;
+import graph.view.Graph;
+import graph.view.GraphView;
 
-public class SchemaGraphComponent extends mxGraphComponent
+public class SchemaGraphComponent extends GraphComponent
 {
 
 	/**
@@ -24,18 +24,18 @@ public class SchemaGraphComponent extends mxGraphComponent
 	 * 
 	 * @param graph
 	 */
-	public SchemaGraphComponent(mxGraph graph)
+	public SchemaGraphComponent(Graph graph)
 	{
 		super(graph);
 
-		mxGraphView graphView = new mxGraphView(graph)
+		GraphView graphView = new GraphView(graph)
 		{
 
 			/**
 			 * 
 			 */
-			public void updateFloatingTerminalPoint(mxCellState edge,
-					mxCellState start, mxCellState end, boolean isSource)
+			public void updateFloatingTerminalPoint(CellState edge,
+					CellState start, CellState end, boolean isSource)
 			{
 				int col = getColumn(edge, isSource);
 
@@ -63,11 +63,11 @@ public class SchemaGraphComponent extends mxGraphComponent
 
 					int index2 = (isSource) ? 1
 							: edge.getAbsolutePointCount() - 1;
-					edge.getAbsolutePoints().add(index2, new mxPoint(x2, y));
+					edge.getAbsolutePoints().add(index2, new Point(x2, y));
 
 					int index = (isSource) ? 0
 							: edge.getAbsolutePointCount() - 1;
-					edge.setAbsolutePoint(index, new mxPoint(x, y));
+					edge.setAbsolutePoint(index, new Point(x, y));
 				}
 				else
 				{
@@ -86,17 +86,17 @@ public class SchemaGraphComponent extends mxGraphComponent
 	 * @param isSource
 	 * @return the column number the edge is attached to
 	 */
-	public int getColumn(mxCellState state, boolean isSource)
+	public int getColumn(CellState state, boolean isSource)
 	{
 		if (state != null)
 		{
 			if (isSource)
 			{
-				return mxUtils.getInt(state.getStyle(), "sourceRow", -1);
+				return Utils.getInt(state.getStyle(), "sourceRow", -1);
 			}
 			else
 			{
-				return mxUtils.getInt(state.getStyle(), "targetRow", -1);
+				return Utils.getInt(state.getStyle(), "targetRow", -1);
 			}
 		}
 
@@ -106,7 +106,7 @@ public class SchemaGraphComponent extends mxGraphComponent
 	/**
 	 * 
 	 */
-	public int getColumnLocation(mxCellState edge, mxCellState terminal,
+	public int getColumnLocation(CellState edge, CellState terminal,
 			int column)
 	{
 		Component[] c = components.get(terminal.getCell());
@@ -136,7 +136,7 @@ public class SchemaGraphComponent extends mxGraphComponent
 	/**
 	 * 
 	 */
-	public Component[] createComponents(mxCellState state)
+	public Component[] createComponents(CellState state)
 	{
 		if (getGraph().getModel().isVertex(state.getCell()))
 		{

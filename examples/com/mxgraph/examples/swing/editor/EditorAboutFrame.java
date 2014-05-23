@@ -1,4 +1,4 @@
-package com.mxgraph.examples.swing.editor;
+package graph.examples.swing.editor;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -22,8 +22,8 @@ import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
 
-import com.mxgraph.util.mxResources;
-import com.mxgraph.view.mxGraph;
+import graph.util.Resources;
+import graph.view.Graph;
 
 public class EditorAboutFrame extends JDialog
 {
@@ -39,7 +39,7 @@ public class EditorAboutFrame extends JDialog
 	public EditorAboutFrame(Frame owner)
 	{
 		super(owner);
-		setTitle(mxResources.get("aboutGraphEditor"));
+		setTitle(Resources.get("aboutGraphEditor"));
 		setLayout(new BorderLayout());
 
 		// Creates the gradient panel
@@ -72,7 +72,7 @@ public class EditorAboutFrame extends JDialog
 				.createEmptyBorder(8, 8, 12, 8)));
 
 		// Adds title
-		JLabel titleLabel = new JLabel(mxResources.get("aboutGraphEditor"));
+		JLabel titleLabel = new JLabel(Resources.get("aboutGraphEditor"));
 		titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD));
 		titleLabel.setBorder(BorderFactory.createEmptyBorder(4, 0, 0, 0));
 		titleLabel.setOpaque(false);
@@ -80,7 +80,7 @@ public class EditorAboutFrame extends JDialog
 
 		// Adds optional subtitle
 		JLabel subtitleLabel = new JLabel(
-				"For more information visit http://www.mxgraph.com/");
+				"For more information visit http://www.graph.com/");
 		subtitleLabel.setBorder(BorderFactory.createEmptyBorder(4, 18, 0, 0));
 		subtitleLabel.setOpaque(false);
 		panel.add(subtitleLabel, BorderLayout.CENTER);
@@ -91,10 +91,10 @@ public class EditorAboutFrame extends JDialog
 		content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
 		content.setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
 
-		content.add(new JLabel("JGraph X - The Swing Portion of mxGraph"));
+		content.add(new JLabel("JGraph X - The Swing Portion of Graph"));
 		content.add(new JLabel(" "));
 
-		content.add(new JLabel("mxGraph Version " + mxGraph.VERSION));
+		content.add(new JLabel("Graph Version " + Graph.VERSION));
 		content.add(new JLabel("Copyright (C) 2009 by JGraph Ltd."));
 		content.add(new JLabel("All rights reserved."));
 		content.add(new JLabel(" "));

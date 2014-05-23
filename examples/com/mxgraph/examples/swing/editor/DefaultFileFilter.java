@@ -7,7 +7,7 @@
  * See LICENSE file for license details. If you are unable to locate
  * this file please contact info (at) jgraph (dot) com.
  */
-package com.mxgraph.examples.swing.editor;
+package graph.examples.swing.editor;
 
 import java.io.File;
 

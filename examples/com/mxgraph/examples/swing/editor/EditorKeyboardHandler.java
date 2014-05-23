@@ -2,29 +2,29 @@
  * $Id: EditorKeyboardHandler.java,v 1.1 2012/11/15 13:26:46 gaudenz Exp $
  * Copyright (c) 2008, Gaudenz Alder
  */
-package com.mxgraph.examples.swing.editor;
+package graph.examples.swing.editor;
 
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
-import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.swing.handler.mxKeyboardHandler;
-import com.mxgraph.swing.util.mxGraphActions;
+import graph.swing.GraphComponent;
+import graph.swing.handler.KeyboardHandler;
+import graph.swing.util.GraphActions;
 
 /**
  * @author Administrator
  * 
  */
-public class EditorKeyboardHandler extends mxKeyboardHandler
+public class EditorKeyboardHandler extends KeyboardHandler
 {
 
 	/**
 	 * 
 	 * @param graphComponent
 	 */
-	public EditorKeyboardHandler(mxGraphComponent graphComponent)
+	public EditorKeyboardHandler(GraphComponent graphComponent)
 	{
 		super(graphComponent);
 	}
@@ -67,8 +67,8 @@ public class EditorKeyboardHandler extends mxKeyboardHandler
 		map.put("open", new EditorActions.OpenAction());
 		map.put("undo", new EditorActions.HistoryAction(true));
 		map.put("redo", new EditorActions.HistoryAction(false));
-		map.put("selectVertices", mxGraphActions.getSelectVerticesAction());
-		map.put("selectEdges", mxGraphActions.getSelectEdgesAction());
+		map.put("selectVertices", GraphActions.getSelectVerticesAction());
+		map.put("selectEdges", GraphActions.getSelectEdgesAction());
 
 		return map;
 	}

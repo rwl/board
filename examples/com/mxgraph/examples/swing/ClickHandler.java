@@ -1,12 +1,12 @@
-package com.mxgraph.examples.swing;
+package graph.examples.swing;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
 
-import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.view.mxGraph;
+import graph.swing.GraphComponent;
+import graph.view.Graph;
 
 public class ClickHandler extends JFrame
 {
@@ -20,7 +20,7 @@ public class ClickHandler extends JFrame
 	{
 		super("Hello, World!");
 		
-		final mxGraph graph = new mxGraph();
+		final Graph graph = new Graph();
 		Object parent = graph.getDefaultParent();
 
 		graph.getModel().beginUpdate();
@@ -37,7 +37,7 @@ public class ClickHandler extends JFrame
 		   graph.getModel().endUpdate();
 		}
 		
-		final mxGraphComponent graphComponent = new mxGraphComponent(graph);
+		final GraphComponent graphComponent = new GraphComponent(graph);
 		getContentPane().add(graphComponent);
 		
 		graphComponent.getGraphControl().addMouseListener(new MouseAdapter()

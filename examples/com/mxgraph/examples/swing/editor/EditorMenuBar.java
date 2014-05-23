@@ -1,4 +1,4 @@
-package com.mxgraph.examples.swing.editor;
+package graph.examples.swing.editor;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -14,57 +14,57 @@ import javax.swing.SwingUtilities;
 import javax.swing.TransferHandler;
 import javax.swing.UIManager;
 
-import com.mxgraph.analysis.StructuralException;
-import com.mxgraph.analysis.mxGraphProperties.GraphType;
-import com.mxgraph.analysis.mxAnalysisGraph;
-import com.mxgraph.analysis.mxGraphProperties;
-import com.mxgraph.analysis.mxGraphStructure;
-import com.mxgraph.analysis.mxTraversal;
-import com.mxgraph.costfunction.mxCostFunction;
-import com.mxgraph.examples.swing.editor.EditorActions.AlignCellsAction;
-import com.mxgraph.examples.swing.editor.EditorActions.AutosizeAction;
-import com.mxgraph.examples.swing.editor.EditorActions.BackgroundAction;
-import com.mxgraph.examples.swing.editor.EditorActions.BackgroundImageAction;
-import com.mxgraph.examples.swing.editor.EditorActions.ColorAction;
-import com.mxgraph.examples.swing.editor.EditorActions.ExitAction;
-import com.mxgraph.examples.swing.editor.EditorActions.GridColorAction;
-import com.mxgraph.examples.swing.editor.EditorActions.GridStyleAction;
-import com.mxgraph.examples.swing.editor.EditorActions.HistoryAction;
-import com.mxgraph.examples.swing.editor.EditorActions.ImportAction;
-import com.mxgraph.examples.swing.editor.EditorActions.KeyValueAction;
-import com.mxgraph.examples.swing.editor.EditorActions.NewAction;
-import com.mxgraph.examples.swing.editor.EditorActions.OpenAction;
-import com.mxgraph.examples.swing.editor.EditorActions.PageBackgroundAction;
-import com.mxgraph.examples.swing.editor.EditorActions.PageSetupAction;
-import com.mxgraph.examples.swing.editor.EditorActions.PrintAction;
-import com.mxgraph.examples.swing.editor.EditorActions.PromptPropertyAction;
-import com.mxgraph.examples.swing.editor.EditorActions.PromptValueAction;
-import com.mxgraph.examples.swing.editor.EditorActions.SaveAction;
-import com.mxgraph.examples.swing.editor.EditorActions.ScaleAction;
-import com.mxgraph.examples.swing.editor.EditorActions.SelectShortestPathAction;
-import com.mxgraph.examples.swing.editor.EditorActions.SelectSpanningTreeAction;
-import com.mxgraph.examples.swing.editor.EditorActions.SetLabelPositionAction;
-import com.mxgraph.examples.swing.editor.EditorActions.SetStyleAction;
-import com.mxgraph.examples.swing.editor.EditorActions.StyleAction;
-import com.mxgraph.examples.swing.editor.EditorActions.StylesheetAction;
-import com.mxgraph.examples.swing.editor.EditorActions.ToggleAction;
-import com.mxgraph.examples.swing.editor.EditorActions.ToggleConnectModeAction;
-import com.mxgraph.examples.swing.editor.EditorActions.ToggleCreateTargetItem;
-import com.mxgraph.examples.swing.editor.EditorActions.ToggleDirtyAction;
-import com.mxgraph.examples.swing.editor.EditorActions.ToggleGridItem;
-import com.mxgraph.examples.swing.editor.EditorActions.ToggleOutlineItem;
-import com.mxgraph.examples.swing.editor.EditorActions.TogglePropertyItem;
-import com.mxgraph.examples.swing.editor.EditorActions.ToggleRulersItem;
-import com.mxgraph.examples.swing.editor.EditorActions.WarningAction;
-import com.mxgraph.examples.swing.editor.EditorActions.ZoomPolicyAction;
-import com.mxgraph.model.mxIGraphModel;
-import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.swing.util.mxGraphActions;
-import com.mxgraph.util.mxConstants;
-import com.mxgraph.util.mxPoint;
-import com.mxgraph.util.mxResources;
-import com.mxgraph.view.mxGraph;
-import com.mxgraph.view.mxGraphView;
+import graph.analysis.StructuralException;
+import graph.analysis.GraphProperties.GraphType;
+import graph.analysis.AnalysisGraph;
+import graph.analysis.GraphProperties;
+import graph.analysis.GraphStructure;
+import graph.analysis.Traversal;
+import graph.costfunction.CostFunction;
+import graph.examples.swing.editor.EditorActions.AlignCellsAction;
+import graph.examples.swing.editor.EditorActions.AutosizeAction;
+import graph.examples.swing.editor.EditorActions.BackgroundAction;
+import graph.examples.swing.editor.EditorActions.BackgroundImageAction;
+import graph.examples.swing.editor.EditorActions.ColorAction;
+import graph.examples.swing.editor.EditorActions.ExitAction;
+import graph.examples.swing.editor.EditorActions.GridColorAction;
+import graph.examples.swing.editor.EditorActions.GridStyleAction;
+import graph.examples.swing.editor.EditorActions.HistoryAction;
+import graph.examples.swing.editor.EditorActions.ImportAction;
+import graph.examples.swing.editor.EditorActions.KeyValueAction;
+import graph.examples.swing.editor.EditorActions.NewAction;
+import graph.examples.swing.editor.EditorActions.OpenAction;
+import graph.examples.swing.editor.EditorActions.PageBackgroundAction;
+import graph.examples.swing.editor.EditorActions.PageSetupAction;
+import graph.examples.swing.editor.EditorActions.PrintAction;
+import graph.examples.swing.editor.EditorActions.PromptPropertyAction;
+import graph.examples.swing.editor.EditorActions.PromptValueAction;
+import graph.examples.swing.editor.EditorActions.SaveAction;
+import graph.examples.swing.editor.EditorActions.ScaleAction;
+import graph.examples.swing.editor.EditorActions.SelectShortestPathAction;
+import graph.examples.swing.editor.EditorActions.SelectSpanningTreeAction;
+import graph.examples.swing.editor.EditorActions.SetLabelPositionAction;
+import graph.examples.swing.editor.EditorActions.SetStyleAction;
+import graph.examples.swing.editor.EditorActions.StyleAction;
+import graph.examples.swing.editor.EditorActions.StylesheetAction;
+import graph.examples.swing.editor.EditorActions.ToggleAction;
+import graph.examples.swing.editor.EditorActions.ToggleConnectModeAction;
+import graph.examples.swing.editor.EditorActions.ToggleCreateTargetItem;
+import graph.examples.swing.editor.EditorActions.ToggleDirtyAction;
+import graph.examples.swing.editor.EditorActions.ToggleGridItem;
+import graph.examples.swing.editor.EditorActions.ToggleOutlineItem;
+import graph.examples.swing.editor.EditorActions.TogglePropertyItem;
+import graph.examples.swing.editor.EditorActions.ToggleRulersItem;
+import graph.examples.swing.editor.EditorActions.WarningAction;
+import graph.examples.swing.editor.EditorActions.ZoomPolicyAction;
+import graph.model.IGraphModel;
+import graph.swing.GraphComponent;
+import graph.swing.util.GraphActions;
+import graph.util.Constants;
+import graph.util.Point;
+import graph.util.Resources;
+import graph.view.Graph;
+import graph.view.GraphView;
 
 public class EditorMenuBar extends JMenuBar
 {
@@ -81,64 +81,64 @@ public class EditorMenuBar extends JMenuBar
 
 	public EditorMenuBar(final BasicGraphEditor editor)
 	{
-		final mxGraphComponent graphComponent = editor.getGraphComponent();
-		final mxGraph graph = graphComponent.getGraph();
-		mxAnalysisGraph aGraph = new mxAnalysisGraph();
+		final GraphComponent graphComponent = editor.getGraphComponent();
+		final Graph graph = graphComponent.getGraph();
+		AnalysisGraph aGraph = new AnalysisGraph();
 
 		JMenu menu = null;
 		JMenu submenu = null;
 
 		// Creates the file menu
-		menu = add(new JMenu(mxResources.get("file")));
+		menu = add(new JMenu(Resources.get("file")));
 
-		menu.add(editor.bind(mxResources.get("new"), new NewAction(), "/com/mxgraph/examples/swing/images/new.gif"));
-		menu.add(editor.bind(mxResources.get("openFile"), new OpenAction(), "/com/mxgraph/examples/swing/images/open.gif"));
-		menu.add(editor.bind(mxResources.get("importStencil"), new ImportAction(), "/com/mxgraph/examples/swing/images/open.gif"));
-
-		menu.addSeparator();
-
-		menu.add(editor.bind(mxResources.get("save"), new SaveAction(false), "/com/mxgraph/examples/swing/images/save.gif"));
-		menu.add(editor.bind(mxResources.get("saveAs"), new SaveAction(true), "/com/mxgraph/examples/swing/images/saveas.gif"));
+		menu.add(editor.bind(Resources.get("new"), new NewAction(), "/com/graph/examples/swing/images/new.gif"));
+		menu.add(editor.bind(Resources.get("openFile"), new OpenAction(), "/com/graph/examples/swing/images/open.gif"));
+		menu.add(editor.bind(Resources.get("importStencil"), new ImportAction(), "/com/graph/examples/swing/images/open.gif"));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("pageSetup"), new PageSetupAction(), "/com/mxgraph/examples/swing/images/pagesetup.gif"));
-		menu.add(editor.bind(mxResources.get("print"), new PrintAction(), "/com/mxgraph/examples/swing/images/print.gif"));
+		menu.add(editor.bind(Resources.get("save"), new SaveAction(false), "/com/graph/examples/swing/images/save.gif"));
+		menu.add(editor.bind(Resources.get("saveAs"), new SaveAction(true), "/com/graph/examples/swing/images/saveas.gif"));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("exit"), new ExitAction()));
+		menu.add(editor.bind(Resources.get("pageSetup"), new PageSetupAction(), "/com/graph/examples/swing/images/pagesetup.gif"));
+		menu.add(editor.bind(Resources.get("print"), new PrintAction(), "/com/graph/examples/swing/images/print.gif"));
+
+		menu.addSeparator();
+
+		menu.add(editor.bind(Resources.get("exit"), new ExitAction()));
 
 		// Creates the edit menu
-		menu = add(new JMenu(mxResources.get("edit")));
+		menu = add(new JMenu(Resources.get("edit")));
 
-		menu.add(editor.bind(mxResources.get("undo"), new HistoryAction(true), "/com/mxgraph/examples/swing/images/undo.gif"));
-		menu.add(editor.bind(mxResources.get("redo"), new HistoryAction(false), "/com/mxgraph/examples/swing/images/redo.gif"));
-
-		menu.addSeparator();
-
-		menu.add(editor.bind(mxResources.get("cut"), TransferHandler.getCutAction(), "/com/mxgraph/examples/swing/images/cut.gif"));
-		menu.add(editor.bind(mxResources.get("copy"), TransferHandler.getCopyAction(), "/com/mxgraph/examples/swing/images/copy.gif"));
-		menu.add(editor.bind(mxResources.get("paste"), TransferHandler.getPasteAction(), "/com/mxgraph/examples/swing/images/paste.gif"));
+		menu.add(editor.bind(Resources.get("undo"), new HistoryAction(true), "/com/graph/examples/swing/images/undo.gif"));
+		menu.add(editor.bind(Resources.get("redo"), new HistoryAction(false), "/com/graph/examples/swing/images/redo.gif"));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("delete"), mxGraphActions.getDeleteAction(), "/com/mxgraph/examples/swing/images/delete.gif"));
+		menu.add(editor.bind(Resources.get("cut"), TransferHandler.getCutAction(), "/com/graph/examples/swing/images/cut.gif"));
+		menu.add(editor.bind(Resources.get("copy"), TransferHandler.getCopyAction(), "/com/graph/examples/swing/images/copy.gif"));
+		menu.add(editor.bind(Resources.get("paste"), TransferHandler.getPasteAction(), "/com/graph/examples/swing/images/paste.gif"));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("selectAll"), mxGraphActions.getSelectAllAction()));
-		menu.add(editor.bind(mxResources.get("selectNone"), mxGraphActions.getSelectNoneAction()));
+		menu.add(editor.bind(Resources.get("delete"), GraphActions.getDeleteAction(), "/com/graph/examples/swing/images/delete.gif"));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("warning"), new WarningAction()));
-		menu.add(editor.bind(mxResources.get("edit"), mxGraphActions.getEditAction()));
+		menu.add(editor.bind(Resources.get("selectAll"), GraphActions.getSelectAllAction()));
+		menu.add(editor.bind(Resources.get("selectNone"), GraphActions.getSelectNoneAction()));
+
+		menu.addSeparator();
+
+		menu.add(editor.bind(Resources.get("warning"), new WarningAction()));
+		menu.add(editor.bind(Resources.get("edit"), GraphActions.getEditAction()));
 
 		// Creates the view menu
-		menu = add(new JMenu(mxResources.get("view")));
+		menu = add(new JMenu(Resources.get("view")));
 
-		JMenuItem item = menu.add(new TogglePropertyItem(graphComponent, mxResources.get("pageLayout"), "PageVisible", true,
+		JMenuItem item = menu.add(new TogglePropertyItem(graphComponent, Resources.get("pageLayout"), "PageVisible", true,
 				new ActionListener()
 				{
 					/**
@@ -167,7 +167,7 @@ public class EditorMenuBar extends JMenuBar
 			{
 				if (e.getSource() instanceof TogglePropertyItem)
 				{
-					final mxGraphComponent graphComponent = editor.getGraphComponent();
+					final GraphComponent graphComponent = editor.getGraphComponent();
 					TogglePropertyItem toggleItem = (TogglePropertyItem) e.getSource();
 
 					if (toggleItem.isSelected())
@@ -189,27 +189,27 @@ public class EditorMenuBar extends JMenuBar
 					else
 					{
 						// Resets the translation of the view
-						mxPoint tr = graphComponent.getGraph().getView().getTranslate();
+						Point tr = graphComponent.getGraph().getView().getTranslate();
 
 						if (tr.getX() != 0 || tr.getY() != 0)
 						{
-							graphComponent.getGraph().getView().setTranslate(new mxPoint());
+							graphComponent.getGraph().getView().setTranslate(new Point());
 						}
 					}
 				}
 			}
 		});
 
-		menu.add(new TogglePropertyItem(graphComponent, mxResources.get("antialias"), "AntiAlias", true));
+		menu.add(new TogglePropertyItem(graphComponent, Resources.get("antialias"), "AntiAlias", true));
 
 		menu.addSeparator();
 
-		menu.add(new ToggleGridItem(editor, mxResources.get("grid")));
-		menu.add(new ToggleRulersItem(editor, mxResources.get("rulers")));
+		menu.add(new ToggleGridItem(editor, Resources.get("grid")));
+		menu.add(new ToggleRulersItem(editor, Resources.get("rulers")));
 
 		menu.addSeparator();
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("zoom")));
+		submenu = (JMenu) menu.add(new JMenu(Resources.get("zoom")));
 
 		submenu.add(editor.bind("400%", new ScaleAction(4)));
 		submenu.add(editor.bind("200%", new ScaleAction(2)));
@@ -220,63 +220,63 @@ public class EditorMenuBar extends JMenuBar
 
 		submenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("custom"), new ScaleAction(0)));
+		submenu.add(editor.bind(Resources.get("custom"), new ScaleAction(0)));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("zoomIn"), mxGraphActions.getZoomInAction()));
-		menu.add(editor.bind(mxResources.get("zoomOut"), mxGraphActions.getZoomOutAction()));
+		menu.add(editor.bind(Resources.get("zoomIn"), GraphActions.getZoomInAction()));
+		menu.add(editor.bind(Resources.get("zoomOut"), GraphActions.getZoomOutAction()));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("page"), new ZoomPolicyAction(mxGraphComponent.ZOOM_POLICY_PAGE)));
-		menu.add(editor.bind(mxResources.get("width"), new ZoomPolicyAction(mxGraphComponent.ZOOM_POLICY_WIDTH)));
+		menu.add(editor.bind(Resources.get("page"), new ZoomPolicyAction(GraphComponent.ZOOM_POLICY_PAGE)));
+		menu.add(editor.bind(Resources.get("width"), new ZoomPolicyAction(GraphComponent.ZOOM_POLICY_WIDTH)));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("actualSize"), mxGraphActions.getZoomActualAction()));
+		menu.add(editor.bind(Resources.get("actualSize"), GraphActions.getZoomActualAction()));
 
 		// Creates the format menu
-		menu = add(new JMenu(mxResources.get("format")));
+		menu = add(new JMenu(Resources.get("format")));
 
 		populateFormatMenu(menu, editor);
 
 		// Creates the shape menu
-		menu = add(new JMenu(mxResources.get("shape")));
+		menu = add(new JMenu(Resources.get("shape")));
 
 		populateShapeMenu(menu, editor);
 
 		// Creates the diagram menu
-		menu = add(new JMenu(mxResources.get("diagram")));
+		menu = add(new JMenu(Resources.get("diagram")));
 
-		menu.add(new ToggleOutlineItem(editor, mxResources.get("outline")));
-
-		menu.addSeparator();
-
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("background")));
-
-		submenu.add(editor.bind(mxResources.get("backgroundColor"), new BackgroundAction()));
-		submenu.add(editor.bind(mxResources.get("backgroundImage"), new BackgroundImageAction()));
-
-		submenu.addSeparator();
-
-		submenu.add(editor.bind(mxResources.get("pageBackground"), new PageBackgroundAction()));
-
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("grid")));
-
-		submenu.add(editor.bind(mxResources.get("gridSize"), new PromptPropertyAction(graph, "Grid Size", "GridSize")));
-		submenu.add(editor.bind(mxResources.get("gridColor"), new GridColorAction()));
-
-		submenu.addSeparator();
-
-		submenu.add(editor.bind(mxResources.get("dashed"), new GridStyleAction(mxGraphComponent.GRID_STYLE_DASHED)));
-		submenu.add(editor.bind(mxResources.get("dot"), new GridStyleAction(mxGraphComponent.GRID_STYLE_DOT)));
-		submenu.add(editor.bind(mxResources.get("line"), new GridStyleAction(mxGraphComponent.GRID_STYLE_LINE)));
-		submenu.add(editor.bind(mxResources.get("cross"), new GridStyleAction(mxGraphComponent.GRID_STYLE_CROSS)));
+		menu.add(new ToggleOutlineItem(editor, Resources.get("outline")));
 
 		menu.addSeparator();
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("layout")));
+		submenu = (JMenu) menu.add(new JMenu(Resources.get("background")));
+
+		submenu.add(editor.bind(Resources.get("backgroundColor"), new BackgroundAction()));
+		submenu.add(editor.bind(Resources.get("backgroundImage"), new BackgroundImageAction()));
+
+		submenu.addSeparator();
+
+		submenu.add(editor.bind(Resources.get("pageBackground"), new PageBackgroundAction()));
+
+		submenu = (JMenu) menu.add(new JMenu(Resources.get("grid")));
+
+		submenu.add(editor.bind(Resources.get("gridSize"), new PromptPropertyAction(graph, "Grid Size", "GridSize")));
+		submenu.add(editor.bind(Resources.get("gridColor"), new GridColorAction()));
+
+		submenu.addSeparator();
+
+		submenu.add(editor.bind(Resources.get("dashed"), new GridStyleAction(GraphComponent.GRID_STYLE_DASHED)));
+		submenu.add(editor.bind(Resources.get("dot"), new GridStyleAction(GraphComponent.GRID_STYLE_DOT)));
+		submenu.add(editor.bind(Resources.get("line"), new GridStyleAction(GraphComponent.GRID_STYLE_LINE)));
+		submenu.add(editor.bind(Resources.get("cross"), new GridStyleAction(GraphComponent.GRID_STYLE_CROSS)));
+
+		menu.addSeparator();
+
+		submenu = (JMenu) menu.add(new JMenu(Resources.get("layout")));
 
 		submenu.add(editor.graphLayout("verticalHierarchical", true));
 		submenu.add(editor.graphLayout("horizontalHierarchical", true));
@@ -306,32 +306,32 @@ public class EditorMenuBar extends JMenuBar
 		submenu.add(editor.graphLayout("organicLayout", true));
 		submenu.add(editor.graphLayout("circleLayout", true));
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("selection")));
+		submenu = (JMenu) menu.add(new JMenu(Resources.get("selection")));
 
-		submenu.add(editor.bind(mxResources.get("selectPath"), new SelectShortestPathAction(false)));
-		submenu.add(editor.bind(mxResources.get("selectDirectedPath"), new SelectShortestPathAction(true)));
+		submenu.add(editor.bind(Resources.get("selectPath"), new SelectShortestPathAction(false)));
+		submenu.add(editor.bind(Resources.get("selectDirectedPath"), new SelectShortestPathAction(true)));
 
 		submenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("selectTree"), new SelectSpanningTreeAction(false)));
-		submenu.add(editor.bind(mxResources.get("selectDirectedTree"), new SelectSpanningTreeAction(true)));
+		submenu.add(editor.bind(Resources.get("selectTree"), new SelectSpanningTreeAction(false)));
+		submenu.add(editor.bind(Resources.get("selectDirectedTree"), new SelectSpanningTreeAction(true)));
 
 		menu.addSeparator();
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("stylesheet")));
+		submenu = (JMenu) menu.add(new JMenu(Resources.get("stylesheet")));
 
-		submenu.add(editor.bind(mxResources.get("basicStyle"),
-				new StylesheetAction("/com/mxgraph/examples/swing/resources/basic-style.xml")));
-		submenu.add(editor.bind(mxResources.get("defaultStyle"), new StylesheetAction(
-				"/com/mxgraph/examples/swing/resources/default-style.xml")));
+		submenu.add(editor.bind(Resources.get("basicStyle"),
+				new StylesheetAction("/com/graph/examples/swing/resources/basic-style.xml")));
+		submenu.add(editor.bind(Resources.get("defaultStyle"), new StylesheetAction(
+				"/com/graph/examples/swing/resources/default-style.xml")));
 
 		// Creates the options menu
-		menu = add(new JMenu(mxResources.get("options")));
+		menu = add(new JMenu(Resources.get("options")));
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("display")));
-		submenu.add(new TogglePropertyItem(graphComponent, mxResources.get("buffering"), "TripleBuffered", true));
+		submenu = (JMenu) menu.add(new JMenu(Resources.get("display")));
+		submenu.add(new TogglePropertyItem(graphComponent, Resources.get("buffering"), "TripleBuffered", true));
 
-		submenu.add(new TogglePropertyItem(graphComponent, mxResources.get("preferPageSize"), "PreferPageSize", true, new ActionListener()
+		submenu.add(new TogglePropertyItem(graphComponent, Resources.get("preferPageSize"), "PreferPageSize", true, new ActionListener()
 		{
 			/**
 			 * 
@@ -343,23 +343,23 @@ public class EditorMenuBar extends JMenuBar
 		}));
 
 		// TODO: This feature is not yet implemented
-		//submenu.add(new TogglePropertyItem(graphComponent, mxResources
+		//submenu.add(new TogglePropertyItem(graphComponent, Resources
 		//		.get("pageBreaks"), "PageBreaksVisible", true));
 
 		submenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("tolerance"), new PromptPropertyAction(graphComponent, "Tolerance")));
+		submenu.add(editor.bind(Resources.get("tolerance"), new PromptPropertyAction(graphComponent, "Tolerance")));
 
-		submenu.add(editor.bind(mxResources.get("dirty"), new ToggleDirtyAction()));
+		submenu.add(editor.bind(Resources.get("dirty"), new ToggleDirtyAction()));
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("zoom")));
+		submenu = (JMenu) menu.add(new JMenu(Resources.get("zoom")));
 
-		submenu.add(new TogglePropertyItem(graphComponent, mxResources.get("centerZoom"), "CenterZoom", true));
-		submenu.add(new TogglePropertyItem(graphComponent, mxResources.get("zoomToSelection"), "KeepSelectionVisibleOnZoom", true));
+		submenu.add(new TogglePropertyItem(graphComponent, Resources.get("centerZoom"), "CenterZoom", true));
+		submenu.add(new TogglePropertyItem(graphComponent, Resources.get("zoomToSelection"), "KeepSelectionVisibleOnZoom", true));
 
 		submenu.addSeparator();
 
-		submenu.add(new TogglePropertyItem(graphComponent, mxResources.get("centerPage"), "CenterPage", true, new ActionListener()
+		submenu.add(new TogglePropertyItem(graphComponent, Resources.get("centerPage"), "CenterPage", true, new ActionListener()
 		{
 			/**
 			 * 
@@ -375,57 +375,57 @@ public class EditorMenuBar extends JMenuBar
 
 		menu.addSeparator();
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("dragAndDrop")));
+		submenu = (JMenu) menu.add(new JMenu(Resources.get("dragAndDrop")));
 
-		submenu.add(new TogglePropertyItem(graphComponent, mxResources.get("dragEnabled"), "DragEnabled"));
-		submenu.add(new TogglePropertyItem(graph, mxResources.get("dropEnabled"), "DropEnabled"));
-
-		submenu.addSeparator();
-
-		submenu.add(new TogglePropertyItem(graphComponent.getGraphHandler(), mxResources.get("imagePreview"), "ImagePreview"));
-
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("labels")));
-
-		submenu.add(new TogglePropertyItem(graph, mxResources.get("htmlLabels"), "HtmlLabels", true));
-		submenu.add(new TogglePropertyItem(graph, mxResources.get("showLabels"), "LabelsVisible", true));
+		submenu.add(new TogglePropertyItem(graphComponent, Resources.get("dragEnabled"), "DragEnabled"));
+		submenu.add(new TogglePropertyItem(graph, Resources.get("dropEnabled"), "DropEnabled"));
 
 		submenu.addSeparator();
 
-		submenu.add(new TogglePropertyItem(graph, mxResources.get("moveEdgeLabels"), "EdgeLabelsMovable"));
-		submenu.add(new TogglePropertyItem(graph, mxResources.get("moveVertexLabels"), "VertexLabelsMovable"));
+		submenu.add(new TogglePropertyItem(graphComponent.getGraphHandler(), Resources.get("imagePreview"), "ImagePreview"));
+
+		submenu = (JMenu) menu.add(new JMenu(Resources.get("labels")));
+
+		submenu.add(new TogglePropertyItem(graph, Resources.get("htmlLabels"), "HtmlLabels", true));
+		submenu.add(new TogglePropertyItem(graph, Resources.get("showLabels"), "LabelsVisible", true));
 
 		submenu.addSeparator();
 
-		submenu.add(new TogglePropertyItem(graphComponent, mxResources.get("handleReturn"), "EnterStopsCellEditing"));
+		submenu.add(new TogglePropertyItem(graph, Resources.get("moveEdgeLabels"), "EdgeLabelsMovable"));
+		submenu.add(new TogglePropertyItem(graph, Resources.get("moveVertexLabels"), "VertexLabelsMovable"));
+
+		submenu.addSeparator();
+
+		submenu.add(new TogglePropertyItem(graphComponent, Resources.get("handleReturn"), "EnterStopsCellEditing"));
 
 		menu.addSeparator();
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("connections")));
+		submenu = (JMenu) menu.add(new JMenu(Resources.get("connections")));
 
-		submenu.add(new TogglePropertyItem(graphComponent, mxResources.get("connectable"), "Connectable"));
-		submenu.add(new TogglePropertyItem(graph, mxResources.get("connectableEdges"), "ConnectableEdges"));
-
-		submenu.addSeparator();
-
-		submenu.add(new ToggleCreateTargetItem(editor, mxResources.get("createTarget")));
-		submenu.add(new TogglePropertyItem(graph, mxResources.get("disconnectOnMove"), "DisconnectOnMove"));
+		submenu.add(new TogglePropertyItem(graphComponent, Resources.get("connectable"), "Connectable"));
+		submenu.add(new TogglePropertyItem(graph, Resources.get("connectableEdges"), "ConnectableEdges"));
 
 		submenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("connectMode"), new ToggleConnectModeAction()));
-
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("validation")));
-
-		submenu.add(new TogglePropertyItem(graph, mxResources.get("allowDanglingEdges"), "AllowDanglingEdges"));
-		submenu.add(new TogglePropertyItem(graph, mxResources.get("cloneInvalidEdges"), "CloneInvalidEdges"));
+		submenu.add(new ToggleCreateTargetItem(editor, Resources.get("createTarget")));
+		submenu.add(new TogglePropertyItem(graph, Resources.get("disconnectOnMove"), "DisconnectOnMove"));
 
 		submenu.addSeparator();
 
-		submenu.add(new TogglePropertyItem(graph, mxResources.get("allowLoops"), "AllowLoops"));
-		submenu.add(new TogglePropertyItem(graph, mxResources.get("multigraph"), "Multigraph"));
+		submenu.add(editor.bind(Resources.get("connectMode"), new ToggleConnectModeAction()));
+
+		submenu = (JMenu) menu.add(new JMenu(Resources.get("validation")));
+
+		submenu.add(new TogglePropertyItem(graph, Resources.get("allowDanglingEdges"), "AllowDanglingEdges"));
+		submenu.add(new TogglePropertyItem(graph, Resources.get("cloneInvalidEdges"), "CloneInvalidEdges"));
+
+		submenu.addSeparator();
+
+		submenu.add(new TogglePropertyItem(graph, Resources.get("allowLoops"), "AllowLoops"));
+		submenu.add(new TogglePropertyItem(graph, Resources.get("multigraph"), "Multigraph"));
 
 		// Creates the window menu
-		menu = add(new JMenu(mxResources.get("window")));
+		menu = add(new JMenu(Resources.get("window")));
 
 		UIManager.LookAndFeelInfo[] lafs = UIManager.getInstalledLookAndFeels();
 
@@ -500,9 +500,9 @@ public class EditorMenuBar extends JMenuBar
 		menu.add(editor.bind("Is biconnected", new AnalyzeGraph(AnalyzeType.IS_BICONNECTED, aGraph)));
 
 		// Creates the help menu
-		menu = add(new JMenu(mxResources.get("help")));
+		menu = add(new JMenu(Resources.get("help")));
 
-		item = menu.add(new JMenuItem(mxResources.get("aboutGraphEditor")));
+		item = menu.add(new JMenuItem(Resources.get("aboutGraphEditor")));
 		item.addActionListener(new ActionListener()
 		{
 			/*
@@ -522,61 +522,61 @@ public class EditorMenuBar extends JMenuBar
 	 */
 	public static void populateShapeMenu(JMenu menu, BasicGraphEditor editor)
 	{
-		menu.add(editor.bind(mxResources.get("home"), mxGraphActions.getHomeAction(), "/com/mxgraph/examples/swing/images/house.gif"));
+		menu.add(editor.bind(Resources.get("home"), GraphActions.getHomeAction(), "/com/graph/examples/swing/images/house.gif"));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("exitGroup"), mxGraphActions.getExitGroupAction(), "/com/mxgraph/examples/swing/images/up.gif"));
-		menu.add(editor.bind(mxResources.get("enterGroup"), mxGraphActions.getEnterGroupAction(),
-				"/com/mxgraph/examples/swing/images/down.gif"));
+		menu.add(editor.bind(Resources.get("exitGroup"), GraphActions.getExitGroupAction(), "/com/graph/examples/swing/images/up.gif"));
+		menu.add(editor.bind(Resources.get("enterGroup"), GraphActions.getEnterGroupAction(),
+				"/com/graph/examples/swing/images/down.gif"));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("group"), mxGraphActions.getGroupAction(), "/com/mxgraph/examples/swing/images/group.gif"));
-		menu.add(editor.bind(mxResources.get("ungroup"), mxGraphActions.getUngroupAction(),
-				"/com/mxgraph/examples/swing/images/ungroup.gif"));
+		menu.add(editor.bind(Resources.get("group"), GraphActions.getGroupAction(), "/com/graph/examples/swing/images/group.gif"));
+		menu.add(editor.bind(Resources.get("ungroup"), GraphActions.getUngroupAction(),
+				"/com/graph/examples/swing/images/ungroup.gif"));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("removeFromGroup"), mxGraphActions.getRemoveFromParentAction()));
+		menu.add(editor.bind(Resources.get("removeFromGroup"), GraphActions.getRemoveFromParentAction()));
 
-		menu.add(editor.bind(mxResources.get("updateGroupBounds"), mxGraphActions.getUpdateGroupBoundsAction()));
-
-		menu.addSeparator();
-
-		menu.add(editor.bind(mxResources.get("collapse"), mxGraphActions.getCollapseAction(),
-				"/com/mxgraph/examples/swing/images/collapse.gif"));
-		menu.add(editor.bind(mxResources.get("expand"), mxGraphActions.getExpandAction(), "/com/mxgraph/examples/swing/images/expand.gif"));
+		menu.add(editor.bind(Resources.get("updateGroupBounds"), GraphActions.getUpdateGroupBoundsAction()));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("toBack"), mxGraphActions.getToBackAction(), "/com/mxgraph/examples/swing/images/toback.gif"));
-		menu.add(editor.bind(mxResources.get("toFront"), mxGraphActions.getToFrontAction(),
-				"/com/mxgraph/examples/swing/images/tofront.gif"));
+		menu.add(editor.bind(Resources.get("collapse"), GraphActions.getCollapseAction(),
+				"/com/graph/examples/swing/images/collapse.gif"));
+		menu.add(editor.bind(Resources.get("expand"), GraphActions.getExpandAction(), "/com/graph/examples/swing/images/expand.gif"));
 
 		menu.addSeparator();
 
-		JMenu submenu = (JMenu) menu.add(new JMenu(mxResources.get("align")));
+		menu.add(editor.bind(Resources.get("toBack"), GraphActions.getToBackAction(), "/com/graph/examples/swing/images/toback.gif"));
+		menu.add(editor.bind(Resources.get("toFront"), GraphActions.getToFrontAction(),
+				"/com/graph/examples/swing/images/tofront.gif"));
 
-		submenu.add(editor.bind(mxResources.get("left"), new AlignCellsAction(mxConstants.ALIGN_LEFT),
-				"/com/mxgraph/examples/swing/images/alignleft.gif"));
-		submenu.add(editor.bind(mxResources.get("center"), new AlignCellsAction(mxConstants.ALIGN_CENTER),
-				"/com/mxgraph/examples/swing/images/aligncenter.gif"));
-		submenu.add(editor.bind(mxResources.get("right"), new AlignCellsAction(mxConstants.ALIGN_RIGHT),
-				"/com/mxgraph/examples/swing/images/alignright.gif"));
+		menu.addSeparator();
+
+		JMenu submenu = (JMenu) menu.add(new JMenu(Resources.get("align")));
+
+		submenu.add(editor.bind(Resources.get("left"), new AlignCellsAction(Constants.ALIGN_LEFT),
+				"/com/graph/examples/swing/images/alignleft.gif"));
+		submenu.add(editor.bind(Resources.get("center"), new AlignCellsAction(Constants.ALIGN_CENTER),
+				"/com/graph/examples/swing/images/aligncenter.gif"));
+		submenu.add(editor.bind(Resources.get("right"), new AlignCellsAction(Constants.ALIGN_RIGHT),
+				"/com/graph/examples/swing/images/alignright.gif"));
 
 		submenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("top"), new AlignCellsAction(mxConstants.ALIGN_TOP),
-				"/com/mxgraph/examples/swing/images/aligntop.gif"));
-		submenu.add(editor.bind(mxResources.get("middle"), new AlignCellsAction(mxConstants.ALIGN_MIDDLE),
-				"/com/mxgraph/examples/swing/images/alignmiddle.gif"));
-		submenu.add(editor.bind(mxResources.get("bottom"), new AlignCellsAction(mxConstants.ALIGN_BOTTOM),
-				"/com/mxgraph/examples/swing/images/alignbottom.gif"));
+		submenu.add(editor.bind(Resources.get("top"), new AlignCellsAction(Constants.ALIGN_TOP),
+				"/com/graph/examples/swing/images/aligntop.gif"));
+		submenu.add(editor.bind(Resources.get("middle"), new AlignCellsAction(Constants.ALIGN_MIDDLE),
+				"/com/graph/examples/swing/images/alignmiddle.gif"));
+		submenu.add(editor.bind(Resources.get("bottom"), new AlignCellsAction(Constants.ALIGN_BOTTOM),
+				"/com/graph/examples/swing/images/alignbottom.gif"));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("autosize"), new AutosizeAction()));
+		menu.add(editor.bind(Resources.get("autosize"), new AutosizeAction()));
 
 	}
 
@@ -586,200 +586,200 @@ public class EditorMenuBar extends JMenuBar
 	 */
 	public static void populateFormatMenu(JMenu menu, BasicGraphEditor editor)
 	{
-		JMenu submenu = (JMenu) menu.add(new JMenu(mxResources.get("background")));
+		JMenu submenu = (JMenu) menu.add(new JMenu(Resources.get("background")));
 
-		submenu.add(editor.bind(mxResources.get("fillcolor"), new ColorAction("Fillcolor", mxConstants.STYLE_FILLCOLOR),
-				"/com/mxgraph/examples/swing/images/fillcolor.gif"));
-		submenu.add(editor.bind(mxResources.get("gradient"), new ColorAction("Gradient", mxConstants.STYLE_GRADIENTCOLOR)));
-
-		submenu.addSeparator();
-
-		submenu.add(editor.bind(mxResources.get("image"), new PromptValueAction(mxConstants.STYLE_IMAGE, "Image")));
-		submenu.add(editor.bind(mxResources.get("shadow"), new ToggleAction(mxConstants.STYLE_SHADOW)));
+		submenu.add(editor.bind(Resources.get("fillcolor"), new ColorAction("Fillcolor", Constants.STYLE_FILLCOLOR),
+				"/com/graph/examples/swing/images/fillcolor.gif"));
+		submenu.add(editor.bind(Resources.get("gradient"), new ColorAction("Gradient", Constants.STYLE_GRADIENTCOLOR)));
 
 		submenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("opacity"), new PromptValueAction(mxConstants.STYLE_OPACITY, "Opacity (0-100)")));
-
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("label")));
-
-		submenu.add(editor.bind(mxResources.get("fontcolor"), new ColorAction("Fontcolor", mxConstants.STYLE_FONTCOLOR),
-				"/com/mxgraph/examples/swing/images/fontcolor.gif"));
+		submenu.add(editor.bind(Resources.get("image"), new PromptValueAction(Constants.STYLE_IMAGE, "Image")));
+		submenu.add(editor.bind(Resources.get("shadow"), new ToggleAction(Constants.STYLE_SHADOW)));
 
 		submenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("labelFill"), new ColorAction("Label Fill", mxConstants.STYLE_LABEL_BACKGROUNDCOLOR)));
-		submenu.add(editor.bind(mxResources.get("labelBorder"), new ColorAction("Label Border", mxConstants.STYLE_LABEL_BORDERCOLOR)));
+		submenu.add(editor.bind(Resources.get("opacity"), new PromptValueAction(Constants.STYLE_OPACITY, "Opacity (0-100)")));
+
+		submenu = (JMenu) menu.add(new JMenu(Resources.get("label")));
+
+		submenu.add(editor.bind(Resources.get("fontcolor"), new ColorAction("Fontcolor", Constants.STYLE_FONTCOLOR),
+				"/com/graph/examples/swing/images/fontcolor.gif"));
 
 		submenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("rotateLabel"), new ToggleAction(mxConstants.STYLE_HORIZONTAL, true)));
-
-		submenu.add(editor.bind(mxResources.get("textOpacity"), new PromptValueAction(mxConstants.STYLE_TEXT_OPACITY, "Opacity (0-100)")));
+		submenu.add(editor.bind(Resources.get("labelFill"), new ColorAction("Label Fill", Constants.STYLE_LABEL_BACKGROUNDCOLOR)));
+		submenu.add(editor.bind(Resources.get("labelBorder"), new ColorAction("Label Border", Constants.STYLE_LABEL_BORDERCOLOR)));
 
 		submenu.addSeparator();
 
-		JMenu subsubmenu = (JMenu) submenu.add(new JMenu(mxResources.get("position")));
+		submenu.add(editor.bind(Resources.get("rotateLabel"), new ToggleAction(Constants.STYLE_HORIZONTAL, true)));
 
-		subsubmenu.add(editor.bind(mxResources.get("top"), new SetLabelPositionAction(mxConstants.ALIGN_TOP, mxConstants.ALIGN_BOTTOM)));
-		subsubmenu.add(editor.bind(mxResources.get("middle"),
-				new SetLabelPositionAction(mxConstants.ALIGN_MIDDLE, mxConstants.ALIGN_MIDDLE)));
-		subsubmenu.add(editor.bind(mxResources.get("bottom"), new SetLabelPositionAction(mxConstants.ALIGN_BOTTOM, mxConstants.ALIGN_TOP)));
+		submenu.add(editor.bind(Resources.get("textOpacity"), new PromptValueAction(Constants.STYLE_TEXT_OPACITY, "Opacity (0-100)")));
+
+		submenu.addSeparator();
+
+		JMenu subsubmenu = (JMenu) submenu.add(new JMenu(Resources.get("position")));
+
+		subsubmenu.add(editor.bind(Resources.get("top"), new SetLabelPositionAction(Constants.ALIGN_TOP, Constants.ALIGN_BOTTOM)));
+		subsubmenu.add(editor.bind(Resources.get("middle"),
+				new SetLabelPositionAction(Constants.ALIGN_MIDDLE, Constants.ALIGN_MIDDLE)));
+		subsubmenu.add(editor.bind(Resources.get("bottom"), new SetLabelPositionAction(Constants.ALIGN_BOTTOM, Constants.ALIGN_TOP)));
 
 		subsubmenu.addSeparator();
 
-		subsubmenu.add(editor.bind(mxResources.get("left"), new SetLabelPositionAction(mxConstants.ALIGN_LEFT, mxConstants.ALIGN_RIGHT)));
-		subsubmenu.add(editor.bind(mxResources.get("center"),
-				new SetLabelPositionAction(mxConstants.ALIGN_CENTER, mxConstants.ALIGN_CENTER)));
-		subsubmenu.add(editor.bind(mxResources.get("right"), new SetLabelPositionAction(mxConstants.ALIGN_RIGHT, mxConstants.ALIGN_LEFT)));
+		subsubmenu.add(editor.bind(Resources.get("left"), new SetLabelPositionAction(Constants.ALIGN_LEFT, Constants.ALIGN_RIGHT)));
+		subsubmenu.add(editor.bind(Resources.get("center"),
+				new SetLabelPositionAction(Constants.ALIGN_CENTER, Constants.ALIGN_CENTER)));
+		subsubmenu.add(editor.bind(Resources.get("right"), new SetLabelPositionAction(Constants.ALIGN_RIGHT, Constants.ALIGN_LEFT)));
 
 		submenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("wordWrap"), new KeyValueAction(mxConstants.STYLE_WHITE_SPACE, "wrap")));
-		submenu.add(editor.bind(mxResources.get("noWordWrap"), new KeyValueAction(mxConstants.STYLE_WHITE_SPACE, null)));
+		submenu.add(editor.bind(Resources.get("wordWrap"), new KeyValueAction(Constants.STYLE_WHITE_SPACE, "wrap")));
+		submenu.add(editor.bind(Resources.get("noWordWrap"), new KeyValueAction(Constants.STYLE_WHITE_SPACE, null)));
 
 		submenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("hide"), new ToggleAction(mxConstants.STYLE_NOLABEL)));
+		submenu.add(editor.bind(Resources.get("hide"), new ToggleAction(Constants.STYLE_NOLABEL)));
 
 		menu.addSeparator();
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("line")));
+		submenu = (JMenu) menu.add(new JMenu(Resources.get("line")));
 
-		submenu.add(editor.bind(mxResources.get("linecolor"), new ColorAction("Linecolor", mxConstants.STYLE_STROKECOLOR),
-				"/com/mxgraph/examples/swing/images/linecolor.gif"));
-
-		submenu.addSeparator();
-
-		submenu.add(editor.bind(mxResources.get("orthogonal"), new ToggleAction(mxConstants.STYLE_ORTHOGONAL)));
-		submenu.add(editor.bind(mxResources.get("dashed"), new ToggleAction(mxConstants.STYLE_DASHED)));
+		submenu.add(editor.bind(Resources.get("linecolor"), new ColorAction("Linecolor", Constants.STYLE_STROKECOLOR),
+				"/com/graph/examples/swing/images/linecolor.gif"));
 
 		submenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("linewidth"), new PromptValueAction(mxConstants.STYLE_STROKEWIDTH, "Linewidth")));
-
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("connector")));
-
-		submenu.add(editor.bind(mxResources.get("straight"), new SetStyleAction("straight"),
-				"/com/mxgraph/examples/swing/images/straight.gif"));
-
-		submenu.add(editor.bind(mxResources.get("horizontal"), new SetStyleAction(""), "/com/mxgraph/examples/swing/images/connect.gif"));
-		submenu.add(editor.bind(mxResources.get("vertical"), new SetStyleAction("vertical"),
-				"/com/mxgraph/examples/swing/images/vertical.gif"));
+		submenu.add(editor.bind(Resources.get("orthogonal"), new ToggleAction(Constants.STYLE_ORTHOGONAL)));
+		submenu.add(editor.bind(Resources.get("dashed"), new ToggleAction(Constants.STYLE_DASHED)));
 
 		submenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("entityRelation"), new SetStyleAction("edgeStyle=mxEdgeStyle.EntityRelation"),
-				"/com/mxgraph/examples/swing/images/entity.gif"));
-		submenu.add(editor.bind(mxResources.get("arrow"), new SetStyleAction("arrow"), "/com/mxgraph/examples/swing/images/arrow.gif"));
+		submenu.add(editor.bind(Resources.get("linewidth"), new PromptValueAction(Constants.STYLE_STROKEWIDTH, "Linewidth")));
+
+		submenu = (JMenu) menu.add(new JMenu(Resources.get("connector")));
+
+		submenu.add(editor.bind(Resources.get("straight"), new SetStyleAction("straight"),
+				"/com/graph/examples/swing/images/straight.gif"));
+
+		submenu.add(editor.bind(Resources.get("horizontal"), new SetStyleAction(""), "/com/graph/examples/swing/images/connect.gif"));
+		submenu.add(editor.bind(Resources.get("vertical"), new SetStyleAction("vertical"),
+				"/com/graph/examples/swing/images/vertical.gif"));
 
 		submenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("plain"), new ToggleAction(mxConstants.STYLE_NOEDGESTYLE)));
+		submenu.add(editor.bind(Resources.get("entityRelation"), new SetStyleAction("edgeStyle=EdgeStyle.EntityRelation"),
+				"/com/graph/examples/swing/images/entity.gif"));
+		submenu.add(editor.bind(Resources.get("arrow"), new SetStyleAction("arrow"), "/com/graph/examples/swing/images/arrow.gif"));
+
+		submenu.addSeparator();
+
+		submenu.add(editor.bind(Resources.get("plain"), new ToggleAction(Constants.STYLE_NOEDGESTYLE)));
 
 		menu.addSeparator();
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("linestart")));
+		submenu = (JMenu) menu.add(new JMenu(Resources.get("linestart")));
 
-		submenu.add(editor.bind(mxResources.get("open"), new KeyValueAction(mxConstants.STYLE_STARTARROW, mxConstants.ARROW_OPEN),
-				"/com/mxgraph/examples/swing/images/open_start.gif"));
-		submenu.add(editor.bind(mxResources.get("classic"), new KeyValueAction(mxConstants.STYLE_STARTARROW, mxConstants.ARROW_CLASSIC),
-				"/com/mxgraph/examples/swing/images/classic_start.gif"));
-		submenu.add(editor.bind(mxResources.get("block"), new KeyValueAction(mxConstants.STYLE_STARTARROW, mxConstants.ARROW_BLOCK),
-				"/com/mxgraph/examples/swing/images/block_start.gif"));
-
-		submenu.addSeparator();
-
-		submenu.add(editor.bind(mxResources.get("diamond"), new KeyValueAction(mxConstants.STYLE_STARTARROW, mxConstants.ARROW_DIAMOND),
-				"/com/mxgraph/examples/swing/images/diamond_start.gif"));
-		submenu.add(editor.bind(mxResources.get("oval"), new KeyValueAction(mxConstants.STYLE_STARTARROW, mxConstants.ARROW_OVAL),
-				"/com/mxgraph/examples/swing/images/oval_start.gif"));
+		submenu.add(editor.bind(Resources.get("open"), new KeyValueAction(Constants.STYLE_STARTARROW, Constants.ARROW_OPEN),
+				"/com/graph/examples/swing/images/open_start.gif"));
+		submenu.add(editor.bind(Resources.get("classic"), new KeyValueAction(Constants.STYLE_STARTARROW, Constants.ARROW_CLASSIC),
+				"/com/graph/examples/swing/images/classic_start.gif"));
+		submenu.add(editor.bind(Resources.get("block"), new KeyValueAction(Constants.STYLE_STARTARROW, Constants.ARROW_BLOCK),
+				"/com/graph/examples/swing/images/block_start.gif"));
 
 		submenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("none"), new KeyValueAction(mxConstants.STYLE_STARTARROW, mxConstants.NONE)));
-		submenu.add(editor.bind(mxResources.get("size"), new PromptValueAction(mxConstants.STYLE_STARTSIZE, "Linestart Size")));
-
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("lineend")));
-
-		submenu.add(editor.bind(mxResources.get("open"), new KeyValueAction(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_OPEN),
-				"/com/mxgraph/examples/swing/images/open_end.gif"));
-		submenu.add(editor.bind(mxResources.get("classic"), new KeyValueAction(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_CLASSIC),
-				"/com/mxgraph/examples/swing/images/classic_end.gif"));
-		submenu.add(editor.bind(mxResources.get("block"), new KeyValueAction(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_BLOCK),
-				"/com/mxgraph/examples/swing/images/block_end.gif"));
+		submenu.add(editor.bind(Resources.get("diamond"), new KeyValueAction(Constants.STYLE_STARTARROW, Constants.ARROW_DIAMOND),
+				"/com/graph/examples/swing/images/diamond_start.gif"));
+		submenu.add(editor.bind(Resources.get("oval"), new KeyValueAction(Constants.STYLE_STARTARROW, Constants.ARROW_OVAL),
+				"/com/graph/examples/swing/images/oval_start.gif"));
 
 		submenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("diamond"), new KeyValueAction(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_DIAMOND),
-				"/com/mxgraph/examples/swing/images/diamond_end.gif"));
-		submenu.add(editor.bind(mxResources.get("oval"), new KeyValueAction(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_OVAL),
-				"/com/mxgraph/examples/swing/images/oval_end.gif"));
+		submenu.add(editor.bind(Resources.get("none"), new KeyValueAction(Constants.STYLE_STARTARROW, Constants.NONE)));
+		submenu.add(editor.bind(Resources.get("size"), new PromptValueAction(Constants.STYLE_STARTSIZE, "Linestart Size")));
+
+		submenu = (JMenu) menu.add(new JMenu(Resources.get("lineend")));
+
+		submenu.add(editor.bind(Resources.get("open"), new KeyValueAction(Constants.STYLE_ENDARROW, Constants.ARROW_OPEN),
+				"/com/graph/examples/swing/images/open_end.gif"));
+		submenu.add(editor.bind(Resources.get("classic"), new KeyValueAction(Constants.STYLE_ENDARROW, Constants.ARROW_CLASSIC),
+				"/com/graph/examples/swing/images/classic_end.gif"));
+		submenu.add(editor.bind(Resources.get("block"), new KeyValueAction(Constants.STYLE_ENDARROW, Constants.ARROW_BLOCK),
+				"/com/graph/examples/swing/images/block_end.gif"));
 
 		submenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("none"), new KeyValueAction(mxConstants.STYLE_ENDARROW, mxConstants.NONE)));
-		submenu.add(editor.bind(mxResources.get("size"), new PromptValueAction(mxConstants.STYLE_ENDSIZE, "Lineend Size")));
+		submenu.add(editor.bind(Resources.get("diamond"), new KeyValueAction(Constants.STYLE_ENDARROW, Constants.ARROW_DIAMOND),
+				"/com/graph/examples/swing/images/diamond_end.gif"));
+		submenu.add(editor.bind(Resources.get("oval"), new KeyValueAction(Constants.STYLE_ENDARROW, Constants.ARROW_OVAL),
+				"/com/graph/examples/swing/images/oval_end.gif"));
+
+		submenu.addSeparator();
+
+		submenu.add(editor.bind(Resources.get("none"), new KeyValueAction(Constants.STYLE_ENDARROW, Constants.NONE)));
+		submenu.add(editor.bind(Resources.get("size"), new PromptValueAction(Constants.STYLE_ENDSIZE, "Lineend Size")));
 
 		menu.addSeparator();
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("alignment")));
+		submenu = (JMenu) menu.add(new JMenu(Resources.get("alignment")));
 
-		submenu.add(editor.bind(mxResources.get("left"), new KeyValueAction(mxConstants.STYLE_ALIGN, mxConstants.ALIGN_LEFT),
-				"/com/mxgraph/examples/swing/images/left.gif"));
-		submenu.add(editor.bind(mxResources.get("center"), new KeyValueAction(mxConstants.STYLE_ALIGN, mxConstants.ALIGN_CENTER),
-				"/com/mxgraph/examples/swing/images/center.gif"));
-		submenu.add(editor.bind(mxResources.get("right"), new KeyValueAction(mxConstants.STYLE_ALIGN, mxConstants.ALIGN_RIGHT),
-				"/com/mxgraph/examples/swing/images/right.gif"));
-
-		submenu.addSeparator();
-
-		submenu.add(editor.bind(mxResources.get("top"), new KeyValueAction(mxConstants.STYLE_VERTICAL_ALIGN, mxConstants.ALIGN_TOP),
-				"/com/mxgraph/examples/swing/images/top.gif"));
-		submenu.add(editor.bind(mxResources.get("middle"), new KeyValueAction(mxConstants.STYLE_VERTICAL_ALIGN, mxConstants.ALIGN_MIDDLE),
-				"/com/mxgraph/examples/swing/images/middle.gif"));
-		submenu.add(editor.bind(mxResources.get("bottom"), new KeyValueAction(mxConstants.STYLE_VERTICAL_ALIGN, mxConstants.ALIGN_BOTTOM),
-				"/com/mxgraph/examples/swing/images/bottom.gif"));
-
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("spacing")));
-
-		submenu.add(editor.bind(mxResources.get("top"), new PromptValueAction(mxConstants.STYLE_SPACING_TOP, "Top Spacing")));
-		submenu.add(editor.bind(mxResources.get("right"), new PromptValueAction(mxConstants.STYLE_SPACING_RIGHT, "Right Spacing")));
-		submenu.add(editor.bind(mxResources.get("bottom"), new PromptValueAction(mxConstants.STYLE_SPACING_BOTTOM, "Bottom Spacing")));
-		submenu.add(editor.bind(mxResources.get("left"), new PromptValueAction(mxConstants.STYLE_SPACING_LEFT, "Left Spacing")));
+		submenu.add(editor.bind(Resources.get("left"), new KeyValueAction(Constants.STYLE_ALIGN, Constants.ALIGN_LEFT),
+				"/com/graph/examples/swing/images/left.gif"));
+		submenu.add(editor.bind(Resources.get("center"), new KeyValueAction(Constants.STYLE_ALIGN, Constants.ALIGN_CENTER),
+				"/com/graph/examples/swing/images/center.gif"));
+		submenu.add(editor.bind(Resources.get("right"), new KeyValueAction(Constants.STYLE_ALIGN, Constants.ALIGN_RIGHT),
+				"/com/graph/examples/swing/images/right.gif"));
 
 		submenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("global"), new PromptValueAction(mxConstants.STYLE_SPACING, "Spacing")));
+		submenu.add(editor.bind(Resources.get("top"), new KeyValueAction(Constants.STYLE_VERTICAL_ALIGN, Constants.ALIGN_TOP),
+				"/com/graph/examples/swing/images/top.gif"));
+		submenu.add(editor.bind(Resources.get("middle"), new KeyValueAction(Constants.STYLE_VERTICAL_ALIGN, Constants.ALIGN_MIDDLE),
+				"/com/graph/examples/swing/images/middle.gif"));
+		submenu.add(editor.bind(Resources.get("bottom"), new KeyValueAction(Constants.STYLE_VERTICAL_ALIGN, Constants.ALIGN_BOTTOM),
+				"/com/graph/examples/swing/images/bottom.gif"));
+
+		submenu = (JMenu) menu.add(new JMenu(Resources.get("spacing")));
+
+		submenu.add(editor.bind(Resources.get("top"), new PromptValueAction(Constants.STYLE_SPACING_TOP, "Top Spacing")));
+		submenu.add(editor.bind(Resources.get("right"), new PromptValueAction(Constants.STYLE_SPACING_RIGHT, "Right Spacing")));
+		submenu.add(editor.bind(Resources.get("bottom"), new PromptValueAction(Constants.STYLE_SPACING_BOTTOM, "Bottom Spacing")));
+		submenu.add(editor.bind(Resources.get("left"), new PromptValueAction(Constants.STYLE_SPACING_LEFT, "Left Spacing")));
 
 		submenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("sourceSpacing"), new PromptValueAction(mxConstants.STYLE_SOURCE_PERIMETER_SPACING,
-				mxResources.get("sourceSpacing"))));
-		submenu.add(editor.bind(mxResources.get("targetSpacing"), new PromptValueAction(mxConstants.STYLE_TARGET_PERIMETER_SPACING,
-				mxResources.get("targetSpacing"))));
+		submenu.add(editor.bind(Resources.get("global"), new PromptValueAction(Constants.STYLE_SPACING, "Spacing")));
 
 		submenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("perimeter"), new PromptValueAction(mxConstants.STYLE_PERIMETER_SPACING,
+		submenu.add(editor.bind(Resources.get("sourceSpacing"), new PromptValueAction(Constants.STYLE_SOURCE_PERIMETER_SPACING,
+				Resources.get("sourceSpacing"))));
+		submenu.add(editor.bind(Resources.get("targetSpacing"), new PromptValueAction(Constants.STYLE_TARGET_PERIMETER_SPACING,
+				Resources.get("targetSpacing"))));
+
+		submenu.addSeparator();
+
+		submenu.add(editor.bind(Resources.get("perimeter"), new PromptValueAction(Constants.STYLE_PERIMETER_SPACING,
 				"Perimeter Spacing")));
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("direction")));
+		submenu = (JMenu) menu.add(new JMenu(Resources.get("direction")));
 
-		submenu.add(editor.bind(mxResources.get("north"), new KeyValueAction(mxConstants.STYLE_DIRECTION, mxConstants.DIRECTION_NORTH)));
-		submenu.add(editor.bind(mxResources.get("east"), new KeyValueAction(mxConstants.STYLE_DIRECTION, mxConstants.DIRECTION_EAST)));
-		submenu.add(editor.bind(mxResources.get("south"), new KeyValueAction(mxConstants.STYLE_DIRECTION, mxConstants.DIRECTION_SOUTH)));
-		submenu.add(editor.bind(mxResources.get("west"), new KeyValueAction(mxConstants.STYLE_DIRECTION, mxConstants.DIRECTION_WEST)));
+		submenu.add(editor.bind(Resources.get("north"), new KeyValueAction(Constants.STYLE_DIRECTION, Constants.DIRECTION_NORTH)));
+		submenu.add(editor.bind(Resources.get("east"), new KeyValueAction(Constants.STYLE_DIRECTION, Constants.DIRECTION_EAST)));
+		submenu.add(editor.bind(Resources.get("south"), new KeyValueAction(Constants.STYLE_DIRECTION, Constants.DIRECTION_SOUTH)));
+		submenu.add(editor.bind(Resources.get("west"), new KeyValueAction(Constants.STYLE_DIRECTION, Constants.DIRECTION_WEST)));
 
 		submenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("rotation"), new PromptValueAction(mxConstants.STYLE_ROTATION, "Rotation (0-360)")));
+		submenu.add(editor.bind(Resources.get("rotation"), new PromptValueAction(Constants.STYLE_ROTATION, "Rotation (0-360)")));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("rounded"), new ToggleAction(mxConstants.STYLE_ROUNDED)));
+		menu.add(editor.bind(Resources.get("rounded"), new ToggleAction(Constants.STYLE_ROUNDED)));
 
-		menu.add(editor.bind(mxResources.get("style"), new StyleAction()));
+		menu.add(editor.bind(Resources.get("style"), new StyleAction()));
 	}
 
 	/**
@@ -798,13 +798,13 @@ public class EditorMenuBar extends JMenuBar
 		 */
 		protected GraphType graphType;
 
-		protected mxAnalysisGraph aGraph;
+		protected AnalysisGraph aGraph;
 
 		/**
 		 * @param aGraph 
 		 * 
 		 */
-		public InsertGraph(GraphType tree, mxAnalysisGraph aGraph)
+		public InsertGraph(GraphType tree, AnalysisGraph aGraph)
 		{
 			this.graphType = tree;
 			this.aGraph = aGraph;
@@ -815,10 +815,10 @@ public class EditorMenuBar extends JMenuBar
 		 */
 		public void actionPerformed(ActionEvent e)
 		{
-			if (e.getSource() instanceof mxGraphComponent)
+			if (e.getSource() instanceof GraphComponent)
 			{
-				mxGraphComponent graphComponent = (mxGraphComponent) e.getSource();
-				mxGraph graph = graphComponent.getGraph();
+				GraphComponent graphComponent = (GraphComponent) e.getSource();
+				Graph graph = graphComponent.getGraph();
 
 				// dialog = new FactoryConfigDialog();
 				String dialogText = "";
@@ -889,7 +889,7 @@ public class EditorMenuBar extends JMenuBar
 		 */
 		private static final long serialVersionUID = 6926170745240507985L;
 
-		mxAnalysisGraph aGraph;
+		AnalysisGraph aGraph;
 
 		/**
 		 * 
@@ -897,9 +897,9 @@ public class EditorMenuBar extends JMenuBar
 		protected AnalyzeType analyzeType;
 
 		/**
-		 * Examples for calling analysis methods from mxGraphStructure 
+		 * Examples for calling analysis methods from GraphStructure 
 		 */
-		public AnalyzeGraph(AnalyzeType analyzeType, mxAnalysisGraph aGraph)
+		public AnalyzeGraph(AnalyzeType analyzeType, AnalysisGraph aGraph)
 		{
 			this.analyzeType = analyzeType;
 			this.aGraph = aGraph;
@@ -907,14 +907,14 @@ public class EditorMenuBar extends JMenuBar
 
 		public void actionPerformed(ActionEvent e)
 		{
-			if (e.getSource() instanceof mxGraphComponent)
+			if (e.getSource() instanceof GraphComponent)
 			{
-				mxGraphComponent graphComponent = (mxGraphComponent) e.getSource();
-				mxGraph graph = graphComponent.getGraph();
+				GraphComponent graphComponent = (GraphComponent) e.getSource();
+				Graph graph = graphComponent.getGraph();
 
 				if (analyzeType == AnalyzeType.IS_CONNECTED)
 				{
-					boolean isConnected = mxGraphStructure.isConnected(aGraph);
+					boolean isConnected = GraphStructure.isConnected(aGraph);
 
 					if (isConnected)
 					{
@@ -927,7 +927,7 @@ public class EditorMenuBar extends JMenuBar
 				}
 				else if (analyzeType == AnalyzeType.IS_SIMPLE)
 				{
-					boolean isSimple = mxGraphStructure.isSimple(aGraph);
+					boolean isSimple = GraphStructure.isSimple(aGraph);
 
 					if (isSimple)
 					{
@@ -940,7 +940,7 @@ public class EditorMenuBar extends JMenuBar
 				}
 				else if (analyzeType == AnalyzeType.IS_CYCLIC_DIRECTED)
 				{
-					boolean isCyclicDirected = mxGraphStructure.isCyclicDirected(aGraph);
+					boolean isCyclicDirected = GraphStructure.isCyclicDirected(aGraph);
 
 					if (isCyclicDirected)
 					{
@@ -953,7 +953,7 @@ public class EditorMenuBar extends JMenuBar
 				}
 				else if (analyzeType == AnalyzeType.IS_CYCLIC_UNDIRECTED)
 				{
-					boolean isCyclicUndirected = mxGraphStructure.isCyclicUndirected(aGraph);
+					boolean isCyclicUndirected = GraphStructure.isCyclicUndirected(aGraph);
 
 					if (isCyclicUndirected)
 					{
@@ -968,16 +968,16 @@ public class EditorMenuBar extends JMenuBar
 				{
 					graph.getModel().beginUpdate();
 
-					mxGraphStructure.complementaryGraph(aGraph);
+					GraphStructure.complementaryGraph(aGraph);
 
-					mxGraphStructure.setDefaultGraphStyle(aGraph, true);
+					GraphStructure.setDefaultGraphStyle(aGraph, true);
 					graph.getModel().endUpdate();
 				}
 				else if (analyzeType == AnalyzeType.REGULARITY)
 				{
 					try
 					{
-						int regularity = mxGraphStructure.regularity(aGraph);
+						int regularity = GraphStructure.regularity(aGraph);
 						System.out.println("Graph regularity is: " + regularity);
 					}
 					catch (StructuralException e1)
@@ -987,8 +987,8 @@ public class EditorMenuBar extends JMenuBar
 				}
 				else if (analyzeType == AnalyzeType.COMPONENTS)
 				{
-					Object[][] components = mxGraphStructure.getGraphComponents(aGraph);
-					mxIGraphModel model = aGraph.getGraph().getModel();
+					Object[][] components = GraphStructure.getGraphComponents(aGraph);
+					IGraphModel model = aGraph.getGraph().getModel();
 
 					for (int i = 0; i < components.length; i++)
 					{
@@ -1009,21 +1009,21 @@ public class EditorMenuBar extends JMenuBar
 				{
 					graph.getModel().beginUpdate();
 
-					if (!mxGraphStructure.isConnected(aGraph))
+					if (!GraphStructure.isConnected(aGraph))
 					{
-						mxGraphStructure.makeConnected(aGraph);
-						mxGraphStructure.setDefaultGraphStyle(aGraph, false);
+						GraphStructure.makeConnected(aGraph);
+						GraphStructure.setDefaultGraphStyle(aGraph, false);
 					}
 
 					graph.getModel().endUpdate();
 				}
 				else if (analyzeType == AnalyzeType.MAKE_SIMPLE)
 				{
-					mxGraphStructure.makeSimple(aGraph);
+					GraphStructure.makeSimple(aGraph);
 				}
 				else if (analyzeType == AnalyzeType.IS_TREE)
 				{
-					boolean isTree = mxGraphStructure.isTree(aGraph);
+					boolean isTree = GraphStructure.isTree(aGraph);
 
 					if (isTree)
 					{
@@ -1040,7 +1040,7 @@ public class EditorMenuBar extends JMenuBar
 					{
 						graph.getModel().beginUpdate();
 						aGraph.getGenerator().oneSpanningTree(aGraph, true, true);
-						mxGraphStructure.setDefaultGraphStyle(aGraph, false);
+						GraphStructure.setDefaultGraphStyle(aGraph, false);
 						graph.getModel().endUpdate();
 					}
 					catch (StructuralException e1)
@@ -1050,7 +1050,7 @@ public class EditorMenuBar extends JMenuBar
 				}
 				else if (analyzeType == AnalyzeType.IS_DIRECTED)
 				{
-					boolean isDirected = mxGraphProperties.isDirected(aGraph.getProperties(), mxGraphProperties.DEFAULT_DIRECTED);
+					boolean isDirected = GraphProperties.isDirected(aGraph.getProperties(), GraphProperties.DEFAULT_DIRECTED);
 
 					if (isDirected)
 					{
@@ -1063,10 +1063,10 @@ public class EditorMenuBar extends JMenuBar
 				}
 				else if (analyzeType == AnalyzeType.GET_CUT_VERTEXES)
 				{
-					Object[] cutVertices = mxGraphStructure.getCutVertices(aGraph);
+					Object[] cutVertices = GraphStructure.getCutVertices(aGraph);
 
 					System.out.print("Cut vertices of the graph are: [");
-					mxIGraphModel model = aGraph.getGraph().getModel();
+					IGraphModel model = aGraph.getGraph().getModel();
 
 					for (int i = 0; i < cutVertices.length; i++)
 					{
@@ -1077,10 +1077,10 @@ public class EditorMenuBar extends JMenuBar
 				}
 				else if (analyzeType == AnalyzeType.GET_CUT_EDGES)
 				{
-					Object[] cutEdges = mxGraphStructure.getCutEdges(aGraph);
+					Object[] cutEdges = GraphStructure.getCutEdges(aGraph);
 
 					System.out.print("Cut edges of the graph are: [");
-					mxIGraphModel model = aGraph.getGraph().getModel();
+					IGraphModel model = aGraph.getGraph().getModel();
 
 					for (int i = 0; i < cutEdges.length; i++)
 					{
@@ -1094,9 +1094,9 @@ public class EditorMenuBar extends JMenuBar
 				{
 					try
 					{
-						Object[] sourceVertices = mxGraphStructure.getSourceVertices(aGraph);
+						Object[] sourceVertices = GraphStructure.getSourceVertices(aGraph);
 						System.out.print("Source vertices of the graph are: [");
-						mxIGraphModel model = aGraph.getGraph().getModel();
+						IGraphModel model = aGraph.getGraph().getModel();
 
 						for (int i = 0; i < sourceVertices.length; i++)
 						{
@@ -1114,9 +1114,9 @@ public class EditorMenuBar extends JMenuBar
 				{
 					try
 					{
-						Object[] sinkVertices = mxGraphStructure.getSinkVertices(aGraph);
+						Object[] sinkVertices = GraphStructure.getSinkVertices(aGraph);
 						System.out.print("Sink vertices of the graph are: [");
-						mxIGraphModel model = aGraph.getGraph().getModel();
+						IGraphModel model = aGraph.getGraph().getModel();
 
 						for (int i = 0; i < sinkVertices.length; i++)
 						{
@@ -1136,7 +1136,7 @@ public class EditorMenuBar extends JMenuBar
 				}
 				else if (analyzeType == AnalyzeType.IS_BICONNECTED)
 				{
-					boolean isBiconnected = mxGraphStructure.isBiconnected(aGraph);
+					boolean isBiconnected = GraphStructure.isBiconnected(aGraph);
 
 					if (isBiconnected)
 					{
@@ -1162,7 +1162,7 @@ public class EditorMenuBar extends JMenuBar
 					try
 					{
 						//only this line is needed to get the result from Floyd-Roy-Warshall, the rest is code for displaying the result
-						FWIresult = mxTraversal.floydRoyWarshall(aGraph);
+						FWIresult = Traversal.floydRoyWarshall(aGraph);
 
 						Object[][] dist = FWIresult.get(0);
 						Object[][] paths = FWIresult.get(1);
@@ -1184,8 +1184,8 @@ public class EditorMenuBar extends JMenuBar
 
 						System.out.println("Path info:");
 
-						mxCostFunction costFunction = aGraph.getGenerator().getCostFunction();
-						mxGraphView view = aGraph.getGraph().getView();
+						CostFunction costFunction = aGraph.getGenerator().getCostFunction();
+						GraphView view = aGraph.getGraph().getView();
 
 						for (int i = 0; i < vertexNum; i++)
 						{
@@ -1208,7 +1208,7 @@ public class EditorMenuBar extends JMenuBar
 
 						try
 						{
-							Object[] path = mxTraversal.getWFIPath(aGraph, FWIresult, vertices[0], vertices[vertexNum - 1]);
+							Object[] path = Traversal.getWFIPath(aGraph, FWIresult, vertices[0], vertices[vertexNum - 1]);
 							System.out.print("The path from " + costFunction.getCost(view.getState(vertices[0])) + " to "
 									+ costFunction.getCost((view.getState(vertices[vertexNum - 1]))) + " is:");
 

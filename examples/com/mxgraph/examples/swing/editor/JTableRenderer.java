@@ -7,7 +7,7 @@
  * See LICENSE file for license details. If you are unable to locate
  * this file please contact info (at) jgraph (dot) com.
  */
-package com.mxgraph.examples.swing.editor;
+package graph.examples.swing.editor;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -47,11 +47,11 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
-import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.swing.handler.mxCellHandler;
-import com.mxgraph.swing.handler.mxGraphTransferHandler;
-import com.mxgraph.swing.util.mxGraphTransferable;
-import com.mxgraph.view.mxGraph;
+import graph.swing.GraphComponent;
+import graph.swing.handler.CellHandler;
+import graph.swing.handler.GraphTransferHandler;
+import graph.swing.util.GraphTransferable;
+import graph.view.Graph;
 
 /**
  * @author Administrator
@@ -68,7 +68,7 @@ public class JTableRenderer extends JComponent
 	/**
 	 * 
 	 */
-	public static final String IMAGE_PATH = "/com/mxgraph/examples/swing/images/";
+	public static final String IMAGE_PATH = "/com/graph/examples/swing/images/";
 
 	/**
 	 * 
@@ -88,12 +88,12 @@ public class JTableRenderer extends JComponent
 	/**
 	 * 
 	 */
-	protected mxGraphComponent graphContainer;
+	protected GraphComponent graphContainer;
 
 	/**
 	 * 
 	 */
-	protected mxGraph graph;
+	protected Graph graph;
 
 	/**
 	 * 
@@ -105,7 +105,7 @@ public class JTableRenderer extends JComponent
 	 */
 	@SuppressWarnings("serial")
 	public JTableRenderer(final Object cell,
-			final mxGraphComponent graphContainer)
+			final GraphComponent graphContainer)
 	{
 		this.cell = cell;
 		this.graphContainer = graphContainer;
@@ -248,7 +248,7 @@ public class JTableRenderer extends JComponent
 			}
 
 			// Initiates a resize event in the handler
-			mxCellHandler handler = graphContainer.getSelectionCellsHandler().getHandler(
+			CellHandler handler = graphContainer.getSelectionCellsHandler().getHandler(
 					cell);
 
 			if (handler != null)
@@ -348,9 +348,9 @@ public class JTableRenderer extends JComponent
 				{
 					sourceRow = getSelectedRow();
 					dragSource = JTableRenderer.this;
-					//mxRectangle bounds = new mxRectangle(0, 0, MyTable.this
+					//Rectangle bounds = new Rectangle(0, 0, MyTable.this
 					//		.getWidth(), 20);
-					return new mxGraphTransferable(null, null, null);
+					return new GraphTransferable(null, null, null);
 				}
 
 			});
@@ -367,7 +367,7 @@ public class JTableRenderer extends JComponent
 		 */
 		public DropTarget getDropTarget()
 		{
-			if (!((mxGraphTransferHandler) graphContainer.getTransferHandler())
+			if (!((GraphTransferHandler) graphContainer.getTransferHandler())
 					.isLocalDrag())
 			{
 				return super.getDropTarget();
@@ -393,7 +393,7 @@ public class JTableRenderer extends JComponent
 		 */
 		public void dragOver(DropTargetDragEvent e)
 		{
-			if (!((mxGraphTransferHandler) graphContainer.getTransferHandler())
+			if (!((GraphTransferHandler) graphContainer.getTransferHandler())
 					.isLocalDrag()
 					&& JTableRenderer.this != dragSource)
 			{
