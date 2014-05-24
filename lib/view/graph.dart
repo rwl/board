@@ -1,7 +1,15 @@
 /**
  * Copyright (c) 2007, Gaudenz Alder
  */
-part of graph.view;
+library graph.view;
+
+/**
+ * This package implements the graph component, represented by the mxGraph
+ * class. The graph holds an mxGraphModel which contains mxCells and caches the
+ * state of the cells in mxGraphView. The cells are painted using a canvas from
+ * the canvas package. The style of the graph is represented by the mxStylesheet
+ * class.
+ */
 
 //import graph.canvas.Graphics2DCanvas;
 //import graph.canvas.ICanvas;
@@ -52,6 +60,19 @@ part of graph.view;
 //import java.util.Set;
 
 //import org.w3c.dom.Element;
+
+part 'connection_constraint.dart';
+part 'edge_style.dart';
+part 'graph_view.dart';
+part 'graph_selection_model.dart';
+part 'layout_manager.dart';
+part 'multiplicity.dart';
+part 'perimeter.dart';
+part 'space_manager.dart';
+part 'style_registry.dart';
+part 'stylesheet.dart';
+part 'swimlane_manager.dart';
+part 'temporary_cell_states.dart';
 
 /**
  * Implements a graph object that allows to create diagrams from a graph model

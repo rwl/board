@@ -1,7 +1,13 @@
 /**
  * Copyright (c) 2007-2012, JGraph Ltd
  */
-part of graph.util;
+library graph.util;
+
+/**
+ * This package provides utility classes such as mxConstants, mxUtils, mxPoint
+ * and mxRectangle as well as all classes for custom events and the undo
+ * history.
+ */
 
 //import graph.io.CodecRegistry;
 //import graph.model.CellPath;
@@ -58,6 +64,29 @@ part of graph.util;
 //import org.w3c.dom.Element;
 //import org.w3c.dom.NamedNodeMap;
 //import org.w3c.dom.Node;
+
+part 'base64.dart';
+part 'cell_renderer.dart';
+part 'constants.dart';
+part 'curve.dart';
+part 'dom_utils.dart';
+part 'event.dart';
+part 'event_obj.dart';
+part 'event_source.dart';
+part 'html_color.dart';
+part 'image.dart';
+part 'image_bundle.dart';
+part 'lightweight_label.dart';
+part 'line.dart';
+part 'point2d.dart';
+part 'rect.dart';
+part 'resources.dart';
+part 'spline.dart';
+part 'spline1d.dart';
+part 'style_utils.dart';
+part 'undoable_edit.dart';
+part 'undo_manager.dart';
+part 'xml_utils.dart';
 
 /**
  * Contains various helper methods for use with Graph.

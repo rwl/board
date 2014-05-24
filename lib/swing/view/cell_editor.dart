@@ -27,6 +27,26 @@ part of graph.swing.view;
 //import javax.swing.KeyStroke;
 //import javax.swing.text.JTextComponent;
 
+public interface ICellEditor
+{
+
+  /**
+   * Returns the cell that is currently being edited.
+   */
+  public Object getEditingCell();
+
+  /**
+   * Starts editing the given cell.
+   */
+  public void startEditing(Object cell, EventObject trigger);
+
+  /**
+   * Stops the current editing.
+   */
+  public void stopEditing(boolean cancel);
+
+}
+
 /**
  * To control this editor, use Graph.invokesStopCellEditing, Graph.
  * enterStopsCellEditing and Graph.escapeEnabled.

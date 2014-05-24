@@ -11,6 +11,16 @@ part of graph.swing.util;
 //import javax.swing.ImageIcon;
 //import javax.swing.JComponent;
 
+public interface ICellOverlay
+{
+
+  /**
+   * 
+   */
+  Rect getBounds(CellState state);
+
+}
+
 public class CellOverlay extends JComponent implements ICellOverlay
 {
 
