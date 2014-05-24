@@ -3,13 +3,13 @@
  */
 part of graph.swing.handler;
 
-//import graph.model.Geometry;
-//import graph.swing.GraphComponent;
-//import graph.util.Constants;
-//import graph.util.Point2d;
-//import graph.util.Resources;
-//import graph.view.CellState;
-//import graph.view.GraphView;
+import '../../model/model.dart' show Geometry;
+import '../../swing/swing.dart' show GraphComponent;
+import '../../util/util.dart' show Constants;
+import '../../util/util.dart' show Point2d;
+import '../../util/util.dart' show Resources;
+import '../../view/view.dart' show CellState;
+import '../../view/view.dart' show GraphView;
 
 //import java.awt.Point;
 //import java.awt.Rectangle;
@@ -20,7 +20,7 @@ part of graph.swing.handler;
  * @author Administrator
  * 
  */
-public class ElbowEdgeHandler extends EdgeHandler
+class ElbowEdgeHandler extends EdgeHandler
 {
 
 	/**
@@ -28,7 +28,7 @@ public class ElbowEdgeHandler extends EdgeHandler
 	 * @param graphComponent
 	 * @param state
 	 */
-	public ElbowEdgeHandler(GraphComponent graphComponent, CellState state)
+	ElbowEdgeHandler(GraphComponent graphComponent, CellState state)
 	{
 		super(graphComponent, state);
 	}
@@ -37,7 +37,7 @@ public class ElbowEdgeHandler extends EdgeHandler
 	 * Hook for subclassers to return tooltip texts for certain points on the
 	 * handle.
 	 */
-	public String getToolTipText(MouseEvent e)
+	String getToolTipText(MouseEvent e)
 	{
 		int index = getIndexAt(e.getX(), e.getY());
 
@@ -52,7 +52,7 @@ public class ElbowEdgeHandler extends EdgeHandler
 	/**
 	 * 
 	 */
-	protected boolean _isFlipEvent(MouseEvent e)
+	bool _isFlipEvent(MouseEvent e)
 	{
 		return e.getClickCount() == 2 && _index == 1;
 	}
@@ -60,7 +60,7 @@ public class ElbowEdgeHandler extends EdgeHandler
 	/**
 	 * Returns true if the given index is the index of the last handle.
 	 */
-	public boolean isLabel(int index)
+	bool isLabel(int index)
 	{
 		return index == 3;
 	}
@@ -68,7 +68,7 @@ public class ElbowEdgeHandler extends EdgeHandler
 	/**
 	 * 
 	 */
-	protected Rectangle[] _createHandles()
+	Rectangle[] _createHandles()
 	{
 		_p = _createPoints(_state);
 		Rectangle[] h = new Rectangle[4];

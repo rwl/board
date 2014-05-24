@@ -96,7 +96,7 @@ class CRC
 		}
 	}
 
-	public static int updateCRC(int crc, byte[] data, int off, int len)
+	static int updateCRC(int crc, byte[] data, int off, int len)
 	{
 		int c = crc;
 
@@ -126,77 +126,77 @@ class ChunkStream extends OutputStream implements DataOutput
 		this._dos = new DataOutputStream(_baos);
 	}
 
-	public void write(byte[] b) throws IOException
+	void write(byte[] b) throws IOException
 	{
 		_dos.write(b);
 	}
 
-	public void write(byte[] b, int off, int len) throws IOException
+	void write(byte[] b, int off, int len) throws IOException
 	{
 		_dos.write(b, off, len);
 	}
 
-	public void write(int b) throws IOException
+	void write(int b) throws IOException
 	{
 		_dos.write(b);
 	}
 
-	public void writeBoolean(boolean v) throws IOException
+	void writeBoolean(bool v) throws IOException
 	{
 		_dos.writeBoolean(v);
 	}
 
-	public void writeByte(int v) throws IOException
+	void writeByte(int v) throws IOException
 	{
 		_dos.writeByte(v);
 	}
 
-	public void writeBytes(String s) throws IOException
+	void writeBytes(String s) throws IOException
 	{
 		_dos.writeBytes(s);
 	}
 
-	public void writeChar(int v) throws IOException
+	void writeChar(int v) throws IOException
 	{
 		_dos.writeChar(v);
 	}
 
-	public void writeChars(String s) throws IOException
+	void writeChars(String s) throws IOException
 	{
 		_dos.writeChars(s);
 	}
 
-	public void writeDouble(double v) throws IOException
+	void writeDouble(double v) throws IOException
 	{
 		_dos.writeDouble(v);
 	}
 
-	public void writeFloat(float v) throws IOException
+	void writeFloat(float v) throws IOException
 	{
 		_dos.writeFloat(v);
 	}
 
-	public void writeInt(int v) throws IOException
+	void writeInt(int v) throws IOException
 	{
 		_dos.writeInt(v);
 	}
 
-	public void writeLong(long v) throws IOException
+	void writeLong(long v) throws IOException
 	{
 		_dos.writeLong(v);
 	}
 
-	public void writeShort(int v) throws IOException
+	void writeShort(int v) throws IOException
 	{
 		_dos.writeShort(v);
 	}
 
-	public void writeUTF(String str) throws IOException
+	void writeUTF(String str) throws IOException
 	{
 		_dos.writeUTF(str);
 	}
 
-	public void writeToStream(DataOutputStream output) throws IOException
+	void writeToStream(DataOutputStream output) throws IOException
 	{
 		byte[] typeSignature = new byte[4];
 		typeSignature[0] = (byte) _type.charAt(0);
@@ -226,7 +226,7 @@ class ChunkStream extends OutputStream implements DataOutput
 	 * 
 	 * @throws IOException
 	 */
-	public void close() throws IOException
+	void close() throws IOException
 	{
 
 		if (_baos != null)
@@ -254,14 +254,14 @@ class IDATOutputStream extends FilterOutputStream
 
 	byte[] buffer;
 
-	public IDATOutputStream(OutputStream output, int segmentLength)
+	IDATOutputStream(OutputStream output, int segmentLength)
 	{
 		super(output);
 		this._segmentLength = segmentLength;
 		this.buffer = new byte[segmentLength];
 	}
 
-	public void close() throws IOException
+	void close() throws IOException
 	{
 		flush();
 	}
@@ -274,7 +274,7 @@ class IDATOutputStream extends FilterOutputStream
 		out.write(x & 0xff);
 	}
 
-	public void flush() throws IOException
+	void flush() throws IOException
 	{
 		// Length
 		_writeInt(_bytesWritten);
@@ -294,12 +294,12 @@ class IDATOutputStream extends FilterOutputStream
 		_bytesWritten = 0;
 	}
 
-	public void write(byte[] b) throws IOException
+	void write(byte[] b) throws IOException
 	{
 		this.write(b, 0, b.length);
 	}
 
-	public void write(byte[] b, int off, int len) throws IOException
+	void write(byte[] b, int off, int len) throws IOException
 	{
 		while (len > 0)
 		{
@@ -316,7 +316,7 @@ class IDATOutputStream extends FilterOutputStream
 		}
 	}
 
-	public void write(int b) throws IOException
+	void write(int b) throws IOException
 	{
 		buffer[_bytesWritten++] = (byte) b;
 		if (_bytesWritten == _segmentLength)
@@ -332,7 +332,7 @@ class IDATOutputStream extends FilterOutputStream
  * @since EA4
  * @version $Id: PngImageEncoder.java,v 1.1 2012/11/15 13:26:39 gaudenz Exp $
  */
-public class PngImageEncoder
+class PngImageEncoder
 {
 
 	private static final int PNG_COLOR_GRAY = 0;
@@ -366,11 +366,11 @@ public class PngImageEncoder
 
 	private int bpp; // bytes per pixel, rounded up
 
-	private boolean skipAlpha = false;
+	private bool skipAlpha = false;
 
-	private boolean compressGray = false;
+	private bool compressGray = false;
 
-	private boolean interlace;
+	private bool interlace;
 
 	private byte[] redPalette = null;
 
@@ -383,9 +383,9 @@ public class PngImageEncoder
 	private DataOutputStream dataOutput;
 
 	/** The OutputStream associcted with this ImageEncoder. */
-	protected OutputStream output;
+	OutputStream output;
 
-	public PngImageEncoder(OutputStream output, PngEncodeParam param)
+	PngImageEncoder(OutputStream output, PngEncodeParam param)
 	{
 		this.output = output;
 		this.param = param;
@@ -396,7 +396,7 @@ public class PngImageEncoder
 	/**
 	 *
 	 */
-	public PngEncodeParam getParam()
+	PngEncodeParam getParam()
 	{
 		return param;
 	}
@@ -404,13 +404,13 @@ public class PngImageEncoder
 	/**
 	 *
 	 */
-	public void setParam(PngEncodeParam param)
+	void setParam(PngEncodeParam param)
 	{
 		this.param = param;
 	}
 
 	/** Returns the OutputStream associated with this ImageEncoder. */
-	public OutputStream getOutputStream()
+	OutputStream getOutputStream()
 	{
 		return output;
 	}
@@ -1036,7 +1036,7 @@ public class PngImageEncoder
 	 * the end of the operation, this should be done if needed
 	 * by the caller of this method.
 	 */
-	public void encode(RenderedImage im) throws IOException
+	void encode(RenderedImage im) throws IOException
 	{
 		this.image = im;
 		this.width = image.getWidth();

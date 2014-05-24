@@ -3,11 +3,11 @@
  */
 part of graph.canvas;
 
-//import graph.util.Constants;
-//import graph.util.Point2d;
-//import graph.util.Rect;
-//import graph.util.Utils;
-//import graph.view.CellState;
+import '../util/util.dart' show Constants;
+import '../util/util.dart' show Point2d;
+import '../util/util.dart' show Rect;
+import '../util/util.dart' show Utils;
+import '../view/view.dart' show CellState;
 
 //import java.awt.Rectangle;
 //import java.util.Hashtable;
@@ -21,18 +21,18 @@ part of graph.canvas;
 /**
  * An implementation of a canvas that uses VML for painting.
  */
-public class VmlCanvas extends BasicCanvas
+class VmlCanvas extends BasicCanvas
 {
 
 	/**
 	 * Holds the HTML document that represents the canvas.
 	 */
-	protected Document _document;
+	Document _document;
 
 	/**
 	 * Constructs a new VML canvas for the specified dimension and scale.
 	 */
-	public VmlCanvas()
+	VmlCanvas()
 	{
 		this(null);
 	}
@@ -41,7 +41,7 @@ public class VmlCanvas extends BasicCanvas
 	 * Constructs a new VML canvas for the specified bounds, scale and
 	 * background color.
 	 */
-	public VmlCanvas(Document document)
+	VmlCanvas(Document document)
 	{
 		setDocument(document);
 	}
@@ -49,7 +49,7 @@ public class VmlCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	public void setDocument(Document document)
+	void setDocument(Document document)
 	{
 		this._document = document;
 	}
@@ -59,7 +59,7 @@ public class VmlCanvas extends BasicCanvas
 	 * 
 	 * @return Returns the document.
 	 */
-	public Document getDocument()
+	Document getDocument()
 	{
 		return _document;
 	}
@@ -67,7 +67,7 @@ public class VmlCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	public void appendVmlElement(Element node)
+	void appendVmlElement(Element node)
 	{
 		if (_document != null)
 		{
@@ -85,7 +85,7 @@ public class VmlCanvas extends BasicCanvas
 	/* (non-Javadoc)
 	 * @see graph.canvas.ICanvas#drawCell()
 	 */
-	public Object drawCell(CellState state)
+	Object drawCell(CellState state)
 	{
 		Map<String, Object> style = state.getStyle();
 		Element elem = null;
@@ -220,7 +220,7 @@ public class VmlCanvas extends BasicCanvas
 	 * (non-Javadoc)
 	 * @see graph.canvas.ICanvas#drawLabel()
 	 */
-	public Object drawLabel(String label, CellState state, boolean html)
+	Object drawLabel(String label, CellState state, bool html)
 	{
 		Rect bounds = state.getLabelBounds();
 
@@ -247,7 +247,7 @@ public class VmlCanvas extends BasicCanvas
 	 * @param h Height of the shape.
 	 * @param style Style of the the shape.
 	 */
-	public Element drawShape(int x, int y, int w, int h,
+	Element drawShape(int x, int y, int w, int h,
 			Map<String, Object> style)
 	{
 		String fillColor = Utils
@@ -524,7 +524,7 @@ public class VmlCanvas extends BasicCanvas
 	 * @param pts List of points that define the line.
 	 * @param style Style to be used for painting the line.
 	 */
-	public Element drawLine(List<Point2d> pts, Map<String, Object> style)
+	Element drawLine(List<Point2d> pts, Map<String, Object> style)
 	{
 		String strokeColor = Utils.getString(style,
 				Constants.STYLE_STROKECOLOR);
@@ -584,7 +584,7 @@ public class VmlCanvas extends BasicCanvas
 	 * @param h Height of the text.
 	 * @param style Style to be used for painting the text.
 	 */
-	public Element drawText(String text, int x, int y, int w, int h,
+	Element drawText(String text, int x, int y, int w, int h,
 			Map<String, Object> style)
 	{
 		Element table = Utils.createTable(_document, text, x, y, w, h, _scale,

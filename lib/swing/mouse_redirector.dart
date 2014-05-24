@@ -9,19 +9,19 @@ part of graph.swing;
 /**
  * 
  */
-public class MouseRedirector implements MouseListener,
+class MouseRedirector implements MouseListener,
 		MouseMotionListener
 {
 
 	/**
 	 * 
 	 */
-	protected GraphComponent graphComponent;
+	GraphComponent graphComponent;
 
 	/**
 	 * 
 	 */
-	public MouseRedirector(GraphComponent graphComponent)
+	MouseRedirector(GraphComponent graphComponent)
 	{
 		this.graphComponent = graphComponent;
 	}
@@ -32,7 +32,7 @@ public class MouseRedirector implements MouseListener,
 	 * @see
 	 * java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
 	 */
-	public void mouseClicked(MouseEvent e)
+	void mouseClicked(MouseEvent e)
 	{
 		graphComponent.getGraphControl().dispatchEvent(
 				SwingUtilities.convertMouseEvent(e.getComponent(), e,
@@ -45,7 +45,7 @@ public class MouseRedirector implements MouseListener,
 	 * @see
 	 * java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
 	 */
-	public void mouseEntered(MouseEvent e)
+	void mouseEntered(MouseEvent e)
 	{
 		// Redirecting this would cause problems on the Mac
 		// and is technically incorrect anyway
@@ -57,7 +57,7 @@ public class MouseRedirector implements MouseListener,
 	 * @see
 	 * java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
 	 */
-	public void mouseExited(MouseEvent e)
+	void mouseExited(MouseEvent e)
 	{
 		mouseClicked(e);
 	}
@@ -68,7 +68,7 @@ public class MouseRedirector implements MouseListener,
 	 * @see
 	 * java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
 	 */
-	public void mousePressed(MouseEvent e)
+	void mousePressed(MouseEvent e)
 	{
 		mouseClicked(e);
 	}
@@ -79,7 +79,7 @@ public class MouseRedirector implements MouseListener,
 	 * @see
 	 * java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
 	 */
-	public void mouseReleased(MouseEvent e)
+	void mouseReleased(MouseEvent e)
 	{
 		mouseClicked(e);
 	}
@@ -91,7 +91,7 @@ public class MouseRedirector implements MouseListener,
 	 * java.awt.event.MouseMotionListener#mouseDragged(java.awt.event.MouseEvent
 	 * )
 	 */
-	public void mouseDragged(MouseEvent e)
+	void mouseDragged(MouseEvent e)
 	{
 		mouseClicked(e);
 	}
@@ -103,7 +103,7 @@ public class MouseRedirector implements MouseListener,
 	 * java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent
 	 * )
 	 */
-	public void mouseMoved(MouseEvent e)
+	void mouseMoved(MouseEvent e)
 	{
 		mouseClicked(e);
 	}

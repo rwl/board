@@ -4,11 +4,11 @@
 
 part of graph.reader;
 
-//import graph.canvas.Graphics2DCanvas;
-//import graph.canvas.ICanvas;
-//import graph.canvas.ImageCanvas;
-//import graph.util.Rect;
-//import graph.util.Utils;
+import '../canvas/canvas.dart' show Graphics2DCanvas;
+import '../canvas/canvas.dart' show ICanvas;
+import '../canvas/canvas.dart' show ImageCanvas;
+import '../util/util.dart' show Rect;
+import '../util/util.dart' show Utils;
 
 //import java.awt.Color;
 //import java.awt.image.BufferedImage;
@@ -28,40 +28,40 @@ part of graph.reader;
  * A converter that renders display XML data onto a graphics canvas. This
  * reader can only be used to generate images for encoded graph views.
  */
-public class GraphViewImageReader extends GraphViewReader
+class GraphViewImageReader extends GraphViewReader
 {
 
 	/**
 	 * Specifies the background color. Default is null.
 	 */
-	protected Color _background;
+	Color _background;
 
 	/**
 	 * Specifies if the image should be anti-aliased. Default is true.
 	 */
-	protected boolean _antiAlias;
+	bool _antiAlias;
 
 	/**
 	 * Specifies the border which is added to the size of the graph. Default is
 	 * 0.
 	 */
-	protected int _border;
+	int _border;
 
 	/**
 	 * Specifies the border which is added to the size of the graph. Default is
 	 * true.
 	 */
-	protected boolean _cropping;
+	bool _cropping;
 
 	/**
 	 * Defines the clip to be drawn. Default is null.
 	 */
-	protected Rect _clip;
+	Rect _clip;
 
 	/**
 	 * Constructs a new reader with a transparent background.
 	 */
-	public GraphViewImageReader()
+	GraphViewImageReader()
 	{
 		this(null);
 	}
@@ -69,7 +69,7 @@ public class GraphViewImageReader extends GraphViewReader
 	/**
 	 * Constructs a new reader with the given background color.
 	 */
-	public GraphViewImageReader(Color background)
+	GraphViewImageReader(Color background)
 	{
 		this(background, 0);
 	}
@@ -77,7 +77,7 @@ public class GraphViewImageReader extends GraphViewReader
 	/**
 	 * Constructs a new reader with a transparent background.
 	 */
-	public GraphViewImageReader(Color background, int border)
+	GraphViewImageReader(Color background, int border)
 	{
 		this(background, border, true);
 	}
@@ -85,8 +85,8 @@ public class GraphViewImageReader extends GraphViewReader
 	/**
 	 * Constructs a new reader with a transparent background.
 	 */
-	public GraphViewImageReader(Color background, int border,
-			boolean antiAlias)
+	GraphViewImageReader(Color background, int border,
+			bool antiAlias)
 	{
 		this(background, border, antiAlias, true);
 	}
@@ -94,8 +94,8 @@ public class GraphViewImageReader extends GraphViewReader
 	/**
 	 * Constructs a new reader with a transparent background.
 	 */
-	public GraphViewImageReader(Color background, int border,
-			boolean antiAlias, boolean cropping)
+	GraphViewImageReader(Color background, int border,
+			bool antiAlias, bool cropping)
 	{
 		setBackground(background);
 		setBorder(border);
@@ -106,7 +106,7 @@ public class GraphViewImageReader extends GraphViewReader
 	/**
 	 * 
 	 */
-	public Color getBackground()
+	Color getBackground()
 	{
 		return _background;
 	}
@@ -114,7 +114,7 @@ public class GraphViewImageReader extends GraphViewReader
 	/**
 	 * 
 	 */
-	public void setBackground(Color background)
+	void setBackground(Color background)
 	{
 		this._background = background;
 	}
@@ -122,7 +122,7 @@ public class GraphViewImageReader extends GraphViewReader
 	/**
 	 * 
 	 */
-	public int getBorder()
+	int getBorder()
 	{
 		return _border;
 	}
@@ -130,7 +130,7 @@ public class GraphViewImageReader extends GraphViewReader
 	/**
 	 * 
 	 */
-	public void setBorder(int border)
+	void setBorder(int border)
 	{
 		this._border = border;
 	}
@@ -138,7 +138,7 @@ public class GraphViewImageReader extends GraphViewReader
 	/**
 	 * 
 	 */
-	public boolean isAntiAlias()
+	bool isAntiAlias()
 	{
 		return _antiAlias;
 	}
@@ -146,7 +146,7 @@ public class GraphViewImageReader extends GraphViewReader
 	/**
 	 * 
 	 */
-	public void setAntiAlias(boolean antiAlias)
+	void setAntiAlias(bool antiAlias)
 	{
 		this._antiAlias = antiAlias;
 	}
@@ -154,7 +154,7 @@ public class GraphViewImageReader extends GraphViewReader
 	/**
 	 * Specifies the optional clipping rectangle.
 	 */
-	public boolean isCropping()
+	bool isCropping()
 	{
 		return _cropping;
 	}
@@ -162,7 +162,7 @@ public class GraphViewImageReader extends GraphViewReader
 	/**
 	 * 
 	 */
-	public void setCropping(boolean value)
+	void setCropping(bool value)
 	{
 		this._cropping = value;
 	}
@@ -170,7 +170,7 @@ public class GraphViewImageReader extends GraphViewReader
 	/**
 	 * 
 	 */
-	public Rect getClip()
+	Rect getClip()
 	{
 		return _clip;
 	}
@@ -178,7 +178,7 @@ public class GraphViewImageReader extends GraphViewReader
 	/**
 	 * 
 	 */
-	public void setClip(Rect value)
+	void setClip(Rect value)
 	{
 		this._clip = value;
 	}
@@ -189,7 +189,7 @@ public class GraphViewImageReader extends GraphViewReader
 	 * @see
 	 * graph.reader.GraphViewReader#createCanvas(java.util.Hashtable)
 	 */
-	public ICanvas createCanvas(Map<String, Object> attrs)
+	ICanvas createCanvas(Map<String, Object> attrs)
 	{
 		int width = 0;
 		int height = 0;
@@ -236,7 +236,7 @@ public class GraphViewImageReader extends GraphViewReader
 	/**
 	 * Hook that creates the graphics canvas.
 	 */
-	protected Graphics2DCanvas _createGraphicsCanvas()
+	Graphics2DCanvas _createGraphicsCanvas()
 	{
 		return new Graphics2DCanvas();
 	}
@@ -249,7 +249,7 @@ public class GraphViewImageReader extends GraphViewReader
 	 *            Filename of the display XML file.
 	 * @return Returns an image representing the display XML file.
 	 */
-	public static BufferedImage convert(String filename,
+	static BufferedImage convert(String filename,
 			GraphViewImageReader viewReader)
 			throws ParserConfigurationException, SAXException, IOException
 	{
@@ -265,7 +265,7 @@ public class GraphViewImageReader extends GraphViewReader
 	 *            Input source that contains the display XML.
 	 * @return Returns an image representing the display XML input source.
 	 */
-	public static BufferedImage convert(InputSource inputSource,
+	static BufferedImage convert(InputSource inputSource,
 			GraphViewImageReader viewReader)
 			throws ParserConfigurationException, SAXException, IOException
 	{

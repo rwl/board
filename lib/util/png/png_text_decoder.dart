@@ -14,22 +14,22 @@ part of graph.util.png;
 /**
  * Utility class to extract the compression text portion of a PNG
  */
-public class PngTextDecoder
+class PngTextDecoder
 {
 	/**
 	 * 
 	 */
-	public static final int PNG_CHUNK_ZTXT = 2052348020;
+	static final int PNG_CHUNK_ZTXT = 2052348020;
 
 	/**
 	 * 
 	 */
-	public static final int PNG_CHUNK_IEND = 1229278788;
+	static final int PNG_CHUNK_IEND = 1229278788;
 
 	/**
 	 * Decodes the zTXt chunk of the given PNG image stream.
 	 */
-	public static Map<String, String> decodeCompressedText(InputStream stream)
+	static Map<String, String> decodeCompressedText(InputStream stream)
 	{
 		Map<String, String> result = new Hashtable<String, String>();
 

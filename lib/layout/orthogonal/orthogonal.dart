@@ -3,9 +3,9 @@
  */
 library graph.layout.orthogonal;
 
-//import graph.layout.GraphLayout;
-//import graph.layout.orthogonal.model.OrthogonalModel;
-//import graph.view.Graph;
+import '../../layout.GraphLayout;
+import '../../layout.orthogonal.model.OrthogonalModel;
+import '../../view/view.dart' show Graph;
 
 /**
  *
@@ -13,7 +13,7 @@ library graph.layout.orthogonal;
 /**
 *
 */
-public class OrthogonalLayout extends GraphLayout
+class OrthogonalLayout extends GraphLayout
 {
 
   /**
@@ -25,7 +25,7 @@ public class OrthogonalLayout extends GraphLayout
    * Whether or not to route the edges along grid lines only, if the grid
    * is enabled. Default is false
    */
-  protected boolean _routeToGrid = false;
+  protected bool _routeToGrid = false;
   
   /**
    * 

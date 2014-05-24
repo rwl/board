@@ -3,12 +3,12 @@
  */
 part of graph.canvas;
 
-//import graph.util.Base64;
-//import graph.util.Constants;
-//import graph.util.Point2d;
-//import graph.util.Rect;
-//import graph.util.Utils;
-//import graph.view.CellState;
+import '../util/util.dart' show Base64;
+import '../util/util.dart' show Constants;
+import '../util/util.dart' show Point2d;
+import '../util/util.dart' show Rect;
+import '../util/util.dart' show Utils;
+import '../view/view.dart' show CellState;
 
 //import java.awt.Font;
 //import java.io.BufferedInputStream;
@@ -28,13 +28,13 @@ part of graph.canvas;
  * ignores the STYLE_LABEL_BACKGROUNDCOLOR and
  * STYLE_LABEL_BORDERCOLOR styles due to limitations of SVG.
  */
-public class SvgCanvas extends BasicCanvas
+class SvgCanvas extends BasicCanvas
 {
 
 	/**
 	 * Holds the HTML document that represents the canvas.
 	 */
-	protected Document _document;
+	Document _document;
 
 	/**
 	 * Used internally for looking up elements. Workaround for getElementById
@@ -50,18 +50,18 @@ public class SvgCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	protected Element _defs = null;
+	Element _defs = null;
 
 	/**
 	 * Specifies if images should be embedded as base64 encoded strings.
 	 * Default is false.
 	 */
-	protected boolean _embedded = false;
+	bool _embedded = false;
 
 	/**
 	 * Constructs a new SVG canvas for the specified dimension and scale.
 	 */
-	public SvgCanvas()
+	SvgCanvas()
 	{
 		this(null);
 	}
@@ -70,7 +70,7 @@ public class SvgCanvas extends BasicCanvas
 	 * Constructs a new SVG canvas for the specified bounds, scale and
 	 * background color.
 	 */
-	public SvgCanvas(Document document)
+	SvgCanvas(Document document)
 	{
 		setDocument(document);
 	}
@@ -78,7 +78,7 @@ public class SvgCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	public void appendSvgElement(Element node)
+	void appendSvgElement(Element node)
 	{
 		if (_document != null)
 		{
@@ -89,7 +89,7 @@ public class SvgCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	protected Element _getDefsElement()
+	Element _getDefsElement()
 	{
 		if (_defs == null)
 		{
@@ -113,7 +113,7 @@ public class SvgCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	public Element getGradientElement(String start, String end, String direction)
+	Element getGradientElement(String start, String end, String direction)
 	{
 		String id = getGradientId(start, end, direction);
 		Element gradient = _gradients.get(id);
@@ -132,7 +132,7 @@ public class SvgCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	public Element getGlassGradientElement()
+	Element getGlassGradientElement()
 	{
 		String id = "mx-glass-gradient";
 
@@ -167,7 +167,7 @@ public class SvgCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	protected Element _createGradientElement(String start, String end,
+	Element _createGradientElement(String start, String end,
 			String direction)
 	{
 		Element gradient = _document.createElement("linearGradient");
@@ -209,7 +209,7 @@ public class SvgCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	public String getGradientId(String start, String end, String direction)
+	String getGradientId(String start, String end, String direction)
 	{
 		// Removes illegal characters from gradient ID
 		if (start.startsWith("#"))
@@ -259,7 +259,7 @@ public class SvgCanvas extends BasicCanvas
 	/**
 	 * Returns true if the given string ends with .png, .jpg or .gif.
 	 */
-	protected boolean _isImageResource(String src)
+	bool _isImageResource(String src)
 	{
 		return src != null
 				&& (src.toLowerCase().endsWith(".png")
@@ -270,7 +270,7 @@ public class SvgCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	protected InputStream _getResource(String src)
+	InputStream _getResource(String src)
 	{
 		InputStream stream = null;
 
@@ -290,7 +290,7 @@ public class SvgCanvas extends BasicCanvas
 	 * @throws IOException 
 	 * 
 	 */
-	protected String _createDataUrl(String src) throws IOException
+	String _createDataUrl(String src) throws IOException
 	{
 		String result = null;
 		InputStream inputStream = _isImageResource(src) ? _getResource(src) : null;
@@ -330,7 +330,7 @@ public class SvgCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	protected Element _getEmbeddedImageElement(String src)
+	Element _getEmbeddedImageElement(String src)
 	{
 		Element img = _images.get(src);
 
@@ -376,9 +376,9 @@ public class SvgCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	protected Element _createImageElement(double x, double y, double w,
-			double h, String src, boolean aspect, boolean flipH, boolean flipV,
-			boolean embedded)
+	Element _createImageElement(double x, double y, double w,
+			double h, String src, bool aspect, bool flipH, bool flipV,
+			bool embedded)
 	{
 		Element elem = null;
 
@@ -453,7 +453,7 @@ public class SvgCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	public void setDocument(Document document)
+	void setDocument(Document document)
 	{
 		this._document = document;
 	}
@@ -463,7 +463,7 @@ public class SvgCanvas extends BasicCanvas
 	 * 
 	 * @return Returns the document.
 	 */
-	public Document getDocument()
+	Document getDocument()
 	{
 		return _document;
 	}
@@ -471,7 +471,7 @@ public class SvgCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	public void setEmbedded(boolean value)
+	void setEmbedded(bool value)
 	{
 		_embedded = value;
 	}
@@ -479,7 +479,7 @@ public class SvgCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	public boolean isEmbedded()
+	bool isEmbedded()
 	{
 		return _embedded;
 	}
@@ -488,7 +488,7 @@ public class SvgCanvas extends BasicCanvas
 	 * (non-Javadoc)
 	 * @see graph.canvas.ICanvas#drawCell()
 	 */
-	public Object drawCell(CellState state)
+	Object drawCell(CellState state)
 	{
 		Map<String, Object> style = state.getStyle();
 		Element elem = null;
@@ -559,7 +559,7 @@ public class SvgCanvas extends BasicCanvas
 	 * (non-Javadoc)
 	 * @see graph.canvas.ICanvas#drawLabel()
 	 */
-	public Object drawLabel(String label, CellState state, boolean html)
+	Object drawLabel(String label, CellState state, bool html)
 	{
 		Rect bounds = state.getLabelBounds();
 
@@ -586,7 +586,7 @@ public class SvgCanvas extends BasicCanvas
 	 * @param h Height of the shape.
 	 * @param style Style of the the shape.
 	 */
-	public Element drawShape(int x, int y, int w, int h,
+	Element drawShape(int x, int y, int w, int h,
 			Map<String, Object> style)
 	{
 		String fillColor = Utils.getString(style,
@@ -611,9 +611,9 @@ public class SvgCanvas extends BasicCanvas
 			if (img != null)
 			{
 				// Vertical and horizontal image flipping
-				boolean flipH = Utils.isTrue(style,
+				bool flipH = Utils.isTrue(style,
 						Constants.STYLE_IMAGE_FLIPH, false);
-				boolean flipV = Utils.isTrue(style,
+				bool flipV = Utils.isTrue(style,
 						Constants.STYLE_IMAGE_FLIPV, false);
 
 				elem = _createImageElement(x, y, w, h, img,
@@ -1043,12 +1043,12 @@ public class SvgCanvas extends BasicCanvas
 	 * @param pts List of points that define the line.
 	 * @param style Style to be used for painting the line.
 	 */
-	public Element drawLine(List<Point2d> pts, Map<String, Object> style)
+	Element drawLine(List<Point2d> pts, Map<String, Object> style)
 	{
 		Element group = _document.createElement("g");
 		Element path = _document.createElement("path");
 
-		boolean rounded = Utils.isTrue(style, Constants.STYLE_ROUNDED,
+		bool rounded = Utils.isTrue(style, Constants.STYLE_ROUNDED,
 				false);
 		String strokeColor = Utils.getString(style,
 				Constants.STYLE_STROKECOLOR);
@@ -1204,7 +1204,7 @@ public class SvgCanvas extends BasicCanvas
 	/**
 	 * Draws the specified marker as a child path in the given parent.
 	 */
-	public Point2d drawMarker(Element parent, Object type, Point2d p0,
+	Point2d drawMarker(Element parent, Object type, Point2d p0,
 			Point2d pe, float size, float strokeWidth, String color)
 	{
 		Point2d offset = null;
@@ -1300,7 +1300,7 @@ public class SvgCanvas extends BasicCanvas
 	 * @param h Height of the text.
 	 * @param style Style to be used for painting the text.
 	 */
-	public Object drawText(String text, int x, int y, int w, int h,
+	Object drawText(String text, int x, int y, int w, int h,
 			Map<String, Object> style)
 	{
 		Element elem = null;

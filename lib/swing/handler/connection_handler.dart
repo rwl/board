@@ -3,21 +3,21 @@
  */
 part of graph.swing.handler;
 
-//import graph.model.Geometry;
-//import graph.model.IGraphModel;
-//import graph.swing.GraphComponent;
-//import graph.swing.GraphControl;
-//import graph.swing.util.MouseAdapter;
-//import graph.util.Constants;
-//import graph.util.Event;
-//import graph.util.EventObj;
-//import graph.util.EventSource;
-//import graph.util.Point2d;
-//import graph.util.Rect;
-//import graph.util.EventSource.IEventListener;
-//import graph.view.CellState;
-//import graph.view.Graph;
-//import graph.view.GraphView;
+import '../../model/model.dart' show Geometry;
+import '../../model/model.dart' show IGraphModel;
+import '../../swing/swing.dart' show GraphComponent;
+import '../../swing/swing.dart' show GraphControl;
+import '../../swing/util/util.dart' show MouseAdapter;
+import '../../util/util.dart' show Constants;
+import '../../util/util.dart' show Event;
+import '../../util/util.dart' show EventObj;
+import '../../util/util.dart' show EventSource;
+import '../../util/util.dart' show Point2d;
+import '../../util/util.dart' show Rect;
+import '../../util/util.dart' show EventSource.IEventListener;
+import '../../view/view.dart' show CellState;
+import '../../view/view.dart' show Graph;
+import '../../view/view.dart' show GraphView;
 
 //import java.awt.Color;
 //import java.awt.Cursor;
@@ -39,7 +39,7 @@ part of graph.swing.handler;
  * property contains the inserted edge, the <code>event</code> and <code>target</code> 
  * properties contain the respective arguments that were passed to mouseReleased.
  */
-public class ConnectionHandler extends MouseAdapter
+class ConnectionHandler extends MouseAdapter
 {
 
 	/**
@@ -50,34 +50,34 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public static Cursor CONNECT_CURSOR = new Cursor(Cursor.HAND_CURSOR);
+	static Cursor CONNECT_CURSOR = new Cursor(Cursor.HAND_CURSOR);
 
 	/**
 	 * 
 	 */
-	protected GraphComponent _graphComponent;
+	GraphComponent _graphComponent;
 
 	/**
 	 * Holds the event source.
 	 */
-	protected EventSource _eventSource = new EventSource(this);
+	EventSource _eventSource = new EventSource(this);
 
 	/**
 	 * 
 	 */
-	protected ConnectPreview _connectPreview;
+	ConnectPreview _connectPreview;
 
 	/**
 	 * Specifies the icon to be used for creating new connections. If this is
 	 * specified then it is used instead of the handle. Default is null.
 	 */
-	protected ImageIcon _connectIcon = null;
+	ImageIcon _connectIcon = null;
 
 	/**
 	 * Specifies the size of the handle to be used for creating new
 	 * connections. Default is Constants.CONNECT_HANDLE_SIZE. 
 	 */
-	protected int _handleSize = Constants.CONNECT_HANDLE_SIZE;
+	int _handleSize = Constants.CONNECT_HANDLE_SIZE;
 
 	/**
 	 * Specifies if a handle should be used for creating new connections. This
@@ -85,63 +85,63 @@ public class ConnectionHandler extends MouseAdapter
 	 * source cell will be highlighted when the mouse is over the hotspot given
 	 * in the marker. Default is Constants.CONNECT_HANDLE_ENABLED.
 	 */
-	protected boolean _handleEnabled = Constants.CONNECT_HANDLE_ENABLED;
+	bool _handleEnabled = Constants.CONNECT_HANDLE_ENABLED;
 
 	/**
 	 * 
 	 */
-	protected boolean _select = true;
+	bool _select = true;
 
 	/**
 	 * Specifies if the source should be cloned and used as a target if no
 	 * target was selected. Default is false.
 	 */
-	protected boolean _createTarget = false;
+	bool _createTarget = false;
 
 	/**
 	 * Appearance and event handling order wrt subhandles.
 	 */
-	protected boolean _keepOnTop = true;
+	bool _keepOnTop = true;
 
 	/**
 	 * 
 	 */
-	protected boolean _enabled = true;
+	bool _enabled = true;
 
 	/**
 	 * 
 	 */
-	protected transient Point _first;
+	transient Point _first;
 
 	/**
 	 * 
 	 */
-	protected transient boolean _active = false;
+	transient bool _active = false;
 
 	/**
 	 * 
 	 */
-	protected transient Rectangle _bounds;
+	transient Rectangle _bounds;
 
 	/**
 	 * 
 	 */
-	protected transient CellState _source;
+	transient CellState _source;
 
 	/**
 	 * 
 	 */
-	protected transient CellMarker _marker;
+	transient CellMarker _marker;
 
 	/**
 	 * 
 	 */
-	protected transient String _error;
+	transient String _error;
 
 	/**
 	 * 
 	 */
-	protected transient IEventListener _resetHandler = new IEventListener()
+	transient IEventListener _resetHandler = new IEventListener()
 	{
 		public void invoke(Object source, EventObj evt)
 		{
@@ -153,7 +153,7 @@ public class ConnectionHandler extends MouseAdapter
 	 * 
 	 * @param graphComponent
 	 */
-	public ConnectionHandler(GraphComponent graphComponent)
+	ConnectionHandler(GraphComponent graphComponent)
 	{
 		this._graphComponent = graphComponent;
 
@@ -229,7 +229,7 @@ public class ConnectionHandler extends MouseAdapter
 			}
 
 			// Sets the highlight color according to isValidConnection
-			protected boolean _isValidState(CellState state)
+			protected bool _isValidState(CellState state)
 			{
 				if (isConnecting())
 				{
@@ -244,7 +244,7 @@ public class ConnectionHandler extends MouseAdapter
 			// Overrides to use marker color only in highlight mode or for
 			// target selection
 			protected Color _getMarkerColor(MouseEvent e, CellState state,
-					boolean isValid)
+					bool isValid)
 			{
 				return (isHighlighting() || isConnecting()) ? super
 						._getMarkerColor(e, state, isValid) : null;
@@ -252,7 +252,7 @@ public class ConnectionHandler extends MouseAdapter
 
 			// Overrides to use hotspot only for source selection otherwise
 			// intersects always returns true when over a cell
-			protected boolean _intersects(CellState state, MouseEvent e)
+			protected bool _intersects(CellState state, MouseEvent e)
 			{
 				if (!isHighlighting() || isConnecting())
 				{
@@ -269,7 +269,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * Installs the listeners to update the handles after any changes.
 	 */
-	protected void _addGraphListeners(Graph graph)
+	void _addGraphListeners(Graph graph)
 	{
 		// LATER: Install change listener for graph model, view
 		if (graph != null)
@@ -286,7 +286,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * Removes all installed listeners.
 	 */
-	protected void _removeGraphListeners(Graph graph)
+	void _removeGraphListeners(Graph graph)
 	{
 		if (graph != null)
 		{
@@ -302,7 +302,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	protected ConnectPreview _createConnectPreview()
+	ConnectPreview _createConnectPreview()
 	{
 		return new ConnectPreview(_graphComponent);
 	}
@@ -310,7 +310,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public ConnectPreview getConnectPreview()
+	ConnectPreview getConnectPreview()
 	{
 		return _connectPreview;
 	}
@@ -318,7 +318,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void setConnectPreview(ConnectPreview value)
+	void setConnectPreview(ConnectPreview value)
 	{
 		_connectPreview = value;
 	}
@@ -327,7 +327,7 @@ public class ConnectionHandler extends MouseAdapter
 	 * Returns true if the source terminal has been clicked and a new
 	 * connection is currently being previewed.
 	 */
-	public boolean isConnecting()
+	bool isConnecting()
 	{
 		return _connectPreview.isActive();
 	}
@@ -335,7 +335,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public boolean isActive()
+	bool isActive()
 	{
 		return _active;
 	}
@@ -343,7 +343,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * Returns true if no connectIcon is specified and handleEnabled is false.
 	 */
-	public boolean isHighlighting()
+	bool isHighlighting()
 	{
 		return _connectIcon == null && !_handleEnabled;
 	}
@@ -351,7 +351,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public boolean isEnabled()
+	bool isEnabled()
 	{
 		return _enabled;
 	}
@@ -359,7 +359,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void setEnabled(boolean value)
+	void setEnabled(bool value)
 	{
 		_enabled = value;
 	}
@@ -367,7 +367,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public boolean isKeepOnTop()
+	bool isKeepOnTop()
 	{
 		return _keepOnTop;
 	}
@@ -375,7 +375,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void setKeepOnTop(boolean value)
+	void setKeepOnTop(bool value)
 	{
 		_keepOnTop = value;
 	}
@@ -383,7 +383,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void setConnectIcon(ImageIcon value)
+	void setConnectIcon(ImageIcon value)
 	{
 		_connectIcon = value;
 	}
@@ -391,7 +391,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public ImageIcon getConnecIcon()
+	ImageIcon getConnecIcon()
 	{
 		return _connectIcon;
 	}
@@ -399,7 +399,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void setHandleEnabled(boolean value)
+	void setHandleEnabled(bool value)
 	{
 		_handleEnabled = value;
 	}
@@ -407,7 +407,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public boolean isHandleEnabled()
+	bool isHandleEnabled()
 	{
 		return _handleEnabled;
 	}
@@ -415,7 +415,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void setHandleSize(int value)
+	void setHandleSize(int value)
 	{
 		_handleSize = value;
 	}
@@ -423,7 +423,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public int getHandleSize()
+	int getHandleSize()
 	{
 		return _handleSize;
 	}
@@ -431,7 +431,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public CellMarker getMarker()
+	CellMarker getMarker()
 	{
 		return _marker;
 	}
@@ -439,7 +439,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void setMarker(CellMarker value)
+	void setMarker(CellMarker value)
 	{
 		_marker = value;
 	}
@@ -447,7 +447,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void setCreateTarget(boolean value)
+	void setCreateTarget(bool value)
 	{
 		_createTarget = value;
 	}
@@ -455,7 +455,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public boolean isCreateTarget()
+	bool isCreateTarget()
 	{
 		return _createTarget;
 	}
@@ -463,7 +463,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void setSelect(boolean value)
+	void setSelect(bool value)
 	{
 		_select = value;
 	}
@@ -471,7 +471,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public boolean isSelect()
+	bool isSelect()
 	{
 		return _select;
 	}
@@ -479,7 +479,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void reset()
+	void reset()
 	{
 		_connectPreview.stop(false);
 		setBounds(null);
@@ -493,7 +493,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public Object createTargetVertex(MouseEvent e, Object source)
+	Object createTargetVertex(MouseEvent e, Object source)
 	{
 		Graph graph = _graphComponent.getGraph();
 		Object clone = graph.cloneCells(new Object[] { source })[0];
@@ -513,7 +513,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public boolean isValidSource(Object cell)
+	bool isValidSource(Object cell)
 	{
 		return _graphComponent.getGraph().isValidSource(cell);
 	}
@@ -523,7 +523,7 @@ public class ConnectionHandler extends MouseAdapter
 	 * Graph.getEdgeValidationError in validateConnection. This is an
 	 * additional hook for disabling certain targets in this specific handler.
 	 */
-	public boolean isValidTarget(Object cell)
+	bool isValidTarget(Object cell)
 	{
 		return true;
 	}
@@ -532,7 +532,7 @@ public class ConnectionHandler extends MouseAdapter
 	 * Returns the error message or an empty string if the connection for the
 	 * given source target pair is not valid. Otherwise it returns null.
 	 */
-	public String validateConnection(Object source, Object target)
+	String validateConnection(Object source, Object target)
 	{
 		if (target == null && _createTarget)
 		{
@@ -551,7 +551,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void mousePressed(MouseEvent e)
+	void mousePressed(MouseEvent e)
 	{
 		if (!_graphComponent.isForceMarqueeEvent(e)
 				&& !_graphComponent.isPanningEvent(e)
@@ -570,7 +570,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void start(MouseEvent e, CellState state)
+	void start(MouseEvent e, CellState state)
 	{
 		_first = e.getPoint();
 		_connectPreview.start(e, state, "");
@@ -579,7 +579,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void mouseMoved(MouseEvent e)
+	void mouseMoved(MouseEvent e)
 	{
 		mouseDragged(e);
 
@@ -634,7 +634,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void mouseDragged(MouseEvent e)
+	void mouseDragged(MouseEvent e)
 	{
 		if (!e.isConsumed() && _graphComponent.isEnabled() && isEnabled())
 		{
@@ -673,7 +673,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void mouseReleased(MouseEvent e)
+	void mouseReleased(MouseEvent e)
 	{
 		if (isActive())
 		{
@@ -771,7 +771,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void setBounds(Rectangle value)
+	void setBounds(Rectangle value)
 	{
 		if ((_bounds == null && value != null)
 				|| (_bounds != null && value == null)
@@ -803,7 +803,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * Adds the given event listener.
 	 */
-	public void addListener(String eventName, IEventListener listener)
+	void addListener(String eventName, IEventListener listener)
 	{
 		_eventSource.addListener(eventName, listener);
 	}
@@ -811,7 +811,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * Removes the given event listener.
 	 */
-	public void removeListener(IEventListener listener)
+	void removeListener(IEventListener listener)
 	{
 		_eventSource.removeListener(listener);
 	}
@@ -819,7 +819,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * Removes the given event listener for the specified event name.
 	 */
-	public void removeListener(IEventListener listener, String eventName)
+	void removeListener(IEventListener listener, String eventName)
 	{
 		_eventSource.removeListener(listener, eventName);
 	}
@@ -827,7 +827,7 @@ public class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void paint(Graphics g)
+	void paint(Graphics g)
 	{
 		if (_bounds != null)
 		{

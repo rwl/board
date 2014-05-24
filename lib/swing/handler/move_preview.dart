@@ -3,15 +3,15 @@
  */
 part of graph.swing.handler;
 
-//import graph.swing.GraphComponent;
-//import graph.swing.util.SwingConstants;
-//import graph.swing.view.CellStatePreview;
-//import graph.util.Event;
-//import graph.util.EventObj;
-//import graph.util.EventSource;
-//import graph.util.Rect;
-//import graph.view.CellState;
-//import graph.view.Graph;
+import '../../swing/swing.dart' show GraphComponent;
+import '../../swing/util/util.dart' show SwingConstants;
+import '../../swing/swing.dart' show view.CellStatePreview;
+import '../../util/util.dart' show Event;
+import '../../util/util.dart' show EventObj;
+import '../../util/util.dart' show EventSource;
+import '../../util/util.dart' show Rect;
+import '../../view/view.dart' show CellState;
+import '../../view/view.dart' show Graph;
 
 //import java.awt.Graphics;
 //import java.awt.Rectangle;
@@ -23,85 +23,85 @@ part of graph.swing.handler;
  * Connection handler creates new connections between cells. This control is used to display the connector
  * icon, while the preview is used to draw the line.
  */
-public class MovePreview extends EventSource
+class MovePreview extends EventSource
 {
 	/**
 	 * 
 	 */
-	protected GraphComponent _graphComponent;
+	GraphComponent _graphComponent;
 
 	/**
 	 * Maximum number of cells to preview individually. Default is 200.
 	 */
-	protected int _threshold = 200;
+	int _threshold = 200;
 
 	/**
 	 * Specifies if the placeholder rectangle should be used for all
 	 * previews. Default is false. This overrides all other preview
 	 * settings if true.
 	 */
-	protected boolean _placeholderPreview = false;
+	bool _placeholderPreview = false;
 
 	/**
 	 * Specifies if the preview should use clones of the original shapes.
 	 * Default is true.
 	 */
-	protected boolean _clonePreview = true;
+	bool _clonePreview = true;
 
 	/**
 	 * Specifies if connected, unselected edges should be included in the
 	 * preview. Default is true. This should not be used if cloning is
 	 * enabled.
 	 */
-	protected boolean _contextPreview = true;
+	bool _contextPreview = true;
 
 	/**
 	 * Specifies if the selection cells handler should be hidden while the
 	 * preview is visible. Default is false.
 	 */
-	protected boolean _hideSelectionHandler = false;
+	bool _hideSelectionHandler = false;
 
 	/**
 	 * 
 	 */
-	protected transient CellState _startState;
+	transient CellState _startState;
 
 	/**
 	 * 
 	 */
-	protected transient CellState[] _previewStates;
+	transient CellState[] _previewStates;
 
 	/**
 	 * 
 	 */
-	protected transient Object[] _movingCells;
+	transient Object[] _movingCells;
 
 	/**
 	 * 
 	 */
-	protected transient Rectangle _initialPlaceholder;
+	transient Rectangle _initialPlaceholder;
 
 	/**
 	 * 
 	 */
-	protected transient Rectangle _placeholder;
+	transient Rectangle _placeholder;
 
 	/**
 	 * 
 	 */
-	protected transient Rect _lastDirty;
+	transient Rect _lastDirty;
 
 	/**
 	 * 
 	 */
-	protected transient CellStatePreview _preview;
+	transient CellStatePreview _preview;
 
 	/**
 	 * Constructs a new rubberband selection for the given graph component.
 	 * 
 	 * @param graphComponent Component that contains the rubberband.
 	 */
-	public MovePreview(GraphComponent graphComponent)
+	MovePreview(GraphComponent graphComponent)
 	{
 		this._graphComponent = graphComponent;
 
@@ -119,7 +119,7 @@ public class MovePreview extends EventSource
 	/**
 	 * 
 	 */
-	public int getThreshold()
+	int getThreshold()
 	{
 		return _threshold;
 	}
@@ -127,7 +127,7 @@ public class MovePreview extends EventSource
 	/**
 	 * 
 	 */
-	public void setThreshold(int value)
+	void setThreshold(int value)
 	{
 		_threshold = value;
 	}
@@ -135,7 +135,7 @@ public class MovePreview extends EventSource
 	/**
 	 * 
 	 */
-	public boolean isPlaceholderPreview()
+	bool isPlaceholderPreview()
 	{
 		return _placeholderPreview;
 	}
@@ -143,7 +143,7 @@ public class MovePreview extends EventSource
 	/**
 	 * 
 	 */
-	public void setPlaceholderPreview(boolean value)
+	void setPlaceholderPreview(bool value)
 	{
 		_placeholderPreview = value;
 	}
@@ -151,7 +151,7 @@ public class MovePreview extends EventSource
 	/**
 	 * 
 	 */
-	public boolean isClonePreview()
+	bool isClonePreview()
 	{
 		return _clonePreview;
 	}
@@ -159,7 +159,7 @@ public class MovePreview extends EventSource
 	/**
 	 * 
 	 */
-	public void setClonePreview(boolean value)
+	void setClonePreview(bool value)
 	{
 		_clonePreview = value;
 	}
@@ -167,7 +167,7 @@ public class MovePreview extends EventSource
 	/**
 	 * 
 	 */
-	public boolean isContextPreview()
+	bool isContextPreview()
 	{
 		return _contextPreview;
 	}
@@ -175,7 +175,7 @@ public class MovePreview extends EventSource
 	/**
 	 * 
 	 */
-	public void setContextPreview(boolean value)
+	void setContextPreview(bool value)
 	{
 		_contextPreview = value;
 	}
@@ -183,7 +183,7 @@ public class MovePreview extends EventSource
 	/**
 	 * 
 	 */
-	public boolean isHideSelectionHandler()
+	bool isHideSelectionHandler()
 	{
 		return _hideSelectionHandler;
 	}
@@ -191,7 +191,7 @@ public class MovePreview extends EventSource
 	/**
 	 * 
 	 */
-	public void setHideSelectionHandler(boolean value)
+	void setHideSelectionHandler(bool value)
 	{
 		_hideSelectionHandler = value;
 	}
@@ -199,7 +199,7 @@ public class MovePreview extends EventSource
 	/**
 	 * 
 	 */
-	public boolean isActive()
+	bool isActive()
 	{
 		return _startState != null;
 	}
@@ -207,7 +207,7 @@ public class MovePreview extends EventSource
 	/**
 	 * FIXME: Cells should be assigned outside of getPreviewStates
 	 */
-	public Object[] getMovingCells()
+	Object[] getMovingCells()
 	{
 		return _movingCells;
 	}
@@ -215,7 +215,7 @@ public class MovePreview extends EventSource
 	/**
 	 * 
 	 */
-	public Object[] getCells(CellState initialState)
+	Object[] getCells(CellState initialState)
 	{
 		Graph graph = _graphComponent.getGraph();
 
@@ -225,7 +225,7 @@ public class MovePreview extends EventSource
 	/**
 	 * Returns the states that are affected by the move operation.
 	 */
-	protected CellState[] _getPreviewStates()
+	CellState[] _getPreviewStates()
 	{
 		Graph graph = _graphComponent.getGraph();
 		Collection<CellState> result = new LinkedList<CellState>();
@@ -277,7 +277,7 @@ public class MovePreview extends EventSource
 	/**
 	 * 
 	 */
-	protected boolean _isCellOpaque(Object cell)
+	bool _isCellOpaque(Object cell)
 	{
 		return _startState != null && _startState.getCell() == cell;
 	}
@@ -285,7 +285,7 @@ public class MovePreview extends EventSource
 	/**
 	 * Sets the translation of the preview.
 	 */
-	public void start(MouseEvent e, CellState state)
+	void start(MouseEvent e, CellState state)
 	{
 		_startState = state;
 		_movingCells = getCells(state);
@@ -305,7 +305,7 @@ public class MovePreview extends EventSource
 	/**
 	 * 
 	 */
-	protected Rect _getPlaceholderBounds(CellState startState)
+	Rect _getPlaceholderBounds(CellState startState)
 	{
 		Graph graph = _graphComponent.getGraph();
 
@@ -315,7 +315,7 @@ public class MovePreview extends EventSource
 	/**
 	 * 
 	 */
-	public CellStatePreview createCellStatePreview()
+	CellStatePreview createCellStatePreview()
 	{
 		return new CellStatePreview(_graphComponent, isClonePreview())
 		{
@@ -334,7 +334,7 @@ public class MovePreview extends EventSource
 	/**
 	 * Sets the translation of the preview.
 	 */
-	public void update(MouseEvent e, double dx, double dy, boolean clone)
+	void update(MouseEvent e, double dx, double dy, bool clone)
 	{
 		Graph graph = _graphComponent.getGraph();
 
@@ -357,7 +357,7 @@ public class MovePreview extends EventSource
 				_preview.moveState(previewState, dx, dy, false, false);
 
 				// FIXME: Move into show-handler?
-				boolean visible = true;
+				bool visible = true;
 
 				if ((dx != 0 || dy != 0) && clone && isContextPreview())
 				{
@@ -403,7 +403,7 @@ public class MovePreview extends EventSource
 	/**
 	 * 
 	 */
-	protected void _repaint(Rect dirty)
+	void _repaint(Rect dirty)
 	{
 		if (dirty != null)
 		{
@@ -418,7 +418,7 @@ public class MovePreview extends EventSource
 	/**
 	 * 
 	 */
-	protected void _reset()
+	void _reset()
 	{
 		Graph graph = _graphComponent.getGraph();
 
@@ -456,8 +456,8 @@ public class MovePreview extends EventSource
 	/**
 	 *
 	 */
-	public Object[] stop(boolean commit, MouseEvent e, double dx, double dy,
-			boolean clone, Object target)
+	Object[] stop(bool commit, MouseEvent e, double dx, double dy,
+			bool clone, Object target)
 	{
 		Object[] cells = _movingCells;
 		_reset();
@@ -487,7 +487,7 @@ public class MovePreview extends EventSource
 	/**
 	 *
 	 */
-	public void paint(Graphics g)
+	void paint(Graphics g)
 	{
 		if (_placeholder != null)
 		{

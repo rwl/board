@@ -3,12 +3,12 @@
  */
 part of graph.swing;
 
-//import graph.util.Event;
-//import graph.util.EventObj;
-//import graph.util.Point2d;
-//import graph.util.Rect;
-//import graph.util.Utils;
-//import graph.util.EventSource.IEventListener;
+import '../util/util.dart' show Event;
+import '../util/util.dart' show EventObj;
+import '../util/util.dart' show Point2d;
+import '../util/util.dart' show Rect;
+import '../util/util.dart' show Utils;
+import '../util/util.dart' show EventSource.IEventListener;
 
 //import java.awt.BasicStroke;
 //import java.awt.Color;
@@ -31,7 +31,7 @@ part of graph.swing;
 /**
  * An outline view for a specific graph component.
  */
-public class GraphOutline extends JComponent
+class GraphOutline extends JComponent
 {
 
 	/**
@@ -42,78 +42,78 @@ public class GraphOutline extends JComponent
 	/**
 	 * 
 	 */
-	public static Color DEFAULT_ZOOMHANDLE_FILL = new Color(0, 255, 255);
+	static Color DEFAULT_ZOOMHANDLE_FILL = new Color(0, 255, 255);
 
 	/**
 	 * 
 	 */
-	protected GraphComponent _graphComponent;
+	GraphComponent _graphComponent;
 
 	/**
 	 * TODO: Not yet implemented.
 	 */
-	protected BufferedImage _tripleBuffer;
+	BufferedImage _tripleBuffer;
 
 	/**
 	 * Holds the graphics of the triple buffer.
 	 */
-	protected Graphics2D _tripleBufferGraphics;
+	Graphics2D _tripleBufferGraphics;
 
 	/**
 	 * True if the triple buffer needs a full repaint.
 	 */
-	protected boolean _repaintBuffer = false;
+	bool _repaintBuffer = false;
 
 	/**
 	 * Clip of the triple buffer to be repainted.
 	 */
-	protected Rect _repaintClip = null;
+	Rect _repaintClip = null;
 
 	/**
 	 * 
 	 */
-	protected boolean _tripleBuffered = true;
+	bool _tripleBuffered = true;
 
 	/**
 	 * 
 	 */
-	protected Rectangle _finderBounds = new Rectangle();
+	Rectangle _finderBounds = new Rectangle();
 
 	/**
 	 * 
 	 */
-	protected Point _zoomHandleLocation = null;
+	Point _zoomHandleLocation = null;
 
 	/**
 	 * 
 	 */
-	protected boolean _finderVisible = true;
+	bool _finderVisible = true;
 
 	/**
 	 * 
 	 */
-	protected boolean _zoomHandleVisible = true;
+	bool _zoomHandleVisible = true;
 
 	/**
 	 * 
 	 */
-	protected boolean _useScaledInstance = false;
+	bool _useScaledInstance = false;
 
 	/**
 	 * 
 	 */
-	protected boolean _antiAlias = false;
+	bool _antiAlias = false;
 
 	/**
 	 * 
 	 */
-	protected boolean _drawLabels = false;
+	bool _drawLabels = false;
 
 	/**
 	 * Specifies if the outline should be zoomed to the page if the graph
 	 * component is in page layout mode. Default is true.
 	 */
-	protected boolean _fitPage = true;
+	bool _fitPage = true;
 
 	/**
 	 * Not yet implemented.
@@ -121,32 +121,32 @@ public class GraphOutline extends JComponent
 	 * Border to add around the page bounds if wholePage is true.
 	 * Default is 4.
 	 */
-	protected int _outlineBorder = 10;
+	int _outlineBorder = 10;
 
 	/**
 	 * 
 	 */
-	protected MouseTracker _tracker = new MouseTracker(this);
+	MouseTracker _tracker = new MouseTracker(this);
 
 	/**
 	 * 
 	 */
-	protected double _scale = 1;
+	double _scale = 1;
 
 	/**
 	 * 
 	 */
-	protected Point _translate = new Point();
+	Point _translate = new Point();
 
 	/**
 	 * 
 	 */
-	protected transient boolean _zoomGesture = false;
+	transient bool _zoomGesture = false;
 
 	/**
 	 * 
 	 */
-	protected IEventListener _repaintHandler = new IEventListener()
+	IEventListener _repaintHandler = new IEventListener()
 	{
 		public void invoke(Object source, EventObj evt)
 		{
@@ -186,7 +186,7 @@ public class GraphOutline extends JComponent
 	/**
 	 * 
 	 */
-	protected ComponentListener _componentHandler = new ComponentAdapter()
+	ComponentListener _componentHandler = new ComponentAdapter()
 	{
 		public void componentResized(ComponentEvent e)
 		{
@@ -206,7 +206,7 @@ public class GraphOutline extends JComponent
 	/**
 	 * 
 	 */
-	protected AdjustmentListener _adjustmentHandler = new AdjustmentListener()
+	AdjustmentListener _adjustmentHandler = new AdjustmentListener()
 	{
 
 		/**
@@ -231,7 +231,7 @@ public class GraphOutline extends JComponent
 	/**
 	 * 
 	 */
-	public GraphOutline(GraphComponent graphComponent)
+	GraphOutline(GraphComponent graphComponent)
 	{
 		addComponentListener(_componentHandler);
 		addMouseMotionListener(_tracker);
@@ -246,9 +246,9 @@ public class GraphOutline extends JComponent
 	 * 
 	 * @param tripleBuffered the tripleBuffered to set
 	 */
-	public void setTripleBuffered(boolean tripleBuffered)
+	void setTripleBuffered(bool tripleBuffered)
 	{
-		boolean oldValue = this._tripleBuffered;
+		bool oldValue = this._tripleBuffered;
 		this._tripleBuffered = tripleBuffered;
 
 		if (!tripleBuffered)
@@ -262,7 +262,7 @@ public class GraphOutline extends JComponent
 	/**
 	 * 
 	 */
-	public boolean isTripleBuffered()
+	bool isTripleBuffered()
 	{
 		return _tripleBuffered;
 	}
@@ -272,9 +272,9 @@ public class GraphOutline extends JComponent
 	 * 
 	 * @param drawLabels the drawLabels to set
 	 */
-	public void setDrawLabels(boolean drawLabels)
+	void setDrawLabels(bool drawLabels)
 	{
-		boolean oldValue = this._drawLabels;
+		bool oldValue = this._drawLabels;
 		this._drawLabels = drawLabels;
 		repaintTripleBuffer(null);
 
@@ -284,7 +284,7 @@ public class GraphOutline extends JComponent
 	/**
 	 * 
 	 */
-	public boolean isDrawLabels()
+	bool isDrawLabels()
 	{
 		return _drawLabels;
 	}
@@ -294,9 +294,9 @@ public class GraphOutline extends JComponent
 	 * 
 	 * @param antiAlias the antiAlias to set
 	 */
-	public void setAntiAlias(boolean antiAlias)
+	void setAntiAlias(bool antiAlias)
 	{
-		boolean oldValue = this._antiAlias;
+		bool oldValue = this._antiAlias;
 		this._antiAlias = antiAlias;
 		repaintTripleBuffer(null);
 
@@ -306,7 +306,7 @@ public class GraphOutline extends JComponent
 	/**
 	 * @return the antiAlias
 	 */
-	public boolean isAntiAlias()
+	bool isAntiAlias()
 	{
 		return _antiAlias;
 	}
@@ -314,7 +314,7 @@ public class GraphOutline extends JComponent
 	/**
 	 * 
 	 */
-	public void setVisible(boolean visible)
+	void setVisible(bool visible)
 	{
 		super.setVisible(visible);
 
@@ -328,7 +328,7 @@ public class GraphOutline extends JComponent
 	/**
 	 * 
 	 */
-	public void setFinderVisible(boolean visible)
+	void setFinderVisible(bool visible)
 	{
 		_finderVisible = visible;
 	}
@@ -336,7 +336,7 @@ public class GraphOutline extends JComponent
 	/**
 	 * 
 	 */
-	public void setZoomHandleVisible(boolean visible)
+	void setZoomHandleVisible(bool visible)
 	{
 		_zoomHandleVisible = visible;
 	}
@@ -346,9 +346,9 @@ public class GraphOutline extends JComponent
 	 * 
 	 * @param fitPage the fitPage to set
 	 */
-	public void setFitPage(boolean fitPage)
+	void setFitPage(bool fitPage)
 	{
-		boolean oldValue = this._fitPage;
+		bool oldValue = this._fitPage;
 		this._fitPage = fitPage;
 
 		if (updateScaleAndTranslate())
@@ -363,7 +363,7 @@ public class GraphOutline extends JComponent
 	/**
 	 * 
 	 */
-	public boolean isFitPage()
+	bool isFitPage()
 	{
 		return _fitPage;
 	}
@@ -371,7 +371,7 @@ public class GraphOutline extends JComponent
 	/**
 	 * 
 	 */
-	public GraphComponent getGraphComponent()
+	GraphComponent getGraphComponent()
 	{
 		return _graphComponent;
 	}
@@ -381,7 +381,7 @@ public class GraphOutline extends JComponent
 	 * 
 	 * @param graphComponent the graphComponent to set
 	 */
-	public void setGraphComponent(GraphComponent graphComponent)
+	void setGraphComponent(GraphComponent graphComponent)
 	{
 		GraphComponent oldValue = this._graphComponent;
 
@@ -425,7 +425,7 @@ public class GraphOutline extends JComponent
 	 * size of the graph and drops the buffer if it has a
 	 * different size.
 	 */
-	public void checkTripleBuffer()
+	void checkTripleBuffer()
 	{
 		if (_tripleBuffer != null)
 		{
@@ -450,7 +450,7 @@ public class GraphOutline extends JComponent
 	 * @param width
 	 * @param height
 	 */
-	protected void _createTripleBuffer(int width, int height)
+	void _createTripleBuffer(int width, int height)
 	{
 		try
 		{
@@ -469,7 +469,7 @@ public class GraphOutline extends JComponent
 	/**
 	 * Destroys the tripleBuffer and tripleBufferGraphics objects.
 	 */
-	public void destroyTripleBuffer()
+	void destroyTripleBuffer()
 	{
 		if (_tripleBuffer != null)
 		{
@@ -485,7 +485,7 @@ public class GraphOutline extends JComponent
 	 * 
 	 * @param clip
 	 */
-	public void repaintTripleBuffer(Rectangle clip)
+	void repaintTripleBuffer(Rectangle clip)
 	{
 		if (_tripleBuffered && _tripleBufferGraphics != null)
 		{
@@ -510,7 +510,7 @@ public class GraphOutline extends JComponent
 	/**
 	 * 
 	 */
-	public void updateFinder(boolean repaint)
+	void updateFinder(bool repaint)
 	{
 		Rectangle rect = _graphComponent.getViewport().getViewRect();
 
@@ -526,7 +526,7 @@ public class GraphOutline extends JComponent
 	/**
 	 * 
 	 */
-	public void updateFinderBounds(Rectangle bounds, boolean repaint)
+	void updateFinderBounds(Rectangle bounds, bool repaint)
 	{
 		if (bounds != null && !bounds.equals(_finderBounds))
 		{
@@ -546,7 +546,7 @@ public class GraphOutline extends JComponent
 	/**
 	 * 
 	 */
-	public void paintComponent(Graphics g)
+	void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
 		_paintBackground(g);
@@ -598,7 +598,7 @@ public class GraphOutline extends JComponent
 	/**
 	 * Paints the background.
 	 */
-	protected void _paintBackground(Graphics g)
+	void _paintBackground(Graphics g)
 	{
 		if (_graphComponent != null)
 		{
@@ -654,7 +654,7 @@ public class GraphOutline extends JComponent
 	/**
 	 * Paints the graph outline.
 	 */
-	public void paintGraph(Graphics g)
+	void paintGraph(Graphics g)
 	{
 		if (_graphComponent != null)
 		{
@@ -682,7 +682,7 @@ public class GraphOutline extends JComponent
 	 * Paints the foreground. Foreground is dynamic and should never be made
 	 * part of the triple buffer. It is painted on top of the buffer.
 	 */
-	protected void _paintForeground(Graphics g)
+	void _paintForeground(Graphics g)
 	{
 		if (_graphComponent != null)
 		{
@@ -710,7 +710,7 @@ public class GraphOutline extends JComponent
 	/**
 	 * Returns true if the scale or translate has changed.
 	 */
-	public boolean updateScaleAndTranslate()
+	bool updateScaleAndTranslate()
 	{
 		double newScale = 1;
 		int dx = 0;
@@ -726,7 +726,7 @@ public class GraphOutline extends JComponent
 
 			if (gw > 0 && gh > 0)
 			{
-				boolean magnifyPage = _graphComponent.isPageVisible()
+				bool magnifyPage = _graphComponent.isPageVisible()
 						&& isFitPage()
 						&& _graphComponent.getHorizontalScrollBar().isVisible()
 						&& _graphComponent.getVerticalScrollBar().isVisible();

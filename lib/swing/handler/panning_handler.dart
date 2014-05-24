@@ -3,8 +3,8 @@
  */
 part of graph.swing.handler;
 
-//import graph.swing.GraphComponent;
-//import graph.swing.util.MouseAdapter;
+import '../../swing/swing.dart' show GraphComponent;
+import '../../swing/util/util.dart' show MouseAdapter;
 
 //import java.awt.Point;
 //import java.awt.Rectangle;
@@ -13,7 +13,7 @@ part of graph.swing.handler;
 /**
  * 
  */
-public class PanningHandler extends MouseAdapter
+class PanningHandler extends MouseAdapter
 {
 
 	/**
@@ -24,23 +24,23 @@ public class PanningHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	protected GraphComponent _graphComponent;
+	GraphComponent _graphComponent;
 	
 	/**
 	 * 
 	 */
-	protected boolean _enabled = true;
+	bool _enabled = true;
 
 	/**
 	 * 
 	 */
-	protected transient Point _start;
+	transient Point _start;
 
 	/**
 	 * 
 	 * @param graphComponent
 	 */
-	public PanningHandler(GraphComponent graphComponent)
+	PanningHandler(GraphComponent graphComponent)
 	{
 		this._graphComponent = graphComponent;
 
@@ -51,7 +51,7 @@ public class PanningHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public boolean isEnabled()
+	bool isEnabled()
 	{
 		return _enabled;
 	}
@@ -59,7 +59,7 @@ public class PanningHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void setEnabled(boolean value)
+	void setEnabled(bool value)
 	{
 		_enabled = value;
 	}
@@ -67,7 +67,7 @@ public class PanningHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void mousePressed(MouseEvent e)
+	void mousePressed(MouseEvent e)
 	{
 		if (isEnabled() && !e.isConsumed() && _graphComponent.isPanningEvent(e)
 				&& !e.isPopupTrigger())
@@ -79,7 +79,7 @@ public class PanningHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void mouseDragged(MouseEvent e)
+	void mouseDragged(MouseEvent e)
 	{
 		if (!e.isConsumed() && _start != null)
 		{
@@ -101,7 +101,7 @@ public class PanningHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void mouseReleased(MouseEvent e)
+	void mouseReleased(MouseEvent e)
 	{
 		if (!e.isConsumed() && _start != null)
 		{
@@ -121,7 +121,7 @@ public class PanningHandler extends MouseAdapter
 	 * Whether or not panning is currently active
 	 * @return Whether or not panning is currently active
 	 */
-	public boolean isActive()
+	bool isActive()
 	{
 		return (_start != null);
 	}

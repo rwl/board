@@ -8,12 +8,12 @@
  */
 part of graph.swing.handler;
 
-//import graph.swing.GraphComponent;
-//import graph.util.Event;
-//import graph.util.EventObj;
-//import graph.util.EventSource.IEventListener;
-//import graph.view.CellState;
-//import graph.view.Graph;
+import '../../swing/swing.dart' show GraphComponent;
+import '../../util/util.dart' show Event;
+import '../../util/util.dart' show EventObj;
+import '../../util/util.dart' show EventSource.IEventListener;
+import '../../view/view.dart' show CellState;
+import '../../view/view.dart' show Graph;
 
 //import java.awt.Graphics;
 //import java.awt.Rectangle;
@@ -29,7 +29,7 @@ part of graph.swing.handler;
 
 //import javax.swing.SwingUtilities;
 
-public class SelectionCellsHandler implements MouseListener,
+class SelectionCellsHandler implements MouseListener,
 		MouseMotionListener
 {
 
@@ -41,43 +41,43 @@ public class SelectionCellsHandler implements MouseListener,
 	/**
 	 * Defines the default value for maxHandlers. Default is 100.
 	 */
-	public static int DEFAULT_MAX_HANDLERS = 100;
+	static int DEFAULT_MAX_HANDLERS = 100;
 
 	/**
 	 * Reference to the enclosing graph component.
 	 */
-	protected GraphComponent _graphComponent;
+	GraphComponent _graphComponent;
 
 	/**
 	 * Specifies if this handler is enabled.
 	 */
-	protected boolean _enabled = true;
+	bool _enabled = true;
 
 	/**
 	 * Specifies if this handler is visible.
 	 */
-	protected boolean _visible = true;
+	bool _visible = true;
 
 	/**
 	 * Reference to the enclosing graph component.
 	 */
-	protected Rectangle _bounds = null;
+	Rectangle _bounds = null;
 
 	/**
 	 * Defines the maximum number of handlers to paint individually.
 	 * Default is DEFAULT_MAX_HANDLES.
 	 */
-	protected int _maxHandlers = DEFAULT_MAX_HANDLERS;
+	int _maxHandlers = DEFAULT_MAX_HANDLERS;
 
 	/**
 	 * Maps from cells to handlers in the order of the selection cells.
 	 */
-	protected transient LinkedHashMap<Object, CellHandler> _handlers = new LinkedHashMap<Object, CellHandler>();
+	transient LinkedHashMap<Object, CellHandler> _handlers = new LinkedHashMap<Object, CellHandler>();
 
 	/**
 	 * 
 	 */
-	protected transient IEventListener _refreshHandler = new IEventListener()
+	transient IEventListener _refreshHandler = new IEventListener()
 	{
 		public void invoke(Object source, EventObj evt)
 		{
@@ -91,7 +91,7 @@ public class SelectionCellsHandler implements MouseListener,
 	/**
 	 * 
 	 */
-	protected transient PropertyChangeListener _labelMoveHandler = new PropertyChangeListener()
+	transient PropertyChangeListener _labelMoveHandler = new PropertyChangeListener()
 	{
 
 		/*
@@ -113,7 +113,7 @@ public class SelectionCellsHandler implements MouseListener,
 	 * 
 	 * @param graphComponent
 	 */
-	public SelectionCellsHandler(final GraphComponent graphComponent)
+	SelectionCellsHandler(final GraphComponent graphComponent)
 	{
 		this._graphComponent = graphComponent;
 
@@ -150,7 +150,7 @@ public class SelectionCellsHandler implements MouseListener,
 	/**
 	 * Installs the listeners to update the handles after any changes.
 	 */
-	protected void _addGraphListeners(Graph graph)
+	void _addGraphListeners(Graph graph)
 	{
 		// LATER: Install change listener for graph model, selection model, view
 		if (graph != null)
@@ -173,7 +173,7 @@ public class SelectionCellsHandler implements MouseListener,
 	/**
 	 * Removes all installed listeners.
 	 */
-	protected void _removeGraphListeners(Graph graph)
+	void _removeGraphListeners(Graph graph)
 	{
 		if (graph != null)
 		{
@@ -195,7 +195,7 @@ public class SelectionCellsHandler implements MouseListener,
 	/**
 	 * 
 	 */
-	public GraphComponent getGraphComponent()
+	GraphComponent getGraphComponent()
 	{
 		return _graphComponent;
 	}
@@ -203,7 +203,7 @@ public class SelectionCellsHandler implements MouseListener,
 	/**
 	 * 
 	 */
-	public boolean isEnabled()
+	bool isEnabled()
 	{
 		return _enabled;
 	}
@@ -211,7 +211,7 @@ public class SelectionCellsHandler implements MouseListener,
 	/**
 	 * 
 	 */
-	public void setEnabled(boolean value)
+	void setEnabled(bool value)
 	{
 		_enabled = value;
 	}
@@ -219,7 +219,7 @@ public class SelectionCellsHandler implements MouseListener,
 	/**
 	 * 
 	 */
-	public boolean isVisible()
+	bool isVisible()
 	{
 		return _visible;
 	}
@@ -227,7 +227,7 @@ public class SelectionCellsHandler implements MouseListener,
 	/**
 	 * 
 	 */
-	public void setVisible(boolean value)
+	void setVisible(bool value)
 	{
 		_visible = value;
 	}
@@ -235,7 +235,7 @@ public class SelectionCellsHandler implements MouseListener,
 	/**
 	 * 
 	 */
-	public int getMaxHandlers()
+	int getMaxHandlers()
 	{
 		return _maxHandlers;
 	}
@@ -243,7 +243,7 @@ public class SelectionCellsHandler implements MouseListener,
 	/**
 	 * 
 	 */
-	public void setMaxHandlers(int value)
+	void setMaxHandlers(int value)
 	{
 		_maxHandlers = value;
 	}
@@ -251,7 +251,7 @@ public class SelectionCellsHandler implements MouseListener,
 	/**
 	 * 
 	 */
-	public CellHandler getHandler(Object cell)
+	CellHandler getHandler(Object cell)
 	{
 		return _handlers.get(cell);
 	}
@@ -261,7 +261,7 @@ public class SelectionCellsHandler implements MouseListener,
 	 * called from the connection handler as subhandles have precedence
 	 * over the connection handler.
 	 */
-	public void mousePressed(MouseEvent e)
+	void mousePressed(MouseEvent e)
 	{
 		if (_graphComponent.isEnabled()
 				&& !_graphComponent.isForceMarqueeEvent(e) && isEnabled())
@@ -278,7 +278,7 @@ public class SelectionCellsHandler implements MouseListener,
 	/**
 	 * 
 	 */
-	public void mouseMoved(MouseEvent e)
+	void mouseMoved(MouseEvent e)
 	{
 		if (_graphComponent.isEnabled() && isEnabled())
 		{
@@ -294,7 +294,7 @@ public class SelectionCellsHandler implements MouseListener,
 	/**
 	 * 
 	 */
-	public void mouseDragged(MouseEvent e)
+	void mouseDragged(MouseEvent e)
 	{
 		if (_graphComponent.isEnabled() && isEnabled())
 		{
@@ -310,7 +310,7 @@ public class SelectionCellsHandler implements MouseListener,
 	/**
 	 * 
 	 */
-	public void mouseReleased(MouseEvent e)
+	void mouseReleased(MouseEvent e)
 	{
 		if (_graphComponent.isEnabled() && isEnabled())
 		{
@@ -330,7 +330,7 @@ public class SelectionCellsHandler implements MouseListener,
 	 * component, which in turn may use getHandleToolTipText in this class to
 	 * find a tooltip associated with a handle.
 	 */
-	public String getToolTipText(MouseEvent e)
+	String getToolTipText(MouseEvent e)
 	{
 		MouseEvent tmp = SwingUtilities.convertMouseEvent(e.getComponent(), e,
 				_graphComponent.getGraphControl());
@@ -348,7 +348,7 @@ public class SelectionCellsHandler implements MouseListener,
 	/**
 	 * 
 	 */
-	public void reset()
+	void reset()
 	{
 		Iterator<CellHandler> it = _handlers.values().iterator();
 
@@ -361,7 +361,7 @@ public class SelectionCellsHandler implements MouseListener,
 	/**
 	 * 
 	 */
-	public void refresh()
+	void refresh()
 	{
 		Graph graph = _graphComponent.getGraph();
 
@@ -372,7 +372,7 @@ public class SelectionCellsHandler implements MouseListener,
 
 		// Creates handles for all selection cells
 		Object[] tmp = graph.getSelectionCells();
-		boolean handlesVisible = tmp.length <= getMaxHandlers();
+		bool handlesVisible = tmp.length <= getMaxHandlers();
 		Rectangle handleBounds = null;
 
 		for (int i = 0; i < tmp.length; i++)
@@ -447,7 +447,7 @@ public class SelectionCellsHandler implements MouseListener,
 	/**
 	 * 
 	 */
-	public void paintHandles(Graphics g)
+	void paintHandles(Graphics g)
 	{
 		Iterator<CellHandler> it = _handlers.values().iterator();
 
@@ -461,7 +461,7 @@ public class SelectionCellsHandler implements MouseListener,
 	 * (non-Javadoc)
 	 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
 	 */
-	public void mouseClicked(MouseEvent arg0)
+	void mouseClicked(MouseEvent arg0)
 	{
 		// empty
 	}
@@ -470,7 +470,7 @@ public class SelectionCellsHandler implements MouseListener,
 	 * (non-Javadoc)
 	 * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
 	 */
-	public void mouseEntered(MouseEvent arg0)
+	void mouseEntered(MouseEvent arg0)
 	{
 		// empty
 	}
@@ -479,7 +479,7 @@ public class SelectionCellsHandler implements MouseListener,
 	 * (non-Javadoc)
 	 * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
 	 */
-	public void mouseExited(MouseEvent arg0)
+	void mouseExited(MouseEvent arg0)
 	{
 		// empty
 	}

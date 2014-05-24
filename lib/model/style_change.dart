@@ -1,24 +1,24 @@
 part of graph.model;
 
-//import graph.model.IGraphModel.AtomicGraphModelChange;
+import '../model/model.dart' show AtomicGraphModelChange;
 
-public class StyleChange extends AtomicGraphModelChange
+class StyleChange extends AtomicGraphModelChange
 {
 
 	/**
 	 *
 	 */
-	protected Object cell;
+	Object cell;
 
 	/**
 	 * 
 	 */
-	protected String style, previous;
+	String style, previous;
 
 	/**
 	 * 
 	 */
-	public StyleChange()
+	StyleChange()
 	{
 		this(null, null, null);
 	}
@@ -26,7 +26,7 @@ public class StyleChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	public StyleChange(GraphModel model, Object cell, String style)
+	StyleChange(GraphModel model, Object cell, String style)
 	{
 		super(model);
 		this.cell = cell;
@@ -37,7 +37,7 @@ public class StyleChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	public void setCell(Object value)
+	void setCell(Object value)
 	{
 		cell = value;
 	}
@@ -45,7 +45,7 @@ public class StyleChange extends AtomicGraphModelChange
 	/**
 	 * @return the cell
 	 */
-	public Object getCell()
+	Object getCell()
 	{
 		return cell;
 	}
@@ -53,7 +53,7 @@ public class StyleChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	public void setStyle(String value)
+	void setStyle(String value)
 	{
 		style = value;
 	}
@@ -61,7 +61,7 @@ public class StyleChange extends AtomicGraphModelChange
 	/**
 	 * @return the style
 	 */
-	public String getStyle()
+	String getStyle()
 	{
 		return style;
 	}
@@ -69,7 +69,7 @@ public class StyleChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	public void setPrevious(String value)
+	void setPrevious(String value)
 	{
 		previous = value;
 	}
@@ -77,7 +77,7 @@ public class StyleChange extends AtomicGraphModelChange
 	/**
 	 * @return the previous
 	 */
-	public String getPrevious()
+	String getPrevious()
 	{
 		return previous;
 	}
@@ -85,7 +85,7 @@ public class StyleChange extends AtomicGraphModelChange
 	/**
 	 * Changes the root of the model.
 	 */
-	public void execute()
+	void execute()
 	{
 		style = previous;
 		previous = ((GraphModel) model)._styleForCellChanged(cell,

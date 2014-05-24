@@ -3,25 +3,25 @@
  */
 part of graph.shape;
 
-//import graph.canvas.Graphics2DCanvas;
-//import graph.util.Constants;
-//import graph.util.Line;
-//import graph.util.Point2d;
-//import graph.util.Utils;
-//import graph.view.CellState;
+import '../canvas/canvas.dart' show Graphics2DCanvas;
+import '../util/util.dart' show Constants;
+import '../util/util.dart' show Line;
+import '../util/util.dart' show Point2d;
+import '../util/util.dart' show Utils;
+import '../view/view.dart' show CellState;
 
 //import java.awt.Color;
 //import java.util.ArrayList;
 //import java.util.List;
 //import java.util.Map;
 
-public class ConnectorShape extends BasicShape
+class ConnectorShape extends BasicShape
 {
 
 	/**
 	 * 
 	 */
-	public void paintShape(Graphics2DCanvas canvas, CellState state)
+	void paintShape(Graphics2DCanvas canvas, CellState state)
 	{
 		if (state.getAbsolutePointCount() > 1
 				&& _configureGraphics(canvas, state, false))
@@ -32,7 +32,7 @@ public class ConnectorShape extends BasicShape
 
 			// Paints the markers and updates the points
 			// Switch off any dash pattern for markers
-			boolean dashed = Utils.isTrue(style, Constants.STYLE_DASHED);
+			bool dashed = Utils.isTrue(style, Constants.STYLE_DASHED);
 			Object dashedValue = style.get(Constants.STYLE_DASHED);
 
 			if (dashed)
@@ -62,10 +62,10 @@ public class ConnectorShape extends BasicShape
 	/**
 	 * 
 	 */
-	protected void _paintPolyline(Graphics2DCanvas canvas,
+	void _paintPolyline(Graphics2DCanvas canvas,
 			List<Point2d> points, Map<String, Object> style)
 	{
-		boolean rounded = isRounded(style)
+		bool rounded = isRounded(style)
 				&& canvas.getScale() > Constants.MIN_SCALE_FOR_ROUNDED_LINES;
 
 		canvas.paintPolyline(points.toArray(new Point2d[points.size()]),
@@ -75,7 +75,7 @@ public class ConnectorShape extends BasicShape
 	/**
 	 * 
 	 */
-	public boolean isRounded(Map<String, Object> style)
+	bool isRounded(Map<String, Object> style)
 	{
 		return Utils.isTrue(style, Constants.STYLE_ROUNDED, false);
 	}
@@ -99,7 +99,7 @@ public class ConnectorShape extends BasicShape
 	 * 
 	 * @return the offset of the marker from the end of the line
 	 */
-	public Point2d paintMarker(Graphics2DCanvas canvas, CellState state, boolean source)
+	Point2d paintMarker(Graphics2DCanvas canvas, CellState state, bool source)
 	{
 		Map<String, Object> style = state.getStyle();
 		float strokeWidth = (float) (Utils.getFloat(style,
@@ -175,7 +175,7 @@ public class ConnectorShape extends BasicShape
 	 * @param markerSize the scaled maximum length of the marker
 	 * @return a line describing the vector the marker should be drawn along
 	 */
-	protected Line _getMarkerVector(List<Point2d> points, boolean source,
+	Line _getMarkerVector(List<Point2d> points, bool source,
 			double markerSize)
 	{
 		int n = points.size();

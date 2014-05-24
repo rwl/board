@@ -3,7 +3,7 @@
  */
 library graph.layout.orthogonal.model;
 
-//import graph.view.Graph;
+import '../../../view/view.dart' show Graph;
 
 part 'point_pair.dart';
 part 'point_sequence.dart';
@@ -12,7 +12,7 @@ part 'segment.dart';
 /**
  * A custom graph model 
  */
-public class OrthogonalModel
+class OrthogonalModel
 {
    public OrthogonalModel(Graph graph)
    {

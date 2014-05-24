@@ -3,22 +3,22 @@
  */
 part of graph.shape;
 
-//import graph.canvas.Graphics2DCanvas;
-//import graph.swing.util.SwingConstants;
-//import graph.util.Constants;
-//import graph.util.Utils;
-//import graph.view.CellState;
+import '../canvas/canvas.dart' show Graphics2DCanvas;
+import '../swing/util/util.dart' show SwingConstants;
+import '../util/util.dart' show Constants;
+import '../util/util.dart' show Utils;
+import '../view/view.dart' show CellState;
 
 //import java.awt.Rectangle;
 //import java.util.Map;
 
-public class RectangleShape extends BasicShape
+class RectangleShape extends BasicShape
 {
 
 	/**
 	 * 
 	 */
-	public void paintShape(Graphics2DCanvas canvas, CellState state)
+	void paintShape(Graphics2DCanvas canvas, CellState state)
 	{
 		Map<String, Object> style = state.getStyle();
 
@@ -32,7 +32,7 @@ public class RectangleShape extends BasicShape
 			int h = tmp.height;
 			int radius = getArcSize(w, h);
 
-			boolean shadow = hasShadow(canvas, state);
+			bool shadow = hasShadow(canvas, state);
 			int shadowOffsetX = (shadow) ? Constants.SHADOW_OFFSETX : 0;
 			int shadowOffsetY = (shadow) ? Constants.SHADOW_OFFSETY : 0;
 
@@ -90,7 +90,7 @@ public class RectangleShape extends BasicShape
 	 * @param h Height of the rectangle.
 	 * @return Returns the arc size for the given dimension.
 	 */
-	public int getArcSize(int w, int h)
+	int getArcSize(int w, int h)
 	{
 		int arcSize;
 

@@ -9,28 +9,28 @@ part of graph.util;
 /**
  * Base class for objects that dispatch named events.
  */
-public class EventObj
+class EventObj
 {
 
 	/**
 	 * Holds the name of the event.
 	 */
-	protected String _name;
+	String _name;
 	
 	/**
 	 * Holds the properties of the event.
 	 */
-	protected Map<String, Object> _properties;
+	Map<String, Object> _properties;
 	
 	/**
 	 * Holds the consumed state of the event. Default is false.
 	 */
-	protected boolean _consumed = false;
+	bool _consumed = false;
 
 	/**
 	 * Constructs a new event for the given name.
 	 */
-	public EventObj(String name)
+	EventObj(String name)
 	{
 		this(name, (Object[]) null);
 	}
@@ -40,7 +40,7 @@ public class EventObj
 	 * properties are specified using a sequence of keys and values, eg.
 	 * <code>new EventObj("eventName", key1, val1, .., keyN, valN))</code>
 	 */
-	public EventObj(String name, Object... args)
+	EventObj(String name, Object... args)
 	{
 		this._name = name;
 		_properties = new Hashtable<String, Object>();
@@ -60,7 +60,7 @@ public class EventObj
 	/**
 	 * Returns the name of the event.
 	 */
-	public String getName()
+	String getName()
 	{
 		return _name;
 	}
@@ -68,7 +68,7 @@ public class EventObj
 	/**
 	 * 
 	 */
-	public Map<String, Object> getProperties()
+	Map<String, Object> getProperties()
 	{
 		return _properties;
 	}
@@ -76,7 +76,7 @@ public class EventObj
 	/**
 	 * 
 	 */
-	public Object getProperty(String key)
+	Object getProperty(String key)
 	{
 		return _properties.get(key);
 	}
@@ -84,7 +84,7 @@ public class EventObj
 	/**
 	 * Returns true if the event has been consumed.
 	 */
-	public boolean isConsumed()
+	bool isConsumed()
 	{
 		return _consumed;
 	}
@@ -92,7 +92,7 @@ public class EventObj
 	/**
 	 * Consumes the event.
 	 */
-	public void consume()
+	void consume()
 	{
 		_consumed = true;
 	}

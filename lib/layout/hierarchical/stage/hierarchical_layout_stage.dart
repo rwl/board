@@ -8,11 +8,7 @@
  * installation directory. If you are unable to locate this file please
  * contact JGraph sales for another copy.
  */
-library graph.layout.hierarchical.stage;
-
-part 'coordinate_assignment.dart';
-part 'median_hybrid_crossing_reduction.dart';
-part 'minimum_cycle_remover.dart';
+part of graph.layout.hierarchical.stage;
 
 /**
  * The specific layout interface for hierarchical layouts. It adds a
@@ -27,7 +23,7 @@ public interface HierarchicalLayoutStage
 	 * and creates the resulting laid out graph within that facade for further
 	 * use.
 	 */
-	public void execute(Object parent);
+	void execute(Object parent);
 
 }
 
@@ -100,12 +96,12 @@ class _WeightedCellSorter implements Comparable<Object>
   /**
    * Whether or not to flip equal weight values.
    */
-  public boolean nudge = false;
+  public bool nudge = false;
 
   /**
    * Whether or not this cell has been visited in the current assignment
    */
-  public boolean visited = false;
+  public bool visited = false;
 
   /**
    * The index this cell is in the model rank

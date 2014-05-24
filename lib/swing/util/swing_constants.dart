@@ -14,12 +14,12 @@ part of graph.swing.util;
 //import javax.swing.border.Border;
 //import javax.swing.border.LineBorder;
 
-public class SwingConstants
+class SwingConstants
 {
 	/**
 	 * Contains an empty image of size 1, 1.
 	 */
-	public static BufferedImage EMPTY_IMAGE;
+	static BufferedImage EMPTY_IMAGE;
 
 	static
 	{
@@ -39,62 +39,62 @@ public class SwingConstants
 	/**
 	 * Defines the color to be used for shadows. Default is gray.
 	 */
-	public static Color SHADOW_COLOR;
+	static Color SHADOW_COLOR;
 	
 	/**
 	 * Specifies the default valid color. Default is green.
 	 */
-	public static Color DEFAULT_VALID_COLOR;
+	static Color DEFAULT_VALID_COLOR;
 
 	/**
 	 * Specifies the default invalid color. Default is red.
 	 */
-	public static Color DEFAULT_INVALID_COLOR;
+	static Color DEFAULT_INVALID_COLOR;
 	
 	/**
 	 * Defines the rubberband border color. 
 	 */
-	public static Color RUBBERBAND_BORDERCOLOR;
+	static Color RUBBERBAND_BORDERCOLOR;
 
 	/**
 	 * Defines the rubberband fill color with an alpha of 80.
 	 */
-	public static Color RUBBERBAND_FILLCOLOR;
+	static Color RUBBERBAND_FILLCOLOR;
 	
 	/**
 	 * Defines the handle border color. Default is black.
 	 */
-	public static Color HANDLE_BORDERCOLOR;
+	static Color HANDLE_BORDERCOLOR;
 
 	/**
 	 * Defines the handle fill color. Default is green.
 	 */
-	public static Color HANDLE_FILLCOLOR;
+	static Color HANDLE_FILLCOLOR;
 
 	/**
 	 * Defines the label handle fill color. Default is yellow.
 	 */
-	public static Color LABEL_HANDLE_FILLCOLOR;
+	static Color LABEL_HANDLE_FILLCOLOR;
 
 	/**
 	 * Defines the connect handle fill color. Default is blue.
 	 */
-	public static Color CONNECT_HANDLE_FILLCOLOR;
+	static Color CONNECT_HANDLE_FILLCOLOR;
 
 	/**
 	 * Defines the handle fill color for locked handles. Default is red.
 	 */
-	public static Color LOCKED_HANDLE_FILLCOLOR;
+	static Color LOCKED_HANDLE_FILLCOLOR;
 	
 	/**
 	 * Defines the selection color for edges. Default is green.
 	 */
-	public static Color EDGE_SELECTION_COLOR;
+	static Color EDGE_SELECTION_COLOR;
 
 	/**
 	 * Defines the selection color for vertices. Default is green.
 	 */
-	public static Color VERTEX_SELECTION_COLOR;
+	static Color VERTEX_SELECTION_COLOR;
 	
 	static
 	{
@@ -136,7 +136,7 @@ public class SwingConstants
 	 * Defines the stroke used for painting selected edges. Default is a dashed
 	 * line.
 	 */
-	public static Stroke EDGE_SELECTION_STROKE = new BasicStroke(1,
+	static Stroke EDGE_SELECTION_STROKE = new BasicStroke(1,
 			BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, new float[] {
 					3, 3 }, 0.0f);
 
@@ -144,7 +144,7 @@ public class SwingConstants
 	 * Defines the stroke used for painting the border of selected vertices.
 	 * Default is a dashed line.
 	 */
-	public static Stroke VERTEX_SELECTION_STROKE = new BasicStroke(1,
+	static Stroke VERTEX_SELECTION_STROKE = new BasicStroke(1,
 			BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, new float[] {
 					3, 3 }, 0.0f);
 
@@ -152,7 +152,7 @@ public class SwingConstants
 	 * Defines the stroke used for painting the preview for new and existing edges
 	 * that are being changed. Default is a dashed line.
 	 */
-	public static Stroke PREVIEW_STROKE = new BasicStroke(1,
+	static Stroke PREVIEW_STROKE = new BasicStroke(1,
 			BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, new float[] {
 					3, 3 }, 0.0f);
 
@@ -160,7 +160,7 @@ public class SwingConstants
 	 * Defines the border used for painting the preview when vertices are being
 	 * resized, or cells and labels are being moved.
 	 */
-	public static Border PREVIEW_BORDER = new LineBorder(
+	static Border PREVIEW_BORDER = new LineBorder(
 			SwingConstants.HANDLE_BORDERCOLOR)
 	{
 		/**

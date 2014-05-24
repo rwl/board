@@ -1,24 +1,24 @@
 part of graph.model;
 
-//import graph.model.IGraphModel.AtomicGraphModelChange;
+import '../model/model.dart' show AtomicGraphModelChange;
 
-public class ChildChange extends AtomicGraphModelChange
+class ChildChange extends AtomicGraphModelChange
 {
 
 	/**
 	 *
 	 */
-	protected Object parent, previous, child;
+	Object parent, previous, child;
 
 	/**
 	 * 
 	 */
-	protected int index, previousIndex;
+	int index, previousIndex;
 
 	/**
 	 * 
 	 */
-	public ChildChange()
+	ChildChange()
 	{
 		this(null, null, null, 0);
 	}
@@ -26,7 +26,7 @@ public class ChildChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	public ChildChange(GraphModel model, Object parent, Object child)
+	ChildChange(GraphModel model, Object parent, Object child)
 	{
 		this(model, parent, child, 0);
 	}
@@ -34,7 +34,7 @@ public class ChildChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	public ChildChange(GraphModel model, Object parent, Object child,
+	ChildChange(GraphModel model, Object parent, Object child,
 			int index)
 	{
 		super(model);
@@ -48,7 +48,7 @@ public class ChildChange extends AtomicGraphModelChange
 	/**
 	 *
 	 */
-	public void setParent(Object value)
+	void setParent(Object value)
 	{
 		parent = value;
 	}
@@ -56,7 +56,7 @@ public class ChildChange extends AtomicGraphModelChange
 	/**
 	 * @return the parent
 	 */
-	public Object getParent()
+	Object getParent()
 	{
 		return parent;
 	}
@@ -64,7 +64,7 @@ public class ChildChange extends AtomicGraphModelChange
 	/**
 	 *
 	 */
-	public void setPrevious(Object value)
+	void setPrevious(Object value)
 	{
 		previous = value;
 	}
@@ -72,7 +72,7 @@ public class ChildChange extends AtomicGraphModelChange
 	/**
 	 * @return the previous
 	 */
-	public Object getPrevious()
+	Object getPrevious()
 	{
 		return previous;
 	}
@@ -80,7 +80,7 @@ public class ChildChange extends AtomicGraphModelChange
 	/**
 	 *
 	 */
-	public void setChild(Object value)
+	void setChild(Object value)
 	{
 		child = value;
 	}
@@ -88,7 +88,7 @@ public class ChildChange extends AtomicGraphModelChange
 	/**
 	 * @return the child
 	 */
-	public Object getChild()
+	Object getChild()
 	{
 		return child;
 	}
@@ -96,7 +96,7 @@ public class ChildChange extends AtomicGraphModelChange
 	/**
 	 *
 	 */
-	public void setIndex(int value)
+	void setIndex(int value)
 	{
 		index = value;
 	}
@@ -104,7 +104,7 @@ public class ChildChange extends AtomicGraphModelChange
 	/**
 	 * @return the index
 	 */
-	public int getIndex()
+	int getIndex()
 	{
 		return index;
 	}
@@ -112,7 +112,7 @@ public class ChildChange extends AtomicGraphModelChange
 	/**
 	 *
 	 */
-	public void setPreviousIndex(int value)
+	void setPreviousIndex(int value)
 	{
 		previousIndex = value;
 	}
@@ -120,7 +120,7 @@ public class ChildChange extends AtomicGraphModelChange
 	/**
 	 * @return the previousIndex
 	 */
-	public int getPreviousIndex()
+	int getPreviousIndex()
 	{
 		return previousIndex;
 	}
@@ -130,7 +130,7 @@ public class ChildChange extends AtomicGraphModelChange
 	 * edge even if the edge is not stored as an incoming or
 	 * outgoing edge in the respective terminal.
 	 */
-	protected Object getTerminal(Object edge, boolean source)
+	Object getTerminal(Object edge, bool source)
 	{
 		return model.getTerminal(edge, source);
 	}
@@ -140,7 +140,7 @@ public class ChildChange extends AtomicGraphModelChange
 	 * without inserting an incoming or outgoing edge in the
 	 * respective terminal.
 	 */
-	protected void setTerminal(Object edge, Object terminal, boolean source)
+	void setTerminal(Object edge, Object terminal, bool source)
 	{
 		((ICell) edge).setTerminal((ICell) terminal, source);
 	}
@@ -148,7 +148,7 @@ public class ChildChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	protected void connect(Object cell, boolean isConnect)
+	void connect(Object cell, bool isConnect)
 	{
 		Object source = getTerminal(cell, true);
 		Object target = getTerminal(cell, false);
@@ -196,7 +196,7 @@ public class ChildChange extends AtomicGraphModelChange
 	/**
 	 * Returns the index of the given child inside the given parent.
 	 */
-	protected int getChildIndex(Object parent, Object child)
+	int getChildIndex(Object parent, Object child)
 	{
 		return (parent instanceof ICell && child instanceof ICell) ? ((ICell) parent)
 				.getIndex((ICell) child) : 0;
@@ -205,7 +205,7 @@ public class ChildChange extends AtomicGraphModelChange
 	/**
 	 * Changes the root of the model.
 	 */
-	public void execute()
+	void execute()
 	{
 		Object tmp = model.getParent(child);
 		int tmp2 = getChildIndex(tmp, child);

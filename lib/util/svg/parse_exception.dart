@@ -30,23 +30,23 @@ part of graph.util.svg;
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @version $Id: ParseException.java,v 1.1 2012/11/15 13:26:45 gaudenz Exp $
  */
-public class ParseException extends RuntimeException
+class ParseException extends RuntimeException
 {
 
 	/**
 	 * @serial The embedded exception if tunnelling, or null.
 	 */
-	protected Exception exception;
+	Exception exception;
 
 	/**
 	 * @serial The line number.
 	 */
-	protected int lineNumber;
+	int lineNumber;
 
 	/**
 	 * @serial The column number.
 	 */
-	protected int columnNumber;
+	int columnNumber;
 
 	/**
 	 * Creates a new ParseException.
@@ -54,7 +54,7 @@ public class ParseException extends RuntimeException
 	 * @param line The line of the last parsed character.
 	 * @param column The column of the last parsed character.
 	 */
-	public ParseException(String message, int line, int column)
+	ParseException(String message, int line, int column)
 	{
 		super(message);
 		exception = null;
@@ -70,7 +70,7 @@ public class ParseException extends RuntimeException
 	 * the ParseException.
 	 * @param e The exception to be wrapped in a ParseException.
 	 */
-	public ParseException(Exception e)
+	ParseException(Exception e)
 	{
 		exception = e;
 		lineNumber = -1;
@@ -85,7 +85,7 @@ public class ParseException extends RuntimeException
 	 * @param message The detail message.
 	 * @param e The exception to be wrapped in a SAXException.
 	 */
-	public ParseException(String message, Exception e)
+	ParseException(String message, Exception e)
 	{
 		super(message);
 		this.exception = e;
@@ -99,7 +99,7 @@ public class ParseException extends RuntimeException
 	 * the detail message from the embedded exception.
 	 * @return The error or warning message.
 	 */
-	public String getMessage()
+	String getMessage()
 	{
 		String message = super.getMessage();
 
@@ -117,7 +117,7 @@ public class ParseException extends RuntimeException
 	 * Return the embedded exception, if any.
 	 * @return The embedded exception, or null if there is none.
 	 */
-	public Exception getException()
+	Exception getException()
 	{
 		return exception;
 	}
@@ -125,7 +125,7 @@ public class ParseException extends RuntimeException
 	/**
 	 * Returns the line of the last parsed character.
 	 */
-	public int getLineNumber()
+	int getLineNumber()
 	{
 		return lineNumber;
 	}
@@ -133,7 +133,7 @@ public class ParseException extends RuntimeException
 	/**
 	 * Returns the column of the last parsed character.
 	 */
-	public int getColumnNumber()
+	int getColumnNumber()
 	{
 		return columnNumber;
 	}

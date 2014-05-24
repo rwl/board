@@ -3,11 +3,11 @@
  */
 part of graph.shape;
 
-//import graph.canvas.Graphics2DCanvas;
-//import graph.util.Constants;
-//import graph.util.LightweightLabel;
-//import graph.util.Utils;
-//import graph.view.CellState;
+import '../canvas/canvas.dart' show Graphics2DCanvas;
+import '../util/util.dart' show Constants;
+import '../util/util.dart' show LightweightLabel;
+import '../util/util.dart' show Utils;
+import '../view/view.dart' show CellState;
 
 //import java.awt.Graphics2D;
 //import java.awt.Rectangle;
@@ -32,19 +32,19 @@ part of graph.shape;
  * );
  * </pre> 
  */
-public class HtmlTextShape implements ITextShape
+class HtmlTextShape implements ITextShape
 {
 
 	/**
 	 * Specifies if linefeeds should be replaced with breaks in HTML markup.
 	 * Default is true.
 	 */
-	protected boolean _replaceHtmlLinefeeds = true;
+	bool _replaceHtmlLinefeeds = true;
 
 	/**
 	 * Returns replaceHtmlLinefeeds
 	 */
-	public boolean isReplaceHtmlLinefeeds()
+	bool isReplaceHtmlLinefeeds()
 	{
 		return _replaceHtmlLinefeeds;
 	}
@@ -52,7 +52,7 @@ public class HtmlTextShape implements ITextShape
 	/**
 	 * Returns replaceHtmlLinefeeds
 	 */
-	public void setReplaceHtmlLinefeeds(boolean value)
+	void setReplaceHtmlLinefeeds(bool value)
 	{
 		_replaceHtmlLinefeeds = value;
 	}
@@ -60,7 +60,7 @@ public class HtmlTextShape implements ITextShape
 	/**
 	 * 
 	 */
-	protected String _createHtmlDocument(Map<String, Object> style, String text,
+	String _createHtmlDocument(Map<String, Object> style, String text,
 			int w, int h)
 	{
 		String overflow = Utils.getString(style, Constants.STYLE_OVERFLOW, "");
@@ -82,7 +82,7 @@ public class HtmlTextShape implements ITextShape
 	/**
 	 * 
 	 */
-	public void paintShape(Graphics2DCanvas canvas, String text,
+	void paintShape(Graphics2DCanvas canvas, String text,
 			CellState state, Map<String, Object> style)
 	{
 		LightweightLabel textRenderer = LightweightLabel

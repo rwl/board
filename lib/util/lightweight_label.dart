@@ -13,7 +13,7 @@ part of graph.util;
  * @author Administrator
  * 
  */
-public class LightweightLabel extends JLabel
+class LightweightLabel extends JLabel
 {
 
 	/**
@@ -24,7 +24,7 @@ public class LightweightLabel extends JLabel
 	/**
 	 * 
 	 */
-	protected static LightweightLabel _sharedInstance;
+	static LightweightLabel _sharedInstance;
 
 	/**
 	 * Initializes the shared instance.
@@ -44,7 +44,7 @@ public class LightweightLabel extends JLabel
 	/**
 	 * 
 	 */
-	public static LightweightLabel getSharedInstance()
+	static LightweightLabel getSharedInstance()
 	{
 		return _sharedInstance;
 	}
@@ -53,7 +53,7 @@ public class LightweightLabel extends JLabel
 	 * 
 	 * 
 	 */
-	public LightweightLabel()
+	LightweightLabel()
 	{
 		setFont(new Font(Constants.DEFAULT_FONTFAMILY, 0,
 				Constants.DEFAULT_FONTSIZE));
@@ -64,7 +64,7 @@ public class LightweightLabel extends JLabel
 	 * Overridden for performance reasons.
 	 * 
 	 */
-	public void validate()
+	void validate()
 	{
 	}
 
@@ -72,7 +72,7 @@ public class LightweightLabel extends JLabel
 	 * Overridden for performance reasons.
 	 * 
 	 */
-	public void revalidate()
+	void revalidate()
 	{
 	}
 
@@ -80,7 +80,7 @@ public class LightweightLabel extends JLabel
 	 * Overridden for performance reasons.
 	 * 
 	 */
-	public void repaint(long tm, int x, int y, int width, int height)
+	void repaint(long tm, int x, int y, int width, int height)
 	{
 	}
 
@@ -88,7 +88,7 @@ public class LightweightLabel extends JLabel
 	 * Overridden for performance reasons.
 	 * 
 	 */
-	public void repaint(Rectangle r)
+	void repaint(Rectangle r)
 	{
 	}
 
@@ -96,7 +96,7 @@ public class LightweightLabel extends JLabel
 	 * Overridden for performance reasons.
 	 * 
 	 */
-	protected void firePropertyChange(String propertyName, Object oldValue,
+	void firePropertyChange(String propertyName, Object oldValue,
 			Object newValue)
 	{
 		// Strings get interned...
@@ -110,7 +110,7 @@ public class LightweightLabel extends JLabel
 	 * Overridden for performance reasons.
 	 * 
 	 */
-	public void firePropertyChange(String propertyName, byte oldValue,
+	void firePropertyChange(String propertyName, byte oldValue,
 			byte newValue)
 	{
 	}
@@ -119,7 +119,7 @@ public class LightweightLabel extends JLabel
 	 * Overridden for performance reasons.
 	 * 
 	 */
-	public void firePropertyChange(String propertyName, char oldValue,
+	void firePropertyChange(String propertyName, char oldValue,
 			char newValue)
 	{
 	}
@@ -128,7 +128,7 @@ public class LightweightLabel extends JLabel
 	 * Overridden for performance reasons.
 	 * 
 	 */
-	public void firePropertyChange(String propertyName, short oldValue,
+	void firePropertyChange(String propertyName, short oldValue,
 			short newValue)
 	{
 	}
@@ -137,7 +137,7 @@ public class LightweightLabel extends JLabel
 	 * Overridden for performance reasons.
 	 * 
 	 */
-	public void firePropertyChange(String propertyName, int oldValue,
+	void firePropertyChange(String propertyName, int oldValue,
 			int newValue)
 	{
 	}
@@ -146,7 +146,7 @@ public class LightweightLabel extends JLabel
 	 * Overridden for performance reasons.
 	 * 
 	 */
-	public void firePropertyChange(String propertyName, long oldValue,
+	void firePropertyChange(String propertyName, long oldValue,
 			long newValue)
 	{
 	}
@@ -155,7 +155,7 @@ public class LightweightLabel extends JLabel
 	 * Overridden for performance reasons.
 	 * 
 	 */
-	public void firePropertyChange(String propertyName, float oldValue,
+	void firePropertyChange(String propertyName, float oldValue,
 			float newValue)
 	{
 	}
@@ -164,7 +164,7 @@ public class LightweightLabel extends JLabel
 	 * Overridden for performance reasons.
 	 * 
 	 */
-	public void firePropertyChange(String propertyName, double oldValue,
+	void firePropertyChange(String propertyName, double oldValue,
 			double newValue)
 	{
 	}
@@ -173,8 +173,8 @@ public class LightweightLabel extends JLabel
 	 * Overridden for performance reasons.
 	 * 
 	 */
-	public void firePropertyChange(String propertyName, boolean oldValue,
-			boolean newValue)
+	void firePropertyChange(String propertyName, bool oldValue,
+			bool newValue)
 	{
 	}
 

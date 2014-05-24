@@ -3,7 +3,7 @@
  */
 part of graph.view;
 
-//import graph.util.Constants;
+import '../util/util.dart' show Constants;
 
 //import java.util.Hashtable;
 //import java.util.Map;
@@ -19,23 +19,23 @@ part of graph.view;
  * To change the default font size for all cells, set
  * Constants.DEFAULT_FONTSIZE.
  */
-public class Stylesheet
+class Stylesheet
 {
 
 	/**
 	 * Shared immutable empty hashtable (for undefined cell styles).
 	 */
-	public static final Map<String, Object> EMPTY_STYLE = new Hashtable<String, Object>();
+	static final Map<String, Object> EMPTY_STYLE = new Hashtable<String, Object>();
 
 	/**
 	 * Maps from names to styles.
 	 */
-	protected Map<String, Map<String, Object>> _styles = new Hashtable<String, Map<String, Object>>();
+	Map<String, Map<String, Object>> _styles = new Hashtable<String, Map<String, Object>>();
 
 	/**
 	 * Constructs a new stylesheet and assigns default styles.
 	 */
-	public Stylesheet()
+	Stylesheet()
 	{
 		setDefaultVertexStyle(_createDefaultVertexStyle());
 		setDefaultEdgeStyle(_createDefaultEdgeStyle());
@@ -46,7 +46,7 @@ public class Stylesheet
 	 * 
 	 * @return All styles in this stylesheet.
 	 */
-	public Map<String, Map<String, Object>> getStyles()
+	Map<String, Map<String, Object>> getStyles()
 	{
 		return _styles;
 	}
@@ -54,7 +54,7 @@ public class Stylesheet
 	/**
 	 * Sets all styles in the stylesheet.
 	 */
-	public void setStyles(Map<String, Map<String, Object>> styles)
+	void setStyles(Map<String, Map<String, Object>> styles)
 	{
 		this._styles = styles;
 	}
@@ -64,7 +64,7 @@ public class Stylesheet
 	 * 
 	 * @return Returns the default vertex style.
 	 */
-	protected Map<String, Object> _createDefaultVertexStyle()
+	Map<String, Object> _createDefaultVertexStyle()
 	{
 		Map<String, Object> style = new Hashtable<String, Object>();
 
@@ -84,7 +84,7 @@ public class Stylesheet
 	 * 
 	 * @return Returns the default edge style.
 	 */
-	protected Map<String, Object> _createDefaultEdgeStyle()
+	Map<String, Object> _createDefaultEdgeStyle()
 	{
 		Map<String, Object> style = new Hashtable<String, Object>();
 
@@ -103,7 +103,7 @@ public class Stylesheet
 	 * 
 	 * @return Returns the default vertex style.
 	 */
-	public Map<String, Object> getDefaultVertexStyle()
+	Map<String, Object> getDefaultVertexStyle()
 	{
 		return _styles.get("defaultVertex");
 	}
@@ -113,7 +113,7 @@ public class Stylesheet
 	 * 
 	 * @param value Style to be used for vertices.
 	 */
-	public void setDefaultVertexStyle(Map<String, Object> value)
+	void setDefaultVertexStyle(Map<String, Object> value)
 	{
 		putCellStyle("defaultVertex", value);
 	}
@@ -123,7 +123,7 @@ public class Stylesheet
 	 * 
 	 * @return Returns the default edge style.
 	 */
-	public Map<String, Object> getDefaultEdgeStyle()
+	Map<String, Object> getDefaultEdgeStyle()
 	{
 		return _styles.get("defaultEdge");
 	}
@@ -133,7 +133,7 @@ public class Stylesheet
 	 * 
 	 * @param value Style to be used for edges.
 	 */
-	public void setDefaultEdgeStyle(Map<String, Object> value)
+	void setDefaultEdgeStyle(Map<String, Object> value)
 	{
 		putCellStyle("defaultEdge", value);
 	}
@@ -144,7 +144,7 @@ public class Stylesheet
 	 * @param name Name for the style to be stored.
 	 * @param style Key, value pairs that define the style.
 	 */
-	public void putCellStyle(String name, Map<String, Object> style)
+	void putCellStyle(String name, Map<String, Object> style)
 	{
 		_styles.put(name, style);
 	}
@@ -158,7 +158,7 @@ public class Stylesheet
 	 * @param defaultStyle Default style to be returned if no style can be found.
 	 * @return Returns the style for the given formatted cell style.
 	 */
-	public Map<String, Object> getCellStyle(String name,
+	Map<String, Object> getCellStyle(String name,
 			Map<String, Object> defaultStyle)
 	{
 		Map<String, Object> style = defaultStyle;

@@ -11,9 +11,9 @@
  */
 part of graph.analysis;
 
-//import graph.view.CellState;
-//import graph.view.Graph;
-//import graph.view.GraphView;
+import '../view/graph.dart' show CellState;
+import '../view/view.dart' show Graph;
+import '../view/view.dart' show GraphView;
 
 //import java.util.ArrayList;
 //import java.util.Arrays;
@@ -51,22 +51,22 @@ part of graph.analysis;
  * <h3>Connection Components</h3>
  * 
  * The union find may be used as follows to determine whether two cells are
- * connected: <code>boolean connected = uf.differ(vertex1, vertex2)</code>.
+ * connected: <code>bool connected = uf.differ(vertex1, vertex2)</code>.
  * 
  * @see ICostFunction
  */
-public class GraphAnalysis
+class GraphAnalysis
 {
 
 	/**
 	 * Holds the shared instance of this class.
 	 */
-	protected static GraphAnalysis _instance = new GraphAnalysis();
+	static GraphAnalysis _instance = new GraphAnalysis();
 
 	/**
 	 *
 	 */
-	protected GraphAnalysis()
+	GraphAnalysis()
 	{
 		// empty
 	}
@@ -74,7 +74,7 @@ public class GraphAnalysis
 	/**
 	 * @return Returns the sharedInstance.
 	 */
-	public static GraphAnalysis getInstance()
+	static GraphAnalysis getInstance()
 	{
 		return _instance;
 	}
@@ -84,7 +84,7 @@ public class GraphAnalysis
 	 * 
 	 * @param instance The instance to set.
 	 */
-	public static void setInstance(GraphAnalysis instance)
+	static void setInstance(GraphAnalysis instance)
 	{
 		GraphAnalysis._instance = instance;
 	}
@@ -106,8 +106,8 @@ public class GraphAnalysis
 	 * 
 	 * @see #_createPriorityQueue()
 	 */
-	public Object[] getShortestPath(Graph graph, Object from, Object to,
-			ICostFunction cf, int steps, boolean directed)
+	Object[] getShortestPath(Graph graph, Object from, Object to,
+			ICostFunction cf, int steps, bool directed)
 	{
 		// Sets up a pqueue and a hashtable to store the predecessor for each
 		// cell in tha graph traversal. The pqueue is initialized
@@ -194,7 +194,7 @@ public class GraphAnalysis
 				Object source = (state != null) ? state
 						.getVisibleTerminal(true) : view.getVisibleTerminal(
 						edge, true);
-				boolean isSource = source == obj;
+				bool isSource = source == obj;
 				obj = (state != null) ? state.getVisibleTerminal(!isSource)
 						: view.getVisibleTerminal(edge, !isSource);
 				list.add(0, obj);
@@ -226,8 +226,8 @@ public class GraphAnalysis
 	 * 
 	 * @see #_createPriorityQueue()
 	 */
-	public Object[] getMinimumSpanningTree(Graph graph, Object[] v,
-			ICostFunction cf, boolean directed)
+	Object[] getMinimumSpanningTree(Graph graph, Object[] v,
+			ICostFunction cf, bool directed)
 	{
 		ArrayList<Object> mst = new ArrayList<Object>(v.length);
 
@@ -318,7 +318,7 @@ public class GraphAnalysis
 	 * 
 	 * @see #_createUnionFind(Object[])
 	 */
-	public Object[] getMinimumSpanningTree(Graph graph, Object[] v,
+	Object[] getMinimumSpanningTree(Graph graph, Object[] v,
 			Object[] e, ICostFunction cf)
 	{
 		// Sorts all edges according to their lengths, then creates a union
@@ -362,7 +362,7 @@ public class GraphAnalysis
 	 * 
 	 * @see #_createUnionFind(Object[])
 	 */
-	public UnionFind getConnectionComponents(Graph graph, Object[] v,
+	UnionFind getConnectionComponents(Graph graph, Object[] v,
 			Object[] e)
 	{
 		GraphView view = graph.getView();
@@ -394,7 +394,7 @@ public class GraphAnalysis
 	 * @return Returns an ordered set of <code>cells</code> wrt.
 	 *         <code>cf</code>
 	 */
-	public CellState[] sort(CellState[] states, final ICostFunction cf)
+	CellState[] sort(CellState[] states, final ICostFunction cf)
 	{
 		List<CellState> result = Arrays.asList(states);
 
@@ -428,7 +428,7 @@ public class GraphAnalysis
 	 * 
 	 * @return Returns the sum of all cell cost
 	 */
-	public double sum(CellState[] states, ICostFunction cf)
+	double sum(CellState[] states, ICostFunction cf)
 	{
 		double sum = 0;
 
@@ -448,7 +448,7 @@ public class GraphAnalysis
 	 * 
 	 * @return Returns a union find structure for <code>v</code>
 	 */
-	protected UnionFind _createUnionFind(Object[] v)
+	UnionFind _createUnionFind(Object[] v)
 	{
 		return new UnionFind(v);
 	}
@@ -456,7 +456,7 @@ public class GraphAnalysis
 	/**
 	 * Hook for subclassers to provide a custom fibonacci heap.
 	 */
-	protected FibonacciHeap _createPriorityQueue()
+	FibonacciHeap _createPriorityQueue()
 	{
 		return new FibonacciHeap();
 	}

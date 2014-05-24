@@ -1,49 +1,49 @@
 part of graph.view;
 
-//import graph.model.Geometry;
-//import graph.model.IGraphModel;
-//import graph.util.Event;
-//import graph.util.EventObj;
-//import graph.util.EventSource;
-//import graph.util.Point2d;
+import '../model/model.dart' show Geometry;
+import '../model/model.dart' show IGraphModel;
+import '../util/util.dart' show Event;
+import '../util/util.dart' show EventObj;
+import '../util/util.dart' show EventSource;
+import '../util/util.dart' show Point2d;
 
-public class SpaceManager extends EventSource
+class SpaceManager extends EventSource
 {
 
 	/**
 	 * Defines the type of the source or target terminal. The type is a string
 	 * passed to Cell.is to check if the rule applies to a cell.
 	 */
-	protected Graph _graph;
+	Graph _graph;
 
 	/**
 	 * Optional string that specifies the value of the attribute to be passed
 	 * to Cell.is to check if the rule applies to a cell.
 	 */
-	protected boolean _enabled;
+	bool _enabled;
 
 	/**
 	 * Optional string that specifies the attributename to be passed to
 	 * Cell.is to check if the rule applies to a cell.
 	 */
-	protected boolean _shiftRightwards;
+	bool _shiftRightwards;
 
 	/**
 	 * Optional string that specifies the attributename to be passed to
 	 * Cell.is to check if the rule applies to a cell.
 	 */
-	protected boolean _shiftDownwards;
+	bool _shiftDownwards;
 
 	/**
 	 * Optional string that specifies the attributename to be passed to
 	 * Cell.is to check if the rule applies to a cell.
 	 */
-	protected boolean _extendParents;
+	bool _extendParents;
 
 	/**
 	 * 
 	 */
-	protected IEventListener _resizeHandler = new IEventListener()
+	IEventListener _resizeHandler = new IEventListener()
 	{
 		public void invoke(Object source, EventObj evt)
 		{
@@ -57,7 +57,7 @@ public class SpaceManager extends EventSource
 	/**
 	 * 
 	 */
-	public SpaceManager(Graph graph)
+	SpaceManager(Graph graph)
 	{
 		setGraph(graph);
 	}
@@ -65,7 +65,7 @@ public class SpaceManager extends EventSource
 	/**
 	 * 
 	 */
-	public boolean isCellIgnored(Object cell)
+	bool isCellIgnored(Object cell)
 	{
 		return !getGraph().getModel().isVertex(cell);
 	}
@@ -73,7 +73,7 @@ public class SpaceManager extends EventSource
 	/**
 	 * 
 	 */
-	public boolean isCellShiftable(Object cell)
+	bool isCellShiftable(Object cell)
 	{
 		return getGraph().getModel().isVertex(cell)
 				&& getGraph().isCellMovable(cell);
@@ -82,7 +82,7 @@ public class SpaceManager extends EventSource
 	/**
 	 * @return the enabled
 	 */
-	public boolean isEnabled()
+	bool isEnabled()
 	{
 		return _enabled;
 	}
@@ -90,7 +90,7 @@ public class SpaceManager extends EventSource
 	/**
 	 * @param value the enabled to set
 	 */
-	public void setEnabled(boolean value)
+	void setEnabled(bool value)
 	{
 		_enabled = value;
 	}
@@ -98,7 +98,7 @@ public class SpaceManager extends EventSource
 	/**
 	 * @return the shiftRightwards
 	 */
-	public boolean isShiftRightwards()
+	bool isShiftRightwards()
 	{
 		return _shiftRightwards;
 	}
@@ -106,7 +106,7 @@ public class SpaceManager extends EventSource
 	/**
 	 * @param shiftRightwards the shiftRightwards to set
 	 */
-	public void setShiftRightwards(boolean shiftRightwards)
+	void setShiftRightwards(bool shiftRightwards)
 	{
 		this._shiftRightwards = shiftRightwards;
 	}
@@ -114,7 +114,7 @@ public class SpaceManager extends EventSource
 	/**
 	 * @return the shiftDownwards
 	 */
-	public boolean isShiftDownwards()
+	bool isShiftDownwards()
 	{
 		return _shiftDownwards;
 	}
@@ -122,7 +122,7 @@ public class SpaceManager extends EventSource
 	/**
 	 * @param shiftDownwards the shiftDownwards to set
 	 */
-	public void setShiftDownwards(boolean shiftDownwards)
+	void setShiftDownwards(bool shiftDownwards)
 	{
 		this._shiftDownwards = shiftDownwards;
 	}
@@ -130,7 +130,7 @@ public class SpaceManager extends EventSource
 	/**
 	 * @return the extendParents
 	 */
-	public boolean isExtendParents()
+	bool isExtendParents()
 	{
 		return _extendParents;
 	}
@@ -138,7 +138,7 @@ public class SpaceManager extends EventSource
 	/**
 	 * @param extendParents the extendParents to set
 	 */
-	public void setExtendParents(boolean extendParents)
+	void setExtendParents(bool extendParents)
 	{
 		this._extendParents = extendParents;
 	}
@@ -146,7 +146,7 @@ public class SpaceManager extends EventSource
 	/**
 	 * @return the graph
 	 */
-	public Graph getGraph()
+	Graph getGraph()
 	{
 		return _graph;
 	}
@@ -154,7 +154,7 @@ public class SpaceManager extends EventSource
 	/**
 	 * @param graph the graph to set
 	 */
-	public void setGraph(Graph graph)
+	void setGraph(Graph graph)
 	{
 		if (this._graph != null)
 		{
@@ -173,7 +173,7 @@ public class SpaceManager extends EventSource
 	/**
 	 * 
 	 */
-	protected void _cellsResized(Object[] cells)
+	void _cellsResized(Object[] cells)
 	{
 		if (cells != null)
 		{
@@ -201,7 +201,7 @@ public class SpaceManager extends EventSource
 	/**
 	 * 
 	 */
-	protected void _cellResized(Object cell)
+	void _cellResized(Object cell)
 	{
 		Graph graph = getGraph();
 		GraphView view = graph.getView();
@@ -259,9 +259,9 @@ public class SpaceManager extends EventSource
 	/**
 	 * 
 	 */
-	protected void _shiftCell(Object cell, double dx, double dy, double x0,
+	void _shiftCell(Object cell, double dx, double dy, double x0,
 			double y0, double right, double bottom, double fx, double fy,
-			boolean extendParent)
+			bool extendParent)
 	{
 		Graph graph = getGraph();
 		CellState state = graph.getView().getState(cell);
@@ -329,12 +329,12 @@ public class SpaceManager extends EventSource
 	/**
 	 * 
 	 */
-	protected Object[] _getCellsToShift(CellState state)
+	Object[] _getCellsToShift(CellState state)
 	{
 		Graph graph = this.getGraph();
 		Object parent = graph.getModel().getParent(state.getCell());
-		boolean down = isShiftDownwards();
-		boolean right = isShiftRightwards();
+		bool down = isShiftDownwards();
+		bool right = isShiftRightwards();
 
 		return graph.getCellsBeyond(state.getX()
 				+ ((down) ? 0 : state.getWidth()), state.getY()
@@ -345,7 +345,7 @@ public class SpaceManager extends EventSource
 	/**
 	 * 
 	 */
-	public void destroy()
+	void destroy()
 	{
 		setGraph(null);
 	}

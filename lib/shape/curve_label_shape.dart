@@ -3,14 +3,14 @@
  */
 part of graph.shape;
 
-//import graph.canvas.Graphics2DCanvas;
-//import graph.util.Constants;
-//import graph.util.Curve;
-//import graph.util.Line;
-//import graph.util.Point2d;
-//import graph.util.Rect;
-//import graph.util.Utils;
-//import graph.view.CellState;
+import '../canvas/canvas.dart' show Graphics2DCanvas;
+import '../util/util.dart' show Constants;
+import '../util/util.dart' show Curve;
+import '../util/util.dart' show Line;
+import '../util/util.dart' show Point2d;
+import '../util/util.dart' show Rect;
+import '../util/util.dart' show Utils;
+import '../view/view.dart' show CellState;
 
 //import java.awt.Color;
 //import java.awt.Font;
@@ -34,98 +34,98 @@ part of graph.shape;
  * Draws the edge label along a curve derived from the curve describing
  * the edge's path
  */
-public class CurveLabelShape implements ITextShape
+class CurveLabelShape implements ITextShape
 {
 	/**
 	 * Cache of the label text
 	 */
-	protected String _lastValue;
+	String _lastValue;
 
 	/**
 	 * Cache of the label font
 	 */
-	protected Font _lastFont;
+	Font _lastFont;
 
 	/**
 	 * Cache of the last set of guide points that this label was calculated for
 	 */
-	protected List<Point2d> _lastPoints;
+	List<Point2d> _lastPoints;
 
 	/**
 	 * Cache of the points between which drawing straight lines views as a
 	 * curve
 	 */
-	protected Curve _curve;
+	Curve _curve;
 
 	/**
 	 * Cache the state associated with this shape
 	 */
-	protected CellState _state;
+	CellState _state;
 
 	/**
 	 * Cache of information describing characteristics relating to drawing 
 	 * each glyph of this label
 	 */
-	protected LabelGlyphCache[] _labelGlyphs;
+	LabelGlyphCache[] _labelGlyphs;
 
 	/**
 	 * Cache of the total length of the branch label
 	 */
-	protected double _labelSize;
+	double _labelSize;
 
 	/**
 	 * Cache of the bounds of the label
 	 */
-	protected Rect _labelBounds;
+	Rect _labelBounds;
 
 	/**
 	 * ADT to encapsulate label positioning information
 	 */
-	protected LabelPosition _labelPosition = new LabelPosition();
+	LabelPosition _labelPosition = new LabelPosition();
 
 	/**
 	 * Buffer at both ends of the label
 	 */
-	public static double LABEL_BUFFER = 30;
+	static double LABEL_BUFFER = 30;
 
 	/**
 	 * Factor by which text on the inside of curve is stretched
 	 */
-	public static double CURVE_TEXT_STRETCH_FACTOR = 20.0;
+	static double CURVE_TEXT_STRETCH_FACTOR = 20.0;
 
 	/**
 	 * Indicates that a glyph does not have valid drawing bounds, usually 
 	 * because it is not visible
 	 */
-	public static Rect INVALID_GLYPH_BOUNDS = new Rect(0, 0, 0, 0);
+	static Rect INVALID_GLYPH_BOUNDS = new Rect(0, 0, 0, 0);
 
 	/**
 	 * The index of the central glyph of the label that is visible
 	 */
-	public int centerVisibleIndex = 0;
+	int centerVisibleIndex = 0;
 
 	/**
 	 * Specifies if image aspect should be preserved in drawImage. Default is true.
 	 */
-	public static Object FONT_FRACTIONALMETRICS = RenderingHints.VALUE_FRACTIONALMETRICS_DEFAULT;
+	static Object FONT_FRACTIONALMETRICS = RenderingHints.VALUE_FRACTIONALMETRICS_DEFAULT;
 
 	/**
 	 * Cache of BIDI glyph vectors
 	 */
-	public GlyphVector[] rtlGlyphVectors;
+	GlyphVector[] rtlGlyphVectors;
 
 	/**
 	 * Shared FRC for font size calculations
 	 */
-	public static FontRenderContext frc = new FontRenderContext(null, false,
+	static FontRenderContext frc = new FontRenderContext(null, false,
 			false);
 
 	/**
 	 *
 	 */
-	protected boolean _rotationEnabled = true;
+	bool _rotationEnabled = true;
 
-	public CurveLabelShape(CellState state, Curve value)
+	CurveLabelShape(CellState state, Curve value)
 	{
 		this._state = state;
 		this._curve = value;
@@ -134,7 +134,7 @@ public class CurveLabelShape implements ITextShape
 	/**
 	 *
 	 */
-	public boolean getRotationEnabled()
+	bool getRotationEnabled()
 	{
 		return _rotationEnabled;
 	}
@@ -142,7 +142,7 @@ public class CurveLabelShape implements ITextShape
 	/**
 	 *
 	 */
-	public void setRotationEnabled(boolean value)
+	void setRotationEnabled(bool value)
 	{
 		_rotationEnabled = value;
 	}
@@ -150,7 +150,7 @@ public class CurveLabelShape implements ITextShape
 	/**
 	 * 
 	 */
-	public void paintShape(Graphics2DCanvas canvas, String text,
+	void paintShape(Graphics2DCanvas canvas, String text,
 			CellState state, Map<String, Object> style)
 	{
 		Rectangle rect = state.getLabelBounds().getRectangle();
@@ -221,7 +221,7 @@ public class CurveLabelShape implements ITextShape
 	 * @param label the entire string of the label.
 	 * @param style the edge style
 	 */
-	public Rect updateLabelBounds(String label, Map<String, Object> style)
+	Rect updateLabelBounds(String label, Map<String, Object> style)
 	{
 		double scale = _state.getView().getScale();
 		Font font = Utils.getFont(style, scale);
@@ -246,7 +246,7 @@ public class CurveLabelShape implements ITextShape
 		{
 			char[] labelChars = label.toCharArray();
 			ArrayList<LabelGlyphCache> glyphList = new ArrayList<LabelGlyphCache>();
-			boolean bidiRequired = Bidi.requiresBidi(labelChars, 0,
+			bool bidiRequired = Bidi.requiresBidi(labelChars, 0,
 					labelChars.length);
 
 			_labelSize = 0;
@@ -559,7 +559,7 @@ public class CurveLabelShape implements ITextShape
 	 * @param j the index of the label
 	 * @param currentPos the distance along the label curve the glyph is
 	 */
-	protected void _postprocessGlyph(Curve curve, String label, int j,
+	void _postprocessGlyph(Curve curve, String label, int j,
 			double currentPos)
 	{
 	}
@@ -570,7 +570,7 @@ public class CurveLabelShape implements ITextShape
 	 * @param rect the rectangle to detect for a hit
 	 * @return whether or not the rectangle hits this curve
 	 */
-	public boolean intersectsRect(Rectangle rect)
+	bool intersectsRect(Rectangle rect)
 	{
 		// To save CPU, we can test if the rectangle intersects the entire
 		// bounds of this label
@@ -599,7 +599,7 @@ public class CurveLabelShape implements ITextShape
 	 * @param style the style of the curve
 	 * @param label the string label to be displayed on the curve
 	 */
-	protected void _calculationLabelPosition(Map<String, Object> style,
+	void _calculationLabelPosition(Map<String, Object> style,
 			String label)
 	{
 		double curveLength = _curve.getCurveLength(Curve.LABEL_CURVE);
@@ -616,7 +616,7 @@ public class CurveLabelShape implements ITextShape
 	/**
 	 * @return the curve
 	 */
-	public Curve getCurve()
+	Curve getCurve()
 	{
 		return _curve;
 	}
@@ -624,7 +624,7 @@ public class CurveLabelShape implements ITextShape
 	/**
 	 * @param curve the curve to set
 	 */
-	public void setCurve(Curve curve)
+	void setCurve(Curve curve)
 	{
 		this._curve = curve;
 	}
@@ -634,7 +634,7 @@ public class CurveLabelShape implements ITextShape
 	 * branch label. Each instance represents one glyph
 	 *
 	 */
-	public class LabelGlyphCache
+	class LabelGlyphCache
 	{
 		/**
 		 * Cache of the bounds of the individual element of the label of this 
@@ -667,14 +667,14 @@ public class CurveLabelShape implements ITextShape
 		/**
 		 * Whether or not the glyph should be drawn
 		 */
-		public boolean visible;
+		public bool visible;
 	}
 
 	/**
 	 * Utility class that stores details of how the label is positioned
 	 * on the curve
 	 */
-	public class LabelPosition
+	class LabelPosition
 	{
 		public double startBuffer = LABEL_BUFFER;
 
@@ -683,7 +683,7 @@ public class CurveLabelShape implements ITextShape
 		public double defaultInterGlyphSpace = 0;;
 	}
 
-	public Rect getLabelBounds()
+	Rect getLabelBounds()
 	{
 		return _labelBounds;
 	}
@@ -692,7 +692,7 @@ public class CurveLabelShape implements ITextShape
 	 * Returns the drawing bounds of the central indexed visible glyph
 	 * @return the centerVisibleIndex
 	 */
-	public Rect getCenterVisiblePosition()
+	Rect getCenterVisiblePosition()
 	{
 		return _labelGlyphs[centerVisibleIndex].drawingBounds;
 	}

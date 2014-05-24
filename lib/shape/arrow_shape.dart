@@ -1,20 +1,20 @@
 part of graph.shape;
 
-//import graph.canvas.Graphics2DCanvas;
-//import graph.util.Constants;
-//import graph.util.Point2d;
-//import graph.view.CellState;
+import '../canvas/canvas.dart' show Graphics2DCanvas;
+import '../util/util.dart' show Constants;
+import '../util/util.dart' show Point2d;
+import '../view/view.dart' show CellState;
 
 //import java.awt.Polygon;
 //import java.awt.Shape;
 
-public class ArrowShape extends BasicShape
+class ArrowShape extends BasicShape
 {
 
 	/**
 	 *
 	 */
-	public Shape createShape(Graphics2DCanvas canvas, CellState state)
+	Shape createShape(Graphics2DCanvas canvas, CellState state)
 	{
 		double scale = canvas.getScale();
 		Point2d p0 = state.getAbsolutePoint(0);

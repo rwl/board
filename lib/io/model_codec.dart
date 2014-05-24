@@ -3,8 +3,8 @@
  */
 part of graph.io;
 
-//import graph.model.GraphModel;
-//import graph.model.ICell;
+import '../model/model.dart' show GraphModel;
+import '../model/model.dart' show ICell;
 
 //import java.util.Map;
 
@@ -16,13 +16,13 @@ part of graph.io;
  * dynamically at load time and used implicitly via Codec
  * and the CodecRegistry.
  */
-public class ModelCodec extends ObjectCodec
+class ModelCodec extends ObjectCodec
 {
 
 	/**
 	 * Constructs a new model codec.
 	 */
-	public ModelCodec()
+	ModelCodec()
 	{
 		this(new GraphModel());
 	}
@@ -30,7 +30,7 @@ public class ModelCodec extends ObjectCodec
 	/**
 	 * Constructs a new model codec for the given template.
 	 */
-	public ModelCodec(Object template)
+	ModelCodec(Object template)
 	{
 		this(template, null, null, null);
 	}
@@ -38,7 +38,7 @@ public class ModelCodec extends ObjectCodec
 	/**
 	 * Constructs a new model codec for the given arguments.
 	 */
-	public ModelCodec(Object template, String[] exclude, String[] idrefs,
+	ModelCodec(Object template, String[] exclude, String[] idrefs,
 			Map<String, String> mapping)
 	{
 		super(template, exclude, idrefs, mapping);
@@ -49,7 +49,7 @@ public class ModelCodec extends ObjectCodec
 	 * of cell nodes as produced by the CellCodec. The sequence is
 	 * wrapped-up in a node with the name root.
 	 */
-	protected void _encodeObject(Codec enc, Object obj, Node node)
+	void _encodeObject(Codec enc, Object obj, Node node)
 	{
 		if (obj instanceof GraphModel)
 		{
@@ -64,7 +64,7 @@ public class ModelCodec extends ObjectCodec
 	 * Reads the cells into the graph model. All cells are children of the root
 	 * element in the node.
 	 */
-	public Node beforeDecode(Codec dec, Node node, Object into)
+	Node beforeDecode(Codec dec, Node node, Object into)
 	{
 		if (node instanceof Element)
 		{

@@ -1,24 +1,24 @@
 part of graph.model;
 
-//import graph.model.IGraphModel.AtomicGraphModelChange;
+import '../model/model.dart' show AtomicGraphModelChange;
 
-public class VisibleChange extends AtomicGraphModelChange
+class VisibleChange extends AtomicGraphModelChange
 {
 
 	/**
 	 *
 	 */
-	protected Object cell;
+	Object cell;
 
 	/**
 	 * 
 	 */
-	protected boolean visible, previous;
+	bool visible, previous;
 
 	/**
 	 * 
 	 */
-	public VisibleChange()
+	VisibleChange()
 	{
 		this(null, null, false);
 	}
@@ -26,7 +26,7 @@ public class VisibleChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	public VisibleChange(GraphModel model, Object cell, boolean visible)
+	VisibleChange(GraphModel model, Object cell, bool visible)
 	{
 		super(model);
 		this.cell = cell;
@@ -37,7 +37,7 @@ public class VisibleChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	public void setCell(Object value)
+	void setCell(Object value)
 	{
 		cell = value;
 	}
@@ -45,7 +45,7 @@ public class VisibleChange extends AtomicGraphModelChange
 	/**
 	 * @return the cell
 	 */
-	public Object getCell()
+	Object getCell()
 	{
 		return cell;
 	}
@@ -53,7 +53,7 @@ public class VisibleChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	public void setVisible(boolean value)
+	void setVisible(bool value)
 	{
 		visible = value;
 	}
@@ -61,7 +61,7 @@ public class VisibleChange extends AtomicGraphModelChange
 	/**
 	 * @return the visible
 	 */
-	public boolean isVisible()
+	bool isVisible()
 	{
 		return visible;
 	}
@@ -69,7 +69,7 @@ public class VisibleChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	public void setPrevious(boolean value)
+	void setPrevious(bool value)
 	{
 		previous = value;
 	}
@@ -77,7 +77,7 @@ public class VisibleChange extends AtomicGraphModelChange
 	/**
 	 * @return the previous
 	 */
-	public boolean getPrevious()
+	bool getPrevious()
 	{
 		return previous;
 	}
@@ -85,7 +85,7 @@ public class VisibleChange extends AtomicGraphModelChange
 	/**
 	 * Changes the root of the model.
 	 */
-	public void execute()
+	void execute()
 	{
 		visible = previous;
 		previous = ((GraphModel) model)._visibleStateForCellChanged(cell,

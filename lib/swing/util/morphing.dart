@@ -3,15 +3,15 @@
  */
 part of graph.swing.util;
 
-//import graph.model.Geometry;
-//import graph.swing.GraphComponent;
-//import graph.swing.view.CellStatePreview;
-//import graph.util.Event;
-//import graph.util.EventObj;
-//import graph.util.Point2d;
-//import graph.util.Rect;
-//import graph.view.CellState;
-//import graph.view.Graph;
+import '../../model/model.dart' show Geometry;
+import '../../swing/swing.dart' show GraphComponent;
+import '../../swing/swing.dart' show view.CellStatePreview;
+import '../../util/util.dart' show Event;
+import '../../util/util.dart' show EventObj;
+import '../../util/util.dart' show Point2d;
+import '../../util/util.dart' show Rect;
+import '../../view/view.dart' show CellState;
+import '../../view/view.dart' show Graph;
 
 //import java.awt.Graphics;
 //import java.util.HashMap;
@@ -20,55 +20,55 @@ part of graph.swing.util;
 /**
  * Provides animation effects.
  */
-public class Morphing extends Animation
+class Morphing extends Animation
 {
 
 	/**
 	 * Reference to the enclosing graph instance.
 	 */
-	protected GraphComponent _graphComponent;
+	GraphComponent _graphComponent;
 
 	/**
 	 * Specifies the maximum number of steps for the morphing. Default is
 	 * 6.
 	 */
-	protected int _steps;
+	int _steps;
 
 	/**
 	 * Counts the current number of steps of the animation.
 	 */
-	protected int _step;
+	int _step;
 
 	/**
 	 * Ease-off for movement towards the given vector. Larger values are
 	 * slower and smoother. Default is 1.5.
 	 */
-	protected double _ease;
+	double _ease;
 
 	/**
 	 * Maps from cells to origins. 
 	 */
-	protected Map<Object, Point2d> _origins = new HashMap<Object, Point2d>();
+	Map<Object, Point2d> _origins = new HashMap<Object, Point2d>();
 
 	/**
 	 * Optional array of cells to limit the animation to. 
 	 */
-	protected Object[] _cells;
+	Object[] _cells;
 
 	/**
 	 * 
 	 */
-	protected transient Rect _dirty;
+	transient Rect _dirty;
 
 	/**
 	 * 
 	 */
-	protected transient CellStatePreview _preview;
+	transient CellStatePreview _preview;
 
 	/**
 	 * Constructs a new morphing instance for the given graph.
 	 */
-	public Morphing(GraphComponent graphComponent)
+	Morphing(GraphComponent graphComponent)
 	{
 		this(graphComponent, 6, 1.5, DEFAULT_DELAY);
 
@@ -86,7 +86,7 @@ public class Morphing extends Animation
 	/**
 	 * Constructs a new morphing instance for the given graph.
 	 */
-	public Morphing(GraphComponent graphComponent, int steps, double ease,
+	Morphing(GraphComponent graphComponent, int steps, double ease,
 			int delay)
 	{
 		super(delay);
@@ -98,7 +98,7 @@ public class Morphing extends Animation
 	/**
 	 * Returns the number of steps for the animation.
 	 */
-	public int getSteps()
+	int getSteps()
 	{
 		return _steps;
 	}
@@ -106,7 +106,7 @@ public class Morphing extends Animation
 	/**
 	 * Sets the number of steps for the animation.
 	 */
-	public void setSteps(int value)
+	void setSteps(int value)
 	{
 		_steps = value;
 	}
@@ -114,7 +114,7 @@ public class Morphing extends Animation
 	/**
 	 * Returns the easing for the movements.
 	 */
-	public double getEase()
+	double getEase()
 	{
 		return _ease;
 	}
@@ -122,7 +122,7 @@ public class Morphing extends Animation
 	/**
 	 * Sets the easing for the movements.
 	 */
-	public void setEase(double value)
+	void setEase(double value)
 	{
 		_ease = value;
 	}
@@ -132,7 +132,7 @@ public class Morphing extends Animation
 	 * then all cells are checked and animated if they have been moved
 	 * in the current transaction.
 	 */
-	public void setCells(Object[] value)
+	void setCells(Object[] value)
 	{
 		_cells = value;
 	}
@@ -140,7 +140,7 @@ public class Morphing extends Animation
 	/**
 	 * Animation step.
 	 */
-	public void updateAnimation()
+	void updateAnimation()
 	{
 		_preview = new CellStatePreview(_graphComponent, false);
 
@@ -171,7 +171,7 @@ public class Morphing extends Animation
 	/**
 	 * 
 	 */
-	public void stopAnimation()
+	void stopAnimation()
 	{
 		_graphComponent.getGraph().getView().revalidate();
 		super.stopAnimation();
@@ -187,7 +187,7 @@ public class Morphing extends Animation
 	/**
 	 * Shows the changes in the given CellStatePreview.
 	 */
-	protected void _show(CellStatePreview preview)
+	void _show(CellStatePreview preview)
 	{
 		if (_dirty != null)
 		{
@@ -209,8 +209,8 @@ public class Morphing extends Animation
 	/**
 	 * Animates the given cell state using moveState.
 	 */
-	protected void _animateCell(Object cell, CellStatePreview move,
-			boolean recurse)
+	void _animateCell(Object cell, CellStatePreview move,
+			bool recurse)
 	{
 		Graph graph = _graphComponent.getGraph();
 		CellState state = graph.getView().getState(cell);
@@ -252,7 +252,7 @@ public class Morphing extends Animation
 	 * Returns true if the animation should not recursively find more
 	 * deltas for children if the given parent state has been animated.
 	 */
-	protected boolean _stopRecursion(CellState state, Point2d delta)
+	bool _stopRecursion(CellState state, Point2d delta)
 	{
 		return delta != null && (delta.getX() != 0 || delta.getY() != 0);
 	}
@@ -261,7 +261,7 @@ public class Morphing extends Animation
 	 * Returns the vector between the current rendered state and the future
 	 * location of the state after the display will be updated.
 	 */
-	protected Point2d _getDelta(CellState state)
+	Point2d _getDelta(CellState state)
 	{
 		Graph graph = _graphComponent.getGraph();
 		Point2d origin = _getOriginForCell(state.getCell());
@@ -278,7 +278,7 @@ public class Morphing extends Animation
 	/**
 	 * Returns the top, left corner of the given cell.
 	 */
-	protected Point2d _getOriginForCell(Object cell)
+	Point2d _getOriginForCell(Object cell)
 	{
 		Point2d result = _origins.get(cell);
 
@@ -315,7 +315,7 @@ public class Morphing extends Animation
 	/**
 	 *
 	 */
-	public void paint(Graphics g)
+	void paint(Graphics g)
 	{
 		if (_preview != null)
 		{

@@ -8,7 +8,7 @@ library graph.canvas;
  * different technologies, such as Graphics2D, HTML, SVG or VML.
  */
 
-//import graph.view.CellState;
+import '../view/view.dart' show CellState;
 
 //import java.awt.Point;
 
@@ -65,6 +65,6 @@ public interface ICanvas
 	 * @param html Specifies if the label contains HTML markup.
 	 * @return Object that represents the label.
 	 */
-	Object drawLabel(String text, CellState state, boolean html);
+	Object drawLabel(String text, CellState state, bool html);
 
 }

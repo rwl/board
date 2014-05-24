@@ -1,19 +1,19 @@
 part of graph.shape;
 
-//import graph.canvas.Graphics2DCanvas;
-//import graph.view.CellState;
+import '../canvas/canvas.dart' show Graphics2DCanvas;
+import '../view/view.dart' show CellState;
 
 //import java.awt.Rectangle;
 //import java.awt.Shape;
 //import java.awt.geom.GeneralPath;
 
-public class CloudShape extends BasicShape
+class CloudShape extends BasicShape
 {
 
 	/**
 	 * 
 	 */
-	public Shape createShape(Graphics2DCanvas canvas, CellState state)
+	Shape createShape(Graphics2DCanvas canvas, CellState state)
 	{
 		Rectangle temp = state.getRectangle();
 		int x = temp.x;

@@ -1,24 +1,24 @@
 part of graph.model;
 
-//import graph.model.IGraphModel.AtomicGraphModelChange;
+import '../model/model.dart' show AtomicGraphModelChange;
 
-public class TerminalChange extends AtomicGraphModelChange
+class TerminalChange extends AtomicGraphModelChange
 {
 
 	/**
 	 *
 	 */
-	protected Object cell, terminal, previous;
+	Object cell, terminal, previous;
 
 	/**
 	 * 
 	 */
-	protected boolean source;
+	bool source;
 
 	/**
 	 * 
 	 */
-	public TerminalChange()
+	TerminalChange()
 	{
 		this(null, null, null, false);
 	}
@@ -26,8 +26,8 @@ public class TerminalChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	public TerminalChange(GraphModel model, Object cell,
-			Object terminal, boolean source)
+	TerminalChange(GraphModel model, Object cell,
+			Object terminal, bool source)
 	{
 		super(model);
 		this.cell = cell;
@@ -39,7 +39,7 @@ public class TerminalChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	public void setCell(Object value)
+	void setCell(Object value)
 	{
 		cell = value;
 	}
@@ -47,7 +47,7 @@ public class TerminalChange extends AtomicGraphModelChange
 	/**
 	 * @return the cell
 	 */
-	public Object getCell()
+	Object getCell()
 	{
 		return cell;
 	}
@@ -55,7 +55,7 @@ public class TerminalChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	public void setTerminal(Object value)
+	void setTerminal(Object value)
 	{
 		terminal = value;
 	}
@@ -63,7 +63,7 @@ public class TerminalChange extends AtomicGraphModelChange
 	/**
 	 * @return the terminal
 	 */
-	public Object getTerminal()
+	Object getTerminal()
 	{
 		return terminal;
 	}
@@ -71,7 +71,7 @@ public class TerminalChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	public void setPrevious(Object value)
+	void setPrevious(Object value)
 	{
 		previous = value;
 	}
@@ -79,7 +79,7 @@ public class TerminalChange extends AtomicGraphModelChange
 	/**
 	 * @return the previous
 	 */
-	public Object getPrevious()
+	Object getPrevious()
 	{
 		return previous;
 	}
@@ -87,7 +87,7 @@ public class TerminalChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	public void setSource(boolean value)
+	void setSource(bool value)
 	{
 		source = value;
 	}
@@ -95,7 +95,7 @@ public class TerminalChange extends AtomicGraphModelChange
 	/**
 	 * @return the isSource
 	 */
-	public boolean isSource()
+	bool isSource()
 	{
 		return source;
 	}
@@ -103,7 +103,7 @@ public class TerminalChange extends AtomicGraphModelChange
 	/**
 	 * Changes the root of the model.
 	 */
-	public void execute()
+	void execute()
 	{
 		terminal = previous;
 		previous = ((GraphModel) model)._terminalForCellChanged(cell,

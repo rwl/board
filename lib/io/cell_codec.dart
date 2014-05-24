@@ -3,7 +3,7 @@
  */
 part of graph.io;
 
-//import graph.model.Cell;
+import '../model/model.dart' show Cell;
 
 //import java.util.Iterator;
 //import java.util.Map;
@@ -16,13 +16,13 @@ part of graph.io;
  * dynamically at load time and used implicitely via Codec
  * and the CodecRegistry.
  */
-public class CellCodec extends ObjectCodec
+class CellCodec extends ObjectCodec
 {
 
 	/**
 	 * Constructs a new cell codec.
 	 */
-	public CellCodec()
+	CellCodec()
 	{
 		this(new Cell(), null, new String[] { "parent", "source", "target" },
 				null);
@@ -31,7 +31,7 @@ public class CellCodec extends ObjectCodec
 	/**
 	 * Constructs a new cell codec for the given template.
 	 */
-	public CellCodec(Object template)
+	CellCodec(Object template)
 	{
 		this(template, null, null, null);
 	}
@@ -39,7 +39,7 @@ public class CellCodec extends ObjectCodec
 	/**
 	 * Constructs a new cell codec for the given arguments.
 	 */
-	public CellCodec(Object template, String[] exclude, String[] idrefs,
+	CellCodec(Object template, String[] exclude, String[] idrefs,
 			Map<String, String> mapping)
 	{
 		super(template, exclude, idrefs, mapping);
@@ -48,8 +48,8 @@ public class CellCodec extends ObjectCodec
 	/**
 	 * Excludes user objects that are XML nodes.
 	 */
-	public boolean isExcluded(Object obj, String attr, Object value,
-			boolean write)
+	bool isExcluded(Object obj, String attr, Object value,
+			bool write)
 	{
 		return _exclude.contains(attr)
 				|| (write && attr.equals("value") && value instanceof Node && ((Node) value)
@@ -60,7 +60,7 @@ public class CellCodec extends ObjectCodec
 	 * Encodes an Cell and wraps the XML up inside the
 	 * XML of the user object (inversion).
 	 */
-	public Node afterEncode(Codec enc, Object obj, Node node)
+	Node afterEncode(Codec enc, Object obj, Node node)
 	{
 		if (obj instanceof Cell)
 		{
@@ -94,7 +94,7 @@ public class CellCodec extends ObjectCodec
 	 * Decodes an Cell and uses the enclosing XML node as
 	 * the user object for the cell (inversion).
 	 */
-	public Node beforeDecode(Codec dec, Node node, Object obj)
+	Node beforeDecode(Codec dec, Node node, Object obj)
 	{
 		Element inner = (Element) node;
 

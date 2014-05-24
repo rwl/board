@@ -3,11 +3,11 @@
  */
 part of graph.view;
 
-//import graph.model.Geometry;
-//import graph.model.IGraphModel;
-//import graph.util.Constants;
-//import graph.util.Point2d;
-//import graph.util.Utils;
+import '../model/model.dart' show Geometry;
+import '../model/model.dart' show IGraphModel;
+import '../util/util.dart' show Constants;
+import '../util/util.dart' show Point2d;
+import '../util/util.dart' show Utils;
 
 //import java.util.List;
 
@@ -17,13 +17,13 @@ part of graph.view;
  * EDGESTYLE_* constants can be used to reference an edge style via the
  * StyleRegistry.
  */
-public class EdgeStyle
+class EdgeStyle
 {
 
 	/**
 	 * Defines the requirements for an edge style function.
 	 */
-	public interface EdgeStyleFunction
+	interface EdgeStyleFunction
 	{
 
 		/**
@@ -52,7 +52,7 @@ public class EdgeStyle
 	 * Provides an entity relation style for edges (as used in database
 	 * schema diagrams).
 	 */
-	public static EdgeStyleFunction EntityRelation = new EdgeStyleFunction()
+	static EdgeStyleFunction EntityRelation = new EdgeStyleFunction()
 	{
 
 		/* (non-Javadoc)
@@ -71,7 +71,7 @@ public class EdgeStyle
 			Point2d pe = state
 					.getAbsolutePoint(state.getAbsolutePointCount() - 1);
 
-			boolean isSourceLeft = false;
+			bool isSourceLeft = false;
 
 			if (p0 != null)
 			{
@@ -103,7 +103,7 @@ public class EdgeStyle
 				}
 			}
 
-			boolean isTargetLeft = true;
+			bool isTargetLeft = true;
 
 			if (pe != null)
 			{
@@ -177,7 +177,7 @@ public class EdgeStyle
 	/**
 	 * Provides a self-reference, aka. loop.
 	 */
-	public static EdgeStyleFunction Loop = new EdgeStyleFunction()
+	static EdgeStyleFunction Loop = new EdgeStyleFunction()
 	{
 
 		/* (non-Javadoc)
@@ -276,7 +276,7 @@ public class EdgeStyle
 	 * flag in the cell style. SideToSide is used if horizontal is true or
 	 * unspecified.
 	 */
-	public static EdgeStyleFunction ElbowConnector = new EdgeStyleFunction()
+	static EdgeStyleFunction ElbowConnector = new EdgeStyleFunction()
 	{
 
 		/* (non-Javadoc)
@@ -288,8 +288,8 @@ public class EdgeStyle
 			Point2d pt = (points != null && points.size() > 0) ? points.get(0)
 					: null;
 
-			boolean vertical = false;
-			boolean horizontal = false;
+			bool vertical = false;
+			bool horizontal = false;
 
 			if (source != null && target != null)
 			{
@@ -348,7 +348,7 @@ public class EdgeStyle
 	/**
 	 * Provides a vertical elbow edge.
 	 */
-	public static EdgeStyleFunction SideToSide = new EdgeStyleFunction()
+	static EdgeStyleFunction SideToSide = new EdgeStyleFunction()
 	{
 
 		/* (non-Javadoc)
@@ -444,7 +444,7 @@ public class EdgeStyle
 	/**
 	 * Provides a horizontal elbow edge.
 	 */
-	public static EdgeStyleFunction TopToBottom = new EdgeStyleFunction()
+	static EdgeStyleFunction TopToBottom = new EdgeStyleFunction()
 	{
 
 		/* (non-Javadoc)
@@ -541,7 +541,7 @@ public class EdgeStyle
 	 * Implements an orthogonal edge style. Use <mxEdgeSegmentHandler>
 	 * as an interactive handler for this style.
 	 */
-	public static EdgeStyleFunction SegmentConnector = new EdgeStyleFunction()
+	static EdgeStyleFunction SegmentConnector = new EdgeStyleFunction()
 	{
 
 		/* (non-Javadoc)
@@ -551,7 +551,7 @@ public class EdgeStyle
 		{
 			// Creates array of all way- and terminalpoints
 			List<Point2d> pts = state._absolutePoints;
-			boolean horizontal = true;
+			bool horizontal = true;
 			Point2d hint = null;
 
 			// Adds the first point
@@ -575,19 +575,19 @@ public class EdgeStyle
 
 				CellState currentTerm = source;
 				Point2d currentPt = pts.get(0);
-				boolean hozChan = false;
-				boolean vertChan = false;
+				bool hozChan = false;
+				bool vertChan = false;
 				Point2d currentHint = hint;
 				int hintsLen = hints.size();
 
 				for (int i = 0; i < 2; i++)
 				{
-					boolean fixedVertAlign = currentPt != null && currentPt.getX() == currentHint.getX();
-					boolean fixedHozAlign = currentPt != null && currentPt.getY() == currentHint.getY();
-					boolean inHozChan = currentTerm != null
+					bool fixedVertAlign = currentPt != null && currentPt.getX() == currentHint.getX();
+					bool fixedHozAlign = currentPt != null && currentPt.getY() == currentHint.getY();
+					bool inHozChan = currentTerm != null
 							&& (currentHint.getY() >= currentTerm.getY() && currentHint.getY() <= currentTerm.getY()
 									+ currentTerm.getHeight());
-					boolean inVertChan = currentTerm != null
+					bool inVertChan = currentTerm != null
 							&& (currentHint.getX() >= currentTerm.getX() && currentHint.getX() <= currentTerm.getX()
 									+ currentTerm.getWidth());
 
@@ -708,17 +708,17 @@ public class EdgeStyle
 		}
 	};
 	
-	public static double orthBuffer = 10;
+	static double orthBuffer = 10;
 
-	public static double[][] dirVectors = new double[][] { { -1, 0 },
+	static double[][] dirVectors = new double[][] { { -1, 0 },
 			{ 0, -1 }, { 1, 0 }, { 0, 1 }, { -1, 0 }, { 0, -1 }, { 1, 0 } };
 
-	public static double[][] wayPoints1 = new double[128][2];
+	static double[][] wayPoints1 = new double[128][2];
 
 	/**
 	 * The default routing patterns for orthogonal connections
 	 */
-	public static int[][][] routePatterns = new int[][][] {
+	static int[][][] routePatterns = new int[][][] {
 			{ { 513, 2308, 2081, 2562 }, { 513, 1090, 514, 2184, 2114, 2561 },
 					{ 513, 1090, 514, 2564, 2184, 2562 },
 					{ 513, 2308, 2561, 1090, 514, 2568, 2308 } },
@@ -736,52 +736,52 @@ public class EdgeStyle
 	 * Overriden routing patterns for orthogonal connections
 	 * where the vertices have 
 	 */
-	public static int[][][] inlineRoutePatterns = new int[][][] {
+	static int[][][] inlineRoutePatterns = new int[][][] {
 			{ null, { 2114, 2568 }, null, null },
 			{ null, { 514, 2081, 2114, 2568 }, null, null },
 			{ null, { 2114, 2561 }, null, null },
 			{ { 2081, 2562 }, { 1057, 2114, 2568 }, { 2184, 2562 }, null } };
 
-	public static double[] vertexSeperations = new double[5];
+	static double[] vertexSeperations = new double[5];
 
-	public static double[][] limits = new double[2][9];
+	static double[][] limits = new double[2][9];
 
-	public static int LEFT_MASK = 32;
+	static int LEFT_MASK = 32;
 
-	public static int TOP_MASK = 64;
+	static int TOP_MASK = 64;
 
-	public static int RIGHT_MASK = 128;
+	static int RIGHT_MASK = 128;
 
-	public static int BOTTOM_MASK = 256;
+	static int BOTTOM_MASK = 256;
 
-	public static int LEFT = 1;
+	static int LEFT = 1;
 
-	public static int TOP = 2;
+	static int TOP = 2;
 
-	public static int RIGHT = 4;
+	static int RIGHT = 4;
 
-	public static int BOTTOM = 8;
+	static int BOTTOM = 8;
 
-	public static int SIDE_MASK = LEFT_MASK | TOP_MASK | RIGHT_MASK
+	static int SIDE_MASK = LEFT_MASK | TOP_MASK | RIGHT_MASK
 			| BOTTOM_MASK;
 
-	public static int CENTER_MASK = 512;
+	static int CENTER_MASK = 512;
 
-	public static int SOURCE_MASK = 1024;
+	static int SOURCE_MASK = 1024;
 
-	public static int TARGET_MASK = 2048;
+	static int TARGET_MASK = 2048;
 
-	public static int VERTEX_MASK = SOURCE_MASK | TARGET_MASK;
+	static int VERTEX_MASK = SOURCE_MASK | TARGET_MASK;
 
-	public static double vertBendProportion = 0.5;
+	static double vertBendProportion = 0.5;
 
-	public static double hozBendProportion = 0.5;
+	static double hozBendProportion = 0.5;
 
 	/**
 	 * An orthogonal connector that avoids connecting vertices and 
 	 * respects port constraints
 	 */
-	public static EdgeStyleFunction OrthConnector = new EdgeStyleFunction()
+	static EdgeStyleFunction OrthConnector = new EdgeStyleFunction()
 	{
 
 		/* (non-Javadoc)
@@ -791,8 +791,8 @@ public class EdgeStyle
 				CellState target, List<Point2d> points, List<Point2d> result)
 		{
 			Graph graph = state._view._graph;
-			boolean sourceEdge = source == null ? false : graph.getModel().isEdge(source._cell);
-			boolean targetEdge = target == null ? false : graph.getModel().isEdge(target._cell);
+			bool sourceEdge = source == null ? false : graph.getModel().isEdge(source._cell);
+			bool targetEdge = target == null ? false : graph.getModel().isEdge(target._cell);
 
 			if ((points != null && points.size() > 0) || (sourceEdge) || (targetEdge))
 			{
@@ -955,7 +955,7 @@ public class EdgeStyle
 						: sourceBottomDist;
 
 				int prefOrdering[][] = new int[2][2];
-				boolean preferredOrderSet = false;
+				bool preferredOrderSet = false;
 
 				// If the preferred port isn't available, switch it
 				for (int i = 0; i < 2; i++)
@@ -1142,8 +1142,8 @@ public class EdgeStyle
 						wayPoints1[currentIndex][1] = wayPoints1[currentIndex - 1][1];
 					}
 
-					boolean tar = (routePattern[i] & TARGET_MASK) > 0;
-					boolean sou = (routePattern[i] & SOURCE_MASK) > 0;
+					bool tar = (routePattern[i] & TARGET_MASK) > 0;
+					bool sou = (routePattern[i] & SOURCE_MASK) > 0;
 					int side = (routePattern[i] & SIDE_MASK) >> 5;
 					side = side << quad;
 
@@ -1152,7 +1152,7 @@ public class EdgeStyle
 						side = side >> 4;
 					}
 
-					boolean center = (routePattern[i] & CENTER_MASK) > 0;
+					bool center = (routePattern[i] & CENTER_MASK) > 0;
 
 					if ((sou || tar) && side < 9)
 					{

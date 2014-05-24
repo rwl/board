@@ -3,34 +3,34 @@
  */
 part of graph.canvas;
 
-//import graph.shape.ActorShape;
-//import graph.shape.ArrowShape;
-//import graph.shape.CloudShape;
-//import graph.shape.ConnectorShape;
-//import graph.shape.CurveShape;
-//import graph.shape.CylinderShape;
-//import graph.shape.DefaultTextShape;
-//import graph.shape.DoubleEllipseShape;
-//import graph.shape.DoubleRectangleShape;
-//import graph.shape.EllipseShape;
-//import graph.shape.HexagonShape;
-//import graph.shape.HtmlTextShape;
-//import graph.shape.IShape;
-//import graph.shape.ITextShape;
-//import graph.shape.ImageShape;
-//import graph.shape.LabelShape;
-//import graph.shape.LineShape;
-//import graph.shape.RectangleShape;
-//import graph.shape.RhombusShape;
-//import graph.shape.StencilRegistry;
-//import graph.shape.SwimlaneShape;
-//import graph.shape.TriangleShape;
-//import graph.swing.util.SwingConstants;
-//import graph.util.Constants;
-//import graph.util.Point2d;
-//import graph.util.Rect;
-//import graph.util.Utils;
-//import graph.view.CellState;
+import '../shape/shape.dart' show ActorShape;
+import '../shape/shape.dart' show ArrowShape;
+import '../shape/shape.dart' show CloudShape;
+import '../shape/shape.dart' show ConnectorShape;
+import '../shape/shape.dart' show CurveShape;
+import '../shape/shape.dart' show CylinderShape;
+import '../shape/shape.dart' show DefaultTextShape;
+import '../shape/shape.dart' show DoubleEllipseShape;
+import '../shape/shape.dart' show DoubleRectangleShape;
+import '../shape/shape.dart' show EllipseShape;
+import '../shape/shape.dart' show HexagonShape;
+import '../shape/shape.dart' show HtmlTextShape;
+import '../shape/shape.dart' show IShape;
+import '../shape/shape.dart' show ITextShape;
+import '../shape/shape.dart' show ImageShape;
+import '../shape/shape.dart' show LabelShape;
+import '../shape/shape.dart' show LineShape;
+import '../shape/shape.dart' show RectangleShape;
+import '../shape/shape.dart' show RhombusShape;
+import '../shape/shape.dart' show StencilRegistry;
+import '../shape/shape.dart' show SwimlaneShape;
+import '../shape/shape.dart' show TriangleShape;
+import '../swing/util/util.dart' show SwingConstants;
+import '../util/util.dart' show Constants;
+import '../util/util.dart' show Point2d;
+import '../util/util.dart' show Rect;
+import '../util/util.dart' show Utils;
+import '../view/view.dart' show CellState;
 
 //import java.awt.AlphaComposite;
 //import java.awt.BasicStroke;
@@ -53,33 +53,33 @@ part of graph.canvas;
 /**
  * An implementation of a canvas that uses Graphics2D for painting.
  */
-public class Graphics2DCanvas extends BasicCanvas
+class Graphics2DCanvas extends BasicCanvas
 {
 	/**
 	 * 
 	 */
-	public static final String TEXT_SHAPE_DEFAULT = "default";
+	static final String TEXT_SHAPE_DEFAULT = "default";
 
 	/**
 	 * 
 	 */
-	public static final String TEXT_SHAPE_HTML = "html";
+	static final String TEXT_SHAPE_HTML = "html";
 
 	/**
 	 * Specifies the image scaling quality. Default is Image.SCALE_SMOOTH.
 	 */
-	public static int IMAGE_SCALING = Image.SCALE_SMOOTH;
+	static int IMAGE_SCALING = Image.SCALE_SMOOTH;
 
 	/**
 	 * Maps from names to mxIVertexShape instances.
 	 */
-	protected static Map<String, IShape> _shapes = new HashMap<String, IShape>();
+	static Map<String, IShape> _shapes = new HashMap<String, IShape>();
 
 	/**
 	 * Maps from names to ITextShape instances. There are currently three different
 	 * hardcoded text shapes available here: default, html and wrapped.
 	 */
-	protected static Map<String, ITextShape> _textShapes = new HashMap<String, ITextShape>();
+	static Map<String, ITextShape> _textShapes = new HashMap<String, ITextShape>();
 
 	/**
 	 * Static initializer.
@@ -110,17 +110,17 @@ public class Graphics2DCanvas extends BasicCanvas
 	/**
 	 * Optional renderer pane to be used for HTML label rendering.
 	 */
-	protected CellRendererPane _rendererPane;
+	CellRendererPane _rendererPane;
 
 	/**
 	 * Global graphics handle to the image.
 	 */
-	protected Graphics2D _g;
+	Graphics2D _g;
 
 	/**
 	 * Constructs a new graphics canvas with an empty graphics object.
 	 */
-	public Graphics2DCanvas()
+	Graphics2DCanvas()
 	{
 		this(null);
 	}
@@ -128,7 +128,7 @@ public class Graphics2DCanvas extends BasicCanvas
 	/**
 	 * Constructs a new graphics canvas for the given graphics object.
 	 */
-	public Graphics2DCanvas(Graphics2D g)
+	Graphics2DCanvas(Graphics2D g)
 	{
 		this._g = g;
 
@@ -146,7 +146,7 @@ public class Graphics2DCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	public static void putShape(String name, IShape shape)
+	static void putShape(String name, IShape shape)
 	{
 		_shapes.put(name, shape);
 	}
@@ -154,7 +154,7 @@ public class Graphics2DCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	public IShape getShape(Map<String, Object> style)
+	IShape getShape(Map<String, Object> style)
 	{
 		String name = Utils.getString(style, Constants.STYLE_SHAPE, null);
 		IShape shape = _shapes.get(name);
@@ -170,7 +170,7 @@ public class Graphics2DCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	public static void putTextShape(String name, ITextShape shape)
+	static void putTextShape(String name, ITextShape shape)
 	{
 		_textShapes.put(name, shape);
 	}
@@ -178,7 +178,7 @@ public class Graphics2DCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	public ITextShape getTextShape(Map<String, Object> style, boolean html)
+	ITextShape getTextShape(Map<String, Object> style, bool html)
 	{
 		String name;
 
@@ -197,7 +197,7 @@ public class Graphics2DCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	public CellRendererPane getRendererPane()
+	CellRendererPane getRendererPane()
 	{
 		return _rendererPane;
 	}
@@ -205,7 +205,7 @@ public class Graphics2DCanvas extends BasicCanvas
 	/**
 	 * Returns the graphics object for this canvas.
 	 */
-	public Graphics2D getGraphics()
+	Graphics2D getGraphics()
 	{
 		return _g;
 	}
@@ -213,7 +213,7 @@ public class Graphics2DCanvas extends BasicCanvas
 	/**
 	 * Sets the graphics object for this canvas.
 	 */
-	public void setGraphics(Graphics2D g)
+	void setGraphics(Graphics2D g)
 	{
 		this._g = g;
 	}
@@ -222,7 +222,7 @@ public class Graphics2DCanvas extends BasicCanvas
 	 * (non-Javadoc)
 	 * @see graph.canvas.ICanvas#drawCell()
 	 */
-	public Object drawCell(CellState state)
+	Object drawCell(CellState state)
 	{
 		Map<String, Object> style = state.getStyle();
 		IShape shape = getShape(style);
@@ -248,7 +248,7 @@ public class Graphics2DCanvas extends BasicCanvas
 	 * (non-Javadoc)
 	 * @see graph.canvas.ICanvas#drawLabel()
 	 */
-	public Object drawLabel(String text, CellState state, boolean html)
+	Object drawLabel(String text, CellState state, bool html)
 	{
 		Map<String, Object> style = state.getStyle();
 		ITextShape shape = getTextShape(style, html);
@@ -281,7 +281,7 @@ public class Graphics2DCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	public void drawImage(Rectangle bounds, String imageUrl)
+	void drawImage(Rectangle bounds, String imageUrl)
 	{
 		drawImage(bounds, imageUrl, PRESERVE_IMAGE_ASPECT, false, false);
 	}
@@ -289,8 +289,8 @@ public class Graphics2DCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	public void drawImage(Rectangle bounds, String imageUrl,
-			boolean preserveAspect, boolean flipH, boolean flipV)
+	void drawImage(Rectangle bounds, String imageUrl,
+			bool preserveAspect, bool flipH, bool flipV)
 	{
 		if (imageUrl != null && bounds.getWidth() > 0 && bounds.getHeight() > 0)
 		{
@@ -364,7 +364,7 @@ public class Graphics2DCanvas extends BasicCanvas
 	/**
 	 * Implements the actual graphics call.
 	 */
-	protected void _drawImageImpl(Image image, int x, int y)
+	void _drawImageImpl(Image image, int x, int y)
 	{
 		_g.drawImage(image, x, y, null);
 	}
@@ -372,7 +372,7 @@ public class Graphics2DCanvas extends BasicCanvas
 	/**
 	 * Returns the size for the given image.
 	 */
-	protected Dimension _getImageSize(Image image)
+	Dimension _getImageSize(Image image)
 	{
 		return new Dimension(image.getWidth(null), image.getHeight(null));
 	}
@@ -380,7 +380,7 @@ public class Graphics2DCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	public void paintPolyline(Point2d[] points, boolean rounded)
+	void paintPolyline(Point2d[] points, bool rounded)
 	{
 		if (points != null && points.length > 1)
 		{
@@ -454,7 +454,7 @@ public class Graphics2DCanvas extends BasicCanvas
 	/**
 	 *
 	 */
-	public void paintRectangle(Rectangle bounds, Color background, Color border)
+	void paintRectangle(Rectangle bounds, Color background, Color border)
 	{
 		if (background != null)
 		{
@@ -472,7 +472,7 @@ public class Graphics2DCanvas extends BasicCanvas
 	/**
 	 *
 	 */
-	public void fillShape(Shape shape)
+	void fillShape(Shape shape)
 	{
 		fillShape(shape, false);
 	}
@@ -480,7 +480,7 @@ public class Graphics2DCanvas extends BasicCanvas
 	/**
 	 *
 	 */
-	public void fillShape(Shape shape, boolean shadow)
+	void fillShape(Shape shape, bool shadow)
 	{
 		int shadowOffsetX = (shadow) ? Constants.SHADOW_OFFSETX : 0;
 		int shadowOffsetY = (shadow) ? Constants.SHADOW_OFFSETY : 0;
@@ -508,11 +508,11 @@ public class Graphics2DCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	public Stroke createStroke(Map<String, Object> style)
+	Stroke createStroke(Map<String, Object> style)
 	{
 		double width = Utils
 				.getFloat(style, Constants.STYLE_STROKEWIDTH, 1) * _scale;
-		boolean dashed = Utils.isTrue(style, Constants.STYLE_DASHED);
+		bool dashed = Utils.isTrue(style, Constants.STYLE_DASHED);
 		if (dashed)
 		{
 			float[] dashPattern = Utils.getFloatArray(style,
@@ -537,7 +537,7 @@ public class Graphics2DCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	public Paint createFillPaint(Rect bounds, Map<String, Object> style)
+	Paint createFillPaint(Rect bounds, Map<String, Object> style)
 	{
 		Color fillColor = Utils.getColor(style, Constants.STYLE_FILLCOLOR);
 		Paint fillPaint = null;
@@ -587,7 +587,7 @@ public class Graphics2DCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	public Graphics2D createTemporaryGraphics(Map<String, Object> style,
+	Graphics2D createTemporaryGraphics(Map<String, Object> style,
 			float opacity, Rect bounds)
 	{
 		Graphics2D temporaryGraphics = (Graphics2D) _g.create();

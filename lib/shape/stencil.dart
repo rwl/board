@@ -3,13 +3,13 @@
  */
 part of graph.shape;
 
-//import graph.canvas.Graphics2DCanvas;
-//import graph.canvas.GraphicsCanvas2D;
-//import graph.util.Constants;
-//import graph.util.Point2d;
-//import graph.util.Rect;
-//import graph.util.Utils;
-//import graph.view.CellState;
+import '../canvas/canvas.dart' show Graphics2DCanvas;
+import '../canvas/canvas.dart' show GraphicsCanvas2D;
+import '../util/util.dart' show Constants;
+import '../util/util.dart' show Point2d;
+import '../util/util.dart' show Rect;
+import '../util/util.dart' show Utils;
+import '../view/view.dart' show CellState;
 
 //import java.util.Map;
 
@@ -20,57 +20,57 @@ part of graph.shape;
  * Implements a stencil for the given XML definition. This class implements the Graph
  * stencil schema.
  */
-public class Stencil implements IShape
+class Stencil implements IShape
 {
 	/**
 	 * Holds the top-level node of the stencil definition.
 	 */
-	protected Element _desc;
+	Element _desc;
 
 	/**
 	 * Holds the aspect of the shape. Default is "auto".
 	 */
-	protected String _aspect = null;
+	String _aspect = null;
 
 	/**
 	 * Holds the width of the shape. Default is 100.
 	 */
-	protected double _w0 = 100;
+	double _w0 = 100;
 
 	/**
 	 * Holds the height of the shape. Default is 100.
 	 */
-	protected double _h0 = 100;
+	double _h0 = 100;
 
 	/**
 	 * Holds the XML node with the stencil description.
 	 */
-	protected Element _bgNode = null;
+	Element _bgNode = null;
 
 	/**
 	 * Holds the XML node with the stencil description.
 	 */
-	protected Element _fgNode = null;
+	Element _fgNode = null;
 
 	/**
 	 * Holds the strokewidth direction from the description.
 	 */
-	protected String _strokewidth = null;
+	String _strokewidth = null;
 
 	/**
 	 * Holds the last x-position of the cursor.
 	 */
-	protected double _lastMoveX = 0;
+	double _lastMoveX = 0;
 
 	/**
 	 * Holds the last y-position of the cursor.
 	 */
-	protected double _lastMoveY = 0;
+	double _lastMoveY = 0;
 
 	/**
 	 * Constructs a new stencil for the given Graph shape description.
 	 */
-	public Stencil(Element description)
+	Stencil(Element description)
 	{
 		setDescription(description);
 	}
@@ -78,7 +78,7 @@ public class Stencil implements IShape
 	/**
 	 * Returns the description.
 	 */
-	public Element getDescription()
+	Element getDescription()
 	{
 		return _desc;
 	}
@@ -86,7 +86,7 @@ public class Stencil implements IShape
 	/**
 	 * Sets the description.
 	 */
-	public void setDescription(Element value)
+	void setDescription(Element value)
 	{
 		_desc = value;
 		_parseDescription();
@@ -95,7 +95,7 @@ public class Stencil implements IShape
 	/**
 	 * Creates the canvas for rendering the stencil.
 	 */
-	protected GraphicsCanvas2D _createCanvas(Graphics2DCanvas gc)
+	GraphicsCanvas2D _createCanvas(Graphics2DCanvas gc)
 	{
 		return new GraphicsCanvas2D(gc.getGraphics());
 	}
@@ -103,7 +103,7 @@ public class Stencil implements IShape
 	/**
 	 * Paints the stencil for the given state.
 	 */
-	public void paintShape(Graphics2DCanvas gc, CellState state)
+	void paintShape(Graphics2DCanvas gc, CellState state)
 	{
 		Map<String, Object> style = state.getStyle();
 		GraphicsCanvas2D canvas = _createCanvas(gc);
@@ -131,9 +131,9 @@ public class Stencil implements IShape
 		}
 
 		// New styles for shape flipping the stencil
-		boolean flipH = Utils.isTrue(style, Constants.STYLE_STENCIL_FLIPH,
+		bool flipH = Utils.isTrue(style, Constants.STYLE_STENCIL_FLIPH,
 				false);
-		boolean flipV = Utils.isTrue(style, Constants.STYLE_STENCIL_FLIPV,
+		bool flipV = Utils.isTrue(style, Constants.STYLE_STENCIL_FLIPV,
 				false);
 
 		if (flipH && flipV)
@@ -233,8 +233,8 @@ public class Stencil implements IShape
 	/**
 	 * Draws the shadow.
 	 */
-	protected void _drawShadow(GraphicsCanvas2D canvas, CellState state, double rotation, boolean flipH,
-			boolean flipV, Rect bounds, double alpha, boolean filled)
+	void _drawShadow(GraphicsCanvas2D canvas, CellState state, double rotation, bool flipH,
+			bool flipV, Rect bounds, double alpha, bool filled)
 	{
 		// Requires background in generic shape for shadow, looks like only one
 		// fillAndStroke is allowed per current path, try working around that
@@ -271,8 +271,8 @@ public class Stencil implements IShape
 	/**
 	 * Draws this stencil inside the given bounds.
 	 */
-	public boolean drawShape(GraphicsCanvas2D canvas, CellState state,
-			Rect bounds, boolean background)
+	bool drawShape(GraphicsCanvas2D canvas, CellState state,
+			Rect bounds, bool background)
 	{
 		Element elt = (background) ? _bgNode : _fgNode;
 
@@ -313,7 +313,7 @@ public class Stencil implements IShape
 	 * and vertical scale in width and height used to draw this shape inside the
 	 * given rectangle.
 	 */
-	protected Rect _computeAspect(CellState state, Rect bounds,
+	Rect _computeAspect(CellState state, Rect bounds,
 			String direction)
 	{
 		double x0 = bounds.getX();
@@ -321,7 +321,7 @@ public class Stencil implements IShape
 		double sx = bounds.getWidth() / _w0;
 		double sy = bounds.getHeight() / _h0;
 
-		boolean inverse = (direction != null && (direction.equals("north") || direction
+		bool inverse = (direction != null && (direction.equals("north") || direction
 				.equals("south")));
 
 		if (inverse)
@@ -359,7 +359,7 @@ public class Stencil implements IShape
 	/**
 	 * Drawsthe given element.
 	 */
-	protected void _drawElement(GraphicsCanvas2D canvas, CellState state,
+	void _drawElement(GraphicsCanvas2D canvas, CellState state,
 			Element node, Rect aspect)
 	{
 		String name = node.getNodeName();
@@ -602,7 +602,7 @@ public class Stencil implements IShape
 	/**
 	 * Returns the given attribute or the default value.
 	 */
-	protected int _getInt(Element elt, String attribute, int defaultValue)
+	int _getInt(Element elt, String attribute, int defaultValue)
 	{
 		String value = elt.getAttribute(attribute);
 
@@ -624,7 +624,7 @@ public class Stencil implements IShape
 	/**
 	 * Returns the given attribute or 0.
 	 */
-	protected double _getDouble(Element elt, String attribute)
+	double _getDouble(Element elt, String attribute)
 	{
 		return _getDouble(elt, attribute, 0);
 	}
@@ -632,7 +632,7 @@ public class Stencil implements IShape
 	/**
 	 * Returns the given attribute or the default value.
 	 */
-	protected double _getDouble(Element elt, String attribute,
+	double _getDouble(Element elt, String attribute,
 			double defaultValue)
 	{
 		String value = elt.getAttribute(attribute);
@@ -655,7 +655,7 @@ public class Stencil implements IShape
 	/**
 	 * Returns the given attribute or the default value.
 	 */
-	protected String _getString(Element elt, String attribute,
+	String _getString(Element elt, String attribute,
 			String defaultValue)
 	{
 		String value = elt.getAttribute(attribute);
@@ -671,7 +671,7 @@ public class Stencil implements IShape
 	/**
 	 * Parses the description of this shape.
 	 */
-	protected void _parseDescription()
+	void _parseDescription()
 	{
 		// LATER: Preprocess nodes for faster painting
 		_fgNode = (Element) _desc.getElementsByTagName("foreground").item(0);
@@ -697,7 +697,7 @@ public class Stencil implements IShape
 	 * a function it is invoked with <state> as the only argument and the return
 	 * value is used as the attribute value to be returned.
 	 */
-	public String evaluateAttribute(Element elt, String attribute,
+	String evaluateAttribute(Element elt, String attribute,
 			CellState state)
 	{
 		String result = elt.getAttribute(attribute);

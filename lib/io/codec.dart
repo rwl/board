@@ -3,11 +3,11 @@
  */
 part of graph.io;
 
-//import graph.model.Cell;
-//import graph.model.CellPath;
-//import graph.model.ICell;
-//import graph.util.DomUtils;
-//import graph.util.Utils;
+import '../model/model.dart' show Cell;
+import '../model/model.dart' show CellPath;
+import '../model/model.dart' show ICell;
+import '../util/util.dart' show DomUtils;
+import '../util/util.dart' show Utils;
 
 //import java.util.Hashtable;
 //import java.util.Map;
@@ -21,28 +21,28 @@ part of graph.io;
  * when reading files the XML document that contains the data must be passed
  * to the constructor.
  */
-public class Codec
+class Codec
 {
 
 	/**
 	 * Holds the owner document of the codec.
 	 */
-	protected Document _document;
+	Document _document;
 
 	/**
 	 * Maps from IDs to objects.
 	 */
-	protected Map<String, Object> _objects = new Hashtable<String, Object>();
+	Map<String, Object> _objects = new Hashtable<String, Object>();
 
 	/**
 	 * Specifies if default values should be encoded. Default is false.
 	 */
-	protected boolean _encodeDefaults = false;
+	bool _encodeDefaults = false;
 
 	/**
 	 * Constructs an XML encoder/decoder with a new owner document.
 	 */
-	public Codec()
+	Codec()
 	{
 		this(DomUtils.createDocument());
 	}
@@ -53,7 +53,7 @@ public class Codec
 	 * @param document Optional XML document that contains the data. If no document
 	 * is specified then a new document is created using Utils.createDocument
 	 */
-	public Codec(Document document)
+	Codec(Document document)
 	{
 		if (document == null)
 		{
@@ -68,7 +68,7 @@ public class Codec
 	 * 
 	 * @return Returns the owner document.
 	 */
-	public Document getDocument()
+	Document getDocument()
 	{
 		return _document;
 	}
@@ -76,7 +76,7 @@ public class Codec
 	/**
 	 * Sets the owner document of the codec.
 	 */
-	public void setDocument(Document value)
+	void setDocument(Document value)
 	{
 		_document = value;
 	}
@@ -84,7 +84,7 @@ public class Codec
 	/**
 	 * Returns if default values of member variables should be encoded.
 	 */
-	public boolean isEncodeDefaults()
+	bool isEncodeDefaults()
 	{
 		return _encodeDefaults;
 	}
@@ -92,7 +92,7 @@ public class Codec
 	/**
 	 * Sets if default values of member variables should be encoded.
 	 */
-	public void setEncodeDefaults(boolean encodeDefaults)
+	void setEncodeDefaults(bool encodeDefaults)
 	{
 		this._encodeDefaults = encodeDefaults;
 	}
@@ -100,7 +100,7 @@ public class Codec
 	/**
 	 * Returns the object lookup table.
 	 */
-	public Map<String, Object> getObjects()
+	Map<String, Object> getObjects()
 	{
 		return _objects;
 	}
@@ -112,7 +112,7 @@ public class Codec
 	 * @param object Object to be associated with the ID.
 	 * @return Returns the given object.
 	 */
-	public Object putObject(String id, Object object)
+	Object putObject(String id, Object object)
 	{
 		return _objects.put(id, object);
 	}
@@ -126,7 +126,7 @@ public class Codec
 	 * @param id ID of the object to be returned.
 	 * @return Returns the object for the given ID.
 	 */
-	public Object getObject(String id)
+	Object getObject(String id)
 	{
 		Object obj = null;
 
@@ -160,7 +160,7 @@ public class Codec
 	 * @param id ID of the object to be returned.
 	 * @return Returns the object for the given ID.
 	 */
-	public Object lookup(String id)
+	Object lookup(String id)
 	{
 		return null;
 	}
@@ -171,7 +171,7 @@ public class Codec
 	 * @param id ID of the element to be returned.
 	 * @return Returns the element for the given ID.
 	 */
-	public Node getElementById(String id)
+	Node getElementById(String id)
 	{
 		return getElementById(id, null);
 	}
@@ -187,7 +187,7 @@ public class Codec
 	 * id - String that contains the ID.
 	 * attr - Optional string for the attributename. Default is id.
 	 */
-	public Node getElementById(String id, String attr)
+	Node getElementById(String id, String attr)
 	{
 		if (attr == null)
 		{
@@ -209,7 +209,7 @@ public class Codec
 	 * @param obj Object to return the ID for.
 	 * @return Returns the ID for the given object.
 	 */
-	public String getId(Object obj)
+	String getId(Object obj)
 	{
 		String id = null;
 
@@ -244,7 +244,7 @@ public class Codec
 	 * @param obj Object whose ID should be returned.
 	 * @return Returns the ID for the given object.
 	 */
-	public String reference(Object obj)
+	String reference(Object obj)
 	{
 		return null;
 	}
@@ -255,7 +255,7 @@ public class Codec
 	 * @param obj Object to be encoded.
 	 * @return Returns an XML node that represents the given object.
 	 */
-	public Node encode(Object obj)
+	Node encode(Object obj)
 	{
 		Node node = null;
 
@@ -290,7 +290,7 @@ public class Codec
 	 * @param node XML node to be decoded.
 	 * @return Returns an object that represents the given node.
 	 */
-	public Object decode(Node node)
+	Object decode(Node node)
 	{
 		return decode(node, null);
 	}
@@ -307,7 +307,7 @@ public class Codec
 	 * @param into Optional object to be decodec into.
 	 * @return Returns an object that represents the given node.
 	 */
-	public Object decode(Node node, Object into)
+	Object decode(Node node, Object into)
 	{
 		Object obj = null;
 
@@ -353,7 +353,7 @@ public class Codec
 	 * @param includeChildren Boolean indicating if the method
 	 * should include all descendents.
 	 */
-	public void encodeCell(ICell cell, Node node, boolean includeChildren)
+	void encodeCell(ICell cell, Node node, bool includeChildren)
 	{
 		node.appendChild(encode(cell));
 
@@ -380,7 +380,7 @@ public class Codec
 	 * parent and terminals, respectively.
 	 * @return Graph cell that represents the given node.
 	 */
-	public ICell decodeCell(Node node, boolean restoreStructures)
+	ICell decodeCell(Node node, bool restoreStructures)
 	{
 		ICell cell = null;
 
@@ -429,7 +429,7 @@ public class Codec
 	/**
 	 * Inserts the given cell into its parent and terminal cells.
 	 */
-	public void insertIntoGraph(ICell cell)
+	void insertIntoGraph(ICell cell)
 	{
 		ICell parent = cell.getParent();
 		ICell source = cell.getTerminal(true);
@@ -465,7 +465,7 @@ public class Codec
 	 * @param attribute Name of the attribute whose value should be set.
 	 * @param value New value of the attribute.
 	 */
-	public static void setAttribute(Node node, String attribute, Object value)
+	static void setAttribute(Node node, String attribute, Object value)
 	{
 		if (node.getNodeType() == Node.ELEMENT_NODE && attribute != null
 				&& value != null)

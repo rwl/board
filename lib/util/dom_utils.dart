@@ -12,14 +12,14 @@ part of graph.util;
 /**
  * Contains various DOM API helper methods for use with Graph.
  */
-public class DomUtils
+class DomUtils
 {
 	/**
 	 * Returns a new, empty DOM document.
 	 * 
 	 * @return Returns a new DOM document.
 	 */
-	public static Document createDocument()
+	static Document createDocument()
 	{
 		Document result = null;
 
@@ -42,7 +42,7 @@ public class DomUtils
 	/**
 	 * Creates a new SVG document for the given width and height.
 	 */
-	public static Document createSvgDocument(int width, int height)
+	static Document createSvgDocument(int width, int height)
 	{
 		Document document = createDocument();
 		Element root = document.createElement("svg");
@@ -65,7 +65,7 @@ public class DomUtils
 	/**
 	 * 
 	 */
-	public static Document createVmlDocument()
+	static Document createVmlDocument()
 	{
 		Document document = createDocument();
 
@@ -94,7 +94,7 @@ public class DomUtils
 	/**
 	 * Returns a document with a HTML node containing a HEAD and BODY node.
 	 */
-	public static Document createHtmlDocument()
+	static Document createHtmlDocument()
 	{
 		Document document = createDocument();
 

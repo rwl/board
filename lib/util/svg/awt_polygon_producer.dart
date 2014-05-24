@@ -26,14 +26,14 @@ part of graph.util.svg;
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @version $Id: AWTPolygonProducer.java,v 1.1 2012/11/15 13:26:45 gaudenz Exp $
  */
-public class AWTPolygonProducer extends AWTPolylineProducer
+class AWTPolygonProducer extends AWTPolylineProducer
 {
 	/**
 	 * Utility method for creating an ExtendedGeneralPath.
 	 * @param text The text representation of the path specification.
 	 * @param wr The winding rule to use for creating the path.
 	 */
-	public static Shape createShape(String text, int wr) throws ParseException
+	static Shape createShape(String text, int wr) throws ParseException
 	{
 		AWTPolygonProducer ph = new AWTPolygonProducer();
 
@@ -47,7 +47,7 @@ public class AWTPolygonProducer extends AWTPolylineProducer
 	/**
 	 * Implements {@link PointsHandler#endPoints()}.
 	 */
-	public void endPoints() throws ParseException
+	void endPoints() throws ParseException
 	{
 		path.closePath();
 	}

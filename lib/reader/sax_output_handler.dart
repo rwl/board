@@ -1,6 +1,6 @@
 part of graph.reader;
 
-//import graph.canvas.ICanvas2D;
+import '../canvas/canvas.dart' show ICanvas2D;
 
 //import java.util.Hashtable;
 //import java.util.Map;
@@ -16,22 +16,22 @@ part of graph.reader;
 			new mxGraphicsExportCanvas(g2)));
 	reader.parse(new InputSource(new StringReader(xml)));
  */
-public class SaxOutputHandler extends DefaultHandler
+class SaxOutputHandler extends DefaultHandler
 {
 	/**
 	 * 
 	 */
-	protected ICanvas2D _canvas;
+	ICanvas2D _canvas;
 
 	/**
 	 * 
 	 */
-	protected transient Map<String, IElementHandler> _handlers = new Hashtable<String, IElementHandler>();
+	transient Map<String, IElementHandler> _handlers = new Hashtable<String, IElementHandler>();
 
 	/**
 	 * 
 	 */
-	public SaxOutputHandler(ICanvas2D canvas)
+	SaxOutputHandler(ICanvas2D canvas)
 	{
 		setCanvas(canvas);
 		_initHandlers();
@@ -40,7 +40,7 @@ public class SaxOutputHandler extends DefaultHandler
 	/**
 	 * Sets the canvas for rendering.
 	 */
-	public void setCanvas(ICanvas2D value)
+	void setCanvas(ICanvas2D value)
 	{
 		_canvas = value;
 	}
@@ -48,7 +48,7 @@ public class SaxOutputHandler extends DefaultHandler
 	/**
 	 * Returns the canvas for rendering.
 	 */
-	public ICanvas2D getCanvas()
+	ICanvas2D getCanvas()
 	{
 		return _canvas;
 	}
@@ -56,7 +56,7 @@ public class SaxOutputHandler extends DefaultHandler
 	/**
 	 * 
 	 */
-	public void startElement(String uri, String localName, String qName,
+	void startElement(String uri, String localName, String qName,
 			Attributes atts) throws SAXException
 	{
 		IElementHandler handler = _handlers.get(qName.toLowerCase());
@@ -70,7 +70,7 @@ public class SaxOutputHandler extends DefaultHandler
 	/**
 	 * 
 	 */
-	protected void _initHandlers()
+	void _initHandlers()
 	{
 		_handlers.put("save", new IElementHandler()
 		{
@@ -439,7 +439,7 @@ public class SaxOutputHandler extends DefaultHandler
 	/**
 	 * Returns the given attribute value or an empty string.
 	 */
-	protected String _getValue(Attributes atts, String name, String defaultValue)
+	String _getValue(Attributes atts, String name, String defaultValue)
 	{
 		String value = atts.getValue(name);
 
@@ -454,7 +454,7 @@ public class SaxOutputHandler extends DefaultHandler
 	/**
 	 * 
 	 */
-	protected interface IElementHandler
+	interface IElementHandler
 	{
 		void parseElement(Attributes atts);
 	}

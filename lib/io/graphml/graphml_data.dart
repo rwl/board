@@ -12,7 +12,7 @@ part of graph.io.graphml;
 /**
  * Represents a Data element in the GML Structure.
  */
-public class GraphMlData
+class GraphMlData
 {
 	private String _dataId = "";
 
@@ -32,7 +32,7 @@ public class GraphMlData
 	 * @param dataShapeEdge JGraph specific edge properties.
 	 * @param dataShapeNode JGraph specific node properties.
 	 */
-	public GraphMlData(String dataId, String dataKey, String dataValue,
+	GraphMlData(String dataId, String dataKey, String dataValue,
 			GraphMlShapeEdge dataShapeEdge, GraphMlShapeNode dataShapeNode)
 	{
 		this._dataId = dataId;
@@ -46,7 +46,7 @@ public class GraphMlData
 	 * Construct a data from one xml data element.
 	 * @param dataElement Xml Data Element.
 	 */
-	public GraphMlData(Element dataElement)
+	GraphMlData(Element dataElement)
 	{
 		this._dataId = dataElement.getAttribute(GraphMlConstants.ID);
 		this._dataKey = dataElement.getAttribute(GraphMlConstants.KEY);
@@ -86,56 +86,56 @@ public class GraphMlData
 	/**
 	 * Construct an empty data.
 	 */
-	public GraphMlData()
+	GraphMlData()
 	{
 	}
 
-	public String getDataId()
+	String getDataId()
 	{
 		return _dataId;
 	}
 
-	public void setDataId(String dataId)
+	void setDataId(String dataId)
 	{
 		this._dataId = dataId;
 	}
 
-	public String getDataKey()
+	String getDataKey()
 	{
 		return _dataKey;
 	}
 
-	public void setDataKey(String dataKey)
+	void setDataKey(String dataKey)
 	{
 		this._dataKey = dataKey;
 	}
 
-	public String getDataValue()
+	String getDataValue()
 	{
 		return _dataValue;
 	}
 
-	public void setDataValue(String dataValue)
+	void setDataValue(String dataValue)
 	{
 		this._dataValue = dataValue;
 	}
 
-	public GraphMlShapeNode getDataShapeNode()
+	GraphMlShapeNode getDataShapeNode()
 	{
 		return _dataShapeNode;
 	}
 
-	public void setDataShapeNode(GraphMlShapeNode dataShapeNode)
+	void setDataShapeNode(GraphMlShapeNode dataShapeNode)
 	{
 		this._dataShapeNode = dataShapeNode;
 	}
 
-	public GraphMlShapeEdge getDataShapeEdge()
+	GraphMlShapeEdge getDataShapeEdge()
 	{
 		return _dataShapeEdge;
 	}
 
-	public void setDataShapeEdge(GraphMlShapeEdge dataShapeEdge)
+	void setDataShapeEdge(GraphMlShapeEdge dataShapeEdge)
 	{
 		this._dataShapeEdge = dataShapeEdge;
 	}
@@ -145,7 +145,7 @@ public class GraphMlData
 	 * @param document Document where the key Element will be inserted.
 	 * @return Returns the generated Elements.
 	 */
-	public Element generateNodeElement(Document document)
+	Element generateNodeElement(Document document)
 	{
 		Element data = document.createElement(GraphMlConstants.DATA);
 		data.setAttribute(GraphMlConstants.KEY, _dataKey);
@@ -161,7 +161,7 @@ public class GraphMlData
 	 * @param document Document where the key Element will be inserted.
 	 * @return Returns the generated Elements.
 	 */
-	public Element generateEdgeElement(Document document)
+	Element generateEdgeElement(Document document)
 	{
 		Element data = document.createElement(GraphMlConstants.DATA);
 		data.setAttribute(GraphMlConstants.KEY, _dataKey);

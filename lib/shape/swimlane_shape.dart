@@ -1,20 +1,20 @@
 part of graph.shape;
 
-//import graph.canvas.Graphics2DCanvas;
-//import graph.util.Constants;
-//import graph.util.Rect;
-//import graph.util.Utils;
-//import graph.view.CellState;
+import '../canvas/canvas.dart' show Graphics2DCanvas;
+import '../util/util.dart' show Constants;
+import '../util/util.dart' show Rect;
+import '../util/util.dart' show Utils;
+import '../view/view.dart' show CellState;
 
 //import java.awt.Rectangle;
 
-public class SwimlaneShape extends BasicShape
+class SwimlaneShape extends BasicShape
 {
 
 	/**
 	 * 
 	 */
-	public void paintShape(Graphics2DCanvas canvas, CellState state)
+	void paintShape(Graphics2DCanvas canvas, CellState state)
 	{
 		int start = (int) Math.round(Utils.getInt(state.getStyle(),
 				Constants.STYLE_STARTSIZE, Constants.DEFAULT_STARTSIZE)
@@ -61,7 +61,7 @@ public class SwimlaneShape extends BasicShape
 	/**
 	 * 
 	 */
-	protected Rect _getGradientBounds(Graphics2DCanvas canvas,
+	Rect _getGradientBounds(Graphics2DCanvas canvas,
 			CellState state)
 	{
 		int start = (int) Math.round(Utils.getInt(state.getStyle(),

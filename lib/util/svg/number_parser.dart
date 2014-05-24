@@ -32,17 +32,17 @@ public abstract class NumberParser extends AbstractParser
 	/**
 	 * Parses the content of the buffer and converts it to a float.
 	 */
-	protected float parseFloat() throws ParseException, IOException
+	float parseFloat() throws ParseException, IOException
 	{
 		int mant = 0;
 		int mantDig = 0;
-		boolean mantPos = true;
-		boolean mantRead = false;
+		bool mantPos = true;
+		bool mantRead = false;
 
 		int exp = 0;
 		int expDig = 0;
 		int expAdj = 0;
-		boolean expPos = true;
+		bool expPos = true;
 
 		switch (current)
 		{
@@ -329,7 +329,7 @@ public abstract class NumberParser extends AbstractParser
 	/**
 	 * Computes a float from mantissa and exponent.
 	 */
-	public static float buildFloat(int mant, int exp)
+	static float buildFloat(int mant, int exp)
 	{
 		if (exp < -125 || mant == 0)
 		{

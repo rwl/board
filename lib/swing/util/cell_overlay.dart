@@ -1,9 +1,9 @@
 part of graph.swing.util;
 
-//import graph.util.Constants;
-//import graph.util.Point2d;
-//import graph.util.Rect;
-//import graph.view.CellState;
+import '../../util/util.dart' show Constants;
+import '../../util/util.dart' show Point2d;
+import '../../util/util.dart' show Rect;
+import '../../view/view.dart' show CellState;
 
 //import java.awt.Cursor;
 //import java.awt.Graphics;
@@ -21,7 +21,7 @@ public interface ICellOverlay
 
 }
 
-public class CellOverlay extends JComponent implements ICellOverlay
+class CellOverlay extends JComponent implements ICellOverlay
 {
 
 	/**
@@ -32,33 +32,33 @@ public class CellOverlay extends JComponent implements ICellOverlay
 	/**
 	 * 
 	 */
-	protected ImageIcon _imageIcon;
+	ImageIcon _imageIcon;
 
 	/**
 	 * Holds the horizontal alignment for the overlay.
 	 * Default is ALIGN_RIGHT. For edges, the overlay
 	 * always appears in the center of the edge.
 	 */
-	protected Object _align = Constants.ALIGN_RIGHT;
+	Object _align = Constants.ALIGN_RIGHT;
 
 	/**
 	 * Holds the vertical alignment for the overlay.
 	 * Default is bottom. For edges, the overlay
 	 * always appears in the center of the edge.
 	 */
-	protected Object _verticalAlign = Constants.ALIGN_BOTTOM;
+	Object _verticalAlign = Constants.ALIGN_BOTTOM;
 
 	/**
 	 * Defines the overlapping for the overlay, that is,
 	 * the proportional distance from the origin to the
 	 * point defined by the alignment. Default is 0.5.
 	 */
-	protected double _defaultOverlap = 0.5;
+	double _defaultOverlap = 0.5;
 
 	/**
 	 * 
 	 */
-	public CellOverlay(ImageIcon icon, String warning)
+	CellOverlay(ImageIcon icon, String warning)
 	{
 		this._imageIcon = icon;
 		setToolTipText(warning);
@@ -68,7 +68,7 @@ public class CellOverlay extends JComponent implements ICellOverlay
 	/**
 	 * @return the alignment of the overlay, see <code>Constants.ALIGN_*****</code>
 	 */
-	public Object getAlign()
+	Object getAlign()
 	{
 		return _align;
 	}
@@ -76,7 +76,7 @@ public class CellOverlay extends JComponent implements ICellOverlay
 	/**
 	 * @param value the alignment to set, see <code>Constants.ALIGN_*****</code>
 	 */
-	public void setAlign(Object value)
+	void setAlign(Object value)
 	{
 		_align = value;
 	}
@@ -84,7 +84,7 @@ public class CellOverlay extends JComponent implements ICellOverlay
 	/**
 	 * @return the vertical alignment, see <code>Constants.ALIGN_*****</code>
 	 */
-	public Object getVerticalAlign()
+	Object getVerticalAlign()
 	{
 		return _verticalAlign;
 	}
@@ -92,7 +92,7 @@ public class CellOverlay extends JComponent implements ICellOverlay
 	/**
 	 * @param value the vertical alignment to set, see <code>Constants.ALIGN_*****</code>
 	 */
-	public void setVerticalAlign(Object value)
+	void setVerticalAlign(Object value)
 	{
 		_verticalAlign = value;
 	}
@@ -100,7 +100,7 @@ public class CellOverlay extends JComponent implements ICellOverlay
 	/**
 	 * 
 	 */
-	public void paint(Graphics g)
+	void paint(Graphics g)
 	{
 		g.drawImage(_imageIcon.getImage(), 0, 0, getWidth(), getHeight(), this);
 	}
@@ -109,9 +109,9 @@ public class CellOverlay extends JComponent implements ICellOverlay
 	 * (non-Javadoc)
 	 * @see graph.swing.util.mxIOverlay#getBounds(graph.view.CellState)
 	 */
-	public Rect getBounds(CellState state)
+	Rect getBounds(CellState state)
 	{
-		boolean isEdge = state.getView().getGraph().getModel()
+		bool isEdge = state.getView().getGraph().getModel()
 				.isEdge(state.getCell());
 		double s = state.getView().getScale();
 		Point2d pt = null;

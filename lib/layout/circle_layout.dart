@@ -1,55 +1,55 @@
 part of graph.layout;
 
-//import graph.model.IGraphModel;
-//import graph.util.Rect;
-//import graph.view.Graph;
+import '../../model/model.dart' show IGraphModel;
+import '../../util/util.dart' show Rect;
+import '../../view/view.dart' show Graph;
 
 //import java.util.ArrayList;
 //import java.util.List;
 
-public class CircleLayout extends GraphLayout
+class CircleLayout extends GraphLayout
 {
 
 	/**
 	 * Integer specifying the size of the radius. Default is 100.
 	 */
-	protected double _radius;
+	double _radius;
 
 	/**
 	 * Boolean specifying if the circle should be moved to the top,
 	 * left corner specified by x0 and y0. Default is false.
 	 */
-	protected boolean _moveCircle = true;
+	bool _moveCircle = true;
 
 	/**
 	 * Integer specifying the left coordinate of the circle.
 	 * Default is 0.
 	 */
-	protected double _x0 = 0;
+	double _x0 = 0;
 
 	/**
 	 * Integer specifying the top coordinate of the circle.
 	 * Default is 0.
 	 */
-	protected double _y0 = 0;
+	double _y0 = 0;
 
 	/**
 	 * Specifies if all edge points of traversed edges should be removed.
 	 * Default is true.
 	 */
-	protected boolean _resetEdges = false;
+	bool _resetEdges = false;
 
 	/**
 	 *  Specifies if the STYLE_NOEDGESTYLE flag should be set on edges that are
 	 * modified by the result. Default is true.
 	 */
-	protected boolean _disableEdgeStyle = true;
+	bool _disableEdgeStyle = true;
 
 	/**
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	public CircleLayout(Graph graph)
+	CircleLayout(Graph graph)
 	{
 		this(graph, 100);
 	}
@@ -58,7 +58,7 @@ public class CircleLayout extends GraphLayout
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	public CircleLayout(Graph graph, double radius)
+	CircleLayout(Graph graph, double radius)
 	{
 		super(graph);
 		this._radius = radius;
@@ -67,7 +67,7 @@ public class CircleLayout extends GraphLayout
 	/**
 	 * @return the radius
 	 */
-	public double getRadius()
+	double getRadius()
 	{
 		return _radius;
 	}
@@ -75,7 +75,7 @@ public class CircleLayout extends GraphLayout
 	/**
 	 * @param radius the radius to set
 	 */
-	public void setRadius(double radius)
+	void setRadius(double radius)
 	{
 		this._radius = radius;
 	}
@@ -83,7 +83,7 @@ public class CircleLayout extends GraphLayout
 	/**
 	 * @return the moveCircle
 	 */
-	public boolean isMoveCircle()
+	bool isMoveCircle()
 	{
 		return _moveCircle;
 	}
@@ -91,7 +91,7 @@ public class CircleLayout extends GraphLayout
 	/**
 	 * @param moveCircle the moveCircle to set
 	 */
-	public void setMoveCircle(boolean moveCircle)
+	void setMoveCircle(bool moveCircle)
 	{
 		this._moveCircle = moveCircle;
 	}
@@ -99,7 +99,7 @@ public class CircleLayout extends GraphLayout
 	/**
 	 * @return the x0
 	 */
-	public double getX0()
+	double getX0()
 	{
 		return _x0;
 	}
@@ -107,7 +107,7 @@ public class CircleLayout extends GraphLayout
 	/**
 	 * @param x0 the x0 to set
 	 */
-	public void setX0(double x0)
+	void setX0(double x0)
 	{
 		this._x0 = x0;
 	}
@@ -115,7 +115,7 @@ public class CircleLayout extends GraphLayout
 	/**
 	 * @return the y0
 	 */
-	public double getY0()
+	double getY0()
 	{
 		return _y0;
 	}
@@ -123,7 +123,7 @@ public class CircleLayout extends GraphLayout
 	/**
 	 * @param y0 the y0 to set
 	 */
-	public void setY0(double y0)
+	void setY0(double y0)
 	{
 		this._y0 = y0;
 	}
@@ -131,7 +131,7 @@ public class CircleLayout extends GraphLayout
 	/**
 	 * @return the resetEdges
 	 */
-	public boolean isResetEdges()
+	bool isResetEdges()
 	{
 		return _resetEdges;
 	}
@@ -139,7 +139,7 @@ public class CircleLayout extends GraphLayout
 	/**
 	 * @param resetEdges the resetEdges to set
 	 */
-	public void setResetEdges(boolean resetEdges)
+	void setResetEdges(bool resetEdges)
 	{
 		this._resetEdges = resetEdges;
 	}
@@ -147,7 +147,7 @@ public class CircleLayout extends GraphLayout
 	/**
 	 * @return the disableEdgeStyle
 	 */
-	public boolean isDisableEdgeStyle()
+	bool isDisableEdgeStyle()
 	{
 		return _disableEdgeStyle;
 	}
@@ -155,7 +155,7 @@ public class CircleLayout extends GraphLayout
 	/**
 	 * @param disableEdgeStyle the disableEdgeStyle to set
 	 */
-	public void setDisableEdgeStyle(boolean disableEdgeStyle)
+	void setDisableEdgeStyle(bool disableEdgeStyle)
 	{
 		this._disableEdgeStyle = disableEdgeStyle;
 	}
@@ -164,7 +164,7 @@ public class CircleLayout extends GraphLayout
 	 * (non-Javadoc)
 	 * @see graph.layout.IGraphLayout#execute(java.lang.Object)
 	 */
-	public void execute(Object parent)
+	void execute(Object parent)
 	{
 		IGraphModel model = graph.getModel();
 
@@ -248,7 +248,7 @@ public class CircleLayout extends GraphLayout
 	 * Executes the circular layout for the specified array
 	 * of vertices and the given radius.
 	 */
-	public void circle(Object[] vertices, double r, double left, double top)
+	void circle(Object[] vertices, double r, double left, double top)
 	{
 		int vertexCount = vertices.length;
 		double phi = 2 * Math.PI / vertexCount;

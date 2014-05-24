@@ -9,28 +9,28 @@ part of graph.analysis;
 /**
  * This class implements a priority queue.
  */
-public class FibonacciHeap
+class FibonacciHeap
 {
 
 	/**
 	 * Maps from elements to nodes
 	 */
-	protected Map<Object, _FibonacciHeapNode> _nodes = new Hashtable<Object, _FibonacciHeapNode>();
+	Map<Object, _FibonacciHeapNode> _nodes = new Hashtable<Object, _FibonacciHeapNode>();
 
 	/**
 	 * 
 	 */
-	protected _FibonacciHeapNode _min;
+	_FibonacciHeapNode _min;
 
 	/**
 	 * 
 	 */
-	protected int _size;
+	int _size;
 
 	/**
 	 * Returns the node that represents element.
 	 */
-	public _FibonacciHeapNode getNode(Object element, boolean create)
+	_FibonacciHeapNode getNode(Object element, bool create)
 	{
 		_FibonacciHeapNode node = _nodes.get(element);
 
@@ -46,7 +46,7 @@ public class FibonacciHeap
 	/**
 	 * Returns true if the queue is empty.
 	 */
-	public boolean isEmpty()
+	bool isEmpty()
 	{
 		return _min == null;
 	}
@@ -65,7 +65,7 @@ public class FibonacciHeap
 	 * @exception IllegalArgumentException
 	 *                Thrown if k is larger than x.key value.
 	 */
-	public void decreaseKey(_FibonacciHeapNode x, double k)
+	void decreaseKey(_FibonacciHeapNode x, double k)
 	{
 		if (k > x._key)
 		{
@@ -100,7 +100,7 @@ public class FibonacciHeap
 	 * 
 	 * @param x The node to remove from the heap.
 	 */
-	public void delete(_FibonacciHeapNode x)
+	void delete(_FibonacciHeapNode x)
 	{
 		// make x as small as possible
 		decreaseKey(x, Double.NEGATIVE_INFINITY);
@@ -123,7 +123,7 @@ public class FibonacciHeap
 	 * @param key
 	 *            key value associated with data object
 	 */
-	public void insert(_FibonacciHeapNode node, double key)
+	void insert(_FibonacciHeapNode node, double key)
 	{
 		node._key = key;
 
@@ -158,7 +158,7 @@ public class FibonacciHeap
 	 * 
 	 * @return Returns the heap node with the smallest key.
 	 */
-	public _FibonacciHeapNode min()
+	_FibonacciHeapNode min()
 	{
 		return _min;
 	}
@@ -174,7 +174,7 @@ public class FibonacciHeap
 	 * 
 	 * @return Returns the node with the smallest key.
 	 */
-	public _FibonacciHeapNode removeMin()
+	_FibonacciHeapNode removeMin()
 	{
 		_FibonacciHeapNode z = _min;
 
@@ -236,7 +236,7 @@ public class FibonacciHeap
 	 * 
 	 * @return Returns the number of elements in the heap.
 	 */
-	public int size()
+	int size()
 	{
 		return _size;
 	}
@@ -253,7 +253,7 @@ public class FibonacciHeap
 	 * @param h2 The second heap.
 	 * @return Returns a new heap containing h1 and h2.
 	 */
-	public static FibonacciHeap union(FibonacciHeap h1, FibonacciHeap h2)
+	static FibonacciHeap union(FibonacciHeap h1, FibonacciHeap h2)
 	{
 		FibonacciHeap h = new FibonacciHeap();
 
@@ -297,7 +297,7 @@ public class FibonacciHeap
 	 * 
 	 * @param y The node to perform cascading cut on.
 	 */
-	protected void _cascadingCut(_FibonacciHeapNode y)
+	void _cascadingCut(_FibonacciHeapNode y)
 	{
 		_FibonacciHeapNode z = y._parent;
 
@@ -328,7 +328,7 @@ public class FibonacciHeap
 	 * Running time: O(log n) amortized
 	 * </p>
 	 */
-	protected void _consolidate()
+	void _consolidate()
 	{
 		int arraySize = _size + 1;
 		_FibonacciHeapNode[] array = new _FibonacciHeapNode[arraySize];
@@ -439,7 +439,7 @@ public class FibonacciHeap
 	 * @param x The child of y to be removed from y's child list.
 	 * @param y The parent of x about to lose a child.
 	 */
-	protected void _cut(_FibonacciHeapNode x, _FibonacciHeapNode y)
+	void _cut(_FibonacciHeapNode x, _FibonacciHeapNode y)
 	{
 		// remove x from childlist of y and decrement degree[y]
 		x._left._right = x._right;
@@ -480,7 +480,7 @@ public class FibonacciHeap
 	 * @param y The node to become child.
 	 * @param x The node to become parent.
 	 */
-	protected void _link(_FibonacciHeapNode y, _FibonacciHeapNode x)
+	void _link(_FibonacciHeapNode y, _FibonacciHeapNode x)
 	{
 		// remove y from root list of heap
 		y._left._right = y._right;
@@ -518,7 +518,7 @@ public class FibonacciHeap
  * reference to the key value (which is used to determine the heap
  * structure). Additional Node data should be stored in a subclass.
  */
-public class _FibonacciHeapNode
+class _FibonacciHeapNode
 {
 
   Object _userObject;
@@ -547,7 +547,7 @@ public class _FibonacciHeapNode
    * true if this node has had a child removed since this node was added
    * to its parent
    */
-  boolean _mark;
+  bool _mark;
 
   /**
    * key value for this node

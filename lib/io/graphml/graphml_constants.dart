@@ -6,91 +6,91 @@ part of graph.io.graphml;
 /**
  * This class contains constants used in the Import of gml documents.
  */
-public class GraphMlConstants
+class GraphMlConstants
 {
-	public static String ID = "id";
+	static String ID = "id";
 
-	public static String KEY_FOR = "for";
+	static String KEY_FOR = "for";
 
-	public static String KEY_NAME = "attr.name";
+	static String KEY_NAME = "attr.name";
 
-	public static String KEY_TYPE = "attr.type";
+	static String KEY_TYPE = "attr.type";
 
-	public static String GRAPH = "graph";
+	static String GRAPH = "graph";
 
-	public static String GRAPHML = "graphml";
+	static String GRAPHML = "graphml";
 
-	public static String NODE = "node";
+	static String NODE = "node";
 
-	public static String EDGE = "edge";
+	static String EDGE = "edge";
 
-	public static String HYPEREDGE = "hyperedge";
+	static String HYPEREDGE = "hyperedge";
 
-	public static String PORT = "port";
+	static String PORT = "port";
 
-	public static String ENDPOINT = "endpoint";
+	static String ENDPOINT = "endpoint";
 
-	public static String KEY = "key";
+	static String KEY = "key";
 
-	public static String DATA = "data";
+	static String DATA = "data";
 
-	public static String ALL = "all";
+	static String ALL = "all";
 
-	public static String EDGE_SOURCE = "source";
+	static String EDGE_SOURCE = "source";
 
-	public static String EDGE_SOURCE_PORT = "sourceport";
+	static String EDGE_SOURCE_PORT = "sourceport";
 
-	public static String EDGE_TARGET = "target";
+	static String EDGE_TARGET = "target";
 
-	public static String EDGE_TARGET_PORT = "targetport";
+	static String EDGE_TARGET_PORT = "targetport";
 
-	public static String EDGE_DIRECTED = "directed";
+	static String EDGE_DIRECTED = "directed";
 
-	public static String EDGE_UNDIRECTED = "undirected";
+	static String EDGE_UNDIRECTED = "undirected";
 
-	public static String EDGE_DEFAULT = "edgedefault";
+	static String EDGE_DEFAULT = "edgedefault";
 
-	public static String PORT_NAME = "name";
+	static String PORT_NAME = "name";
 
-	public static String HEIGHT = "height";
+	static String HEIGHT = "height";
 
-	public static String WIDTH = "width";
+	static String WIDTH = "width";
 
-	public static String X = "x";
+	static String X = "x";
 
-	public static String Y = "y";
+	static String Y = "y";
 
-	public static String JGRAPH = "jGraph:";
+	static String JGRAPH = "jGraph:";
 
-	public static String GEOMETRY = "Geometry";
+	static String GEOMETRY = "Geometry";
 
-	public static String FILL = "Fill";
+	static String FILL = "Fill";
 
-	public static String SHAPENODE = "ShapeNode";
+	static String SHAPENODE = "ShapeNode";
 
-	public static String SHAPEEDGE = "ShapeEdge";
+	static String SHAPEEDGE = "ShapeEdge";
 
-	public static String JGRAPH_URL = "http://www.jgraph.com/";
+	static String JGRAPH_URL = "http://www.jgraph.com/";
 
-	public static String KEY_NODE_ID = "d0";
+	static String KEY_NODE_ID = "d0";
 
-	public static String KEY_NODE_NAME = "nodeData";
+	static String KEY_NODE_NAME = "nodeData";
 
-	public static String KEY_EDGE_ID = "d1";
+	static String KEY_EDGE_ID = "d1";
 
-	public static String KEY_EDGE_NAME = "edgeData";
+	static String KEY_EDGE_NAME = "edgeData";
 
-	public static String STYLE = "Style";
+	static String STYLE = "Style";
 
-	public static String SHAPE = "Shape";
+	static String SHAPE = "Shape";
 
-	public static String TYPE = "type";
+	static String TYPE = "type";
 
-	public static String LABEL = "label";
+	static String LABEL = "label";
 
-	public static String TEXT = "text";
+	static String TEXT = "text";
 
-	public static String PROPERTIES = "properties";
+	static String PROPERTIES = "properties";
 
-	public static String SOURCETARGET = "SourceTarget";
+	static String SOURCETARGET = "SourceTarget";
 }

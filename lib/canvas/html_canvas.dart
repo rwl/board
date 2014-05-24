@@ -3,11 +3,11 @@
  */
 part of graph.canvas;
 
-//import graph.util.Constants;
-//import graph.util.Point2d;
-//import graph.util.Rect;
-//import graph.util.Utils;
-//import graph.view.CellState;
+import '../util/util.dart' show Constants;
+import '../util/util.dart' show Point2d;
+import '../util/util.dart' show Rect;
+import '../util/util.dart' show Utils;
+import '../view/view.dart' show CellState;
 
 //import java.util.Hashtable;
 //import java.util.List;
@@ -20,18 +20,18 @@ part of graph.canvas;
 /**
  * An implementation of a canvas that uses HTML for painting.
  */
-public class HtmlCanvas extends BasicCanvas
+class HtmlCanvas extends BasicCanvas
 {
 
 	/**
 	 * Holds the HTML document that represents the canvas.
 	 */
-	protected Document _document;
+	Document _document;
 
 	/**
 	 * Constructs a new HTML canvas for the specified dimension and scale.
 	 */
-	public HtmlCanvas()
+	HtmlCanvas()
 	{
 		this(null);
 	}
@@ -40,7 +40,7 @@ public class HtmlCanvas extends BasicCanvas
 	 * Constructs a new HTML canvas for the specified bounds, scale and
 	 * background color.
 	 */
-	public HtmlCanvas(Document document)
+	HtmlCanvas(Document document)
 	{
 		setDocument(document);
 	}
@@ -48,7 +48,7 @@ public class HtmlCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	public void appendHtmlElement(Element node)
+	void appendHtmlElement(Element node)
 	{
 		if (_document != null)
 		{
@@ -65,7 +65,7 @@ public class HtmlCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	public void setDocument(Document document)
+	void setDocument(Document document)
 	{
 		this._document = document;
 	}
@@ -75,7 +75,7 @@ public class HtmlCanvas extends BasicCanvas
 	 * 
 	 * @return Returns the document.
 	 */
-	public Document getDocument()
+	Document getDocument()
 	{
 		return _document;
 	}
@@ -84,7 +84,7 @@ public class HtmlCanvas extends BasicCanvas
 	 * (non-Javadoc)
 	 * @see graph.canvas.ICanvas#drawCell()
 	 */
-	public Object drawCell(CellState state)
+	Object drawCell(CellState state)
 	{
 		Map<String, Object> style = state.getStyle();
 		
@@ -141,7 +141,7 @@ public class HtmlCanvas extends BasicCanvas
 	 * (non-Javadoc)
 	 * @see graph.canvas.ICanvas#drawLabel()
 	 */
-	public Object drawLabel(String label, CellState state, boolean html)
+	Object drawLabel(String label, CellState state, bool html)
 	{
 		Rect bounds = state.getLabelBounds();
 
@@ -168,7 +168,7 @@ public class HtmlCanvas extends BasicCanvas
 	 * @param h Height of the shape.
 	 * @param style Style of the the shape.
 	 */
-	public Element drawShape(int x, int y, int w, int h,
+	Element drawShape(int x, int y, int w, int h,
 			Map<String, Object> style)
 	{
 		String fillColor = Utils
@@ -255,7 +255,7 @@ public class HtmlCanvas extends BasicCanvas
 	 * @param pts List of points that define the line.
 	 * @param style Style to be used for painting the line.
 	 */
-	public void drawLine(List<Point2d> pts, Map<String, Object> style)
+	void drawLine(List<Point2d> pts, Map<String, Object> style)
 	{
 		String strokeColor = Utils.getString(style,
 				Constants.STYLE_STROKECOLOR);
@@ -289,7 +289,7 @@ public class HtmlCanvas extends BasicCanvas
 	 * @param strokeColor Color of the stroke to be painted.
 	 * @param strokeWidth Width of the stroke to be painted.
 	 */
-	protected void _drawSegment(int x0, int y0, int x1, int y1,
+	void _drawSegment(int x0, int y0, int x1, int y1,
 			String strokeColor, int strokeWidth)
 	{
 		int tmpX = Math.min(x0, x1);
@@ -335,7 +335,7 @@ public class HtmlCanvas extends BasicCanvas
 	 * @param h Height of the text.
 	 * @param style Style to be used for painting the text.
 	 */
-	public Element drawText(String text, int x, int y, int w, int h,
+	Element drawText(String text, int x, int y, int w, int h,
 			Map<String, Object> style)
 	{
 		Element table = Utils.createTable(_document, text, x, y, w, h, _scale,

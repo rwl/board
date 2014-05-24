@@ -3,24 +3,24 @@
  */
 part of graph.io;
 
-//import graph.io.graphml.GraphMlConstants;
-//import graph.io.graphml.GraphMlData;
-//import graph.io.graphml.GraphMlEdge;
-//import graph.io.graphml.GraphMlGraph;
-//import graph.io.graphml.GraphMlKey;
-//import graph.io.graphml.GraphMlKeyManager;
-//import graph.io.graphml.GraphMlNode;
-//import graph.io.graphml.GraphMlShapeEdge;
-//import graph.io.graphml.GraphMlShapeNode;
-//import graph.io.graphml.GraphMlUtils;
-//import graph.model.Cell;
-//import graph.util.Constants;
-//import graph.util.DomUtils;
-//import graph.util.Point2d;
-//import graph.view.CellState;
-//import graph.view.ConnectionConstraint;
-//import graph.view.Graph;
-//import graph.view.GraphView;
+import '../io/graphml/graphml.dart' show GraphMlConstants;
+import '../io/graphml/graphml.dart' show GraphMlData;
+import '../io/graphml/graphml.dart' show GraphMlEdge;
+import '../io/graphml/graphml.dart' show GraphMlGraph;
+import '../io/graphml/graphml.dart' show GraphMlKey;
+import '../io/graphml/graphml.dart' show GraphMlKeyManager;
+import '../io/graphml/graphml.dart' show GraphMlNode;
+import '../io/graphml/graphml.dart' show GraphMlShapeEdge;
+import '../io/graphml/graphml.dart' show GraphMlShapeNode;
+import '../io/graphml/graphml.dart' show GraphMlUtils;
+import '../model/model.dart' show Cell;
+import '../util/util.dart' show Constants;
+import '../util/util.dart' show DomUtils;
+import '../util/util.dart' show Point2d;
+import '../view/view.dart' show CellState;
+import '../view/view.dart' show ConnectionConstraint;
+import '../view/view.dart' show Graph;
+import '../view/view.dart' show GraphView;
 
 //import java.util.HashMap;
 //import java.util.List;
@@ -37,14 +37,14 @@ part of graph.io;
  * This class depends from the classes contained in
  * graph.io.gmlImplements.
  */
-public class GraphMlCodec
+class GraphMlCodec
 {
 	/**
 	 * Receives a GraphMl document and parses it generating a new graph that is inserted in graph.
 	 * @param document XML to be parsed
 	 * @param graph Graph where the parsed graph is included.
 	 */
-	public static void decode(Document document, Graph graph)
+	static void decode(Document document, Graph graph)
 	{
 		Object parent = graph.getDefaultParent();
 
@@ -82,7 +82,7 @@ public class GraphMlCodec
 	 * @param gmlGraph Graph model.
 	 * @return The Xml document generated.
 	 */
-	public static Document encodeXML(GraphMlGraph gmlGraph)
+	static Document encodeXML(GraphMlGraph gmlGraph)
 	{
 		Document doc = DomUtils.createDocument();
 
@@ -121,7 +121,7 @@ public class GraphMlCodec
 	 * @param graph Graph with the cells.
 	 * @return The Xml document generated.
 	 */
-	public static Document encode(Graph graph)
+	static Document encode(Graph graph)
 	{
 		GraphMlGraph gmlGraph = new GraphMlGraph();
 		Object parent = graph.getDefaultParent();
@@ -161,7 +161,7 @@ public class GraphMlCodec
 	 * @param graph Graph that contains the vertexes and edges.
 	 * @return Returns the document with the elements added.
 	 */
-	public static GraphMlGraph decodeGraph(Graph graph, Object parent,
+	static GraphMlGraph decodeGraph(Graph graph, Object parent,
 			GraphMlGraph gmlGraph)
 	{
 		Object[] vertexes = graph.getChildVertices(parent);
@@ -200,7 +200,7 @@ public class GraphMlCodec
 	 * @param gmlNode Gml node where the data add.
 	 * @param v Cell where data are obtained.
 	 */
-	public static void addNodeData(GraphMlNode gmlNode, Cell v)
+	static void addNodeData(GraphMlNode gmlNode, Cell v)
 	{
 		GraphMlData data = new GraphMlData();
 		GraphMlShapeNode dataShapeNode = new GraphMlShapeNode();
@@ -224,7 +224,7 @@ public class GraphMlCodec
 	 * @param gmlEdge Gml edge where the data add.
 	 * @param v Cell where data are obtained.
 	 */
-	public static void addEdgeData(GraphMlEdge gmlEdge, Cell v)
+	static void addEdgeData(GraphMlEdge gmlEdge, Cell v)
 	{
 		GraphMlData data = new GraphMlData();
 		GraphMlShapeEdge dataShapeEdge = new GraphMlShapeEdge();

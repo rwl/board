@@ -1,19 +1,19 @@
 part of graph.shape;
 
-//import graph.canvas.Graphics2DCanvas;
-//import graph.view.CellState;
+import '../canvas/canvas.dart' show Graphics2DCanvas;
+import '../view/view.dart' show CellState;
 
 //import java.awt.Rectangle;
 //import java.awt.geom.Area;
 //import java.awt.geom.Ellipse2D;
 
-public class CylinderShape extends BasicShape
+class CylinderShape extends BasicShape
 {
 
 	/**
 	 * Draws a cylinder for the given parameters.
 	 */
-	public void paintShape(Graphics2DCanvas canvas, CellState state)
+	void paintShape(Graphics2DCanvas canvas, CellState state)
 	{
 		Rectangle rect = state.getRectangle();
 		int x = rect.x;

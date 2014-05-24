@@ -1,13 +1,13 @@
 part of graph.layout;
 
-//import graph.model.GraphModel;
-//import graph.model.IGraphModel;
-//import graph.util.Point2d;
-//import graph.util.Rect;
-//import graph.util.Utils;
-//import graph.view.CellState;
-//import graph.view.Graph;
-//import graph.view.GraphView;
+import '../../model/model.dart' show GraphModel;
+import '../../model/model.dart' show IGraphModel;
+import '../../util/util.dart' show Point2d;
+import '../../util/util.dart' show Rect;
+import '../../util/util.dart' show Utils;
+import '../../view/view.dart' show CellState;
+import '../../view/view.dart' show Graph;
+import '../../view/view.dart' show GraphView;
 
 //import java.util.ArrayList;
 //import java.util.Arrays;
@@ -15,89 +15,89 @@ part of graph.layout;
 //import java.util.List;
 //import java.util.Set;
 
-public class CompactTreeLayout extends GraphLayout
+class CompactTreeLayout extends GraphLayout
 {
 
 	/**
 	 * Specifies the orientation of the layout. Default is true.
 	 */
-	protected boolean _horizontal;
+	bool _horizontal;
 
 	/**
 	 * Specifies if edge directions should be inverted. Default is false.
 	 */
-	protected boolean _invert;
+	bool _invert;
 
 	/**
 	 * If the parents should be resized to match the width/height of the
 	 * children. Default is true.
 	 */
-	protected boolean _resizeParent = true;
+	bool _resizeParent = true;
 
 	/**
 	 * Padding added to resized parents
 	 */
-	protected int _groupPadding = 10;
+	int _groupPadding = 10;
 
 	/**
 	 * A set of the parents that need updating based on children
 	 * process as part of the layout
 	 */
-	protected Set<Object> _parentsChanged = null;
+	Set<Object> _parentsChanged = null;
 
 	/**
 	 * Specifies if the tree should be moved to the top, left corner
 	 * if it is inside a top-level layer. Default is false.
 	 */
-	protected boolean _moveTree = false;
+	bool _moveTree = false;
 
 	/**
 	 * Specifies if all edge points of traversed edges should be removed.
 	 * Default is true.
 	 */
-	protected boolean _resetEdges = true;
+	bool _resetEdges = true;
 
 	/**
 	 * Holds the levelDistance. Default is 10.
 	 */
-	protected int _levelDistance = 10;
+	int _levelDistance = 10;
 
 	/**
 	 * Holds the nodeDistance. Default is 20.
 	 */
-	protected int _nodeDistance = 20;
+	int _nodeDistance = 20;
 
 	/**
 	 * The preferred horizontal distance between edges exiting a vertex
 	 */
-	protected int _prefHozEdgeSep = 5;
+	int _prefHozEdgeSep = 5;
 
 	/**
 	 * The preferred vertical offset between edges exiting a vertex
 	 */
-	protected int _prefVertEdgeOff = 2;
+	int _prefVertEdgeOff = 2;
 
 	/**
 	 * The minimum distance for an edge jetty from a vertex
 	 */
-	protected int _minEdgeJetty = 12;
+	int _minEdgeJetty = 12;
 
 	/**
 	 * The size of the vertical buffer in the center of inter-rank channels
 	 * where edge control points should not be placed
 	 */
-	protected int _channelBuffer = 4;
+	int _channelBuffer = 4;
 
 	/**
 	 * Whether or not to apply the internal tree edge routing
 	 */
-	protected boolean _edgeRouting = true;
+	bool _edgeRouting = true;
 
 	/**
 	 * 
 	 * @param graph
 	 */
-	public CompactTreeLayout(Graph graph)
+	CompactTreeLayout(Graph graph)
 	{
 		this(graph, true);
 	}
@@ -107,7 +107,7 @@ public class CompactTreeLayout extends GraphLayout
 	 * @param graph
 	 * @param horizontal
 	 */
-	public CompactTreeLayout(Graph graph, boolean horizontal)
+	CompactTreeLayout(Graph graph, bool horizontal)
 	{
 		this(graph, horizontal, false);
 	}
@@ -118,7 +118,7 @@ public class CompactTreeLayout extends GraphLayout
 	 * @param horizontal
 	 * @param invert
 	 */
-	public CompactTreeLayout(Graph graph, boolean horizontal, boolean invert)
+	CompactTreeLayout(Graph graph, bool horizontal, bool invert)
 	{
 		super(graph);
 		this._horizontal = horizontal;
@@ -126,13 +126,13 @@ public class CompactTreeLayout extends GraphLayout
 	}
 
 	/**
-	 * Returns a boolean indicating if the given <Cell> should be ignored as a
+	 * Returns a bool indicating if the given <Cell> should be ignored as a
 	 * vertex. This returns true if the cell has no connections.
 	 * 
 	 * @param vertex Object that represents the vertex to be tested.
 	 * @return Returns true if the vertex should be ignored.
 	 */
-	public boolean isVertexIgnored(Object vertex)
+	bool isVertexIgnored(Object vertex)
 	{
 		return super.isVertexIgnored(vertex)
 				|| graph.getConnections(vertex).length == 0;
@@ -141,7 +141,7 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * @return the horizontal
 	 */
-	public boolean isHorizontal()
+	bool isHorizontal()
 	{
 		return _horizontal;
 	}
@@ -149,7 +149,7 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * @param horizontal the horizontal to set
 	 */
-	public void setHorizontal(boolean horizontal)
+	void setHorizontal(bool horizontal)
 	{
 		this._horizontal = horizontal;
 	}
@@ -157,7 +157,7 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * @return the invert
 	 */
-	public boolean isInvert()
+	bool isInvert()
 	{
 		return _invert;
 	}
@@ -165,7 +165,7 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * @param invert the invert to set
 	 */
-	public void setInvert(boolean invert)
+	void setInvert(bool invert)
 	{
 		this._invert = invert;
 	}
@@ -173,7 +173,7 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * @return the resizeParent
 	 */
-	public boolean isResizeParent()
+	bool isResizeParent()
 	{
 		return _resizeParent;
 	}
@@ -181,7 +181,7 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * @param resizeParent the resizeParent to set
 	 */
-	public void setResizeParent(boolean resizeParent)
+	void setResizeParent(bool resizeParent)
 	{
 		this._resizeParent = resizeParent;
 	}
@@ -189,7 +189,7 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * @return the moveTree
 	 */
-	public boolean isMoveTree()
+	bool isMoveTree()
 	{
 		return _moveTree;
 	}
@@ -197,7 +197,7 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * @param moveTree the moveTree to set
 	 */
-	public void setMoveTree(boolean moveTree)
+	void setMoveTree(bool moveTree)
 	{
 		this._moveTree = moveTree;
 	}
@@ -205,7 +205,7 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * @return the resetEdges
 	 */
-	public boolean isResetEdges()
+	bool isResetEdges()
 	{
 		return _resetEdges;
 	}
@@ -213,17 +213,17 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * @param resetEdges the resetEdges to set
 	 */
-	public void setResetEdges(boolean resetEdges)
+	void setResetEdges(bool resetEdges)
 	{
 		this._resetEdges = resetEdges;
 	}
 
-	public boolean isEdgeRouting()
+	bool isEdgeRouting()
 	{
 		return _edgeRouting;
 	}
 
-	public void setEdgeRouting(boolean edgeRouting)
+	void setEdgeRouting(bool edgeRouting)
 	{
 		this._edgeRouting = edgeRouting;
 	}
@@ -231,7 +231,7 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * @return the levelDistance
 	 */
-	public int getLevelDistance()
+	int getLevelDistance()
 	{
 		return _levelDistance;
 	}
@@ -239,7 +239,7 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * @param levelDistance the levelDistance to set
 	 */
-	public void setLevelDistance(int levelDistance)
+	void setLevelDistance(int levelDistance)
 	{
 		this._levelDistance = levelDistance;
 	}
@@ -247,7 +247,7 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * @return the nodeDistance
 	 */
-	public int getNodeDistance()
+	int getNodeDistance()
 	{
 		return _nodeDistance;
 	}
@@ -255,17 +255,17 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * @param nodeDistance the nodeDistance to set
 	 */
-	public void setNodeDistance(int nodeDistance)
+	void setNodeDistance(int nodeDistance)
 	{
 		this._nodeDistance = nodeDistance;
 	}
 
-	public double getGroupPadding()
+	double getGroupPadding()
 	{
 		return _groupPadding;
 	}
 
-	public void setGroupPadding(int groupPadding)
+	void setGroupPadding(int groupPadding)
 	{
 		this._groupPadding = groupPadding;
 	}
@@ -274,7 +274,7 @@ public class CompactTreeLayout extends GraphLayout
 	 * (non-Javadoc)
 	 * @see graph.layout.IGraphLayout#execute(java.lang.Object)
 	 */
-	public void execute(Object parent)
+	void execute(Object parent)
 	{
 		super.execute(parent);
 		execute(parent, null);
@@ -287,7 +287,7 @@ public class CompactTreeLayout extends GraphLayout
 	 * the tree. Else, <Graph.findTreeRoots> will be used to find a suitable
 	 * root node within the set of children of the given parent.
 	 */
-	public void execute(Object parent, Object root)
+	void execute(Object parent, Object root)
 	{
 		IGraphModel model = graph.getModel();
 
@@ -420,7 +420,7 @@ public class CompactTreeLayout extends GraphLayout
 	 * for a tree root. If false then outgoing edges will be counted.
 	 * @return List of tree roots in parent.
 	 */
-	public List<Object> findTreeRoots(Object parent, boolean invert)
+	List<Object> findTreeRoots(Object parent, bool invert)
 	{
 		List<Object> roots = new ArrayList<Object>();
 
@@ -484,7 +484,7 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * Moves the specified node and all of its children by the given amount.
 	 */
-	protected void _moveNode(_TreeNode node, double dx, double dy)
+	void _moveNode(_TreeNode node, double dx, double dy)
 	{
 		node.x += dx;
 		node.y += dy;
@@ -504,7 +504,7 @@ public class CompactTreeLayout extends GraphLayout
 	 * Makes sure the specified parent is never left by the
 	 * algorithm.
 	 */
-	protected _TreeNode _dfs(Object cell, Object parent, Set<Object> visited)
+	_TreeNode _dfs(Object cell, Object parent, Set<Object> visited)
 	{
 		if (visited == null)
 		{
@@ -573,7 +573,7 @@ public class CompactTreeLayout extends GraphLayout
 	 * Starts the actual compact tree layout algorithm
 	 * at the given node.
 	 */
-	protected void _layout(_TreeNode node)
+	void _layout(_TreeNode node)
 	{
 		if (node != null)
 		{
@@ -599,7 +599,7 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * 
 	 */
-	protected Rect _horizontalLayout(_TreeNode node, double x0, double y0,
+	Rect _horizontalLayout(_TreeNode node, double x0, double y0,
 			Rect bounds)
 	{
 		node.x += x0 + node.offsetX;
@@ -628,7 +628,7 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * 
 	 */
-	protected Rect _verticalLayout(_TreeNode node, Object parent,
+	Rect _verticalLayout(_TreeNode node, Object parent,
 			double x0, double y0, Rect bounds)
 	{
 		node.x += x0 + node.offsetY;
@@ -657,7 +657,7 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * 
 	 */
-	protected void _attachParent(_TreeNode node, double height)
+	void _attachParent(_TreeNode node, double height)
 	{
 		double x = _nodeDistance + _levelDistance;
 		double y2 = (height - node.width) / 2 - _nodeDistance;
@@ -675,7 +675,7 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * 
 	 */
-	protected void _layoutLeaf(_TreeNode node)
+	void _layoutLeaf(_TreeNode node)
 	{
 		double dist = 2 * _nodeDistance;
 
@@ -689,7 +689,7 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * 
 	 */
-	protected double _join(_TreeNode node)
+	double _join(_TreeNode node)
 	{
 		double dist = 2 * _nodeDistance;
 
@@ -715,7 +715,7 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * 
 	 */
-	protected double _merge(_Polygon p1, _Polygon p2)
+	double _merge(_Polygon p1, _Polygon p2)
 	{
 		double x = 0;
 		double y = 0;
@@ -768,7 +768,7 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * 
 	 */
-	protected double _offset(double p1, double p2, double a1, double a2,
+	double _offset(double p1, double p2, double a1, double a2,
 			double b1, double b2)
 	{
 		double d = 0;
@@ -823,7 +823,7 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * 
 	 */
-	protected _Polyline _bridge(_Polyline line1, double x1, double y1,
+	_Polyline _bridge(_Polyline line1, double x1, double y1,
 			_Polyline line2, double x2, double y2)
 	{
 		double dx = x2 + line2.dx - x1;
@@ -849,7 +849,7 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * 
 	 */
-	protected _TreeNode _createNode(Object cell)
+	_TreeNode _createNode(Object cell)
 	{
 		_TreeNode node = new _TreeNode(cell);
 
@@ -878,7 +878,7 @@ public class CompactTreeLayout extends GraphLayout
 	 * @param bounds
 	 * @return
 	 */
-	protected Rect _apply(_TreeNode node, Rect bounds)
+	Rect _apply(_TreeNode node, Rect bounds)
 	{
 		IGraphModel model = graph.getModel();
 		Object cell = node.cell;
@@ -918,7 +918,7 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * 
 	 */
-	protected _Polyline _createLine(double dx, double dy, _Polyline next)
+	_Polyline _createLine(double dx, double dy, _Polyline next)
 	{
 		return new _Polyline(dx, dy, next);
 	}
@@ -928,7 +928,7 @@ public class CompactTreeLayout extends GraphLayout
 	 * implementation adjusts the group to just fit around the children with 
 	 * a padding.
 	 */
-	protected void _adjustParents()
+	void _adjustParents()
 	{
 		arrangeGroups(Utils.sortCells(this._parentsChanged, true).toArray(), _groupPadding);
 	}
@@ -936,7 +936,7 @@ public class CompactTreeLayout extends GraphLayout
 	/**
 	 * Moves the specified node and all of its children by the given amount.
 	 */
-	protected void _localEdgeProcessing(_TreeNode node)
+	void _localEdgeProcessing(_TreeNode node)
 	{
 		_processNodeOutgoing(node);
 		_TreeNode child = node.child;
@@ -954,7 +954,7 @@ public class CompactTreeLayout extends GraphLayout
 	 * @param node
 	 *            the root node of the tree
 	 */
-	protected void _processNodeOutgoing(_TreeNode node)
+	void _processNodeOutgoing(_TreeNode node)
 	{
 		IGraphModel model = graph.getModel();
 
@@ -1088,12 +1088,12 @@ class _WeightedCellSorter implements Comparable<Object>
   /**
    * Whether or not to flip equal weight values.
    */
-  public boolean nudge = false;
+  public bool nudge = false;
 
   /**
    * Whether or not this cell has been visited in the current assignment
    */
-  public boolean visited = false;
+  public bool visited = false;
 
   /**
    * The cell whose median value is being calculated

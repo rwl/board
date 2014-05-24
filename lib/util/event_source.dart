@@ -9,13 +9,13 @@ part of graph.util;
 /**
  * Base class for objects that dispatch named events.
  */
-public class EventSource
+class EventSource
 {
 
 	/**
 	 * Defines the requirements for an object that listens to an event source.
 	 */
-	public interface IEventListener
+	interface IEventListener
 	{
 
 		/**
@@ -33,22 +33,22 @@ public class EventSource
 	 * contains the event name followed by the respective listener for each
 	 * registered listener.
 	 */
-	protected transient List<Object> _eventListeners = null;
+	transient List<Object> _eventListeners = null;
 
 	/**
 	 * Holds the source object for this event source.
 	 */
-	protected Object _eventSource;
+	Object _eventSource;
 
 	/**
 	 * Specifies if events can be fired. Default is true.
 	 */
-	protected boolean _eventsEnabled = true;
+	bool _eventsEnabled = true;
 
 	/**
 	 * Constructs a new event source using this as the source object.
 	 */
-	public EventSource()
+	EventSource()
 	{
 		this(null);
 	}
@@ -56,7 +56,7 @@ public class EventSource
 	/**
 	 * Constructs a new event source for the given source object.
 	 */
-	public EventSource(Object source)
+	EventSource(Object source)
 	{
 		setEventSource(source);
 	}
@@ -64,7 +64,7 @@ public class EventSource
 	/**
 	 * 
 	 */
-	public Object getEventSource()
+	Object getEventSource()
 	{
 		return _eventSource;
 	}
@@ -72,7 +72,7 @@ public class EventSource
 	/**
 	 * 
 	 */
-	public void setEventSource(Object value)
+	void setEventSource(Object value)
 	{
 		this._eventSource = value;
 	}
@@ -80,7 +80,7 @@ public class EventSource
 	/**
 	 * 
 	 */
-	public boolean isEventsEnabled()
+	bool isEventsEnabled()
 	{
 		return _eventsEnabled;
 	}
@@ -88,7 +88,7 @@ public class EventSource
 	/**
 	 * 
 	 */
-	public void setEventsEnabled(boolean eventsEnabled)
+	void setEventsEnabled(bool eventsEnabled)
 	{
 		this._eventsEnabled = eventsEnabled;
 	}
@@ -97,7 +97,7 @@ public class EventSource
 	 * Binds the specified function to the given event name. If no event name
 	 * is given, then the listener is registered for all events.
 	 */
-	public void addListener(String eventName, IEventListener listener)
+	void addListener(String eventName, IEventListener listener)
 	{
 		if (_eventListeners == null)
 		{
@@ -113,7 +113,7 @@ public class EventSource
 	 *
 	 * Removes all occurances of the given listener from the list of listeners.
 	 */
-	public void removeListener(IEventListener listener)
+	void removeListener(IEventListener listener)
 	{
 		removeListener(listener, null);
 	}
@@ -123,7 +123,7 @@ public class EventSource
 	 *
 	 * Removes all occurances of the given listener from the list of listeners.
 	 */
-	public void removeListener(IEventListener listener, String eventName)
+	void removeListener(IEventListener listener, String eventName)
 	{
 		if (_eventListeners != null)
 		{
@@ -145,7 +145,7 @@ public class EventSource
 	 * <code>fireEvent(new EventObj("eventName", key1, val1, .., keyN, valN))</code>
 	 * 
 	 */
-	public void fireEvent(EventObj evt)
+	void fireEvent(EventObj evt)
 	{
 		fireEvent(evt, null);
 	}
@@ -154,7 +154,7 @@ public class EventSource
 	 * Dispatches the given event name, passing all arguments after the given
 	 * name to the registered listeners for the event.
 	 */
-	public void fireEvent(EventObj evt, Object sender)
+	void fireEvent(EventObj evt, Object sender)
 	{
 		if (_eventListeners != null && !_eventListeners.isEmpty()
 				&& isEventsEnabled())

@@ -4,16 +4,16 @@
 
 part of graph.layout.hierarchical.stage;
 
-//import graph.layout.hierarchical.HierarchicalLayout;
-//import graph.layout.hierarchical.model.GraphAbstractHierarchyCell;
-//import graph.layout.hierarchical.model.GraphHierarchyEdge;
-//import graph.layout.hierarchical.model.GraphHierarchyModel;
-//import graph.layout.hierarchical.model.GraphHierarchyNode;
-//import graph.layout.hierarchical.model.GraphHierarchyRank;
-//import graph.util.Point2d;
-//import graph.util.Rect;
-//import graph.util.Utils;
-//import graph.view.Graph;
+import '../../../layout/hierarchical/hierarchical.dart' show HierarchicalLayout;
+import '../../../layout/hierarchical/model/model.dart' show GraphAbstractHierarchyCell;
+import '../../../layout/hierarchical/model/model.dart' show GraphHierarchyEdge;
+import '../../../layout/hierarchical/model/model.dart' show GraphHierarchyModel;
+import '../../../layout/hierarchical/model/model.dart' show GraphHierarchyNode;
+import '../../../layout/hierarchical/model/model.dart' show GraphHierarchyRank;
+import '../../../util/util.dart' show Point2d;
+import '../../../util/util.dart' show Rect;
+import '../../../util/util.dart' show Utils;
+import '../../../view/view.dart' show Graph;
 
 //import java.util.ArrayList;
 //import java.util.Arrays;
@@ -36,7 +36,7 @@ part of graph.layout.hierarchical.stage;
  * Uses median down and up weighings as well as heuristics to straighten edges as
  * far as possible.
  */
-public class CoordinateAssignment implements HierarchicalLayoutStage
+class CoordinateAssignment implements HierarchicalLayoutStage
 {
 
 	enum HierarchicalEdgeStyle
@@ -47,53 +47,53 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 	/**
 	 * Reference to the enclosing layout algorithm
 	 */
-	protected HierarchicalLayout _layout;
+	HierarchicalLayout _layout;
 
 	/**
 	 * The minimum buffer between cells on the same rank
 	 */
-	protected double _intraCellSpacing = 30.0;
+	double _intraCellSpacing = 30.0;
 
 	/**
 	 * The minimum distance between cells on adjacent ranks
 	 */
-	protected double _interRankCellSpacing = 30.0;
+	double _interRankCellSpacing = 30.0;
 
 	/**
 	 * The distance between each parallel edge on each ranks for long edges
 	 */
-	protected double _parallelEdgeSpacing = 4.0;
+	double _parallelEdgeSpacing = 4.0;
 
 	/**
 	 * The buffer on either side of a vertex where edges must not connect.
 	 */
-	protected double _vertexConnectionBuffer = 0.0;
+	double _vertexConnectionBuffer = 0.0;
 
 	/**
 	 * The number of heuristic iterations to run
 	 */
-	protected int _maxIterations = 8;
+	int _maxIterations = 8;
 
 	/**
 	 * The preferred horizontal distance between edges exiting a vertex
 	 */
-	protected int _prefHozEdgeSep = 5;
+	int _prefHozEdgeSep = 5;
 
 	/**
 	 * The preferred vertical offset between edges exiting a vertex
 	 */
-	protected int _prefVertEdgeOff = 2;
+	int _prefVertEdgeOff = 2;
 
 	/**
 	 * The minimum distance for an edge jetty from a vertex
 	 */
-	protected int _minEdgeJetty = 12;
+	int _minEdgeJetty = 12;
 
 	/**
 	 * The size of the vertical buffer in the center of inter-rank channels
 	 * where edge control points should not be placed
 	 */
-	protected int _channelBuffer = 4;
+	int _channelBuffer = 4;
 
 	/**
 	 * Map of internal edges and (x,y) pair of positions of the start and end jetty
@@ -104,90 +104,90 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 	 * Note that the y co-ord is the offset of the jetty, not the
 	 * absolute point
 	 */
-	protected Map<GraphHierarchyEdge, double[]> _jettyPositions = new HashMap<GraphHierarchyEdge, double[]>();
+	Map<GraphHierarchyEdge, double[]> _jettyPositions = new HashMap<GraphHierarchyEdge, double[]>();
 
 	/**
 	 * The position of the root ( start ) node(s) relative to the rest of the
 	 * laid out graph
 	 */
-	protected int _orientation = SwingConstants.NORTH;
+	int _orientation = SwingConstants.NORTH;
 
 	/**
 	 * The minimum x position node placement starts at
 	 */
-	protected double _initialX;
+	double _initialX;
 
 	/**
 	 * The maximum x value this positioning lays up to
 	 */
-	protected double _limitX;
+	double _limitX;
 
 	/**
 	 * The sum of x-displacements for the current iteration
 	 */
-	protected double _currentXDelta;
+	double _currentXDelta;
 
 	/**
 	 * The rank that has the widest x position
 	 */
-	protected int _widestRank;
+	int _widestRank;
 
 	/**
 	 * Internal cache of top-most values of Y for each rank
 	 */
-	protected double[] _rankTopY;
+	double[] _rankTopY;
 
 	/**
 	 * Internal cache of bottom-most value of Y for each rank
 	 */
-	protected double[] _rankBottomY;
+	double[] _rankBottomY;
 
 	/**
 	 * The X-coordinate of the edge of the widest rank
 	 */
-	protected double _widestRankValue;
+	double _widestRankValue;
 
 	/**
 	 * The width of all the ranks
 	 */
-	protected double[] _rankWidths;
+	double[] _rankWidths;
 
 	/**
 	 * The Y-coordinate of all the ranks
 	 */
-	protected double[] _rankY;
+	double[] _rankY;
 
 	/**
 	 * Whether or not to perform local optimisations and iterate multiple times
 	 * through the algorithm
 	 */
-	protected boolean _fineTuning = true;
+	bool _fineTuning = true;
 
 	/**
 	 * Specifies if the STYLE_NOEDGESTYLE flag should be set on edges that are
 	 * modified by the result. Default is true.
 	 */
-	protected boolean _disableEdgeStyle = true;
+	bool _disableEdgeStyle = true;
 
 	/**
 	 * The style to apply between cell layers to edge segments
 	 */
-	protected HierarchicalEdgeStyle _edgeStyle = HierarchicalEdgeStyle.POLYLINE;
+	HierarchicalEdgeStyle _edgeStyle = HierarchicalEdgeStyle.POLYLINE;
 
 	/**
 	 * A store of connections to the layer above for speed
 	 */
-	protected GraphAbstractHierarchyCell[][] _nextLayerConnectedCache;
+	GraphAbstractHierarchyCell[][] _nextLayerConnectedCache;
 
 	/**
 	 * Padding added to resized parents
 	 */
-	protected int _groupPadding = 10;
+	int _groupPadding = 10;
 
 	/**
 	 * A store of connections to the layer below for speed
 	 */
-	protected GraphAbstractHierarchyCell[][] _previousLayerConnectedCache;
+	GraphAbstractHierarchyCell[][] _previousLayerConnectedCache;
 
 	/** The logger for this class */
 	private static Logger _logger = Logger
@@ -205,7 +205,7 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 	 * @param initialX
 	 *            the leftmost coordinate node placement starts at
 	 */
-	public CoordinateAssignment(HierarchicalLayout layout,
+	CoordinateAssignment(HierarchicalLayout layout,
 			double intraCellSpacing, double interRankCellSpacing,
 			int orientation, double initialX, double parallelEdgeSpacing)
 	{
@@ -221,7 +221,7 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 	/**
 	 * Utility method to display the x co-ords
 	 */
-	public void printStatus()
+	void printStatus()
 	{
 		GraphHierarchyModel model = _layout.getModel();
 
@@ -249,7 +249,7 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 	/**
 	 * A basic horizontal coordinate assignment algorithm
 	 */
-	public void execute(Object parent)
+	void execute(Object parent)
 	{
 		GraphHierarchyModel model = _layout.getModel();
 		_currentXDelta = 0.0;
@@ -399,7 +399,7 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 			}
 
 			// Flag storing whether or not position has changed
-			boolean positionChanged = false;
+			bool positionChanged = false;
 
 			if (cellMedian < currentPosition - tolerance)
 			{
@@ -516,7 +516,7 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 	private void _medianPos(int i, GraphHierarchyModel model)
 	{
 		// Reverse sweep direction each time through this method
-		boolean downwardSweep = (i % 2 == 0);
+		bool downwardSweep = (i % 2 == 0);
 
 		if (downwardSweep)
 		{
@@ -545,7 +545,7 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 	 *            the layer number whose connected cels are to be laid out
 	 *            relative to
 	 */
-	protected void _rankMedianPosition(int rankValue,
+	void _rankMedianPosition(int rankValue,
 			GraphHierarchyModel model, int nextRankValue)
 	{
 		GraphHierarchyRank rankSet = model.ranks.get(new Integer(rankValue));
@@ -835,7 +835,7 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 	 * @param model
 	 *            an internal model of the hierarchical layout
 	 */
-	protected void _rankCoordinates(int rankValue, Graph graph,
+	void _rankCoordinates(int rankValue, Graph graph,
 			GraphHierarchyModel model)
 	{
 		GraphHierarchyRank rank = model.ranks.get(new Integer(rankValue));
@@ -845,7 +845,7 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 
 		// Store whether or not any of the cells' bounds were unavailable so
 		// to only issue the warning once for all cells
-		boolean boundsWarning = false;
+		bool boundsWarning = false;
 
 		for (GraphAbstractHierarchyCell cell : rank)
 		{
@@ -917,7 +917,7 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 	 * @param model
 	 *            an internal model of the hierarchical layout
 	 */
-	protected void _calculateWidestRank(Graph graph,
+	void _calculateWidestRank(Graph graph,
 			GraphHierarchyModel model)
 	{
 		// Starting y co-ordinate
@@ -938,7 +938,7 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 
 			// Store whether or not any of the cells' bounds were unavailable so
 			// to only issue the warning once for all cells
-			boolean boundsWarning = false;
+			bool boundsWarning = false;
 			Iterator<GraphAbstractHierarchyCell> iter = rank.iterator();
 
 			while (iter.hasNext())
@@ -1042,7 +1042,7 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 	 * @param model
 	 *            an internal model of the hierarchical layout
 	 */
-	protected void _minPath(GraphHierarchyModel model)
+	void _minPath(GraphHierarchyModel model)
 	{
 		// Work down and up each edge with at least 2 control points
 		// trying to straighten each one out. If the same number of
@@ -1061,7 +1061,7 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 				// Check first whether the edge is already straight
 				int referenceX = cell
 						.getGeneralPurposeVariable(cell.minRank + 1);
-				boolean edgeStraight = true;
+				bool edgeStraight = true;
 				int refSegCount = 0;
 
 				for (int i = cell.minRank + 2; i < cell.maxRank; i++)
@@ -1184,7 +1184,7 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 	 * @param position the x position being sought
 	 * @return whether or not the virtual node can be moved to this position
 	 */
-	protected boolean _repositionValid(GraphHierarchyModel model,
+	bool _repositionValid(GraphHierarchyModel model,
 			GraphAbstractHierarchyCell cell, int rank, double position)
 	{
 		GraphHierarchyRank rankSet = model.ranks.get(new Integer(rank));
@@ -1267,7 +1267,7 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 	 * @param model
 	 *            an internal model of the hierarchical layout
 	 */
-	protected void _setCellLocations(Graph graph, GraphHierarchyModel model)
+	void _setCellLocations(Graph graph, GraphHierarchyModel model)
 	{
 		_rankTopY = new double[model.ranks.size()];
 		_rankBottomY = new double[model.ranks.size()];
@@ -1326,7 +1326,7 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 	 * implementation adjusts the group to just fit around the children with 
 	 * a padding.
 	 */
-	protected void _adjustParents(Set<Object> parentsChanged)
+	void _adjustParents(Set<Object> parentsChanged)
 	{
 		_layout.arrangeGroups(Utils.sortCells(parentsChanged, true).toArray(), _groupPadding);
 	}
@@ -1337,7 +1337,7 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 	 * @param model
 	 *            an internal model of the hierarchical layout
 	 */
-	protected void _localEdgeProcessing(GraphHierarchyModel model)
+	void _localEdgeProcessing(GraphHierarchyModel model)
 	{
 		// Check the map of jetty positions doesn't contain
 		// any deleted edges. We can't use a WeakHashMap because
@@ -1511,7 +1511,7 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 	 * Fixes the control points 
 	 * @param cell
 	 */
-	protected void _setEdgePosition(GraphAbstractHierarchyCell cell)
+	void _setEdgePosition(GraphAbstractHierarchyCell cell)
 	{
 		GraphHierarchyEdge edge = (GraphHierarchyEdge) cell;
 
@@ -1547,7 +1547,7 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 				// Single length reversed edges end up with the jettys in the wrong
 				// places. Since single length edges only have jettys, not segment
 				// control points, we just say the edge isn't reversed in this section
-				boolean reversed = edge.isReversed();
+				bool reversed = edge.isReversed();
 				
 				if (realSource != source)
 				{
@@ -1699,7 +1699,7 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 	 * Fixes the position of the specified vertex
 	 * @param cell the vertex to position
 	 */
-	protected void _setVertexLocation(GraphAbstractHierarchyCell cell)
+	void _setVertexLocation(GraphAbstractHierarchyCell cell)
 	{
 		GraphHierarchyNode node = (GraphHierarchyNode) cell;
 		Object realCell = node.cell;
@@ -1736,7 +1736,7 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 	 * @param realEdge
 	 *            The real edge in the graph
 	 */
-	protected void _processReversedEdge(GraphHierarchyEdge edge,
+	void _processReversedEdge(GraphHierarchyEdge edge,
 			Object realEdge)
 	{
 		// Added as hook for customer
@@ -1745,7 +1745,7 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 	/**
 	 * @return Returns the interRankCellSpacing.
 	 */
-	public double getInterRankCellSpacing()
+	double getInterRankCellSpacing()
 	{
 		return _interRankCellSpacing;
 	}
@@ -1754,7 +1754,7 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 	 * @param interRankCellSpacing
 	 *            The interRankCellSpacing to set.
 	 */
-	public void setInterRankCellSpacing(double interRankCellSpacing)
+	void setInterRankCellSpacing(double interRankCellSpacing)
 	{
 		this._interRankCellSpacing = interRankCellSpacing;
 	}
@@ -1762,7 +1762,7 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 	/**
 	 * @return Returns the intraCellSpacing.
 	 */
-	public double getIntraCellSpacing()
+	double getIntraCellSpacing()
 	{
 		return _intraCellSpacing;
 	}
@@ -1771,7 +1771,7 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 	 * @param intraCellSpacing
 	 *            The intraCellSpacing to set.
 	 */
-	public void setIntraCellSpacing(double intraCellSpacing)
+	void setIntraCellSpacing(double intraCellSpacing)
 	{
 		this._intraCellSpacing = intraCellSpacing;
 	}
@@ -1779,7 +1779,7 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 	/**
 	 * @return Returns the orientation.
 	 */
-	public int getOrientation()
+	int getOrientation()
 	{
 		return _orientation;
 	}
@@ -1788,7 +1788,7 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 	 * @param orientation
 	 *            The orientation to set.
 	 */
-	public void setOrientation(int orientation)
+	void setOrientation(int orientation)
 	{
 		this._orientation = orientation;
 	}
@@ -1796,7 +1796,7 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 	/**
 	 * @return Returns the limitX.
 	 */
-	public double getLimitX()
+	double getLimitX()
 	{
 		return _limitX;
 	}
@@ -1805,7 +1805,7 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 	 * @param limitX
 	 *            The limitX to set.
 	 */
-	public void setLimitX(double limitX)
+	void setLimitX(double limitX)
 	{
 		this._limitX = limitX;
 	}
@@ -1813,7 +1813,7 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 	/**
 	 * @return Returns the fineTuning.
 	 */
-	public boolean isFineTuning()
+	bool isFineTuning()
 	{
 		return _fineTuning;
 	}
@@ -1822,7 +1822,7 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 	 * @param fineTuning
 	 *            The fineTuning to set.
 	 */
-	public void setFineTuning(boolean fineTuning)
+	void setFineTuning(bool fineTuning)
 	{
 		this._fineTuning = fineTuning;
 	}
@@ -1833,7 +1833,7 @@ public class CoordinateAssignment implements HierarchicalLayoutStage
 	 * @param level
 	 *            the logging level to set
 	 */
-	public void setLoggerLevel(Level level)
+	void setLoggerLevel(Level level)
 	{
 		try
 		{

@@ -13,7 +13,7 @@ part of graph.io.graphml;
  * document. The key elements are wrapped in instances of mxGmlKey and
  * may to be access by ID.
  */
-public class GraphMlKeyManager
+class GraphMlKeyManager
 {
 	/**
 	 * Map with the key elements of the document.<br/>
@@ -37,7 +37,7 @@ public class GraphMlKeyManager
 	 * This method don't load the map.
 	 * @return An instance of mxGmlKeyManager.
 	 */
-	public static GraphMlKeyManager getInstance()
+	static GraphMlKeyManager getInstance()
 	{
 		if (_keyManager == null)
 		{
@@ -51,7 +51,7 @@ public class GraphMlKeyManager
 	 * The keys are wrapped for instances of mxGmlKey.
 	 * @param doc Document with the keys.
 	 */
-	public void initialise(Document doc)
+	void initialise(Document doc)
 	{
 		NodeList gmlKeys = doc.getElementsByTagName(GraphMlConstants.KEY);
 
@@ -66,12 +66,12 @@ public class GraphMlKeyManager
 		}
 	}
 
-	public HashMap<String, GraphMlKey> getKeyMap()
+	HashMap<String, GraphMlKey> getKeyMap()
 	{
 		return _keyMap;
 	}
 
-	public void setKeyMap(HashMap<String, GraphMlKey> keyMap)
+	void setKeyMap(HashMap<String, GraphMlKey> keyMap)
 	{
 		this._keyMap = keyMap;
 	}

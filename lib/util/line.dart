@@ -9,7 +9,7 @@ part of graph.util;
  * Implements a line with double precision coordinates.
  */
 
-public class Line extends Point2d
+class Line extends Point2d
 {
 	/**
 	 * 
@@ -18,12 +18,12 @@ public class Line extends Point2d
 	/**
 	 * The end point of the line
 	 */
-	protected Point2d _endPoint;
+	Point2d _endPoint;
 
 	/**
 	 * Creates a new line
 	 */
-	public Line(Point2d startPt, Point2d endPt)
+	Line(Point2d startPt, Point2d endPt)
 	{
 		this.setX(startPt.getX());
 		this.setY(startPt.getY());
@@ -33,7 +33,7 @@ public class Line extends Point2d
 	/**
 	 * Creates a new line
 	 */
-	public Line(double startPtX, double startPtY, Point2d endPt)
+	Line(double startPtX, double startPtY, Point2d endPt)
 	{
 		_x = startPtX;
 		_y = startPtY;
@@ -45,7 +45,7 @@ public class Line extends Point2d
 	 * 
 	 * @return Returns the end point of the line.
 	 */
-	public Point2d getEndPoint()
+	Point2d getEndPoint()
 	{
 		return this._endPoint;
 	}
@@ -55,7 +55,7 @@ public class Line extends Point2d
 	 * 
 	 * @param value The new end point of the line
 	 */
-	public void setEndPoint(Point2d value)
+	void setEndPoint(Point2d value)
 	{
 		this._endPoint = value;
 	}
@@ -63,7 +63,7 @@ public class Line extends Point2d
 	/**
 	 * Sets the start and end points.
 	 */
-	public void setPoints(Point2d startPt, Point2d endPt)
+	void setPoints(Point2d startPt, Point2d endPt)
 	{
 		this.setX(startPt.getX());
 		this.setY(startPt.getY());
@@ -78,7 +78,7 @@ public class Line extends Point2d
 	 * @param pt the point whose distance is being measured
 	 * @return the square of the distance from the specified point to this line.
 	 */
-	public double ptLineDistSq(Point2d pt)
+	double ptLineDistSq(Point2d pt)
 	{
 		return new Line2D.Double(getX(), getY(), _endPoint.getX(), _endPoint
 				.getY()).ptLineDistSq(pt.getX(), pt.getY());
@@ -91,7 +91,7 @@ public class Line extends Point2d
 	 * @param pt the point whose distance is being measured
 	 * @return the square of the distance from the specified point to this segment.
 	 */
-	public double ptSegDistSq(Point2d pt)
+	double ptSegDistSq(Point2d pt)
 	{
 		return new Line2D.Double(getX(), getY(), _endPoint.getX(), _endPoint
 				.getY()).ptSegDistSq(pt.getX(), pt.getY());

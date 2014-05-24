@@ -9,11 +9,11 @@
  */
 part of graph.view;
 
-//import graph.util.Event;
-//import graph.util.EventObj;
-//import graph.util.EventSource;
-//import graph.util.UndoableEdit;
-//import graph.util.UndoableEdit.UndoableChange;
+import '../util/util.dart' show Event;
+import '../util/util.dart' show EventObj;
+import '../util/util.dart' show EventSource;
+import '../util/util.dart' show UndoableEdit;
+import '../util/util.dart' show UndoableChange;
 
 //import java.util.ArrayList;
 //import java.util.Collection;
@@ -52,31 +52,31 @@ part of graph.view;
  *   });
  * </code>
  */
-public class GraphSelectionModel extends EventSource
+class GraphSelectionModel extends EventSource
 {
 
 	/**
 	 * Reference to the enclosing graph.
 	 */
-	protected Graph _graph;
+	Graph _graph;
 
 	/**
 	 * Specifies if only one selected item at a time is allowed.
 	 * Default is false.
 	 */
-	protected boolean _singleSelection = false;
+	bool _singleSelection = false;
 
 	/**
 	 * Holds the selection cells.
 	 */
-	protected Set<Object> _cells = new LinkedHashSet<Object>();
+	Set<Object> _cells = new LinkedHashSet<Object>();
 
 	/**
 	 * Constructs a new selection model for the specified graph.
 	 * 
 	 * @param graph
 	 */
-	public GraphSelectionModel(Graph graph)
+	GraphSelectionModel(Graph graph)
 	{
 		this._graph = graph;
 	}
@@ -84,7 +84,7 @@ public class GraphSelectionModel extends EventSource
 	/**
 	 * @return the singleSelection
 	 */
-	public boolean isSingleSelection()
+	bool isSingleSelection()
 	{
 		return _singleSelection;
 	}
@@ -92,7 +92,7 @@ public class GraphSelectionModel extends EventSource
 	/**
 	 * @param singleSelection the singleSelection to set
 	 */
-	public void setSingleSelection(boolean singleSelection)
+	void setSingleSelection(bool singleSelection)
 	{
 		this._singleSelection = singleSelection;
 	}
@@ -103,7 +103,7 @@ public class GraphSelectionModel extends EventSource
 	 * @param cell
 	 * @return Returns true if the given cell is selected.
 	 */
-	public boolean isSelected(Object cell)
+	bool isSelected(Object cell)
 	{
 		return (cell == null) ? false : _cells.contains(cell);
 	}
@@ -111,7 +111,7 @@ public class GraphSelectionModel extends EventSource
 	/**
 	 * Returns true if no cells are selected.
 	 */
-	public boolean isEmpty()
+	bool isEmpty()
 	{
 		return _cells.isEmpty();
 	}
@@ -119,7 +119,7 @@ public class GraphSelectionModel extends EventSource
 	/**
 	 * Returns the number of selected cells.
 	 */
-	public int size()
+	int size()
 	{
 		return _cells.size();
 	}
@@ -127,7 +127,7 @@ public class GraphSelectionModel extends EventSource
 	/**
 	 * Clears the selection.
 	 */
-	public void clear()
+	void clear()
 	{
 		_changeSelection(null, _cells);
 	}
@@ -135,7 +135,7 @@ public class GraphSelectionModel extends EventSource
 	/**
 	 * Returns the first selected cell.
 	 */
-	public Object getCell()
+	Object getCell()
 	{
 		return (_cells.isEmpty()) ? null : _cells.iterator().next();
 	}
@@ -143,7 +143,7 @@ public class GraphSelectionModel extends EventSource
 	/**
 	 * Returns the selection cells.
 	 */
-	public Object[] getCells()
+	Object[] getCells()
 	{
 		return _cells.toArray();
 	}
@@ -151,7 +151,7 @@ public class GraphSelectionModel extends EventSource
 	/**
 	 * Clears the selection and adds the given cell to the selection.
 	 */
-	public void setCell(Object cell)
+	void setCell(Object cell)
 	{
 		if (cell != null)
 		{
@@ -166,7 +166,7 @@ public class GraphSelectionModel extends EventSource
 	/**
 	 * Clears the selection and adds the given cells.
 	 */
-	public void setCells(Object[] cells)
+	void setCells(Object[] cells)
 	{
 		if (cells != null)
 		{
@@ -199,7 +199,7 @@ public class GraphSelectionModel extends EventSource
 	 * @param cells Array of cells to return the first selectable cell for.
 	 * @return Returns the first cell that may be selected.
 	 */
-	protected Object _getFirstSelectableCell(Object[] cells)
+	Object _getFirstSelectableCell(Object[] cells)
 	{
 		if (cells != null)
 		{
@@ -218,7 +218,7 @@ public class GraphSelectionModel extends EventSource
 	/**
 	 * Adds the given cell to the selection.
 	 */
-	public void addCell(Object cell)
+	void addCell(Object cell)
 	{
 		if (cell != null)
 		{
@@ -229,7 +229,7 @@ public class GraphSelectionModel extends EventSource
 	/**
 	 * 
 	 */
-	public void addCells(Object[] cells)
+	void addCells(Object[] cells)
 	{
 		if (cells != null)
 		{
@@ -258,7 +258,7 @@ public class GraphSelectionModel extends EventSource
 	/**
 	 * Removes the given cell from the selection.
 	 */
-	public void removeCell(Object cell)
+	void removeCell(Object cell)
 	{
 		if (cell != null)
 		{
@@ -269,7 +269,7 @@ public class GraphSelectionModel extends EventSource
 	/**
 	 * 
 	 */
-	public void removeCells(Object[] cells)
+	void removeCells(Object[] cells)
 	{
 		if (cells != null)
 		{
@@ -290,7 +290,7 @@ public class GraphSelectionModel extends EventSource
 	/**
 	 * 
 	 */
-	protected void _changeSelection(Collection<Object> added,
+	void _changeSelection(Collection<Object> added,
 			Collection<Object> removed)
 	{
 		if ((added != null && !added.isEmpty())
@@ -308,7 +308,7 @@ public class GraphSelectionModel extends EventSource
 	/**
 	 * 
 	 */
-	protected void _cellAdded(Object cell)
+	void _cellAdded(Object cell)
 	{
 		if (cell != null)
 		{
@@ -319,7 +319,7 @@ public class GraphSelectionModel extends EventSource
 	/**
 	 * 
 	 */
-	protected void _cellRemoved(Object cell)
+	void _cellRemoved(Object cell)
 	{
 		if (cell != null)
 		{
@@ -330,7 +330,7 @@ public class GraphSelectionModel extends EventSource
 	/**
 	 *
 	 */
-	public static class SelectionChange implements UndoableChange
+	static class SelectionChange implements UndoableChange
 	{
 
 		/**

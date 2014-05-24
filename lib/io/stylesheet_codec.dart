@@ -3,8 +3,8 @@
  */
 part of graph.io;
 
-//import graph.util.Utils;
-//import graph.view.Stylesheet;
+import '../util/util.dart' show Utils;
+import '../view/view.dart' show Stylesheet;
 
 //import java.util.Hashtable;
 //import java.util.Iterator;
@@ -18,13 +18,13 @@ part of graph.io;
  * dynamically at load time and used implicitely via Codec
  * and the CodecRegistry.
  */
-public class StylesheetCodec extends ObjectCodec
+class StylesheetCodec extends ObjectCodec
 {
 
 	/**
 	 * Constructs a new model codec.
 	 */
-	public StylesheetCodec()
+	StylesheetCodec()
 	{
 		this(new Stylesheet());
 	}
@@ -32,7 +32,7 @@ public class StylesheetCodec extends ObjectCodec
 	/**
 	 * Constructs a new stylesheet codec for the given template.
 	 */
-	public StylesheetCodec(Object template)
+	StylesheetCodec(Object template)
 	{
 		this(template, null, null, null);
 	}
@@ -40,7 +40,7 @@ public class StylesheetCodec extends ObjectCodec
 	/**
 	 * Constructs a new model codec for the given arguments.
 	 */
-	public StylesheetCodec(Object template, String[] exclude,
+	StylesheetCodec(Object template, String[] exclude,
 			String[] idrefs, Map<String, String> mapping)
 	{
 		super(template, exclude, idrefs, mapping);
@@ -49,7 +49,7 @@ public class StylesheetCodec extends ObjectCodec
 	/**
 	 * Encodes the given Stylesheet.
 	 */
-	public Node encode(Codec enc, Object obj)
+	Node encode(Codec enc, Object obj)
 	{
 		Element node = enc._document.createElement(getName());
 
@@ -94,7 +94,7 @@ public class StylesheetCodec extends ObjectCodec
 	/**
 	 * Returns the string for encoding the given value.
 	 */
-	protected String _getStringValue(Map.Entry<String, Object> entry)
+	String _getStringValue(Map.Entry<String, Object> entry)
 	{
 		if (entry.getValue() instanceof Boolean)
 		{
@@ -107,7 +107,7 @@ public class StylesheetCodec extends ObjectCodec
 	/**
 	 * Decodes the given Stylesheet.
 	 */
-	public Object decode(Codec dec, Node node, Object into)
+	Object decode(Codec dec, Node node, Object into)
 	{
 		Object obj = null;
 

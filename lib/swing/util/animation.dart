@@ -3,9 +3,9 @@
  */
 part of graph.swing.util;
 
-//import graph.util.Event;
-//import graph.util.EventObj;
-//import graph.util.EventSource;
+import '../../util/util.dart' show Event;
+import '../../util/util.dart' show EventObj;
+import '../../util/util.dart' show EventSource;
 
 //import java.awt.event.ActionEvent;
 //import java.awt.event.ActionListener;
@@ -17,27 +17,27 @@ part of graph.swing.util;
  * stopAnimation method is called. Implement updateAnimation for the
  * actual animation or listen to Event.EXECUTE.
  */
-public class Animation extends EventSource
+class Animation extends EventSource
 {
 	/**
 	 * Specifies the default delay for animations in ms. Default is 20.
 	 */
-	public static int DEFAULT_DELAY = 20;
+	static int DEFAULT_DELAY = 20;
 
 	/**
 	 * Default is DEFAULT_DELAY.
 	 */
-	protected int _delay;
+	int _delay;
 
 	/**
 	 * Time instance that is used for timing the animation.
 	 */
-	protected Timer _timer;
+	Timer _timer;
 
 	/**
 	 * Constructs a new animation instance with the given repaint delay.
 	 */
-	public Animation()
+	Animation()
 	{
 		this(DEFAULT_DELAY);
 	}
@@ -45,7 +45,7 @@ public class Animation extends EventSource
 	/**
 	 * Constructs a new animation instance with the given repaint delay.
 	 */
-	public Animation(int delay)
+	Animation(int delay)
 	{
 		this._delay = delay;
 	}
@@ -53,7 +53,7 @@ public class Animation extends EventSource
 	/**
 	 * Returns the delay for the animation.
 	 */
-	public int getDelay()
+	int getDelay()
 	{
 		return _delay;
 	}
@@ -61,7 +61,7 @@ public class Animation extends EventSource
 	/**
 	 * Sets the delay for the animation.
 	 */
-	public void setDelay(int value)
+	void setDelay(int value)
 	{
 		_delay = value;
 	}
@@ -69,7 +69,7 @@ public class Animation extends EventSource
 	/**
 	 * Returns true if the animation is running.
 	 */
-	public boolean isRunning()
+	bool isRunning()
 	{
 		return _timer != null;
 	}
@@ -77,7 +77,7 @@ public class Animation extends EventSource
 	/**
 	 * Starts the animation by repeatedly invoking updateAnimation.
 	 */
-	public void startAnimation()
+	void startAnimation()
 	{
 		if (_timer == null)
 		{
@@ -100,7 +100,7 @@ public class Animation extends EventSource
 	 * when finished, startAnimation to resume. This is called whenever the
 	 * timer fires and fires an Event.EXECUTE event with no properties.
 	 */
-	public void updateAnimation()
+	void updateAnimation()
 	{
 		fireEvent(new EventObj(Event.EXECUTE));
 	}
@@ -108,7 +108,7 @@ public class Animation extends EventSource
 	/**
 	 * Stops the animation by deleting the timer and fires Event.DONE.
 	 */
-	public void stopAnimation()
+	void stopAnimation()
 	{
 		if (_timer != null)
 		{

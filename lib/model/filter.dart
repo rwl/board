@@ -9,5 +9,5 @@ public interface Filter
 	/**
 	 * 
 	 */
-	boolean filter(Object cell);
+	bool filter(Object cell);
 }

@@ -234,8 +234,8 @@ public interface PathHandler
 	 * @param y the relative y coordinate for the end point 
 	 * @exception ParseException if an error occured while processing the path
 	 */
-	void arcRel(float rx, float ry, float xAxisRotation, boolean largeArcFlag,
-			boolean sweepFlag, float x, float y) throws ParseException;
+	void arcRel(float rx, float ry, float xAxisRotation, bool largeArcFlag,
+			bool sweepFlag, float x, float y) throws ParseException;
 
 	/**
 	 * Invoked when an absolute elliptical arc command has been parsed.
@@ -250,6 +250,6 @@ public interface PathHandler
 	 * @param y the absolute y coordinate for the end point 
 	 * @exception ParseException if an error occured while processing the path
 	 */
-	void arcAbs(float rx, float ry, float xAxisRotation, boolean largeArcFlag,
-			boolean sweepFlag, float x, float y) throws ParseException;
+	void arcAbs(float rx, float ry, float xAxisRotation, bool largeArcFlag,
+			bool sweepFlag, float x, float y) throws ParseException;
 }

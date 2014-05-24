@@ -1,36 +1,36 @@
 part of graph.view;
 
-//import graph.model.Cell;
-//import graph.util.Rect;
+import '../model/model.dart' show Cell;
+import '../util/util.dart' show Rect;
 
 //import java.util.Hashtable;
 
-public class TemporaryCellStates
+class TemporaryCellStates
 {
 	/**
 	 * 
 	 */
-	protected GraphView _view;
+	GraphView _view;
 
 	/**
 	 * 
 	 */
-	protected Hashtable<Object, CellState> _oldStates;
+	Hashtable<Object, CellState> _oldStates;
 
 	/**
 	 * 
 	 */
-	protected Rect _oldBounds;
+	Rect _oldBounds;
 
 	/**
 	 * 
 	 */
-	protected double _oldScale;
+	double _oldScale;
 
 	/**
 	 * Constructs a new temporary cell states instance.
 	 */
-	public TemporaryCellStates(GraphView view)
+	TemporaryCellStates(GraphView view)
 	{
 		this(view, 1, null);
 	}
@@ -38,7 +38,7 @@ public class TemporaryCellStates
 	/**
 	 * Constructs a new temporary cell states instance.
 	 */
-	public TemporaryCellStates(GraphView view, double scale)
+	TemporaryCellStates(GraphView view, double scale)
 	{
 		this(view, scale, null);
 	}
@@ -46,7 +46,7 @@ public class TemporaryCellStates
 	/**
 	 * Constructs a new temporary cell states instance.
 	 */
-	public TemporaryCellStates(GraphView view, double scale, Object[] cells)
+	TemporaryCellStates(GraphView view, double scale, Object[] cells)
 	{
 		this._view = view;
 
@@ -91,7 +91,7 @@ public class TemporaryCellStates
 	/**
 	 * Destroys the cell states and restores the state of the graph view.
 	 */
-	public void destroy()
+	void destroy()
 	{
 		_view.setScale(_oldScale);
 		_view.setStates(_oldStates);

@@ -1,7 +1,7 @@
 part of graph.canvas;
 
-//import graph.util.Constants;
-//import graph.util.Utils;
+import '../util/util.dart' show Constants;
+import '../util/util.dart' show Utils;
 
 //import java.awt.Point;
 //import java.awt.image.BufferedImage;
@@ -14,44 +14,44 @@ public abstract class BasicCanvas implements ICanvas
 	/**
 	 * Specifies if image aspect should be preserved in drawImage. Default is true.
 	 */
-	public static boolean PRESERVE_IMAGE_ASPECT = true;
+	static bool PRESERVE_IMAGE_ASPECT = true;
 
 	/**
 	 * Defines the default value for the imageBasePath in all GDI canvases.
 	 * Default is an empty string.
 	 */
-	public static String DEFAULT_IMAGEBASEPATH = "";
+	static String DEFAULT_IMAGEBASEPATH = "";
 
 	/**
 	 * Defines the base path for images with relative paths. Trailing slash
 	 * is required. Default value is DEFAULT_IMAGEBASEPATH.
 	 */
-	protected String _imageBasePath = DEFAULT_IMAGEBASEPATH;
+	String _imageBasePath = DEFAULT_IMAGEBASEPATH;
 
 	/**
 	 * Specifies the current translation. Default is (0,0).
 	 */
-	protected Point _translate = new Point();
+	Point _translate = new Point();
 
 	/**
 	 * Specifies the current scale. Default is 1.
 	 */
-	protected double _scale = 1;
+	double _scale = 1;
 
 	/**
 	 * Specifies whether labels should be painted. Default is true.
 	 */
-	protected boolean _drawLabels = true;
+	bool _drawLabels = true;
 
 	/**
 	 * Cache for images.
 	 */
-	protected Hashtable<String, BufferedImage> _imageCache = new Hashtable<String, BufferedImage>();
+	Hashtable<String, BufferedImage> _imageCache = new Hashtable<String, BufferedImage>();
 
 	/**
 	 * Sets the current translate.
 	 */
-	public void setTranslate(int dx, int dy)
+	void setTranslate(int dx, int dy)
 	{
 		_translate = new Point(dx, dy);
 	}
@@ -59,7 +59,7 @@ public abstract class BasicCanvas implements ICanvas
 	/**
 	 * Returns the current translate.
 	 */
-	public Point getTranslate()
+	Point getTranslate()
 	{
 		return _translate;
 	}
@@ -67,7 +67,7 @@ public abstract class BasicCanvas implements ICanvas
 	/**
 	 * 
 	 */
-	public void setScale(double scale)
+	void setScale(double scale)
 	{
 		this._scale = scale;
 	}
@@ -75,7 +75,7 @@ public abstract class BasicCanvas implements ICanvas
 	/**
 	 * 
 	 */
-	public double getScale()
+	double getScale()
 	{
 		return _scale;
 	}
@@ -83,7 +83,7 @@ public abstract class BasicCanvas implements ICanvas
 	/**
 	 * 
 	 */
-	public void setDrawLabels(boolean drawLabels)
+	void setDrawLabels(bool drawLabels)
 	{
 		this._drawLabels = drawLabels;
 	}
@@ -91,7 +91,7 @@ public abstract class BasicCanvas implements ICanvas
 	/**
 	 * 
 	 */
-	public String getImageBasePath()
+	String getImageBasePath()
 	{
 		return _imageBasePath;
 	}
@@ -99,7 +99,7 @@ public abstract class BasicCanvas implements ICanvas
 	/**
 	 * 
 	 */
-	public void setImageBasePath(String imageBasePath)
+	void setImageBasePath(String imageBasePath)
 	{
 		this._imageBasePath = imageBasePath;
 	}
@@ -107,7 +107,7 @@ public abstract class BasicCanvas implements ICanvas
 	/**
 	 * 
 	 */
-	public boolean isDrawLabels()
+	bool isDrawLabels()
 	{
 		return _drawLabels;
 	}
@@ -117,7 +117,7 @@ public abstract class BasicCanvas implements ICanvas
 	 * been loaded before than an instance of the same instance is
 	 * returned as in the previous call.
 	 */
-	public BufferedImage loadImage(String image)
+	BufferedImage loadImage(String image)
 	{
 		BufferedImage img = _imageCache.get(image);
 
@@ -137,7 +137,7 @@ public abstract class BasicCanvas implements ICanvas
 	/**
 	 * 
 	 */
-	public void flushImageCache()
+	void flushImageCache()
 	{
 		_imageCache.clear();
 	}
@@ -146,7 +146,7 @@ public abstract class BasicCanvas implements ICanvas
 	 * Gets the image path from the given style. If the path is relative (does
 	 * not start with a slash) then it is appended to the imageBasePath.
 	 */
-	public String getImageForStyle(Map<String, Object> style)
+	String getImageForStyle(Map<String, Object> style)
 	{
 		String filename = Utils.getString(style, Constants.STYLE_IMAGE);
 

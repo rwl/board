@@ -1,24 +1,24 @@
 part of graph.model;
 
-//import graph.model.IGraphModel.AtomicGraphModelChange;
+import '../model/model.dart' show AtomicGraphModelChange;
 
-public class CollapseChange extends AtomicGraphModelChange
+class CollapseChange extends AtomicGraphModelChange
 {
 
 	/**
 	 *
 	 */
-	protected Object cell;
+	Object cell;
 
 	/**
 	 * 
 	 */
-	protected boolean collapsed, previous;
+	bool collapsed, previous;
 
 	/**
 	 * 
 	 */
-	public CollapseChange()
+	CollapseChange()
 	{
 		this(null, null, false);
 	}
@@ -26,8 +26,8 @@ public class CollapseChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	public CollapseChange(GraphModel model, Object cell,
-			boolean collapsed)
+	CollapseChange(GraphModel model, Object cell,
+			bool collapsed)
 	{
 		super(model);
 		this.cell = cell;
@@ -38,7 +38,7 @@ public class CollapseChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	public void setCell(Object value)
+	void setCell(Object value)
 	{
 		cell = value;
 	}
@@ -46,7 +46,7 @@ public class CollapseChange extends AtomicGraphModelChange
 	/**
 	 * @return the cell
 	 */
-	public Object getCell()
+	Object getCell()
 	{
 		return cell;
 	}
@@ -54,7 +54,7 @@ public class CollapseChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	public void setCollapsed(boolean value)
+	void setCollapsed(bool value)
 	{
 		collapsed = value;
 	}
@@ -62,7 +62,7 @@ public class CollapseChange extends AtomicGraphModelChange
 	/**
 	 * @return the collapsed
 	 */
-	public boolean isCollapsed()
+	bool isCollapsed()
 	{
 		return collapsed;
 	}
@@ -70,7 +70,7 @@ public class CollapseChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	public void setPrevious(boolean value)
+	void setPrevious(bool value)
 	{
 		previous = value;
 	}
@@ -78,7 +78,7 @@ public class CollapseChange extends AtomicGraphModelChange
 	/**
 	 * @return the previous
 	 */
-	public boolean getPrevious()
+	bool getPrevious()
 	{
 		return previous;
 	}
@@ -86,7 +86,7 @@ public class CollapseChange extends AtomicGraphModelChange
 	/**
 	 * Changes the root of the model.
 	 */
-	public void execute()
+	void execute()
 	{
 		collapsed = previous;
 		previous = ((GraphModel) model)._collapsedStateForCellChanged(

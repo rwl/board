@@ -3,8 +3,8 @@
  */
 part of graph.sharing;
 
-//import graph.util.EventSource;
-//import graph.util.XmlUtils;
+import '../util/util.dart' show EventSource;
+import '../util/util.dart' show XmlUtils;
 
 //import java.util.ArrayList;
 //import java.util.Iterator;
@@ -18,14 +18,14 @@ part of graph.sharing;
  * The diagram is represented by its initial state and the sequence of edits
  * as applied to the diagram.
  */
-public class SharedState extends EventSource
+class SharedState extends EventSource
 {
 
 	/**
 	 * Defines the requirements for an object that listens to changes on the
 	 * shared diagram.
 	 */
-	public interface DiagramChangeListener
+	interface DiagramChangeListener
 	{
 
 		/**
@@ -40,24 +40,24 @@ public class SharedState extends EventSource
 	/**
 	 * Holds a list of diagram change listeners.
 	 */
-	protected List<DiagramChangeListener> _diagramChangeListeners;
+	List<DiagramChangeListener> _diagramChangeListeners;
 
 	/**
 	 * Holds the initial state of the diagram.
 	 */
-	protected String _state;
+	String _state;
 
 	/**
 	 * Holds the history of all changes of initial state.
 	 */
-	protected StringBuffer _delta = new StringBuffer();
+	StringBuffer _delta = new StringBuffer();
 
 	/**
 	 * Constructs a new diagram with the given state.
 	 * 
 	 * @param state Initial state of the diagram.
 	 */
-	public SharedState(String state)
+	SharedState(String state)
 	{
 		this._state = state;
 	}
@@ -65,7 +65,7 @@ public class SharedState extends EventSource
 	/**
 	 * Returns the initial state of the diagram.
 	 */
-	public String getState()
+	String getState()
 	{
 		return _state;
 	}
@@ -73,7 +73,7 @@ public class SharedState extends EventSource
 	/**
 	 * Returns the history of all changes as a string.
 	 */
-	public synchronized String getDelta()
+	synchronized String getDelta()
 	{
 		return _delta.toString();
 	}
@@ -85,7 +85,7 @@ public class SharedState extends EventSource
 	 * @param sender Session where the change originated from.
 	 * @param delta XML that represents the change.
 	 */
-	public void processDelta(Object sender, Node delta)
+	void processDelta(Object sender, Node delta)
 	{
 		StringBuffer edits = new StringBuffer();
 
@@ -112,7 +112,7 @@ public class SharedState extends EventSource
 	/**
 	 * 
 	 */
-	protected String _processEdit(Node node)
+	String _processEdit(Node node)
 	{
 		return XmlUtils.getXml(node);
 	}
@@ -120,7 +120,7 @@ public class SharedState extends EventSource
 	/**
 	 * 
 	 */
-	public synchronized void addDelta(String xml)
+	synchronized void addDelta(String xml)
 	{
 		// TODO: Clear delta if xml contains RootChange
 		_delta.append(xml);
@@ -129,7 +129,7 @@ public class SharedState extends EventSource
 	/**
 	 * Clears the history of all changes.
 	 */
-	public synchronized void resetDelta()
+	synchronized void resetDelta()
 	{
 		_delta = new StringBuffer();
 	}
@@ -139,7 +139,7 @@ public class SharedState extends EventSource
 	 * 
 	 * @param listener Diagram change listener to be added.
 	 */
-	public void addDiagramChangeListener(DiagramChangeListener listener)
+	void addDiagramChangeListener(DiagramChangeListener listener)
 	{
 		if (_diagramChangeListeners == null)
 		{
@@ -154,7 +154,7 @@ public class SharedState extends EventSource
 	 * 
 	 * @param listener Diagram change listener to be removed.
 	 */
-	public void removeDiagramChangeListener(DiagramChangeListener listener)
+	void removeDiagramChangeListener(DiagramChangeListener listener)
 	{
 		if (_diagramChangeListeners != null)
 		{

@@ -1,45 +1,37 @@
 /**
  * Copyright (c) 2007, Gaudenz Alder
  */
-library graph.view;
+part of graph.view;
 
-/**
- * This package implements the graph component, represented by the mxGraph
- * class. The graph holds an mxGraphModel which contains mxCells and caches the
- * state of the cells in mxGraphView. The cells are painted using a canvas from
- * the canvas package. The style of the graph is represented by the mxStylesheet
- * class.
- */
-
-//import graph.canvas.Graphics2DCanvas;
-//import graph.canvas.ICanvas;
-//import graph.canvas.ImageCanvas;
-//import graph.model.Cell;
-//import graph.model.ChildChange;
-//import graph.model.CollapseChange;
-//import graph.model.Filter;
-//import graph.model.Geometry;
-//import graph.model.GeometryChange;
-//import graph.model.GraphModel;
-//import graph.model.ICell;
-//import graph.model.IGraphModel;
-//import graph.model.RootChange;
-//import graph.model.StyleChange;
-//import graph.model.TerminalChange;
-//import graph.model.ValueChange;
-//import graph.model.VisibleChange;
-//import graph.util.Constants;
-//import graph.util.Event;
-//import graph.util.EventObj;
-//import graph.util.EventSource;
-//import graph.util.ImageBundle;
-//import graph.util.Point2d;
-//import graph.util.Rect;
-//import graph.util.Resources;
-//import graph.util.StyleUtils;
-//import graph.util.UndoableEdit;
-//import graph.util.Utils;
-//import graph.util.UndoableEdit.UndoableChange;
+import '../canvas/canvas.dart' show Graphics2DCanvas;
+import '../canvas/canvas.dart' show ICanvas;
+import '../canvas/canvas.dart' show ImageCanvas;
+import '../model/model.dart' show Cell;
+import '../model/model.dart' show ChildChange;
+import '../model/model.dart' show CollapseChange;
+import '../model/model.dart' show Filter;
+import '../model/model.dart' show Geometry;
+import '../model/model.dart' show GeometryChange;
+import '../model/model.dart' show GraphModel;
+import '../model/model.dart' show ICell;
+import '../model/model.dart' show IGraphModel;
+import '../model/model.dart' show RootChange;
+import '../model/model.dart' show StyleChange;
+import '../model/model.dart' show TerminalChange;
+import '../model/model.dart' show ValueChange;
+import '../model/model.dart' show VisibleChange;
+import '../util/util.dart' show Constants;
+import '../util/util.dart' show Event;
+import '../util/util.dart' show EventObj;
+import '../util/util.dart' show EventSource;
+import '../util/util.dart' show ImageBundle;
+import '../util/util.dart' show Point2d;
+import '../util/util.dart' show Rect;
+import '../util/util.dart' show Resources;
+import '../util/util.dart' show StyleUtils;
+import '../util/util.dart' show UndoableEdit;
+import '../util/util.dart' show Utils;
+import '../util/util.dart' show UndoableChange;
 
 //import java.awt.Graphics;
 //import java.awt.Point;
@@ -60,19 +52,6 @@ library graph.view;
 //import java.util.Set;
 
 //import org.w3c.dom.Element;
-
-part 'connection_constraint.dart';
-part 'edge_style.dart';
-part 'graph_view.dart';
-part 'graph_selection_model.dart';
-part 'layout_manager.dart';
-part 'multiplicity.dart';
-part 'perimeter.dart';
-part 'space_manager.dart';
-part 'style_registry.dart';
-part 'stylesheet.dart';
-part 'swimlane_manager.dart';
-part 'temporary_cell_states.dart';
 
 /**
  * Implements a graph object that allows to create diagrams from a graph model
@@ -195,7 +174,7 @@ part 'temporary_cell_states.dart';
  * <code>region</code> property contains the optional Rect that was
  * passed to repaint to define the dirty region.
  */
-public class Graph extends EventSource
+class Graph extends EventSource
 {
 
 	/**
@@ -217,12 +196,12 @@ public class Graph extends EventSource
 	 * Holds the version number of this release. Current version
 	 * is 2.8.0.0.
 	 */
-	public static final String VERSION = "2.8.0.0";
+	static final String VERSION = "2.8.0.0";
 
 	/**
 	 * 
 	 */
-	public interface ICellVisitor
+	interface ICellVisitor
 	{
 
 		/**
@@ -230,51 +209,51 @@ public class Graph extends EventSource
 		 * @param vertex
 		 * @param edge
 		 */
-		boolean visit(Object vertex, Object edge);
+		bool visit(Object vertex, Object edge);
 
 	}
 
 	/**
 	 * Property change event handling.
 	 */
-	protected PropertyChangeSupport _changeSupport = new PropertyChangeSupport(
+	PropertyChangeSupport _changeSupport = new PropertyChangeSupport(
 			this);
 
 	/**
 	 * Holds the model that contains the cells to be displayed.
 	 */
-	protected IGraphModel _model;
+	IGraphModel _model;
 
 	/**
 	 * Holds the view that caches the cell states.
 	 */
-	protected GraphView _view;
+	GraphView _view;
 
 	/**
 	 * Holds the stylesheet that defines the appearance of the cells.
 	 */
-	protected Stylesheet _stylesheet;
+	Stylesheet _stylesheet;
 
 	/**
 	 * Holds the <mxGraphSelection> that models the current selection.
 	 */
-	protected GraphSelectionModel _selectionModel;
+	GraphSelectionModel _selectionModel;
 
 	/**
 	 * Specifies the grid size. Default is 10.
 	 */
-	protected int _gridSize = 10;
+	int _gridSize = 10;
 
 	/**
 	 * Specifies if the grid is enabled. Default is true.
 	 */
-	protected boolean _gridEnabled = true;
+	bool _gridEnabled = true;
 
 	/**
 	 * Specifies if ports are enabled. This is used in <cellConnected> to update
 	 * the respective style. Default is true.
 	 */
-	protected boolean _portsEnabled = true;
+	bool _portsEnabled = true;
 
 	/**
 	 * Value returned by getOverlap if isAllowOverlapParent returns
@@ -282,247 +261,247 @@ public class Graph extends EventSource
 	 * isKeepInsideParentOnMove returns true. The value specifies the
 	 * portion of the child which is allowed to overlap the parent.
 	 */
-	protected double _defaultOverlap = 0.5;
+	double _defaultOverlap = 0.5;
 
 	/**
 	 * Specifies the default parent to be used to insert new cells.
 	 * This is used in getDefaultParent. Default is null.
 	 */
-	protected Object _defaultParent;
+	Object _defaultParent;
 
 	/**
 	 * Specifies the alternate edge style to be used if the main control point
 	 * on an edge is being doubleclicked. Default is null.
 	 */
-	protected String _alternateEdgeStyle;
+	String _alternateEdgeStyle;
 
 	/**
 	 * Specifies the return value for isEnabled. Default is true.
 	 */
-	protected boolean _enabled = true;
+	bool _enabled = true;
 
 	/**
 	 * Specifies the return value for isCell(s)Locked. Default is false.
 	 */
-	protected boolean _cellsLocked = false;
+	bool _cellsLocked = false;
 
 	/**
 	 * Specifies the return value for isCell(s)Editable. Default is true.
 	 */
-	protected boolean _cellsEditable = true;
+	bool _cellsEditable = true;
 
 	/**
 	 * Specifies the return value for isCell(s)Sizable. Default is true.
 	 */
-	protected boolean _cellsResizable = true;
+	bool _cellsResizable = true;
 
 	/**
 	 * Specifies the return value for isCell(s)Movable. Default is true.
 	 */
-	protected boolean _cellsMovable = true;
+	bool _cellsMovable = true;
 
 	/**
 	 * Specifies the return value for isCell(s)Bendable. Default is true.
 	 */
-	protected boolean _cellsBendable = true;
+	bool _cellsBendable = true;
 
 	/**
 	 * Specifies the return value for isCell(s)Selectable. Default is true.
 	 */
-	protected boolean _cellsSelectable = true;
+	bool _cellsSelectable = true;
 
 	/**
 	 * Specifies the return value for isCell(s)Deletable. Default is true.
 	 */
-	protected boolean _cellsDeletable = true;
+	bool _cellsDeletable = true;
 
 	/**
 	 * Specifies the return value for isCell(s)Cloneable. Default is true.
 	 */
-	protected boolean _cellsCloneable = true;
+	bool _cellsCloneable = true;
 
 	/**
 	 * Specifies the return value for isCellDisconntableFromTerminal. Default
 	 * is true.
 	 */
-	protected boolean _cellsDisconnectable = true;
+	bool _cellsDisconnectable = true;
 
 	/**
 	 * Specifies the return value for isLabel(s)Clipped. Default is false.
 	 */
-	protected boolean _labelsClipped = false;
+	bool _labelsClipped = false;
 
 	/**
 	 * Specifies the return value for edges in isLabelMovable. Default is true.
 	 */
-	protected boolean _edgeLabelsMovable = true;
+	bool _edgeLabelsMovable = true;
 
 	/**
 	 * Specifies the return value for vertices in isLabelMovable. Default is false.
 	 */
-	protected boolean _vertexLabelsMovable = false;
+	bool _vertexLabelsMovable = false;
 
 	/**
 	 * Specifies the return value for isDropEnabled. Default is true.
 	 */
-	protected boolean _dropEnabled = true;
+	bool _dropEnabled = true;
 
 	/**
 	 * Specifies if dropping onto edges should be enabled. Default is true.
 	 */
-	protected boolean _splitEnabled = true;
+	bool _splitEnabled = true;
 
 	/**
 	 * Specifies if the graph should automatically update the cell size
 	 * after an edit. This is used in isAutoSizeCell. Default is false.
 	 */
-	protected boolean _autoSizeCells = false;
+	bool _autoSizeCells = false;
 
 	/**
 	 * <Rect> that specifies the area in which all cells in the
 	 * diagram should be placed. Uses in getMaximumGraphBounds. Use a width
 	 * or height of 0 if you only want to give a upper, left corner.
 	 */
-	protected Rect _maximumGraphBounds = null;
+	Rect _maximumGraphBounds = null;
 
 	/**
 	 * Rect that specifies the minimum size of the graph canvas inside
 	 * the scrollpane.
 	 */
-	protected Rect _minimumGraphSize = null;
+	Rect _minimumGraphSize = null;
 
 	/**
 	 * Border to be added to the bottom and right side when the container is
 	 * being resized after the graph has been changed. Default is 0.
 	 */
-	protected int _border = 0;
+	int _border = 0;
 
 	/**
 	 * Specifies if edges should appear in the foreground regardless of their
 	 * order in the model. This has precendence over keepEdgeInBackground
 	 * Default is false.
 	 */
-	protected boolean _keepEdgesInForeground = false;
+	bool _keepEdgesInForeground = false;
 
 	/**
 	 * Specifies if edges should appear in the background regardless of their
 	 * order in the model. Default is false.
 	 */
-	protected boolean _keepEdgesInBackground = false;
+	bool _keepEdgesInBackground = false;
 
 	/**
 	 * Specifies if the cell size should be changed to the preferred size when
 	 * a cell is first collapsed. Default is true.
 	 */
-	protected boolean _collapseToPreferredSize = true;
+	bool _collapseToPreferredSize = true;
 
 	/**
 	 * Specifies if negative coordinates for vertices are allowed. Default is true.
 	 */
-	protected boolean _allowNegativeCoordinates = true;
+	bool _allowNegativeCoordinates = true;
 
 	/**
 	 * Specifies the return value for isConstrainChildren. Default is true.
 	 */
-	protected boolean _constrainChildren = true;
+	bool _constrainChildren = true;
 
 	/**
 	 * Specifies if a parent should contain the child bounds after a resize of
 	 * the child. Default is true.
 	 */
-	protected boolean _extendParents = true;
+	bool _extendParents = true;
 
 	/**
 	 * Specifies if parents should be extended according to the <extendParents>
 	 * switch if cells are added. Default is true.
 	 */
-	protected boolean _extendParentsOnAdd = true;
+	bool _extendParentsOnAdd = true;
 
 	/**
 	 * Specifies if the scale and translate should be reset if
 	 * the root changes in the model. Default is true.
 	 */
-	protected boolean _resetViewOnRootChange = true;
+	bool _resetViewOnRootChange = true;
 
 	/**
 	 * Specifies if loops (aka self-references) are allowed.
 	 * Default is false.
 	 */
-	protected boolean _resetEdgesOnResize = false;
+	bool _resetEdgesOnResize = false;
 
 	/**
 	 * Specifies if edge control points should be reset after
 	 * the move of a connected cell. Default is false.
 	 */
-	protected boolean _resetEdgesOnMove = false;
+	bool _resetEdgesOnMove = false;
 
 	/**
 	 * Specifies if edge control points should be reset after
 	 * the the edge has been reconnected. Default is true.
 	 */
-	protected boolean _resetEdgesOnConnect = true;
+	bool _resetEdgesOnConnect = true;
 
 	/**
 	 * Specifies if loops (aka self-references) are allowed.
 	 * Default is false.
 	 */
-	protected boolean _allowLoops = false;
+	bool _allowLoops = false;
 
 	/**
 	 * Specifies the multiplicities to be used for validation of the graph.
 	 */
-	protected Multiplicity[] _multiplicities;
+	Multiplicity[] _multiplicities;
 
 	/**
 	 * Specifies the default style for loops.
 	 */
-	protected EdgeStyle.EdgeStyleFunction _defaultLoopStyle = EdgeStyle.Loop;
+	EdgeStyle.EdgeStyleFunction _defaultLoopStyle = EdgeStyle.Loop;
 
 	/**
 	 * Specifies if multiple edges in the same direction between
 	 * the same pair of vertices are allowed. Default is true.
 	 */
-	protected boolean _multigraph = true;
+	bool _multigraph = true;
 
 	/**
 	 * Specifies if edges are connectable. Default is false.
 	 * This overrides the connectable field in edges.
 	 */
-	protected boolean _connectableEdges = false;
+	bool _connectableEdges = false;
 
 	/**
 	 * Specifies if edges with disconnected terminals are
 	 * allowed in the graph. Default is false.
 	 */
-	protected boolean _allowDanglingEdges = true;
+	bool _allowDanglingEdges = true;
 
 	/**
 	 * Specifies if edges that are cloned should be validated and only inserted
 	 * if they are valid. Default is true.
 	 */
-	protected boolean _cloneInvalidEdges = false;
+	bool _cloneInvalidEdges = false;
 
 	/**
 	 * Specifies if edges should be disconnected from their terminals when they
 	 * are moved. Default is true.
 	 */
-	protected boolean _disconnectOnMove = true;
+	bool _disconnectOnMove = true;
 
 	/**
 	 * Specifies if labels should be visible. This is used in
 	 * getLabel. Default is true.
 	 */
-	protected boolean _labelsVisible = true;
+	bool _labelsVisible = true;
 
 	/**
 	 * Specifies the return value for isHtmlLabel. Default is false.
 	 */
-	protected boolean _htmlLabels = false;
+	bool _htmlLabels = false;
 
 	/**
 	 * Specifies if nesting of swimlanes is allowed. Default is true.
 	 */
-	protected boolean _swimlaneNesting = true;
+	bool _swimlaneNesting = true;
 
 	/**
 	 * Specifies the maximum number of changes that should be processed to find
@@ -530,27 +509,27 @@ public class Graph extends EventSource
 	 * grah is repainted. A value of zero will always compute the dirty region
 	 * for any number of changes. Default is 1000.
 	 */
-	protected int _changesRepaintThreshold = 1000;
+	int _changesRepaintThreshold = 1000;
 
 	/**
 	 * Specifies if the origin should be automatically updated. 
 	 */
-	protected boolean _autoOrigin = false;
+	bool _autoOrigin = false;
 
 	/**
 	 * Holds the current automatic origin.
 	 */
-	protected Point2d _origin = new Point2d();
+	Point2d _origin = new Point2d();
 
 	/**
 	 * Holds the list of bundles.
 	 */
-	protected static List<ImageBundle> _imageBundles = new LinkedList<ImageBundle>();
+	static List<ImageBundle> _imageBundles = new LinkedList<ImageBundle>();
 
 	/**
 	 * Fires repaint events for full repaints.
 	 */
-	protected IEventListener _fullRepaintHandler = new IEventListener()
+	IEventListener _fullRepaintHandler = new IEventListener()
 	{
 		public void invoke(Object sender, EventObj evt)
 		{
@@ -561,7 +540,7 @@ public class Graph extends EventSource
 	/**
 	 * Fires repaint events for full repaints.
 	 */
-	protected IEventListener _updateOriginHandler = new IEventListener()
+	IEventListener _updateOriginHandler = new IEventListener()
 	{
 		public void invoke(Object sender, EventObj evt)
 		{
@@ -575,7 +554,7 @@ public class Graph extends EventSource
 	/**
 	 * Fires repaint events for model changes.
 	 */
-	protected IEventListener _graphModelChangeHandler = new IEventListener()
+	IEventListener _graphModelChangeHandler = new IEventListener()
 	{
 		public void invoke(Object sender, EventObj evt)
 		{
@@ -590,7 +569,7 @@ public class Graph extends EventSource
 	 * Constructs a new graph with an empty
 	 * {@link graph.model.GraphModel}.
 	 */
-	public Graph()
+	Graph()
 	{
 		this(null, null);
 	}
@@ -602,7 +581,7 @@ public class Graph extends EventSource
 	 * 
 	 * @param model Model that contains the graph data
 	 */
-	public Graph(IGraphModel model)
+	Graph(IGraphModel model)
 	{
 		this(model, null);
 	}
@@ -614,7 +593,7 @@ public class Graph extends EventSource
 	 * 
 	 * @param stylesheet The stylesheet to use for the graph.
 	 */
-	public Graph(Stylesheet stylesheet)
+	Graph(Stylesheet stylesheet)
 	{
 		this(null, stylesheet);
 	}
@@ -626,7 +605,7 @@ public class Graph extends EventSource
 	 * 
 	 * @param model Model that contains the graph data
 	 */
-	public Graph(IGraphModel model, Stylesheet stylesheet)
+	Graph(IGraphModel model, Stylesheet stylesheet)
 	{
 		_selectionModel = _createSelectionModel();
 		setModel((model != null) ? model : new GraphModel());
@@ -637,7 +616,7 @@ public class Graph extends EventSource
 	/**
 	 * Constructs a new selection model to be used in this graph.
 	 */
-	protected GraphSelectionModel _createSelectionModel()
+	GraphSelectionModel _createSelectionModel()
 	{
 		return new GraphSelectionModel(this);
 	}
@@ -645,7 +624,7 @@ public class Graph extends EventSource
 	/**
 	 * Constructs a new stylesheet to be used in this graph.
 	 */
-	protected Stylesheet _createStylesheet()
+	Stylesheet _createStylesheet()
 	{
 		return new Stylesheet();
 	}
@@ -653,7 +632,7 @@ public class Graph extends EventSource
 	/**
 	 * Constructs a new view to be used in this graph.
 	 */
-	protected GraphView _createGraphView()
+	GraphView _createGraphView()
 	{
 		return new GraphView(this);
 	}
@@ -663,7 +642,7 @@ public class Graph extends EventSource
 	 * 
 	 * @return Returns the model that contains the graph data
 	 */
-	public IGraphModel getModel()
+	IGraphModel getModel()
 	{
 		return _model;
 	}
@@ -674,7 +653,7 @@ public class Graph extends EventSource
 	 * 
 	 * @param value Model that contains the graph data
 	 */
-	public void setModel(IGraphModel value)
+	void setModel(IGraphModel value)
 	{
 		if (_model != null)
 		{
@@ -699,7 +678,7 @@ public class Graph extends EventSource
 	 * 
 	 * @return Returns the view that contains the cell states
 	 */
-	public GraphView getView()
+	GraphView getView()
 	{
 		return _view;
 	}
@@ -709,7 +688,7 @@ public class Graph extends EventSource
 	 * 
 	 * @param value View that contains the cell states
 	 */
-	public void setView(GraphView value)
+	void setView(GraphView value)
 	{
 		if (_view != null)
 		{
@@ -742,7 +721,7 @@ public class Graph extends EventSource
 	 * 
 	 * @return Returns the stylesheet that provides the style.
 	 */
-	public Stylesheet getStylesheet()
+	Stylesheet getStylesheet()
 	{
 		return _stylesheet;
 	}
@@ -752,7 +731,7 @@ public class Graph extends EventSource
 	 * 
 	 * @param value Stylesheet that provides the style.
 	 */
-	public void setStylesheet(Stylesheet value)
+	void setStylesheet(Stylesheet value)
 	{
 		Stylesheet oldValue = _stylesheet;
 		_stylesheet = value;
@@ -763,7 +742,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns the cells to be selected for the given list of changes.
 	 */
-	public Object[] getSelectionCellsForChanges(List<UndoableChange> changes)
+	Object[] getSelectionCellsForChanges(List<UndoableChange> changes)
 	{
 		List<Object> cells = new ArrayList<Object>();
 		Iterator<UndoableChange> it = changes.iterator();
@@ -814,11 +793,11 @@ public class Graph extends EventSource
 	 * Called when the graph model changes. Invokes processChange on each
 	 * item of the given array to update the view accordingly.
 	 */
-	public Rect graphModelChanged(IGraphModel sender,
+	Rect graphModelChanged(IGraphModel sender,
 			List<UndoableChange> changes)
 	{
 		int thresh = getChangesRepaintThreshold();
-		boolean ignoreDirty = thresh > 0 && changes.size() > thresh;
+		bool ignoreDirty = thresh > 0 && changes.size() > thresh;
 
 		// Ignores dirty rectangle if there was a root change
 		if (!ignoreDirty)
@@ -872,7 +851,7 @@ public class Graph extends EventSource
 	 * The first validation is required to compute the bounds of the graph
 	 * while the second validation is required to apply the new translate.
 	 */
-	protected void _updateOrigin()
+	void _updateOrigin()
 	{
 		Rect bounds = getGraphBounds();
 
@@ -913,7 +892,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns the cells that have been removed from the model.
 	 */
-	public Object[] getRemovedCellsForChanges(List<UndoableChange> changes)
+	Object[] getRemovedCellsForChanges(List<UndoableChange> changes)
 	{
 		List<Object> result = new ArrayList<Object>();
 		Iterator<UndoableChange> it = changes.iterator();
@@ -951,8 +930,8 @@ public class Graph extends EventSource
 	 * repainted in the buffer. A return value of null means no repaint
 	 * is required.
 	 */
-	public Rect processChanges(List<UndoableChange> changes,
-			boolean invalidate, boolean ignoreDirty)
+	Rect processChanges(List<UndoableChange> changes,
+			bool invalidate, bool ignoreDirty)
 	{
 		Rect bounds = null;
 		Iterator<UndoableChange> it = changes.iterator();
@@ -979,8 +958,8 @@ public class Graph extends EventSource
 	 * in <view>. This fires a <root> event if the root has changed in the
 	 * model.
 	 */
-	public Rect processChange(UndoableChange change,
-			boolean invalidate, boolean ignoreDirty)
+	Rect processChange(UndoableChange change,
+			bool invalidate, bool ignoreDirty)
 	{
 		Rect result = null;
 
@@ -1164,7 +1143,7 @@ public class Graph extends EventSource
 	 * 
 	 * @param cell Cell that was removed from the model.
 	 */
-	protected void _removeStateForCell(Object cell)
+	void _removeStateForCell(Object cell)
 	{
 		int childCount = _model.getChildCount(cell);
 
@@ -1190,7 +1169,7 @@ public class Graph extends EventSource
 	 * @param cell Cell whose style should be returned.
 	 * @return Returns the style of the cell.
 	 */
-	public Map<String, Object> getCellStyle(Object cell)
+	Map<String, Object> getCellStyle(Object cell)
 	{
 		Map<String, Object> style = (_model.isEdge(cell)) ? _stylesheet
 				.getDefaultEdgeStyle() : _stylesheet.getDefaultVertexStyle();
@@ -1215,7 +1194,7 @@ public class Graph extends EventSource
 	 * turns short data URIs as defined in ImageBundle to data URIs as
 	 * defined in RFC 2397 of the IETF.
 	 */
-	protected Map<String, Object> _postProcessCellStyle(Map<String, Object> style)
+	Map<String, Object> _postProcessCellStyle(Map<String, Object> style)
 	{
 		if (style != null)
 		{
@@ -1254,7 +1233,7 @@ public class Graph extends EventSource
 	 * 
 	 * @param style String representing the new style of the cells.
 	 */
-	public Object[] setCellStyle(String style)
+	Object[] setCellStyle(String style)
 	{
 		return setCellStyle(style, null);
 	}
@@ -1267,7 +1246,7 @@ public class Graph extends EventSource
 	 * @param cells Optional array of <mxCells> to set the style for. Default is the
 	 * selection cells.
 	 */
-	public Object[] setCellStyle(String style, Object[] cells)
+	Object[] setCellStyle(String style, Object[] cells)
 	{
 		if (cells == null)
 		{
@@ -1294,42 +1273,42 @@ public class Graph extends EventSource
 	}
 
 	/**
-	 * Toggles the boolean value for the given key in the style of the
+	 * Toggles the bool value for the given key in the style of the
 	 * given cell. If no cell is specified then the selection cell is
 	 * used.
 	 * 
-	 * @param key Key for the boolean value to be toggled.
-	 * @param defaultValue Default boolean value if no value is defined.
+	 * @param key Key for the bool value to be toggled.
+	 * @param defaultValue Default bool value if no value is defined.
 	 * @param cell Cell whose style should be modified.
 	 */
-	public Object toggleCellStyle(String key, boolean defaultValue, Object cell)
+	Object toggleCellStyle(String key, bool defaultValue, Object cell)
 	{
 		return toggleCellStyles(key, defaultValue, new Object[] { cell })[0];
 	}
 
 	/**
-	 * Toggles the boolean value for the given key in the style of the
+	 * Toggles the bool value for the given key in the style of the
 	 * selection cells.
 	 * 
-	 * @param key Key for the boolean value to be toggled.
-	 * @param defaultValue Default boolean value if no value is defined.
+	 * @param key Key for the bool value to be toggled.
+	 * @param defaultValue Default bool value if no value is defined.
 	 */
-	public Object[] toggleCellStyles(String key, boolean defaultValue)
+	Object[] toggleCellStyles(String key, bool defaultValue)
 	{
 		return toggleCellStyles(key, defaultValue, null);
 	}
 
 	/**
-	 * Toggles the boolean value for the given key in the style of the given
+	 * Toggles the bool value for the given key in the style of the given
 	 * cells. If no cells are specified, then the selection cells are used. For
 	 * example, this can be used to toggle Constants.STYLE_ROUNDED or any
-	 * other style with a boolean value.
+	 * other style with a bool value.
 	 * 
-	 * @param key String representing the key of the boolean style to be toggled.
-	 * @param defaultValue Default boolean value if no value is defined.
+	 * @param key String representing the key of the bool style to be toggled.
+	 * @param defaultValue Default bool value if no value is defined.
 	 * @param cells Cells whose styles should be modified.
 	 */
-	public Object[] toggleCellStyles(String key, boolean defaultValue,
+	Object[] toggleCellStyles(String key, bool defaultValue,
 			Object[] cells)
 	{
 		if (cells == null)
@@ -1360,7 +1339,7 @@ public class Graph extends EventSource
 	 * @param key String representing the key to be assigned.
 	 * @param value String representing the new value for the key.
 	 */
-	public Object[] setCellStyles(String key, String value)
+	Object[] setCellStyles(String key, String value)
 	{
 		return setCellStyles(key, value, null);
 	}
@@ -1376,7 +1355,7 @@ public class Graph extends EventSource
 	 * @param value String representing the new value for the key.
 	 * @param cells Array of cells to change the style for.
 	 */
-	public Object[] setCellStyles(String key, String value, Object[] cells)
+	Object[] setCellStyles(String key, String value, Object[] cells)
 	{
 		if (cells == null)
 		{
@@ -1395,7 +1374,7 @@ public class Graph extends EventSource
 	 * @param key String representing the key to toggle the flag in.
 	 * @param flag Integer that represents the bit to be toggled.
 	 */
-	public Object[] toggleCellStyleFlags(String key, int flag)
+	Object[] toggleCellStyleFlags(String key, int flag)
 	{
 		return toggleCellStyleFlags(key, flag, null);
 	}
@@ -1409,7 +1388,7 @@ public class Graph extends EventSource
 	 * @param cells Optional array of <mxCells> to change the style for. Default is
 	 * the selection cells.
 	 */
-	public Object[] toggleCellStyleFlags(String key, int flag, Object[] cells)
+	Object[] toggleCellStyleFlags(String key, int flag, Object[] cells)
 	{
 		return setCellStyleFlags(key, flag, null, cells);
 	}
@@ -1423,7 +1402,7 @@ public class Graph extends EventSource
 	 * @param value Boolean value to be used or null if the value should be
 	 * toggled.
 	 */
-	public Object[] setCellStyleFlags(String key, int flag, boolean value)
+	Object[] setCellStyleFlags(String key, int flag, bool value)
 	{
 		return setCellStyleFlags(key, flag, value, null);
 	}
@@ -1439,7 +1418,7 @@ public class Graph extends EventSource
 	 * @param cells Optional array of cells to change the style for. If no
 	 * cells are specified then the selection cells are used.
 	 */
-	public Object[] setCellStyleFlags(String key, int flag, Boolean value,
+	Object[] setCellStyleFlags(String key, int flag, Boolean value,
 			Object[] cells)
 	{
 		if (cells == null)
@@ -1471,7 +1450,7 @@ public class Graph extends EventSource
 	/**
 	 * Adds the specified bundle.
 	 */
-	public void addImageBundle(ImageBundle bundle)
+	void addImageBundle(ImageBundle bundle)
 	{
 		_imageBundles.add(bundle);
 	}
@@ -1479,7 +1458,7 @@ public class Graph extends EventSource
 	/**
 	 * Removes the specified bundle.
 	 */
-	public void removeImageBundle(ImageBundle bundle)
+	void removeImageBundle(ImageBundle bundle)
 	{
 		_imageBundles.remove(bundle);
 	}
@@ -1488,7 +1467,7 @@ public class Graph extends EventSource
 	 * Searches all bundles for the specified key and returns the value for the
 	 * first match or null if the key is not found.
 	 */
-	public String getImageFromBundles(String key)
+	String getImageFromBundles(String key)
 	{
 		if (key != null)
 		{
@@ -1511,7 +1490,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns the image bundles
 	 */
-	public List<ImageBundle> getImageBundles()
+	List<ImageBundle> getImageBundles()
 	{
 		return _imageBundles;
 	}
@@ -1519,7 +1498,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns the image bundles
 	 */
-	public void getImageBundles(List<ImageBundle> value)
+	void getImageBundles(List<ImageBundle> value)
 	{
 		_imageBundles = value;
 	}
@@ -1535,7 +1514,7 @@ public class Graph extends EventSource
 	 * @param align Specifies the alignment. Possible values are all constants
 	 * in Constants with an ALIGN prefix.
 	 */
-	public Object[] alignCells(String align)
+	Object[] alignCells(String align)
 	{
 		return alignCells(align, null);
 	}
@@ -1548,7 +1527,7 @@ public class Graph extends EventSource
 	 * in Constants with an ALIGN prefix.
 	 * @param cells Array of cells to be aligned.
 	 */
-	public Object[] alignCells(String align, Object[] cells)
+	Object[] alignCells(String align, Object[] cells)
 	{
 		return alignCells(align, cells, null);
 	}
@@ -1562,7 +1541,7 @@ public class Graph extends EventSource
 	 * @param cells Array of cells to be aligned.
 	 * @param param Optional coordinate for the alignment.
 	 */
-	public Object[] alignCells(String align, Object[] cells, Object param)
+	Object[] alignCells(String align, Object[] cells, Object param)
 	{
 		if (cells == null)
 		{
@@ -1709,7 +1688,7 @@ public class Graph extends EventSource
 	 * @param edge Cell that represents the edge to be flipped.
 	 * @return Returns the edge that has been flipped.
 	 */
-	public Object flipEdge(Object edge)
+	Object flipEdge(Object edge)
 	{
 		if (edge != null && _alternateEdgeStyle != null)
 		{
@@ -1749,7 +1728,7 @@ public class Graph extends EventSource
 	 * 
 	 * @param back Specifies if the cells should be moved to back.
 	 */
-	public Object[] orderCells(boolean back)
+	Object[] orderCells(bool back)
 	{
 		return orderCells(back, null);
 	}
@@ -1763,7 +1742,7 @@ public class Graph extends EventSource
 	 * @param cells Array of cells whose order should be changed. If null is
 	 * specified then the selection cells are used.
 	 */
-	public Object[] orderCells(boolean back, Object[] cells)
+	Object[] orderCells(bool back, Object[] cells)
 	{
 		if (cells == null)
 		{
@@ -1792,7 +1771,7 @@ public class Graph extends EventSource
 	 * @param cells Array of cells whose order should be changed.
 	 * @param back Specifies if the cells should be moved to back.
 	 */
-	public void cellsOrdered(Object[] cells, boolean back)
+	void cellsOrdered(Object[] cells, bool back)
 	{
 		if (cells != null)
 		{
@@ -1833,7 +1812,7 @@ public class Graph extends EventSource
 	 * 
 	 * @return Returns the new group.
 	 */
-	public Object groupCells()
+	Object groupCells()
 	{
 		return groupCells(null);
 	}
@@ -1844,7 +1823,7 @@ public class Graph extends EventSource
 	 * 
 	 * @return Returns the new group.
 	 */
-	public Object groupCells(Object group)
+	Object groupCells(Object group)
 	{
 		return groupCells(group, 0);
 	}
@@ -1855,7 +1834,7 @@ public class Graph extends EventSource
 	 * 
 	 * @return Returns the new group.
 	 */
-	public Object groupCells(Object group, double border)
+	Object groupCells(Object group, double border)
 	{
 		return groupCells(group, border, null);
 	}
@@ -1874,7 +1853,7 @@ public class Graph extends EventSource
 	 * @param cells Optional array of cells to be grouped. If null is specified
 	 * then the selection cells are used.
 	 */
-	public Object groupCells(Object group, double border, Object[] cells)
+	Object groupCells(Object group, double border, Object[] cells)
 	{
 		if (cells == null)
 		{
@@ -1938,7 +1917,7 @@ public class Graph extends EventSource
 	 * Returns the cells with the same parent as the first cell
 	 * in the given array.
 	 */
-	public Object[] getCellsForGroup(Object[] cells)
+	Object[] getCellsForGroup(Object[] cells)
 	{
 		List<Object> result = new ArrayList<Object>(cells.length);
 
@@ -1966,7 +1945,7 @@ public class Graph extends EventSource
 	 * vertices in the given children array. Edges are ignored. If the group
 	 * cell is a swimlane the title region is added to the bounds.
 	 */
-	public Rect getBoundsForGroup(Object group, Object[] children,
+	Rect getBoundsForGroup(Object group, Object[] children,
 			double border)
 	{
 		Rect result = getBoundingBoxFromGeometry(children);
@@ -2003,7 +1982,7 @@ public class Graph extends EventSource
 	 * @param cells
 	 * @return Returns a new group cell.
 	 */
-	public Object createGroupCell(Object[] cells)
+	Object createGroupCell(Object[] cells)
 	{
 		Cell group = new Cell("", new Geometry(), null);
 		group.setVertex(true);
@@ -2015,7 +1994,7 @@ public class Graph extends EventSource
 	/**
 	 * Ungroups the selection cells. This is a shortcut method.
 	 */
-	public Object[] ungroupCells()
+	Object[] ungroupCells()
 	{
 		return ungroupCells(null);
 	}
@@ -2028,7 +2007,7 @@ public class Graph extends EventSource
 	 * the selection cells are used.
 	 * @return Returns the children that have been removed from the groups.
 	 */
-	public Object[] ungroupCells(Object[] cells)
+	Object[] ungroupCells(Object[] cells)
 	{
 		List<Object> result = new ArrayList<Object>();
 
@@ -2087,7 +2066,7 @@ public class Graph extends EventSource
 	 * Removes the selection cells from their parents and adds them to the
 	 * default parent returned by getDefaultParent.
 	 */
-	public Object[] removeCellsFromParent()
+	Object[] removeCellsFromParent()
 	{
 		return removeCellsFromParent(null);
 	}
@@ -2099,7 +2078,7 @@ public class Graph extends EventSource
 	 * @param cells Array of cells to be removed from their parents.
 	 * @return Returns the cells that were removed from their parents.
 	 */
-	public Object[] removeCellsFromParent(Object[] cells)
+	Object[] removeCellsFromParent(Object[] cells)
 	{
 		if (cells == null)
 		{
@@ -2128,7 +2107,7 @@ public class Graph extends EventSource
 	 * Updates the bounds of the given array of groups so that it includes
 	 * all child vertices.
 	 */
-	public Object[] updateGroupBounds()
+	Object[] updateGroupBounds()
 	{
 		return updateGroupBounds(null);
 	}
@@ -2139,7 +2118,7 @@ public class Graph extends EventSource
 	 * 
 	 * @param cells The groups whose bounds should be updated.
 	 */
-	public Object[] updateGroupBounds(Object[] cells)
+	Object[] updateGroupBounds(Object[] cells)
 	{
 		return updateGroupBounds(cells, 0);
 	}
@@ -2151,7 +2130,7 @@ public class Graph extends EventSource
 	 * @param cells The groups whose bounds should be updated.
 	 * @param border The border to be added in the group.
 	 */
-	public Object[] updateGroupBounds(Object[] cells, int border)
+	Object[] updateGroupBounds(Object[] cells, int border)
 	{
 		return updateGroupBounds(cells, border, false);
 	}
@@ -2164,8 +2143,8 @@ public class Graph extends EventSource
 	 * @param border The border to be added in the group.
 	 * @param moveParent Specifies if the group should be moved.
 	 */
-	public Object[] updateGroupBounds(Object[] cells, int border,
-			boolean moveParent)
+	Object[] updateGroupBounds(Object[] cells, int border,
+			bool moveParent)
 	{
 		if (cells == null)
 		{
@@ -2246,7 +2225,7 @@ public class Graph extends EventSource
 	 * g2.addCells(g1.cloneCells(g1.cloneCells(g1.getChildCells(g1.getDefaultParent()));
 	 * </code>
 	 */
-	public Object[] cloneCells(Object[] cells)
+	Object[] cloneCells(Object[] cells)
 	{
 
 		return cloneCells(cells, true);
@@ -2263,7 +2242,7 @@ public class Graph extends EventSource
 	 * @param cells Array of mxCells to be cloned.
 	 * @return Returns the clones of the given cells.
 	 */
-	public Object[] cloneCells(Object[] cells, boolean allowInvalidEdges)
+	Object[] cloneCells(Object[] cells, bool allowInvalidEdges)
 	{
 		Object[] clones = null;
 
@@ -2385,7 +2364,7 @@ public class Graph extends EventSource
 	/**
 	 * Creates and adds a new vertex with an empty style.
 	 */
-	public Object insertVertex(Object parent, String id, Object value,
+	Object insertVertex(Object parent, String id, Object value,
 			double x, double y, double width, double height)
 	{
 		return insertVertex(parent, id, value, x, y, width, height, null);
@@ -2407,7 +2386,7 @@ public class Graph extends EventSource
 	 * @param style Optional string that defines the cell style.
 	 * @return Returns the new vertex that has been inserted.
 	 */
-	public Object insertVertex(Object parent, String id, Object value,
+	Object insertVertex(Object parent, String id, Object value,
 			double x, double y, double width, double height, String style)
 	{
 		return insertVertex(parent, id, value, x, y, width, height, style,
@@ -2431,9 +2410,9 @@ public class Graph extends EventSource
 	 * @param relative Specifies if the geometry should be relative.
 	 * @return Returns the new vertex that has been inserted.
 	 */
-	public Object insertVertex(Object parent, String id, Object value,
+	Object insertVertex(Object parent, String id, Object value,
 			double x, double y, double width, double height, String style,
-			boolean relative)
+			bool relative)
 	{
 		Object vertex = createVertex(parent, id, value, x, y, width, height,
 				style, relative);
@@ -2454,7 +2433,7 @@ public class Graph extends EventSource
 	 * @param style Optional string that defines the cell style.
 	 * @return Returns the new vertex to be inserted.
 	 */
-	public Object createVertex(Object parent, String id, Object value,
+	Object createVertex(Object parent, String id, Object value,
 			double x, double y, double width, double height, String style)
 	{
 		return createVertex(parent, id, value, x, y, width, height, style,
@@ -2475,9 +2454,9 @@ public class Graph extends EventSource
 	 * @param relative Specifies if the geometry should be relative.
 	 * @return Returns the new vertex to be inserted.
 	 */
-	public Object createVertex(Object parent, String id, Object value,
+	Object createVertex(Object parent, String id, Object value,
 			double x, double y, double width, double height, String style,
-			boolean relative)
+			bool relative)
 	{
 		Geometry geometry = new Geometry(x, y, width, height);
 		geometry.setRelative(relative);
@@ -2493,7 +2472,7 @@ public class Graph extends EventSource
 	/**
 	 * Creates and adds a new edge with an empty style.
 	 */
-	public Object insertEdge(Object parent, String id, Object value,
+	Object insertEdge(Object parent, String id, Object value,
 			Object source, Object target)
 	{
 		return insertEdge(parent, id, value, source, target, null);
@@ -2513,7 +2492,7 @@ public class Graph extends EventSource
 	 * @param style Optional string that defines the cell style.
 	 * @return Returns the new edge that has been inserted.
 	 */
-	public Object insertEdge(Object parent, String id, Object value,
+	Object insertEdge(Object parent, String id, Object value,
 			Object source, Object target, String style)
 	{
 		Object edge = createEdge(parent, id, value, source, target, style);
@@ -2534,7 +2513,7 @@ public class Graph extends EventSource
 	 * @param style Optional string that defines the cell style.
 	 * @return Returns the new edge to be inserted.
 	 */
-	public Object createEdge(Object parent, String id, Object value,
+	Object createEdge(Object parent, String id, Object value,
 			Object source, Object target, String style)
 	{
 		Cell edge = new Cell(value, new Geometry(), style);
@@ -2558,7 +2537,7 @@ public class Graph extends EventSource
 	 * @param index Optional index to insert the cells at. Default is to append.
 	 * @return Returns the edge that was added.
 	 */
-	public Object addEdge(Object edge, Object parent, Object source,
+	Object addEdge(Object edge, Object parent, Object source,
 			Object target, Integer index)
 	{
 		return addCell(edge, parent, index, source, target);
@@ -2570,7 +2549,7 @@ public class Graph extends EventSource
 	 * @param cell Cell to be inserted.
 	 * @return Returns the cell that was added.
 	 */
-	public Object addCell(Object cell)
+	Object addCell(Object cell)
 	{
 		return addCell(cell, null);
 	}
@@ -2583,7 +2562,7 @@ public class Graph extends EventSource
 	 * given then the default parent is used.
 	 * @return Returns the cell that was added.
 	 */
-	public Object addCell(Object cell, Object parent)
+	Object addCell(Object cell, Object parent)
 	{
 		return addCell(cell, parent, null, null, null);
 	}
@@ -2600,7 +2579,7 @@ public class Graph extends EventSource
 	 * @param target Optional cell that represents the target terminal.
 	 * @return Returns the cell that was added.
 	 */
-	public Object addCell(Object cell, Object parent, Integer index,
+	Object addCell(Object cell, Object parent, Integer index,
 			Object source, Object target)
 	{
 		return addCells(new Object[] { cell }, parent, index, source, target)[0];
@@ -2612,7 +2591,7 @@ public class Graph extends EventSource
 	 * @param cells Array of cells to be inserted.
 	 * @return Returns the cells that were added.
 	 */
-	public Object[] addCells(Object[] cells)
+	Object[] addCells(Object[] cells)
 	{
 		return addCells(cells, null);
 	}
@@ -2625,7 +2604,7 @@ public class Graph extends EventSource
 	 * is specified then the default parent is used.
 	 * @return Returns the cells that were added.
 	 */
-	public Object[] addCells(Object[] cells, Object parent)
+	Object[] addCells(Object[] cells, Object parent)
 	{
 		return addCells(cells, parent, null);
 	}
@@ -2639,7 +2618,7 @@ public class Graph extends EventSource
 	 * @param index Optional index to insert the cells at. Default is to append.
 	 * @return Returns the cells that were added.
 	 */
-	public Object[] addCells(Object[] cells, Object parent, Integer index)
+	Object[] addCells(Object[] cells, Object parent, Integer index)
 	{
 		return addCells(cells, parent, index, null, null);
 	}
@@ -2658,7 +2637,7 @@ public class Graph extends EventSource
 	 * @param target Optional target terminal for all inserted cells.
 	 * @return Returns the cells that were added.
 	 */
-	public Object[] addCells(Object[] cells, Object parent, Integer index,
+	Object[] addCells(Object[] cells, Object parent, Integer index,
 			Object source, Object target)
 	{
 		if (parent == null)
@@ -2690,8 +2669,8 @@ public class Graph extends EventSource
 	 * Adds the specified cells to the given parent. This method fires
 	 * Event.CELLS_ADDED while the transaction is in progress.
 	 */
-	public void cellsAdded(Object[] cells, Object parent, Integer index,
-			Object source, Object target, boolean absolute)
+	void cellsAdded(Object[] cells, Object parent, Integer index,
+			Object source, Object target, bool absolute)
 	{
 		cellsAdded(cells, parent, index, source, target, absolute, true);
 	}
@@ -2700,8 +2679,8 @@ public class Graph extends EventSource
 	 * Adds the specified cells to the given parent. This method fires
 	 * Event.CELLS_ADDED while the transaction is in progress.
 	 */
-	public void cellsAdded(Object[] cells, Object parent, Integer index,
-			Object source, Object target, boolean absolute, boolean constrain)
+	void cellsAdded(Object[] cells, Object parent, Integer index,
+			Object source, Object target, bool absolute, bool constrain)
 	{
 		if (cells != null && parent != null && index != null)
 		{
@@ -2805,7 +2784,7 @@ public class Graph extends EventSource
 	 * 
 	 * @return Returns the cells that have been removed.
 	 */
-	public Object[] removeCells()
+	Object[] removeCells()
 	{
 		return removeCells(null);
 	}
@@ -2816,7 +2795,7 @@ public class Graph extends EventSource
 	 * @param cells Array of cells to remove.
 	 * @return Returns the cells that have been removed.
 	 */
-	public Object[] removeCells(Object[] cells)
+	Object[] removeCells(Object[] cells)
 	{
 		return removeCells(cells, true);
 	}
@@ -2831,7 +2810,7 @@ public class Graph extends EventSource
 	 * @param includeEdges Specifies if all connected edges should be removed as
 	 * well.
 	 */
-	public Object[] removeCells(Object[] cells, boolean includeEdges)
+	Object[] removeCells(Object[] cells, bool includeEdges)
 	{
 		if (cells == null)
 		{
@@ -2865,7 +2844,7 @@ public class Graph extends EventSource
 	 * 
 	 * @param cells Array of cells to remove.
 	 */
-	public void cellsRemoved(Object[] cells)
+	void cellsRemoved(Object[] cells)
 	{
 		if (cells != null && cells.length > 0)
 		{
@@ -2895,7 +2874,7 @@ public class Graph extends EventSource
 								if (state != null)
 								{
 									geo = (Geometry) geo.clone();
-									boolean source = state
+									bool source = state
 											.getVisibleTerminal(true) == cells[i];
 									int n = (source) ? 0 : state
 											.getAbsolutePointCount() - 1;
@@ -2927,7 +2906,7 @@ public class Graph extends EventSource
 	/**
 	 * 
 	 */
-	public Object splitEdge(Object edge, Object[] cells)
+	Object splitEdge(Object edge, Object[] cells)
 	{
 		return splitEdge(edge, cells, null, 0, 0);
 	}
@@ -2935,7 +2914,7 @@ public class Graph extends EventSource
 	/**
 	 * 
 	 */
-	public Object splitEdge(Object edge, Object[] cells, double dx, double dy)
+	Object splitEdge(Object edge, Object[] cells, double dx, double dy)
 	{
 		return splitEdge(edge, cells, null, dx, dy);
 	}
@@ -2951,7 +2930,7 @@ public class Graph extends EventSource
 	 * @param newEdge Object that represents the edge to be inserted.
 	 * @return Returns the new edge that has been inserted.
 	 */
-	public Object splitEdge(Object edge, Object[] cells, Object newEdge,
+	Object splitEdge(Object edge, Object[] cells, Object newEdge,
 			double dx, double dy)
 	{
 		if (newEdge == null)
@@ -2993,7 +2972,7 @@ public class Graph extends EventSource
 	 * @param show Boolean that specifies the visible state to be assigned.
 	 * @return Returns the cells whose visible state was changed.
 	 */
-	public Object[] toggleCells(boolean show)
+	Object[] toggleCells(bool show)
 	{
 		return toggleCells(show, null);
 	}
@@ -3006,7 +2985,7 @@ public class Graph extends EventSource
 	 * @param cells Array of cells whose visible state should be changed.
 	 * @return Returns the cells whose visible state was changed.
 	 */
-	public Object[] toggleCells(boolean show, Object[] cells)
+	Object[] toggleCells(bool show, Object[] cells)
 	{
 		return toggleCells(show, cells, true);
 	}
@@ -3022,8 +3001,8 @@ public class Graph extends EventSource
 	 * null is specified then the selection cells are used.
 	 * @return Returns the cells whose visible state was changed.
 	 */
-	public Object[] toggleCells(boolean show, Object[] cells,
-			boolean includeEdges)
+	Object[] toggleCells(bool show, Object[] cells,
+			bool includeEdges)
 	{
 		if (cells == null)
 		{
@@ -3057,7 +3036,7 @@ public class Graph extends EventSource
 	 * @param cells Array of cells whose visible state should be changed.
 	 * @param show Boolean that specifies the visible state to be assigned.
 	 */
-	public void cellsToggled(Object[] cells, boolean show)
+	void cellsToggled(Object[] cells, bool show)
 	{
 		if (cells != null && cells.length > 0)
 		{
@@ -3088,7 +3067,7 @@ public class Graph extends EventSource
 	 * assigned.
 	 * @return Returns the cells whose collapsed state was changed.
 	 */
-	public Object[] foldCells(boolean collapse)
+	Object[] foldCells(bool collapse)
 	{
 		return foldCells(collapse, false);
 	}
@@ -3103,7 +3082,7 @@ public class Graph extends EventSource
 	 * be assigned to all descendants.
 	 * @return Returns the cells whose collapsed state was changed.
 	 */
-	public Object[] foldCells(boolean collapse, boolean recurse)
+	Object[] foldCells(bool collapse, bool recurse)
 	{
 		return foldCells(collapse, recurse, null);
 	}
@@ -3111,7 +3090,7 @@ public class Graph extends EventSource
 	/**
 	 * Invokes foldCells with checkFoldable set to false.
 	 */
-	public Object[] foldCells(boolean collapse, boolean recurse, Object[] cells)
+	Object[] foldCells(bool collapse, bool recurse, Object[] cells)
 	{
 		return foldCells(collapse, recurse, cells, false);
 	}
@@ -3130,8 +3109,8 @@ public class Graph extends EventSource
 	 * @param checkFoldable Boolean indicating of isCellFoldable should be
 	 * checked. Default is false.
 	 */
-	public Object[] foldCells(boolean collapse, boolean recurse,
-			Object[] cells, boolean checkFoldable)
+	Object[] foldCells(bool collapse, bool recurse,
+			Object[] cells, bool checkFoldable)
 	{
 		if (cells == null)
 		{
@@ -3156,7 +3135,7 @@ public class Graph extends EventSource
 	/**
 	 * Invokes cellsFoldable with checkFoldable set to false.
 	 */
-	public void cellsFolded(Object[] cells, boolean collapse, boolean recurse)
+	void cellsFolded(Object[] cells, bool collapse, bool recurse)
 	{
 		cellsFolded(cells, collapse, recurse, false);
 	}
@@ -3173,8 +3152,8 @@ public class Graph extends EventSource
 	 * @param checkFoldable Boolean indicating of isCellFoldable should be
 	 * checked. Default is false.
 	 */
-	public void cellsFolded(Object[] cells, boolean collapse, boolean recurse,
-			boolean checkFoldable)
+	void cellsFolded(Object[] cells, bool collapse, bool recurse,
+			bool checkFoldable)
 	{
 		if (cells != null && cells.length > 0)
 		{
@@ -3220,7 +3199,7 @@ public class Graph extends EventSource
 	 * @param cell Cell for which the bounds should be swapped.
 	 * @param willCollapse Boolean indicating if the cell is going to be collapsed.
 	 */
-	public void swapBounds(Object cell, boolean willCollapse)
+	void swapBounds(Object cell, bool willCollapse)
 	{
 		if (cell != null)
 		{
@@ -3250,8 +3229,8 @@ public class Graph extends EventSource
 	 * @param geo Geometry for which the alternate bounds should be updated.
 	 * @param willCollapse Boolean indicating if the cell is going to be collapsed.
 	 */
-	public void updateAlternateBounds(Object cell, Geometry geo,
-			boolean willCollapse)
+	void updateAlternateBounds(Object cell, Geometry geo,
+			bool willCollapse)
 	{
 		if (cell != null && geo != null)
 		{
@@ -3294,7 +3273,7 @@ public class Graph extends EventSource
 	 * Returns an array with the given cells and all edges that are connected
 	 * to a cell or one of its descendants.
 	 */
-	public Object[] addAllEdges(Object[] cells)
+	Object[] addAllEdges(Object[] cells)
 	{
 		List<Object> allCells = new ArrayList<Object>(cells.length);
 		allCells.addAll(Arrays.asList(cells));
@@ -3306,7 +3285,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns all edges connected to the given cells or their descendants.
 	 */
-	public Object[] getAllEdges(Object[] cells)
+	Object[] getAllEdges(Object[] cells)
 	{
 		List<Object> edges = new ArrayList<Object>();
 
@@ -3341,7 +3320,7 @@ public class Graph extends EventSource
 	 * 
 	 * @param cell <Cell> for which the size should be changed.
 	 */
-	public Object updateCellSize(Object cell)
+	Object updateCellSize(Object cell)
 	{
 		return updateCellSize(cell, false);
 	}
@@ -3353,7 +3332,7 @@ public class Graph extends EventSource
 	 * 
 	 * @param cell Cell for which the size should be changed.
 	 */
-	public Object updateCellSize(Object cell, boolean ignoreChildren)
+	Object updateCellSize(Object cell, bool ignoreChildren)
 	{
 		_model.beginUpdate();
 		try
@@ -3376,7 +3355,7 @@ public class Graph extends EventSource
 	 * 
 	 * @param cell Cell for which the size should be changed.
 	 */
-	public void cellSizeUpdated(Object cell, boolean ignoreChildren)
+	void cellSizeUpdated(Object cell, bool ignoreChildren)
 	{
 		if (cell != null)
 		{
@@ -3388,7 +3367,7 @@ public class Graph extends EventSource
 
 				if (size != null && geo != null)
 				{
-					boolean collapsed = isCellCollapsed(cell);
+					bool collapsed = isCellCollapsed(cell);
 					geo = (Geometry) geo.clone();
 
 					if (isSwimlane(cell))
@@ -3476,7 +3455,7 @@ public class Graph extends EventSource
 	 * 
 	 * @param cell <Cell> for which the preferred size should be returned.
 	 */
-	public Rect getPreferredSizeForCell(Object cell)
+	Rect getPreferredSizeForCell(Object cell)
 	{
 		Rect result = null;
 
@@ -3576,7 +3555,7 @@ public class Graph extends EventSource
 	 * @param cell <Cell> whose bounds should be changed.
 	 * @param bounds <Rect> that represents the new bounds.
 	 */
-	public Object resizeCell(Object cell, Rect bounds)
+	Object resizeCell(Object cell, Rect bounds)
 	{
 		return resizeCells(new Object[] { cell }, new Rect[] { bounds })[0];
 	}
@@ -3589,7 +3568,7 @@ public class Graph extends EventSource
 	 * @param cells Array of cells whose bounds should be changed.
 	 * @param bounds Array of rectangles that represents the new bounds.
 	 */
-	public Object[] resizeCells(Object[] cells, Rect[] bounds)
+	Object[] resizeCells(Object[] cells, Rect[] bounds)
 	{
 		_model.beginUpdate();
 		try
@@ -3614,7 +3593,7 @@ public class Graph extends EventSource
 	 * @param cells Array of <mxCells> whose bounds should be changed.
 	 * @param bounds Array of <mxRectangles> that represents the new bounds.
 	 */
-	public void cellsResized(Object[] cells, Rect[] bounds)
+	void cellsResized(Object[] cells, Rect[] bounds)
 	{
 		if (cells != null && bounds != null && cells.length == bounds.length)
 		{
@@ -3691,7 +3670,7 @@ public class Graph extends EventSource
 	 * 
 	 * @param cell <Cell> that has been resized.
 	 */
-	public void extendParent(Object cell)
+	void extendParent(Object cell)
 	{
 		if (cell != null)
 		{
@@ -3727,7 +3706,7 @@ public class Graph extends EventSource
 	/**
 	 * Moves the cells by the given amount. This is a shortcut method.
 	 */
-	public Object[] moveCells(Object[] cells, double dx, double dy)
+	Object[] moveCells(Object[] cells, double dx, double dy)
 	{
 		return moveCells(cells, dx, dy, false);
 	}
@@ -3736,8 +3715,8 @@ public class Graph extends EventSource
 	 * Moves or clones the cells and moves the cells or clones by the given
 	 * amount. This is a shortcut method.
 	 */
-	public Object[] moveCells(Object[] cells, double dx, double dy,
-			boolean clone)
+	Object[] moveCells(Object[] cells, double dx, double dy,
+			bool clone)
 	{
 		return moveCells(cells, dx, dy, clone, null, null);
 	}
@@ -3757,8 +3736,8 @@ public class Graph extends EventSource
 	 * @param location Location where the mouse was released.
 	 * @return Returns the cells that were moved.
 	 */
-	public Object[] moveCells(Object[] cells, double dx, double dy,
-			boolean clone, Object target, Point location)
+	Object[] moveCells(Object[] cells, double dx, double dy,
+			bool clone, Object target, Point location)
 	{
 		if (cells != null && (dx != 0 || dy != 0 || clone || target != null))
 		{
@@ -3777,7 +3756,7 @@ public class Graph extends EventSource
 
 				// Need to disable allowNegativeCoordinates if target not null to
 				// allow for temporary negative numbers until cellsAdded is called.
-				boolean previous = isAllowNegativeCoordinates();
+				bool previous = isAllowNegativeCoordinates();
 				
 				if (target != null)
 				{
@@ -3813,8 +3792,8 @@ public class Graph extends EventSource
 	 * using disconnectGraph if disconnect is true. This method fires
 	 * Event.CELLS_MOVED while the transaction is in progress.
 	 */
-	public void cellsMoved(Object[] cells, double dx, double dy,
-			boolean disconnect, boolean constrain)
+	void cellsMoved(Object[] cells, double dx, double dy,
+			bool disconnect, bool constrain)
 	{
 		if (cells != null && (dx != 0 || dy != 0))
 		{
@@ -3855,7 +3834,7 @@ public class Graph extends EventSource
 	 * Translates the geometry of the given cell and stores the new,
 	 * translated geometry in the model as an atomic change.
 	 */
-	public void translateCell(Object cell, double dx, double dy)
+	void translateCell(Object cell, double dx, double dy)
 	{
 		Geometry geo = _model.getGeometry(cell);
 
@@ -3893,7 +3872,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns the Rect inside which a cell is to be kept.
 	 */
-	public Rect getCellContainmentArea(Object cell)
+	Rect getCellContainmentArea(Object cell)
 	{
 		if (cell != null && !_model.isEdge(cell))
 		{
@@ -3935,7 +3914,7 @@ public class Graph extends EventSource
 	/**
 	 * @return the maximumGraphBounds
 	 */
-	public Rect getMaximumGraphBounds()
+	Rect getMaximumGraphBounds()
 	{
 		return _maximumGraphBounds;
 	}
@@ -3943,7 +3922,7 @@ public class Graph extends EventSource
 	/**
 	 * @param value the maximumGraphBounds to set
 	 */
-	public void setMaximumGraphBounds(Rect value)
+	void setMaximumGraphBounds(Rect value)
 	{
 		Rect oldValue = _maximumGraphBounds;
 		_maximumGraphBounds = value;
@@ -3960,7 +3939,7 @@ public class Graph extends EventSource
 	 * 
 	 * @param cell Cell which should be constrained.
 	 */
-	public void constrainChild(Object cell)
+	void constrainChild(Object cell)
 	{
 		if (cell != null)
 		{
@@ -4010,7 +3989,7 @@ public class Graph extends EventSource
 	 * @param cells Array of mxCells for which the connected edges should be
 	 * reset.
 	 */
-	public void resetEdges(Object[] cells)
+	void resetEdges(Object[] cells)
 	{
 		if (cells != null)
 		{
@@ -4057,7 +4036,7 @@ public class Graph extends EventSource
 	/**
 	 * Resets the control points of the given edge.
 	 */
-	public Object resetEdge(Object edge)
+	Object resetEdge(Object edge)
 	{
 		Geometry geo = _model.getGeometry(edge);
 
@@ -4087,8 +4066,8 @@ public class Graph extends EventSource
 	 * @param terminal Cell state that represents the terminal.
 	 * @param source Specifies if the terminal is the source or target.
 	 */
-	public ConnectionConstraint[] getAllConnectionConstraints(
-			CellState terminal, boolean source)
+	ConnectionConstraint[] getAllConnectionConstraints(
+			CellState terminal, bool source)
 	{
 		return null;
 	}
@@ -4101,8 +4080,8 @@ public class Graph extends EventSource
 	 * @param terminal Cell state that represents the terminal.
 	 * @param source Boolean indicating if the terminal is the source or target.
 	 */
-	public ConnectionConstraint getConnectionConstraint(CellState edge,
-			CellState terminal, boolean source)
+	ConnectionConstraint getConnectionConstraint(CellState edge,
+			CellState terminal, bool source)
 	{
 		Point2d point = null;
 		Object x = edge.getStyle()
@@ -4122,7 +4101,7 @@ public class Graph extends EventSource
 			}
 		}
 
-		boolean perimeter = false;
+		bool perimeter = false;
 
 		if (point != null)
 		{
@@ -4144,8 +4123,8 @@ public class Graph extends EventSource
 	 * @param source Boolean indicating if the terminal is the source or target.
 	 * @param constraint Optional connection constraint to be used for this connection.
 	 */
-	public void setConnectionConstraint(Object edge, Object terminal,
-			boolean source, ConnectionConstraint constraint)
+	void setConnectionConstraint(Object edge, Object terminal,
+			bool source, ConnectionConstraint constraint)
 	{
 		if (constraint != null)
 		{
@@ -4206,7 +4185,7 @@ public class Graph extends EventSource
 	 * @param constraint Connection constraint that represents the connection point
 	 * constraint as returned by getConnectionConstraint.
 	 */
-	public Point2d getConnectionPoint(CellState vertex,
+	Point2d getConnectionPoint(CellState vertex,
 			ConnectionConstraint constraint)
 	{
 		Point2d point = null;
@@ -4231,7 +4210,7 @@ public class Graph extends EventSource
 	 * using cellConnected and fires Event.CONNECT_CELL while the transaction
 	 * is in progress.
 	 */
-	public Object connectCell(Object edge, Object terminal, boolean source)
+	Object connectCell(Object edge, Object terminal, bool source)
 	{
 		return connectCell(edge, terminal, source, null);
 	}
@@ -4247,7 +4226,7 @@ public class Graph extends EventSource
 	 * @param constraint Optional constraint to be used for this connection.
 	 * @return Returns the update edge.
 	 */
-	public Object connectCell(Object edge, Object terminal, boolean source,
+	Object connectCell(Object edge, Object terminal, bool source,
 			ConnectionConstraint constraint)
 	{
 		_model.beginUpdate();
@@ -4277,7 +4256,7 @@ public class Graph extends EventSource
 	 * @param source Specifies if the new terminal is the source or target.
 	 * @param constraint Constraint to be used for this connection.
 	 */
-	public void cellConnected(Object edge, Object terminal, boolean source,
+	void cellConnected(Object edge, Object terminal, bool source,
 			ConnectionConstraint constraint)
 	{
 		if (edge != null)
@@ -4333,7 +4312,7 @@ public class Graph extends EventSource
 	 * 
 	 * @param cells Array of <mxCells> to be disconnected.
 	 */
-	public void disconnectGraph(Object[] cells)
+	void disconnectGraph(Object[] cells)
 	{
 		if (cells != null)
 		{
@@ -4443,7 +4422,7 @@ public class Graph extends EventSource
 	 * 
 	 * @return Returns the current root in the view.
 	 */
-	public Object getCurrentRoot()
+	Object getCurrentRoot()
 	{
 		return _view.getCurrentRoot();
 	}
@@ -4455,7 +4434,7 @@ public class Graph extends EventSource
 	 * @param cell Cell that represents the root of the view.
 	 * @return Returns the translation of the graph for the given root cell.
 	 */
-	public Point2d getTranslateForRoot(Object cell)
+	Point2d getTranslateForRoot(Object cell)
 	{
 		return null;
 	}
@@ -4471,7 +4450,7 @@ public class Graph extends EventSource
 	 * A typical implementation of this method looks as follows:
 	 * 
 	 * <code>
-	 * public boolean isPort(Object cell)
+	 * public bool isPort(Object cell)
 	 * {
 	 *   Geometry geo = getCellGeometry(cell);
 	 *   
@@ -4482,7 +4461,7 @@ public class Graph extends EventSource
 	 * @param cell Cell that represents the port.
 	 * @return Returns true if the cell is a port.
 	 */
-	public boolean isPort(Object cell)
+	bool isPort(Object cell)
 	{
 		return false;
 	}
@@ -4495,7 +4474,7 @@ public class Graph extends EventSource
 	 * @param source If the cell is the source or target port.
 	 * @return Returns the terminal to be used for the given port.
 	 */
-	public Object getTerminalForPort(Object cell, boolean source)
+	Object getTerminalForPort(Object cell, bool source)
 	{
 		return getModel().getParent(cell);
 	}
@@ -4508,7 +4487,7 @@ public class Graph extends EventSource
 	 * @param cell Cell whose offset should be returned.
 	 * @return Returns the child offset for the given cell.
 	 */
-	public Point2d getChildOffsetForCell(Object cell)
+	Point2d getChildOffsetForCell(Object cell)
 	{
 		return null;
 	}
@@ -4516,7 +4495,7 @@ public class Graph extends EventSource
 	/**
 	 * 
 	 */
-	public void enterGroup()
+	void enterGroup()
 	{
 		enterGroup(null);
 	}
@@ -4528,7 +4507,7 @@ public class Graph extends EventSource
 	 * 
 	 * @param cell
 	 */
-	public void enterGroup(Object cell)
+	void enterGroup(Object cell)
 	{
 		if (cell == null)
 		{
@@ -4546,7 +4525,7 @@ public class Graph extends EventSource
 	 * Changes the current root to the next valid root in the displayed cell
 	 * hierarchy.
 	 */
-	public void exitGroup()
+	void exitGroup()
 	{
 		Object root = _model.getRoot();
 		Object current = getCurrentRoot();
@@ -4587,7 +4566,7 @@ public class Graph extends EventSource
 	 * Uses the root of the model as the root of the displayed cell hierarchy
 	 * and selects the previous root.
 	 */
-	public void home()
+	void home()
 	{
 		Object current = getCurrentRoot();
 
@@ -4610,7 +4589,7 @@ public class Graph extends EventSource
 	 * @param cell <Cell> which should be checked as a possible root.
 	 * @return Returns true if the given cell is a valid root.
 	 */
-	public boolean isValidRoot(Object cell)
+	bool isValidRoot(Object cell)
 	{
 		return (cell != null);
 	}
@@ -4622,7 +4601,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns the bounds of the visible graph.
 	 */
-	public Rect getGraphBounds()
+	Rect getGraphBounds()
 	{
 		return _view.getGraphBounds();
 	}
@@ -4630,7 +4609,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns the bounds of the given cell.
 	 */
-	public Rect getCellBounds(Object cell)
+	Rect getCellBounds(Object cell)
 	{
 		return getCellBounds(cell, false);
 	}
@@ -4639,7 +4618,7 @@ public class Graph extends EventSource
 	 * Returns the bounds of the given cell including all connected edges
 	 * if includeEdge is true.
 	 */
-	public Rect getCellBounds(Object cell, boolean includeEdges)
+	Rect getCellBounds(Object cell, bool includeEdges)
 	{
 		return getCellBounds(cell, includeEdges, false);
 	}
@@ -4648,8 +4627,8 @@ public class Graph extends EventSource
 	 * Returns the bounds of the given cell including all connected edges
 	 * if includeEdge is true.
 	 */
-	public Rect getCellBounds(Object cell, boolean includeEdges,
-			boolean includeDescendants)
+	Rect getCellBounds(Object cell, bool includeEdges,
+			bool includeDescendants)
 	{
 		return getCellBounds(cell, includeEdges, includeDescendants, false);
 	}
@@ -4658,7 +4637,7 @@ public class Graph extends EventSource
 	 * Returns the bounding box for the geometries of the vertices in the
 	 * given array of cells.
 	 */
-	public Rect getBoundingBoxFromGeometry(Object[] cells)
+	Rect getBoundingBoxFromGeometry(Object[] cells)
 	{
 		Rect result = null;
 
@@ -4688,7 +4667,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns the bounds of the given cell.
 	 */
-	public Rect getBoundingBox(Object cell)
+	Rect getBoundingBox(Object cell)
 	{
 		return getBoundingBox(cell, false);
 	}
@@ -4697,7 +4676,7 @@ public class Graph extends EventSource
 	 * Returns the bounding box of the given cell including all connected edges
 	 * if includeEdge is true.
 	 */
-	public Rect getBoundingBox(Object cell, boolean includeEdges)
+	Rect getBoundingBox(Object cell, bool includeEdges)
 	{
 		return getBoundingBox(cell, includeEdges, false);
 	}
@@ -4706,8 +4685,8 @@ public class Graph extends EventSource
 	 * Returns the bounding box of the given cell including all connected edges
 	 * if includeEdge is true.
 	 */
-	public Rect getBoundingBox(Object cell, boolean includeEdges,
-			boolean includeDescendants)
+	Rect getBoundingBox(Object cell, bool includeEdges,
+			bool includeDescendants)
 	{
 		return getCellBounds(cell, includeEdges, includeDescendants, true);
 	}
@@ -4715,7 +4694,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns the bounding box of the given cells and their descendants.
 	 */
-	public Rect getPaintBounds(Object[] cells)
+	Rect getPaintBounds(Object[] cells)
 	{
 		return getBoundsForCells(cells, false, true, true);
 	}
@@ -4723,8 +4702,8 @@ public class Graph extends EventSource
 	/**
 	 * Returns the bounds for the given cells.
 	 */
-	public Rect getBoundsForCells(Object[] cells, boolean includeEdges,
-			boolean includeDescendants, boolean boundingBox)
+	Rect getBoundsForCells(Object[] cells, bool includeEdges,
+			bool includeDescendants, bool boundingBox)
 	{
 		Rect result = null;
 
@@ -4756,8 +4735,8 @@ public class Graph extends EventSource
 	 * Returns the bounds of the given cell including all connected edges
 	 * if includeEdge is true.
 	 */
-	public Rect getCellBounds(Object cell, boolean includeEdges,
-			boolean includeDescendants, boolean boundingBox)
+	Rect getCellBounds(Object cell, bool includeEdges,
+			bool includeDescendants, bool boundingBox)
 	{
 		Object[] cells;
 
@@ -4826,7 +4805,7 @@ public class Graph extends EventSource
 	 * Clears all cell states or the states for the hierarchy starting at the
 	 * given cell and validates the graph.
 	 */
-	public void refresh()
+	void refresh()
 	{
 		_view.reload();
 		repaint();
@@ -4835,7 +4814,7 @@ public class Graph extends EventSource
 	/**
 	 * Fires a repaint event.
 	 */
-	public void repaint()
+	void repaint()
 	{
 		repaint(null);
 	}
@@ -4844,7 +4823,7 @@ public class Graph extends EventSource
 	 * Fires a repaint event. The optional region is the rectangle that needs
 	 * to be repainted.
 	 */
-	public void repaint(Rect region)
+	void repaint(Rect region)
 	{
 		fireEvent(new EventObj(Event.REPAINT, "region", region));
 	}
@@ -4855,7 +4834,7 @@ public class Graph extends EventSource
 	 * @param value Numeric value to be snapped to the grid.
 	 * @return Returns the value aligned to the grid.
 	 */
-	public double snap(double value)
+	double snap(double value)
 	{
 		if (_gridEnabled)
 		{
@@ -4871,7 +4850,7 @@ public class Graph extends EventSource
 	 * @param cell Cell whose geometry should be returned.
 	 * @return Returns the geometry of the cell.
 	 */
-	public Geometry getCellGeometry(Object cell)
+	Geometry getCellGeometry(Object cell)
 	{
 		return _model.getGeometry(cell);
 	}
@@ -4888,7 +4867,7 @@ public class Graph extends EventSource
 	 * @param cell Cell whose visible state should be returned.
 	 * @return Returns the visible state of the cell.
 	 */
-	public boolean isCellVisible(Object cell)
+	bool isCellVisible(Object cell)
 	{
 		return _model.isVisible(cell);
 	}
@@ -4905,7 +4884,7 @@ public class Graph extends EventSource
 	 * @param cell Cell whose collapsed state should be returned.
 	 * @return Returns the collapsed state of the cell.
 	 */
-	public boolean isCellCollapsed(Object cell)
+	bool isCellCollapsed(Object cell)
 	{
 		return _model.isCollapsed(cell);
 	}
@@ -4919,7 +4898,7 @@ public class Graph extends EventSource
 	 * @param cell Cell whose connectable state should be returned.
 	 * @return Returns the connectable state of the cell.
 	 */
-	public boolean isCellConnectable(Object cell)
+	bool isCellConnectable(Object cell)
 	{
 		return _model.isConnectable(cell);
 	}
@@ -4930,7 +4909,7 @@ public class Graph extends EventSource
 	 * 
 	 * @param edge Cell state that represents the edge.
 	 */
-	public boolean isOrthogonal(CellState edge)
+	bool isOrthogonal(CellState edge)
 	{
 		if (edge.getStyle().containsKey(Constants.STYLE_ORTHOGONAL))
 		{
@@ -4955,7 +4934,7 @@ public class Graph extends EventSource
 	 * @param state <CellState> that represents a potential loop.
 	 * @return Returns true if the given cell is a loop.
 	 */
-	public boolean isLoop(CellState state)
+	bool isLoop(CellState state)
 	{
 		Object src = state.getVisibleTerminalState(true);
 		Object trg = state.getVisibleTerminalState(false);
@@ -4970,7 +4949,7 @@ public class Graph extends EventSource
 	/**
 	 * 
 	 */
-	public void setMultiplicities(Multiplicity[] value)
+	void setMultiplicities(Multiplicity[] value)
 	{
 		Multiplicity[] oldValue = _multiplicities;
 		_multiplicities = value;
@@ -4982,7 +4961,7 @@ public class Graph extends EventSource
 	/**
 	 * 
 	 */
-	public Multiplicity[] getMultiplicities()
+	Multiplicity[] getMultiplicities()
 	{
 		return _multiplicities;
 	}
@@ -4995,7 +4974,7 @@ public class Graph extends EventSource
 	 * @param source Cell that represents the source terminal.
 	 * @param target Cell that represents the target terminal.
 	 */
-	public boolean isEdgeValid(Object edge, Object source, Object target)
+	bool isEdgeValid(Object edge, Object source, Object target)
 	{
 		return getEdgeValidationError(edge, source, target) == null;
 	}
@@ -5014,7 +4993,7 @@ public class Graph extends EventSource
 	 * @param source Cell that represents the source terminal.
 	 * @param target Cell that represents the target terminal.
 	 */
-	public String getEdgeValidationError(Object edge, Object source,
+	String getEdgeValidationError(Object edge, Object source,
 			Object target)
 	{
 		if (edge != null && !isAllowDanglingEdges()
@@ -5105,7 +5084,7 @@ public class Graph extends EventSource
 	 * @param source Cell that represents the source terminal.
 	 * @param target Cell that represents the target terminal.
 	 */
-	public String validateEdge(Object edge, Object source, Object target)
+	String validateEdge(Object edge, Object source, Object target)
 	{
 		return null;
 	}
@@ -5117,7 +5096,7 @@ public class Graph extends EventSource
 	 * 
 	 * @param cell Cell for which the multiplicities should be checked.
 	 */
-	public String getCellValidationError(Object cell)
+	String getCellValidationError(Object cell)
 	{
 		int outCount = GraphModel.getDirectedEdgeCount(_model, cell, true);
 		int inCount = GraphModel.getDirectedEdgeCount(_model, cell, false);
@@ -5160,7 +5139,7 @@ public class Graph extends EventSource
 	 * @param cell Cell that represents the cell to validate.
 	 * @param context Hashtable that represents the global validation state.
 	 */
-	public String validateCell(Object cell, Hashtable<Object, Object> context)
+	String validateCell(Object cell, Hashtable<Object, Object> context)
 	{
 		return null;
 	}
@@ -5172,7 +5151,7 @@ public class Graph extends EventSource
 	/**
 	 * @return the labelsVisible
 	 */
-	public boolean isLabelsVisible()
+	bool isLabelsVisible()
 	{
 		return _labelsVisible;
 	}
@@ -5180,9 +5159,9 @@ public class Graph extends EventSource
 	/**
 	 * @param value the labelsVisible to set
 	 */
-	public void setLabelsVisible(boolean value)
+	void setLabelsVisible(bool value)
 	{
-		boolean oldValue = _labelsVisible;
+		bool oldValue = _labelsVisible;
 		_labelsVisible = value;
 
 		_changeSupport.firePropertyChange("labelsVisible", oldValue,
@@ -5192,9 +5171,9 @@ public class Graph extends EventSource
 	/**
 	 * @param value the htmlLabels to set
 	 */
-	public void setHtmlLabels(boolean value)
+	void setHtmlLabels(bool value)
 	{
-		boolean oldValue = _htmlLabels;
+		bool oldValue = _htmlLabels;
 		_htmlLabels = value;
 
 		_changeSupport.firePropertyChange("htmlLabels", oldValue, _htmlLabels);
@@ -5203,7 +5182,7 @@ public class Graph extends EventSource
 	/**
 	 * 
 	 */
-	public boolean isHtmlLabels()
+	bool isHtmlLabels()
 	{
 		return _htmlLabels;
 	}
@@ -5214,7 +5193,7 @@ public class Graph extends EventSource
 	 * @param cell Cell to be converted to a string.
 	 * @return Returns the textual representation of the cell.
 	 */
-	public String convertValueToString(Object cell)
+	String convertValueToString(Object cell)
 	{
 		Object result = _model.getValue(cell);
 
@@ -5229,7 +5208,7 @@ public class Graph extends EventSource
 	 * @param cell <Cell> whose label should be returned.
 	 * @return Returns the label for the given cell.
 	 */
-	public String getLabel(Object cell)
+	String getLabel(Object cell)
 	{
 		String result = "";
 
@@ -5257,7 +5236,7 @@ public class Graph extends EventSource
 	 * @param value New label to be assigned.
 	 * @param autoSize Specifies if cellSizeUpdated should be called.
 	 */
-	public void cellLabelChanged(Object cell, Object value, boolean autoSize)
+	void cellLabelChanged(Object cell, Object value, bool autoSize)
 	{
 		_model.beginUpdate();
 		try
@@ -5282,7 +5261,7 @@ public class Graph extends EventSource
 	 * @param cell <Cell> whose label should be displayed as HTML markup.
 	 * @return Returns true if the given cell label is HTML markup.
 	 */
-	public boolean isHtmlLabel(Object cell)
+	bool isHtmlLabel(Object cell)
 	{
 		return isHtmlLabels();
 	}
@@ -5290,7 +5269,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns the tooltip to be used for the given cell.
 	 */
-	public String getToolTipForCell(Object cell)
+	String getToolTipForCell(Object cell)
 	{
 		return convertValueToString(cell);
 	}
@@ -5304,7 +5283,7 @@ public class Graph extends EventSource
 	 * @param swimlane <Cell> whose start size should be returned.
 	 * @return Returns the startsize for the given swimlane.
 	 */
-	public Rect getStartSize(Object swimlane)
+	Rect getStartSize(Object swimlane)
 	{
 		Rect result = new Rect();
 		CellState state = _view.getState(swimlane);
@@ -5337,7 +5316,7 @@ public class Graph extends EventSource
 	 * @param state
 	 * @return Returns the image associated with the given cell state.
 	 */
-	public String getImage(CellState state)
+	String getImage(CellState state)
 	{
 		return (state != null && state.getStyle() != null) ? Utils.getString(
 				state.getStyle(), Constants.STYLE_IMAGE) : null;
@@ -5348,7 +5327,7 @@ public class Graph extends EventSource
 	 * 
 	 * @return Returns the border.
 	 */
-	public int getBorder()
+	int getBorder()
 	{
 		return _border;
 	}
@@ -5358,7 +5337,7 @@ public class Graph extends EventSource
 	 * 
 	 * @param value Positive integer that represents the border to be used.
 	 */
-	public void setBorder(int value)
+	void setBorder(int value)
 	{
 		_border = value;
 	}
@@ -5368,7 +5347,7 @@ public class Graph extends EventSource
 	 * 
 	 * @return Returns the default loop style.
 	 */
-	public EdgeStyle.EdgeStyleFunction getDefaultLoopStyle()
+	EdgeStyle.EdgeStyleFunction getDefaultLoopStyle()
 	{
 		return _defaultLoopStyle;
 	}
@@ -5378,7 +5357,7 @@ public class Graph extends EventSource
 	 * 
 	 * @param value Default style to be used for loops.
 	 */
-	public void setDefaultLoopStyle(EdgeStyle.EdgeStyleFunction value)
+	void setDefaultLoopStyle(EdgeStyle.EdgeStyleFunction value)
 	{
 		EdgeStyle.EdgeStyleFunction oldValue = _defaultLoopStyle;
 		_defaultLoopStyle = value;
@@ -5394,7 +5373,7 @@ public class Graph extends EventSource
 	 * @param cell Cell that should be checked. 
 	 * @return Returns true if the cell is a swimlane.
 	 */
-	public boolean isSwimlane(Object cell)
+	bool isSwimlane(Object cell)
 	{
 		if (cell != null)
 		{
@@ -5428,7 +5407,7 @@ public class Graph extends EventSource
 	 * @param cell Cell whose locked state should be returned.
 	 * @return Returns true if the given cell is locked.
 	 */
-	public boolean isCellLocked(Object cell)
+	bool isCellLocked(Object cell)
 	{
 		Geometry geometry = _model.getGeometry(cell);
 
@@ -5440,7 +5419,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns cellsLocked, the default return value for isCellLocked.
 	 */
-	public boolean isCellsLocked()
+	bool isCellsLocked()
 	{
 		return _cellsLocked;
 	}
@@ -5449,9 +5428,9 @@ public class Graph extends EventSource
 	 * Sets cellsLocked, the default return value for isCellLocked and fires a
 	 * property change event for cellsLocked.
 	 */
-	public void setCellsLocked(boolean value)
+	void setCellsLocked(bool value)
 	{
-		boolean oldValue = _cellsLocked;
+		bool oldValue = _cellsLocked;
 		_cellsLocked = value;
 
 		_changeSupport.firePropertyChange("cellsLocked", oldValue, _cellsLocked);
@@ -5463,7 +5442,7 @@ public class Graph extends EventSource
 	 * @param cell Cell whose editable state should be returned.
 	 * @return Returns true if the cell is editable.
 	 */
-	public boolean isCellEditable(Object cell)
+	bool isCellEditable(Object cell)
 	{
 		CellState state = _view.getState(cell);
 		Map<String, Object> style = (state != null) ? state.getStyle()
@@ -5478,7 +5457,7 @@ public class Graph extends EventSource
 	 * 
 	 * @return Returns true if the graph is editable.
 	 */
-	public boolean isCellsEditable()
+	bool isCellsEditable()
 	{
 		return _cellsEditable;
 	}
@@ -5486,9 +5465,9 @@ public class Graph extends EventSource
 	/**
 	 * Sets if the graph is editable.
 	 */
-	public void setCellsEditable(boolean value)
+	void setCellsEditable(bool value)
 	{
-		boolean oldValue = _cellsEditable;
+		bool oldValue = _cellsEditable;
 		_cellsEditable = value;
 
 		_changeSupport.firePropertyChange("cellsEditable", oldValue,
@@ -5502,7 +5481,7 @@ public class Graph extends EventSource
 	 * @param cell Cell whose resizable state should be returned.
 	 * @return Returns true if the cell is sizable.
 	 */
-	public boolean isCellResizable(Object cell)
+	bool isCellResizable(Object cell)
 	{
 		CellState state = _view.getState(cell);
 		Map<String, Object> style = (state != null) ? state.getStyle()
@@ -5515,7 +5494,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns true if the given cell is resizable. This implementation return sizable.
 	 */
-	public boolean isCellsResizable()
+	bool isCellsResizable()
 	{
 		return _cellsResizable;
 	}
@@ -5523,9 +5502,9 @@ public class Graph extends EventSource
 	/**
 	 * Sets if the graph is resizable.
 	 */
-	public void setCellsResizable(boolean value)
+	void setCellsResizable(bool value)
 	{
-		boolean oldValue = _cellsResizable;
+		bool oldValue = _cellsResizable;
 		_cellsResizable = value;
 
 		_changeSupport.firePropertyChange("cellsResizable", oldValue,
@@ -5535,11 +5514,11 @@ public class Graph extends EventSource
 	/**
 	 * Returns the cells which are movable in the given array of cells.
 	 */
-	public Object[] getMovableCells(Object[] cells)
+	Object[] getMovableCells(Object[] cells)
 	{
 		return GraphModel.filterCells(cells, new Filter()
 		{
-			public boolean filter(Object cell)
+			public bool filter(Object cell)
 			{
 				return isCellMovable(cell);
 			}
@@ -5553,7 +5532,7 @@ public class Graph extends EventSource
 	 * @param cell Cell whose movable state should be returned.
 	 * @return Returns true if the cell is movable.
 	 */
-	public boolean isCellMovable(Object cell)
+	bool isCellMovable(Object cell)
 	{
 		CellState state = _view.getState(cell);
 		Map<String, Object> style = (state != null) ? state.getStyle()
@@ -5566,7 +5545,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns cellsMovable.
 	 */
-	public boolean isCellsMovable()
+	bool isCellsMovable()
 	{
 		return _cellsMovable;
 	}
@@ -5574,9 +5553,9 @@ public class Graph extends EventSource
 	/**
 	 * Sets cellsMovable.
 	 */
-	public void setCellsMovable(boolean value)
+	void setCellsMovable(bool value)
 	{
-		boolean oldValue = _cellsMovable;
+		bool oldValue = _cellsMovable;
 		_cellsMovable = value;
 
 		_changeSupport
@@ -5595,7 +5574,7 @@ public class Graph extends EventSource
 	 * @param cell Cell whose terminal point should be moved.
 	 * @param source Boolean indicating if the source or target terminal should be moved.
 	 */
-	public boolean isTerminalPointMovable(Object cell, boolean source)
+	bool isTerminalPointMovable(Object cell, bool source)
 	{
 		return true;
 	}
@@ -5608,7 +5587,7 @@ public class Graph extends EventSource
 	 * @param cell Cell whose bendable state should be returned.
 	 * @return Returns true if the cell is bendable.
 	 */
-	public boolean isCellBendable(Object cell)
+	bool isCellBendable(Object cell)
 	{
 		CellState state = _view.getState(cell);
 		Map<String, Object> style = (state != null) ? state.getStyle()
@@ -5621,7 +5600,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns cellsBendable.
 	 */
-	public boolean isCellsBendable()
+	bool isCellsBendable()
 	{
 		return _cellsBendable;
 	}
@@ -5629,9 +5608,9 @@ public class Graph extends EventSource
 	/**
 	 * Sets cellsBendable.
 	 */
-	public void setCellsBendable(boolean value)
+	void setCellsBendable(bool value)
 	{
-		boolean oldValue = _cellsBendable;
+		bool oldValue = _cellsBendable;
 		_cellsBendable = value;
 
 		_changeSupport.firePropertyChange("cellsBendable", oldValue,
@@ -5645,7 +5624,7 @@ public class Graph extends EventSource
 	 * @param cell <Cell> whose selectable state should be returned.
 	 * @return Returns true if the given cell is selectable.
 	 */
-	public boolean isCellSelectable(Object cell)
+	bool isCellSelectable(Object cell)
 	{
 		return isCellsSelectable();
 	}
@@ -5653,7 +5632,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns cellsSelectable.
 	 */
-	public boolean isCellsSelectable()
+	bool isCellsSelectable()
 	{
 		return _cellsSelectable;
 	}
@@ -5661,9 +5640,9 @@ public class Graph extends EventSource
 	/**
 	 * Sets cellsSelectable.
 	 */
-	public void setCellsSelectable(boolean value)
+	void setCellsSelectable(bool value)
 	{
-		boolean oldValue = _cellsSelectable;
+		bool oldValue = _cellsSelectable;
 		_cellsSelectable = value;
 
 		_changeSupport.firePropertyChange("cellsSelectable", oldValue,
@@ -5673,11 +5652,11 @@ public class Graph extends EventSource
 	/**
 	 * Returns the cells which are movable in the given array of cells.
 	 */
-	public Object[] getDeletableCells(Object[] cells)
+	Object[] getDeletableCells(Object[] cells)
 	{
 		return GraphModel.filterCells(cells, new Filter()
 		{
-			public boolean filter(Object cell)
+			public bool filter(Object cell)
 			{
 				return isCellDeletable(cell);
 			}
@@ -5691,7 +5670,7 @@ public class Graph extends EventSource
 	 * @param cell Cell whose movable state should be returned.
 	 * @return Returns true if the cell is movable.
 	 */
-	public boolean isCellDeletable(Object cell)
+	bool isCellDeletable(Object cell)
 	{
 		CellState state = _view.getState(cell);
 		Map<String, Object> style = (state != null) ? state.getStyle()
@@ -5704,7 +5683,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns cellsDeletable.
 	 */
-	public boolean isCellsDeletable()
+	bool isCellsDeletable()
 	{
 		return _cellsDeletable;
 	}
@@ -5712,9 +5691,9 @@ public class Graph extends EventSource
 	/**
 	 * Sets cellsDeletable.
 	 */
-	public void setCellsDeletable(boolean value)
+	void setCellsDeletable(bool value)
 	{
-		boolean oldValue = _cellsDeletable;
+		bool oldValue = _cellsDeletable;
 		_cellsDeletable = value;
 
 		_changeSupport.firePropertyChange("cellsDeletable", oldValue,
@@ -5724,11 +5703,11 @@ public class Graph extends EventSource
 	/**
 	 * Returns the cells which are movable in the given array of cells.
 	 */
-	public Object[] getCloneableCells(Object[] cells)
+	Object[] getCloneableCells(Object[] cells)
 	{
 		return GraphModel.filterCells(cells, new Filter()
 		{
-			public boolean filter(Object cell)
+			public bool filter(Object cell)
 			{
 				return isCellCloneable(cell);
 			}
@@ -5740,7 +5719,7 @@ public class Graph extends EventSource
 	 * return a value for a given cell, it is simply a hook for subclassers
 	 * to disallow cloning of individual cells.
 	 */
-	public boolean isCellCloneable(Object cell)
+	bool isCellCloneable(Object cell)
 	{
 		CellState state = _view.getState(cell);
 		Map<String, Object> style = (state != null) ? state.getStyle()
@@ -5753,7 +5732,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns cellsCloneable.
 	 */
-	public boolean isCellsCloneable()
+	bool isCellsCloneable()
 	{
 		return _cellsCloneable;
 	}
@@ -5765,9 +5744,9 @@ public class Graph extends EventSource
 	 *
 	 * @param value Boolean indicating if the graph should be cloneable.
 	 */
-	public void setCellsCloneable(boolean value)
+	void setCellsCloneable(bool value)
 	{
-		boolean oldValue = _cellsCloneable;
+		bool oldValue = _cellsCloneable;
 		_cellsCloneable = value;
 
 		_changeSupport.firePropertyChange("cellsCloneable", oldValue,
@@ -5786,8 +5765,8 @@ public class Graph extends EventSource
 	 * @return Returns true if the given edge can be disconnected from the given
 	 * terminal.
 	 */
-	public boolean isCellDisconnectable(Object cell, Object terminal,
-			boolean source)
+	bool isCellDisconnectable(Object cell, Object terminal,
+			bool source)
 	{
 		return isCellsDisconnectable() && !isCellLocked(cell);
 	}
@@ -5795,7 +5774,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns cellsDisconnectable.
 	 */
-	public boolean isCellsDisconnectable()
+	bool isCellsDisconnectable()
 	{
 		return _cellsDisconnectable;
 	}
@@ -5806,9 +5785,9 @@ public class Graph extends EventSource
 	 * @param value Boolean indicating if the graph should allow disconnecting of
 	 * edges.
 	 */
-	public void setCellsDisconnectable(boolean value)
+	void setCellsDisconnectable(bool value)
 	{
-		boolean oldValue = _cellsDisconnectable;
+		bool oldValue = _cellsDisconnectable;
 		_cellsDisconnectable = value;
 
 		_changeSupport.firePropertyChange("cellsDisconnectable", oldValue,
@@ -5824,7 +5803,7 @@ public class Graph extends EventSource
 	 * @param cell Cell whose label should be clipped.
 	 * @return Returns true if the cell label should be clipped.
 	 */
-	public boolean isLabelClipped(Object cell)
+	bool isLabelClipped(Object cell)
 	{
 		if (!isLabelsClipped())
 		{
@@ -5842,7 +5821,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns labelsClipped.
 	 */
-	public boolean isLabelsClipped()
+	bool isLabelsClipped()
 	{
 		return _labelsClipped;
 	}
@@ -5850,9 +5829,9 @@ public class Graph extends EventSource
 	/**
 	 * Sets labelsClipped.
 	 */
-	public void setLabelsClipped(boolean value)
+	void setLabelsClipped(bool value)
 	{
-		boolean oldValue = _labelsClipped;
+		bool oldValue = _labelsClipped;
 		_labelsClipped = value;
 
 		_changeSupport.firePropertyChange("labelsClipped", oldValue,
@@ -5867,7 +5846,7 @@ public class Graph extends EventSource
 	 * @param cell <Cell> whose label should be moved.
 	 * @return Returns true if the label of the given cell is movable.
 	 */
-	public boolean isLabelMovable(Object cell)
+	bool isLabelMovable(Object cell)
 	{
 		return !isCellLocked(cell)
 				&& ((_model.isEdge(cell) && isEdgeLabelsMovable()) || (_model
@@ -5877,7 +5856,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns vertexLabelsMovable.
 	 */
-	public boolean isVertexLabelsMovable()
+	bool isVertexLabelsMovable()
 	{
 		return _vertexLabelsMovable;
 	}
@@ -5885,9 +5864,9 @@ public class Graph extends EventSource
 	/**
 	 * Sets vertexLabelsMovable.
 	 */
-	public void setVertexLabelsMovable(boolean value)
+	void setVertexLabelsMovable(bool value)
 	{
-		boolean oldValue = _vertexLabelsMovable;
+		bool oldValue = _vertexLabelsMovable;
 		_vertexLabelsMovable = value;
 
 		_changeSupport.firePropertyChange("vertexLabelsMovable", oldValue,
@@ -5897,7 +5876,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns edgeLabelsMovable.
 	 */
-	public boolean isEdgeLabelsMovable()
+	bool isEdgeLabelsMovable()
 	{
 		return _edgeLabelsMovable;
 	}
@@ -5905,9 +5884,9 @@ public class Graph extends EventSource
 	/**
 	 * Returns edgeLabelsMovable.
 	 */
-	public void setEdgeLabelsMovable(boolean value)
+	void setEdgeLabelsMovable(bool value)
 	{
-		boolean oldValue = _edgeLabelsMovable;
+		bool oldValue = _edgeLabelsMovable;
 		_edgeLabelsMovable = value;
 
 		_changeSupport.firePropertyChange("edgeLabelsMovable", oldValue,
@@ -5923,7 +5902,7 @@ public class Graph extends EventSource
 	 * 
 	 * @return Returns true if the graph is enabled.
 	 */
-	public boolean isEnabled()
+	bool isEnabled()
 	{
 		return _enabled;
 	}
@@ -5934,9 +5913,9 @@ public class Graph extends EventSource
 	 * 
 	 * @param value Boolean indicating if the graph should be enabled.
 	 */
-	public void setEnabled(boolean value)
+	void setEnabled(bool value)
 	{
-		boolean oldValue = _enabled;
+		bool oldValue = _enabled;
 		_enabled = value;
 
 		_changeSupport.firePropertyChange("enabled", oldValue, _enabled);
@@ -5945,7 +5924,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns true if the graph allows drop into other cells.
 	 */
-	public boolean isDropEnabled()
+	bool isDropEnabled()
 	{
 		return _dropEnabled;
 	}
@@ -5953,9 +5932,9 @@ public class Graph extends EventSource
 	/**
 	 * Sets dropEnabled.
 	 */
-	public void setDropEnabled(boolean value)
+	void setDropEnabled(bool value)
 	{
-		boolean oldValue = _dropEnabled;
+		bool oldValue = _dropEnabled;
 		_dropEnabled = value;
 
 		_changeSupport.firePropertyChange("dropEnabled", oldValue, _dropEnabled);
@@ -5966,7 +5945,7 @@ public class Graph extends EventSource
 	 * drop targets. The splitEdge method is called in GraphHandler if
 	 * GraphComponent.isSplitEvent returns true for a given configuration.
 	 */
-	public boolean isSplitEnabled()
+	bool isSplitEnabled()
 	{
 		return _splitEnabled;
 	}
@@ -5974,7 +5953,7 @@ public class Graph extends EventSource
 	/**
 	 * Sets splitEnabled.
 	 */
-	public void setSplitEnabled(boolean value)
+	void setSplitEnabled(bool value)
 	{
 		_splitEnabled = value;
 	}
@@ -5982,7 +5961,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns multigraph.
 	 */
-	public boolean isMultigraph()
+	bool isMultigraph()
 	{
 		return _multigraph;
 	}
@@ -5990,9 +5969,9 @@ public class Graph extends EventSource
 	/**
 	 * Sets multigraph.
 	 */
-	public void setMultigraph(boolean value)
+	void setMultigraph(bool value)
 	{
-		boolean oldValue = _multigraph;
+		bool oldValue = _multigraph;
 		_multigraph = value;
 
 		_changeSupport.firePropertyChange("multigraph", oldValue, _multigraph);
@@ -6001,7 +5980,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns swimlaneNesting.
 	 */
-	public boolean isSwimlaneNesting()
+	bool isSwimlaneNesting()
 	{
 		return _swimlaneNesting;
 	}
@@ -6009,9 +5988,9 @@ public class Graph extends EventSource
 	/**
 	 * Sets swimlaneNesting.
 	 */
-	public void setSwimlaneNesting(boolean value)
+	void setSwimlaneNesting(bool value)
 	{
-		boolean oldValue = _swimlaneNesting;
+		bool oldValue = _swimlaneNesting;
 		_swimlaneNesting = value;
 
 		_changeSupport.firePropertyChange("swimlaneNesting", oldValue,
@@ -6021,7 +6000,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns allowDanglingEdges
 	 */
-	public boolean isAllowDanglingEdges()
+	bool isAllowDanglingEdges()
 	{
 		return _allowDanglingEdges;
 	}
@@ -6029,9 +6008,9 @@ public class Graph extends EventSource
 	/**
 	 * Sets allowDanglingEdges.
 	 */
-	public void setAllowDanglingEdges(boolean value)
+	void setAllowDanglingEdges(bool value)
 	{
-		boolean oldValue = _allowDanglingEdges;
+		bool oldValue = _allowDanglingEdges;
 		_allowDanglingEdges = value;
 
 		_changeSupport.firePropertyChange("allowDanglingEdges", oldValue,
@@ -6041,7 +6020,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns cloneInvalidEdges.
 	 */
-	public boolean isCloneInvalidEdges()
+	bool isCloneInvalidEdges()
 	{
 		return _cloneInvalidEdges;
 	}
@@ -6049,9 +6028,9 @@ public class Graph extends EventSource
 	/**
 	 * Sets cloneInvalidEdge.
 	 */
-	public void setCloneInvalidEdges(boolean value)
+	void setCloneInvalidEdges(bool value)
 	{
-		boolean oldValue = _cloneInvalidEdges;
+		bool oldValue = _cloneInvalidEdges;
 		_cloneInvalidEdges = value;
 
 		_changeSupport.firePropertyChange("cloneInvalidEdges", oldValue,
@@ -6061,7 +6040,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns disconnectOnMove
 	 */
-	public boolean isDisconnectOnMove()
+	bool isDisconnectOnMove()
 	{
 		return _disconnectOnMove;
 	}
@@ -6069,9 +6048,9 @@ public class Graph extends EventSource
 	/**
 	 * Sets disconnectOnMove.
 	 */
-	public void setDisconnectOnMove(boolean value)
+	void setDisconnectOnMove(bool value)
 	{
-		boolean oldValue = _disconnectOnMove;
+		bool oldValue = _disconnectOnMove;
 		_disconnectOnMove = value;
 
 		_changeSupport.firePropertyChange("disconnectOnMove", oldValue,
@@ -6082,7 +6061,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns allowLoops.
 	 */
-	public boolean isAllowLoops()
+	bool isAllowLoops()
 	{
 		return _allowLoops;
 	}
@@ -6090,9 +6069,9 @@ public class Graph extends EventSource
 	/**
 	 * Sets allowLoops.
 	 */
-	public void setAllowLoops(boolean value)
+	void setAllowLoops(bool value)
 	{
-		boolean oldValue = _allowLoops;
+		bool oldValue = _allowLoops;
 		_allowLoops = value;
 
 		_changeSupport.firePropertyChange("allowLoops", oldValue, _allowLoops);
@@ -6101,7 +6080,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns connectableEdges.
 	 */
-	public boolean isConnectableEdges()
+	bool isConnectableEdges()
 	{
 		return _connectableEdges;
 	}
@@ -6109,9 +6088,9 @@ public class Graph extends EventSource
 	/**
 	 * Sets connetableEdges.
 	 */
-	public void setConnectableEdges(boolean value)
+	void setConnectableEdges(bool value)
 	{
-		boolean oldValue = _connectableEdges;
+		bool oldValue = _connectableEdges;
 		_connectableEdges = value;
 
 		_changeSupport.firePropertyChange("connectableEdges", oldValue,
@@ -6122,7 +6101,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns resetEdgesOnMove.
 	 */
-	public boolean isResetEdgesOnMove()
+	bool isResetEdgesOnMove()
 	{
 		return _resetEdgesOnMove;
 	}
@@ -6130,9 +6109,9 @@ public class Graph extends EventSource
 	/**
 	 * Sets resetEdgesOnMove.
 	 */
-	public void setResetEdgesOnMove(boolean value)
+	void setResetEdgesOnMove(bool value)
 	{
-		boolean oldValue = _resetEdgesOnMove;
+		bool oldValue = _resetEdgesOnMove;
 		_resetEdgesOnMove = value;
 
 		_changeSupport.firePropertyChange("resetEdgesOnMove", oldValue,
@@ -6142,7 +6121,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns resetViewOnRootChange.
 	 */
-	public boolean isResetViewOnRootChange()
+	bool isResetViewOnRootChange()
 	{
 		return _resetViewOnRootChange;
 	}
@@ -6150,9 +6129,9 @@ public class Graph extends EventSource
 	/**
 	 * Sets resetEdgesOnResize.
 	 */
-	public void setResetViewOnRootChange(boolean value)
+	void setResetViewOnRootChange(bool value)
 	{
-		boolean oldValue = _resetViewOnRootChange;
+		bool oldValue = _resetViewOnRootChange;
 		_resetViewOnRootChange = value;
 
 		_changeSupport.firePropertyChange("resetViewOnRootChange", oldValue,
@@ -6162,7 +6141,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns resetEdgesOnResize.
 	 */
-	public boolean isResetEdgesOnResize()
+	bool isResetEdgesOnResize()
 	{
 		return _resetEdgesOnResize;
 	}
@@ -6170,9 +6149,9 @@ public class Graph extends EventSource
 	/**
 	 * Sets resetEdgesOnResize.
 	 */
-	public void setResetEdgesOnResize(boolean value)
+	void setResetEdgesOnResize(bool value)
 	{
-		boolean oldValue = _resetEdgesOnResize;
+		bool oldValue = _resetEdgesOnResize;
 		_resetEdgesOnResize = value;
 
 		_changeSupport.firePropertyChange("resetEdgesOnResize", oldValue,
@@ -6182,7 +6161,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns resetEdgesOnConnect.
 	 */
-	public boolean isResetEdgesOnConnect()
+	bool isResetEdgesOnConnect()
 	{
 		return _resetEdgesOnConnect;
 	}
@@ -6190,9 +6169,9 @@ public class Graph extends EventSource
 	/**
 	 * Sets resetEdgesOnConnect.
 	 */
-	public void setResetEdgesOnConnect(boolean value)
+	void setResetEdgesOnConnect(bool value)
 	{
-		boolean oldValue = _resetEdgesOnConnect;
+		bool oldValue = _resetEdgesOnConnect;
 		_resetEdgesOnConnect = value;
 
 		_changeSupport.firePropertyChange("resetEdgesOnConnect", oldValue,
@@ -6208,7 +6187,7 @@ public class Graph extends EventSource
 	 * @param cell Cell that should be resized.
 	 * @return Returns true if the size of the given cell should be updated.
 	 */
-	public boolean isAutoSizeCell(Object cell)
+	bool isAutoSizeCell(Object cell)
 	{
 		CellState state = _view.getState(cell);
 		Map<String, Object> style = (state != null) ? state.getStyle()
@@ -6223,7 +6202,7 @@ public class Graph extends EventSource
 	 * updated after a change of the label. This implementation returns
 	 * autoSize for all given cells.
 	 */
-	public boolean isAutoSizeCells()
+	bool isAutoSizeCells()
 	{
 		return _autoSizeCells;
 	}
@@ -6235,9 +6214,9 @@ public class Graph extends EventSource
 	 * @param value Boolean indicating if cells should be resized
 	 * automatically.
 	 */
-	public void setAutoSizeCells(boolean value)
+	void setAutoSizeCells(bool value)
 	{
-		boolean oldValue = _autoSizeCells;
+		bool oldValue = _autoSizeCells;
 		_autoSizeCells = value;
 
 		_changeSupport.firePropertyChange("autoSizeCells", oldValue,
@@ -6251,7 +6230,7 @@ public class Graph extends EventSource
 	 * 
 	 * @param cell Cell that has been resized.
 	 */
-	public boolean isExtendParent(Object cell)
+	bool isExtendParent(Object cell)
 	{
 		return !getModel().isEdge(cell) && isExtendParents();
 	}
@@ -6259,7 +6238,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns extendParents.
 	 */
-	public boolean isExtendParents()
+	bool isExtendParents()
 	{
 		return _extendParents;
 	}
@@ -6267,9 +6246,9 @@ public class Graph extends EventSource
 	/**
 	 * Sets extendParents.
 	 */
-	public void setExtendParents(boolean value)
+	void setExtendParents(bool value)
 	{
-		boolean oldValue = _extendParents;
+		bool oldValue = _extendParents;
 		_extendParents = value;
 
 		_changeSupport.firePropertyChange("extendParents", oldValue,
@@ -6279,7 +6258,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns extendParentsOnAdd.
 	 */
-	public boolean isExtendParentsOnAdd()
+	bool isExtendParentsOnAdd()
 	{
 		return _extendParentsOnAdd;
 	}
@@ -6287,9 +6266,9 @@ public class Graph extends EventSource
 	/**
 	 * Sets extendParentsOnAdd.
 	 */
-	public void setExtendParentsOnAdd(boolean value)
+	void setExtendParentsOnAdd(bool value)
 	{
-		boolean oldValue = _extendParentsOnAdd;
+		bool oldValue = _extendParentsOnAdd;
 		_extendParentsOnAdd = value;
 
 		_changeSupport.firePropertyChange("extendParentsOnAdd", oldValue,
@@ -6302,7 +6281,7 @@ public class Graph extends EventSource
 	 * isAllowOverlapParent. This implementation returns false for all children
 	 * of edges and isConstrainChildren() otherwise.
 	 */
-	public boolean isConstrainChild(Object cell)
+	bool isConstrainChild(Object cell)
 	{
 		return isConstrainChildren()
 				&& !getModel().isEdge(getModel().getParent(cell));
@@ -6313,7 +6292,7 @@ public class Graph extends EventSource
 	 * 
 	 * @return the keepInsideParentOnMove
 	 */
-	public boolean isConstrainChildren()
+	bool isConstrainChildren()
 	{
 		return _constrainChildren;
 	}
@@ -6321,9 +6300,9 @@ public class Graph extends EventSource
 	/**
 	 * @param value the constrainChildren to set
 	 */
-	public void setConstrainChildren(boolean value)
+	void setConstrainChildren(bool value)
 	{
-		boolean oldValue = _constrainChildren;
+		bool oldValue = _constrainChildren;
 		_constrainChildren = value;
 
 		_changeSupport.firePropertyChange("constrainChildren", oldValue,
@@ -6333,7 +6312,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns autoOrigin.
 	 */
-	public boolean isAutoOrigin()
+	bool isAutoOrigin()
 	{
 		return _autoOrigin;
 	}
@@ -6341,9 +6320,9 @@ public class Graph extends EventSource
 	/**
 	 * @param value the autoOrigin to set
 	 */
-	public void setAutoOrigin(boolean value)
+	void setAutoOrigin(bool value)
 	{
-		boolean oldValue = _autoOrigin;
+		bool oldValue = _autoOrigin;
 		_autoOrigin = value;
 
 		_changeSupport.firePropertyChange("autoOrigin", oldValue, _autoOrigin);
@@ -6352,7 +6331,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns origin.
 	 */
-	public Point2d getOrigin()
+	Point2d getOrigin()
 	{
 		return _origin;
 	}
@@ -6360,7 +6339,7 @@ public class Graph extends EventSource
 	/**
 	 * @param value the origin to set
 	 */
-	public void setOrigin(Point2d value)
+	void setOrigin(Point2d value)
 	{
 		Point2d oldValue = _origin;
 		_origin = value;
@@ -6371,7 +6350,7 @@ public class Graph extends EventSource
 	/**
 	 * @return Returns changesRepaintThreshold.
 	 */
-	public int getChangesRepaintThreshold()
+	int getChangesRepaintThreshold()
 	{
 		return _changesRepaintThreshold;
 	}
@@ -6379,7 +6358,7 @@ public class Graph extends EventSource
 	/**
 	 * @param value the changesRepaintThreshold to set
 	 */
-	public void setChangesRepaintThreshold(int value)
+	void setChangesRepaintThreshold(int value)
 	{
 		int oldValue = _changesRepaintThreshold;
 		_changesRepaintThreshold = value;
@@ -6393,7 +6372,7 @@ public class Graph extends EventSource
 	 * 
 	 * @return the allowNegativeCoordinates
 	 */
-	public boolean isAllowNegativeCoordinates()
+	bool isAllowNegativeCoordinates()
 	{
 		return _allowNegativeCoordinates;
 	}
@@ -6401,9 +6380,9 @@ public class Graph extends EventSource
 	/**
 	 * @param value the allowNegativeCoordinates to set
 	 */
-	public void setAllowNegativeCoordinates(boolean value)
+	void setAllowNegativeCoordinates(bool value)
 	{
-		boolean oldValue = _allowNegativeCoordinates;
+		bool oldValue = _allowNegativeCoordinates;
 		_allowNegativeCoordinates = value;
 
 		_changeSupport.firePropertyChange("allowNegativeCoordinates", oldValue,
@@ -6415,7 +6394,7 @@ public class Graph extends EventSource
 	 * 
 	 * @return the collapseToPreferredSize
 	 */
-	public boolean isCollapseToPreferredSize()
+	bool isCollapseToPreferredSize()
 	{
 		return _collapseToPreferredSize;
 	}
@@ -6423,9 +6402,9 @@ public class Graph extends EventSource
 	/**
 	 * @param value the collapseToPreferredSize to set
 	 */
-	public void setCollapseToPreferredSize(boolean value)
+	void setCollapseToPreferredSize(bool value)
 	{
-		boolean oldValue = _collapseToPreferredSize;
+		bool oldValue = _collapseToPreferredSize;
 		_collapseToPreferredSize = value;
 
 		_changeSupport.firePropertyChange("collapseToPreferredSize", oldValue,
@@ -6435,7 +6414,7 @@ public class Graph extends EventSource
 	/**
 	 * @return Returns true if edges are rendered in the foreground.
 	 */
-	public boolean isKeepEdgesInForeground()
+	bool isKeepEdgesInForeground()
 	{
 		return _keepEdgesInForeground;
 	}
@@ -6443,9 +6422,9 @@ public class Graph extends EventSource
 	/**
 	 * @param value the keepEdgesInForeground to set
 	 */
-	public void setKeepEdgesInForeground(boolean value)
+	void setKeepEdgesInForeground(bool value)
 	{
-		boolean oldValue = _keepEdgesInForeground;
+		bool oldValue = _keepEdgesInForeground;
 		_keepEdgesInForeground = value;
 
 		_changeSupport.firePropertyChange("keepEdgesInForeground", oldValue,
@@ -6455,7 +6434,7 @@ public class Graph extends EventSource
 	/**
 	 * @return Returns true if edges are rendered in the background.
 	 */
-	public boolean isKeepEdgesInBackground()
+	bool isKeepEdgesInBackground()
 	{
 		return _keepEdgesInBackground;
 	}
@@ -6463,9 +6442,9 @@ public class Graph extends EventSource
 	/**
 	 * @param value the keepEdgesInBackground to set
 	 */
-	public void setKeepEdgesInBackground(boolean value)
+	void setKeepEdgesInBackground(bool value)
 	{
-		boolean oldValue = _keepEdgesInBackground;
+		bool oldValue = _keepEdgesInBackground;
 		_keepEdgesInBackground = value;
 
 		_changeSupport.firePropertyChange("keepEdgesInBackground", oldValue,
@@ -6480,7 +6459,7 @@ public class Graph extends EventSource
 	 * @param cell Object that represents a possible source or null.
 	 * @return Returns true if the given cell is a valid source terminal.
 	 */
-	public boolean isValidSource(Object cell)
+	bool isValidSource(Object cell)
 	{
 		return (cell == null && _allowDanglingEdges)
 				|| (cell != null
@@ -6494,14 +6473,14 @@ public class Graph extends EventSource
 	 * @param cell Object that represents a possible target or null.
 	 * @return Returns true if the given cell is a valid target.
 	 */
-	public boolean isValidTarget(Object cell)
+	bool isValidTarget(Object cell)
 	{
 		return isValidSource(cell);
 	}
 
 	/**
 	 * Returns true if the given target cell is a valid target for source.
-	 * This is a boolean implementation for not allowing connections between
+	 * This is a bool implementation for not allowing connections between
 	 * certain pairs of vertices and is called by <getEdgeValidationError>.
 	 * This implementation returns true if <isValidSource> returns true for
 	 * the source and <isValidTarget> returns true for the target.
@@ -6511,7 +6490,7 @@ public class Graph extends EventSource
 	 * @return Returns true if the the connection between the given terminals
 	 * is valid.
 	 */
-	public boolean isValidConnection(Object source, Object target)
+	bool isValidConnection(Object source, Object target)
 	{
 		return isValidSource(source) && isValidTarget(target)
 				&& (isAllowLoops() || source != target);
@@ -6522,7 +6501,7 @@ public class Graph extends EventSource
 	 * 
 	 * @return Returns the minimum container size.
 	 */
-	public Rect getMinimumGraphSize()
+	Rect getMinimumGraphSize()
 	{
 		return _minimumGraphSize;
 	}
@@ -6530,7 +6509,7 @@ public class Graph extends EventSource
 	/**
 	 * @param value the minimumGraphSize to set
 	 */
-	public void setMinimumGraphSize(Rect value)
+	void setMinimumGraphSize(Rect value)
 	{
 		Rect oldValue = _minimumGraphSize;
 		_minimumGraphSize = value;
@@ -6550,7 +6529,7 @@ public class Graph extends EventSource
 	 * @return Returns the overlapping value for the given cell inside its
 	 * parent.
 	 */
-	public double getOverlap(Object cell)
+	double getOverlap(Object cell)
 	{
 		return (isAllowOverlapParent(cell)) ? getDefaultOverlap() : 0;
 	}
@@ -6558,7 +6537,7 @@ public class Graph extends EventSource
 	/**
 	 * Gets defaultOverlap.
 	 */
-	public double getDefaultOverlap()
+	double getDefaultOverlap()
 	{
 		return _defaultOverlap;
 	}
@@ -6566,7 +6545,7 @@ public class Graph extends EventSource
 	/**
 	 * Sets defaultOverlap.
 	 */
-	public void setDefaultOverlap(double value)
+	void setDefaultOverlap(double value)
 	{
 		double oldValue = _defaultOverlap;
 		_defaultOverlap = value;
@@ -6581,7 +6560,7 @@ public class Graph extends EventSource
 	 * @param cell
 	 * @return Returns true if the given cell may overlap its parent.
 	 */
-	public boolean isAllowOverlapParent(Object cell)
+	bool isAllowOverlapParent(Object cell)
 	{
 		return false;
 	}
@@ -6589,11 +6568,11 @@ public class Graph extends EventSource
 	/**
 	 * Returns the cells which are movable in the given array of cells.
 	 */
-	public Object[] getFoldableCells(Object[] cells, final boolean collapse)
+	Object[] getFoldableCells(Object[] cells, final bool collapse)
 	{
 		return GraphModel.filterCells(cells, new Filter()
 		{
-			public boolean filter(Object cell)
+			public bool filter(Object cell)
 			{
 				return isCellFoldable(cell, collapse);
 			}
@@ -6608,7 +6587,7 @@ public class Graph extends EventSource
 	 * @param cell <Cell> whose expandable state should be returned.
 	 * @return Returns true if the given cell is expandable.
 	 */
-	public boolean isCellFoldable(Object cell, boolean collapse)
+	bool isCellFoldable(Object cell, bool collapse)
 	{
 		CellState state = _view.getState(cell);
 		Map<String, Object> style = (state != null) ? state.getStyle()
@@ -6623,7 +6602,7 @@ public class Graph extends EventSource
 	 * 
 	 * @return Returns the enabled state of the grid.
 	 */
-	public boolean isGridEnabled()
+	bool isGridEnabled()
 	{
 		return _gridEnabled;
 	}
@@ -6633,9 +6612,9 @@ public class Graph extends EventSource
 	 * 
 	 * @param value Specifies if the grid should be enabled.
 	 */
-	public void setGridEnabled(boolean value)
+	void setGridEnabled(bool value)
 	{
-		boolean oldValue = _gridEnabled;
+		bool oldValue = _gridEnabled;
 		_gridEnabled = value;
 
 		_changeSupport.firePropertyChange("gridEnabled", oldValue, _gridEnabled);
@@ -6646,7 +6625,7 @@ public class Graph extends EventSource
 	 * 
 	 * @return Returns the enabled state of the ports.
 	 */
-	public boolean isPortsEnabled()
+	bool isPortsEnabled()
 	{
 		return _portsEnabled;
 	}
@@ -6656,9 +6635,9 @@ public class Graph extends EventSource
 	 * 
 	 * @param value Specifies if the ports should be enabled.
 	 */
-	public void setPortsEnabled(boolean value)
+	void setPortsEnabled(bool value)
 	{
-		boolean oldValue = _portsEnabled;
+		bool oldValue = _portsEnabled;
 		_portsEnabled = value;
 
 		_changeSupport.firePropertyChange("portsEnabled", oldValue, _portsEnabled);
@@ -6669,7 +6648,7 @@ public class Graph extends EventSource
 	 * 
 	 * @return Returns the grid size
 	 */
-	public int getGridSize()
+	int getGridSize()
 	{
 		return _gridSize;
 	}
@@ -6679,7 +6658,7 @@ public class Graph extends EventSource
 	 * 
 	 * @param value New grid size to be used.
 	 */
-	public void setGridSize(int value)
+	void setGridSize(int value)
 	{
 		int oldValue = _gridSize;
 		_gridSize = value;
@@ -6690,7 +6669,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns alternateEdgeStyle.
 	 */
-	public String getAlternateEdgeStyle()
+	String getAlternateEdgeStyle()
 	{
 		return _alternateEdgeStyle;
 	}
@@ -6698,7 +6677,7 @@ public class Graph extends EventSource
 	/**
 	 * Sets alternateEdgeStyle.
 	 */
-	public void setAlternateEdgeStyle(String value)
+	void setAlternateEdgeStyle(String value)
 	{
 		String oldValue = _alternateEdgeStyle;
 		_alternateEdgeStyle = value;
@@ -6718,7 +6697,7 @@ public class Graph extends EventSource
 	 * @return Returns true if the cell is a valid drop target for the given
 	 * cells.
 	 */
-	public boolean isValidDropTarget(Object cell, Object[] cells)
+	bool isValidDropTarget(Object cell, Object[] cells)
 	{
 		return cell != null
 				&& ((isSplitEnabled() && isSplitTarget(cell, cells)) || (!_model
@@ -6735,7 +6714,7 @@ public class Graph extends EventSource
 	 * @return Returns true if the given edge may be splitted by the given
 	 * cell.
 	 */
-	public boolean isSplitTarget(Object target, Object[] cells)
+	bool isSplitTarget(Object target, Object[] cells)
 	{
 		if (target != null && cells != null && cells.length == 1)
 		{
@@ -6762,7 +6741,7 @@ public class Graph extends EventSource
 	 * 
 	 * This function should only be used if isDropEnabled returns true.
 	 */
-	public Object getDropTarget(Object[] cells, Point pt, Object cell)
+	Object getDropTarget(Object[] cells, Point pt, Object cell)
 	{
 		if (!isSwimlaneNesting())
 		{
@@ -6819,7 +6798,7 @@ public class Graph extends EventSource
 	 * 
 	 * @return Returns the default parent for new cells.
 	 */
-	public Object getDefaultParent()
+	Object getDefaultParent()
 	{
 		Object parent = _defaultParent;
 
@@ -6842,7 +6821,7 @@ public class Graph extends EventSource
 	 * Set this to null to return the first child of the root in
 	 * getDefaultParent.
 	 */
-	public void setDefaultParent(Object value)
+	void setDefaultParent(Object value)
 	{
 		_defaultParent = value;
 	}
@@ -6852,7 +6831,7 @@ public class Graph extends EventSource
 	 * 
 	 * @param parent Cell whose children should be returned.
 	 */
-	public Object[] getChildVertices(Object parent)
+	Object[] getChildVertices(Object parent)
 	{
 		return getChildCells(parent, true, false);
 	}
@@ -6862,7 +6841,7 @@ public class Graph extends EventSource
 	 * 
 	 * @param parent Cell whose children should be returned.
 	 */
-	public Object[] getChildEdges(Object parent)
+	Object[] getChildEdges(Object parent)
 	{
 		return getChildCells(parent, false, true);
 	}
@@ -6872,7 +6851,7 @@ public class Graph extends EventSource
 	 * 
 	 * @param parent Cell whose children should be returned.
 	 */
-	public Object[] getChildCells(Object parent)
+	Object[] getChildCells(Object parent)
 	{
 		return getChildCells(parent, false, false);
 	}
@@ -6886,7 +6865,7 @@ public class Graph extends EventSource
 	 * @param edges Specifies if child edges should be returned.
 	 * @return Returns the child vertices and edges.
 	 */
-	public Object[] getChildCells(Object parent, boolean vertices, boolean edges)
+	Object[] getChildCells(Object parent, bool vertices, bool edges)
 	{
 		Object[] cells = GraphModel.getChildCells(_model, parent, vertices,
 				edges);
@@ -6910,7 +6889,7 @@ public class Graph extends EventSource
 	 * @param cell Cell whose connections should be returned.
 	 * @return Returns the connected edges for the given cell.
 	 */
-	public Object[] getConnections(Object cell)
+	Object[] getConnections(Object cell)
 	{
 		return getConnections(cell, null);
 	}
@@ -6925,7 +6904,7 @@ public class Graph extends EventSource
 	 * to be returned.
 	 * @return Returns the connected edges for the given cell.
 	 */
-	public Object[] getConnections(Object cell, Object parent)
+	Object[] getConnections(Object cell, Object parent)
 	{
 		return getConnections(cell, parent, false);
 	}
@@ -6940,7 +6919,7 @@ public class Graph extends EventSource
 	 * to be returned.
 	 * @return Returns the connected edges for the given cell.
 	 */
-	public Object[] getConnections(Object cell, Object parent, boolean recurse)
+	Object[] getConnections(Object cell, Object parent, bool recurse)
 	{
 		return getEdges(cell, parent, true, true, false, recurse);
 	}
@@ -6952,7 +6931,7 @@ public class Graph extends EventSource
 	 * @param cell Cell whose incoming edges should be returned.
 	 * @return Returns the incoming edges of the given cell.
 	 */
-	public Object[] getIncomingEdges(Object cell)
+	Object[] getIncomingEdges(Object cell)
 	{
 		return getIncomingEdges(cell, null);
 	}
@@ -6967,7 +6946,7 @@ public class Graph extends EventSource
 	 * to be returned.
 	 * @return Returns the incoming edges of the given cell.
 	 */
-	public Object[] getIncomingEdges(Object cell, Object parent)
+	Object[] getIncomingEdges(Object cell, Object parent)
 	{
 		return getEdges(cell, parent, true, false, false);
 	}
@@ -6979,7 +6958,7 @@ public class Graph extends EventSource
 	 * @param cell Cell whose outgoing edges should be returned.
 	 * @return Returns the outgoing edges of the given cell.
 	 */
-	public Object[] getOutgoingEdges(Object cell)
+	Object[] getOutgoingEdges(Object cell)
 	{
 		return getOutgoingEdges(cell, null);
 	}
@@ -6994,7 +6973,7 @@ public class Graph extends EventSource
 	 * to be returned.
 	 * @return Returns the outgoing edges of the given cell.
 	 */
-	public Object[] getOutgoingEdges(Object cell, Object parent)
+	Object[] getOutgoingEdges(Object cell, Object parent)
 	{
 		return getEdges(cell, parent, false, true, false);
 	}
@@ -7005,7 +6984,7 @@ public class Graph extends EventSource
 	 * @param cell Cell whose edges should be returned.
 	 * @return Returns the edges of the given cell.
 	 */
-	public Object[] getEdges(Object cell)
+	Object[] getEdges(Object cell)
 	{
 		return getEdges(cell, null);
 	}
@@ -7018,7 +6997,7 @@ public class Graph extends EventSource
 	 * to be returned.
 	 * @return Returns the edges of the given cell.
 	 */
-	public Object[] getEdges(Object cell, Object parent)
+	Object[] getEdges(Object cell, Object parent)
 	{
 		return getEdges(cell, parent, true, true, true);
 	}
@@ -7038,8 +7017,8 @@ public class Graph extends EventSource
 	 * @param includeLoops Specifies if loops should be included in the result.
 	 * @return Returns the edges connected to the given cell.
 	 */
-	public Object[] getEdges(Object cell, Object parent, boolean incoming,
-			boolean outgoing, boolean includeLoops)
+	Object[] getEdges(Object cell, Object parent, bool incoming,
+			bool outgoing, bool includeLoops)
 	{
 		return getEdges(cell, parent, incoming, outgoing, includeLoops, false);
 	}
@@ -7063,10 +7042,10 @@ public class Graph extends EventSource
 	 * parent, <code>true</code>, or the direct parent, <code>false</code>
 	 * @return Returns the edges connected to the given cell.
 	 */
-	public Object[] getEdges(Object cell, Object parent, boolean incoming,
-			boolean outgoing, boolean includeLoops, boolean recurse)
+	Object[] getEdges(Object cell, Object parent, bool incoming,
+			bool outgoing, bool includeLoops, bool recurse)
 	{
-		boolean isCollapsed = isCellCollapsed(cell);
+		bool isCollapsed = isCellCollapsed(cell);
 		List<Object> edges = new ArrayList<Object>();
 		int childCount = _model.getChildCount(cell);
 
@@ -7119,7 +7098,7 @@ public class Graph extends EventSource
 	 * ancestor of the specified cell, either direct or indirectly
 	 * based on whether ancestor recursion is enabled.
 	 */
-	public boolean isValidAncestor(Object cell, Object parent, boolean recurse)
+	bool isValidAncestor(Object cell, Object parent, bool recurse)
 	{
 		return (recurse ? _model.isAncestor(parent, cell) : _model
 				.getParent(cell) == parent);
@@ -7133,7 +7112,7 @@ public class Graph extends EventSource
 	 * @param terminal
 	 * @return Returns the terminals at the opposite ends of the given edges.
 	 */
-	public Object[] getOpposites(Object[] edges, Object terminal)
+	Object[] getOpposites(Object[] edges, Object terminal)
 	{
 		return getOpposites(edges, terminal, true, true);
 	}
@@ -7151,8 +7130,8 @@ public class Graph extends EventSource
 	 * result.
 	 * @return Returns the cells at the opposite ends of the given edges.
 	 */
-	public Object[] getOpposites(Object[] edges, Object terminal,
-			boolean sources, boolean targets)
+	Object[] getOpposites(Object[] edges, Object terminal,
+			bool sources, bool targets)
 	{
 		Collection<Object> terminals = new LinkedHashSet<Object>();
 
@@ -7200,7 +7179,7 @@ public class Graph extends EventSource
 	 * @param target
 	 * @return Returns all edges between the given terminals.
 	 */
-	public Object[] getEdgesBetween(Object source, Object target)
+	Object[] getEdgesBetween(Object source, Object target)
 	{
 		return getEdgesBetween(source, target, false);
 	}
@@ -7215,8 +7194,8 @@ public class Graph extends EventSource
 	 * @param directed
 	 * @return Returns all edges between the given terminals.
 	 */
-	public Object[] getEdgesBetween(Object source, Object target,
-			boolean directed)
+	Object[] getEdgesBetween(Object source, Object target,
+			bool directed)
 	{
 		Object[] edges = getEdges(source);
 		List<Object> result = new ArrayList<Object>(edges.length);
@@ -7255,8 +7234,8 @@ public class Graph extends EventSource
 	 * from the origin should be returned.
 	 * @return Returns the cells beyond the given halfpane.
 	 */
-	public Object[] getCellsBeyond(double x0, double y0, Object parent,
-			boolean rightHalfpane, boolean bottomHalfpane)
+	Object[] getCellsBeyond(double x0, double y0, Object parent,
+			bool rightHalfpane, bool bottomHalfpane)
 	{
 		if (parent == null)
 		{
@@ -7301,7 +7280,7 @@ public class Graph extends EventSource
 	 * @param parent Cell whose children should be checked.
 	 * @return List of tree roots in parent.
 	 */
-	public List<Object> findTreeRoots(Object parent)
+	List<Object> findTreeRoots(Object parent)
 	{
 		return findTreeRoots(parent, false);
 	}
@@ -7318,7 +7297,7 @@ public class Graph extends EventSource
 	 * end is not a child of the given parent cell.
 	 * @return List of tree roots in parent.
 	 */
-	public List<Object> findTreeRoots(Object parent, boolean isolate)
+	List<Object> findTreeRoots(Object parent, bool isolate)
 	{
 		return findTreeRoots(parent, isolate, false);
 	}
@@ -7337,8 +7316,8 @@ public class Graph extends EventSource
 	 * for a tree root. If false then outgoing edges will be counted.
 	 * @return List of tree roots in parent.
 	 */
-	public List<Object> findTreeRoots(Object parent, boolean isolate,
-			boolean invert)
+	List<Object> findTreeRoots(Object parent, bool isolate,
+			bool invert)
 	{
 		List<Object> roots = new ArrayList<Object>();
 
@@ -7404,7 +7383,7 @@ public class Graph extends EventSource
 	 * <code>
 	 * graph.traverse(root, true, new ICellVisitor()
 	 * {
-	 *   public boolean visit(Object vertex, Object edge)
+	 *   public bool visit(Object vertex, Object edge)
 	 *   {
 	 *     System.out.println("edge="+graph.convertValueToString(edge)+
 	 *       " vertex="+graph.convertValueToString(vertex));
@@ -7418,7 +7397,7 @@ public class Graph extends EventSource
 	 * @param directed
 	 * @param visitor
 	 */
-	public void traverse(Object vertex, boolean directed, ICellVisitor visitor)
+	void traverse(Object vertex, bool directed, ICellVisitor visitor)
 	{
 		traverse(vertex, directed, visitor, null, null);
 	}
@@ -7431,7 +7410,7 @@ public class Graph extends EventSource
 	 * traversal should stop at the given vertex.
 	 * 
 	 * @param vertex <Cell> that represents the vertex where the traversal starts.
-	 * @param directed Optional boolean indicating if edges should only be traversed
+	 * @param directed Optional bool indicating if edges should only be traversed
 	 * from source to target. Default is true.
 	 * @param visitor Visitor that takes the current vertex and the incoming edge.
 	 * The traversal stops if the function returns false.
@@ -7439,7 +7418,7 @@ public class Graph extends EventSource
 	 * null for the first step of the traversal.
 	 * @param visited Optional array of cell paths for the visited cells.
 	 */
-	public void traverse(Object vertex, boolean directed,
+	void traverse(Object vertex, bool directed,
 			ICellVisitor visitor, Object edge, Set<Object> visited)
 	{
 		if (vertex != null && visitor != null)
@@ -7462,7 +7441,7 @@ public class Graph extends EventSource
 						for (int i = 0; i < edgeCount; i++)
 						{
 							Object e = _model.getEdgeAt(vertex, i);
-							boolean isSource = _model.getTerminal(e, true) == vertex;
+							bool isSource = _model.getTerminal(e, true) == vertex;
 
 							if (!directed || isSource)
 							{
@@ -7483,7 +7462,7 @@ public class Graph extends EventSource
 	/**
 	 * 
 	 */
-	public GraphSelectionModel getSelectionModel()
+	GraphSelectionModel getSelectionModel()
 	{
 		return _selectionModel;
 	}
@@ -7491,7 +7470,7 @@ public class Graph extends EventSource
 	/**
 	 * 
 	 */
-	public int getSelectionCount()
+	int getSelectionCount()
 	{
 		return _selectionModel.size();
 	}
@@ -7501,7 +7480,7 @@ public class Graph extends EventSource
 	 * @param cell
 	 * @return Returns true if the given cell is selected.
 	 */
-	public boolean isCellSelected(Object cell)
+	bool isCellSelected(Object cell)
 	{
 		return _selectionModel.isSelected(cell);
 	}
@@ -7510,7 +7489,7 @@ public class Graph extends EventSource
 	 * 
 	 * @return Returns true if the selection is empty.
 	 */
-	public boolean isSelectionEmpty()
+	bool isSelectionEmpty()
 	{
 		return _selectionModel.isEmpty();
 	}
@@ -7518,7 +7497,7 @@ public class Graph extends EventSource
 	/**
 	 * 
 	 */
-	public void clearSelection()
+	void clearSelection()
 	{
 		_selectionModel.clear();
 	}
@@ -7527,7 +7506,7 @@ public class Graph extends EventSource
 	 * 
 	 * @return Returns the selection cell.
 	 */
-	public Object getSelectionCell()
+	Object getSelectionCell()
 	{
 		return _selectionModel.getCell();
 	}
@@ -7536,7 +7515,7 @@ public class Graph extends EventSource
 	 * 
 	 * @param cell
 	 */
-	public void setSelectionCell(Object cell)
+	void setSelectionCell(Object cell)
 	{
 		_selectionModel.setCell(cell);
 	}
@@ -7545,7 +7524,7 @@ public class Graph extends EventSource
 	 * 
 	 * @return Returns the selection cells.
 	 */
-	public Object[] getSelectionCells()
+	Object[] getSelectionCells()
 	{
 		return _selectionModel.getCells();
 	}
@@ -7553,7 +7532,7 @@ public class Graph extends EventSource
 	/**
 	 * 
 	 */
-	public void setSelectionCells(Object[] cells)
+	void setSelectionCells(Object[] cells)
 	{
 		_selectionModel.setCells(cells);
 	}
@@ -7562,7 +7541,7 @@ public class Graph extends EventSource
 	 * 
 	 * @param cells
 	 */
-	public void setSelectionCells(Collection<Object> cells)
+	void setSelectionCells(Collection<Object> cells)
 	{
 		if (cells != null)
 		{
@@ -7573,7 +7552,7 @@ public class Graph extends EventSource
 	/**
 	 * 
 	 */
-	public void addSelectionCell(Object cell)
+	void addSelectionCell(Object cell)
 	{
 		_selectionModel.addCell(cell);
 	}
@@ -7581,7 +7560,7 @@ public class Graph extends EventSource
 	/**
 	 * 
 	 */
-	public void addSelectionCells(Object[] cells)
+	void addSelectionCells(Object[] cells)
 	{
 		_selectionModel.addCells(cells);
 	}
@@ -7589,7 +7568,7 @@ public class Graph extends EventSource
 	/**
 	 * 
 	 */
-	public void removeSelectionCell(Object cell)
+	void removeSelectionCell(Object cell)
 	{
 		_selectionModel.removeCell(cell);
 	}
@@ -7597,7 +7576,7 @@ public class Graph extends EventSource
 	/**
 	 * 
 	 */
-	public void removeSelectionCells(Object[] cells)
+	void removeSelectionCells(Object[] cells)
 	{
 		_selectionModel.removeCells(cells);
 	}
@@ -7605,7 +7584,7 @@ public class Graph extends EventSource
 	/**
 	 * Selects the next cell.
 	 */
-	public void selectNextCell()
+	void selectNextCell()
 	{
 		selectCell(true, false, false);
 	}
@@ -7613,7 +7592,7 @@ public class Graph extends EventSource
 	/**
 	 * Selects the previous cell.
 	 */
-	public void selectPreviousCell()
+	void selectPreviousCell()
 	{
 		selectCell(false, false, false);
 	}
@@ -7621,7 +7600,7 @@ public class Graph extends EventSource
 	/**
 	 * Selects the parent cell.
 	 */
-	public void selectParentCell()
+	void selectParentCell()
 	{
 		selectCell(false, true, false);
 	}
@@ -7629,7 +7608,7 @@ public class Graph extends EventSource
 	/**
 	 * Selects the first child cell.
 	 */
-	public void selectChildCell()
+	void selectChildCell()
 	{
 		selectCell(false, false, true);
 	}
@@ -7642,7 +7621,7 @@ public class Graph extends EventSource
 	 * @param isParent
 	 * @param isChild
 	 */
-	public void selectCell(boolean isNext, boolean isParent, boolean isChild)
+	void selectCell(bool isNext, bool isParent, bool isChild)
 	{
 		Object cell = getSelectionCell();
 
@@ -7699,7 +7678,7 @@ public class Graph extends EventSource
 	/**
 	 * Selects all vertices inside the default parent.
 	 */
-	public void selectVertices()
+	void selectVertices()
 	{
 		selectVertices(null);
 	}
@@ -7708,7 +7687,7 @@ public class Graph extends EventSource
 	 * Selects all vertices inside the given parent or the default parent
 	 * if no parent is given.
 	 */
-	public void selectVertices(Object parent)
+	void selectVertices(Object parent)
 	{
 		selectCells(true, false, parent);
 	}
@@ -7716,7 +7695,7 @@ public class Graph extends EventSource
 	/**
 	 * Selects all vertices inside the default parent.
 	 */
-	public void selectEdges()
+	void selectEdges()
 	{
 		selectEdges(null);
 	}
@@ -7725,7 +7704,7 @@ public class Graph extends EventSource
 	 * Selects all vertices inside the given parent or the default parent
 	 * if no parent is given.
 	 */
-	public void selectEdges(Object parent)
+	void selectEdges(Object parent)
 	{
 		selectCells(false, true, parent);
 	}
@@ -7738,7 +7717,7 @@ public class Graph extends EventSource
 	 * @param vertices Boolean indicating if vertices should be selected.
 	 * @param edges Boolean indicating if edges should be selected.
 	 */
-	public void selectCells(boolean vertices, boolean edges)
+	void selectCells(bool vertices, bool edges)
 	{
 		selectCells(vertices, edges, null);
 	}
@@ -7754,7 +7733,7 @@ public class Graph extends EventSource
 	 * @param parent Optional cell that acts as the root of the recursion.
 	 * Default is <code>defaultParent</code>.
 	 */
-	public void selectCells(final boolean vertices, final boolean edges,
+	void selectCells(final bool vertices, final bool edges,
 			Object parent)
 	{
 		if (parent == null)
@@ -7769,7 +7748,7 @@ public class Graph extends EventSource
 					/**
 					 * 
 					 */
-					public boolean filter(Object cell)
+					public bool filter(Object cell)
 					{
 						return _view.getState(cell) != null
 								&& _model.getChildCount(cell) == 0
@@ -7784,7 +7763,7 @@ public class Graph extends EventSource
 	/**
 	 * 
 	 */
-	public void selectAll()
+	void selectAll()
 	{
 		selectAll(null);
 	}
@@ -7797,7 +7776,7 @@ public class Graph extends EventSource
 	 * @param parent  Optional <Cell> whose children should be selected.
 	 * Default is <defaultParent>.
 	 */
-	public void selectAll(Object parent)
+	void selectAll(Object parent)
 	{
 		if (parent == null)
 		{
@@ -7821,7 +7800,7 @@ public class Graph extends EventSource
 	 * 
 	 * @param canvas Canvas onto which the graph should be drawn.
 	 */
-	public void drawGraph(ICanvas canvas)
+	void drawGraph(ICanvas canvas)
 	{
 		drawCell(canvas, getModel().getRoot());
 	}
@@ -7832,7 +7811,7 @@ public class Graph extends EventSource
 	 * @param canvas Canvas onto which the cell should be drawn.
 	 * @param cell Cell that should be drawn onto the canvas.
 	 */
-	public void drawCell(ICanvas canvas, Object cell)
+	void drawCell(ICanvas canvas, Object cell)
 	{
 		drawState(canvas, getView().getState(cell), true);
 
@@ -7856,7 +7835,7 @@ public class Graph extends EventSource
 	 * @param state State of the cell to be drawn.
 	 * @param drawLabel Indicates if the label should be drawn.
 	 */
-	public void drawState(ICanvas canvas, CellState state, boolean drawLabel)
+	void drawState(ICanvas canvas, CellState state, bool drawLabel)
 	{
 		Object cell = (state != null) ? state.getCell() : null;
 
@@ -7932,7 +7911,7 @@ public class Graph extends EventSource
 	 * Called when a cell has been painted as the specified object, typically a
 	 * DOM node that represents the given cell graphically in a document.
 	 */
-	protected void _cellDrawn(ICanvas canvas, CellState state,
+	void _cellDrawn(ICanvas canvas, CellState state,
 			Object element, Object labelElement)
 	{
 		if (element instanceof Element)
@@ -7999,7 +7978,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns the hyperlink to be used for the given cell.
 	 */
-	protected String _getLinkForCell(Object cell)
+	String _getLinkForCell(Object cell)
 	{
 		return null;
 	}
@@ -8007,7 +7986,7 @@ public class Graph extends EventSource
 	/**
 	 * Returns the hyperlink to be used for the given cell.
 	 */
-	protected String _getTargetForCell(Object cell)
+	String _getTargetForCell(Object cell)
 	{
 		return null;
 	}
@@ -8020,7 +7999,7 @@ public class Graph extends EventSource
 	 * @param listener
 	 * @see java.beans.PropertyChangeSupport#addPropertyChangeListener(java.beans.PropertyChangeListener)
 	 */
-	public void addPropertyChangeListener(PropertyChangeListener listener)
+	void addPropertyChangeListener(PropertyChangeListener listener)
 	{
 		_changeSupport.addPropertyChangeListener(listener);
 	}
@@ -8030,7 +8009,7 @@ public class Graph extends EventSource
 	 * @param listener
 	 * @see java.beans.PropertyChangeSupport#addPropertyChangeListener(java.lang.String, java.beans.PropertyChangeListener)
 	 */
-	public void addPropertyChangeListener(String propertyName,
+	void addPropertyChangeListener(String propertyName,
 			PropertyChangeListener listener)
 	{
 		_changeSupport.addPropertyChangeListener(propertyName, listener);
@@ -8040,7 +8019,7 @@ public class Graph extends EventSource
 	 * @param listener
 	 * @see java.beans.PropertyChangeSupport#removePropertyChangeListener(java.beans.PropertyChangeListener)
 	 */
-	public void removePropertyChangeListener(PropertyChangeListener listener)
+	void removePropertyChangeListener(PropertyChangeListener listener)
 	{
 		_changeSupport.removePropertyChangeListener(listener);
 	}
@@ -8050,7 +8029,7 @@ public class Graph extends EventSource
 	 * @param listener
 	 * @see java.beans.PropertyChangeSupport#removePropertyChangeListener(java.lang.String, java.beans.PropertyChangeListener)
 	 */
-	public void removePropertyChangeListener(String propertyName,
+	void removePropertyChangeListener(String propertyName,
 			PropertyChangeListener listener)
 	{
 		_changeSupport.removePropertyChangeListener(propertyName, listener);
@@ -8059,7 +8038,7 @@ public class Graph extends EventSource
 	/**
 	 * Prints the version number on the console. 
 	 */
-	public static void main(String[] args)
+	static void main(String[] args)
 	{
 		System.out.println("Graph version \"" + VERSION + "\"");
 	}

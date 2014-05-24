@@ -12,17 +12,17 @@ part of graph.io;
  * dynamically at load time and used implicitely via Codec
  * and the CodecRegistry.
  */
-public class GenericChangeCodec extends ObjectCodec
+class GenericChangeCodec extends ObjectCodec
 {
 	/**
 	 * 
 	 */
-	protected String _fieldname;
+	String _fieldname;
 
 	/**
 	 * Constructs a new model codec.
 	 */
-	public GenericChangeCodec(Object template, String fieldname)
+	GenericChangeCodec(Object template, String fieldname)
 	{
 		this(template, new String[] { "model", "previous" },
 				new String[] { "cell" }, null, fieldname);
@@ -31,7 +31,7 @@ public class GenericChangeCodec extends ObjectCodec
 	/**
 	 * Constructs a new model codec for the given arguments.
 	 */
-	public GenericChangeCodec(Object template, String[] exclude,
+	GenericChangeCodec(Object template, String[] exclude,
 			String[] idrefs, Map<String, String> mapping, String fieldname)
 	{
 		super(template, exclude, idrefs, mapping);
@@ -43,7 +43,7 @@ public class GenericChangeCodec extends ObjectCodec
 	 * @see graph.io.ObjectCodec#afterDecode(graph.io.Codec, org.w3c.dom.Node, java.lang.Object)
 	 */
 	@Override
-	public Object afterDecode(Codec dec, Node node, Object obj)
+	Object afterDecode(Codec dec, Node node, Object obj)
 	{
 		Object cell = _getFieldValue(obj, "cell");
 

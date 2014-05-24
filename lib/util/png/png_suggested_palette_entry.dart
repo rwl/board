@@ -43,7 +43,7 @@ part of graph.util.png;
  *
  * @version $Id: PngSuggestedPaletteEntry.java,v 1.1 2012/11/15 13:26:39 gaudenz Exp $
  */
-public class PngSuggestedPaletteEntry implements Serializable
+class PngSuggestedPaletteEntry implements Serializable
 {
 
 	/**
@@ -52,24 +52,24 @@ public class PngSuggestedPaletteEntry implements Serializable
 	private static final long serialVersionUID = -8711686482529372447L;
 
 	/** The name of the entry. */
-	public String name;
+	String name;
 
 	/** The depth of the color samples. */
-	public int sampleDepth;
+	int sampleDepth;
 
 	/** The red color value of the entry. */
-	public int red;
+	int red;
 
 	/** The green color value of the entry. */
-	public int green;
+	int green;
 
 	/** The blue color value of the entry. */
-	public int blue;
+	int blue;
 
 	/** The alpha opacity value of the entry. */
-	public int alpha;
+	int alpha;
 
 	/** The probable frequency of the color in the image. */
-	public int frequency;
+	int frequency;
 
 }

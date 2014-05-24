@@ -1,19 +1,19 @@
 part of graph.model;
 
-//import graph.model.IGraphModel.AtomicGraphModelChange;
+import '../model/model.dart' show AtomicGraphModelChange;
 
-public class RootChange extends AtomicGraphModelChange
+class RootChange extends AtomicGraphModelChange
 {
 
 	/**
 	 * Holds the new and previous root cell.
 	 */
-	protected Object root, previous;
+	Object root, previous;
 
 	/**
 	 * 
 	 */
-	public RootChange()
+	RootChange()
 	{
 		this(null, null);
 	}
@@ -21,7 +21,7 @@ public class RootChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	public RootChange(GraphModel model, Object root)
+	RootChange(GraphModel model, Object root)
 	{
 		super(model);
 		this.root = root;
@@ -31,7 +31,7 @@ public class RootChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	public void setRoot(Object value)
+	void setRoot(Object value)
 	{
 		root = value;
 	}
@@ -39,7 +39,7 @@ public class RootChange extends AtomicGraphModelChange
 	/**
 	 * @return the root
 	 */
-	public Object getRoot()
+	Object getRoot()
 	{
 		return root;
 	}
@@ -47,7 +47,7 @@ public class RootChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	public void setPrevious(Object value)
+	void setPrevious(Object value)
 	{
 		previous = value;
 	}
@@ -55,7 +55,7 @@ public class RootChange extends AtomicGraphModelChange
 	/**
 	 * @return the previous
 	 */
-	public Object getPrevious()
+	Object getPrevious()
 	{
 		return previous;
 	}
@@ -63,7 +63,7 @@ public class RootChange extends AtomicGraphModelChange
 	/**
 	 * Changes the root of the model.
 	 */
-	public void execute()
+	void execute()
 	{
 		root = previous;
 		previous = ((GraphModel) model)._rootChanged(previous);

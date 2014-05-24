@@ -3,7 +3,7 @@
  */
 part of graph.swing.handler;
 
-//import graph.swing.GraphComponent;
+import '../../swing/swing.dart' show GraphComponent;
 
 //import java.awt.Color;
 //import java.awt.event.MouseEvent;
@@ -13,7 +13,7 @@ part of graph.swing.handler;
 /**
  * Event handler that highlights cells. Inherits from CellMarker.
  */
-public class CellTracker extends CellMarker implements MouseListener,
+class CellTracker extends CellMarker implements MouseListener,
 		MouseMotionListener
 {
 
@@ -25,7 +25,7 @@ public class CellTracker extends CellMarker implements MouseListener,
 	/**
 	 * Constructs an event handler that highlights cells.
 	 */
-	public CellTracker(GraphComponent graphComponent, Color color)
+	CellTracker(GraphComponent graphComponent, Color color)
 	{
 		super(graphComponent, color);
 
@@ -36,7 +36,7 @@ public class CellTracker extends CellMarker implements MouseListener,
 	/**
 	 * 
 	 */
-	public void destroy()
+	void destroy()
 	{
 		_graphComponent.getGraphControl().removeMouseListener(this);
 		_graphComponent.getGraphControl().removeMouseMotionListener(this);
@@ -46,7 +46,7 @@ public class CellTracker extends CellMarker implements MouseListener,
 	 * (non-Javadoc)
 	 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
 	 */
-	public void mouseClicked(MouseEvent e)
+	void mouseClicked(MouseEvent e)
 	{
 		// empty
 	}
@@ -55,7 +55,7 @@ public class CellTracker extends CellMarker implements MouseListener,
 	 * (non-Javadoc)
 	 * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
 	 */
-	public void mouseEntered(MouseEvent e)
+	void mouseEntered(MouseEvent e)
 	{
 		// empty
 	}
@@ -64,7 +64,7 @@ public class CellTracker extends CellMarker implements MouseListener,
 	 * (non-Javadoc)
 	 * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
 	 */
-	public void mouseExited(MouseEvent e)
+	void mouseExited(MouseEvent e)
 	{
 		// empty
 	}
@@ -73,7 +73,7 @@ public class CellTracker extends CellMarker implements MouseListener,
 	 * (non-Javadoc)
 	 * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
 	 */
-	public void mousePressed(MouseEvent e)
+	void mousePressed(MouseEvent e)
 	{
 		// empty
 	}
@@ -82,7 +82,7 @@ public class CellTracker extends CellMarker implements MouseListener,
 	 * (non-Javadoc)
 	 * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
 	 */
-	public void mouseReleased(MouseEvent e)
+	void mouseReleased(MouseEvent e)
 	{
 		reset();
 	}
@@ -91,7 +91,7 @@ public class CellTracker extends CellMarker implements MouseListener,
 	 * (non-Javadoc)
 	 * @see java.awt.event.MouseMotionListener#mouseDragged(java.awt.event.MouseEvent)
 	 */
-	public void mouseDragged(MouseEvent e)
+	void mouseDragged(MouseEvent e)
 	{
 		// empty
 	}
@@ -100,7 +100,7 @@ public class CellTracker extends CellMarker implements MouseListener,
 	 * (non-Javadoc)
 	 * @see java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent)
 	 */
-	public void mouseMoved(MouseEvent e)
+	void mouseMoved(MouseEvent e)
 	{
 		process(e);
 	}

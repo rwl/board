@@ -16,13 +16,13 @@ part of graph.analysis;
  * <code>alpha(m,n) = min{i &gt;= 1 | A(i, floor(m/n)) &gt; log n} for m &gt;= n &gt;= 1</code>
  * Which yields almost constant time for each individual operation.
  */
-public class UnionFind
+class UnionFind
 {
 
 	/**
 	 * Maps from elements to nodes
 	 */
-	protected Map<Object, _UnionFindNode> _nodes = new Hashtable<Object, _UnionFindNode>();
+	Map<Object, _UnionFindNode> _nodes = new Hashtable<Object, _UnionFindNode>();
 
 	/**
 	 * Constructs a union find structure and initializes it with the specified
@@ -30,7 +30,7 @@ public class UnionFind
 	 * 
 	 * @param elements
 	 */
-	public UnionFind(Object[] elements)
+	UnionFind(Object[] elements)
 	{
 		for (int i = 0; i < elements.length; i++)
 		{
@@ -41,7 +41,7 @@ public class UnionFind
 	/**
 	 * Returns the node that represents element.
 	 */
-	public _UnionFindNode getNode(Object element)
+	_UnionFindNode getNode(Object element)
 	{
 		return _nodes.get(element);
 	}
@@ -50,7 +50,7 @@ public class UnionFind
 	 * Returns the set that contains <code>node</code>. This implementation
 	 * provides path compression by halving.
 	 */
-	public _UnionFindNode find(_UnionFindNode unionFindNode)
+	_UnionFindNode find(_UnionFindNode unionFindNode)
 	{
 		while (unionFindNode.getParent().getParent() != unionFindNode.getParent())
 		{
@@ -66,7 +66,7 @@ public class UnionFind
 	 * Unifies the sets <code>a</code> and <code>b</code> in constant time
 	 * using a union by rank on the tree size.
 	 */
-	public void union(_UnionFindNode a, _UnionFindNode b)
+	void union(_UnionFindNode a, _UnionFindNode b)
 	{
 		_UnionFindNode set1 = find(a);
 		_UnionFindNode set2 = find(b);
@@ -97,7 +97,7 @@ public class UnionFind
 	 * 
 	 * @see #getNode(Object)
 	 */
-	public boolean differ(Object a, Object b)
+	bool differ(Object a, Object b)
 	{
 		_UnionFindNode set1 = find(getNode(a));
 		_UnionFindNode set2 = find(getNode(b));
@@ -109,7 +109,7 @@ public class UnionFind
 /**
  * A class that defines the identity of a set.
  */
-public class _UnionFindNode
+class _UnionFindNode
 {
 
   /**

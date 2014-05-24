@@ -1,21 +1,21 @@
 part of graph.util.png;
 
-public class RGB extends PngEncodeParam
+class RGB extends PngEncodeParam
 {
 
 	/** Constructs an instance of <code>PNGEncodeParam.RGB</code>. */
-	public RGB()
+	RGB()
 	{
 	}
 
 	// bKGD chunk
 
-	private boolean backgroundSet = false;
+	private bool backgroundSet = false;
 
 	/**
 	 * Suppresses the 'bKGD' chunk from being output.
 	 */
-	public void unsetBackground()
+	void unsetBackground()
 	{
 		backgroundSet = false;
 	}
@@ -23,7 +23,7 @@ public class RGB extends PngEncodeParam
 	/**
 	 * Returns true if a 'bKGD' chunk will be output.
 	 */
-	public boolean isBackgroundSet()
+	bool isBackgroundSet()
 	{
 		return backgroundSet;
 	}
@@ -32,7 +32,7 @@ public class RGB extends PngEncodeParam
 	 * Sets the desired bit depth for an RGB image.  The bit
 	 * depth must be 8 or 16.
 	 */
-	public void setBitDepth(int bitDepth)
+	void setBitDepth(int bitDepth)
 	{
 		if (bitDepth != 8 && bitDepth != 16)
 		{
@@ -52,7 +52,7 @@ public class RGB extends PngEncodeParam
 	 *
 	 * <p> The 'bKGD' chunk will encode this information.
 	 */
-	public void setBackgroundRGB(int[] rgb)
+	void setBackgroundRGB(int[] rgb)
 	{
 		if (rgb.length != 3)
 		{
@@ -70,7 +70,7 @@ public class RGB extends PngEncodeParam
 	 *
 	 * @throws IllegalStateException if the background color is not set.
 	 */
-	public int[] getBackgroundRGB()
+	int[] getBackgroundRGB()
 	{
 		if (!backgroundSet)
 		{
@@ -91,7 +91,7 @@ public class RGB extends PngEncodeParam
 	 *
 	 * <p> The 'tRNS' chunk will encode this information.
 	 */
-	public void setTransparentRGB(int[] transparentRGB)
+	void setTransparentRGB(int[] transparentRGB)
 	{
 		transparency = (transparentRGB.clone());
 		transparencySet = true;
@@ -106,7 +106,7 @@ public class RGB extends PngEncodeParam
 	 *
 	 * @throws IllegalStateException if the transparent color is not set.
 	 */
-	public int[] getTransparentRGB()
+	int[] getTransparentRGB()
 	{
 		if (!transparencySet)
 		{

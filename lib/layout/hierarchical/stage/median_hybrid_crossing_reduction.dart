@@ -11,10 +11,10 @@
 
 part of graph.layout.hierarchical.stage;
 
-//import graph.layout.hierarchical.HierarchicalLayout;
-//import graph.layout.hierarchical.model.GraphAbstractHierarchyCell;
-//import graph.layout.hierarchical.model.GraphHierarchyModel;
-//import graph.layout.hierarchical.model.GraphHierarchyRank;
+import '../../../layout/hierarchical/hierarchical.dart' show HierarchicalLayout;
+import '../../../layout/hierarchical/model/model.dart' show GraphAbstractHierarchyCell;
+import '../../../layout/hierarchical/model/model.dart' show GraphHierarchyModel;
+import '../../../layout/hierarchical/model/model.dart' show GraphHierarchyRank;
 
 //import java.util.ArrayList;
 //import java.util.Arrays;
@@ -27,39 +27,39 @@ part of graph.layout.hierarchical.stage;
 /**
  * Performs a vertex ordering within ranks as described by Gansner et al 1993
  */
-public class MedianHybridCrossingReduction implements
+class MedianHybridCrossingReduction implements
 		HierarchicalLayoutStage/*, JGraphLayout.Stoppable*/
 {
 	/**
 	 * Reference to the enclosing layout algorithm
 	 */
-	protected HierarchicalLayout _layout;
+	HierarchicalLayout _layout;
 
 	/**
 	 * The maximum number of iterations to perform whilst reducing edge
 	 * crossings
 	 */
-	protected int _maxIterations = 24;
+	int _maxIterations = 24;
 
 	/**
 	 * Stores each rank as a collection of cells in the best order found for
 	 * each layer so far
 	 */
-	protected GraphAbstractHierarchyCell[][] _nestedBestRanks = null;
+	GraphAbstractHierarchyCell[][] _nestedBestRanks = null;
 
 	/**
 	 * The total number of crossings found in the best configuration so far
 	 */
-	protected int _currentBestCrossings = 0;
+	int _currentBestCrossings = 0;
 
-	protected int _iterationsWithoutImprovement = 0;
+	int _iterationsWithoutImprovement = 0;
 
-	protected int _maxNoImprovementIterations = 2;
+	int _maxNoImprovementIterations = 2;
 
 	/**
 	 * Constructor that has the roots specified
 	 */
-	public MedianHybridCrossingReduction(HierarchicalLayout layout)
+	MedianHybridCrossingReduction(HierarchicalLayout layout)
 	{
 		this._layout = layout;
 	}
@@ -68,7 +68,7 @@ public class MedianHybridCrossingReduction implements
 	 * Performs a vertex ordering within ranks as described by Gansner et al
 	 * 1993
 	 */
-	public void execute(Object parent)
+	void execute(Object parent)
 	{
 		GraphHierarchyModel model = _layout.getModel();
 
@@ -196,7 +196,7 @@ public class MedianHybridCrossingReduction implements
 	 *            the internal hierarchy model of the graph
 	 * @return the number of edges crossings with the rank beneath
 	 */
-	protected int _calculateRankCrossing(int i, GraphHierarchyModel model)
+	int _calculateRankCrossing(int i, GraphHierarchyModel model)
 	{
 		int totalCrossings = 0;
 		GraphHierarchyRank rank = model.ranks.get(new Integer(i));
@@ -279,7 +279,7 @@ public class MedianHybridCrossingReduction implements
 	 */
 	private void _transpose(int mainLoopIteration, GraphHierarchyModel model)
 	{
-		boolean improved = true;
+		bool improved = true;
 
 		// Track the number of iterations in case of looping
 		int count = 0;
@@ -290,7 +290,7 @@ public class MedianHybridCrossingReduction implements
 			// On certain iterations allow allow swapping of cell pairs with
 			// equal edge crossings switched or not switched. This help to
 			// nudge a stuck layout into a lower crossing total.
-			boolean nudge = mainLoopIteration % 2 == 1 && count % 2 == 1;
+			bool nudge = mainLoopIteration % 2 == 1 && count % 2 == 1;
 			improved = false;
 
 			for (int i = 0; i < model.ranks.size(); i++)
@@ -462,7 +462,7 @@ public class MedianHybridCrossingReduction implements
 	private void _weightedMedian(int iteration, GraphHierarchyModel model)
 	{
 		// Reverse sweep direction each time through this method
-		boolean downwardSweep = (iteration % 2 == 0);
+		bool downwardSweep = (iteration % 2 == 0);
 
 		if (downwardSweep)
 		{
@@ -489,7 +489,7 @@ public class MedianHybridCrossingReduction implements
 	 * @param downwardSweep
 	 *            whether or not this is a downward sweep through the graph
 	 */
-	private void _medianRank(int rankValue, boolean downwardSweep)
+	private void _medianRank(int rankValue, bool downwardSweep)
 	{
 		int numCellsForRank = _nestedBestRanks[rankValue].length;
 		ArrayList<_MedianCellSorter> medianValues = new ArrayList<_MedianCellSorter>(numCellsForRank);

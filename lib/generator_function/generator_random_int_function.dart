@@ -1,24 +1,24 @@
 part of graph.generatorfunction;
 
-//import graph.view.CellState;
+import '../view/view.dart' show CellState;
 
 /**
  * @author Mate
  * A generator random cost function
  * It will generate random integer edge weights in the range of (<b>minWeight</b>, <b>maxWeight</b>) and rounds the values to <b>roundToDecimals</b>
  */
-public class GeneratorRandomIntFunction extends GeneratorFunction
+class GeneratorRandomIntFunction extends GeneratorFunction
 {
 	private double _maxWeight = 10;
 
 	private double _minWeight = 0;
 
-	public GeneratorRandomIntFunction(double minWeight, double maxWeight)
+	GeneratorRandomIntFunction(double minWeight, double maxWeight)
 	{
 		setWeightRange(minWeight, maxWeight);
 	};
 
-	public double getCost(CellState state)
+	double getCost(CellState state)
 	{
 		//assumed future parameters
 		//		Graph graph = state.getView().getGraph();
@@ -33,18 +33,18 @@ public class GeneratorRandomIntFunction extends GeneratorFunction
 		return currValue;
 	};
 
-	public double getMaxWeight()
+	double getMaxWeight()
 	{
 		return _maxWeight;
 	};
 
-	public void setWeightRange(double minWeight, double maxWeight)
+	void setWeightRange(double minWeight, double maxWeight)
 	{
 		this._maxWeight = Math.round(Math.max(minWeight, maxWeight));
 		this._minWeight = Math.round(Math.min(minWeight, maxWeight));
 	};
 
-	public double getMinWeight()
+	double getMinWeight()
 	{
 		return _minWeight;
 	};

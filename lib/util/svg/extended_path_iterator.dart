@@ -113,7 +113,7 @@ public interface ExtendedPathIterator
 
 	int getWindingRule();
 
-	boolean isDone();
+	bool isDone();
 
 	void next();
 }

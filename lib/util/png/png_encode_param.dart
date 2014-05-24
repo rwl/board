@@ -71,31 +71,31 @@ public abstract class PngEncodeParam
 {
 
 	/** Constant for use with the sRGB chunk. */
-	public static final int INTENT_PERCEPTUAL = 0;
+	static final int INTENT_PERCEPTUAL = 0;
 
 	/** Constant for use with the sRGB chunk. */
-	public static final int INTENT_RELATIVE = 1;
+	static final int INTENT_RELATIVE = 1;
 
 	/** Constant for use with the sRGB chunk. */
-	public static final int INTENT_SATURATION = 2;
+	static final int INTENT_SATURATION = 2;
 
 	/** Constant for use with the sRGB chunk. */
-	public static final int INTENT_ABSOLUTE = 3;
+	static final int INTENT_ABSOLUTE = 3;
 
 	/** Constant for use in filtering. */
-	public static final int PNG_FILTER_NONE = 0;
+	static final int PNG_FILTER_NONE = 0;
 
 	/** Constant for use in filtering. */
-	public static final int PNG_FILTER_SUB = 1;
+	static final int PNG_FILTER_SUB = 1;
 
 	/** Constant for use in filtering. */
-	public static final int PNG_FILTER_UP = 2;
+	static final int PNG_FILTER_UP = 2;
 
 	/** Constant for use in filtering. */
-	public static final int PNG_FILTER_AVERAGE = 3;
+	static final int PNG_FILTER_AVERAGE = 3;
 
 	/** Constant for use in filtering. */
-	public static final int PNG_FILTER_PAETH = 4;
+	static final int PNG_FILTER_PAETH = 4;
 
 	/**
 	 * Returns an instance of <code>PNGEncodeParam.Palette</code>,
@@ -115,7 +115,7 @@ public abstract class PngEncodeParam
 	 * encoder, as it only performs a very superficial analysis of
 	 * the image structure.
 	 */
-	public static PngEncodeParam getDefaultEncodeParam(RenderedImage im)
+	static PngEncodeParam getDefaultEncodeParam(RenderedImage im)
 	{
 		ColorModel colorModel = im.getColorModel();
 		if (colorModel instanceof IndexColorModel)
@@ -136,14 +136,14 @@ public abstract class PngEncodeParam
 		}
 	}
 
-	protected int _bitDepth;
+	int _bitDepth;
 
-	protected boolean _bitDepthSet = false;
+	bool _bitDepthSet = false;
 
 	/**
 	 * Sets the desired bit depth of an image.
 	 */
-	public abstract void setBitDepth(int bitDepth);
+	abstract void setBitDepth(int bitDepth);
 
 	/**
 	 * Returns the desired bit depth for a grayscale image.
@@ -153,7 +153,7 @@ public abstract class PngEncodeParam
 	 *
 	 * @throws IllegalStateException if the bit depth is not set.
 	 */
-	public int getBitDepth()
+	int getBitDepth()
 	{
 		if (!_bitDepthSet)
 		{
@@ -168,17 +168,17 @@ public abstract class PngEncodeParam
 	 * image bit depth, rounded up to the next power of 2 between 1
 	 * and 16.
 	 */
-	public void unsetBitDepth()
+	void unsetBitDepth()
 	{
 		_bitDepthSet = false;
 	}
 
-	private boolean _useInterlacing = false;
+	private bool _useInterlacing = false;
 
 	/**
 	 * Turns Adam7 interlacing on or off.
 	 */
-	public void setInterlacing(boolean useInterlacing)
+	void setInterlacing(bool useInterlacing)
 	{
 		this._useInterlacing = useInterlacing;
 	}
@@ -186,7 +186,7 @@ public abstract class PngEncodeParam
 	/**
 	 * Returns <code>true</code> if Adam7 interlacing will be used.
 	 */
-	public boolean getInterlacing()
+	bool getInterlacing()
 	{
 		return _useInterlacing;
 	}
@@ -210,7 +210,7 @@ public abstract class PngEncodeParam
 	 * defines this method to throw a <code>RuntimeException</code>;
 	 * accordingly, subclasses must provide their own implementations.
 	 */
-	public void unsetBackground()
+	void unsetBackground()
 	{
 		throw new RuntimeException("PNGEncodeParam23");
 	}
@@ -221,7 +221,7 @@ public abstract class PngEncodeParam
 	 * defines this method to throw a <code>RuntimeException</code>;
 	 * accordingly, subclasses must provide their own implementations.
 	 */
-	public boolean isBackgroundSet()
+	bool isBackgroundSet()
 	{
 		throw new RuntimeException("PNGEncodeParam24");
 	}
@@ -230,7 +230,7 @@ public abstract class PngEncodeParam
 
 	private float[] _chromaticity = null;
 
-	private boolean _chromaticitySet = false;
+	private bool _chromaticitySet = false;
 
 	/**
 	 * Sets the white point and primary chromaticities in CIE (x, y)
@@ -243,7 +243,7 @@ public abstract class PngEncodeParam
 	 *
 	 * <p> The 'cHRM' chunk will encode this information.
 	 */
-	public void setChromaticity(float[] chromaticity)
+	void setChromaticity(float[] chromaticity)
 	{
 		if (chromaticity.length != 8)
 		{
@@ -256,7 +256,7 @@ public abstract class PngEncodeParam
 	/**
 	 * A convenience method that calls the array version.
 	 */
-	public void setChromaticity(float whitePointX, float whitePointY,
+	void setChromaticity(float whitePointX, float whitePointY,
 			float redX, float redY, float greenX, float greenY, float blueX,
 			float blueY)
 	{
@@ -284,7 +284,7 @@ public abstract class PngEncodeParam
 	 *
 	 * @throws IllegalStateException if the chromaticity is not set.
 	 */
-	public float[] getChromaticity()
+	float[] getChromaticity()
 	{
 		if (!_chromaticitySet)
 		{
@@ -296,7 +296,7 @@ public abstract class PngEncodeParam
 	/**
 	 * Suppresses the 'cHRM' chunk from being output.
 	 */
-	public void unsetChromaticity()
+	void unsetChromaticity()
 	{
 		_chromaticity = null;
 		_chromaticitySet = false;
@@ -305,7 +305,7 @@ public abstract class PngEncodeParam
 	/**
 	 * Returns true if a 'cHRM' chunk will be output.
 	 */
-	public boolean isChromaticitySet()
+	bool isChromaticitySet()
 	{
 		return _chromaticitySet;
 	}
@@ -314,14 +314,14 @@ public abstract class PngEncodeParam
 
 	private float _gamma;
 
-	private boolean _gammaSet = false;
+	private bool _gammaSet = false;
 
 	/**
 	 * Sets the file gamma value for the image.
 	 *
 	 * <p> The 'gAMA' chunk will encode this information.
 	 */
-	public void setGamma(float gamma)
+	void setGamma(float gamma)
 	{
 		this._gamma = gamma;
 		_gammaSet = true;
@@ -335,7 +335,7 @@ public abstract class PngEncodeParam
 	 *
 	 * @throws IllegalStateException if the gamma is not set.
 	 */
-	public float getGamma()
+	float getGamma()
 	{
 		if (!_gammaSet)
 		{
@@ -347,7 +347,7 @@ public abstract class PngEncodeParam
 	/**
 	 * Suppresses the 'gAMA' chunk from being output.
 	 */
-	public void unsetGamma()
+	void unsetGamma()
 	{
 		_gammaSet = false;
 	}
@@ -355,7 +355,7 @@ public abstract class PngEncodeParam
 	/**
 	 * Returns true if a 'gAMA' chunk will be output.
 	 */
-	public boolean isGammaSet()
+	bool isGammaSet()
 	{
 		return _gammaSet;
 	}
@@ -364,7 +364,7 @@ public abstract class PngEncodeParam
 
 	private int[] _paletteHistogram = null;
 
-	private boolean _paletteHistogramSet = false;
+	private bool _paletteHistogramSet = false;
 
 	/**
 	 * Sets the palette histogram to be stored with this image.
@@ -373,7 +373,7 @@ public abstract class PngEncodeParam
 	 *
 	 * <p> The 'hIST' chunk will encode this information.
 	 */
-	public void setPaletteHistogram(int[] paletteHistogram)
+	void setPaletteHistogram(int[] paletteHistogram)
 	{
 		this._paletteHistogram = (paletteHistogram.clone());
 		_paletteHistogramSet = true;
@@ -387,7 +387,7 @@ public abstract class PngEncodeParam
 	 *
 	 * @throws IllegalStateException if the histogram is not set.
 	 */
-	public int[] getPaletteHistogram()
+	int[] getPaletteHistogram()
 	{
 		if (!_paletteHistogramSet)
 		{
@@ -399,7 +399,7 @@ public abstract class PngEncodeParam
 	/**
 	 * Suppresses the 'hIST' chunk from being output.
 	 */
-	public void unsetPaletteHistogram()
+	void unsetPaletteHistogram()
 	{
 		_paletteHistogram = null;
 		_paletteHistogramSet = false;
@@ -408,7 +408,7 @@ public abstract class PngEncodeParam
 	/**
 	 * Returns true if a 'hIST' chunk will be output.
 	 */
-	public boolean isPaletteHistogramSet()
+	bool isPaletteHistogramSet()
 	{
 		return _paletteHistogramSet;
 	}
@@ -417,7 +417,7 @@ public abstract class PngEncodeParam
 
 	private byte[] _ICCProfileData = null;
 
-	private boolean _ICCProfileDataSet = false;
+	private bool _ICCProfileDataSet = false;
 
 	/**
 	 * Sets the ICC profile data to be stored with this image.
@@ -425,7 +425,7 @@ public abstract class PngEncodeParam
 	 *
 	 * <p> The 'iCCP' chunk will encode this information.
 	 */
-	public void setICCProfileData(byte[] ICCProfileData)
+	void setICCProfileData(byte[] ICCProfileData)
 	{
 		this._ICCProfileData = (ICCProfileData.clone());
 		_ICCProfileDataSet = true;
@@ -439,7 +439,7 @@ public abstract class PngEncodeParam
 	 *
 	 * @throws IllegalStateException if the ICC profile is not set.
 	 */
-	public byte[] getICCProfileData()
+	byte[] getICCProfileData()
 	{
 		if (!_ICCProfileDataSet)
 		{
@@ -451,7 +451,7 @@ public abstract class PngEncodeParam
 	/**
 	 * Suppresses the 'iCCP' chunk from being output.
 	 */
-	public void unsetICCProfileData()
+	void unsetICCProfileData()
 	{
 		_ICCProfileData = null;
 		_ICCProfileDataSet = false;
@@ -460,7 +460,7 @@ public abstract class PngEncodeParam
 	/**
 	 * Returns true if a 'iCCP' chunk will be output.
 	 */
-	public boolean isICCProfileDataSet()
+	bool isICCProfileDataSet()
 	{
 		return _ICCProfileDataSet;
 	}
@@ -469,7 +469,7 @@ public abstract class PngEncodeParam
 
 	private int[] _physicalDimension = null;
 
-	private boolean _physicalDimensionSet = false;
+	private bool _physicalDimensionSet = false;
 
 	/**
 	 * Sets the physical dimension information to be stored with this
@@ -480,7 +480,7 @@ public abstract class PngEncodeParam
 	 *
 	 * <p> The 'pHYS' chunk will encode this information.
 	 */
-	public void setPhysicalDimension(int[] physicalDimension)
+	void setPhysicalDimension(int[] physicalDimension)
 	{
 		this._physicalDimension = (physicalDimension.clone());
 		_physicalDimensionSet = true;
@@ -489,7 +489,7 @@ public abstract class PngEncodeParam
 	/**
 	 * A convenience method that calls the array version.
 	 */
-	public void setPhysicalDimension(int xPixelsPerUnit, int yPixelsPerUnit,
+	void setPhysicalDimension(int xPixelsPerUnit, int yPixelsPerUnit,
 			int unitSpecifier)
 	{
 		int[] pd = new int[3];
@@ -511,7 +511,7 @@ public abstract class PngEncodeParam
 	 * @throws IllegalStateException if the physical dimension information
 	 *        is not set.
 	 */
-	public int[] getPhysicalDimension()
+	int[] getPhysicalDimension()
 	{
 		if (!_physicalDimensionSet)
 		{
@@ -523,7 +523,7 @@ public abstract class PngEncodeParam
 	/**
 	 * Suppresses the 'pHYS' chunk from being output.
 	 */
-	public void unsetPhysicalDimension()
+	void unsetPhysicalDimension()
 	{
 		_physicalDimension = null;
 		_physicalDimensionSet = false;
@@ -532,7 +532,7 @@ public abstract class PngEncodeParam
 	/**
 	 * Returns true if a 'pHYS' chunk will be output.
 	 */
-	public boolean isPhysicalDimensionSet()
+	bool isPhysicalDimensionSet()
 	{
 		return _physicalDimensionSet;
 	}
@@ -541,7 +541,7 @@ public abstract class PngEncodeParam
 
 	private PngSuggestedPaletteEntry[] _suggestedPalette = null;
 
-	private boolean _suggestedPaletteSet = false;
+	private bool _suggestedPaletteSet = false;
 
 	/**
 	 * Sets the suggested palette information to be stored with this
@@ -550,7 +550,7 @@ public abstract class PngEncodeParam
 	 *
 	 * <p> The 'sPLT' chunk will encode this information.
 	 */
-	public void setSuggestedPalette(PngSuggestedPaletteEntry[] palette)
+	void setSuggestedPalette(PngSuggestedPaletteEntry[] palette)
 	{
 		_suggestedPalette = (palette.clone());
 		_suggestedPaletteSet = true;
@@ -579,7 +579,7 @@ public abstract class PngEncodeParam
 	/**
 	 * Suppresses the 'sPLT' chunk from being output.
 	 */
-	public void unsetSuggestedPalette()
+	void unsetSuggestedPalette()
 	{
 		_suggestedPalette = null;
 		_suggestedPaletteSet = false;
@@ -588,7 +588,7 @@ public abstract class PngEncodeParam
 	/**
 	 * Returns true if a 'sPLT' chunk will be output.
 	 */
-	public boolean isSuggestedPaletteSet()
+	bool isSuggestedPaletteSet()
 	{
 		return _suggestedPaletteSet;
 	}
@@ -597,7 +597,7 @@ public abstract class PngEncodeParam
 
 	private int[] _significantBits = null;
 
-	private boolean _significantBitsSet = false;
+	private bool _significantBitsSet = false;
 
 	/**
 	 * Sets the number of significant bits for each band of the image.
@@ -609,7 +609,7 @@ public abstract class PngEncodeParam
 	 *
 	 * <p> The 'sBIT' chunk will encode this information.
 	 */
-	public void setSignificantBits(int[] significantBits)
+	void setSignificantBits(int[] significantBits)
 	{
 		this._significantBits = (significantBits.clone());
 		_significantBitsSet = true;
@@ -625,7 +625,7 @@ public abstract class PngEncodeParam
 	 * @throws IllegalStateException if the significant bits values are
 	 *        not set.
 	 */
-	public int[] getSignificantBits()
+	int[] getSignificantBits()
 	{
 		if (!_significantBitsSet)
 		{
@@ -637,7 +637,7 @@ public abstract class PngEncodeParam
 	/**
 	 * Suppresses the 'sBIT' chunk from being output.
 	 */
-	public void unsetSignificantBits()
+	void unsetSignificantBits()
 	{
 		_significantBits = null;
 		_significantBitsSet = false;
@@ -646,7 +646,7 @@ public abstract class PngEncodeParam
 	/**
 	 * Returns true if an 'sBIT' chunk will be output.
 	 */
-	public boolean isSignificantBitsSet()
+	bool isSignificantBitsSet()
 	{
 		return _significantBitsSet;
 	}
@@ -655,7 +655,7 @@ public abstract class PngEncodeParam
 
 	private int _SRGBIntent;
 
-	private boolean _SRGBIntentSet = false;
+	private bool _SRGBIntentSet = false;
 
 	/**
 	 * Sets the sRGB rendering intent to be stored with this image.
@@ -665,7 +665,7 @@ public abstract class PngEncodeParam
 	 *
 	 * <p> The 'sRGB' chunk will encode this information.
 	 */
-	public void setSRGBIntent(int SRGBIntent)
+	void setSRGBIntent(int SRGBIntent)
 	{
 		this._SRGBIntent = SRGBIntent;
 		_SRGBIntentSet = true;
@@ -679,7 +679,7 @@ public abstract class PngEncodeParam
 	 *
 	 * @throws IllegalStateException if the sRGB intent is not set.
 	 */
-	public int getSRGBIntent()
+	int getSRGBIntent()
 	{
 		if (!_SRGBIntentSet)
 		{
@@ -691,7 +691,7 @@ public abstract class PngEncodeParam
 	/**
 	 * Suppresses the 'sRGB' chunk from being output.
 	 */
-	public void unsetSRGBIntent()
+	void unsetSRGBIntent()
 	{
 		_SRGBIntentSet = false;
 	}
@@ -699,7 +699,7 @@ public abstract class PngEncodeParam
 	/**
 	 * Returns true if an 'sRGB' chunk will be output.
 	 */
-	public boolean isSRGBIntentSet()
+	bool isSRGBIntentSet()
 	{
 		return _SRGBIntentSet;
 	}
@@ -708,7 +708,7 @@ public abstract class PngEncodeParam
 
 	private String[] _text = null;
 
-	private boolean _textSet = false;
+	private bool _textSet = false;
 
 	/**
 	 * Sets the textual data to be stored in uncompressed form with this
@@ -717,7 +717,7 @@ public abstract class PngEncodeParam
 	 *
 	 * <p> The 'tEXt' chunk will encode this information.
 	 */
-	public void setText(String[] text)
+	void setText(String[] text)
 	{
 		this._text = text;
 		_textSet = true;
@@ -732,7 +732,7 @@ public abstract class PngEncodeParam
 	 *
 	 * @throws IllegalStateException if the text strings are not set.
 	 */
-	public String[] getText()
+	String[] getText()
 	{
 		if (!_textSet)
 		{
@@ -744,7 +744,7 @@ public abstract class PngEncodeParam
 	/**
 	 * Suppresses the 'tEXt' chunk from being output.
 	 */
-	public void unsetText()
+	void unsetText()
 	{
 		_text = null;
 		_textSet = false;
@@ -753,7 +753,7 @@ public abstract class PngEncodeParam
 	/**
 	 * Returns true if a 'tEXt' chunk will be output.
 	 */
-	public boolean isTextSet()
+	bool isTextSet()
 	{
 		return _textSet;
 	}
@@ -762,7 +762,7 @@ public abstract class PngEncodeParam
 
 	private Date _modificationTime;
 
-	private boolean _modificationTimeSet = false;
+	private bool _modificationTimeSet = false;
 
 	/**
 	 * Sets the modification time, as a <code>Date</code>, to be
@@ -772,7 +772,7 @@ public abstract class PngEncodeParam
 	 *
 	 * <p> The 'tIME' chunk will encode this information.
 	 */
-	public void setModificationTime(Date modificationTime)
+	void setModificationTime(Date modificationTime)
 	{
 		this._modificationTime = modificationTime;
 		_modificationTimeSet = true;
@@ -786,7 +786,7 @@ public abstract class PngEncodeParam
 	 *
 	 * @throws IllegalStateException if the bit depth is not set.
 	 */
-	public Date getModificationTime()
+	Date getModificationTime()
 	{
 		if (!_modificationTimeSet)
 		{
@@ -798,7 +798,7 @@ public abstract class PngEncodeParam
 	/**
 	 * Suppresses the 'tIME' chunk from being output.
 	 */
-	public void unsetModificationTime()
+	void unsetModificationTime()
 	{
 		_modificationTime = null;
 		_modificationTimeSet = false;
@@ -807,19 +807,19 @@ public abstract class PngEncodeParam
 	/**
 	 * Returns true if a 'tIME' chunk will be output.
 	 */
-	public boolean isModificationTimeSet()
+	bool isModificationTimeSet()
 	{
 		return _modificationTimeSet;
 	}
 
 	// tRNS chunk
 
-	boolean transparencySet = false;
+	bool transparencySet = false;
 
 	/**
 	 * Suppresses the 'tRNS' chunk from being output.
 	 */
-	public void unsetTransparency()
+	void unsetTransparency()
 	{
 		transparencySet = false;
 	}
@@ -827,7 +827,7 @@ public abstract class PngEncodeParam
 	/**
 	 * Returns true if a 'tRNS' chunk will be output.
 	 */
-	public boolean isTransparencySet()
+	bool isTransparencySet()
 	{
 		return transparencySet;
 	}
@@ -836,7 +836,7 @@ public abstract class PngEncodeParam
 
 	private String[] _zText = null;
 
-	private boolean _zTextSet = false;
+	private bool _zTextSet = false;
 
 	/**
 	 * Sets the text strings to be stored in compressed form with this
@@ -845,7 +845,7 @@ public abstract class PngEncodeParam
 	 *
 	 * <p> The 'zTXt' chunk will encode this information.
 	 */
-	public void setCompressedText(String[] text)
+	void setCompressedText(String[] text)
 	{
 		this._zText = text;
 		_zTextSet = true;
@@ -862,7 +862,7 @@ public abstract class PngEncodeParam
 	 * @throws IllegalStateException if the compressed text strings are
 	 *        not set.
 	 */
-	public String[] getCompressedText()
+	String[] getCompressedText()
 	{
 		if (!_zTextSet)
 		{
@@ -874,7 +874,7 @@ public abstract class PngEncodeParam
 	/**
 	 * Suppresses the 'zTXt' chunk from being output.
 	 */
-	public void unsetCompressedText()
+	void unsetCompressedText()
 	{
 		_zText = null;
 		_zTextSet = false;
@@ -883,7 +883,7 @@ public abstract class PngEncodeParam
 	/**
 	 * Returns true if a 'zTXT' chunk will be output.
 	 */
-	public boolean isCompressedTextSet()
+	bool isCompressedTextSet()
 	{
 		return _zTextSet;
 	}
@@ -902,7 +902,7 @@ public abstract class PngEncodeParam
 	 * @param data an array of <code>byte</code>s containing the
 	 *        chunk data.
 	 */
-	public synchronized void addPrivateChunk(String type, byte[] data)
+	synchronized void addPrivateChunk(String type, byte[] data)
 	{
 		chunkType.add(type);
 		chunkData.add(data.clone());
@@ -912,7 +912,7 @@ public abstract class PngEncodeParam
 	 * Returns the number of private chunks to be written to the
 	 * output file.
 	 */
-	public synchronized int getNumPrivateChunks()
+	synchronized int getNumPrivateChunks()
 	{
 		return chunkType.size();
 	}
@@ -922,7 +922,7 @@ public abstract class PngEncodeParam
 	 * 4-character <code>String</code>.  The index must be smaller
 	 * than the return value of <code>getNumPrivateChunks</code>.
 	 */
-	public synchronized String getPrivateChunkType(int index)
+	synchronized String getPrivateChunkType(int index)
 	{
 		return chunkType.get(index);
 	}
@@ -933,7 +933,7 @@ public abstract class PngEncodeParam
 	 * smaller than the return value of
 	 * <code>getNumPrivateChunks</code>.
 	 */
-	public synchronized byte[] getPrivateChunkData(int index)
+	synchronized byte[] getPrivateChunkData(int index)
 	{
 		return chunkData.get(index);
 	}
@@ -943,7 +943,7 @@ public abstract class PngEncodeParam
 	 * whose 'safe-to-copy' bit is not set.  This may be advisable when
 	 * transcoding PNG images.
 	 */
-	public synchronized void removeUnsafeToCopyPrivateChunks()
+	synchronized void removeUnsafeToCopyPrivateChunks()
 	{
 		List<String> newChunkType = new ArrayList<String>();
 		List<byte[]> newChunkData = new ArrayList<byte[]>();
@@ -967,7 +967,7 @@ public abstract class PngEncodeParam
 	/**
 	 * Remove all private chunks associated with this parameter instance.
 	 */
-	public synchronized void removeAllPrivateChunks()
+	synchronized void removeAllPrivateChunks()
 	{
 		chunkType = new ArrayList<String>();
 		chunkData = new ArrayList<byte[]>();
@@ -986,7 +986,7 @@ public abstract class PngEncodeParam
 	 * is included as a convenience to subclasses that override the
 	 * <code>filterRow</code> method.
 	 */
-	public static final int paethPredictor(int a, int b, int c)
+	static final int paethPredictor(int a, int b, int c)
 	{
 		int p = a + b - c;
 		int pa = _abs(p - a);
@@ -1064,7 +1064,7 @@ public abstract class PngEncodeParam
 	 * @return The filter type to be used.  The entry of
 	 *         <code>scratchRows[]</code> at this index holds the
 	 *         filtered data.  */
-	public int filterRow(byte[] currRow, byte[] prevRow, byte[][] scratchRows,
+	int filterRow(byte[] currRow, byte[] prevRow, byte[][] scratchRows,
 			int bytesPerRow, int bytesPerPixel)
 	{
 

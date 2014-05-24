@@ -3,10 +3,10 @@
  */
 part of graph.layout;
 
-//import graph.model.Geometry;
-//import graph.model.IGraphModel;
-//import graph.util.Rect;
-//import graph.view.Graph;
+import '../../model/model.dart' show Geometry;
+import '../../model/model.dart' show IGraphModel;
+import '../../util/util.dart' show Rect;
+import '../../view/view.dart' show Graph;
 
 //import java.util.ArrayList;
 //import java.util.Hashtable;
@@ -15,142 +15,142 @@ part of graph.layout;
 /**
  * Fast organic layout algorithm.
  */
-public class FastOrganicLayout extends GraphLayout
+class FastOrganicLayout extends GraphLayout
 {
 	/**
 	 * Specifies if the top left corner of the input cells should be the origin
 	 * of the layout result. Default is true.
 	 */
-	protected boolean useInputOrigin = true;
+	bool useInputOrigin = true;
 
 	/**
 	 * Specifies if all edge points of traversed edges should be removed.
 	 * Default is true.
 	 */
-	protected boolean resetEdges = true;
+	bool resetEdges = true;
 
 	/**
 	 *  Specifies if the STYLE_NOEDGESTYLE flag should be set on edges that are
 	 * modified by the result. Default is true.
 	 */
-	protected boolean disableEdgeStyle = true;
+	bool disableEdgeStyle = true;
 
 	/**
 	 * The force constant by which the attractive forces are divided and the
 	 * replusive forces are multiple by the square of. The value equates to the
 	 * average radius there is of free space around each node. Default is 50.
 	 */
-	protected double forceConstant = 50;
+	double forceConstant = 50;
 
 	/**
 	 * Cache of <forceConstant>^2 for performance.
 	 */
-	protected double forceConstantSquared = 0;
+	double forceConstantSquared = 0;
 
 	/**
 	 * Minimal distance limit. Default is 2. Prevents of
 	 * dividing by zero.
 	 */
-	protected double minDistanceLimit = 2;
+	double minDistanceLimit = 2;
 
 	/**
 	 * Cached version of <minDistanceLimit> squared.
 	 */
-	protected double minDistanceLimitSquared = 0;
+	double minDistanceLimitSquared = 0;
 
 	/**
 	 * The maximum distance between vertices, beyond which their
 	 * repulsion no longer has an effect
 	 */
-	protected double maxDistanceLimit = 500;
+	double maxDistanceLimit = 500;
 
 	/**
 	 * Start value of temperature. Default is 200.
 	 */
-	protected double initialTemp = 200;
+	double initialTemp = 200;
 
 	/**
 	 * Temperature to limit displacement at later stages of layout.
 	 */
-	protected double temperature = 0;
+	double temperature = 0;
 
 	/**
 	 * Total number of iterations to run the layout though.
 	 */
-	protected double maxIterations = 0;
+	double maxIterations = 0;
 
 	/**
 	 * Current iteration count.
 	 */
-	protected double iteration = 0;
+	double iteration = 0;
 
 	/**
 	 * An array of all vertices to be laid out.
 	 */
-	protected Object[] vertexArray;
+	Object[] vertexArray;
 
 	/**
 	 * An array of locally stored X co-ordinate displacements for the vertices.
 	 */
-	protected double[] dispX;
+	double[] dispX;
 
 	/**
 	 * An array of locally stored Y co-ordinate displacements for the vertices.
 	 */
-	protected double[] dispY;
+	double[] dispY;
 
 	/**
 	 * An array of locally stored co-ordinate positions for the vertices.
 	 */
-	protected double[][] cellLocation;
+	double[][] cellLocation;
 
 	/**
 	 * The approximate radius of each cell, nodes only.
 	 */
-	protected double[] radius;
+	double[] radius;
 
 	/**
 	 * The approximate radius squared of each cell, nodes only.
 	 */
-	protected double[] radiusSquared;
+	double[] radiusSquared;
 
 	/**
 	 * Array of booleans representing the movable states of the vertices.
 	 */
-	protected boolean[] isMoveable;
+	boolean[] isMoveable;
 
 	/**
 	 * Local copy of cell neighbours.
 	 */
-	protected int[][] neighbours;
+	int[][] neighbours;
 
 	/**
 	 * Boolean flag that specifies if the layout is allowed to run. If this is
 	 * set to false, then the layout exits in the following iteration.
 	 */
-	protected boolean allowedToRun = true;
+	bool allowedToRun = true;
 
 	/**
 	 * Maps from vertices to indices.
 	 */
-	protected Hashtable<Object, Integer> indices = new Hashtable<Object, Integer>();
+	Hashtable<Object, Integer> indices = new Hashtable<Object, Integer>();
 
 	/**
 	 * Constructs a new fast organic layout for the specified graph.
 	 */
-	public FastOrganicLayout(Graph graph)
+	FastOrganicLayout(Graph graph)
 	{
 		super(graph);
 	}
 
 	/**
-	 * Returns a boolean indicating if the given <Cell> should be ignored as a
+	 * Returns a bool indicating if the given <Cell> should be ignored as a
 	 * vertex. This returns true if the cell has no connections.
 	 * 
 	 * @param vertex Object that represents the vertex to be tested.
 	 * @return Returns true if the vertex should be ignored.
 	 */
-	public boolean isVertexIgnored(Object vertex)
+	bool isVertexIgnored(Object vertex)
 	{
 		return super.isVertexIgnored(vertex)
 				|| graph.getConnections(vertex).length == 0;
@@ -159,7 +159,7 @@ public class FastOrganicLayout extends GraphLayout
 	/**
 	 *
 	 */
-	public boolean isUseInputOrigin()
+	bool isUseInputOrigin()
 	{
 		return useInputOrigin;
 	}
@@ -168,7 +168,7 @@ public class FastOrganicLayout extends GraphLayout
 	 * 
 	 * @param value
 	 */
-	public void setUseInputOrigin(boolean value)
+	void setUseInputOrigin(bool value)
 	{
 		useInputOrigin = value;
 	}
@@ -176,7 +176,7 @@ public class FastOrganicLayout extends GraphLayout
 	/**
 	 *
 	 */
-	public boolean isResetEdges()
+	bool isResetEdges()
 	{
 		return resetEdges;
 	}
@@ -185,7 +185,7 @@ public class FastOrganicLayout extends GraphLayout
 	 * 
 	 * @param value
 	 */
-	public void setResetEdges(boolean value)
+	void setResetEdges(bool value)
 	{
 		resetEdges = value;
 	}
@@ -193,7 +193,7 @@ public class FastOrganicLayout extends GraphLayout
 	/**
 	 *
 	 */
-	public boolean isDisableEdgeStyle()
+	bool isDisableEdgeStyle()
 	{
 		return disableEdgeStyle;
 	}
@@ -202,7 +202,7 @@ public class FastOrganicLayout extends GraphLayout
 	 * 
 	 * @param value
 	 */
-	public void setDisableEdgeStyle(boolean value)
+	void setDisableEdgeStyle(bool value)
 	{
 		disableEdgeStyle = value;
 	}
@@ -210,7 +210,7 @@ public class FastOrganicLayout extends GraphLayout
 	/**
 	 * 
 	 */
-	public double getMaxIterations()
+	double getMaxIterations()
 	{
 		return maxIterations;
 	}
@@ -219,7 +219,7 @@ public class FastOrganicLayout extends GraphLayout
 	 * 
 	 * @param value
 	 */
-	public void setMaxIterations(double value)
+	void setMaxIterations(double value)
 	{
 		maxIterations = value;
 	}
@@ -227,7 +227,7 @@ public class FastOrganicLayout extends GraphLayout
 	/**
 	 * 
 	 */
-	public double getForceConstant()
+	double getForceConstant()
 	{
 		return forceConstant;
 	}
@@ -236,7 +236,7 @@ public class FastOrganicLayout extends GraphLayout
 	 * 
 	 * @param value
 	 */
-	public void setForceConstant(double value)
+	void setForceConstant(double value)
 	{
 		forceConstant = value;
 	}
@@ -244,7 +244,7 @@ public class FastOrganicLayout extends GraphLayout
 	/**
 	 * 
 	 */
-	public double getMinDistanceLimit()
+	double getMinDistanceLimit()
 	{
 		return minDistanceLimit;
 	}
@@ -253,7 +253,7 @@ public class FastOrganicLayout extends GraphLayout
 	 * 
 	 * @param value
 	 */
-	public void setMinDistanceLimit(double value)
+	void setMinDistanceLimit(double value)
 	{
 		minDistanceLimit = value;
 	}
@@ -261,7 +261,7 @@ public class FastOrganicLayout extends GraphLayout
 	/**
 	 * @return the maxDistanceLimit
 	 */
-	public double getMaxDistanceLimit()
+	double getMaxDistanceLimit()
 	{
 		return maxDistanceLimit;
 	}
@@ -269,7 +269,7 @@ public class FastOrganicLayout extends GraphLayout
 	/**
 	 * @param maxDistanceLimit the maxDistanceLimit to set
 	 */
-	public void setMaxDistanceLimit(double maxDistanceLimit)
+	void setMaxDistanceLimit(double maxDistanceLimit)
 	{
 		this.maxDistanceLimit = maxDistanceLimit;
 	}
@@ -277,7 +277,7 @@ public class FastOrganicLayout extends GraphLayout
 	/**
 	 * 
 	 */
-	public double getInitialTemp()
+	double getInitialTemp()
 	{
 		return initialTemp;
 	}
@@ -286,7 +286,7 @@ public class FastOrganicLayout extends GraphLayout
 	 * 
 	 * @param value
 	 */
-	public void setInitialTemp(double value)
+	void setInitialTemp(double value)
 	{
 		initialTemp = value;
 	}
@@ -295,7 +295,7 @@ public class FastOrganicLayout extends GraphLayout
 	 * Reduces the temperature of the layout from an initial setting in a linear
 	 * fashion to zero.
 	 */
-	protected void reduceTemperature()
+	void reduceTemperature()
 	{
 		temperature = initialTemp * (1.0 - iteration / maxIterations);
 	}
@@ -303,7 +303,7 @@ public class FastOrganicLayout extends GraphLayout
 	/* (non-Javadoc)
 	 * @see graph.layout.IGraphLayout#move(java.lang.Object, double, double)
 	 */
-	public void moveCell(Object cell, double x, double y)
+	void moveCell(Object cell, double x, double y)
 	{
 		// TODO: Map the position to a child index for
 		// the cell to be placed closest to the position
@@ -312,7 +312,7 @@ public class FastOrganicLayout extends GraphLayout
 	/* (non-Javadoc)
 	 * @see graph.layout.IGraphLayout#execute(java.lang.Object)
 	 */
-	public void execute(Object parent)
+	void execute(Object parent)
 	{
 		IGraphModel model = graph.getModel();
 
@@ -521,7 +521,7 @@ public class FastOrganicLayout extends GraphLayout
 	 * local cache of cell positions. Limits the displacement to the current
 	 * temperature.
 	 */
-	protected void calcPositions()
+	void calcPositions()
 	{
 		for (int index = 0; index < vertexArray.length; index++)
 		{
@@ -559,7 +559,7 @@ public class FastOrganicLayout extends GraphLayout
 	 * Calculates the attractive forces between all laid out nodes linked by
 	 * edges
 	 */
-	protected void calcAttraction()
+	void calcAttraction()
 	{
 		// Check the neighbours of each vertex and calculate the attractive
 		// force of the edge connecting them
@@ -610,7 +610,7 @@ public class FastOrganicLayout extends GraphLayout
 	/**
 	 * Calculates the repulsive forces between all laid out nodes
 	 */
-	protected void calcRepulsion()
+	void calcRepulsion()
 	{
 		int vertexCount = vertexArray.length;
 

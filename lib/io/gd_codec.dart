@@ -3,8 +3,8 @@
  */
 part of graph.io;
 
-//import graph.model.GraphModel;
-//import graph.view.Graph;
+import '../model/model.dart' show GraphModel;
+import '../view/view.dart' show Graph;
 
 //import java.io.BufferedReader;
 //import java.io.StringReader;
@@ -15,12 +15,12 @@ part of graph.io;
  * This class depends from the classes contained in
  * graph.io.gd.
  */
-public class GdCodec
+class GdCodec
 {
 	/**
 	 * Represents the different states in the parse of a file.
 	 */
-	public enum GDParseState
+	enum GDParseState
 	{
 		START, NUM_NODES, PARSING_NODES, PARSING_EDGES
 	}
@@ -28,14 +28,14 @@ public class GdCodec
 	/**
 	 * Map with the vertex cells added in the addNode method.
 	 */
-	protected static HashMap<String, Object> _cellsMap = new HashMap<String, Object>();
+	static HashMap<String, Object> _cellsMap = new HashMap<String, Object>();
 
 	/**
 	 * Parses simple GD format and populate the specified graph
 	 * @param input GD file to be parsed
 	 * @param graph Graph where the parsed graph is included.
 	 */
-	public static void decode(String input, Graph graph)
+	static void decode(String input, Graph graph)
 	{
 		BufferedReader br = new BufferedReader(new StringReader(input));
 		GDParseState state = GDParseState.START;
@@ -158,7 +158,7 @@ public class GdCodec
 	 * @param graph Graph with the cells.
 	 * @return The GD document generated.
 	 */
-	public static String encode(Graph graph)
+	static String encode(Graph graph)
 	{
 		StringBuilder builder = new StringBuilder();
 		

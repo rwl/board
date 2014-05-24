@@ -3,29 +3,29 @@
  */
 part of graph.shape;
 
-//import graph.canvas.Graphics2DCanvas;
-//import graph.util.Constants;
-//import graph.util.Curve;
-//import graph.util.Line;
-//import graph.util.Point2d;
-//import graph.view.CellState;
+import '../canvas/canvas.dart' show Graphics2DCanvas;
+import '../util/util.dart' show Constants;
+import '../util/util.dart' show Curve;
+import '../util/util.dart' show Line;
+import '../util/util.dart' show Point2d;
+import '../view/view.dart' show CellState;
 
 //import java.awt.RenderingHints;
 //import java.util.List;
 //import java.util.Map;
 
-public class CurveShape extends ConnectorShape
+class CurveShape extends ConnectorShape
 {
 	/**
 	 * Cache of the points between which drawing straight lines views as a
 	 * curve
 	 */
-	protected Curve _curve;
+	Curve _curve;
 
 	/**
 	 * 
 	 */
-	public CurveShape()
+	CurveShape()
 	{
 		this(new Curve());
 	}
@@ -33,7 +33,7 @@ public class CurveShape extends ConnectorShape
 	/**
 	 * 
 	 */
-	public CurveShape(Curve curve)
+	CurveShape(Curve curve)
 	{
 		this._curve = curve;
 	}
@@ -41,7 +41,7 @@ public class CurveShape extends ConnectorShape
 	/**
 	 * 
 	 */
-	public Curve getCurve()
+	Curve getCurve()
 	{
 		return _curve;
 	}
@@ -49,7 +49,7 @@ public class CurveShape extends ConnectorShape
 	/**
 	 * 
 	 */
-	public void paintShape(Graphics2DCanvas canvas, CellState state)
+	void paintShape(Graphics2DCanvas canvas, CellState state)
 	{
 		Object keyStrokeHint = canvas.getGraphics().getRenderingHint(
 				RenderingHints.KEY_STROKE_CONTROL);
@@ -66,7 +66,7 @@ public class CurveShape extends ConnectorShape
 	/**
 	 * 
 	 */
-	protected void _paintPolyline(Graphics2DCanvas canvas,
+	void _paintPolyline(Graphics2DCanvas canvas,
 			List<Point2d> points, Map<String, Object> style)
 	{
 		double scale = canvas.getScale();
@@ -79,7 +79,7 @@ public class CurveShape extends ConnectorShape
 	 * Forces underlying curve to a valid state
 	 * @param points
 	 */
-	public void validateCurve(List<Point2d> points, double scale,
+	void validateCurve(List<Point2d> points, double scale,
 			Map<String, Object> style)
 	{
 		if (_curve == null)
@@ -103,7 +103,7 @@ public class CurveShape extends ConnectorShape
 	 * @param markerSize the scaled maximum length of the marker
 	 * @return a line describing the vector the marker should be drawn along
 	 */
-	protected Line _getMarkerVector(List<Point2d> points, boolean source,
+	Line _getMarkerVector(List<Point2d> points, bool source,
 			double markerSize)
 	{
 		double curveLength = _curve.getCurveLength(Curve.CORE_CURVE);

@@ -22,28 +22,28 @@ part of graph.util;
  * Event.ADD fires after an undoable edit was added to the history. The
  * <code>edit</code> property contains the UndoableEdit that was added.
  */
-public class UndoManager extends EventSource
+class UndoManager extends EventSource
 {
 
 	/**
 	 * Maximum command history size. 0 means unlimited history. Default is 100.
 	 */
-	protected int _size;
+	int _size;
 
 	/**
 	 * List that contains the steps of the command history.
 	 */
-	protected List<UndoableEdit> _history;
+	List<UndoableEdit> _history;
 
 	/**
 	 * Index of the element to be added next.
 	 */
-	protected int _indexOfNextAdd;
+	int _indexOfNextAdd;
 
 	/**
 	 * Constructs a new undo manager with a default history size.
 	 */
-	public UndoManager()
+	UndoManager()
 	{
 		this(100);
 	}
@@ -51,7 +51,7 @@ public class UndoManager extends EventSource
 	/**
 	 * Constructs a new undo manager for the specified size.
 	 */
-	public UndoManager(int size)
+	UndoManager(int size)
 	{
 		this._size = size;
 		clear();
@@ -60,7 +60,7 @@ public class UndoManager extends EventSource
 	/**
 	 * 
 	 */
-	public boolean isEmpty()
+	bool isEmpty()
 	{
 		return _history.isEmpty();
 	}
@@ -68,7 +68,7 @@ public class UndoManager extends EventSource
 	/**
 	 * Clears the command history.
 	 */
-	public void clear()
+	void clear()
 	{
 		_history = new ArrayList<UndoableEdit>(_size);
 		_indexOfNextAdd = 0;
@@ -78,7 +78,7 @@ public class UndoManager extends EventSource
 	/**
 	 * Returns true if an undo is possible.
 	 */
-	public boolean canUndo()
+	bool canUndo()
 	{
 		return _indexOfNextAdd > 0;
 	}
@@ -86,7 +86,7 @@ public class UndoManager extends EventSource
 	/**
 	 * Undoes the last change.
 	 */
-	public void undo()
+	void undo()
 	{
 		while (_indexOfNextAdd > 0)
 		{
@@ -104,7 +104,7 @@ public class UndoManager extends EventSource
 	/**
 	 * Returns true if a redo is possible.
 	 */
-	public boolean canRedo()
+	bool canRedo()
 	{
 		return _indexOfNextAdd < _history.size();
 	}
@@ -112,7 +112,7 @@ public class UndoManager extends EventSource
 	/**
 	 * Redoes the last change.
 	 */
-	public void redo()
+	void redo()
 	{
 		int n = _history.size();
 
@@ -132,7 +132,7 @@ public class UndoManager extends EventSource
 	/**
 	 * Method to be called to add new undoable edits to the history.
 	 */
-	public void undoableEditHappened(UndoableEdit undoableEdit)
+	void undoableEditHappened(UndoableEdit undoableEdit)
 	{
 		_trim();
 
@@ -150,7 +150,7 @@ public class UndoManager extends EventSource
 	 * Removes all pending steps after indexOfNextAdd from the history,
 	 * invoking die on each edit. This is called from undoableEditHappened.
 	 */
-	protected void _trim()
+	void _trim()
 	{
 		while (_history.size() > _indexOfNextAdd)
 		{

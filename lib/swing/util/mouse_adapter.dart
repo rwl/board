@@ -10,7 +10,7 @@ part of graph.swing.util;
 /**
  *
  */
-public class MouseAdapter implements MouseMotionListener, MouseListener
+class MouseAdapter implements MouseMotionListener, MouseListener
 {
 
 	/**
@@ -21,7 +21,7 @@ public class MouseAdapter implements MouseMotionListener, MouseListener
 	/**
 	 * 
 	 */
-	public void mouseDragged(MouseEvent e)
+	void mouseDragged(MouseEvent e)
 	{
 		// empty
 	}
@@ -29,7 +29,7 @@ public class MouseAdapter implements MouseMotionListener, MouseListener
 	/**
 	 * 
 	 */
-	public void mousePressed(MouseEvent e)
+	void mousePressed(MouseEvent e)
 	{
 		// empty
 	}
@@ -37,7 +37,7 @@ public class MouseAdapter implements MouseMotionListener, MouseListener
 	/**
 	 * 
 	 */
-	public void mouseReleased(MouseEvent e)
+	void mouseReleased(MouseEvent e)
 	{
 		// empty
 	}
@@ -45,7 +45,7 @@ public class MouseAdapter implements MouseMotionListener, MouseListener
 	/**
 	 * 
 	 */
-	public void mouseMoved(MouseEvent e)
+	void mouseMoved(MouseEvent e)
 	{
 		// empty
 	}
@@ -53,7 +53,7 @@ public class MouseAdapter implements MouseMotionListener, MouseListener
 	/**
 	 * 
 	 */
-	public void mouseClicked(MouseEvent e)
+	void mouseClicked(MouseEvent e)
 	{
 		// empty
 	}
@@ -61,7 +61,7 @@ public class MouseAdapter implements MouseMotionListener, MouseListener
 	/**
 	 * 
 	 */
-	public void mouseEntered(MouseEvent e)
+	void mouseEntered(MouseEvent e)
 	{
 		// empty
 	}
@@ -69,7 +69,7 @@ public class MouseAdapter implements MouseMotionListener, MouseListener
 	/**
 	 * 
 	 */
-	public void mouseExited(MouseEvent e)
+	void mouseExited(MouseEvent e)
 	{
 		// empty
 	}

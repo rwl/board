@@ -1,10 +1,10 @@
 part of graph.shape;
 
-//import graph.canvas.Graphics2DCanvas;
-//import graph.util.Constants;
-//import graph.util.Point2d;
-//import graph.util.Utils;
-//import graph.view.CellState;
+import '../canvas/canvas.dart' show Graphics2DCanvas;
+import '../util/util.dart' show Constants;
+import '../util/util.dart' show Point2d;
+import '../util/util.dart' show Utils;
+import '../view/view.dart' show CellState;
 
 //import java.awt.Polygon;
 //import java.awt.Shape;
@@ -13,12 +13,12 @@ part of graph.shape;
 //import java.util.Hashtable;
 //import java.util.Map;
 
-public class MarkerRegistry
+class MarkerRegistry
 {
 	/**
 	 * 
 	 */
-	protected static Map<String, IMarker> _markers = new Hashtable<String, IMarker>();
+	static Map<String, IMarker> _markers = new Hashtable<String, IMarker>();
 
 	static
 	{
@@ -26,7 +26,7 @@ public class MarkerRegistry
 		{
 			public Point2d paintMarker(Graphics2DCanvas canvas,
 					CellState state, String type, Point2d pe, double nx,
-					double ny, double size, boolean source)
+					double ny, double size, bool source)
 			{
 				Polygon poly = new Polygon();
 				poly.addPoint((int) Math.round(pe.getX()),
@@ -61,7 +61,7 @@ public class MarkerRegistry
 		{
 			public Point2d paintMarker(Graphics2DCanvas canvas,
 					CellState state, String type, Point2d pe, double nx,
-					double ny, double size, boolean source)
+					double ny, double size, bool source)
 			{
 				canvas.getGraphics().draw(
 						new Line2D.Float((int) Math.round(pe.getX() - nx - ny
@@ -83,7 +83,7 @@ public class MarkerRegistry
 		{
 			public Point2d paintMarker(Graphics2DCanvas canvas,
 					CellState state, String type, Point2d pe, double nx,
-					double ny, double size, boolean source)
+					double ny, double size, bool source)
 			{
 				double cx = pe.getX() - nx / 2;
 				double cy = pe.getY() - ny / 2;
@@ -106,7 +106,7 @@ public class MarkerRegistry
 		{
 			public Point2d paintMarker(Graphics2DCanvas canvas,
 					CellState state, String type, Point2d pe, double nx,
-					double ny, double size, boolean source)
+					double ny, double size, bool source)
 			{
 				Polygon poly = new Polygon();
 				poly.addPoint((int) Math.round(pe.getX()),
@@ -133,7 +133,7 @@ public class MarkerRegistry
 	/**
 	 * 
 	 */
-	public static IMarker getMarker(String name)
+	static IMarker getMarker(String name)
 	{
 		return _markers.get(name);
 	}
@@ -141,7 +141,7 @@ public class MarkerRegistry
 	/**
 	 * 
 	 */
-	public static void registerMarker(String name, IMarker marker)
+	static void registerMarker(String name, IMarker marker)
 	{
 		_markers.put(name, marker);
 	}

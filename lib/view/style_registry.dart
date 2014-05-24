@@ -3,7 +3,7 @@
  */
 part of graph.view;
 
-//import graph.util.Constants;
+import '../util/util.dart' show Constants;
 
 //import java.util.Hashtable;
 //import java.util.Iterator;
@@ -13,13 +13,13 @@ part of graph.view;
  * Singleton class that acts as a global converter from string to object values
  * in a style. This is currently only used to perimeters and edge styles.
  */
-public class StyleRegistry
+class StyleRegistry
 {
 
 	/**
 	 * Maps from strings to objects.
 	 */
-	protected static Map<String, Object> _values = new Hashtable<String, Object>();
+	static Map<String, Object> _values = new Hashtable<String, Object>();
 
 	// Registers the known object styles
 	static
@@ -44,7 +44,7 @@ public class StyleRegistry
 	/**
 	 * Puts the given object into the registry under the given name.
 	 */
-	public static void putValue(String name, Object value)
+	static void putValue(String name, Object value)
 	{
 		_values.put(name, value);
 	}
@@ -52,7 +52,7 @@ public class StyleRegistry
 	/**
 	 * Returns the value associated with the given name.
 	 */
-	public static Object getValue(String name)
+	static Object getValue(String name)
 	{
 		return _values.get(name);
 	}
@@ -60,7 +60,7 @@ public class StyleRegistry
 	/**
 	 * Returns the name for the given value.
 	 */
-	public static String getName(Object value)
+	static String getName(Object value)
 	{
 		Iterator<Map.Entry<String, Object>> it = _values.entrySet().iterator();
 

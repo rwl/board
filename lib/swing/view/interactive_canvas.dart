@@ -3,14 +3,14 @@
  */
 part of graph.swing.view;
 
-//import graph.canvas.Graphics2DCanvas;
-//import graph.shape.BasicShape;
-//import graph.shape.IShape;
-//import graph.swing.GraphComponent;
-//import graph.util.Constants;
-//import graph.util.Point2d;
-//import graph.util.Utils;
-//import graph.view.CellState;
+import '../../canvas/canvas.dart' show Graphics2DCanvas;
+import '../../shape/shape.dart' show BasicShape;
+import '../../shape/shape.dart' show IShape;
+import '../../swing/swing.dart' show GraphComponent;
+import '../../util/util.dart' show Constants;
+import '../../util/util.dart' show Point2d;
+import '../../util/util.dart' show Utils;
+import '../../view/view.dart' show CellState;
 
 //import java.awt.Dimension;
 //import java.awt.Image;
@@ -18,17 +18,17 @@ part of graph.swing.view;
 //import java.awt.Shape;
 //import java.awt.image.ImageObserver;
 
-public class InteractiveCanvas extends Graphics2DCanvas
+class InteractiveCanvas extends Graphics2DCanvas
 {
 	/**
 	 * 
 	 */
-	protected ImageObserver _imageObserver = null;
+	ImageObserver _imageObserver = null;
 
 	/**
 	 * 
 	 */
-	public InteractiveCanvas()
+	InteractiveCanvas()
 	{
 		this(null);
 	}
@@ -36,7 +36,7 @@ public class InteractiveCanvas extends Graphics2DCanvas
 	/**
 	 * 
 	 */
-	public InteractiveCanvas(ImageObserver imageObserver)
+	InteractiveCanvas(ImageObserver imageObserver)
 	{
 		setImageObserver(imageObserver);
 	}
@@ -44,7 +44,7 @@ public class InteractiveCanvas extends Graphics2DCanvas
 	/**
 	 * 
 	 */
-	public void setImageObserver(ImageObserver value)
+	void setImageObserver(ImageObserver value)
 	{
 		_imageObserver = value;
 	}
@@ -52,7 +52,7 @@ public class InteractiveCanvas extends Graphics2DCanvas
 	/**
 	 * 
 	 */
-	public ImageObserver getImageObserver()
+	ImageObserver getImageObserver()
 	{
 		return _imageObserver;
 	}
@@ -60,7 +60,7 @@ public class InteractiveCanvas extends Graphics2DCanvas
 	/**
 	 * Overrides graphics call to use image observer.
 	 */
-	protected void _drawImageImpl(Image image, int x, int y)
+	void _drawImageImpl(Image image, int x, int y)
 	{
 		_g.drawImage(image, x, y, _imageObserver);
 	}
@@ -68,7 +68,7 @@ public class InteractiveCanvas extends Graphics2DCanvas
 	/**
 	 * Returns the size for the given image.
 	 */
-	protected Dimension _getImageSize(Image image)
+	Dimension _getImageSize(Image image)
 	{
 		return new Dimension(image.getWidth(_imageObserver),
 				image.getHeight(_imageObserver));
@@ -77,7 +77,7 @@ public class InteractiveCanvas extends Graphics2DCanvas
 	/**
 	 * 
 	 */
-	public boolean contains(GraphComponent graphComponent, Rectangle rect,
+	bool contains(GraphComponent graphComponent, Rectangle rect,
 			CellState state)
 	{
 		return state != null && state.getX() >= rect.x
@@ -89,7 +89,7 @@ public class InteractiveCanvas extends Graphics2DCanvas
 	/**
 	 * 
 	 */
-	public boolean intersects(GraphComponent graphComponent, Rectangle rect,
+	bool intersects(GraphComponent graphComponent, Rectangle rect,
 			CellState state)
 	{
 		if (state != null)
@@ -164,7 +164,7 @@ public class InteractiveCanvas extends Graphics2DCanvas
 	 * implementation does not check if the given state is a swimlane, it is
 	 * assumed that the caller has checked this before using this method.
 	 */
-	public boolean hitSwimlaneContent(GraphComponent graphComponent,
+	bool hitSwimlaneContent(GraphComponent graphComponent,
 			CellState swimlane, int x, int y)
 	{
 		if (swimlane != null)

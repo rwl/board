@@ -3,10 +3,10 @@
  */
 part of graph.shape;
 
-//import graph.canvas.Graphics2DCanvas;
-//import graph.util.Constants;
-//import graph.util.Utils;
-//import graph.view.CellState;
+import '../canvas/canvas.dart' show Graphics2DCanvas;
+import '../util/util.dart' show Constants;
+import '../util/util.dart' show Utils;
+import '../view/view.dart' show CellState;
 
 //import java.awt.Color;
 //import java.awt.Rectangle;
@@ -15,19 +15,19 @@ part of graph.shape;
  * A rectangular shape that contains a single image. See ImageBundle for
  * creating a lookup table with images which can then be referenced by key.
  */
-public class ImageShape extends RectangleShape
+class ImageShape extends RectangleShape
 {
 
 	/**
 	 * 
 	 */
-	public void paintShape(Graphics2DCanvas canvas, CellState state)
+	void paintShape(Graphics2DCanvas canvas, CellState state)
 	{
 		super.paintShape(canvas, state);
 
-		boolean flipH = Utils.isTrue(state.getStyle(),
+		bool flipH = Utils.isTrue(state.getStyle(),
 				Constants.STYLE_IMAGE_FLIPH, false);
-		boolean flipV = Utils.isTrue(state.getStyle(),
+		bool flipV = Utils.isTrue(state.getStyle(),
 				Constants.STYLE_IMAGE_FLIPV, false);
 
 		canvas.drawImage(getImageBounds(canvas, state),
@@ -38,7 +38,7 @@ public class ImageShape extends RectangleShape
 	/**
 	 * 
 	 */
-	public Rectangle getImageBounds(Graphics2DCanvas canvas, CellState state)
+	Rectangle getImageBounds(Graphics2DCanvas canvas, CellState state)
 	{
 		return state.getRectangle();
 	}
@@ -46,7 +46,7 @@ public class ImageShape extends RectangleShape
 	/**
 	 * 
 	 */
-	public boolean hasGradient(Graphics2DCanvas canvas, CellState state)
+	bool hasGradient(Graphics2DCanvas canvas, CellState state)
 	{
 		return false;
 	}
@@ -54,7 +54,7 @@ public class ImageShape extends RectangleShape
 	/**
 	 * 
 	 */
-	public String getImageForStyle(Graphics2DCanvas canvas, CellState state)
+	String getImageForStyle(Graphics2DCanvas canvas, CellState state)
 	{
 		return canvas.getImageForStyle(state.getStyle());
 	}
@@ -62,7 +62,7 @@ public class ImageShape extends RectangleShape
 	/**
 	 * 
 	 */
-	public Color getFillColor(Graphics2DCanvas canvas, CellState state)
+	Color getFillColor(Graphics2DCanvas canvas, CellState state)
 	{
 		return Utils.getColor(state.getStyle(),
 				Constants.STYLE_IMAGE_BACKGROUND);
@@ -71,7 +71,7 @@ public class ImageShape extends RectangleShape
 	/**
 	 * 
 	 */
-	public Color getStrokeColor(Graphics2DCanvas canvas, CellState state)
+	Color getStrokeColor(Graphics2DCanvas canvas, CellState state)
 	{
 		return Utils.getColor(state.getStyle(),
 				Constants.STYLE_IMAGE_BORDER);

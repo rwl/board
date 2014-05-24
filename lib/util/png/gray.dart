@@ -1,21 +1,21 @@
 part of graph.util.png;
 
-public class Gray extends PngEncodeParam
+class Gray extends PngEncodeParam
 {
 
 	/** Constructs an instance of <code>PNGEncodeParam.Gray</code>. */
-	public Gray()
+	Gray()
 	{
 	}
 
 	// bKGD chunk
 
-	private boolean backgroundSet = false;
+	private bool backgroundSet = false;
 
 	/**
 	 * Suppresses the 'bKGD' chunk from being output.
 	 */
-	public void unsetBackground()
+	void unsetBackground()
 	{
 		backgroundSet = false;
 	}
@@ -23,7 +23,7 @@ public class Gray extends PngEncodeParam
 	/**
 	 * Returns true if a 'bKGD' chunk will be output.
 	 */
-	public boolean isBackgroundSet()
+	bool isBackgroundSet()
 	{
 		return backgroundSet;
 	}
@@ -38,7 +38,7 @@ public class Gray extends PngEncodeParam
 	 * When encoding a source image of a smaller bit depth, pixel
 	 * values will be shifted and left-filled with zeroes.
 	 */
-	public void setBitDepth(int bitDepth)
+	void setBitDepth(int bitDepth)
 	{
 		if (bitDepth != 1 && bitDepth != 2 && bitDepth != 4
 				&& bitDepth != 8 && bitDepth != 16)
@@ -58,7 +58,7 @@ public class Gray extends PngEncodeParam
 	 *
 	 * <p> The 'bKGD' chunk will encode this information.
 	 */
-	public void setBackgroundGray(int gray)
+	void setBackgroundGray(int gray)
 	{
 		backgroundPaletteGray = gray;
 		backgroundSet = true;
@@ -74,7 +74,7 @@ public class Gray extends PngEncodeParam
 	 * @throws IllegalStateException if the background gray level
 	 *        is not set.
 	 */
-	public int getBackgroundGray()
+	int getBackgroundGray()
 	{
 		if (!backgroundSet)
 		{
@@ -95,7 +95,7 @@ public class Gray extends PngEncodeParam
 	 *
 	 * <p> The 'tRNS' chunk will encode this information.
 	 */
-	public void setTransparentGray(int transparentGray)
+	void setTransparentGray(int transparentGray)
 	{
 		transparency = new int[1];
 		transparency[0] = transparentGray;
@@ -112,7 +112,7 @@ public class Gray extends PngEncodeParam
 	 * @throws IllegalStateException if the transparent gray value
 	 *        is not set.
 	 */
-	public int getTransparentGray()
+	int getTransparentGray()
 	{
 		if (!transparencySet)
 		{
@@ -124,7 +124,7 @@ public class Gray extends PngEncodeParam
 
 	private int bitShift;
 
-	private boolean bitShiftSet = false;
+	private bool bitShiftSet = false;
 
 	/**
 	 * Sets the desired bit shift for a grayscale image.
@@ -132,7 +132,7 @@ public class Gray extends PngEncodeParam
 	 * the given amount prior to being clamped to the maximum
 	 * value given by the encoded image's bit depth.
 	 */
-	public void setBitShift(int bitShift)
+	void setBitShift(int bitShift)
 	{
 		if (bitShift < 0)
 		{
@@ -150,7 +150,7 @@ public class Gray extends PngEncodeParam
 	 *
 	 * @throws IllegalStateException if the bit shift is not set.
 	 */
-	public int getBitShift()
+	int getBitShift()
 	{
 		if (!bitShiftSet)
 		{
@@ -163,7 +163,7 @@ public class Gray extends PngEncodeParam
 	 * Suppresses the setting of the bit shift of a grayscale image.
 	 * Pixels in the source image will not be shifted prior to encoding.
 	 */
-	public void unsetBitShift()
+	void unsetBitShift()
 	{
 		bitShiftSet = false;
 	}
@@ -171,7 +171,7 @@ public class Gray extends PngEncodeParam
 	/**
 	 * Returns true if the bit shift has been set.
 	 */
-	public boolean isBitShiftSet()
+	bool isBitShiftSet()
 	{
 		return bitShiftSet;
 	}
@@ -179,7 +179,7 @@ public class Gray extends PngEncodeParam
 	/**
 	 * Returns true if the bit depth has been set.
 	 */
-	public boolean isBitDepthSet()
+	bool isBitDepthSet()
 	{
 		return _bitDepthSet;
 	}

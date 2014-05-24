@@ -3,8 +3,8 @@
  */
 part of graph.io;
 
-//import graph.model.ChildChange;
-//import graph.model.ICell;
+import '../model/model.dart' show ChildChange;
+import '../model/model.dart' show ICell;
 
 //import java.util.Map;
 
@@ -16,13 +16,13 @@ part of graph.io;
  * dynamically at load time and used implicitely via Codec
  * and the CodecRegistry.
  */
-public class ChildChangeCodec extends ObjectCodec
+class ChildChangeCodec extends ObjectCodec
 {
 
 	/**
 	 * Constructs a new model codec.
 	 */
-	public ChildChangeCodec()
+	ChildChangeCodec()
 	{
 		this(new ChildChange(), new String[] { "model", "child",
 				"previousIndex" }, new String[] { "parent", "previous" }, null);
@@ -31,7 +31,7 @@ public class ChildChangeCodec extends ObjectCodec
 	/**
 	 * Constructs a new model codec for the given arguments.
 	 */
-	public ChildChangeCodec(Object template, String[] exclude,
+	ChildChangeCodec(Object template, String[] exclude,
 			String[] idrefs, Map<String, String> mapping)
 	{
 		super(template, exclude, idrefs, mapping);
@@ -41,8 +41,8 @@ public class ChildChangeCodec extends ObjectCodec
 	 * @see graph.io.ObjectCodec#isReference(java.lang.Object, java.lang.String, java.lang.Object, boolean)
 	 */
 	@Override
-	public boolean isReference(Object obj, String attr, Object value,
-			boolean isWrite)
+	bool isReference(Object obj, String attr, Object value,
+			bool isWrite)
 	{
 		if (attr.equals("child") && obj instanceof ChildChange
 				&& (((ChildChange) obj).getPrevious() != null || !isWrite))
@@ -57,7 +57,7 @@ public class ChildChangeCodec extends ObjectCodec
 	 * @see graph.io.ObjectCodec#afterEncode(graph.io.Codec, java.lang.Object, org.w3c.dom.Node)
 	 */
 	@Override
-	public Node afterEncode(Codec enc, Object obj, Node node)
+	Node afterEncode(Codec enc, Object obj, Node node)
 	{
 		if (obj instanceof ChildChange)
 		{
@@ -87,7 +87,7 @@ public class ChildChangeCodec extends ObjectCodec
 	 * Reads the cells into the graph model. All cells are children of the root
 	 * element in the node.
 	 */
-	public Node beforeDecode(Codec dec, Node node, Object into)
+	Node beforeDecode(Codec dec, Node node, Object into)
 	{
 		if (into instanceof ChildChange)
 		{
@@ -144,7 +144,7 @@ public class ChildChangeCodec extends ObjectCodec
 	 * @see graph.io.ObjectCodec#afterDecode(graph.io.Codec, org.w3c.dom.Node, java.lang.Object)
 	 */
 	@Override
-	public Object afterDecode(Codec dec, Node node, Object obj)
+	Object afterDecode(Codec dec, Node node, Object obj)
 	{
 		if (obj instanceof ChildChange)
 		{

@@ -4,21 +4,21 @@
 part of graph.view;
 
 
-//import graph.model.Geometry;
-//import graph.model.GraphModel;
-//import graph.model.ICell;
-//import graph.model.IGraphModel;
-//import graph.util.Constants;
-//import graph.util.Event;
-//import graph.util.EventObj;
-//import graph.util.EventSource;
-//import graph.util.Point2d;
-//import graph.util.Rect;
-//import graph.util.UndoableEdit;
-//import graph.util.Utils;
-//import graph.util.UndoableEdit.UndoableChange;
-//import graph.view.EdgeStyle.EdgeStyleFunction;
-//import graph.view.Perimeter.PerimeterFunction;
+import '../model/model.dart' show Geometry;
+import '../model/model.dart' show GraphModel;
+import '../model/model.dart' show ICell;
+import '../model/model.dart' show IGraphModel;
+import '../util/util.dart' show Constants;
+import '../util/util.dart' show Event;
+import '../util/util.dart' show EventObj;
+import '../util/util.dart' show EventSource;
+import '../util/util.dart' show Point2d;
+import '../util/util.dart' show Rect;
+import '../util/util.dart' show UndoableEdit;
+import '../util/util.dart' show Utils;
+import '../util/util.dart' show UndoableChange;
+import '../view/view.dart' show EdgeStyleFunction;
+import '../view/view.dart' show PerimeterFunction;
 
 //import java.awt.geom.Line2D;
 //import java.util.ArrayList;
@@ -59,7 +59,7 @@ part of graph.view;
  * <code>root</code> and <code>previous</code> properties contain the new and
  * previous root, respectively.
  */
-public class GraphView extends EventSource
+class GraphView extends EventSource
 {
 	/**
 	 *
@@ -69,40 +69,40 @@ public class GraphView extends EventSource
 	/**
 	 * Reference to the enclosing graph.
 	 */
-	protected Graph _graph;
+	Graph _graph;
 
 	/**
 	 * Cell that acts as the root of the displayed cell hierarchy.
 	 */
-	protected Object _currentRoot = null;
+	Object _currentRoot = null;
 
 	/**
 	 * Caches the current bounds of the graph.
 	 */
-	protected Rect _graphBounds = new Rect();
+	Rect _graphBounds = new Rect();
 
 	/**
 	 * Specifies the scale. Default is 1 (100%).
 	 */
-	protected double _scale = 1;
+	double _scale = 1;
 
 	/**
 	 * Point that specifies the current translation. Default is a new
 	 * empty point.
 	 */
-	protected Point2d _translate = new Point2d(0, 0);
+	Point2d _translate = new Point2d(0, 0);
 
 	/**
 	 * Maps from cells to cell states.
 	 */
-	protected Hashtable<Object, CellState> _states = new Hashtable<Object, CellState>();
+	Hashtable<Object, CellState> _states = new Hashtable<Object, CellState>();
 
 	/**
 	 * Constructs a new view for the given graph.
 	 * 
 	 * @param graph Reference to the enclosing graph.
 	 */
-	public GraphView(Graph graph)
+	GraphView(Graph graph)
 	{
 		this._graph = graph;
 	}
@@ -112,7 +112,7 @@ public class GraphView extends EventSource
 	 * 
 	 * @return Returns the enclosing graph.
 	 */
-	public Graph getGraph()
+	Graph getGraph()
 	{
 		return _graph;
 	}
@@ -120,7 +120,7 @@ public class GraphView extends EventSource
 	/**
 	 * Returns the dictionary that maps from cells to states.
 	 */
-	public Hashtable<Object, CellState> getStates()
+	Hashtable<Object, CellState> getStates()
 	{
 		return _states;
 	}
@@ -128,7 +128,7 @@ public class GraphView extends EventSource
 	/**
 	 * Returns the dictionary that maps from cells to states.
 	 */
-	public void setStates(Hashtable<Object, CellState> states)
+	void setStates(Hashtable<Object, CellState> states)
 	{
 		this._states = states;
 	}
@@ -138,7 +138,7 @@ public class GraphView extends EventSource
 	 * 
 	 * @return Returns the diagram bounds.
 	 */
-	public Rect getGraphBounds()
+	Rect getGraphBounds()
 	{
 		return _graphBounds;
 	}
@@ -146,7 +146,7 @@ public class GraphView extends EventSource
 	/**
 	 * Sets the graph bounds.
 	 */
-	public void setGraphBounds(Rect value)
+	void setGraphBounds(Rect value)
 	{
 		_graphBounds = value;
 	}
@@ -154,7 +154,7 @@ public class GraphView extends EventSource
 	/**
 	 * Returns the current root.
 	 */
-	public Object getCurrentRoot()
+	Object getCurrentRoot()
 	{
 		return _currentRoot;
 	}
@@ -165,7 +165,7 @@ public class GraphView extends EventSource
 	 * @param root Cell that specifies the root of the displayed cell hierarchy.
 	 * @return Returns the object that represents the current root.
 	 */
-	public Object setCurrentRoot(Object root)
+	Object setCurrentRoot(Object root)
 	{
 		if (_currentRoot != root)
 		{
@@ -188,7 +188,7 @@ public class GraphView extends EventSource
 	 * @param dx X-coordinate of the translation.
 	 * @param dy Y-coordinate of the translation.
 	 */
-	public void scaleAndTranslate(double scale, double dx, double dy)
+	void scaleAndTranslate(double scale, double dx, double dy)
 	{
 		double previousScale = this._scale;
 		Object previousTranslate = _translate.clone();
@@ -215,7 +215,7 @@ public class GraphView extends EventSource
 	 * 
 	 * @return Returns the scale.
 	 */
-	public double getScale()
+	double getScale()
 	{
 		return _scale;
 	}
@@ -227,7 +227,7 @@ public class GraphView extends EventSource
 	 * 
 	 * @param value New scale to be used.
 	 */
-	public void setScale(double value)
+	void setScale(double value)
 	{
 		double previousScale = _scale;
 
@@ -250,7 +250,7 @@ public class GraphView extends EventSource
 	 * 
 	 * @return Returns the translation.
 	 */
-	public Point2d getTranslate()
+	Point2d getTranslate()
 	{
 		return _translate;
 	}
@@ -262,7 +262,7 @@ public class GraphView extends EventSource
 	 * 
 	 * @param value New translation to be used.
 	 */
-	public void setTranslate(Point2d value)
+	void setTranslate(Point2d value)
 	{
 		Object previousTranslate = _translate.clone();
 
@@ -289,7 +289,7 @@ public class GraphView extends EventSource
 	 * @param cells
 	 * @return Returns the bounding box for the given cells.
 	 */
-	public Rect getBounds(Object[] cells)
+	Rect getBounds(Object[] cells)
 	{
 		return getBounds(cells, false);
 	}
@@ -301,7 +301,7 @@ public class GraphView extends EventSource
 	 * @param cells
 	 * @return Returns the bounding box for the given cells.
 	 */
-	public Rect getBoundingBox(Object[] cells)
+	Rect getBoundingBox(Object[] cells)
 	{
 		return getBounds(cells, true);
 	}
@@ -313,7 +313,7 @@ public class GraphView extends EventSource
 	 * @param cells
 	 * @return Returns the bounding box for the given cells.
 	 */
-	public Rect getBounds(Object[] cells, boolean boundingBox)
+	Rect getBounds(Object[] cells, bool boundingBox)
 	{
 		Rect result = null;
 
@@ -354,7 +354,7 @@ public class GraphView extends EventSource
 	/**
 	 * Removes all existing cell states and invokes validate.
 	 */
-	public void reload()
+	void reload()
 	{
 		_states.clear();
 		validate();
@@ -363,7 +363,7 @@ public class GraphView extends EventSource
 	/**
 	 * 
 	 */
-	public void revalidate()
+	void revalidate()
 	{
 		invalidate();
 		validate();
@@ -372,7 +372,7 @@ public class GraphView extends EventSource
 	/**
 	 * Invalidates all cell states.
 	 */
-	public void invalidate()
+	void invalidate()
 	{
 		invalidate(null);
 	}
@@ -385,7 +385,7 @@ public class GraphView extends EventSource
 	 * @param force
 	 * @param recurse
 	 */
-	public void clear(Object cell, boolean force, boolean recurse)
+	void clear(Object cell, bool force, bool recurse)
 	{
 		removeState(cell);
 
@@ -409,7 +409,7 @@ public class GraphView extends EventSource
 	 * Invalidates the state of the given cell, all its descendants and
 	 * connected edges.
 	 */
-	public void invalidate(Object cell)
+	void invalidate(Object cell)
 	{
 		IGraphModel model = _graph.getModel();
 		cell = (cell != null) ? cell : model.getRoot();
@@ -445,7 +445,7 @@ public class GraphView extends EventSource
 	 * First validates all bounds and then validates all points recursively on
 	 * all visible cells.
 	 */
-	public void validate()
+	void validate()
 	{
 		Rect graphBounds = getBoundingBox(validateCellState(validateCell((_currentRoot != null) ? _currentRoot
 				: _graph.getModel().getRoot())));
@@ -455,7 +455,7 @@ public class GraphView extends EventSource
 	/**
 	 * Shortcut to validateCell with visible set to true.
 	 */
-	public Rect getBoundingBox(CellState state)
+	Rect getBoundingBox(CellState state)
 	{
 		return getBoundingBox(state, true);
 	}
@@ -467,7 +467,7 @@ public class GraphView extends EventSource
 	 * @param state Cell state whose bounding box should be returned.
 	 * @param recurse Boolean indicating if the children should be included.
 	 */
-	public Rect getBoundingBox(CellState state, boolean recurse)
+	Rect getBoundingBox(CellState state, bool recurse)
 	{
 		Rect bbox = null;
 
@@ -509,7 +509,7 @@ public class GraphView extends EventSource
 	/**
 	 * Shortcut to validateCell with visible set to true.
 	 */
-	public Object validateCell(Object cell)
+	Object validateCell(Object cell)
 	{
 		return validateCell(cell, true);
 	}
@@ -522,7 +522,7 @@ public class GraphView extends EventSource
 	 * @param cell Cell whose cell state should be created.
 	 * @param visible Boolean indicating if the cell should be visible.
 	 */
-	public Object validateCell(Object cell, boolean visible)
+	Object validateCell(Object cell, bool visible)
 	{
 		if (cell != null)
 		{
@@ -554,7 +554,7 @@ public class GraphView extends EventSource
 	/**
 	 * Shortcut to validateCellState with recurse set to true.
 	 */
-	public CellState validateCellState(Object cell)
+	CellState validateCellState(Object cell)
 	{
 		return validateCellState(cell, true);
 	}
@@ -566,7 +566,7 @@ public class GraphView extends EventSource
 	 * @param recurse Boolean indicating if the children of the cell should be
 	 * validated.
 	 */
-	public CellState validateCellState(Object cell, boolean recurse)
+	CellState validateCellState(Object cell, bool recurse)
 	{
 		CellState state = null;
 
@@ -623,7 +623,7 @@ public class GraphView extends EventSource
 	 * 
 	 * @param state Cell state to be updated.
 	 */
-	public void updateCellState(CellState state)
+	void updateCellState(CellState state)
 	{
 		state.getAbsoluteOffset().setX(0);
 		state.getAbsoluteOffset().setY(0);
@@ -728,7 +728,7 @@ public class GraphView extends EventSource
 	/**
 	 * Validates the given cell state.
 	 */
-	public void updateVertexState(CellState state, Geometry geo)
+	void updateVertexState(CellState state, Geometry geo)
 	{
 		// LATER: Add support for rotation
 		updateVertexLabelOffset(state);
@@ -737,7 +737,7 @@ public class GraphView extends EventSource
 	/**
 	 * Validates the given cell state.
 	 */
-	public void updateEdgeState(CellState state, Geometry geo)
+	void updateEdgeState(CellState state, Geometry geo)
 	{
 		CellState source = state.getVisibleTerminalState(true);
 		CellState target = state.getVisibleTerminalState(false);
@@ -781,7 +781,7 @@ public class GraphView extends EventSource
 	 * 
 	 * @param state Cell state whose absolute offset should be updated.
 	 */
-	public void updateVertexLabelOffset(CellState state)
+	void updateVertexLabelOffset(CellState state)
 	{
 		String horizontal = Utils.getString(state.getStyle(),
 				Constants.STYLE_LABEL_POSITION, Constants.ALIGN_CENTER);
@@ -816,7 +816,7 @@ public class GraphView extends EventSource
 	/**
 	 * Updates the label of the given state.
 	 */
-	public void updateLabel(CellState state)
+	void updateLabel(CellState state)
 	{
 		String label = _graph.getLabel(state.getCell());
 		Map<String, Object> style = state.getStyle();
@@ -862,10 +862,10 @@ public class GraphView extends EventSource
 	 * Returns the width for wrapping the label of the given state at
 	 * scale 1.
 	 */
-	public double getWordWrapWidth(CellState state)
+	double getWordWrapWidth(CellState state)
 	{
 		Map<String, Object> style = state.getStyle();
-		boolean horizontal = Utils.isTrue(style,
+		bool horizontal = Utils.isTrue(style,
 				Constants.STYLE_HORIZONTAL, true);
 		double w = 0;
 
@@ -895,7 +895,7 @@ public class GraphView extends EventSource
 	/**
 	 * Updates the label bounds in the given state.
 	 */
-	public void updateLabelBounds(CellState state)
+	void updateLabelBounds(CellState state)
 	{
 		Object cell = state.getCell();
 		Map<String, Object> style = state.getStyle();
@@ -945,7 +945,7 @@ public class GraphView extends EventSource
 	 * @param state Cell state whose bounding box should be
 	 * updated.
 	 */
-	public Rect updateBoundingBox(CellState state)
+	Rect updateBoundingBox(CellState state)
 	{
 		// Gets the cell bounds and adds shadows and markers
 		Rect rect = new Rect(state);
@@ -1069,7 +1069,7 @@ public class GraphView extends EventSource
 	 * @param source Cell state which represents the source terminal.
 	 * @param target Cell state which represents the target terminal.
 	 */
-	public void updateFixedTerminalPoints(CellState edge, CellState source,
+	void updateFixedTerminalPoints(CellState edge, CellState source,
 			CellState target)
 	{
 		updateFixedTerminalPoint(edge, source, true,
@@ -1084,8 +1084,8 @@ public class GraphView extends EventSource
 	 * @param edge Cell state whose initial terminal points should be
 	 * updated.
 	 */
-	public void updateFixedTerminalPoint(CellState edge,
-			CellState terminal, boolean source,
+	void updateFixedTerminalPoint(CellState edge,
+			CellState terminal, bool source,
 			ConnectionConstraint constraint)
 	{
 		Point2d pt = null;
@@ -1121,7 +1121,7 @@ public class GraphView extends EventSource
 	 * @param source Cell state that represents the source terminal.
 	 * @param target Cell state that represents the target terminal.
 	 */
-	public void updatePoints(CellState edge, List<Point2d> points,
+	void updatePoints(CellState edge, List<Point2d> points,
 			CellState source, CellState target)
 	{
 		if (edge != null)
@@ -1154,7 +1154,7 @@ public class GraphView extends EventSource
 	/**
 	 * Transforms the given control point to an absolute point.
 	 */
-	public Point2d transformControlPoint(CellState state, Point2d pt)
+	Point2d transformControlPoint(CellState state, Point2d pt)
 	{
 		Point2d origin = state.getOrigin();
 
@@ -1167,7 +1167,7 @@ public class GraphView extends EventSource
 	 * Returns the edge style function to be used to compute the absolute
 	 * points for the given state, control points and terminals.
 	 */
-	public EdgeStyleFunction getEdgeStyle(CellState edge,
+	EdgeStyleFunction getEdgeStyle(CellState edge,
 			List<Point2d> points, Object source, Object target)
 	{
 		Object edgeStyle = null;
@@ -1217,7 +1217,7 @@ public class GraphView extends EventSource
 	 * @param source Cell state that represents the source terminal.
 	 * @param target Cell state that represents the target terminal.
 	 */
-	public void updateFloatingTerminalPoints(CellState state,
+	void updateFloatingTerminalPoints(CellState state,
 			CellState source, CellState target)
 	{
 		Point2d p0 = state.getAbsolutePoint(0);
@@ -1243,8 +1243,8 @@ public class GraphView extends EventSource
 	 * @param end Cell state for the terminal on the other side of the edge.
 	 * @param source Boolean indicating if start is the source terminal state.
 	 */
-	public void updateFloatingTerminalPoint(CellState edge,
-			CellState start, CellState end, boolean source)
+	void updateFloatingTerminalPoint(CellState edge,
+			CellState start, CellState end, bool source)
 	{
 		start = getTerminalPort(edge, start, source);
 		Point2d next = getNextPoint(edge, end, source);
@@ -1262,8 +1262,8 @@ public class GraphView extends EventSource
 	 * Returns a cell state that represents the source or target terminal or
 	 * port for the given edge.
 	 */
-	public CellState getTerminalPort(CellState state, CellState terminal,
-			boolean source)
+	CellState getTerminalPort(CellState state, CellState terminal,
+			bool source)
 	{
 		String key = (source) ? Constants.STYLE_SOURCE_PORT
 				: Constants.STYLE_TARGET_PORT;
@@ -1288,8 +1288,8 @@ public class GraphView extends EventSource
 	 * Returns a point that defines the location of the intersection point between
 	 * the perimeter and the line between the center of the shape and the given point.
 	 */
-	public Point2d getPerimeterPoint(CellState terminal, Point2d next,
-			boolean orthogonal)
+	Point2d getPerimeterPoint(CellState terminal, Point2d next,
+			bool orthogonal)
 	{
 		return getPerimeterPoint(terminal, next, orthogonal, 0);
 	}
@@ -1306,8 +1306,8 @@ public class GraphView extends EventSource
 	 * returned.
 	 * @param border Optional border between the perimeter and the shape.
 	 */
-	public Point2d getPerimeterPoint(CellState terminal, Point2d next,
-			boolean orthogonal, double border)
+	Point2d getPerimeterPoint(CellState terminal, Point2d next,
+			bool orthogonal, double border)
 	{
 		Point2d point = null;
 
@@ -1339,7 +1339,7 @@ public class GraphView extends EventSource
 	 * 
 	 * @return Returns the x-coordinate of the routing center point.
 	 */
-	public double getRoutingCenterX(CellState state)
+	double getRoutingCenterX(CellState state)
 	{
 		float f = (state.getStyle() != null) ? Utils.getFloat(
 				state.getStyle(), Constants.STYLE_ROUTING_CENTER_X) : 0;
@@ -1352,7 +1352,7 @@ public class GraphView extends EventSource
 	 * 
 	 * @return Returns the y-coordinate of the routing center point.
 	 */
-	public double getRoutingCenterY(CellState state)
+	double getRoutingCenterY(CellState state)
 	{
 		float f = (state.getStyle() != null) ? Utils.getFloat(
 				state.getStyle(), Constants.STYLE_ROUTING_CENTER_Y) : 0;
@@ -1363,7 +1363,7 @@ public class GraphView extends EventSource
 	/**
 	 * Returns the perimeter bounds for the given terminal, edge pair.
 	 */
-	public Rect getPerimeterBounds(CellState terminal, double border)
+	Rect getPerimeterBounds(CellState terminal, double border)
 	{
 		if (terminal != null)
 		{
@@ -1377,7 +1377,7 @@ public class GraphView extends EventSource
 	/**
 	 * Returns the perimeter function for the given state.
 	 */
-	public PerimeterFunction getPerimeterFunction(CellState state)
+	PerimeterFunction getPerimeterFunction(CellState state)
 	{
 		Object perimeter = state.getStyle().get(Constants.STYLE_PERIMETER);
 
@@ -1413,8 +1413,8 @@ public class GraphView extends EventSource
 	 * should be returned.
 	 * @return Returns the nearest point of the opposite side.
 	 */
-	public Point2d getNextPoint(CellState edge, CellState opposite,
-			boolean source)
+	Point2d getNextPoint(CellState edge, CellState opposite,
+			bool source)
 	{
 		List<Point2d> pts = edge.getAbsolutePoints();
 		Point2d point = null;
@@ -1444,7 +1444,7 @@ public class GraphView extends EventSource
 	 * should be returned.
 	 * @return Returns the visible source or target terminal.
 	 */
-	public Object getVisibleTerminal(Object edge, boolean source)
+	Object getVisibleTerminal(Object edge, bool source)
 	{
 		IGraphModel model = _graph.getModel();
 		Object result = model.getTerminal(edge, source);
@@ -1475,7 +1475,7 @@ public class GraphView extends EventSource
 	 * 
 	 * @param state Cell state whose bounds should be updated.
 	 */
-	public void updateEdgeBounds(CellState state)
+	void updateEdgeBounds(CellState state)
 	{
 		List<Point2d> points = state.getAbsolutePoints();
 		Point2d p0 = points.get(0);
@@ -1535,7 +1535,7 @@ public class GraphView extends EventSource
 	/**
 	 * Returns the absolute center point along the given edge.
 	 */
-	public Point2d getPoint(CellState state)
+	Point2d getPoint(CellState state)
 	{
 		return getPoint(state, null);
 	}
@@ -1549,7 +1549,7 @@ public class GraphView extends EventSource
 	 * @return Returns the mxpoint that represents the absolute location
 	 * of the given relative geometry.
 	 */
-	public Point2d getPoint(CellState state, Geometry geometry)
+	Point2d getPoint(CellState state, Geometry geometry)
 	{
 		double x = state.getCenterX();
 		double y = state.getCenterY();
@@ -1620,7 +1620,7 @@ public class GraphView extends EventSource
 	 * Gets the relative point that describes the given, absolute label
 	 * position for the given edge state.
 	 */
-	public Point2d getRelativePoint(CellState edgeState, double x, double y)
+	Point2d getRelativePoint(CellState edgeState, double x, double y)
 	{
 		IGraphModel model = _graph.getModel();
 		Geometry geometry = model.getGeometry(edgeState.getCell());
@@ -1728,7 +1728,7 @@ public class GraphView extends EventSource
 	 * states that are not null, that is, the returned array may have less
 	 * elements than the given array.
 	 */
-	public CellState[] getCellStates(Object[] cells)
+	CellState[] getCellStates(Object[] cells)
 	{
 		List<CellState> result = new ArrayList<CellState>(cells.length);
 
@@ -1753,7 +1753,7 @@ public class GraphView extends EventSource
 	 * @param cell Cell whose state should be returned.
 	 * @return Returns the state for the given cell.
 	 */
-	public CellState getState(Object cell)
+	CellState getState(Object cell)
 	{
 		return getState(cell, false);
 	}
@@ -1767,7 +1767,7 @@ public class GraphView extends EventSource
 	 * does not yet exist.
 	 * @return Returns the state for the given cell.
 	 */
-	public CellState getState(Object cell, boolean create)
+	CellState getState(Object cell, bool create)
 	{
 		CellState state = null;
 
@@ -1791,7 +1791,7 @@ public class GraphView extends EventSource
 	 * @param cell Cell for which the CellState should be removed.
 	 * @return Returns the CellState that has been removed.
 	 */
-	public CellState removeState(Object cell)
+	CellState removeState(Object cell)
 	{
 		return (cell != null) ? (CellState) _states.remove(cell) : null;
 	}
@@ -1802,7 +1802,7 @@ public class GraphView extends EventSource
 	 * @param cell Cell for which a new state should be created.
 	 * @return Returns a new state for the given cell.
 	 */
-	public CellState createState(Object cell)
+	CellState createState(Object cell)
 	{
 		return new CellState(this, cell, _graph.getCellStyle(cell));
 	}
@@ -1810,7 +1810,7 @@ public class GraphView extends EventSource
 	/**
 	 * Action to change the current root in a view.
 	 */
-	public static class CurrentRootChange implements UndoableChange
+	static class CurrentRootChange implements UndoableChange
 	{
 
 		/**
@@ -1826,7 +1826,7 @@ public class GraphView extends EventSource
 		/**
 		 * 
 		 */
-		protected boolean up;
+		protected bool up;
 
 		/**
 		 * Constructs a change of the current root in the given view.
@@ -1883,7 +1883,7 @@ public class GraphView extends EventSource
 		/**
 		 * Returns true if the drilling went upwards.
 		 */
-		public boolean isUp()
+		public bool isUp()
 		{
 			return up;
 		}

@@ -18,40 +18,40 @@ part of graph.layout.hierarchical.model;
 /**
  * An abstraction of an internal node in the hierarchy layout
  */
-public class GraphHierarchyNode extends GraphAbstractHierarchyCell
+class GraphHierarchyNode extends GraphAbstractHierarchyCell
 {
 
 	/**
 	 * Shared empty connection map to return instead of null in applyMap.
 	 */
-	public static Collection<GraphHierarchyEdge> emptyConnectionMap = new ArrayList<GraphHierarchyEdge>(0);
+	static Collection<GraphHierarchyEdge> emptyConnectionMap = new ArrayList<GraphHierarchyEdge>(0);
 
 	/**
 	 * The graph cell this object represents.
 	 */
-	public Object cell = null;
+	Object cell = null;
 
 	/**
 	 * Collection of hierarchy edges that have this node as a target
 	 */
-	public Collection<GraphHierarchyEdge> connectsAsTarget = emptyConnectionMap;
+	Collection<GraphHierarchyEdge> connectsAsTarget = emptyConnectionMap;
 
 	/**
 	 * Collection of hierarchy edges that have this node as a source
 	 */
-	public Collection<GraphHierarchyEdge> connectsAsSource = emptyConnectionMap;
+	Collection<GraphHierarchyEdge> connectsAsSource = emptyConnectionMap;
 
 	/**
 	 * Assigns a unique hashcode for each node. Used by the model dfs instead
 	 * of copying HashSets
 	 */
-	public int[] hashCode;
+	int[] hashCode;
 
 	/**
 	 * Constructs an internal node to represent the specified real graph cell
 	 * @param cell the real graph cell this node represents
 	 */
-	public GraphHierarchyNode(Object cell)
+	GraphHierarchyNode(Object cell)
 	{
 		this.cell = cell;
 	}
@@ -60,7 +60,7 @@ public class GraphHierarchyNode extends GraphAbstractHierarchyCell
 	 * Returns the integer value of the layer that this node resides in
 	 * @return the integer value of the layer that this node resides in
 	 */
-	public int getRankValue()
+	int getRankValue()
 	{
 		return maxRank;
 	}
@@ -71,7 +71,7 @@ public class GraphHierarchyNode extends GraphAbstractHierarchyCell
 	 * @return the cells this cell connects to on the next layer up
 	 */
 	@SuppressWarnings("unchecked")
-	public List<GraphAbstractHierarchyCell> getNextLayerConnectedCells(int layer)
+	List<GraphAbstractHierarchyCell> getNextLayerConnectedCells(int layer)
 	{
 		if (_nextLayerConnectedCells == null)
 		{
@@ -106,7 +106,7 @@ public class GraphHierarchyNode extends GraphAbstractHierarchyCell
 	 * @return the cells this cell connects to on the next layer down
 	 */
 	@SuppressWarnings("unchecked")
-	public List<GraphAbstractHierarchyCell> getPreviousLayerConnectedCells(int layer)
+	List<GraphAbstractHierarchyCell> getPreviousLayerConnectedCells(int layer)
 	{
 		if (_previousLayerConnectedCells == null)
 		{
@@ -139,7 +139,7 @@ public class GraphHierarchyNode extends GraphAbstractHierarchyCell
 	 * 
 	 * @return whether or not this cell is an edge
 	 */
-	public boolean isEdge()
+	bool isEdge()
 	{
 		return false;
 	}
@@ -148,7 +148,7 @@ public class GraphHierarchyNode extends GraphAbstractHierarchyCell
 	 * 
 	 * @return whether or not this cell is a node
 	 */
-	public boolean isVertex()
+	bool isVertex()
 	{
 		return true;
 	}
@@ -160,7 +160,7 @@ public class GraphHierarchyNode extends GraphAbstractHierarchyCell
 	 *            the layer relating to a specific entry into temp
 	 * @return the value for that layer
 	 */
-	public int getGeneralPurposeVariable(int layer)
+	int getGeneralPurposeVariable(int layer)
 	{
 		return temp[0];
 	}
@@ -173,12 +173,12 @@ public class GraphHierarchyNode extends GraphAbstractHierarchyCell
 	 * @param value
 	 *            the value for that layer
 	 */
-	public void setGeneralPurposeVariable(int layer, int value)
+	void setGeneralPurposeVariable(int layer, int value)
 	{
 		temp[0] = value;
 	}
 
-	public boolean isAncestor(GraphHierarchyNode otherNode)
+	bool isAncestor(GraphHierarchyNode otherNode)
 	{
 		// Firstly, the hash code of this node needs to be shorter than the
 		// other node

@@ -3,9 +3,9 @@
  */
 part of graph.analysis;
 
-//import graph.costfunction.DoubleValCostFunction;
-//import graph.model.IGraphModel;
-//import graph.view.Graph;
+import '../cost_function/cost_function.dart' show DoubleValCostFunction;
+import '../model/model.dart' show IGraphModel;
+import '../view/view.dart' show Graph;
 
 //import java.util.ArrayList;
 //import java.util.HashMap;
@@ -16,15 +16,15 @@ part of graph.analysis;
  * Implements a collection of utility methods abstracting the graph structure
  * taking into account graph properties such as visible/non-visible traversal
  */
-public class AnalysisGraph
+class AnalysisGraph
 {
 	// contains various filters, like visibility and direction
-	protected Map<String, Object> _properties = new HashMap<String, Object>();
+	Map<String, Object> _properties = new HashMap<String, Object>();
 
 	// contains various data that is used for graph generation and analysis
-	protected GraphGenerator _generator;
+	GraphGenerator _generator;
 
-	protected Graph _graph;
+	Graph _graph;
 
 	/**
 	 * Returns the incoming and/or outgoing edges for the given cell.
@@ -45,7 +45,7 @@ public class AnalysisGraph
 	 * parent, <code>true</code>, or the direct parent, <code>false</code>
 	 * @return Returns the edges connected to the given cell.
 	 */
-	public Object[] getEdges(Object cell, Object parent, boolean incoming, boolean outgoing, boolean includeLoops, boolean recurse)
+	Object[] getEdges(Object cell, Object parent, bool incoming, bool outgoing, bool includeLoops, bool recurse)
 	{
 		if (!GraphProperties.isTraverseVisible(_properties, GraphProperties.DEFAULT_TRAVERSE_VISIBLE))
 		{
@@ -89,7 +89,7 @@ public class AnalysisGraph
 	 * parent, <code>true</code>, or the direct parent, <code>false</code>
 	 * @return Returns the edges connected to the given cell.
 	 */
-	public Object[] getEdges(Object cell, Object parent, boolean includeLoops, boolean recurse)
+	Object[] getEdges(Object cell, Object parent, bool includeLoops, bool recurse)
 	{
 		if (GraphProperties.isDirected(_properties, GraphProperties.DEFAULT_DIRECTED))
 		{
@@ -106,7 +106,7 @@ public class AnalysisGraph
 	 * @param parent
 	 * @return all vertices of the given <b>parent</b>
 	 */
-	public Object[] getChildVertices(Object parent)
+	Object[] getChildVertices(Object parent)
 	{
 		return _graph.getChildVertices(parent);
 	};
@@ -116,7 +116,7 @@ public class AnalysisGraph
 	 * @param parent
 	 * @return all edges of the given <b>parent</b>
 	 */
-	public Object[] getChildEdges(Object parent)
+	Object[] getChildEdges(Object parent)
 	{
 		return _graph.getChildEdges(parent);
 	};
@@ -127,12 +127,12 @@ public class AnalysisGraph
 	 * @param isSource
 	 * @return
 	 */
-	public Object getTerminal(Object edge, boolean isSource)
+	Object getTerminal(Object edge, bool isSource)
 	{
 		return _graph.getModel().getTerminal(edge, isSource);
 	};
 
-	public Object[] getChildCells(Object parent, boolean vertices, boolean edges)
+	Object[] getChildCells(Object parent, bool vertices, bool edges)
 	{
 		return _graph.getChildCells(parent, vertices, edges);
 	}
@@ -150,7 +150,7 @@ public class AnalysisGraph
 	 * result.
 	 * @return Returns the cells at the opposite ends of the given edges.
 	 */
-	public Object[] getOpposites(Object[] edges, Object terminal, boolean sources, boolean targets)
+	Object[] getOpposites(Object[] edges, Object terminal, bool sources, bool targets)
 	{
 		// TODO needs non-visible graph version
 
@@ -166,7 +166,7 @@ public class AnalysisGraph
 	 * returned.
 	 * @return Returns the cells at the opposite ends of the given edges.
 	 */
-	public Object[] getOpposites(Object[] edges, Object terminal)
+	Object[] getOpposites(Object[] edges, Object terminal)
 	{
 		if (GraphProperties.isDirected(_properties, GraphProperties.DEFAULT_DIRECTED))
 		{
@@ -178,27 +178,27 @@ public class AnalysisGraph
 		}
 	};
 
-	public Map<String, Object> getProperties()
+	Map<String, Object> getProperties()
 	{
 		return _properties;
 	};
 
-	public void setProperties(Map<String, Object> properties)
+	void setProperties(Map<String, Object> properties)
 	{
 		this._properties = properties;
 	};
 
-	public Graph getGraph()
+	Graph getGraph()
 	{
 		return _graph;
 	};
 
-	public void setGraph(Graph graph)
+	void setGraph(Graph graph)
 	{
 		this._graph = graph;
 	}
 
-	public GraphGenerator getGenerator()
+	GraphGenerator getGenerator()
 	{
 		if (_generator != null)
 		{
@@ -210,7 +210,7 @@ public class AnalysisGraph
 		}
 	}
 
-	public void setGenerator(GraphGenerator generator)
+	void setGenerator(GraphGenerator generator)
 	{
 		this._generator = generator;
 	};

@@ -16,36 +16,36 @@ part of graph.layout.hierarchical.model;
 /**
  * An abstraction of a hierarchical edge for the hierarchy layout
  */
-public class GraphHierarchyEdge extends GraphAbstractHierarchyCell
+class GraphHierarchyEdge extends GraphAbstractHierarchyCell
 {
 
 	/**
 	 * The graph edge(s) this object represents. Parallel edges are all grouped
 	 * together within one hierarchy edge.
 	 */
-	public List<Object> edges;
+	List<Object> edges;
 
 	/**
 	 * The node this edge is sourced at
 	 */
-	public GraphHierarchyNode source;
+	GraphHierarchyNode source;
 
 	/**
 	 * The node this edge targets
 	 */
-	public GraphHierarchyNode target;
+	GraphHierarchyNode target;
 
 	/**
 	 * Whether or not the direction of this edge has been reversed
 	 * internally to create a DAG for the hierarchical layout
 	 */
-	protected boolean _isReversed = false;
+	bool _isReversed = false;
 
 	/**
 	 * Constructs a hierarchy edge
 	 * @param edges a list of real graph edges this abstraction represents
 	 */
-	public GraphHierarchyEdge(List<Object> edges)
+	GraphHierarchyEdge(List<Object> edges)
 	{
 		this.edges = edges;
 	}
@@ -53,7 +53,7 @@ public class GraphHierarchyEdge extends GraphAbstractHierarchyCell
 	/**
 	 * Inverts the direction of this internal edge(s)
 	 */
-	public void invert()
+	void invert()
 	{
 		GraphHierarchyNode temp = source;
 		source = target;
@@ -64,7 +64,7 @@ public class GraphHierarchyEdge extends GraphAbstractHierarchyCell
 	/**
 	 * @return Returns the isReversed.
 	 */
-	public boolean isReversed()
+	bool isReversed()
 	{
 		return _isReversed;
 	}
@@ -72,7 +72,7 @@ public class GraphHierarchyEdge extends GraphAbstractHierarchyCell
 	/**
 	 * @param isReversed The isReversed to set.
 	 */
-	public void setReversed(boolean isReversed)
+	void setReversed(bool isReversed)
 	{
 		this._isReversed = isReversed;
 	}
@@ -83,7 +83,7 @@ public class GraphHierarchyEdge extends GraphAbstractHierarchyCell
 	 * @return the cells this cell connects to on the next layer up
 	 */
 	@SuppressWarnings("unchecked")
-	public List<GraphAbstractHierarchyCell> getNextLayerConnectedCells(int layer)
+	List<GraphAbstractHierarchyCell> getNextLayerConnectedCells(int layer)
 	{
 		if (_nextLayerConnectedCells == null)
 		{
@@ -113,7 +113,7 @@ public class GraphHierarchyEdge extends GraphAbstractHierarchyCell
 	 * @return the cells this cell connects to on the next layer down
 	 */
 	@SuppressWarnings("unchecked")
-	public List<GraphAbstractHierarchyCell> getPreviousLayerConnectedCells(int layer)
+	List<GraphAbstractHierarchyCell> getPreviousLayerConnectedCells(int layer)
 	{
 		if (_previousLayerConnectedCells == null)
 		{
@@ -141,7 +141,7 @@ public class GraphHierarchyEdge extends GraphAbstractHierarchyCell
 	 * 
 	 * @return whether or not this cell is an edge
 	 */
-	public boolean isEdge()
+	bool isEdge()
 	{
 		return true;
 	}
@@ -150,7 +150,7 @@ public class GraphHierarchyEdge extends GraphAbstractHierarchyCell
 	 * 
 	 * @return whether or not this cell is a node
 	 */
-	public boolean isVertex()
+	bool isVertex()
 	{
 		return false;
 	}
@@ -162,7 +162,7 @@ public class GraphHierarchyEdge extends GraphAbstractHierarchyCell
 	 *            the layer relating to a specific entry into temp
 	 * @return the value for that layer
 	 */
-	public int getGeneralPurposeVariable(int layer)
+	int getGeneralPurposeVariable(int layer)
 	{
 		return temp[layer - minRank - 1];
 	}
@@ -175,7 +175,7 @@ public class GraphHierarchyEdge extends GraphAbstractHierarchyCell
 	 * @param value
 	 *            the value for that layer
 	 */
-	public void setGeneralPurposeVariable(int layer, int value)
+	void setGeneralPurposeVariable(int layer, int value)
 	{
 		temp[layer - minRank - 1] = value;
 	}

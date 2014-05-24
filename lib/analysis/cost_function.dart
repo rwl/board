@@ -3,7 +3,7 @@
  */
 part of graph.analysis;
 
-//import graph.view.CellState;
+import '../view/view.dart' show CellState;
 
 /**
  * The cost function takes a cell and returns it's cost as a double. Two typical

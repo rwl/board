@@ -1,7 +1,7 @@
 part of graph.reader;
 
-//import graph.canvas.ICanvas2D;
-//import graph.reader.SaxOutputHandler.IElementHandler;
+import '../canvas/canvas.dart' show ICanvas2D;
+import '../reader/reader.dart' show IElementHandler;
 
 //import java.util.Hashtable;
 //import java.util.Map;
@@ -12,7 +12,7 @@ part of graph.reader;
 
 /**
  *
-	public static void main(String[] args)
+	static void main(String[] args)
 	{
 		try
 		{
@@ -52,22 +52,22 @@ part of graph.reader;
 	DomOutputParser reader = new DomOutputParser(canvas);
 	reader.read(root.getFirstChild());
  */
-public class DomOutputParser
+class DomOutputParser
 {
 	/**
 	 * 
 	 */
-	protected ICanvas2D _canvas;
+	ICanvas2D _canvas;
 
 	/**
 	 * 
 	 */
-	protected transient Map<String, IElementHandler> _handlers = new Hashtable<String, IElementHandler>();
+	transient Map<String, IElementHandler> _handlers = new Hashtable<String, IElementHandler>();
 
 	/**
 	 * 
 	 */
-	public DomOutputParser(ICanvas2D canvas)
+	DomOutputParser(ICanvas2D canvas)
 	{
 		this._canvas = canvas;
 		_initHandlers();
@@ -76,7 +76,7 @@ public class DomOutputParser
 	/**
 	 * 
 	 */
-	public void read(Node node)
+	void read(Node node)
 	{
 		while (node != null)
 		{
@@ -98,7 +98,7 @@ public class DomOutputParser
 	/**
 	 * 
 	 */
-	protected void _initHandlers()
+	void _initHandlers()
 	{
 		_handlers.put("save", new IElementHandler()
 		{
@@ -470,7 +470,7 @@ public class DomOutputParser
 	/**
 	 * Returns the given attribute value or an empty string.
 	 */
-	protected String _getValue(Element elt, String name, String defaultValue)
+	String _getValue(Element elt, String name, String defaultValue)
 	{
 		String value = elt.getAttribute(name);
 
@@ -485,7 +485,7 @@ public class DomOutputParser
 	/**
 	 * 
 	 */
-	protected interface IElementHandler
+	interface IElementHandler
 	{
 		void parseElement(Element elt);
 	}

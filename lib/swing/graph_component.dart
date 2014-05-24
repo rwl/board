@@ -3,38 +3,38 @@
  */
 part of graph.swing;
 
-//import graph.canvas.Graphics2DCanvas;
-//import graph.model.Filter;
-//import graph.model.GraphModel;
-//import graph.model.IGraphModel;
-//import graph.swing.handler.CellHandler;
-//import graph.swing.handler.ConnectionHandler;
-//import graph.swing.handler.EdgeHandler;
-//import graph.swing.handler.ElbowEdgeHandler;
-//import graph.swing.handler.GraphHandler;
-//import graph.swing.handler.GraphTransferHandler;
-//import graph.swing.handler.PanningHandler;
-//import graph.swing.handler.SelectionCellsHandler;
-//import graph.swing.handler.VertexHandler;
-//import graph.swing.util.CellOverlay;
-//import graph.swing.util.ICellOverlay;
-//import graph.swing.view.CellEditor;
-//import graph.swing.view.ICellEditor;
-//import graph.swing.view.InteractiveCanvas;
-//import graph.util.Event;
-//import graph.util.EventObj;
-//import graph.util.EventSource;
-//import graph.util.Point2d;
-//import graph.util.Rect;
-//import graph.util.Resources;
-//import graph.util.Utils;
-//import graph.util.EventSource.IEventListener;
-//import graph.view.CellState;
-//import graph.view.EdgeStyle;
-//import graph.view.Graph;
-//import graph.view.GraphView;
-//import graph.view.TemporaryCellStates;
-//import graph.view.EdgeStyle.EdgeStyleFunction;
+import '../canvas/canvas.dart' show Graphics2DCanvas;
+import '../model/model.dart' show Filter;
+import '../model/model.dart' show GraphModel;
+import '../model/model.dart' show IGraphModel;
+import '../swing/handler/handler.dart' show CellHandler;
+import '../swing/handler/handler.dart' show ConnectionHandler;
+import '../swing/handler/handler.dart' show EdgeHandler;
+import '../swing/handler/handler.dart' show ElbowEdgeHandler;
+import '../swing/handler/handler.dart' show GraphHandler;
+import '../swing/handler/handler.dart' show GraphTransferHandler;
+import '../swing/handler/handler.dart' show PanningHandler;
+import '../swing/handler/handler.dart' show SelectionCellsHandler;
+import '../swing/handler/handler.dart' show VertexHandler;
+import '../swing/util/util.dart' show CellOverlay;
+import '../swing/util/util.dart' show ICellOverlay;
+import '../swing/swing.dart' show view.CellEditor;
+import '../swing/swing.dart' show view.ICellEditor;
+import '../swing/swing.dart' show view.InteractiveCanvas;
+import '../util/util.dart' show Event;
+import '../util/util.dart' show EventObj;
+import '../util/util.dart' show EventSource;
+import '../util/util.dart' show Point2d;
+import '../util/util.dart' show Rect;
+import '../util/util.dart' show Resources;
+import '../util/util.dart' show Utils;
+import '../util/util.dart' show EventSource.IEventListener;
+import '../view/view.dart' show CellState;
+import '../view/view.dart' show EdgeStyle;
+import '../view/view.dart' show Graph;
+import '../view/view.dart' show GraphView;
+import '../view/view.dart' show TemporaryCellStates;
+import '../view/view.dart' show EdgeStyle.EdgeStyleFunction;
 
 //import java.awt.BasicStroke;
 //import java.awt.Color;
@@ -111,7 +111,7 @@ part of graph.swing;
  * method is called on the component. The <code>g</code> property contains the
  * graphics context which is used for painting.
  */
-public class GraphComponent extends JScrollPane implements Printable
+class GraphComponent extends JScrollPane implements Printable
 {
 
 	/**
@@ -122,57 +122,57 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public static final int GRID_STYLE_DOT = 0;
+	static final int GRID_STYLE_DOT = 0;
 
 	/**
 	 * 
 	 */
-	public static final int GRID_STYLE_CROSS = 1;
+	static final int GRID_STYLE_CROSS = 1;
 
 	/**
 	 * 
 	 */
-	public static final int GRID_STYLE_LINE = 2;
+	static final int GRID_STYLE_LINE = 2;
 
 	/**
 	 * 
 	 */
-	public static final int GRID_STYLE_DASHED = 3;
+	static final int GRID_STYLE_DASHED = 3;
 
 	/**
 	 * 
 	 */
-	public static final int ZOOM_POLICY_NONE = 0;
+	static final int ZOOM_POLICY_NONE = 0;
 
 	/**
 	 * 
 	 */
-	public static final int ZOOM_POLICY_PAGE = 1;
+	static final int ZOOM_POLICY_PAGE = 1;
 
 	/**
 	 * 
 	 */
-	public static final int ZOOM_POLICY_WIDTH = 2;
+	static final int ZOOM_POLICY_WIDTH = 2;
 
 	/**
 	 * 
 	 */
-	public static ImageIcon DEFAULT_EXPANDED_ICON = null;
+	static ImageIcon DEFAULT_EXPANDED_ICON = null;
 
 	/**
 	 * 
 	 */
-	public static ImageIcon DEFAULT_COLLAPSED_ICON = null;
+	static ImageIcon DEFAULT_COLLAPSED_ICON = null;
 
 	/**
 	 * 
 	 */
-	public static ImageIcon DEFAULT_WARNING_ICON = null;
+	static ImageIcon DEFAULT_WARNING_ICON = null;
 
 	/**
 	 * Specifies the default page scale. Default is 1.4
 	 */
-	public static final double DEFAULT_PAGESCALE = 1.4;
+	static final double DEFAULT_PAGESCALE = 1.4;
 
 	/**
 	 * Loads the collapse and expand icons.
@@ -193,231 +193,231 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	protected Graph _graph;
+	Graph _graph;
 
 	/**
 	 * 
 	 */
-	protected GraphControl _graphControl;
+	GraphControl _graphControl;
 
 	/**
 	 * 
 	 */
-	protected EventSource _eventSource = new EventSource(this);
+	EventSource _eventSource = new EventSource(this);
 
 	/**
 	 * 
 	 */
-	protected ICellEditor _cellEditor;
+	ICellEditor _cellEditor;
 
 	/**
 	 * 
 	 */
-	protected ConnectionHandler _connectionHandler;
+	ConnectionHandler _connectionHandler;
 
 	/**
 	 * 
 	 */
-	protected PanningHandler _panningHandler;
+	PanningHandler _panningHandler;
 
 	/**
 	 * 
 	 */
-	protected SelectionCellsHandler _selectionCellsHandler;
+	SelectionCellsHandler _selectionCellsHandler;
 
 	/**
 	 * 
 	 */
-	protected GraphHandler _graphHandler;
+	GraphHandler _graphHandler;
 
 	/**
 	 * The transparency of previewed cells from 0.0. to 0.1. 0.0 indicates
 	 * transparent, 1.0 indicates opaque. Default is 1.
 	 */
-	protected float _previewAlpha = 0.5f;
+	float _previewAlpha = 0.5f;
 
 	/**
 	 * Specifies the <Image> to be returned by <getBackgroundImage>. Default
 	 * is null.
 	 */
-	protected ImageIcon _backgroundImage;
+	ImageIcon _backgroundImage;
 
 	/**
 	 * Background page format.
 	 */
-	protected PageFormat _pageFormat = new PageFormat();
+	PageFormat _pageFormat = new PageFormat();
 
 	/**
 	 * 
 	 */
-	protected InteractiveCanvas _canvas;
+	InteractiveCanvas _canvas;
 
 	/**
 	 * 
 	 */
-	protected BufferedImage _tripleBuffer;
+	BufferedImage _tripleBuffer;
 
 	/**
 	 * 
 	 */
-	protected Graphics2D _tripleBufferGraphics;
+	Graphics2D _tripleBufferGraphics;
 
 	/**
 	 * Defines the scaling for the background page metrics. Default is
 	 * {@link #DEFAULT_PAGESCALE}.
 	 */
-	protected double _pageScale = DEFAULT_PAGESCALE;
+	double _pageScale = DEFAULT_PAGESCALE;
 
 	/**
 	 * Specifies if the background page should be visible. Default is false.
 	 */
-	protected boolean _pageVisible = false;
+	bool _pageVisible = false;
 
 	/**
 	 * If the pageFormat should be used to determine the minimal graph bounds
 	 * even if the page is not visible (see pageVisible). Default is false.
 	 */
-	protected boolean _preferPageSize = false;
+	bool _preferPageSize = false;
 
 	/**
 	 * Specifies if a dashed line should be drawn between multiple pages.
 	 */
-	protected boolean _pageBreaksVisible = true;
+	bool _pageBreaksVisible = true;
 
 	/**
 	 * Specifies the color of page breaks
 	 */
-	protected Color _pageBreakColor = Color.darkGray;
+	Color _pageBreakColor = Color.darkGray;
 
 	/**
 	 * Specifies the number of pages in the horizontal direction.
 	 */
-	protected int _horizontalPageCount = 1;
+	int _horizontalPageCount = 1;
 
 	/**
 	 * Specifies the number of pages in the vertical direction.
 	 */
-	protected int _verticalPageCount = 1;
+	int _verticalPageCount = 1;
 
 	/**
 	 * Specifies if the background page should be centered by automatically
 	 * setting the translate in the view. Default is true. This does only apply
 	 * if pageVisible is true.
 	 */
-	protected boolean _centerPage = true;
+	bool _centerPage = true;
 
 	/**
 	 * Color of the background area if layout view.
 	 */
-	protected Color _pageBackgroundColor = new Color(144, 153, 174);
+	Color _pageBackgroundColor = new Color(144, 153, 174);
 
 	/**
 	 * 
 	 */
-	protected Color _pageShadowColor = new Color(110, 120, 140);
+	Color _pageShadowColor = new Color(110, 120, 140);
 
 	/**
 	 * 
 	 */
-	protected Color _pageBorderColor = Color.black;
+	Color _pageBorderColor = Color.black;
 
 	/**
 	 * Specifies if the grid is visible. Default is false.
 	 */
-	protected boolean _gridVisible = false;
+	bool _gridVisible = false;
 
 	/**
 	 * 
 	 */
-	protected Color _gridColor = new Color(192, 192, 192);
+	Color _gridColor = new Color(192, 192, 192);
 
 	/**
 	 * Whether or not to scroll the scrollable container the graph exists in if
 	 * a suitable handler is active and the graph bounds already exist extended
 	 * in the direction of mouse travel.
 	 */
-	protected boolean _autoScroll = true;
+	bool _autoScroll = true;
 
 	/**
 	 * Whether to extend the graph bounds and scroll towards the limit of those
 	 * new bounds in the direction of mouse travel if a handler is active while
 	 * the mouse leaves the container that the graph exists in.
 	 */
-	protected boolean _autoExtend = true;
+	bool _autoExtend = true;
 
 	/**
 	 * 
 	 */
-	protected boolean _dragEnabled = true;
+	bool _dragEnabled = true;
 
 	/**
 	 * 
 	 */
-	protected boolean _importEnabled = true;
+	bool _importEnabled = true;
 
 	/**
 	 * 
 	 */
-	protected boolean _exportEnabled = true;
+	bool _exportEnabled = true;
 
 	/**
 	 * Specifies if folding (collapse and expand via an image icon in the graph
 	 * should be enabled). Default is true.
 	 */
-	protected boolean _foldingEnabled = true;
+	bool _foldingEnabled = true;
 
 	/**
 	 * Specifies the tolerance for mouse clicks. Default is 4.
 	 */
-	protected int _tolerance = 4;
+	int _tolerance = 4;
 
 	/**
 	 * Specifies if swimlanes are selected when the mouse is released over the
 	 * swimlanes content area. Default is true.
 	 */
-	protected boolean _swimlaneSelectionEnabled = true;
+	bool _swimlaneSelectionEnabled = true;
 
 	/**
 	 * Specifies if the content area should be transparent to events. Default is
 	 * true.
 	 */
-	protected boolean _transparentSwimlaneContent = true;
+	bool _transparentSwimlaneContent = true;
 
 	/**
 	 * 
 	 */
-	protected int _gridStyle = GRID_STYLE_DOT;
+	int _gridStyle = GRID_STYLE_DOT;
 
 	/**
 	 * 
 	 */
-	protected ImageIcon _expandedIcon = DEFAULT_EXPANDED_ICON;
+	ImageIcon _expandedIcon = DEFAULT_EXPANDED_ICON;
 
 	/**
 	 * 
 	 */
-	protected ImageIcon _collapsedIcon = DEFAULT_COLLAPSED_ICON;
+	ImageIcon _collapsedIcon = DEFAULT_COLLAPSED_ICON;
 
 	/**
 	 * 
 	 */
-	protected ImageIcon _warningIcon = DEFAULT_WARNING_ICON;
+	ImageIcon _warningIcon = DEFAULT_WARNING_ICON;
 
 	/**
 	 * 
 	 */
-	protected boolean _antiAlias = true;
+	bool _antiAlias = true;
 
 	/**
 	 * 
 	 */
-	protected boolean _textAntiAlias = true;
+	bool _textAntiAlias = true;
 
 	/**
 	 * Specifies <escape> should be invoked when the escape key is pressed.
 	 * Default is true.
 	 */
-	protected boolean _escapeEnabled = true;
+	bool _escapeEnabled = true;
 
 	/**
 	 * If true, when editing is to be stopped by way of selection changing, data
@@ -425,73 +425,73 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * changes are saved. This is implemented in a mouse listener in this class.
 	 * Default is true.
 	 */
-	protected boolean _invokesStopCellEditing = true;
+	bool _invokesStopCellEditing = true;
 
 	/**
 	 * If true, pressing the enter key without pressing control will stop
 	 * editing and accept the new value. This is used in <mxKeyHandler> to stop
 	 * cell editing. Default is false.
 	 */
-	protected boolean _enterStopsCellEditing = false;
+	bool _enterStopsCellEditing = false;
 
 	/**
 	 * Specifies the zoom policy. Default is ZOOM_POLICY_PAGE. The zoom policy
 	 * does only apply if pageVisible is true.
 	 */
-	protected int _zoomPolicy = ZOOM_POLICY_PAGE;
+	int _zoomPolicy = ZOOM_POLICY_PAGE;
 
 	/**
 	 * Internal flag to not reset zoomPolicy when zoom was set automatically.
 	 */
-	private transient boolean _zooming = false;
+	private transient bool _zooming = false;
 
 	/**
 	 * Specifies the factor used for zoomIn and zoomOut. Default is 1.2 (120%).
 	 */
-	protected double _zoomFactor = 1.2;
+	double _zoomFactor = 1.2;
 
 	/**
 	 * Specifies if the viewport should automatically contain the selection
 	 * cells after a zoom operation. Default is false.
 	 */
-	protected boolean _keepSelectionVisibleOnZoom = false;
+	bool _keepSelectionVisibleOnZoom = false;
 
 	/**
 	 * Specifies if the zoom operations should go into the center of the actual
 	 * diagram rather than going from top, left. Default is true.
 	 */
-	protected boolean _centerZoom = true;
+	bool _centerZoom = true;
 
 	/**
 	 * Specifies if an image buffer should be used for painting the component.
 	 * Default is false.
 	 */
-	protected boolean _tripleBuffered = false;
+	bool _tripleBuffered = false;
 
 	/**
 	 * Used for debugging the dirty region.
 	 */
-	public boolean showDirtyRectangle = false;
+	bool showDirtyRectangle = false;
 
 	/**
 	 * Maps from cells to lists of heavyweights.
 	 */
-	protected Hashtable<Object, Component[]> _components = new Hashtable<Object, Component[]>();
+	Hashtable<Object, Component[]> _components = new Hashtable<Object, Component[]>();
 
 	/**
 	 * Maps from cells to lists of overlays.
 	 */
-	protected Hashtable<Object, ICellOverlay[]> _overlays = new Hashtable<Object, ICellOverlay[]>();
+	Hashtable<Object, ICellOverlay[]> _overlays = new Hashtable<Object, ICellOverlay[]>();
 
 	/**
 	 * Boolean flag to disable centering after the first time.
 	 */
-	private transient boolean _centerOnResize = true;
+	private transient bool _centerOnResize = true;
 
 	/**
 	 * Updates the heavyweight component structure after any changes.
 	 */
-	protected IEventListener _updateHandler = new IEventListener()
+	IEventListener _updateHandler = new IEventListener()
 	{
 		public void invoke(Object sender, EventObj evt)
 		{
@@ -503,7 +503,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	protected IEventListener _repaintHandler = new IEventListener()
+	IEventListener _repaintHandler = new IEventListener()
 	{
 		public void invoke(Object source, EventObj evt)
 		{
@@ -558,7 +558,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	protected PropertyChangeListener _viewChangeHandler = new PropertyChangeListener()
+	PropertyChangeListener _viewChangeHandler = new PropertyChangeListener()
 	{
 		/**
 		 * 
@@ -607,7 +607,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * Resets the zoom policy if the scale is changed manually.
 	 */
-	protected IEventListener _scaleHandler = new IEventListener()
+	IEventListener _scaleHandler = new IEventListener()
 	{
 		/**
 		 * 
@@ -625,7 +625,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * 
 	 * @param graph
 	 */
-	public GraphComponent(Graph graph)
+	GraphComponent(Graph graph)
 	{
 		setCellEditor(_createCellEditor());
 		_canvas = createCanvas();
@@ -646,7 +646,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * installs a handler to set the focus to the container.
 	 */
-	protected void _installFocusHandler()
+	void _installFocusHandler()
 	{
 		_graphControl.addMouseListener(new MouseAdapter()
 		{
@@ -663,7 +663,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * Handles escape keystrokes.
 	 */
-	protected void _installKeyHandler()
+	void _installKeyHandler()
 	{
 		addKeyListener(new KeyAdapter()
 		{
@@ -680,7 +680,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * Applies the zoom policy if the size of the component changes.
 	 */
-	protected void _installResizeHandler()
+	void _installResizeHandler()
 	{
 		addComponentListener(new ComponentAdapter()
 		{
@@ -695,7 +695,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * Adds handling of edit and stop-edit events after all other handlers have
 	 * been installed.
 	 */
-	protected void _installDoubleClickHandler()
+	void _installDoubleClickHandler()
 	{
 		_graphControl.addMouseListener(new MouseAdapter()
 		{
@@ -727,7 +727,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	protected ICellEditor _createCellEditor()
+	ICellEditor _createCellEditor()
 	{
 		return new CellEditor(this);
 	}
@@ -735,7 +735,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public void setGraph(Graph value)
+	void setGraph(Graph value)
 	{
 		Graph oldValue = _graph;
 
@@ -784,7 +784,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * 
 	 * @return Returns the object that contains the graph.
 	 */
-	public Graph getGraph()
+	Graph getGraph()
 	{
 		return _graph;
 	}
@@ -793,7 +793,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * Creates the inner control that handles tooltips, preferred size and can
 	 * draw cells onto a canvas.
 	 */
-	protected GraphControl _createGraphControl()
+	GraphControl _createGraphControl()
 	{
 		return new GraphControl(this);
 	}
@@ -802,7 +802,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * 
 	 * @return Returns the control that renders the graph.
 	 */
-	public GraphControl getGraphControl()
+	GraphControl getGraphControl()
 	{
 		return _graphControl;
 	}
@@ -810,7 +810,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * Creates the connection-, panning and graphhandler (in this order).
 	 */
-	protected void _createHandlers()
+	void _createHandlers()
 	{
 		setTransferHandler(_createTransferHandler());
 		_panningHandler = _createPanningHandler();
@@ -822,7 +822,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	protected TransferHandler _createTransferHandler()
+	TransferHandler _createTransferHandler()
 	{
 		return new GraphTransferHandler();
 	}
@@ -830,7 +830,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 *
 	 */
-	protected SelectionCellsHandler _createSelectionCellsHandler()
+	SelectionCellsHandler _createSelectionCellsHandler()
 	{
 		return new SelectionCellsHandler(this);
 	}
@@ -838,7 +838,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 *
 	 */
-	protected GraphHandler _createGraphHandler()
+	GraphHandler _createGraphHandler()
 	{
 		return new GraphHandler(this);
 	}
@@ -846,7 +846,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public SelectionCellsHandler getSelectionCellsHandler()
+	SelectionCellsHandler getSelectionCellsHandler()
 	{
 		return _selectionCellsHandler;
 	}
@@ -854,7 +854,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public GraphHandler getGraphHandler()
+	GraphHandler getGraphHandler()
 	{
 		return _graphHandler;
 	}
@@ -862,7 +862,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 *
 	 */
-	protected ConnectionHandler _createConnectionHandler()
+	ConnectionHandler _createConnectionHandler()
 	{
 		return new ConnectionHandler(this);
 	}
@@ -870,7 +870,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public ConnectionHandler getConnectionHandler()
+	ConnectionHandler getConnectionHandler()
 	{
 		return _connectionHandler;
 	}
@@ -878,7 +878,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 *
 	 */
-	protected PanningHandler _createPanningHandler()
+	PanningHandler _createPanningHandler()
 	{
 		return new PanningHandler(this);
 	}
@@ -886,7 +886,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public PanningHandler getPanningHandler()
+	PanningHandler getPanningHandler()
 	{
 		return _panningHandler;
 	}
@@ -894,7 +894,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public boolean isEditing()
+	bool isEditing()
 	{
 		return getCellEditor().getEditingCell() != null;
 	}
@@ -902,7 +902,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public ICellEditor getCellEditor()
+	ICellEditor getCellEditor()
 	{
 		return _cellEditor;
 	}
@@ -910,7 +910,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public void setCellEditor(ICellEditor value)
+	void setCellEditor(ICellEditor value)
 	{
 		ICellEditor oldValue = _cellEditor;
 		_cellEditor = value;
@@ -921,7 +921,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * @return the tolerance
 	 */
-	public int getTolerance()
+	int getTolerance()
 	{
 		return _tolerance;
 	}
@@ -930,7 +930,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param value
 	 *            the tolerance to set
 	 */
-	public void setTolerance(int value)
+	void setTolerance(int value)
 	{
 		int oldValue = _tolerance;
 		_tolerance = value;
@@ -941,7 +941,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public PageFormat getPageFormat()
+	PageFormat getPageFormat()
 	{
 		return _pageFormat;
 	}
@@ -949,7 +949,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public void setPageFormat(PageFormat value)
+	void setPageFormat(PageFormat value)
 	{
 		PageFormat oldValue = _pageFormat;
 		_pageFormat = value;
@@ -960,7 +960,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public double getPageScale()
+	double getPageScale()
 	{
 		return _pageScale;
 	}
@@ -968,7 +968,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public void setPageScale(double value)
+	void setPageScale(double value)
 	{
 		double oldValue = _pageScale;
 		_pageScale = value;
@@ -979,7 +979,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * Returns the size of the area that layouts can operate in.
 	 */
-	public Rect getLayoutAreaSize()
+	Rect getLayoutAreaSize()
 	{
 		if (_pageVisible)
 		{
@@ -996,7 +996,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public ImageIcon getBackgroundImage()
+	ImageIcon getBackgroundImage()
 	{
 		return _backgroundImage;
 	}
@@ -1004,7 +1004,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public void setBackgroundImage(ImageIcon value)
+	void setBackgroundImage(ImageIcon value)
 	{
 		ImageIcon oldValue = _backgroundImage;
 		_backgroundImage = value;
@@ -1015,7 +1015,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * @return the pageVisible
 	 */
-	public boolean isPageVisible()
+	bool isPageVisible()
 	{
 		return _pageVisible;
 	}
@@ -1027,9 +1027,9 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param value
 	 *            the pageVisible to set
 	 */
-	public void setPageVisible(boolean value)
+	void setPageVisible(bool value)
 	{
-		boolean oldValue = _pageVisible;
+		bool oldValue = _pageVisible;
 		_pageVisible = value;
 
 		firePropertyChange("pageVisible", oldValue, _pageVisible);
@@ -1038,7 +1038,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * @return the preferPageSize
 	 */
-	public boolean isPreferPageSize()
+	bool isPreferPageSize()
 	{
 		return _preferPageSize;
 	}
@@ -1049,9 +1049,9 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param value
 	 *            the preferPageSize to set
 	 */
-	public void setPreferPageSize(boolean value)
+	void setPreferPageSize(bool value)
 	{
-		boolean oldValue = _preferPageSize;
+		bool oldValue = _preferPageSize;
 		_preferPageSize = value;
 
 		firePropertyChange("preferPageSize", oldValue, _preferPageSize);
@@ -1060,7 +1060,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * @return the pageBreaksVisible
 	 */
-	public boolean isPageBreaksVisible()
+	bool isPageBreaksVisible()
 	{
 		return _pageBreaksVisible;
 	}
@@ -1069,9 +1069,9 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param value
 	 *            the pageBreaksVisible to set
 	 */
-	public void setPageBreaksVisible(boolean value)
+	void setPageBreaksVisible(bool value)
 	{
-		boolean oldValue = _pageBreaksVisible;
+		bool oldValue = _pageBreaksVisible;
 		_pageBreaksVisible = value;
 
 		firePropertyChange("pageBreaksVisible", oldValue, _pageBreaksVisible);
@@ -1080,7 +1080,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * @return the pageBreakColor
 	 */
-	public Color getPageBreakColor()
+	Color getPageBreakColor()
 	{
 		return _pageBreakColor;
 	}
@@ -1088,7 +1088,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * @param pageBreakColor the pageBreakColor to set
 	 */
-	public void setPageBreakColor(Color pageBreakColor)
+	void setPageBreakColor(Color pageBreakColor)
 	{
 		this._pageBreakColor = pageBreakColor;
 	}
@@ -1097,7 +1097,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param value
 	 *            the horizontalPageCount to set
 	 */
-	public void setHorizontalPageCount(int value)
+	void setHorizontalPageCount(int value)
 	{
 		int oldValue = _horizontalPageCount;
 		_horizontalPageCount = value;
@@ -1108,7 +1108,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public int getHorizontalPageCount()
+	int getHorizontalPageCount()
 	{
 		return _horizontalPageCount;
 	}
@@ -1117,7 +1117,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param value
 	 *            the verticalPageCount to set
 	 */
-	public void setVerticalPageCount(int value)
+	void setVerticalPageCount(int value)
 	{
 		int oldValue = _verticalPageCount;
 		_verticalPageCount = value;
@@ -1128,7 +1128,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public int getVerticalPageCount()
+	int getVerticalPageCount()
 	{
 		return _verticalPageCount;
 	}
@@ -1136,7 +1136,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * @return the centerPage
 	 */
-	public boolean isCenterPage()
+	bool isCenterPage()
 	{
 		return _centerPage;
 	}
@@ -1147,9 +1147,9 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param value
 	 *            the centerPage to set
 	 */
-	public void setCenterPage(boolean value)
+	void setCenterPage(bool value)
 	{
-		boolean oldValue = _centerPage;
+		bool oldValue = _centerPage;
 		_centerPage = value;
 
 		firePropertyChange("centerPage", oldValue, _centerPage);
@@ -1158,7 +1158,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * @return the pageBackgroundColor
 	 */
-	public Color getPageBackgroundColor()
+	Color getPageBackgroundColor()
 	{
 		return _pageBackgroundColor;
 	}
@@ -1169,7 +1169,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param value
 	 *            the pageBackgroundColor to set
 	 */
-	public void setPageBackgroundColor(Color value)
+	void setPageBackgroundColor(Color value)
 	{
 		Color oldValue = _pageBackgroundColor;
 		_pageBackgroundColor = value;
@@ -1180,7 +1180,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * @return the pageShadowColor
 	 */
-	public Color getPageShadowColor()
+	Color getPageShadowColor()
 	{
 		return _pageShadowColor;
 	}
@@ -1189,7 +1189,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param value
 	 *            the pageShadowColor to set
 	 */
-	public void setPageShadowColor(Color value)
+	void setPageShadowColor(Color value)
 	{
 		Color oldValue = _pageShadowColor;
 		_pageShadowColor = value;
@@ -1200,7 +1200,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * @return the pageShadowColor
 	 */
-	public Color getPageBorderColor()
+	Color getPageBorderColor()
 	{
 		return _pageBorderColor;
 	}
@@ -1209,7 +1209,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param value
 	 *            the pageBorderColor to set
 	 */
-	public void setPageBorderColor(Color value)
+	void setPageBorderColor(Color value)
 	{
 		Color oldValue = _pageBorderColor;
 		_pageBorderColor = value;
@@ -1220,7 +1220,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * @return the keepSelectionVisibleOnZoom
 	 */
-	public boolean isKeepSelectionVisibleOnZoom()
+	bool isKeepSelectionVisibleOnZoom()
 	{
 		return _keepSelectionVisibleOnZoom;
 	}
@@ -1229,9 +1229,9 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param value
 	 *            the keepSelectionVisibleOnZoom to set
 	 */
-	public void setKeepSelectionVisibleOnZoom(boolean value)
+	void setKeepSelectionVisibleOnZoom(bool value)
 	{
-		boolean oldValue = _keepSelectionVisibleOnZoom;
+		bool oldValue = _keepSelectionVisibleOnZoom;
 		_keepSelectionVisibleOnZoom = value;
 
 		firePropertyChange("keepSelectionVisibleOnZoom", oldValue,
@@ -1241,7 +1241,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * @return the zoomFactor
 	 */
-	public double getZoomFactor()
+	double getZoomFactor()
 	{
 		return _zoomFactor;
 	}
@@ -1250,7 +1250,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param value
 	 *            the zoomFactor to set
 	 */
-	public void setZoomFactor(double value)
+	void setZoomFactor(double value)
 	{
 		double oldValue = _zoomFactor;
 		_zoomFactor = value;
@@ -1261,7 +1261,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * @return the centerZoom
 	 */
-	public boolean isCenterZoom()
+	bool isCenterZoom()
 	{
 		return _centerZoom;
 	}
@@ -1270,9 +1270,9 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param value
 	 *            the centerZoom to set
 	 */
-	public void setCenterZoom(boolean value)
+	void setCenterZoom(bool value)
 	{
-		boolean oldValue = _centerZoom;
+		bool oldValue = _centerZoom;
 		_centerZoom = value;
 
 		firePropertyChange("centerZoom", oldValue, _centerZoom);
@@ -1281,7 +1281,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public void setZoomPolicy(int value)
+	void setZoomPolicy(int value)
 	{
 		int oldValue = _zoomPolicy;
 		_zoomPolicy = value;
@@ -1297,7 +1297,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public int getZoomPolicy()
+	int getZoomPolicy()
 	{
 		return _zoomPolicy;
 	}
@@ -1307,7 +1307,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * 
 	 * @param e
 	 */
-	public void escape(KeyEvent e)
+	void escape(KeyEvent e)
 	{
 		if (_selectionCellsHandler != null)
 		{
@@ -1335,7 +1335,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * and returns the inserted cells. This shortcut is used if cells are
 	 * inserted via datatransfer.
 	 */
-	public Object[] importCells(Object[] cells, double dx, double dy,
+	Object[] importCells(Object[] cells, double dx, double dy,
 			Object target, Point location)
 	{
 		return _graph.moveCells(cells, dx, dy, true, target, location);
@@ -1344,7 +1344,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * Refreshes the display and handles.
 	 */
-	public void refresh()
+	void refresh()
 	{
 		_graph.refresh();
 		_selectionCellsHandler.refresh();
@@ -1354,7 +1354,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * Returns an Point2d representing the given event in the unscaled,
 	 * non-translated coordinate space and applies the grid.
 	 */
-	public Point2d getPointForEvent(MouseEvent e)
+	Point2d getPointForEvent(MouseEvent e)
 	{
 		return getPointForEvent(e, true);
 	}
@@ -1363,7 +1363,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * Returns an Point2d representing the given event in the unscaled,
 	 * non-translated coordinate space and applies the grid.
 	 */
-	public Point2d getPointForEvent(MouseEvent e, boolean addOffset)
+	Point2d getPointForEvent(MouseEvent e, bool addOffset)
 	{
 		double s = _graph.getView().getScale();
 		Point2d tr = _graph.getView().getTranslate();
@@ -1378,7 +1378,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public void startEditing()
+	void startEditing()
 	{
 		startEditingAtCell(null);
 	}
@@ -1386,7 +1386,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public void startEditingAtCell(Object cell)
+	void startEditingAtCell(Object cell)
 	{
 		startEditingAtCell(cell, null);
 	}
@@ -1394,7 +1394,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public void startEditingAtCell(Object cell, EventObject evt)
+	void startEditingAtCell(Object cell, EventObject evt)
 	{
 		if (cell == null)
 		{
@@ -1417,7 +1417,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public String getEditingValue(Object cell, EventObject trigger)
+	String getEditingValue(Object cell, EventObject trigger)
 	{
 		return _graph.convertValueToString(cell);
 	}
@@ -1425,7 +1425,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public void stopEditing(boolean cancel)
+	void stopEditing(bool cancel)
 	{
 		_cellEditor.stopEditing(cancel);
 	}
@@ -1442,7 +1442,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param evt
 	 *            Optional event that triggered the change.
 	 */
-	public Object labelChanged(Object cell, Object value, EventObject evt)
+	Object labelChanged(Object cell, Object value, EventObject evt)
 	{
 		IGraphModel model = _graph.getModel();
 
@@ -1465,7 +1465,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * Returns the (unscaled) preferred size for the current page format (scaled
 	 * by pageScale).
 	 */
-	protected Dimension _getPreferredSizeForPage()
+	Dimension _getPreferredSizeForPage()
 	{
 		return new Dimension((int) Math.round(_pageFormat.getWidth() * _pageScale
 				* _horizontalPageCount), (int) Math.round(_pageFormat.getHeight()
@@ -1475,7 +1475,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * Returns the vertical border between the page and the control.
 	 */
-	public int getVerticalPageBorder()
+	int getVerticalPageBorder()
 	{
 		return (int) Math.round(_pageFormat.getWidth() * _pageScale);
 	}
@@ -1483,7 +1483,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * Returns the horizontal border between the page and the control.
 	 */
-	public int getHorizontalPageBorder()
+	int getHorizontalPageBorder()
 	{
 		return (int) Math.round(0.5 * _pageFormat.getHeight() * _pageScale);
 	}
@@ -1491,7 +1491,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * Returns the scaled preferred size for the current graph.
 	 */
-	protected Dimension _getScaledPreferredSizeForGraph()
+	Dimension _getScaledPreferredSizeForGraph()
 	{
 		Rect bounds = _graph.getGraphBounds();
 		int border = _graph.getBorder();
@@ -1506,7 +1506,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * Should be called by a hook inside GraphView/Graph
 	 */
-	protected Point2d _getPageTranslate(double scale)
+	Point2d _getPageTranslate(double scale)
 	{
 		Dimension d = _getPreferredSizeForPage();
 		Dimension bd = new Dimension(d);
@@ -1533,7 +1533,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * policy is not none and/or update the translation of the diagram if
 	 * pageVisible and centerPage are true.
 	 */
-	public void zoomAndCenter()
+	void zoomAndCenter()
 	{
 		if (_zoomPolicy != ZOOM_POLICY_NONE)
 		{
@@ -1556,7 +1556,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * Zooms into the graph by zoomFactor.
 	 */
-	public void zoomIn()
+	void zoomIn()
 	{
 		zoom(_zoomFactor);
 	}
@@ -1566,7 +1566,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * 
 	 * Zooms out of the graph by <zoomFactor>.
 	 */
-	public void zoomOut()
+	void zoomOut()
 	{
 		zoom(1 / _zoomFactor);
 	}
@@ -1574,7 +1574,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public void zoom(double factor)
+	void zoom(double factor)
 	{
 		GraphView view = _graph.getView();
 		double newScale = (double) ((int) (view.getScale() * 100 * factor)) / 100;
@@ -1603,7 +1603,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public void zoomTo(final double newScale, final boolean center)
+	void zoomTo(final double newScale, final bool center)
 	{
 		GraphView view = _graph.getView();
 		final double scale = view.getScale();
@@ -1635,7 +1635,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * 
 	 * Resets the zoom and panning in the view.
 	 */
-	public void zoomActual()
+	void zoomActual()
 	{
 		Point2d translate = (_pageVisible && _centerPage) ? _getPageTranslate(1)
 				: new Point2d();
@@ -1686,7 +1686,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public void zoom(final boolean page, final boolean center)
+	void zoom(final bool page, final bool center)
 	{
 		if (_pageVisible && !_zooming)
 		{
@@ -1759,8 +1759,8 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 *
 	 */
-	protected void _maintainScrollBar(boolean horizontal, double factor,
-			boolean center)
+	void _maintainScrollBar(bool horizontal, double factor,
+			bool center)
 	{
 		JScrollBar scrollBar = (horizontal) ? getHorizontalScrollBar()
 				: getVerticalScrollBar();
@@ -1778,7 +1778,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public void scrollToCenter(boolean horizontal)
+	void scrollToCenter(bool horizontal)
 	{
 		JScrollBar scrollBar = (horizontal) ? getHorizontalScrollBar()
 				: getVerticalScrollBar();
@@ -1797,7 +1797,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * 
 	 * @param cell
 	 */
-	public void scrollCellToVisible(Object cell)
+	void scrollCellToVisible(Object cell)
 	{
 		scrollCellToVisible(cell, false);
 	}
@@ -1807,7 +1807,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * 
 	 * @param cell
 	 */
-	public void scrollCellToVisible(Object cell, boolean center)
+	void scrollCellToVisible(Object cell, bool center)
 	{
 		CellState state = _graph.getView().getState(cell);
 
@@ -1835,7 +1835,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param y
 	 * @return Returns the cell at the given location.
 	 */
-	public Object getCellAt(int x, int y)
+	Object getCellAt(int x, int y)
 	{
 		return getCellAt(x, y, true);
 	}
@@ -1847,7 +1847,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param hitSwimlaneContent
 	 * @return Returns the cell at the given location.
 	 */
-	public Object getCellAt(int x, int y, boolean hitSwimlaneContent)
+	Object getCellAt(int x, int y, bool hitSwimlaneContent)
 	{
 		return getCellAt(x, y, hitSwimlaneContent, null);
 	}
@@ -1865,7 +1865,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 *            Default is <defaultParent>.
 	 * @return Returns the child at the given location.
 	 */
-	public Object getCellAt(int x, int y, boolean hitSwimlaneContent,
+	Object getCellAt(int x, int y, bool hitSwimlaneContent,
 			Object parent)
 	{
 		if (parent == null)
@@ -1926,9 +1926,9 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public void setSwimlaneSelectionEnabled(boolean value)
+	void setSwimlaneSelectionEnabled(bool value)
 	{
-		boolean oldValue = _swimlaneSelectionEnabled;
+		bool oldValue = _swimlaneSelectionEnabled;
 		_swimlaneSelectionEnabled = value;
 
 		firePropertyChange("swimlaneSelectionEnabled", oldValue,
@@ -1938,7 +1938,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public boolean isSwimlaneSelectionEnabled()
+	bool isSwimlaneSelectionEnabled()
 	{
 		return _swimlaneSelectionEnabled;
 	}
@@ -1946,7 +1946,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public Object[] selectRegion(Rectangle rect, MouseEvent e)
+	Object[] selectRegion(Rectangle rect, MouseEvent e)
 	{
 		Object[] cells = getCells(rect);
 
@@ -1967,7 +1967,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * 
 	 * @return Returns the cells inside the given rectangle.
 	 */
-	public Object[] getCells(Rectangle rect)
+	Object[] getCells(Rectangle rect)
 	{
 		return getCells(rect, null);
 	}
@@ -1980,7 +1980,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * 
 	 * @return Returns the children inside the given rectangle.
 	 */
-	public Object[] getCells(Rectangle rect, Object parent)
+	Object[] getCells(Rectangle rect, Object parent)
 	{
 		Collection<Object> result = new ArrayList<Object>();
 
@@ -2040,7 +2040,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * Selects the cells for the given event.
 	 */
-	public void selectCellsForEvent(Object[] cells, MouseEvent event)
+	void selectCellsForEvent(Object[] cells, MouseEvent event)
 	{
 		if (isToggleEvent(event))
 		{
@@ -2055,9 +2055,9 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * Selects the cell for the given event.
 	 */
-	public void selectCellForEvent(Object cell, MouseEvent e)
+	void selectCellForEvent(Object cell, MouseEvent e)
 	{
-		boolean isSelected = _graph.isCellSelected(cell);
+		bool isSelected = _graph.isCellSelected(cell);
 
 		if (isToggleEvent(e))
 		{
@@ -2080,7 +2080,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * Returns true if the absolute value of one of the given parameters is
 	 * greater than the tolerance.
 	 */
-	public boolean isSignificant(double dx, double dy)
+	bool isSignificant(double dx, double dy)
 	{
 		return Math.abs(dx) > _tolerance || Math.abs(dy) > _tolerance;
 	}
@@ -2089,13 +2089,13 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * Returns the icon used to display the collapsed state of the specified
 	 * cell state. This returns null for all edges.
 	 */
-	public ImageIcon getFoldingIcon(CellState state)
+	ImageIcon getFoldingIcon(CellState state)
 	{
 		if (state != null && isFoldingEnabled()
 				&& !getGraph().getModel().isEdge(state.getCell()))
 		{
 			Object cell = state.getCell();
-			boolean tmp = _graph.isCellCollapsed(cell);
+			bool tmp = _graph.isCellCollapsed(cell);
 
 			if (_graph.isCellFoldable(cell, !tmp))
 			{
@@ -2109,10 +2109,10 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public Rectangle getFoldingIconBounds(CellState state, ImageIcon icon)
+	Rectangle getFoldingIconBounds(CellState state, ImageIcon icon)
 	{
 		IGraphModel model = _graph.getModel();
-		boolean isEdge = model.isEdge(state.getCell());
+		bool isEdge = model.isEdge(state.getCell());
 		double scale = getGraph().getView().getScale();
 
 		int x = (int) Math.round(state.getX() + 4 * scale);
@@ -2134,14 +2134,14 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 *
 	 */
-	public boolean hitFoldingIcon(Object cell, int x, int y)
+	bool hitFoldingIcon(Object cell, int x, int y)
 	{
 		if (cell != null)
 		{
 			IGraphModel model = _graph.getModel();
 
 			// Draws the collapse/expand icons
-			boolean isEdge = model.isEdge(cell);
+			bool isEdge = model.isEdge(cell);
 
 			if (_foldingEnabled && (model.isVertex(cell) || isEdge))
 			{
@@ -2166,7 +2166,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * 
 	 * @param enabled
 	 */
-	public void setToolTips(boolean enabled)
+	void setToolTips(bool enabled)
 	{
 		if (enabled)
 		{
@@ -2181,7 +2181,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public boolean isConnectable()
+	bool isConnectable()
 	{
 		return _connectionHandler.isEnabled();
 	}
@@ -2189,7 +2189,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * @param connectable
 	 */
-	public void setConnectable(boolean connectable)
+	void setConnectable(bool connectable)
 	{
 		_connectionHandler.setEnabled(connectable);
 	}
@@ -2197,7 +2197,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public boolean isPanning()
+	bool isPanning()
 	{
 		return _panningHandler.isEnabled();
 	}
@@ -2205,7 +2205,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * @param enabled
 	 */
-	public void setPanning(boolean enabled)
+	void setPanning(bool enabled)
 	{
 		_panningHandler.setEnabled(enabled);
 	}
@@ -2213,7 +2213,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * @return the autoScroll
 	 */
-	public boolean isAutoScroll()
+	bool isAutoScroll()
 	{
 		return _autoScroll;
 	}
@@ -2222,7 +2222,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param value
 	 *            the autoScroll to set
 	 */
-	public void setAutoScroll(boolean value)
+	void setAutoScroll(bool value)
 	{
 		_autoScroll = value;
 	}
@@ -2230,7 +2230,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * @return the autoExtend
 	 */
-	public boolean isAutoExtend()
+	bool isAutoExtend()
 	{
 		return _autoExtend;
 	}
@@ -2239,7 +2239,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param value
 	 *            the autoExtend to set
 	 */
-	public void setAutoExtend(boolean value)
+	void setAutoExtend(bool value)
 	{
 		_autoExtend = value;
 	}
@@ -2247,7 +2247,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * @return the escapeEnabled
 	 */
-	public boolean isEscapeEnabled()
+	bool isEscapeEnabled()
 	{
 		return _escapeEnabled;
 	}
@@ -2256,9 +2256,9 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param value
 	 *            the escapeEnabled to set
 	 */
-	public void setEscapeEnabled(boolean value)
+	void setEscapeEnabled(bool value)
 	{
-		boolean oldValue = _escapeEnabled;
+		bool oldValue = _escapeEnabled;
 		_escapeEnabled = value;
 
 		firePropertyChange("escapeEnabled", oldValue, _escapeEnabled);
@@ -2267,7 +2267,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * @return the escapeEnabled
 	 */
-	public boolean isInvokesStopCellEditing()
+	bool isInvokesStopCellEditing()
 	{
 		return _invokesStopCellEditing;
 	}
@@ -2276,9 +2276,9 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param value
 	 *            the invokesStopCellEditing to set
 	 */
-	public void setInvokesStopCellEditing(boolean value)
+	void setInvokesStopCellEditing(bool value)
 	{
-		boolean oldValue = _invokesStopCellEditing;
+		bool oldValue = _invokesStopCellEditing;
 		_invokesStopCellEditing = value;
 
 		firePropertyChange("invokesStopCellEditing", oldValue,
@@ -2288,7 +2288,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * @return the enterStopsCellEditing
 	 */
-	public boolean isEnterStopsCellEditing()
+	bool isEnterStopsCellEditing()
 	{
 		return _enterStopsCellEditing;
 	}
@@ -2297,9 +2297,9 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param value
 	 *            the enterStopsCellEditing to set
 	 */
-	public void setEnterStopsCellEditing(boolean value)
+	void setEnterStopsCellEditing(bool value)
 	{
-		boolean oldValue = _enterStopsCellEditing;
+		bool oldValue = _enterStopsCellEditing;
 		_enterStopsCellEditing = value;
 
 		firePropertyChange("enterStopsCellEditing", oldValue,
@@ -2309,7 +2309,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * @return the dragEnabled
 	 */
-	public boolean isDragEnabled()
+	bool isDragEnabled()
 	{
 		return _dragEnabled;
 	}
@@ -2318,9 +2318,9 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param value
 	 *            the dragEnabled to set
 	 */
-	public void setDragEnabled(boolean value)
+	void setDragEnabled(bool value)
 	{
-		boolean oldValue = _dragEnabled;
+		bool oldValue = _dragEnabled;
 		_dragEnabled = value;
 
 		firePropertyChange("dragEnabled", oldValue, _dragEnabled);
@@ -2329,7 +2329,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * @return the gridVisible
 	 */
-	public boolean isGridVisible()
+	bool isGridVisible()
 	{
 		return _gridVisible;
 	}
@@ -2340,9 +2340,9 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param value
 	 *            the gridVisible to set
 	 */
-	public void setGridVisible(boolean value)
+	void setGridVisible(bool value)
 	{
-		boolean oldValue = _gridVisible;
+		bool oldValue = _gridVisible;
 		_gridVisible = value;
 
 		firePropertyChange("gridVisible", oldValue, _gridVisible);
@@ -2351,7 +2351,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * @return the gridVisible
 	 */
-	public boolean isAntiAlias()
+	bool isAntiAlias()
 	{
 		return _antiAlias;
 	}
@@ -2362,9 +2362,9 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param value
 	 *            the antiAlias to set
 	 */
-	public void setAntiAlias(boolean value)
+	void setAntiAlias(bool value)
 	{
-		boolean oldValue = _antiAlias;
+		bool oldValue = _antiAlias;
 		_antiAlias = value;
 
 		firePropertyChange("antiAlias", oldValue, _antiAlias);
@@ -2373,7 +2373,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * @return the gridVisible
 	 */
-	public boolean isTextAntiAlias()
+	bool isTextAntiAlias()
 	{
 		return _antiAlias;
 	}
@@ -2384,9 +2384,9 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param value
 	 *            the textAntiAlias to set
 	 */
-	public void setTextAntiAlias(boolean value)
+	void setTextAntiAlias(bool value)
 	{
-		boolean oldValue = _textAntiAlias;
+		bool oldValue = _textAntiAlias;
 		_textAntiAlias = value;
 
 		firePropertyChange("textAntiAlias", oldValue, _textAntiAlias);
@@ -2395,7 +2395,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public float getPreviewAlpha()
+	float getPreviewAlpha()
 	{
 		return _previewAlpha;
 	}
@@ -2403,7 +2403,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public void setPreviewAlpha(float value)
+	void setPreviewAlpha(float value)
 	{
 		float oldValue = _previewAlpha;
 		_previewAlpha = value;
@@ -2414,7 +2414,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * @return the tripleBuffered
 	 */
-	public boolean isTripleBuffered()
+	bool isTripleBuffered()
 	{
 		return _tripleBuffered;
 	}
@@ -2422,7 +2422,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * Hook for dynamic triple buffering condition.
 	 */
-	public boolean isForceTripleBuffered()
+	bool isForceTripleBuffered()
 	{
 		// LATER: Dynamic condition (cell density) to use triple
 		// buffering for a large number of cells on a small rect
@@ -2433,9 +2433,9 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param value
 	 *            the tripleBuffered to set
 	 */
-	public void setTripleBuffered(boolean value)
+	void setTripleBuffered(bool value)
 	{
-		boolean oldValue = _tripleBuffered;
+		bool oldValue = _tripleBuffered;
 		_tripleBuffered = value;
 
 		firePropertyChange("tripleBuffered", oldValue, _tripleBuffered);
@@ -2444,7 +2444,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * @return the gridColor
 	 */
-	public Color getGridColor()
+	Color getGridColor()
 	{
 		return _gridColor;
 	}
@@ -2455,7 +2455,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param value
 	 *            the gridColor to set
 	 */
-	public void setGridColor(Color value)
+	void setGridColor(Color value)
 	{
 		Color oldValue = _gridColor;
 		_gridColor = value;
@@ -2466,7 +2466,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * @return the gridStyle
 	 */
-	public int getGridStyle()
+	int getGridStyle()
 	{
 		return _gridStyle;
 	}
@@ -2477,7 +2477,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param value
 	 *            the gridStyle to set
 	 */
-	public void setGridStyle(int value)
+	void setGridStyle(int value)
 	{
 		int oldValue = _gridStyle;
 		_gridStyle = value;
@@ -2488,7 +2488,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * Returns importEnabled.
 	 */
-	public boolean isImportEnabled()
+	bool isImportEnabled()
 	{
 		return _importEnabled;
 	}
@@ -2496,9 +2496,9 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * Sets importEnabled.
 	 */
-	public void setImportEnabled(boolean value)
+	void setImportEnabled(bool value)
 	{
-		boolean oldValue = _importEnabled;
+		bool oldValue = _importEnabled;
 		_importEnabled = value;
 
 		firePropertyChange("importEnabled", oldValue, _importEnabled);
@@ -2507,11 +2507,11 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * Returns all cells which may be imported via datatransfer.
 	 */
-	public Object[] getImportableCells(Object[] cells)
+	Object[] getImportableCells(Object[] cells)
 	{
 		return GraphModel.filterCells(cells, new Filter()
 		{
-			public boolean filter(Object cell)
+			public bool filter(Object cell)
 			{
 				return canImportCell(cell);
 			}
@@ -2522,7 +2522,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * Returns true if the given cell can be imported via datatransfer. This
 	 * returns importEnabled.
 	 */
-	public boolean canImportCell(Object cell)
+	bool canImportCell(Object cell)
 	{
 		return isImportEnabled();
 	}
@@ -2530,7 +2530,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * @return the exportEnabled
 	 */
-	public boolean isExportEnabled()
+	bool isExportEnabled()
 	{
 		return _exportEnabled;
 	}
@@ -2539,9 +2539,9 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param value
 	 *            the exportEnabled to set
 	 */
-	public void setExportEnabled(boolean value)
+	void setExportEnabled(bool value)
 	{
-		boolean oldValue = _exportEnabled;
+		bool oldValue = _exportEnabled;
 		_exportEnabled = value;
 
 		firePropertyChange("exportEnabled", oldValue, _exportEnabled);
@@ -2550,11 +2550,11 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * Returns all cells which may be exported via datatransfer.
 	 */
-	public Object[] getExportableCells(Object[] cells)
+	Object[] getExportableCells(Object[] cells)
 	{
 		return GraphModel.filterCells(cells, new Filter()
 		{
-			public boolean filter(Object cell)
+			public bool filter(Object cell)
 			{
 				return canExportCell(cell);
 			}
@@ -2564,7 +2564,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * Returns true if the given cell can be exported via datatransfer.
 	 */
-	public boolean canExportCell(Object cell)
+	bool canExportCell(Object cell)
 	{
 		return isExportEnabled();
 	}
@@ -2572,7 +2572,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * @return the foldingEnabled
 	 */
-	public boolean isFoldingEnabled()
+	bool isFoldingEnabled()
 	{
 		return _foldingEnabled;
 	}
@@ -2581,9 +2581,9 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param value
 	 *            the foldingEnabled to set
 	 */
-	public void setFoldingEnabled(boolean value)
+	void setFoldingEnabled(bool value)
 	{
-		boolean oldValue = _foldingEnabled;
+		bool oldValue = _foldingEnabled;
 		_foldingEnabled = value;
 
 		firePropertyChange("foldingEnabled", oldValue, _foldingEnabled);
@@ -2592,7 +2592,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public boolean isEditEvent(MouseEvent e)
+	bool isEditEvent(MouseEvent e)
 	{
 		return (e != null) ? e.getClickCount() == 2 : false;
 	}
@@ -2602,7 +2602,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param event
 	 * @return Returns true if the given event should toggle selected cells.
 	 */
-	public boolean isCloneEvent(MouseEvent event)
+	bool isCloneEvent(MouseEvent event)
 	{
 		return (event != null) ? event.isControlDown() : false;
 	}
@@ -2612,7 +2612,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param event
 	 * @return Returns true if the given event should toggle selected cells.
 	 */
-	public boolean isToggleEvent(MouseEvent event)
+	bool isToggleEvent(MouseEvent event)
 	{
 		// NOTE: IsMetaDown always returns true for right-clicks on the Mac, so
 		// toggle selection for left mouse buttons requires CMD key to be pressed,
@@ -2629,7 +2629,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param event
 	 * @return Returns true if the given event allows the grid to be applied.
 	 */
-	public boolean isGridEnabledEvent(MouseEvent event)
+	bool isGridEnabledEvent(MouseEvent event)
 	{
 		return (event != null) ? !event.isAltDown() : false;
 	}
@@ -2642,7 +2642,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param event
 	 * @return Returns true if the given event is a panning event.
 	 */
-	public boolean isPanningEvent(MouseEvent event)
+	bool isPanningEvent(MouseEvent event)
 	{
 		return (event != null) ? event.isShiftDown() && event.isControlDown()
 				: false;
@@ -2656,7 +2656,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param event
 	 * @return Returns true if the given event is constrained.
 	 */
-	public boolean isConstrainedEvent(MouseEvent event)
+	bool isConstrainedEvent(MouseEvent event)
 	{
 		return (event != null) ? event.isShiftDown() : false;
 	}
@@ -2669,7 +2669,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param event
 	 * @return Returns true if the given event is constrained.
 	 */
-	public boolean isForceMarqueeEvent(MouseEvent event)
+	bool isForceMarqueeEvent(MouseEvent event)
 	{
 		return (event != null) ? event.isAltDown() : false;
 	}
@@ -2677,7 +2677,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public Point2d snapScaledPoint(Point2d pt)
+	Point2d snapScaledPoint(Point2d pt)
 	{
 		return snapScaledPoint(pt, 0, 0);
 	}
@@ -2685,7 +2685,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public Point2d snapScaledPoint(Point2d pt, double dx, double dy)
+	Point2d snapScaledPoint(Point2d pt, double dx, double dy)
 	{
 		if (pt != null)
 		{
@@ -2714,7 +2714,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @return Returns {@link Printable#PAGE_EXISTS} or
 	 *         {@link Printable#NO_SUCH_PAGE}.
 	 */
-	public int print(Graphics g, PageFormat printFormat, int page)
+	int print(Graphics g, PageFormat printFormat, int page)
 	{
 		int result = NO_SUCH_PAGE;
 
@@ -2727,7 +2727,7 @@ public class GraphComponent extends JScrollPane implements Printable
 		GraphView view = _graph.getView();
 
 		// Stores the old state of the view
-		boolean eventsEnabled = view.isEventsEnabled();
+		bool eventsEnabled = view.isEventsEnabled();
 		Point2d translate = view.getTranslate();
 
 		// Disables firing of scale events so that there is no
@@ -2794,7 +2794,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public InteractiveCanvas getCanvas()
+	InteractiveCanvas getCanvas()
 	{
 		return _canvas;
 	}
@@ -2802,7 +2802,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public BufferedImage getTripleBuffer()
+	BufferedImage getTripleBuffer()
 	{
 		return _tripleBuffer;
 	}
@@ -2812,7 +2812,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * printing. This must be overridden to return a custom canvas if there are
 	 * any custom shapes.
 	 */
-	public InteractiveCanvas createCanvas()
+	InteractiveCanvas createCanvas()
 	{
 		// NOTE: http://forum.jgraph.com/questions/3354/ reports that we should not
 		// pass image observer here as it will cause JVM to enter infinite loop.
@@ -2825,7 +2825,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 *            Cell state for which a handler should be created.
 	 * @return Returns the handler to be used for the given cell state.
 	 */
-	public CellHandler createHandler(CellState state)
+	CellHandler createHandler(CellState state)
 	{
 		if (_graph.getModel().isVertex(state.getCell()))
 		{
@@ -2857,7 +2857,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * Hook for subclassers to create the array of heavyweights for the given
 	 * state.
 	 */
-	public Component[] createComponents(CellState state)
+	Component[] createComponents(CellState state)
 	{
 		return null;
 	}
@@ -2865,7 +2865,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public void insertComponent(CellState state, Component c)
+	void insertComponent(CellState state, Component c)
 	{
 		getGraphControl().add(c, 0);
 	}
@@ -2873,7 +2873,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public void removeComponent(Component c, Object cell)
+	void removeComponent(Component c, Object cell)
 	{
 		if (c.getParent() != null)
 		{
@@ -2884,7 +2884,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public void updateComponent(CellState state, Component c)
+	void updateComponent(CellState state, Component c)
 	{
 		int x = (int) state.getX();
 		int y = (int) state.getY();
@@ -2911,7 +2911,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public void updateComponents()
+	void updateComponents()
 	{
 		Object root = _graph.getModel().getRoot();
 		Hashtable<Object, Component[]> result = updateComponents(root);
@@ -2937,7 +2937,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public void removeAllComponents(Hashtable<Object, Component[]> map)
+	void removeAllComponents(Hashtable<Object, Component[]> map)
 	{
 		Iterator<Map.Entry<Object, Component[]>> it = map.entrySet().iterator();
 
@@ -2956,7 +2956,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public void removeAllOverlays(Hashtable<Object, ICellOverlay[]> map)
+	void removeAllOverlays(Hashtable<Object, ICellOverlay[]> map)
 	{
 		Iterator<Map.Entry<Object, ICellOverlay[]>> it = map.entrySet()
 				.iterator();
@@ -2976,7 +2976,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public Hashtable<Object, Component[]> updateComponents(Object cell)
+	Hashtable<Object, Component[]> updateComponents(Object cell)
 	{
 		Hashtable<Object, Component[]> result = new Hashtable<Object, Component[]>();
 		Component[] c = _components.remove(cell);
@@ -3035,7 +3035,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * to their cells using <setWarning>. This function returns true if no
 	 * validation errors exist in the graph.
 	 */
-	public String validateGraph()
+	String validateGraph()
 	{
 		return validateGraph(_graph.getModel().getRoot(),
 				new Hashtable<Object, Object>());
@@ -3053,11 +3053,11 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param context
 	 *            Object that represents the global validation state.
 	 */
-	public String validateGraph(Object cell, Hashtable<Object, Object> context)
+	String validateGraph(Object cell, Hashtable<Object, Object> context)
 	{
 		IGraphModel model = _graph.getModel();
 		GraphView view = _graph.getView();
-		boolean isValid = true;
+		bool isValid = true;
 		int childCount = model.getChildCount(cell);
 
 		for (int i = 0; i < childCount; i++)
@@ -3144,7 +3144,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param overlay
 	 *            Overlay to be added for the cell.
 	 */
-	public ICellOverlay addCellOverlay(Object cell, ICellOverlay overlay)
+	ICellOverlay addCellOverlay(Object cell, ICellOverlay overlay)
 	{
 		ICellOverlay[] arr = getCellOverlays(cell);
 
@@ -3181,7 +3181,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param cell
 	 *            Cell whose overlays should be returned.
 	 */
-	public ICellOverlay[] getCellOverlays(Object cell)
+	ICellOverlay[] getCellOverlays(Object cell)
 	{
 		return _overlays.get(cell);
 	}
@@ -3196,7 +3196,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param overlay
 	 *            Optional overlay to be removed.
 	 */
-	public ICellOverlay removeCellOverlay(Object cell, ICellOverlay overlay)
+	ICellOverlay removeCellOverlay(Object cell, ICellOverlay overlay)
 	{
 		if (overlay == null)
 		{
@@ -3233,7 +3233,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param cell
 	 *            Cell whose overlays should be removed.
 	 */
-	public ICellOverlay[] removeCellOverlays(Object cell)
+	ICellOverlay[] removeCellOverlays(Object cell)
 	{
 		ICellOverlay[] ovls = _overlays.remove(cell);
 
@@ -3254,7 +3254,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * implementation removes the given overlay from its parent if it is a
 	 * component inside a component hierarchy.
 	 */
-	protected void _removeCellOverlayComponent(ICellOverlay overlay,
+	void _removeCellOverlayComponent(ICellOverlay overlay,
 			Object cell)
 	{
 		if (overlay instanceof Component)
@@ -3276,7 +3276,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * implementation removes the given overlay from its parent if it is a
 	 * component inside a component hierarchy.
 	 */
-	protected void _updateCellOverlayComponent(CellState state,
+	void _updateCellOverlayComponent(CellState state,
 			ICellOverlay overlay)
 	{
 		if (overlay instanceof Component)
@@ -3305,7 +3305,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * Removes all overlays in the graph.
 	 */
-	public void clearCellOverlays()
+	void clearCellOverlays()
 	{
 		clearCellOverlays(null);
 	}
@@ -3320,7 +3320,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 *            Optional cell that represents the root of the subtree to
 	 *            remove the overlays from. Default is the root in the model.
 	 */
-	public void clearCellOverlays(Object cell)
+	void clearCellOverlays(Object cell)
 	{
 		IGraphModel model = _graph.getModel();
 
@@ -3351,7 +3351,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param warning
 	 *            String that represents the warning to be displayed.
 	 */
-	public ICellOverlay setCellWarning(Object cell, String warning)
+	ICellOverlay setCellWarning(Object cell, String warning)
 	{
 		return setCellWarning(cell, warning, null, false);
 	}
@@ -3369,7 +3369,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 *            Optional image to be used for the overlay. Default is
 	 *            warningImageBasename.
 	 */
-	public ICellOverlay setCellWarning(Object cell, String warning,
+	ICellOverlay setCellWarning(Object cell, String warning,
 			ImageIcon icon)
 	{
 		return setCellWarning(cell, warning, icon, false);
@@ -3388,11 +3388,11 @@ public class GraphComponent extends JScrollPane implements Printable
 	 *            Optional image to be used for the overlay. Default is
 	 *            warningImageBasename.
 	 * @param select
-	 *            Optional boolean indicating if a click on the overlay should
+	 *            Optional bool indicating if a click on the overlay should
 	 *            select the corresponding cell. Default is false.
 	 */
-	public ICellOverlay setCellWarning(final Object cell, String warning,
-			ImageIcon icon, boolean select)
+	ICellOverlay setCellWarning(final Object cell, String warning,
+			ImageIcon icon, bool select)
 	{
 		if (warning != null && warning.length() > 0)
 		{
@@ -3440,7 +3440,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * then its overlays are temporarly removed from the rendering control, but
 	 * kept in the result.
 	 */
-	public Hashtable<Object, ICellOverlay[]> updateCellOverlays(Object cell)
+	Hashtable<Object, ICellOverlay[]> updateCellOverlays(Object cell)
 	{
 		Hashtable<Object, ICellOverlay[]> result = new Hashtable<Object, ICellOverlay[]>();
 		ICellOverlay[] c = _overlays.remove(cell);
@@ -3480,7 +3480,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	protected void _paintBackground(Graphics g)
+	void _paintBackground(Graphics g)
 	{
 		Rectangle clip = g.getClipBounds();
 		Rectangle rect = _paintBackgroundPage(g);
@@ -3501,7 +3501,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	protected Rectangle _paintBackgroundPage(Graphics g)
+	Rectangle _paintBackgroundPage(Graphics g)
 	{
 		Point2d translate = _graph.getView().getTranslate();
 		double scale = _graph.getView().getScale();
@@ -3590,7 +3590,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	protected void _paintBackgroundImage(Graphics g)
+	void _paintBackgroundImage(Graphics g)
 	{
 		if (_backgroundImage != null)
 		{
@@ -3608,7 +3608,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * Paints the grid onto the given graphics object.
 	 */
-	protected void _paintGrid(Graphics g)
+	void _paintGrid(Graphics g)
 	{
 		if (isGridVisible())
 		{
@@ -3837,7 +3837,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * Updates the buffer (if one exists) and repaints the given cell state.
 	 */
-	public void redraw(CellState state)
+	void redraw(CellState state)
 	{
 		if (state != null)
 		{
@@ -3853,7 +3853,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * Also compares the size of the buffer with the size of the graph and drops
 	 * the buffer if it has a different size.
 	 */
-	public void checkTripleBuffer()
+	void checkTripleBuffer()
 	{
 		Rect bounds = _graph.getGraphBounds();
 		int width = (int) Math.ceil(bounds.getX() + bounds.getWidth() + 2);
@@ -3882,7 +3882,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param width
 	 * @param height
 	 */
-	protected void _createTripleBuffer(int width, int height)
+	void _createTripleBuffer(int width, int height)
 	{
 		try
 		{
@@ -3902,7 +3902,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * Destroys the tripleBuffer and tripleBufferGraphics objects.
 	 */
-	public void destroyTripleBuffer()
+	void destroyTripleBuffer()
 	{
 		if (_tripleBuffer != null)
 		{
@@ -3918,7 +3918,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * 
 	 * @param dirty
 	 */
-	public void repaintTripleBuffer(Rectangle dirty)
+	void repaintTripleBuffer(Rectangle dirty)
 	{
 		if (_tripleBuffered && _tripleBufferGraphics != null)
 		{
@@ -3945,7 +3945,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @return Returns true if event dispatching is enabled in the event source.
 	 * @see graph.util.EventSource#isEventsEnabled()
 	 */
-	public boolean isEventsEnabled()
+	bool isEventsEnabled()
 	{
 		return _eventSource.isEventsEnabled();
 	}
@@ -3954,7 +3954,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param eventsEnabled
 	 * @see graph.util.EventSource#setEventsEnabled(boolean)
 	 */
-	public void setEventsEnabled(boolean eventsEnabled)
+	void setEventsEnabled(bool eventsEnabled)
 	{
 		_eventSource.setEventsEnabled(eventsEnabled);
 	}
@@ -3965,7 +3965,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @see graph.util.EventSource#addListener(java.lang.String,
 	 *      graph.util.EventSource.IEventListener)
 	 */
-	public void addListener(String eventName, IEventListener listener)
+	void addListener(String eventName, IEventListener listener)
 	{
 		_eventSource.addListener(eventName, listener);
 	}
@@ -3974,7 +3974,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param listener
 	 *            Listener instance.
 	 */
-	public void removeListener(IEventListener listener)
+	void removeListener(IEventListener listener)
 	{
 		_eventSource.removeListener(listener);
 	}
@@ -3985,7 +3985,7 @@ public class GraphComponent extends JScrollPane implements Printable
 	 * @param listener
 	 *            Listener instance.
 	 */
-	public void removeListener(IEventListener listener, String eventName)
+	void removeListener(IEventListener listener, String eventName)
 	{
 		_eventSource.removeListener(listener, eventName);
 	}

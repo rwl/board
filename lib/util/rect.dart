@@ -9,7 +9,7 @@ part of graph.util;
 /**
  * Implements a 2-dimensional rectangle with double precision coordinates.
  */
-public class Rect extends Point2d
+class Rect extends Point2d
 {
 
 	/**
@@ -20,12 +20,12 @@ public class Rect extends Point2d
 	/**
 	 * Holds the width and the height. Default is 0.
 	 */
-	protected double _width, _height;
+	double _width, _height;
 
 	/**
 	 * Constructs a new rectangle at (0, 0) with the width and height set to 0.
 	 */
-	public Rect()
+	Rect()
 	{
 		this(0, 0, 0, 0);
 	}
@@ -35,7 +35,7 @@ public class Rect extends Point2d
 	 * 
 	 * @param rect Rectangle to construct a copy of.
 	 */
-	public Rect(Rectangle2D rect)
+	Rect(Rectangle2D rect)
 	{
 		this(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 	}
@@ -45,7 +45,7 @@ public class Rect extends Point2d
 	 * 
 	 * @param rect Rectangle to construct a copy of.
 	 */
-	public Rect(Rect rect)
+	Rect(Rect rect)
 	{
 		this(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 	}
@@ -58,7 +58,7 @@ public class Rect extends Point2d
 	 * @param width Width of the new rectangle.
 	 * @param height Height of the new rectangle.
 	 */
-	public Rect(double x, double y, double width, double height)
+	Rect(double x, double y, double width, double height)
 	{
 		super(x, y);
 
@@ -71,7 +71,7 @@ public class Rect extends Point2d
 	 * 
 	 * @return Returns the width.
 	 */
-	public double getWidth()
+	double getWidth()
 	{
 		return _width;
 	}
@@ -81,7 +81,7 @@ public class Rect extends Point2d
 	 * 
 	 * @param value Double that specifies the new width.
 	 */
-	public void setWidth(double value)
+	void setWidth(double value)
 	{
 		_width = value;
 	}
@@ -91,7 +91,7 @@ public class Rect extends Point2d
 	 * 
 	 * @return Returns the height.
 	 */
-	public double getHeight()
+	double getHeight()
 	{
 		return _height;
 	}
@@ -101,7 +101,7 @@ public class Rect extends Point2d
 	 * 
 	 * @param value Double that specifies the new height.
 	 */
-	public void setHeight(double value)
+	void setHeight(double value)
 	{
 		_height = value;
 	}
@@ -114,7 +114,7 @@ public class Rect extends Point2d
 	 * @param w the new width of the rectangle
 	 * @param h the new height of the rectangle
 	 */
-	public void setRect(double x, double y, double w, double h)
+	void setRect(double x, double y, double w, double h)
 	{
 	    this._x = x;
 	    this._y = y;
@@ -125,7 +125,7 @@ public class Rect extends Point2d
 	/**
 	 * Adds the given rectangle to this rectangle.
 	 */
-	public void add(Rect rect)
+	void add(Rect rect)
 	{
 		if (rect != null)
 		{
@@ -146,7 +146,7 @@ public class Rect extends Point2d
 	 * 
 	 * @return Returns the x-coordinate of the center.
 	 */
-	public double getCenterX()
+	double getCenterX()
 	{
 		return getX() + getWidth() / 2;
 	}
@@ -156,7 +156,7 @@ public class Rect extends Point2d
 	 * 
 	 * @return Returns the y-coordinate of the center.
 	 */
-	public double getCenterY()
+	double getCenterY()
 	{
 		return getY() + getHeight() / 2;
 	}
@@ -168,7 +168,7 @@ public class Rect extends Point2d
 	 *
 	 * @param amount Amount by which the rectangle should be grown.
 	 */
-	public void grow(double amount)
+	void grow(double amount)
 	{
 		_x -= amount;
 		_y -= amount;
@@ -183,7 +183,7 @@ public class Rect extends Point2d
 	 * @param y Y-coordinate of the point.
 	 * @return Returns true if the point is contained in the rectangle.
 	 */
-	public boolean contains(double x, double y)
+	bool contains(double x, double y)
 	{
 		return (this._x <= x && this._x + _width >= x && this._y <= y && this._y
 				+ _height >= y);
@@ -200,7 +200,7 @@ public class Rect extends Point2d
 	 * @return the point at which the line intersects this rectangle, or null
 	 * 			if there is no intersection
 	 */
-	public Point2d intersectLine(double x0, double y0, double x1, double y1)
+	Point2d intersectLine(double x0, double y0, double x1, double y1)
 	{
 		Point2d result = null;
 
@@ -231,7 +231,7 @@ public class Rect extends Point2d
 	 * 
 	 * @return Returns a new rectangle for the bounds.
 	 */
-	public Rectangle getRectangle()
+	Rectangle getRectangle()
 	{
 		int ix = (int) Math.round(_x);
 		int iy = (int) Math.round(_y);
@@ -245,7 +245,7 @@ public class Rect extends Point2d
 	 * 
 	 * Returns true if the given object equals this rectangle.
 	 */
-	public boolean equals(Object obj)
+	bool equals(Object obj)
 	{
 		if (obj instanceof Rect)
 		{
@@ -262,7 +262,7 @@ public class Rect extends Point2d
 	/**
 	 * Returns a new instance of the same rectangle.
 	 */
-	public Object clone()
+	Object clone()
 	{
 		Rect clone = (Rect) super.clone();
 
@@ -278,7 +278,7 @@ public class Rect extends Point2d
 	 * @return a <code>String</code> representing this
 	 * <code>Rect</code>.
 	 */
-	public String toString()
+	String toString()
 	{
 		return getClass().getName() + "[x=" + _x + ",y=" + _y + ",w=" + _width
 				+ ",h=" + _height + "]";

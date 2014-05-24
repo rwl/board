@@ -3,7 +3,7 @@
  */
 part of graph.io.graphml;
 
-//import graph.util.Constants;
+import '../../util/util.dart' show Constants;
 
 //import java.util.HashMap;
 //import java.util.Hashtable;
@@ -15,7 +15,7 @@ part of graph.io.graphml;
 /**
  * Represents a Data element in the GML Structure.
  */
-public class GraphMlEdge
+class GraphMlEdge
 {
 	private String _edgeId;
 
@@ -41,7 +41,7 @@ public class GraphMlEdge
 	 * @param edgeSource Source Node's ID.
 	 * @param edgeTarget Target Node's ID.
 	 */
-	public GraphMlEdge(String edgeSource, String edgeTarget,
+	GraphMlEdge(String edgeSource, String edgeTarget,
 			String edgeSourcePort, String edgeTargetPort)
 	{
 		this._edgeId = "";
@@ -56,7 +56,7 @@ public class GraphMlEdge
 	 * Construct an edge from a xml edge element.
 	 * @param edgeElement Xml edge element.
 	 */
-	public GraphMlEdge(Element edgeElement)
+	GraphMlEdge(Element edgeElement)
 	{
 		this._edgeId = edgeElement.getAttribute(GraphMlConstants.ID);
 		this._edgeSource = edgeElement.getAttribute(GraphMlConstants.EDGE_SOURCE);
@@ -79,82 +79,82 @@ public class GraphMlEdge
 		}
 	}
 
-	public String getEdgeDirected()
+	String getEdgeDirected()
 	{
 		return _edgeDirected;
 	}
 
-	public void setEdgeDirected(String edgeDirected)
+	void setEdgeDirected(String edgeDirected)
 	{
 		this._edgeDirected = edgeDirected;
 	}
 
-	public String getEdgeId()
+	String getEdgeId()
 	{
 		return _edgeId;
 	}
 
-	public void setEdgeId(String edgeId)
+	void setEdgeId(String edgeId)
 	{
 		this._edgeId = edgeId;
 	}
 
-	public String getEdgeSource()
+	String getEdgeSource()
 	{
 		return _edgeSource;
 	}
 
-	public void setEdgeSource(String edgeSource)
+	void setEdgeSource(String edgeSource)
 	{
 		this._edgeSource = edgeSource;
 	}
 
-	public String getEdgeSourcePort()
+	String getEdgeSourcePort()
 	{
 		return _edgeSourcePort;
 	}
 
-	public void setEdgeSourcePort(String edgeSourcePort)
+	void setEdgeSourcePort(String edgeSourcePort)
 	{
 		this._edgeSourcePort = edgeSourcePort;
 	}
 
-	public String getEdgeTarget()
+	String getEdgeTarget()
 	{
 		return _edgeTarget;
 	}
 
-	public void setEdgeTarget(String edgeTarget)
+	void setEdgeTarget(String edgeTarget)
 	{
 		this._edgeTarget = edgeTarget;
 	}
 
-	public String getEdgeTargetPort()
+	String getEdgeTargetPort()
 	{
 		return _edgeTargetPort;
 	}
 
-	public void setEdgeTargetPort(String edgeTargetPort)
+	void setEdgeTargetPort(String edgeTargetPort)
 	{
 		this._edgeTargetPort = edgeTargetPort;
 	}
 
-	public HashMap<String, GraphMlData> getEdgeDataMap()
+	HashMap<String, GraphMlData> getEdgeDataMap()
 	{
 		return _edgeDataMap;
 	}
 
-	public void setEdgeDataMap(HashMap<String, GraphMlData> nodeEdgeMap)
+	void setEdgeDataMap(HashMap<String, GraphMlData> nodeEdgeMap)
 	{
 		this._edgeDataMap = nodeEdgeMap;
 	}
 
-	public GraphMlData getEdgeData()
+	GraphMlData getEdgeData()
 	{
 		return _edgeData;
 	}
 
-	public void setEdgeData(GraphMlData egdeData)
+	void setEdgeData(GraphMlData egdeData)
 	{
 		this._edgeData = egdeData;
 	}
@@ -164,7 +164,7 @@ public class GraphMlEdge
 	 * @param document Document where the key Element will be inserted.
 	 * @return Returns the generated Elements.
 	 */
-	public Element generateElement(Document document)
+	Element generateElement(Document document)
 	{
 		Element edge = document.createElement(GraphMlConstants.EDGE);
 		
@@ -200,7 +200,7 @@ public class GraphMlEdge
 	 * Returns if the edge has end arrow.
 	 * @return style that indicates the end arrow type(CLASSIC or NONE).
 	 */
-	public String getEdgeStyle()
+	String getEdgeStyle()
 	{
 		String style = "";
 		Hashtable<String, Object> styleMap = new Hashtable<String, Object>();

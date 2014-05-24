@@ -9,14 +9,14 @@ part of graph.model;
 /**
  * Implements a mechanism for temporary cell Ids.
  */
-public class CellPath
+class CellPath
 {
 
 	/**
 	 * Defines the separator between the path components. Default is
 	 * <code>.</code>.
 	 */
-	public static String PATH_SEPARATOR = ".";
+	static String PATH_SEPARATOR = ".";
 
 	/**
 	 * Creates the cell path for the given cell. The cell path is a
@@ -26,7 +26,7 @@ public class CellPath
 	 * @param cell Cell whose path should be returned.
 	 * @return Returns the string that represents the path.
 	 */
-	public static String create(ICell cell)
+	static String create(ICell cell)
 	{
 		String result = "";
 
@@ -54,7 +54,7 @@ public class CellPath
 	 * 
 	 * @param path Path whose parent path should be returned.
 	 */
-	public static String getParentPath(String path)
+	static String getParentPath(String path)
 	{
 		if (path != null)
 		{
@@ -81,7 +81,7 @@ public class CellPath
 	 * @param path String that defines the path.
 	 * @return Returns the cell that is defined by the path.
 	 */
-	public static ICell resolve(ICell root, String path)
+	static ICell resolve(ICell root, String path)
 	{
 		ICell parent = root;
 		String[] tokens = path.split(Pattern.quote(PATH_SEPARATOR));
@@ -98,7 +98,7 @@ public class CellPath
 	 * Compares the given cell paths and returns -1 if cp1 is smaller, 0 if
 	 * cp1 is equal and 1 if cp1 is greater than cp2.
 	 */
-	public static int compare(String cp1, String cp2)
+	static int compare(String cp1, String cp2)
 	{
 		StringTokenizer p1 = new StringTokenizer(cp1, CellPath.PATH_SEPARATOR);
 		StringTokenizer p2 = new StringTokenizer(cp2, CellPath.PATH_SEPARATOR);

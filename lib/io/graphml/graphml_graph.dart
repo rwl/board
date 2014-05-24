@@ -3,10 +3,10 @@
  */
 part of graph.io.graphml;
 
-//import graph.model.Cell;
-//import graph.util.Point2d;
-//import graph.view.ConnectionConstraint;
-//import graph.view.Graph;
+import '../../model/model.dart' show Cell;
+import '../../util/util.dart' show Point2d;
+import '../../view/view.dart' show ConnectionConstraint;
+import '../../view/view.dart' show Graph;
 
 //import java.util.ArrayList;
 //import java.util.HashMap;
@@ -18,7 +18,7 @@ part of graph.io.graphml;
 /**
  * Represents a Graph element in the GML Structure.
  */
-public class GraphMlGraph
+class GraphMlGraph
 {
 	/**
 	 * Map with the vertex cells added in the addNode method.
@@ -38,7 +38,7 @@ public class GraphMlGraph
 	 * @param id Graph's ID
 	 * @param edgedefault Edge Default direction.("directed" or "undirected")
 	 */
-	public GraphMlGraph(String id, String edgedefault)
+	GraphMlGraph(String id, String edgedefault)
 	{
 		this._id = id;
 		this._edgedefault = edgedefault;
@@ -47,7 +47,7 @@ public class GraphMlGraph
 	/**
 	 * Constructs an empty graph.
 	 */
-	public GraphMlGraph()
+	GraphMlGraph()
 	{
 	}
 
@@ -55,7 +55,7 @@ public class GraphMlGraph
 	 * Constructs a graph from a xml graph element.
 	 * @param graphElement Xml graph element.
 	 */
-	public GraphMlGraph(Element graphElement)
+	GraphMlGraph(Element graphElement)
 	{
 		this._id = graphElement.getAttribute(GraphMlConstants.ID);
 		this._edgedefault = graphElement
@@ -101,7 +101,7 @@ public class GraphMlGraph
 	 * @param graph Graph where the elements will be located
 	 * @param parent Parent of the cells to be added.
 	 */
-	public void addGraph(Graph graph, Object parent)
+	void addGraph(Graph graph, Object parent)
 	{
 		List<GraphMlNode> nodeList = getNodes();
 
@@ -122,9 +122,9 @@ public class GraphMlGraph
 	 * @param node Gml node element.
 	 * @return Returns <code>true</code> if the node has data elements inside.
 	 */
-	public static boolean hasData(GraphMlNode node)
+	static bool hasData(GraphMlNode node)
 	{
-		boolean ret = false;
+		bool ret = false;
 		if (node.getNodeDataMap() == null)
 		{
 			ret = false;
@@ -142,7 +142,7 @@ public class GraphMlGraph
 	 * @param node Gml Node element.
 	 * @return The required data. null if not found.
 	 */
-	public static GraphMlData dataNodeKey(GraphMlNode node)
+	static GraphMlData dataNodeKey(GraphMlNode node)
 	{
 		String keyId = "";
 		HashMap<String, GraphMlKey> keyMap = GraphMlKeyManager.getInstance()
@@ -169,7 +169,7 @@ public class GraphMlGraph
 	 * @param edge Gml Edge element.
 	 * @return The required data. null if not found.
 	 */
-	public static GraphMlData dataEdgeKey(GraphMlEdge edge)
+	static GraphMlData dataEdgeKey(GraphMlEdge edge)
 	{
 		String keyId = "";
 		HashMap<String, GraphMlKey> keyMap = GraphMlKeyManager.getInstance()
@@ -344,42 +344,42 @@ public class GraphMlGraph
 		return e;
 	}
 
-	public String getEdgedefault()
+	String getEdgedefault()
 	{
 		return _edgedefault;
 	}
 
-	public void setEdgedefault(String edgedefault)
+	void setEdgedefault(String edgedefault)
 	{
 		this._edgedefault = edgedefault;
 	}
 
-	public String getId()
+	String getId()
 	{
 		return _id;
 	}
 
-	public void setId(String id)
+	void setId(String id)
 	{
 		this._id = id;
 	}
 
-	public List<GraphMlNode> getNodes()
+	List<GraphMlNode> getNodes()
 	{
 		return _nodes;
 	}
 
-	public void setNodes(List<GraphMlNode> node)
+	void setNodes(List<GraphMlNode> node)
 	{
 		this._nodes = node;
 	}
 
-	public List<GraphMlEdge> getEdges()
+	List<GraphMlEdge> getEdges()
 	{
 		return _edges;
 	}
 
-	public void setEdges(List<GraphMlEdge> edge)
+	void setEdges(List<GraphMlEdge> edge)
 	{
 		this._edges = edge;
 	}
@@ -388,7 +388,7 @@ public class GraphMlGraph
 	 * Checks if the graph has child nodes or edges.
 	 * @return Returns <code>true</code> if the graph hasn't child nodes or edges.
 	 */
-	public boolean isEmpty()
+	bool isEmpty()
 	{
 		return _nodes.size() == 0 && _edges.size() == 0;
 	}
@@ -398,7 +398,7 @@ public class GraphMlGraph
 	 * @param document Document where the key Element will be inserted.
 	 * @return Returns the generated Elements.
 	 */
-	public Element generateElement(Document document)
+	Element generateElement(Document document)
 	{
 		Element graph = document.createElement(GraphMlConstants.GRAPH);
 

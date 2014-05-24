@@ -9,12 +9,12 @@ part of graph.io.graphml;
 /**
  * Represents a Key element in the GML Structure.
  */
-public class GraphMlKey
+class GraphMlKey
 {
 	/**
 	 * Possibles values for the keyFor Attribute
 	 */
-	public enum keyForValues
+	enum keyForValues
 	{
 		GRAPH, NODE, EDGE, HYPEREDGE, PORT, ENDPOINT, ALL
 	}
@@ -22,7 +22,7 @@ public class GraphMlKey
 	/**
 	 * Possibles values for the keyType Attribute.
 	 */
-	public enum keyTypeValues
+	enum keyTypeValues
 	{
 		BOOLEAN, INT, LONG, FLOAT, DOUBLE, STRING
 	}
@@ -44,7 +44,7 @@ public class GraphMlKey
 	 * @param keyName Key Name
 	 * @param keyType Type of the values represented for this key.
 	 */
-	public GraphMlKey(String keyId, keyForValues keyFor, String keyName,
+	GraphMlKey(String keyId, keyForValues keyFor, String keyName,
 			keyTypeValues keyType)
 	{
 		this._keyId = keyId;
@@ -58,7 +58,7 @@ public class GraphMlKey
 	 * Construct a key from a xml key element.
 	 * @param keyElement Xml key element.
 	 */
-	public GraphMlKey(Element keyElement)
+	GraphMlKey(Element keyElement)
 	{
 		this._keyId = keyElement.getAttribute(GraphMlConstants.ID);
 		this._keyFor = enumForValue(keyElement
@@ -69,52 +69,52 @@ public class GraphMlKey
 		this._keyDefault = _defaultValue();
 	}
 
-	public String getKeyDefault()
+	String getKeyDefault()
 	{
 		return _keyDefault;
 	}
 
-	public void setKeyDefault(String keyDefault)
+	void setKeyDefault(String keyDefault)
 	{
 		this._keyDefault = keyDefault;
 	}
 
-	public keyForValues getKeyFor()
+	keyForValues getKeyFor()
 	{
 		return _keyFor;
 	}
 
-	public void setKeyFor(keyForValues keyFor)
+	void setKeyFor(keyForValues keyFor)
 	{
 		this._keyFor = keyFor;
 	}
 
-	public String getKeyId()
+	String getKeyId()
 	{
 		return _keyId;
 	}
 
-	public void setKeyId(String keyId)
+	void setKeyId(String keyId)
 	{
 		this._keyId = keyId;
 	}
 
-	public String getKeyName()
+	String getKeyName()
 	{
 		return _keyName;
 	}
 
-	public void setKeyName(String keyName)
+	void setKeyName(String keyName)
 	{
 		this._keyName = keyName;
 	}
 
-	public keyTypeValues getKeyType()
+	keyTypeValues getKeyType()
 	{
 		return _keyType;
 	}
 
-	public void setKeyType(keyTypeValues keyType)
+	void setKeyType(keyTypeValues keyType)
 	{
 		this._keyType = keyType;
 	}
@@ -167,7 +167,7 @@ public class GraphMlKey
 	 * @param document Document where the key Element will be inserted.
 	 * @return Returns the generated Elements.
 	 */
-	public Element generateElement(Document document)
+	Element generateElement(Document document)
 	{
 		Element key = document.createElement(GraphMlConstants.KEY);
 		
@@ -201,7 +201,7 @@ public class GraphMlKey
 	 * @param value Value in String representation.
 	 * @return Returns the value in its enum representation.
 	 */
-	public keyForValues enumForValue(String value)
+	keyForValues enumForValue(String value)
 	{
 		keyForValues enumVal = keyForValues.ALL;
 		
@@ -243,7 +243,7 @@ public class GraphMlKey
 	 * @param value Value in enum representation.
 	 * @return Returns the value in its String representation.
 	 */
-	public String stringForValue(keyForValues value)
+	String stringForValue(keyForValues value)
 	{
 
 		String val = GraphMlConstants.ALL;
@@ -296,7 +296,7 @@ public class GraphMlKey
 	 * @param value Value in String representation.
 	 * @return Returns the value in its enum representation.
 	 */
-	public keyTypeValues enumTypeValue(String value)
+	keyTypeValues enumTypeValue(String value)
 	{
 		keyTypeValues enumVal = keyTypeValues.STRING;
 		
@@ -334,7 +334,7 @@ public class GraphMlKey
 	 * @param value Value in enum representation.
 	 * @return Returns the value in its String representation.
 	 */
-	public String stringTypeValue(keyTypeValues value)
+	String stringTypeValue(keyTypeValues value)
 	{
 		String val = "string";
 		

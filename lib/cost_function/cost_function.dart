@@ -1,6 +1,6 @@
 library graph.costfunction;
 
-//import graph.analysis.ICostFunction;
+import '../analysis/analysis.dart' show ICostFunction;
 
 part 'const_cost_function.dart';
 part 'double_val_cost_function.dart';

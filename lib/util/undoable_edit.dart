@@ -9,13 +9,13 @@ part of graph.util;
 /**
  * Implements a 2-dimensional rectangle with double precision coordinates.
  */
-public class UndoableEdit
+class UndoableEdit
 {
 
 	/**
 	 * Defines the requirements for an undoable change.
 	 */
-	public interface UndoableChange
+	interface UndoableChange
 	{
 
 		/**
@@ -28,27 +28,27 @@ public class UndoableEdit
 	/**
 	 * Holds the source of the undoable edit.
 	 */
-	protected Object _source;
+	Object _source;
 
 	/**
 	 * Holds the list of changes that make up this undoable edit.
 	 */
-	protected List<UndoableChange> _changes = new ArrayList<UndoableChange>();
+	List<UndoableChange> _changes = new ArrayList<UndoableChange>();
 
 	/**
 	 * Specifies this undoable edit is significant. Default is true.
 	 */
-	protected boolean _significant = true;
+	bool _significant = true;
 
 	/**
 	 * Specifies the state of the undoable edit.
 	 */
-	protected boolean _undone, _redone;
+	bool _undone, _redone;
 
 	/**
 	 * Constructs a new undoable edit for the given source.
 	 */
-	public UndoableEdit(Object source)
+	UndoableEdit(Object source)
 	{
 		this(source, true);
 	}
@@ -56,7 +56,7 @@ public class UndoableEdit
 	/**
 	 * Constructs a new undoable edit for the given source.
 	 */
-	public UndoableEdit(Object source, boolean significant)
+	UndoableEdit(Object source, bool significant)
 	{
 		this._source = source;
 		this._significant = significant;
@@ -66,7 +66,7 @@ public class UndoableEdit
 	 * Hook to notify any listeners of the changes after an undo or redo
 	 * has been carried out. This implementation is empty.
 	 */
-	public void dispatch()
+	void dispatch()
 	{
 		// empty
 	}
@@ -75,7 +75,7 @@ public class UndoableEdit
 	 * Hook to free resources after the edit has been removed from the command
 	 * history. This implementation is empty.
 	 */
-	public void die()
+	void die()
 	{
 		// empty
 	}
@@ -83,7 +83,7 @@ public class UndoableEdit
 	/**
 	 * @return the source
 	 */
-	public Object getSource()
+	Object getSource()
 	{
 		return _source;
 	}
@@ -91,7 +91,7 @@ public class UndoableEdit
 	/**
 	 * @return the changes
 	 */
-	public List<UndoableChange> getChanges()
+	List<UndoableChange> getChanges()
 	{
 		return _changes;
 	}
@@ -99,7 +99,7 @@ public class UndoableEdit
 	/**
 	 * @return the significant
 	 */
-	public boolean isSignificant()
+	bool isSignificant()
 	{
 		return _significant;
 	}
@@ -107,7 +107,7 @@ public class UndoableEdit
 	/**
 	 * @return the undone
 	 */
-	public boolean isUndone()
+	bool isUndone()
 	{
 		return _undone;
 	}
@@ -115,7 +115,7 @@ public class UndoableEdit
 	/**
 	 * @return the redone
 	 */
-	public boolean isRedone()
+	bool isRedone()
 	{
 		return _redone;
 	}
@@ -123,7 +123,7 @@ public class UndoableEdit
 	/**
 	 * Returns true if the this edit contains no changes.
 	 */
-	public boolean isEmpty()
+	bool isEmpty()
 	{
 		return _changes.isEmpty();
 	}
@@ -132,7 +132,7 @@ public class UndoableEdit
 	 * Adds the specified change to this edit. The change is an object that is
 	 * expected to either have an undo and redo, or an execute function.
 	 */
-	public void add(UndoableChange change)
+	void add(UndoableChange change)
 	{
 		_changes.add(change);
 	}
@@ -140,7 +140,7 @@ public class UndoableEdit
 	/**
 	 * 
 	 */
-	public void undo()
+	void undo()
 	{
 		if (!_undone)
 		{
@@ -162,7 +162,7 @@ public class UndoableEdit
 	/**
 	 * 
 	 */
-	public void redo()
+	void redo()
 	{
 		if (!_redone)
 		{

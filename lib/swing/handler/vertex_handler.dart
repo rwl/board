@@ -3,14 +3,14 @@
  */
 part of graph.swing.handler;
 
-//import graph.model.Geometry;
-//import graph.swing.GraphComponent;
-//import graph.swing.util.SwingConstants;
-//import graph.util.Constants;
-//import graph.util.Point2d;
-//import graph.util.Rect;
-//import graph.view.CellState;
-//import graph.view.Graph;
+import '../../model/model.dart' show Geometry;
+import '../../swing/swing.dart' show GraphComponent;
+import '../../swing/util/util.dart' show SwingConstants;
+import '../../util/util.dart' show Constants;
+import '../../util/util.dart' show Point2d;
+import '../../util/util.dart' show Rect;
+import '../../view/view.dart' show CellState;
+import '../../view/view.dart' show Graph;
 
 //import java.awt.Color;
 //import java.awt.Cursor;
@@ -26,13 +26,13 @@ part of graph.swing.handler;
 /**
  * 
  */
-public class VertexHandler extends CellHandler
+class VertexHandler extends CellHandler
 {
 
 	/**
 	 * 
 	 */
-	public static Cursor[] CURSORS = new Cursor[] {
+	static Cursor[] CURSORS = new Cursor[] {
 			new Cursor(Cursor.NW_RESIZE_CURSOR),
 			new Cursor(Cursor.N_RESIZE_CURSOR),
 			new Cursor(Cursor.NE_RESIZE_CURSOR),
@@ -45,19 +45,19 @@ public class VertexHandler extends CellHandler
 	/**
 	 * Workaround for alt-key-state not correct in mouseReleased.
 	 */
-	protected transient boolean _gridEnabledEvent = false;
+	transient bool _gridEnabledEvent = false;
 
 	/**
 	 * Workaround for shift-key-state not correct in mouseReleased.
 	 */
-	protected transient boolean _constrainedEvent = false;
+	transient bool _constrainedEvent = false;
 
 	/**
 	 * 
 	 * @param graphComponent
 	 * @param state
 	 */
-	public VertexHandler(GraphComponent graphComponent, CellState state)
+	VertexHandler(GraphComponent graphComponent, CellState state)
 	{
 		super(graphComponent, state);
 	}
@@ -65,7 +65,7 @@ public class VertexHandler extends CellHandler
 	/**
 	 * 
 	 */
-	protected Rectangle[] _createHandles()
+	Rectangle[] _createHandles()
 	{
 		Rectangle[] h = null;
 
@@ -112,7 +112,7 @@ public class VertexHandler extends CellHandler
 	/**
 	 * 
 	 */
-	protected JComponent _createPreview()
+	JComponent _createPreview()
 	{
 		JPanel preview = new JPanel();
 		preview.setBorder(SwingConstants.PREVIEW_BORDER);
@@ -125,7 +125,7 @@ public class VertexHandler extends CellHandler
 	/**
 	 * 
 	 */
-	public void mouseDragged(MouseEvent e)
+	void mouseDragged(MouseEvent e)
 	{
 		if (!e.isConsumed() && _first != null)
 		{
@@ -192,7 +192,7 @@ public class VertexHandler extends CellHandler
 	/**
 	 * 
 	 */
-	public void mouseReleased(MouseEvent e)
+	void mouseReleased(MouseEvent e)
 	{
 		if (!e.isConsumed() && _first != null)
 		{
@@ -217,7 +217,7 @@ public class VertexHandler extends CellHandler
 	/**
 	 * 
 	 */
-	protected void _moveLabel(MouseEvent e)
+	void _moveLabel(MouseEvent e)
 	{
 		Graph graph = _graphComponent.getGraph();
 		Geometry geometry = graph.getModel().getGeometry(_state.getCell());
@@ -267,7 +267,7 @@ public class VertexHandler extends CellHandler
 	 * 
 	 * @param e
 	 */
-	protected void _resizeCell(MouseEvent e)
+	void _resizeCell(MouseEvent e)
 	{
 		Graph graph = _graphComponent.getGraph();
 		double scale = graph.getView().getScale();
@@ -323,7 +323,7 @@ public class VertexHandler extends CellHandler
 	/**
 	 * 
 	 */
-	protected Cursor _getCursor(MouseEvent e, int index)
+	Cursor _getCursor(MouseEvent e, int index)
 	{
 		if (index >= 0 && index <= CURSORS.length)
 		{
@@ -340,7 +340,7 @@ public class VertexHandler extends CellHandler
 	 * @param dy
 	 * @param index
 	 */
-	protected Rect _union(Rect bounds, double dx, double dy,
+	Rect _union(Rect bounds, double dx, double dy,
 			int index)
 	{
 		double left = bounds.getX();
@@ -389,7 +389,7 @@ public class VertexHandler extends CellHandler
 	/**
 	 * 
 	 */
-	public Color getSelectionColor()
+	Color getSelectionColor()
 	{
 		return SwingConstants.VERTEX_SELECTION_COLOR;
 	}
@@ -397,7 +397,7 @@ public class VertexHandler extends CellHandler
 	/**
 	 * 
 	 */
-	public Stroke getSelectionStroke()
+	Stroke getSelectionStroke()
 	{
 		return SwingConstants.VERTEX_SELECTION_STROKE;
 	}
@@ -405,7 +405,7 @@ public class VertexHandler extends CellHandler
 	/**
 	 * 
 	 */
-	public void paint(Graphics g)
+	void paint(Graphics g)
 	{
 		Rectangle bounds = getState().getRectangle();
 

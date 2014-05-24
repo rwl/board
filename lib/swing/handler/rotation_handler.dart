@@ -1,14 +1,14 @@
 part of graph.swing.handler;
 
-//import graph.swing.GraphComponent;
-//import graph.swing.util.MouseAdapter;
-//import graph.util.Constants;
-//import graph.util.Event;
-//import graph.util.EventObj;
-//import graph.util.Rect;
-//import graph.util.Utils;
-//import graph.util.EventSource.IEventListener;
-//import graph.view.CellState;
+import '../../swing/swing.dart' show GraphComponent;
+import '../../swing/util/util.dart' show MouseAdapter;
+import '../../util/util.dart' show Constants;
+import '../../util/util.dart' show Event;
+import '../../util/util.dart' show EventObj;
+import '../../util/util.dart' show Rect;
+import '../../util/util.dart' show Utils;
+import '../../util/util.dart' show EventSource.IEventListener;
+import '../../view/view.dart' show CellState;
 
 //import java.awt.Cursor;
 //import java.awt.Graphics;
@@ -30,12 +30,12 @@ part of graph.swing.handler;
  * Note that the Java core does actually not support rotation for the selection handles,
  * perimeter points etc. Feel free to contribute a fix!
  */
-public class RotationHandler extends MouseAdapter
+class RotationHandler extends MouseAdapter
 {
 	/**
 	 * 
 	 */
-	public static ImageIcon ROTATE_ICON = null;
+	static ImageIcon ROTATE_ICON = null;
 
 	/**
 	 * Loads the collapse and expand icons.
@@ -55,42 +55,42 @@ public class RotationHandler extends MouseAdapter
 	/**
 	 * Reference to the enclosing graph component.
 	 */
-	protected GraphComponent _graphComponent;
+	GraphComponent _graphComponent;
 
 	/**
 	 * Specifies if this handler is enabled. Default is true.
 	 */
-	protected boolean _enabled = true;
+	bool _enabled = true;
 
 	/**
 	 * 
 	 */
-	protected JComponent _handle;
+	JComponent _handle;
 
 	/**
 	 * 
 	 */
-	protected CellState _currentState;
+	CellState _currentState;
 
 	/**
 	 * 
 	 */
-	protected double _initialAngle;
+	double _initialAngle;
 
 	/**
 	 * 
 	 */
-	protected double _currentAngle;
+	double _currentAngle;
 
 	/**
 	 * 
 	 */
-	protected Point _first;
+	Point _first;
 
 	/**
 	 * Constructs a new rotation handler.
 	 */
-	public RotationHandler(GraphComponent graphComponent)
+	RotationHandler(GraphComponent graphComponent)
 	{
 		this._graphComponent = graphComponent;
 		graphComponent.addMouseListener(this);
@@ -118,7 +118,7 @@ public class RotationHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public GraphComponent getGraphComponent()
+	GraphComponent getGraphComponent()
 	{
 		return _graphComponent;
 	}
@@ -126,7 +126,7 @@ public class RotationHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public boolean isEnabled()
+	bool isEnabled()
 	{
 		return _enabled;
 	}
@@ -134,7 +134,7 @@ public class RotationHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void setEnabled(boolean value)
+	void setEnabled(bool value)
 	{
 		_enabled = value;
 	}
@@ -142,7 +142,7 @@ public class RotationHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	protected JComponent _createHandle()
+	JComponent _createHandle()
 	{
 		JLabel label = new JLabel(ROTATE_ICON);
 		label.setSize(ROTATE_ICON.getIconWidth(), ROTATE_ICON.getIconHeight());
@@ -154,7 +154,7 @@ public class RotationHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public boolean isStateHandled(CellState state)
+	bool isStateHandled(CellState state)
 	{
 		return _graphComponent.getGraph().getModel().isVertex(state.getCell());
 	}
@@ -162,7 +162,7 @@ public class RotationHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void mousePressed(MouseEvent e)
+	void mousePressed(MouseEvent e)
 	{
 		if (_currentState != null && _handle.getParent() != null
 				&& e.getSource() == _handle /* mouse hits handle */)
@@ -175,7 +175,7 @@ public class RotationHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void start(MouseEvent e)
+	void start(MouseEvent e)
 	{
 		_initialAngle = Utils.getDouble(_currentState.getStyle(),
 				Constants.STYLE_ROTATION) * Constants.RAD_PER_DEG;
@@ -192,7 +192,7 @@ public class RotationHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void mouseMoved(MouseEvent e)
+	void mouseMoved(MouseEvent e)
 	{
 		if (_graphComponent.isEnabled() && isEnabled())
 		{
@@ -253,7 +253,7 @@ public class RotationHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void mouseDragged(MouseEvent e)
+	void mouseDragged(MouseEvent e)
 	{
 		if (_graphComponent.isEnabled() && isEnabled() && !e.isConsumed()
 				&& _first != null)
@@ -289,7 +289,7 @@ public class RotationHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void mouseReleased(MouseEvent e)
+	void mouseReleased(MouseEvent e)
 	{
 		if (_graphComponent.isEnabled() && isEnabled() && !e.isConsumed()
 				&& _first != null)
@@ -305,7 +305,7 @@ public class RotationHandler extends MouseAdapter
 			}
 
 			deg += _currentAngle * Constants.DEG_PER_RAD;
-			boolean willExecute = cell != null && _first != null;
+			bool willExecute = cell != null && _first != null;
 
 			// TODO: Call reset before execute in all handlers that
 			// offer an execute method
@@ -330,7 +330,7 @@ public class RotationHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void reset()
+	void reset()
 	{
 		if (_handle.getParent() != null)
 		{
@@ -359,7 +359,7 @@ public class RotationHandler extends MouseAdapter
 	/**
 	 *
 	 */
-	public void paint(Graphics g)
+	void paint(Graphics g)
 	{
 		if (_currentState != null && _first != null)
 		{

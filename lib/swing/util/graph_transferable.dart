@@ -3,7 +3,7 @@
  */
 part of graph.swing.util;
 
-//import graph.util.Rect;
+import '../../util/util.dart' show Rect;
 
 //import java.awt.datatransfer.DataFlavor;
 //import java.awt.datatransfer.Transferable;
@@ -24,7 +24,7 @@ part of graph.swing.util;
 /**
  *
  */
-public class GraphTransferable implements Transferable, UIResource,
+class GraphTransferable implements Transferable, UIResource,
 		Serializable
 {
 
@@ -37,7 +37,7 @@ public class GraphTransferable implements Transferable, UIResource,
 	 * Global switch to disable image support in transferables. Set this to false as a workaround
 	 * for Data translation failed: not an image format in Java 1.7 on Mac OS X.
 	 */
-	public static boolean enableImageSupport = true;
+	static bool enableImageSupport = true;
 
 	/**
 	 * Serialized Data Flavor. Use the following code to switch to local 
@@ -61,7 +61,7 @@ public class GraphTransferable implements Transferable, UIResource,
 	 *   new graph.swing.util.GraphTransferable(null, null).getClass().getClassLoader());
 	 * </code>
 	 */
-	public static DataFlavor dataFlavor;
+	static DataFlavor dataFlavor;
 
 	/**
 	 * 
@@ -86,22 +86,22 @@ public class GraphTransferable implements Transferable, UIResource,
 	/**
 	 * 
 	 */
-	protected Object[] _cells;
+	Object[] _cells;
 
 	/**
 	 * 
 	 */
-	protected Rect _bounds;
+	Rect _bounds;
 
 	/**
 	 * 
 	 */
-	protected ImageIcon _image;
+	ImageIcon _image;
 
 	/**
 	 * 
 	 */
-	public GraphTransferable(Object[] cells, Rect bounds)
+	GraphTransferable(Object[] cells, Rect bounds)
 	{
 		this(cells, bounds, null);
 	}
@@ -109,7 +109,7 @@ public class GraphTransferable implements Transferable, UIResource,
 	/**
 	 * 
 	 */
-	public GraphTransferable(Object[] cells, Rect bounds,
+	GraphTransferable(Object[] cells, Rect bounds,
 			ImageIcon image)
 	{
 		this._cells = cells;
@@ -120,7 +120,7 @@ public class GraphTransferable implements Transferable, UIResource,
 	/**
 	 * @return Returns the cells.
 	 */
-	public Object[] getCells()
+	Object[] getCells()
 	{
 		return _cells;
 	}
@@ -128,7 +128,7 @@ public class GraphTransferable implements Transferable, UIResource,
 	/**
 	 * Returns the unscaled, untranslated bounding box of the cells.
 	 */
-	public Rect getBounds()
+	Rect getBounds()
 	{
 		return _bounds;
 	}
@@ -136,7 +136,7 @@ public class GraphTransferable implements Transferable, UIResource,
 	/**
 	 * 
 	 */
-	public ImageIcon getImage()
+	ImageIcon getImage()
 	{
 		return _image;
 	}
@@ -144,7 +144,7 @@ public class GraphTransferable implements Transferable, UIResource,
 	/**
 	 * 
 	 */
-	public DataFlavor[] getTransferDataFlavors()
+	DataFlavor[] getTransferDataFlavors()
 	{
 		DataFlavor[] richerFlavors = _getRicherFlavors();
 
@@ -198,7 +198,7 @@ public class GraphTransferable implements Transferable, UIResource,
 	 * plain text. If this method returns a non-null value, it will be placed at
 	 * the start of the array of supported flavors.
 	 */
-	protected DataFlavor[] _getRicherFlavors()
+	DataFlavor[] _getRicherFlavors()
 	{
 		return new DataFlavor[] { dataFlavor };
 	}
@@ -209,9 +209,9 @@ public class GraphTransferable implements Transferable, UIResource,
 	 * 
 	 * @param flavor
 	 *            the requested flavor for the data
-	 * @return boolean indicating whether or not the data flavor is supported
+	 * @return bool indicating whether or not the data flavor is supported
 	 */
-	public boolean isDataFlavorSupported(DataFlavor flavor)
+	bool isDataFlavorSupported(DataFlavor flavor)
 	{
 		DataFlavor[] flavors = getTransferDataFlavors();
 
@@ -240,7 +240,7 @@ public class GraphTransferable implements Transferable, UIResource,
 	 * @exception UnsupportedFlavorException
 	 *                if the requested data flavor is not supported.
 	 */
-	public Object getTransferData(DataFlavor flavor)
+	Object getTransferData(DataFlavor flavor)
 			throws UnsupportedFlavorException, IOException
 	{
 		if (_isRicherFlavor(flavor))
@@ -321,7 +321,7 @@ public class GraphTransferable implements Transferable, UIResource,
 	 * @return Returns true if the given flavor is a richer flavor of this
 	 * transferable.
 	 */
-	protected boolean _isRicherFlavor(DataFlavor flavor)
+	bool _isRicherFlavor(DataFlavor flavor)
 	{
 		DataFlavor[] richerFlavors = _getRicherFlavors();
 		int nFlavors = (richerFlavors != null) ? richerFlavors.length : 0;
@@ -343,7 +343,7 @@ public class GraphTransferable implements Transferable, UIResource,
 	 * @return the richer data flavor of this and the specified
 	 * @throws UnsupportedFlavorException
 	 */
-	public Object getRicherData(DataFlavor flavor)
+	Object getRicherData(DataFlavor flavor)
 			throws UnsupportedFlavorException
 	{
 		if (flavor.equals(dataFlavor))
@@ -362,9 +362,9 @@ public class GraphTransferable implements Transferable, UIResource,
 	 * 
 	 * @param flavor
 	 *            the requested flavor for the data
-	 * @return boolean indicating whether or not the data flavor is supported
+	 * @return bool indicating whether or not the data flavor is supported
 	 */
-	protected boolean _isHtmlFlavor(DataFlavor flavor)
+	bool _isHtmlFlavor(DataFlavor flavor)
 	{
 		DataFlavor[] flavors = _htmlFlavors;
 
@@ -383,7 +383,7 @@ public class GraphTransferable implements Transferable, UIResource,
 	 * Whether the HTML flavors are offered. If so, the method getHTMLData
 	 * should be implemented to provide something reasonable.
 	 */
-	protected boolean _isHtmlSupported()
+	bool _isHtmlSupported()
 	{
 		return false;
 	}
@@ -391,7 +391,7 @@ public class GraphTransferable implements Transferable, UIResource,
 	/**
 	 * Fetch the data in a text/html format
 	 */
-	protected String _getHtmlData()
+	String _getHtmlData()
 	{
 		return null;
 	}
@@ -402,7 +402,7 @@ public class GraphTransferable implements Transferable, UIResource,
 	 * @return Returns true if the given flavor is an image flavor of this
 	 * transferable.
 	 */
-	protected boolean _isImageFlavor(DataFlavor flavor)
+	bool _isImageFlavor(DataFlavor flavor)
 	{
 		int nFlavors = (_imageFlavors != null) ? _imageFlavors.length : 0;
 
@@ -420,7 +420,7 @@ public class GraphTransferable implements Transferable, UIResource,
 	/**
 	 * 
 	 */
-	public boolean isImageSupported()
+	bool isImageSupported()
 	{
 		return enableImageSupport && _image != null;
 	}
@@ -431,9 +431,9 @@ public class GraphTransferable implements Transferable, UIResource,
 	 * 
 	 * @param flavor
 	 *            the requested flavor for the data
-	 * @return boolean indicating whether or not the data flavor is supported
+	 * @return bool indicating whether or not the data flavor is supported
 	 */
-	protected boolean _isPlainFlavor(DataFlavor flavor)
+	bool _isPlainFlavor(DataFlavor flavor)
 	{
 		DataFlavor[] flavors = _plainFlavors;
 
@@ -452,7 +452,7 @@ public class GraphTransferable implements Transferable, UIResource,
 	 * Whether the plain text flavors are offered. If so, the method
 	 * getPlainData should be implemented to provide something reasonable.
 	 */
-	protected boolean _isPlainSupported()
+	bool _isPlainSupported()
 	{
 		return false;
 	}
@@ -460,7 +460,7 @@ public class GraphTransferable implements Transferable, UIResource,
 	/**
 	 * Fetch the data in a text/plain format.
 	 */
-	protected String _getPlainData()
+	String _getPlainData()
 	{
 		return null;
 	}
@@ -471,9 +471,9 @@ public class GraphTransferable implements Transferable, UIResource,
 	 * 
 	 * @param flavor
 	 *            the requested flavor for the data
-	 * @return boolean indicating whether or not the data flavor is supported
+	 * @return bool indicating whether or not the data flavor is supported
 	 */
-	protected boolean _isStringFlavor(DataFlavor flavor)
+	bool _isStringFlavor(DataFlavor flavor)
 	{
 		DataFlavor[] flavors = _stringFlavors;
 

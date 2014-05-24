@@ -1,13 +1,13 @@
 part of graph.generatorfunction;
 
-//import graph.view.CellState;
+import '../view/view.dart' show CellState;
 
 /**
  * @author Mate
  * A generator random cost function
  * It will generate random (type "double") edge weights in the range of (<b>minWeight</b>, <b>maxWeight</b>) and rounds the values to <b>roundToDecimals</b>
  */
-public class GeneratorRandomFunction extends GeneratorFunction
+class GeneratorRandomFunction extends GeneratorFunction
 {
 	private double _maxWeight = 1;
 
@@ -15,13 +15,13 @@ public class GeneratorRandomFunction extends GeneratorFunction
 
 	private int _roundToDecimals = 2;
 
-	public GeneratorRandomFunction(double minWeight, double maxWeight, int roundToDecimals)
+	GeneratorRandomFunction(double minWeight, double maxWeight, int roundToDecimals)
 	{
 		setWeightRange(minWeight, maxWeight);
 		setRoundToDecimals(roundToDecimals);
 	};
 
-	public double getCost(CellState state)
+	double getCost(CellState state)
 	{
 		Double edgeWeight = null;
 
@@ -31,28 +31,28 @@ public class GeneratorRandomFunction extends GeneratorFunction
 		return edgeWeight;
 	};
 
-	public double getMaxWeight()
+	double getMaxWeight()
 	{
 		return _maxWeight;
 	};
 
-	public void setWeightRange(double minWeight, double maxWeight)
+	void setWeightRange(double minWeight, double maxWeight)
 	{
 		this._maxWeight = Math.max(minWeight, maxWeight);
 		this._minWeight = Math.min(minWeight, maxWeight);
 	};
 
-	public double getMinWeight()
+	double getMinWeight()
 	{
 		return _minWeight;
 	};
 
-	public int getRoundToDecimals()
+	int getRoundToDecimals()
 	{
 		return _roundToDecimals;
 	};
 
-	public void setRoundToDecimals(int roundToDecimals)
+	void setRoundToDecimals(int roundToDecimals)
 	{
 		this._roundToDecimals = roundToDecimals;
 	};

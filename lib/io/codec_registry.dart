@@ -3,11 +3,11 @@
  */
 part of graph.io;
 
-//import graph.model.CollapseChange;
-//import graph.model.GeometryChange;
-//import graph.model.StyleChange;
-//import graph.model.ValueChange;
-//import graph.model.VisibleChange;
+import '../model/model.dart' show CollapseChange;
+import '../model/model.dart' show GeometryChange;
+import '../model/model.dart' show StyleChange;
+import '../model/model.dart' show ValueChange;
+import '../model/model.dart' show VisibleChange;
 
 //import java.util.ArrayList;
 //import java.util.Collection;
@@ -19,24 +19,24 @@ part of graph.io;
  * Singleton class that acts as a global registry for codecs. See
  * {@link Codec} for an example.
  */
-public class CodecRegistry
+class CodecRegistry
 {
 
 	/**
 	 * Maps from constructor names to codecs.
 	 */
-	protected static Hashtable<String, ObjectCodec> _codecs = new Hashtable<String, ObjectCodec>();
+	static Hashtable<String, ObjectCodec> _codecs = new Hashtable<String, ObjectCodec>();
 
 	/**
 	 * Maps from classnames to codecnames.
 	 */
-	protected static Hashtable<String, String> _aliases = new Hashtable<String, String>();
+	static Hashtable<String, String> _aliases = new Hashtable<String, String>();
 
 	/**
 	 * Holds the list of known packages. Packages are used to prefix short
 	 * class names (eg. Cell) in XML markup.
 	 */
-	protected static List<String> _packages = new ArrayList<String>();
+	static List<String> _packages = new ArrayList<String>();
 
 	// Registers the known codecs and package names
 	static
@@ -68,7 +68,7 @@ public class CodecRegistry
 	 * in the codec with the codec object. Automatically creates an alias if the
 	 * codename and the classname are not equal.
 	 */
-	public static ObjectCodec register(ObjectCodec codec)
+	static ObjectCodec register(ObjectCodec codec)
 	{
 		if (codec != null)
 		{
@@ -89,7 +89,7 @@ public class CodecRegistry
 	/**
 	 * Adds an alias for mapping a classname to a codecname.
 	 */
-	public static void addAlias(String classname, String codecname)
+	static void addAlias(String classname, String codecname)
 	{
 		_aliases.put(classname, codecname);
 	}
@@ -100,7 +100,7 @@ public class CodecRegistry
 	 * 
 	 * @param name Java class name.
 	 */
-	public static ObjectCodec getCodec(String name)
+	static ObjectCodec getCodec(String name)
 	{
 		String tmp = _aliases.get(name);
 
@@ -139,7 +139,7 @@ public class CodecRegistry
 	 * 
 	 * @param packagename Name of the package to be added.
 	 */
-	public static void addPackage(String packagename)
+	static void addPackage(String packagename)
 	{
 		_packages.add(packagename);
 	}
@@ -150,7 +150,7 @@ public class CodecRegistry
 	 * @param name Name of the class to be instantiated.
 	 * @return Returns a new instance of the given class.
 	 */
-	public static Object getInstanceForName(String name)
+	static Object getInstanceForName(String name)
 	{
 		Class<?> clazz = getClassForName(name);
 
@@ -183,7 +183,7 @@ public class CodecRegistry
 	 * @param name
 	 * @return Returns the class for the given name.
 	 */
-	public static Class<?> getClassForName(String name)
+	static Class<?> getClassForName(String name)
 	{
 		try
 		{
@@ -222,7 +222,7 @@ public class CodecRegistry
 	 * @param instance Instance whose node name should be returned.
 	 * @return Returns a string that identifies the codec.
 	 */
-	public static String getName(Object instance)
+	static String getName(Object instance)
 	{
 		Class<? extends Object> type = instance.getClass();
 

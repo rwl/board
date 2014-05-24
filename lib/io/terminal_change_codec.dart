@@ -3,7 +3,7 @@
  */
 part of graph.io;
 
-//import graph.model.TerminalChange;
+import '../model/model.dart' show TerminalChange;
 
 //import java.util.Map;
 
@@ -14,13 +14,13 @@ part of graph.io;
  * dynamically at load time and used implicitely via Codec
  * and the CodecRegistry.
  */
-public class TerminalChangeCodec extends ObjectCodec
+class TerminalChangeCodec extends ObjectCodec
 {
 
 	/**
 	 * Constructs a new model codec.
 	 */
-	public TerminalChangeCodec()
+	TerminalChangeCodec()
 	{
 		this(new TerminalChange(), new String[] { "model", "previous" },
 				new String[] { "cell", "terminal" }, null);
@@ -29,7 +29,7 @@ public class TerminalChangeCodec extends ObjectCodec
 	/**
 	 * Constructs a new model codec for the given arguments.
 	 */
-	public TerminalChangeCodec(Object template, String[] exclude,
+	TerminalChangeCodec(Object template, String[] exclude,
 			String[] idrefs, Map<String, String> mapping)
 	{
 		super(template, exclude, idrefs, mapping);
@@ -39,7 +39,7 @@ public class TerminalChangeCodec extends ObjectCodec
 	 * @see graph.io.ObjectCodec#afterDecode(graph.io.Codec, org.w3c.dom.Node, java.lang.Object)
 	 */
 	@Override
-	public Object afterDecode(Codec dec, Node node, Object obj)
+	Object afterDecode(Codec dec, Node node, Object obj)
 	{
 		if (obj instanceof TerminalChange)
 		{

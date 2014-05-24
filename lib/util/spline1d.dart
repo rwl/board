@@ -8,15 +8,15 @@ part of graph.util;
 /**
  * One dimension of a spline curve
  */
-public class Spline1D
+class Spline1D
 {
-	protected double[] _len;
-	protected double[] _pos1D;
+	double[] _len;
+	double[] _pos1D;
 
-	protected double[] _a;
-	protected double[] _b;
-	protected double[] _c;
-	protected double[] _d;
+	double[] _a;
+	double[] _b;
+	double[] _c;
+	double[] _d;
 
 	/** tracks the last index found since that is mostly commonly the next one used */
 	private int _storageIndex = 0;
@@ -28,7 +28,7 @@ public class Spline1D
 	 * @param positions1D the co-ordinate position in the current dimension that
 	 * 			each control point lies on
 	 */
-	public Spline1D(double[] controlPointProportions, double[] positions1D)
+	Spline1D(double[] controlPointProportions, double[] positions1D)
 	{
 		setValues(controlPointProportions, positions1D);
 	}
@@ -40,7 +40,7 @@ public class Spline1D
 	 * @param positions1D the co-ordinate position in the current dimension that
 	 * 			each control point lies on
 	 */
-	public void setValues(double[] controlPointProportions, double[] positions1D)
+	void setValues(double[] controlPointProportions, double[] positions1D)
 	{
 		this._len = controlPointProportions;
 		this._pos1D = positions1D;
@@ -56,7 +56,7 @@ public class Spline1D
 	 * @param x
 	 * @return the interpolated value
 	 */
-	public double getValue(double x)
+	double getValue(double x)
 	{
 		if (_len.length == 0)
 		{
@@ -100,7 +100,7 @@ public class Spline1D
 	 * @param x
 	 * @return the interpolated value
 	 */
-	public double getFastValue(double x)
+	double getFastValue(double x)
 	{
 		// Fast check to see if previous index is still valid
 		if (_storageIndex > -1 && _storageIndex < _len.length-1 && x > _len[_storageIndex] && x < _len[_storageIndex + 1])
@@ -135,7 +135,7 @@ public class Spline1D
 	 * @param x
 	 * @return the first derivation at x
 	 */
-	public double getDx(double x)
+	double getDx(double x)
 	{
 		if (_len.length == 0 || _len.length == 1)
 		{
@@ -229,7 +229,7 @@ public class Spline1D
 	/**
 	 * Solves Ax=b and stores the solution in b.
 	 */
-	public void solve(double[][] A, double[] b) {
+	void solve(double[][] A, double[] b) {
 		int n = b.length;
 		
 		for (int i = 1; i < n; i++)

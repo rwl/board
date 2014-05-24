@@ -3,24 +3,24 @@
  */
 part of graph.analysis;
 
-//import graph.view.CellState;
+import '../view/view.dart' show CellState;
 
 /**
  * Implements a cost function for a constant cost per traversed cell.
  */
-public class ConstantCostFunction implements ICostFunction
+class ConstantCostFunction implements ICostFunction
 {
 
 	/**
 	 * 
 	 */
-	protected double _cost = 0;
+	double _cost = 0;
 
 	/**
 	 * 
 	 * @param cost
 	 */
-	public ConstantCostFunction(double cost)
+	ConstantCostFunction(double cost)
 	{
 		this._cost = cost;
 	}
@@ -28,7 +28,7 @@ public class ConstantCostFunction implements ICostFunction
 	/**
 	 *
 	 */
-	public double getCost(CellState state)
+	double getCost(CellState state)
 	{
 		return _cost;
 	}

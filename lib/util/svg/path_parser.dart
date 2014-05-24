@@ -27,18 +27,18 @@ part of graph.util.svg;
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @version $Id: PathParser.java,v 1.1 2012/11/15 13:26:45 gaudenz Exp $
  */
-public class PathParser extends NumberParser
+class PathParser extends NumberParser
 {
 
 	/**
 	 * The path handler used to report parse events.
 	 */
-	protected PathHandler pathHandler;
+	PathHandler pathHandler;
 
 	/**
 	 * Creates a new PathParser.
 	 */
-	public PathParser(PathHandler handler)
+	PathParser(PathHandler handler)
 	{
 		pathHandler = handler;
 	}
@@ -54,7 +54,7 @@ public class PathParser extends NumberParser
 	 * handler immediately.</p>
 	 * @param handler The transform list handler.
 	 */
-	public void setPathHandler(PathHandler handler)
+	void setPathHandler(PathHandler handler)
 	{
 		pathHandler = handler;
 	}
@@ -62,12 +62,12 @@ public class PathParser extends NumberParser
 	/**
 	 * Returns the path handler in use.
 	 */
-	public PathHandler getPathHandler()
+	PathHandler getPathHandler()
 	{
 		return pathHandler;
 	}
 
-	protected void doParse() throws ParseException, IOException
+	void doParse() throws ParseException, IOException
 	{
 		pathHandler.startPath();
 
@@ -170,7 +170,7 @@ public class PathParser extends NumberParser
 	/**
 	 * Parses a 'm' command.
 	 */
-	protected void parsem() throws ParseException, IOException
+	void parsem() throws ParseException, IOException
 	{
 		current = reader.read();
 		skipSpaces();
@@ -180,14 +180,14 @@ public class PathParser extends NumberParser
 		float y = parseFloat();
 		pathHandler.movetoRel(x, y);
 
-		boolean expectNumber = skipCommaSpaces2();
+		bool expectNumber = skipCommaSpaces2();
 		_parsel(expectNumber);
 	}
 
 	/**
 	 * Parses a 'M' command.
 	 */
-	protected void parseM() throws ParseException, IOException
+	void parseM() throws ParseException, IOException
 	{
 		current = reader.read();
 		skipSpaces();
@@ -197,21 +197,21 @@ public class PathParser extends NumberParser
 		float y = parseFloat();
 		pathHandler.movetoAbs(x, y);
 
-		boolean expectNumber = skipCommaSpaces2();
+		bool expectNumber = skipCommaSpaces2();
 		_parseL(expectNumber);
 	}
 
 	/**
 	 * Parses a 'l' command.
 	 */
-	protected void parsel() throws ParseException, IOException
+	void parsel() throws ParseException, IOException
 	{
 		current = reader.read();
 		skipSpaces();
 		_parsel(true);
 	}
 
-	protected void _parsel(boolean expectNumber) throws ParseException,
+	void _parsel(bool expectNumber) throws ParseException,
 			IOException
 	{
 		for (;;)
@@ -249,14 +249,14 @@ public class PathParser extends NumberParser
 	/**
 	 * Parses a 'L' command.
 	 */
-	protected void parseL() throws ParseException, IOException
+	void parseL() throws ParseException, IOException
 	{
 		current = reader.read();
 		skipSpaces();
 		_parseL(true);
 	}
 
-	protected void _parseL(boolean expectNumber) throws ParseException,
+	void _parseL(bool expectNumber) throws ParseException,
 			IOException
 	{
 		for (;;)
@@ -294,11 +294,11 @@ public class PathParser extends NumberParser
 	/**
 	 * Parses a 'h' command.
 	 */
-	protected void parseh() throws ParseException, IOException
+	void parseh() throws ParseException, IOException
 	{
 		current = reader.read();
 		skipSpaces();
-		boolean expectNumber = true;
+		bool expectNumber = true;
 
 		for (;;)
 		{
@@ -332,11 +332,11 @@ public class PathParser extends NumberParser
 	/**
 	 * Parses a 'H' command.
 	 */
-	protected void parseH() throws ParseException, IOException
+	void parseH() throws ParseException, IOException
 	{
 		current = reader.read();
 		skipSpaces();
-		boolean expectNumber = true;
+		bool expectNumber = true;
 
 		for (;;)
 		{
@@ -371,11 +371,11 @@ public class PathParser extends NumberParser
 	/**
 	 * Parses a 'v' command.
 	 */
-	protected void parsev() throws ParseException, IOException
+	void parsev() throws ParseException, IOException
 	{
 		current = reader.read();
 		skipSpaces();
-		boolean expectNumber = true;
+		bool expectNumber = true;
 
 		for (;;)
 		{
@@ -411,11 +411,11 @@ public class PathParser extends NumberParser
 	/**
 	 * Parses a 'V' command.
 	 */
-	protected void parseV() throws ParseException, IOException
+	void parseV() throws ParseException, IOException
 	{
 		current = reader.read();
 		skipSpaces();
-		boolean expectNumber = true;
+		bool expectNumber = true;
 
 		for (;;)
 		{
@@ -451,11 +451,11 @@ public class PathParser extends NumberParser
 	/**
 	 * Parses a 'c' command.
 	 */
-	protected void parsec() throws ParseException, IOException
+	void parsec() throws ParseException, IOException
 	{
 		current = reader.read();
 		skipSpaces();
-		boolean expectNumber = true;
+		bool expectNumber = true;
 
 		for (;;)
 		{
@@ -502,11 +502,11 @@ public class PathParser extends NumberParser
 	/**
 	 * Parses a 'C' command.
 	 */
-	protected void parseC() throws ParseException, IOException
+	void parseC() throws ParseException, IOException
 	{
 		current = reader.read();
 		skipSpaces();
-		boolean expectNumber = true;
+		bool expectNumber = true;
 
 		for (;;)
 		{
@@ -553,11 +553,11 @@ public class PathParser extends NumberParser
 	/**
 	 * Parses a 'q' command.
 	 */
-	protected void parseq() throws ParseException, IOException
+	void parseq() throws ParseException, IOException
 	{
 		current = reader.read();
 		skipSpaces();
-		boolean expectNumber = true;
+		bool expectNumber = true;
 
 		for (;;)
 		{
@@ -600,11 +600,11 @@ public class PathParser extends NumberParser
 	/**
 	 * Parses a 'Q' command.
 	 */
-	protected void parseQ() throws ParseException, IOException
+	void parseQ() throws ParseException, IOException
 	{
 		current = reader.read();
 		skipSpaces();
-		boolean expectNumber = true;
+		bool expectNumber = true;
 
 		for (;;)
 		{
@@ -647,11 +647,11 @@ public class PathParser extends NumberParser
 	/**
 	 * Parses a 's' command.
 	 */
-	protected void parses() throws ParseException, IOException
+	void parses() throws ParseException, IOException
 	{
 		current = reader.read();
 		skipSpaces();
-		boolean expectNumber = true;
+		bool expectNumber = true;
 
 		for (;;)
 		{
@@ -694,11 +694,11 @@ public class PathParser extends NumberParser
 	/**
 	 * Parses a 'S' command.
 	 */
-	protected void parseS() throws ParseException, IOException
+	void parseS() throws ParseException, IOException
 	{
 		current = reader.read();
 		skipSpaces();
-		boolean expectNumber = true;
+		bool expectNumber = true;
 
 		for (;;)
 		{
@@ -741,11 +741,11 @@ public class PathParser extends NumberParser
 	/**
 	 * Parses a 't' command.
 	 */
-	protected void parset() throws ParseException, IOException
+	void parset() throws ParseException, IOException
 	{
 		current = reader.read();
 		skipSpaces();
-		boolean expectNumber = true;
+		bool expectNumber = true;
 
 		for (;;)
 		{
@@ -784,11 +784,11 @@ public class PathParser extends NumberParser
 	/**
 	 * Parses a 'T' command.
 	 */
-	protected void parseT() throws ParseException, IOException
+	void parseT() throws ParseException, IOException
 	{
 		current = reader.read();
 		skipSpaces();
-		boolean expectNumber = true;
+		bool expectNumber = true;
 
 		for (;;)
 		{
@@ -827,11 +827,11 @@ public class PathParser extends NumberParser
 	/**
 	 * Parses a 'a' command.
 	 */
-	protected void parsea() throws ParseException, IOException
+	void parsea() throws ParseException, IOException
 	{
 		current = reader.read();
 		skipSpaces();
-		boolean expectNumber = true;
+		bool expectNumber = true;
 
 		for (;;)
 		{
@@ -865,7 +865,7 @@ public class PathParser extends NumberParser
 			float ax = parseFloat();
 			skipCommaSpaces();
 
-			boolean laf;
+			bool laf;
 			switch (current)
 			{
 				default:
@@ -882,7 +882,7 @@ public class PathParser extends NumberParser
 			current = reader.read();
 			skipCommaSpaces();
 
-			boolean sf;
+			bool sf;
 			switch (current)
 			{
 				default:
@@ -911,11 +911,11 @@ public class PathParser extends NumberParser
 	/**
 	 * Parses a 'A' command.
 	 */
-	protected void parseA() throws ParseException, IOException
+	void parseA() throws ParseException, IOException
 	{
 		current = reader.read();
 		skipSpaces();
-		boolean expectNumber = true;
+		bool expectNumber = true;
 
 		for (;;)
 		{
@@ -949,7 +949,7 @@ public class PathParser extends NumberParser
 			float ax = parseFloat();
 			skipCommaSpaces();
 
-			boolean laf;
+			bool laf;
 			switch (current)
 			{
 				default:
@@ -966,7 +966,7 @@ public class PathParser extends NumberParser
 			current = reader.read();
 			skipCommaSpaces();
 
-			boolean sf;
+			bool sf;
 			switch (current)
 			{
 				default:
@@ -994,7 +994,7 @@ public class PathParser extends NumberParser
 	/**
 	 * Skips a sub-path.
 	 */
-	protected void skipSubPath() throws ParseException, IOException
+	void skipSubPath() throws ParseException, IOException
 	{
 		for (;;)
 		{
@@ -1011,7 +1011,7 @@ public class PathParser extends NumberParser
 		}
 	}
 
-	protected void reportUnexpected(int ch) throws ParseException, IOException
+	void reportUnexpected(int ch) throws ParseException, IOException
 	{
 		reportUnexpectedCharacterError(current);
 		skipSubPath();
@@ -1021,7 +1021,7 @@ public class PathParser extends NumberParser
 	 * Skips the whitespaces and an optional comma.
 	 * @return true if comma was skipped.
 	 */
-	protected boolean skipCommaSpaces2() throws IOException
+	bool skipCommaSpaces2() throws IOException
 	{
 		wsp1: for (;;)
 		{

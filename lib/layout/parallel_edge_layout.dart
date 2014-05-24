@@ -1,13 +1,13 @@
 part of graph.layout;
 
-//import graph.model.CellPath;
-//import graph.model.Geometry;
-//import graph.model.ICell;
-//import graph.model.IGraphModel;
-//import graph.util.Point2d;
-//import graph.view.CellState;
-//import graph.view.Graph;
-//import graph.view.GraphView;
+import '../../model/model.dart' show CellPath;
+import '../../model/model.dart' show Geometry;
+import '../../model/model.dart' show ICell;
+import '../../model/model.dart' show IGraphModel;
+import '../../util/util.dart' show Point2d;
+import '../../view/view.dart' show CellState;
+import '../../view/view.dart' show Graph;
+import '../../view/view.dart' show GraphView;
 
 //import java.util.ArrayList;
 //import java.util.Arrays;
@@ -16,19 +16,19 @@ part of graph.layout;
 //import java.util.List;
 //import java.util.Map;
 
-public class ParallelEdgeLayout extends GraphLayout
+class ParallelEdgeLayout extends GraphLayout
 {
 
 	/**
 	 * Specifies the spacing between the edges. Default is 20.
 	 */
-	protected int spacing;
+	int spacing;
 
 	/**
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	public ParallelEdgeLayout(Graph graph)
+	ParallelEdgeLayout(Graph graph)
 	{
 		this(graph, 20);
 	}
@@ -37,7 +37,7 @@ public class ParallelEdgeLayout extends GraphLayout
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	public ParallelEdgeLayout(Graph graph, int spacing)
+	ParallelEdgeLayout(Graph graph, int spacing)
 	{
 		super(graph);
 		this.spacing = spacing;
@@ -47,7 +47,7 @@ public class ParallelEdgeLayout extends GraphLayout
 	 * (non-Javadoc)
 	 * @see graph.layout.IGraphLayout#execute(java.lang.Object)
 	 */
-	public void execute(Object parent)
+	void execute(Object parent)
 	{
 		Map<String, List<Object>> lookup = findParallels(parent);
 
@@ -75,7 +75,7 @@ public class ParallelEdgeLayout extends GraphLayout
 	/**
 	 * 
 	 */
-	protected Map<String, List<Object>> findParallels(Object parent)
+	Map<String, List<Object>> findParallels(Object parent)
 	{
 		Map<String, List<Object>> lookup = new Hashtable<String, List<Object>>();
 		IGraphModel model = graph.getModel();
@@ -107,7 +107,7 @@ public class ParallelEdgeLayout extends GraphLayout
 	/**
 	 * 
 	 */
-	protected String getEdgeId(Object edge)
+	String getEdgeId(Object edge)
 	{
 		GraphView view = graph.getView();
 		CellState state = view.getState(edge);
@@ -131,7 +131,7 @@ public class ParallelEdgeLayout extends GraphLayout
 	/**
 	 * 
 	 */
-	protected void layout(List<Object> parallels)
+	void layout(List<Object> parallels)
 	{
 		Object edge = parallels.get(0);
 		IGraphModel model = graph.getModel();
@@ -185,7 +185,7 @@ public class ParallelEdgeLayout extends GraphLayout
 	/**
 	 * 
 	 */
-	protected void route(Object edge, double x, double y)
+	void route(Object edge, double x, double y)
 	{
 		if (graph.isCellMovable(edge))
 		{

@@ -4,15 +4,15 @@
  */
 part of graph.costfunction;
 
-//import graph.view.CellState;
-//import graph.view.Graph;
+import '../view/view.dart' show CellState;
+import '../view/view.dart' show Graph;
 
 /**
  * A cost function that assumes that edge value is of type "double" or "String" and returns that value. Default edge weight is 1.0 (if no double value can be retrieved)
  */
-public class DoubleValCostFunction extends CostFunction
+class DoubleValCostFunction extends CostFunction
 {
-	public double getCost(CellState state)
+	double getCost(CellState state)
 	{
 		//assumed future parameters
 		if (state == null || state.getView() == null || state.getView().getGraph() == null)

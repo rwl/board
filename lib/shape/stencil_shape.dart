@@ -5,15 +5,15 @@ part of graph.shape;
 
 //import org.w3c.dom.Node;
 
-//import graph.canvas.Graphics2DCanvas;
-//import graph.util.Utils;
-//import graph.util.XmlUtils;
-//import graph.util.svg.AWTPathProducer;
-//import graph.util.svg.AWTPolygonProducer;
-//import graph.util.svg.AWTPolylineProducer;
-//import graph.util.svg.CSSConstants;
-//import graph.util.svg.ExtendedGeneralPath;
-//import graph.view.CellState;
+import '../canvas/canvas.dart' show Graphics2DCanvas;
+import '../util/util.dart' show Utils;
+import '../util/util.dart' show XmlUtils;
+import '../util/util.dart' show svg.AWTPathProducer;
+import '../util/util.dart' show svg.AWTPolygonProducer;
+import '../util/util.dart' show svg.AWTPolylineProducer;
+import '../util/util.dart' show svg.CSSConstants;
+import '../util/util.dart' show svg.ExtendedGeneralPath;
+import '../view/view.dart' show CellState;
 
 //import java.awt.Color;
 //import java.awt.Shape;
@@ -37,43 +37,43 @@ part of graph.shape;
  * See http://projects.gnome.org/dia/custom-shapes for specs. See
  * http://dia-installer.de/shapes_de.html for shapes.
  */
-public class StencilShape extends BasicShape
+class StencilShape extends BasicShape
 {
-	public StencilShape()
+	StencilShape()
 	{
 		super();
 	}
 
-	protected GeneralPath _shapePath;
+	GeneralPath _shapePath;
 
 	/**
 	 * Reference to the root node of the Dia shape description.
 	 */
-	protected Node _root;
+	Node _root;
 
-	protected _svgShape _rootShape;
+	_svgShape _rootShape;
 
-	protected Rectangle2D _boundingBox;
+	Rectangle2D _boundingBox;
 
-	protected String _name;
+	String _name;
 
-	protected String _iconPath;
+	String _iconPath;
 
 	/**
 	 * Transform cached to save instance created. Used to scale the internal
 	 * path of shapes where possible
 	 */
-	protected AffineTransform _cachedTransform = new AffineTransform();
+	AffineTransform _cachedTransform = new AffineTransform();
 
 	/**
 	 * Constructs a new stencil for the given Dia shape description.
 	 */
-	public StencilShape(String shapeXml)
+	StencilShape(String shapeXml)
 	{
 		this(XmlUtils.parseXml(shapeXml));
 	}
 
-	public StencilShape(Document document)
+	StencilShape(Document document)
 	{
 		if (document != null)
 		{
@@ -119,7 +119,7 @@ public class StencilShape extends BasicShape
 	 * 
 	 */
 	@Override
-	public void paintShape(Graphics2DCanvas canvas, CellState state)
+	void paintShape(Graphics2DCanvas canvas, CellState state)
 	{
 		double x = state.getX();
 		double y = state.getY();
@@ -144,13 +144,13 @@ public class StencilShape extends BasicShape
 	/**
 	 * 
 	 */
-	public void paintNode(Graphics2DCanvas canvas, CellState state,
+	void paintNode(Graphics2DCanvas canvas, CellState state,
 			_svgShape shape, double widthRatio, double heightRatio)
 	{
 		Shape associatedShape = shape.shape;
 
-		boolean fill = false;
-		boolean stroke = true;
+		bool fill = false;
+		bool stroke = true;
 		Color fillColor = null;
 		Color strokeColor = null;
 
@@ -200,7 +200,7 @@ public class StencilShape extends BasicShape
 
 		if (associatedShape != null)
 		{
-			boolean wasScaled = false;
+			bool wasScaled = false;
 
 			if (widthRatio != 1 || heightRatio != 1)
 			{
@@ -262,7 +262,7 @@ public class StencilShape extends BasicShape
 	 * @param heightRatio
 	 *            the y co-ordinate scale
 	 */
-	protected void _transformShape(Shape shape, double transX, double transY,
+	void _transformShape(Shape shape, double transX, double transY,
 			double widthRatio, double heightRatio)
 	{
 		if (shape instanceof Rectangle2D)
@@ -330,7 +330,7 @@ public class StencilShape extends BasicShape
 	/**
 	 * 
 	 */
-	public void createShape(Node root, _svgShape shape)
+	void createShape(Node root, _svgShape shape)
 	{
 		Node child = root.getFirstChild();
 		/*
@@ -397,7 +397,7 @@ public class StencilShape extends BasicShape
 	 * @return the internal representation of the element, or null if an error
 	 *         occurs
 	 */
-	public _svgShape createElement(Node root)
+	_svgShape createElement(Node root)
 	{
 		Element element = null;
 
@@ -652,7 +652,7 @@ public class StencilShape extends BasicShape
 	/*
 	 *
 	 */
-	private boolean _isRectangle(String tag)
+	private bool _isRectangle(String tag)
 	{
 		return tag.equals("svg:rect") || tag.equals("rect");
 	}
@@ -660,7 +660,7 @@ public class StencilShape extends BasicShape
 	/*
 	 *
 	 */
-	private boolean _isPath(String tag)
+	private bool _isPath(String tag)
 	{
 		return tag.equals("svg:path") || tag.equals("path");
 	}
@@ -668,7 +668,7 @@ public class StencilShape extends BasicShape
 	/*
 	 *
 	 */
-	private boolean _isEllipse(String tag)
+	private bool _isEllipse(String tag)
 	{
 		return tag.equals("svg:ellipse") || tag.equals("ellipse");
 	}
@@ -676,7 +676,7 @@ public class StencilShape extends BasicShape
 	/*
 	 *
 	 */
-	private boolean _isLine(String tag)
+	private bool _isLine(String tag)
 	{
 		return tag.equals("svg:line") || tag.equals("line");
 	}
@@ -684,7 +684,7 @@ public class StencilShape extends BasicShape
 	/*
 	 *
 	 */
-	private boolean _isPolyline(String tag)
+	private bool _isPolyline(String tag)
 	{
 		return tag.equals("svg:polyline") || tag.equals("polyline");
 	}
@@ -692,7 +692,7 @@ public class StencilShape extends BasicShape
 	/*
 	 *
 	 */
-	private boolean _isCircle(String tag)
+	private bool _isCircle(String tag)
 	{
 		return tag.equals("svg:circle") || tag.equals("circle");
 	}
@@ -700,12 +700,12 @@ public class StencilShape extends BasicShape
 	/*
 	 *
 	 */
-	private boolean _isPolygon(String tag)
+	private bool _isPolygon(String tag)
 	{
 		return tag.equals("svg:polygon") || tag.equals("polygon");
 	}
 
-	private boolean _isGroup(String tag)
+	private bool _isGroup(String tag)
 	{
 		return tag.equals("svg:g") || tag.equals("g");
 	}
@@ -718,7 +718,7 @@ public class StencilShape extends BasicShape
 	 *            String of the form stylename[;stylename][;key=value].
 	 * @return Returns the stylename from the given formatted string.
 	 */
-	protected static Map<String, Object> getStylenames(String style)
+	static Map<String, Object> getStylenames(String style)
 	{
 		if (style != null && style.length() > 0)
 		{
@@ -744,32 +744,32 @@ public class StencilShape extends BasicShape
 		return null;
 	}
 
-	public String getName()
+	String getName()
 	{
 		return _name;
 	}
 
-	public void setName(String name)
+	void setName(String name)
 	{
 		this._name = name;
 	}
 
-	public String getIconPath()
+	String getIconPath()
 	{
 		return _iconPath;
 	}
 
-	public void setIconPath(String iconPath)
+	void setIconPath(String iconPath)
 	{
 		this._iconPath = iconPath;
 	}
 
-	public Rectangle2D getBoundingBox()
+	Rectangle2D getBoundingBox()
 	{
 		return _boundingBox;
 	}
 
-	public void setBoundingBox(Rectangle2D boundingBox)
+	void setBoundingBox(Rectangle2D boundingBox)
 	{
 		this._boundingBox = boundingBox;
 	}

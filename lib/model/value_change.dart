@@ -1,19 +1,19 @@
 part of graph.model;
 
-//import graph.model.IGraphModel.AtomicGraphModelChange;
+import '../model/model.dart' show AtomicGraphModelChange;
 
-public class ValueChange extends AtomicGraphModelChange
+class ValueChange extends AtomicGraphModelChange
 {
 
 	/**
 	 *
 	 */
-	protected Object cell, value, previous;
+	Object cell, value, previous;
 
 	/**
 	 * 
 	 */
-	public ValueChange()
+	ValueChange()
 	{
 		this(null, null, null);
 	}
@@ -21,7 +21,7 @@ public class ValueChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	public ValueChange(GraphModel model, Object cell, Object value)
+	ValueChange(GraphModel model, Object cell, Object value)
 	{
 		super(model);
 		this.cell = cell;
@@ -32,7 +32,7 @@ public class ValueChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	public void setCell(Object value)
+	void setCell(Object value)
 	{
 		cell = value;
 	}
@@ -40,7 +40,7 @@ public class ValueChange extends AtomicGraphModelChange
 	/**
 	 * @return the cell
 	 */
-	public Object getCell()
+	Object getCell()
 	{
 		return cell;
 	}
@@ -48,7 +48,7 @@ public class ValueChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	public void setValue(Object value)
+	void setValue(Object value)
 	{
 		this.value = value;
 	}
@@ -56,7 +56,7 @@ public class ValueChange extends AtomicGraphModelChange
 	/**
 	 * @return the value
 	 */
-	public Object getValue()
+	Object getValue()
 	{
 		return value;
 	}
@@ -64,7 +64,7 @@ public class ValueChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	public void setPrevious(Object value)
+	void setPrevious(Object value)
 	{
 		previous = value;
 	}
@@ -72,7 +72,7 @@ public class ValueChange extends AtomicGraphModelChange
 	/**
 	 * @return the previous
 	 */
-	public Object getPrevious()
+	Object getPrevious()
 	{
 		return previous;
 	}
@@ -80,7 +80,7 @@ public class ValueChange extends AtomicGraphModelChange
 	/**
 	 * Changes the root of the model.
 	 */
-	public void execute()
+	void execute()
 	{
 		value = previous;
 		previous = ((GraphModel) model)._valueForCellChanged(cell,

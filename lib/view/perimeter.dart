@@ -3,10 +3,10 @@
  */
 part of graph.view;
 
-//import graph.util.Constants;
-//import graph.util.Point2d;
-//import graph.util.Rect;
-//import graph.util.Utils;
+import '../util/util.dart' show Constants;
+import '../util/util.dart' show Point2d;
+import '../util/util.dart' show Rect;
+import '../util/util.dart' show Utils;
 
 /**
  * Provides various perimeter functions to be used in a style
@@ -14,13 +14,13 @@ part of graph.view;
  * PERIMETER_* constants can be used to reference a perimeter via the
  * StyleRegistry.
  */
-public class Perimeter
+class Perimeter
 {
 
 	/**
 	 * Defines the requirements for a perimeter function.
 	 */
-	public interface PerimeterFunction
+	interface PerimeterFunction
 	{
 
 		/**
@@ -38,21 +38,21 @@ public class Perimeter
 		 * @return Returns the perimeter point.
 		 */
 		Point2d apply(Rect bounds, CellState vertex, Point2d next,
-				boolean orthogonal);
+				bool orthogonal);
 
 	}
 
 	/**
 	 * Describes a rectangular perimeter for the given bounds. 
 	 */
-	public static PerimeterFunction RectanglePerimeter = new PerimeterFunction()
+	static PerimeterFunction RectanglePerimeter = new PerimeterFunction()
 	{
 
 		/* (non-Javadoc)
 		 * @see graph.view.Perimeter.PerimeterFunction#apply
 		 */
 		public Point2d apply(Rect bounds, CellState vertex,
-				Point2d next, boolean orthogonal)
+				Point2d next, bool orthogonal)
 		{
 			double cx = bounds.getCenterX();
 			double cy = bounds.getCenterY();
@@ -131,14 +131,14 @@ public class Perimeter
 	/**
 	 * Describes an elliptic perimeter.
 	 */
-	public static PerimeterFunction EllipsePerimeter = new PerimeterFunction()
+	static PerimeterFunction EllipsePerimeter = new PerimeterFunction()
 	{
 
 		/* (non-Javadoc)
 		 * @see graph.view.Perimeter.PerimeterFunction#apply
 		 */
 		public Point2d apply(Rect bounds, CellState vertex,
-				Point2d next, boolean orthogonal)
+				Point2d next, bool orthogonal)
 		{
 			double x = bounds.getX();
 			double y = bounds.getY();
@@ -244,14 +244,14 @@ public class Perimeter
 	/**
 	 * Describes a rhombus (aka diamond) perimeter.
 	 */
-	public static PerimeterFunction RhombusPerimeter = new PerimeterFunction()
+	static PerimeterFunction RhombusPerimeter = new PerimeterFunction()
 	{
 
 		/* (non-Javadoc)
 		 * @see graph.view.Perimeter.PerimeterFunction#apply
 		 */
 		public Point2d apply(Rect bounds, CellState vertex,
-				Point2d next, boolean orthogonal)
+				Point2d next, bool orthogonal)
 		{
 			double x = bounds.getX();
 			double y = bounds.getY();
@@ -334,19 +334,19 @@ public class Perimeter
 	 * Describes a triangle perimeter. See RectanglePerimeter
 	 * for a description of the parameters.
 	 */
-	public static PerimeterFunction TrianglePerimeter = new PerimeterFunction()
+	static PerimeterFunction TrianglePerimeter = new PerimeterFunction()
 	{
 
 		/* (non-Javadoc)
 		 * @see graph.view.Perimeter.PerimeterFunction#apply(graph.utils.mxRectangle, graph.view.CellState, graph.view.CellState, boolean, graph.utils.mxPoint)
 		 */
 		public Point2d apply(Rect bounds, CellState vertex,
-				Point2d next, boolean orthogonal)
+				Point2d next, bool orthogonal)
 		{
 			Object direction = (vertex != null) ? Utils.getString(
 					vertex._style, Constants.STYLE_DIRECTION,
 					Constants.DIRECTION_EAST) : Constants.DIRECTION_EAST;
-			boolean vertical = direction.equals(Constants.DIRECTION_NORTH)
+			bool vertical = direction.equals(Constants.DIRECTION_NORTH)
 					|| direction.equals(Constants.DIRECTION_SOUTH);
 
 			double x = bounds.getX();
@@ -386,7 +386,7 @@ public class Perimeter
 			double alpha = (vertical) ? Math.atan2(dx, dy) : Math.atan2(dy, dx);
 			double t = (vertical) ? Math.atan2(w, h) : Math.atan2(h, w);
 
-			boolean base = false;
+			bool base = false;
 
 			if (direction.equals(Constants.DIRECTION_NORTH)
 					|| direction.equals(Constants.DIRECTION_WEST))
@@ -499,10 +499,10 @@ public class Perimeter
 	 * Describes a hexagon perimeter. See RectanglePerimeter
 	 * for a description of the parameters.
 	 */
-	public static PerimeterFunction HexagonPerimeter = new PerimeterFunction()
+	static PerimeterFunction HexagonPerimeter = new PerimeterFunction()
 	{
 		public Point2d apply(Rect bounds, CellState vertex,
-				Point2d next, boolean orthogonal)
+				Point2d next, bool orthogonal)
 		{
 			double x = bounds.getX();
 			double y = bounds.getY();
@@ -524,7 +524,7 @@ public class Perimeter
 			Object direction = (vertex != null) ? Utils.getString(
 					vertex._style, Constants.STYLE_DIRECTION,
 					Constants.DIRECTION_EAST) : Constants.DIRECTION_EAST;
-			boolean vertical = direction.equals(Constants.DIRECTION_NORTH)
+			bool vertical = direction.equals(Constants.DIRECTION_NORTH)
 					|| direction.equals(Constants.DIRECTION_SOUTH);
 			Point2d a = new Point2d();
 			Point2d b = new Point2d();

@@ -1,24 +1,24 @@
 part of graph.layout;
 
-//import graph.model.Geometry;
-//import graph.model.IGraphModel;
-//import graph.util.Point2d;
-//import graph.view.CellState;
-//import graph.view.Graph;
-//import graph.view.GraphView;
+import '../../model/model.dart' show Geometry;
+import '../../model/model.dart' show IGraphModel;
+import '../../util/util.dart' show Point2d;
+import '../../view/view.dart' show CellState;
+import '../../view/view.dart' show Graph;
+import '../../view/view.dart' show GraphView;
 
 //import java.awt.Rectangle;
 //import java.util.ArrayList;
 //import java.util.List;
 
-public class EdgeLabelLayout extends GraphLayout
+class EdgeLabelLayout extends GraphLayout
 {
 
 	/**
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	public EdgeLabelLayout(Graph graph)
+	EdgeLabelLayout(Graph graph)
 	{
 		super(graph);
 	}
@@ -27,7 +27,7 @@ public class EdgeLabelLayout extends GraphLayout
 	 * (non-Javadoc)
 	 * @see graph.layout.IGraphLayout#execute(java.lang.Object)
 	 */
-	public void execute(Object parent)
+	void execute(Object parent)
 	{
 		GraphView view = graph.getView();
 		IGraphModel model = graph.getModel();
@@ -61,7 +61,7 @@ public class EdgeLabelLayout extends GraphLayout
 	/**
 	 * 
 	 */
-	protected void placeLabels(Object[] v, Object[] e)
+	void placeLabels(Object[] v, Object[] e)
 	{
 		IGraphModel model = graph.getModel();
 
@@ -98,7 +98,7 @@ public class EdgeLabelLayout extends GraphLayout
 	/**
 	 * 
 	 */
-	protected void avoid(CellState edge, CellState vertex)
+	void avoid(CellState edge, CellState vertex)
 	{
 		IGraphModel model = graph.getModel();
 		Rectangle labRect = edge.getLabelBounds().getRectangle();

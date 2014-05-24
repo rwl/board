@@ -3,11 +3,11 @@
  */
 part of graph.analysis;
 
-//import graph.costfunction.CostFunction;
-//import graph.view.CellState;
-//import graph.view.Graph;
-//import graph.view.GraphView;
-//import graph.view.Graph.ICellVisitor;
+import '../cost_function/cost_function.dart' show CostFunction;
+import '../view/view.dart' show CellState;
+import '../view/view.dart' show Graph;
+import '../view/view.dart' show GraphView;
+import '../view/view.dart' show Graph.ICellVisitor;
 
 //import java.util.ArrayList;
 //import java.util.Arrays;
@@ -22,7 +22,7 @@ part of graph.analysis;
  * Implements a collection of utility methods for traversing the
  * graph structure. This does not include tree traversal methods.
  */
-public class Traversal
+class Traversal
 {
 
 	/**
@@ -33,7 +33,7 @@ public class Traversal
 	 * <pre>
 	 * Traversal.bfs(analysisGraph, startVertex, new ICellVisitor()
 	 * {
-	 * 	public boolean visit(Object vertex, Object edge)
+	 * 	public bool visit(Object vertex, Object edge)
 	 * 	{
 	 * 		// perform your processing on each cell here
 	 *		return false;
@@ -44,7 +44,7 @@ public class Traversal
 	 * @param startVertex
 	 * @param visitor
 	 */
-	public static void dfs(AnalysisGraph aGraph, Object startVertex, ICellVisitor visitor)
+	static void dfs(AnalysisGraph aGraph, Object startVertex, ICellVisitor visitor)
 	{
 		_dfsRec(aGraph, startVertex, null, new HashSet<Object>(), visitor);
 	}
@@ -85,7 +85,7 @@ public class Traversal
 	 * <pre>
 	 * Traversal.bfs(analysisGraph, startVertex, new ICellVisitor()
 	 * {
-	 * 	public boolean visit(Object vertex, Object edge)
+	 * 	public bool visit(Object vertex, Object edge)
 	 * 	{
 	 * 		// perform your processing on each cell here
 	 *		return false;
@@ -96,7 +96,7 @@ public class Traversal
 	 * @param startVertex
 	 * @param visitor
 	 */
-	public static void bfs(AnalysisGraph aGraph, Object startVertex, ICellVisitor visitor)
+	static void bfs(AnalysisGraph aGraph, Object startVertex, ICellVisitor visitor)
 	{
 		if (aGraph != null && startVertex != null && visitor != null)
 		{
@@ -154,7 +154,7 @@ public class Traversal
 	 * <pre>
 	 * Traversal.dijkstra(analysisGraph, startVertex, endVertex, new ICellVisitor()
 	 * {
-	 * 	public boolean visit(Object vertex, Object edge)
+	 * 	public bool visit(Object vertex, Object edge)
 	 * 	{
 	 * 		// perform your processing on each cell here
 	 *		return false;
@@ -168,7 +168,7 @@ public class Traversal
 	 * @param visitor
 	 * @throws StructuralException - The current Dijkstra algorithm only works for connected graphs
 	 */
-	public static void dijkstra(AnalysisGraph aGraph, Object startVertex, Object endVertex, ICellVisitor visitor)
+	static void dijkstra(AnalysisGraph aGraph, Object startVertex, Object endVertex, ICellVisitor visitor)
 			throws StructuralException
 	{
 		if (!GraphStructure.isConnected(aGraph))
@@ -299,7 +299,7 @@ public class Traversal
 	 * @return a List where List(0) is the distance map and List(1) is the parent map. See the example in GraphConfigDialog.java
 	 * @throws StructuralException - The Bellman-Ford algorithm only works for graphs without negative cycles
 	 */
-	public static List<Map<Object, Object>> bellmanFord(AnalysisGraph aGraph, Object startVertex) throws StructuralException
+	static List<Map<Object, Object>> bellmanFord(AnalysisGraph aGraph, Object startVertex) throws StructuralException
 	{
 		Graph graph = aGraph.getGraph();
 		Object[] vertices = aGraph.getChildVertices(graph.getDefaultParent());
@@ -379,7 +379,7 @@ public class Traversal
 	 * @return an ArrayList where ArrayList(0) is the distance map and List(1) is the path map. See the example in GraphConfigDialog.java
 	 * @throws StructuralException - The Floyd-Roy-Warshall algorithm only works for graphs without negative cycles
 	 */
-	public static ArrayList<Object[][]> floydRoyWarshall(AnalysisGraph aGraph) throws StructuralException
+	static ArrayList<Object[][]> floydRoyWarshall(AnalysisGraph aGraph) throws StructuralException
 	{
 
 		Object[] vertices = aGraph.getChildVertices(aGraph.getGraph().getDefaultParent());
@@ -441,7 +441,7 @@ public class Traversal
 			Arrays.fill(weight[i], Double.MAX_VALUE);
 		}
 
-		boolean isDirected = GraphProperties.isDirected(aGraph.getProperties(), GraphProperties.DEFAULT_DIRECTED);
+		bool isDirected = GraphProperties.isDirected(aGraph.getProperties(), GraphProperties.DEFAULT_DIRECTED);
 		CostFunction costFunction = aGraph.getGenerator().getCostFunction();
 		GraphView view = aGraph.getGraph().getView();
 
@@ -475,7 +475,7 @@ public class Traversal
 	 * @return returns the shortest path from <b>startVertex</b> to <b>endVertex</b>
 	 * @throws StructuralException - The Floyd-Roy-Warshall algorithm only works for graphs without negative cycles
 	 */
-	public static Object[] getWFIPath(AnalysisGraph aGraph, ArrayList<Object[][]> FWIresult, Object startVertex, Object targetVertex)
+	static Object[] getWFIPath(AnalysisGraph aGraph, ArrayList<Object[][]> FWIresult, Object startVertex, Object targetVertex)
 			throws StructuralException
 	{
 		Object[][] dist = FWIresult.get(0);

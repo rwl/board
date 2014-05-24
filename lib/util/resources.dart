@@ -10,20 +10,20 @@ part of graph.util;
 //import java.util.PropertyResourceBundle;
 //import java.util.ResourceBundle;
 
-public class Resources
+class Resources
 {
 
 	/**
 	 * Ordered list of the inserted resource bundles.
 	 */
-	protected static LinkedList<ResourceBundle> _bundles = new LinkedList<ResourceBundle>();
+	static LinkedList<ResourceBundle> _bundles = new LinkedList<ResourceBundle>();
 
 	/**
 	 * Returns the bundles.
 	 * 
 	 * @return Returns the bundles.
 	 */
-	public static LinkedList<ResourceBundle> getBundles()
+	static LinkedList<ResourceBundle> getBundles()
 	{
 		return _bundles;
 	}
@@ -34,7 +34,7 @@ public class Resources
 	 * @param value
 	 *            The bundles to set.
 	 */
-	public static void setBundles(LinkedList<ResourceBundle> value)
+	static void setBundles(LinkedList<ResourceBundle> value)
 	{
 		_bundles = value;
 	}
@@ -46,7 +46,7 @@ public class Resources
 	 * @param basename
 	 *            The basename of the resource bundle to add.
 	 */
-	public static void add(String basename)
+	static void add(String basename)
 	{
 		_bundles.addFirst(PropertyResourceBundle.getBundle(basename));
 	}
@@ -58,7 +58,7 @@ public class Resources
 	 * @param basename
 	 *            The basename of the resource bundle to add.
 	 */
-	public static void add(String basename, Locale locale)
+	static void add(String basename, Locale locale)
 	{
 		_bundles.addFirst(PropertyResourceBundle.getBundle(basename, locale));
 	}
@@ -66,7 +66,7 @@ public class Resources
 	/**
 	 * 
 	 */
-	public static String get(String key)
+	static String get(String key)
 	{
 		return get(key, null, null);
 	}
@@ -74,7 +74,7 @@ public class Resources
 	/**
 	 * 
 	 */
-	public static String get(String key, String defaultValue)
+	static String get(String key, String defaultValue)
 	{
 		return get(key, null, defaultValue);
 	}
@@ -82,7 +82,7 @@ public class Resources
 	/**
 	 * Returns the value for the specified resource key.
 	 */
-	public static String get(String key, String[] params)
+	static String get(String key, String[] params)
 	{
 		return get(key, params, null);
 	}
@@ -90,7 +90,7 @@ public class Resources
 	/**
 	 * Returns the value for the specified resource key.
 	 */
-	public static String get(String key, String[] params, String defaultValue)
+	static String get(String key, String[] params, String defaultValue)
 	{
 		String value = _getResource(key);
 
@@ -146,7 +146,7 @@ public class Resources
 	 * bundles in inverse order or <code>null</code> if no value can be found
 	 * for <code>key</code>.
 	 */
-	protected static String _getResource(String key)
+	static String _getResource(String key)
 	{
 		Iterator<ResourceBundle> it = _bundles.iterator();
 

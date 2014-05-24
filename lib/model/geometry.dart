@@ -3,8 +3,8 @@
  */
 part of graph.model;
 
-//import graph.util.Point2d;
-//import graph.util.Rect;
+import '../util/util.dart' show Point2d;
+import '../util/util.dart' show Rect;
 
 //import java.util.ArrayList;
 //import java.util.List;
@@ -22,7 +22,7 @@ part of graph.model;
  * pixels from that point. In addition, the offset is used as an absolute
  * offset vector from the resulting point. 
  */
-public class Geometry extends Rect
+class Geometry extends Rect
 {
 
 	/**
@@ -33,20 +33,20 @@ public class Geometry extends Rect
 	/**
 	 * Global switch to translate the points in translate. Default is true.
 	 */
-	public static transient boolean TRANSLATE_CONTROL_POINTS = true;
+	static transient bool TRANSLATE_CONTROL_POINTS = true;
 
 	/**
 	 * Stores alternate values for x, y, width and height in a rectangle.
 	 * Default is null.
 	 */
-	protected Rect _alternateBounds;
+	Rect _alternateBounds;
 
 	/**
 	 * Defines the source- and target-point of the edge. This is used if the
 	 * corresponding edge does not have a source vertex. Otherwise it is
 	 * ignored. Default is null.
 	 */
-	protected Point2d _sourcePoint, _targetPoint;
+	Point2d _sourcePoint, _targetPoint;
 
 	/**
 	 * List of mxPoints which specifies the control points along the edge.
@@ -54,14 +54,14 @@ public class Geometry extends Rect
 	 * use targetPoint and sourcePoint or set the terminals of the edge to
 	 * a non-null value. Default is null.
 	 */
-	protected List<Point2d> _points;
+	List<Point2d> _points;
 
 	/**
 	 * Holds the offset of the label for edges. This is the absolute vector
 	 * between the center of the edge and the top, left point of the label.
 	 * Default is null.
 	 */
-	protected Point2d _offset;
+	Point2d _offset;
 
 	/**
 	 * Specifies if the coordinates in the geometry are to be interpreted as
@@ -70,12 +70,12 @@ public class Geometry extends Rect
 	 * position, or a relative location with respect to a parent cell's
 	 * width and height.
 	 */
-	protected boolean _relative = false;
+	bool _relative = false;
 
 	/**
 	 * Constructs a new geometry at (0, 0) with the width and height set to 0.
 	 */
-	public Geometry()
+	Geometry()
 	{
 		this(0, 0, 0, 0);
 	}
@@ -88,7 +88,7 @@ public class Geometry extends Rect
 	 * @param width Width of the new geometry.
 	 * @param height Height of the new geometry.
 	 */
-	public Geometry(double x, double y, double width, double height)
+	Geometry(double x, double y, double width, double height)
 	{
 		super(x, y, width, height);
 	}
@@ -96,7 +96,7 @@ public class Geometry extends Rect
 	/**
 	 * Returns the alternate bounds.
 	 */
-	public Rect getAlternateBounds()
+	Rect getAlternateBounds()
 	{
 		return _alternateBounds;
 	}
@@ -106,7 +106,7 @@ public class Geometry extends Rect
 	 * 
 	 * @param rect Rectangle to be used for the alternate bounds.
 	 */
-	public void setAlternateBounds(Rect rect)
+	void setAlternateBounds(Rect rect)
 	{
 		_alternateBounds = rect;
 	}
@@ -116,7 +116,7 @@ public class Geometry extends Rect
 	 * 
 	 * @return Returns the source point.
 	 */
-	public Point2d getSourcePoint()
+	Point2d getSourcePoint()
 	{
 		return _sourcePoint;
 	}
@@ -126,7 +126,7 @@ public class Geometry extends Rect
 	 * 
 	 * @param sourcePoint Source point to be used.
 	 */
-	public void setSourcePoint(Point2d sourcePoint)
+	void setSourcePoint(Point2d sourcePoint)
 	{
 		this._sourcePoint = sourcePoint;
 	}
@@ -136,7 +136,7 @@ public class Geometry extends Rect
 	 * 
 	 * @return Returns the target point.
 	 */
-	public Point2d getTargetPoint()
+	Point2d getTargetPoint()
 	{
 		return _targetPoint;
 	}
@@ -146,7 +146,7 @@ public class Geometry extends Rect
 	 * 
 	 * @param targetPoint Target point to be used.
 	 */
-	public void setTargetPoint(Point2d targetPoint)
+	void setTargetPoint(Point2d targetPoint)
 	{
 		this._targetPoint = targetPoint;
 	}
@@ -154,7 +154,7 @@ public class Geometry extends Rect
 	/**
 	 * Returns the list of control points.
 	 */
-	public List<Point2d> getPoints()
+	List<Point2d> getPoints()
 	{
 		return _points;
 	}
@@ -164,7 +164,7 @@ public class Geometry extends Rect
 	 * 
 	 * @param value List that contains the new control points.
 	 */
-	public void setPoints(List<Point2d> value)
+	void setPoints(List<Point2d> value)
 	{
 		_points = value;
 	}
@@ -172,7 +172,7 @@ public class Geometry extends Rect
 	/**
 	 * Returns the offset.
 	 */
-	public Point2d getOffset()
+	Point2d getOffset()
 	{
 		return _offset;
 	}
@@ -182,7 +182,7 @@ public class Geometry extends Rect
 	 * 
 	 * @param offset Point to be used for the offset.
 	 */
-	public void setOffset(Point2d offset)
+	void setOffset(Point2d offset)
 	{
 		this._offset = offset;
 	}
@@ -190,7 +190,7 @@ public class Geometry extends Rect
 	/**
 	 * Returns true of the geometry is relative.
 	 */
-	public boolean isRelative()
+	bool isRelative()
 	{
 		return _relative;
 	}
@@ -200,7 +200,7 @@ public class Geometry extends Rect
 	 * 
 	 * @param value Boolean value to be used as the new relative state.
 	 */
-	public void setRelative(boolean value)
+	void setRelative(bool value)
 	{
 		_relative = value;
 	}
@@ -214,7 +214,7 @@ public class Geometry extends Rect
 	 * calling this method and setting the geometry of the cell using
 	 * GraphModel.setGeometry.
 	 */
-	public void swap()
+	void swap()
 	{
 		if (_alternateBounds != null)
 		{
@@ -238,7 +238,7 @@ public class Geometry extends Rect
 	 * should be returned.
 	 * @return Returns the source or target point.
 	 */
-	public Point2d getTerminalPoint(boolean isSource)
+	Point2d getTerminalPoint(bool isSource)
 	{
 		return (isSource) ? _sourcePoint : _targetPoint;
 	}
@@ -252,7 +252,7 @@ public class Geometry extends Rect
 	 * should be set.
 	 * @return Returns the new point.
 	 */
-	public Point2d setTerminalPoint(Point2d point, boolean isSource)
+	Point2d setTerminalPoint(Point2d point, bool isSource)
 	{
 		if (isSource)
 		{
@@ -276,7 +276,7 @@ public class Geometry extends Rect
 	 * @param dx Integer that specifies the x-coordinate of the translation.
 	 * @param dy Integer that specifies the y-coordinate of the translation.
 	 */
-	public void translate(double dx, double dy)
+	void translate(double dx, double dy)
 	{
 		// Translates the geometry
 		if (!isRelative())
@@ -317,7 +317,7 @@ public class Geometry extends Rect
 	/**
 	 * Returns a clone of the cell.
 	 */
-	public Object clone()
+	Object clone()
 	{
 		Geometry clone = (Geometry) super.clone();
 

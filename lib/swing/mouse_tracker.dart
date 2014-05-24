@@ -1,6 +1,6 @@
 part of graph.swing;
 
-//import graph.view.GraphView;
+import '../view/view.dart' show GraphView;
 
 //import java.awt.Cursor;
 //import java.awt.Point;
@@ -14,7 +14,7 @@ part of graph.swing;
 /**
  *
  */
-public class MouseTracker implements MouseListener, MouseMotionListener
+class MouseTracker implements MouseListener, MouseMotionListener
 {
 	/**
 	 * 
@@ -31,13 +31,13 @@ public class MouseTracker implements MouseListener, MouseMotionListener
 	/**
 	 * 
 	 */
-	protected Point start = null;
+	Point start = null;
 
 	/*
 	 * (non-Javadoc)
 	 * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
 	 */
-	public void mousePressed(MouseEvent e)
+	void mousePressed(MouseEvent e)
 	{
 		this.graphOutline._zoomGesture = hitZoomHandle(e.getX(), e.getY());
 
@@ -53,7 +53,7 @@ public class MouseTracker implements MouseListener, MouseMotionListener
 	 * (non-Javadoc)
 	 * @see java.awt.event.MouseMotionListener#mouseDragged(java.awt.event.MouseEvent)
 	 */
-	public void mouseDragged(MouseEvent e)
+	void mouseDragged(MouseEvent e)
 	{
 		if (this.graphOutline.isEnabled() && start != null)
 		{
@@ -99,7 +99,7 @@ public class MouseTracker implements MouseListener, MouseMotionListener
 	 * (non-Javadoc)
 	 * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
 	 */
-	public void mouseReleased(MouseEvent e)
+	void mouseReleased(MouseEvent e)
 	{
 		if (start != null)
 		{
@@ -158,7 +158,7 @@ public class MouseTracker implements MouseListener, MouseMotionListener
 	/**
 	 * 
 	 */
-	public boolean hitZoomHandle(int x, int y)
+	bool hitZoomHandle(int x, int y)
 	{
 		return new Rectangle(this.graphOutline._finderBounds.x + this.graphOutline._finderBounds.width - 6,
 				this.graphOutline._finderBounds.y + this.graphOutline._finderBounds.height - 6, 8, 8).contains(x,
@@ -169,7 +169,7 @@ public class MouseTracker implements MouseListener, MouseMotionListener
 	 * (non-Javadoc)
 	 * @see java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent)
 	 */
-	public void mouseMoved(MouseEvent e)
+	void mouseMoved(MouseEvent e)
 	{
 		if (hitZoomHandle(e.getX(), e.getY()))
 		{
@@ -189,7 +189,7 @@ public class MouseTracker implements MouseListener, MouseMotionListener
 	 * (non-Javadoc)
 	 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
 	 */
-	public void mouseClicked(MouseEvent e)
+	void mouseClicked(MouseEvent e)
 	{
 		// ignore
 	}
@@ -198,7 +198,7 @@ public class MouseTracker implements MouseListener, MouseMotionListener
 	 * (non-Javadoc)
 	 * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
 	 */
-	public void mouseEntered(MouseEvent e)
+	void mouseEntered(MouseEvent e)
 	{
 		// ignore
 	}
@@ -207,7 +207,7 @@ public class MouseTracker implements MouseListener, MouseMotionListener
 	 * (non-Javadoc)
 	 * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
 	 */
-	public void mouseExited(MouseEvent e)
+	void mouseExited(MouseEvent e)
 	{
 		// ignore
 	}

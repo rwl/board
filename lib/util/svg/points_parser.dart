@@ -27,23 +27,23 @@ part of graph.util.svg;
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @version $Id: PointsParser.java,v 1.1 2012/11/15 13:26:45 gaudenz Exp $
  */
-public class PointsParser extends NumberParser
+class PointsParser extends NumberParser
 {
 
 	/**
 	 * The points handler used to report parse events.
 	 */
-	protected PointsHandler pointsHandler;
+	PointsHandler pointsHandler;
 
 	/**
 	 * Whether the last character was a 'e' or 'E'.
 	 */
-	protected boolean eRead;
+	bool eRead;
 
 	/**
 	 * Creates a new PointsParser.
 	 */
-	public PointsParser(PointsHandler handler)
+	PointsParser(PointsHandler handler)
 	{
 		pointsHandler = handler;
 	}
@@ -59,7 +59,7 @@ public class PointsParser extends NumberParser
 	 * handler immediately.</p>
 	 * @param handler The transform list handler.
 	 */
-	public void setPointsHandler(PointsHandler handler)
+	void setPointsHandler(PointsHandler handler)
 	{
 		pointsHandler = handler;
 	}
@@ -67,7 +67,7 @@ public class PointsParser extends NumberParser
 	/**
 	 * Returns the points handler in use.
 	 */
-	public PointsHandler getPointsHandler()
+	PointsHandler getPointsHandler()
 	{
 		return pointsHandler;
 	}
@@ -75,7 +75,7 @@ public class PointsParser extends NumberParser
 	/**
 	 * Parses the current stream.
 	 */
-	protected void doParse() throws ParseException, IOException
+	void doParse() throws ParseException, IOException
 	{
 		pointsHandler.startPoints();
 

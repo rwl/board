@@ -3,8 +3,8 @@
  */
 part of graph.swing.handler;
 
-//import graph.swing.GraphComponent;
-//import graph.swing.util.GraphActions;
+import '../../swing/swing.dart' show GraphComponent;
+import '../../swing/util/util.dart' show GraphActions;
 
 //import javax.swing.ActionMap;
 //import javax.swing.InputMap;
@@ -18,14 +18,14 @@ part of graph.swing.handler;
  * @author Administrator
  * 
  */
-public class KeyboardHandler
+class KeyboardHandler
 {
 
 	/**
 	 * 
 	 * @param graphComponent
 	 */
-	public KeyboardHandler(GraphComponent graphComponent)
+	KeyboardHandler(GraphComponent graphComponent)
 	{
 		_installKeyboardActions(graphComponent);
 	}
@@ -33,7 +33,7 @@ public class KeyboardHandler
 	/**
 	 * Invoked as part from the boilerplate install block.
 	 */
-	protected void _installKeyboardActions(GraphComponent graphComponent)
+	void _installKeyboardActions(GraphComponent graphComponent)
 	{
 		InputMap inputMap = _getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 		SwingUtilities.replaceUIInputMap(graphComponent,
@@ -48,7 +48,7 @@ public class KeyboardHandler
 	/**
 	 * Return JTree's input map.
 	 */
-	protected InputMap _getInputMap(int condition)
+	InputMap _getInputMap(int condition)
 	{
 		InputMap map = null;
 
@@ -91,7 +91,7 @@ public class KeyboardHandler
 	/**
 	 * Return the mapping between JTree's input map and JGraph's actions.
 	 */
-	protected ActionMap _createActionMap()
+	ActionMap _createActionMap()
 	{
 		ActionMap map = (ActionMap) UIManager.get("ScrollPane.actionMap");
 

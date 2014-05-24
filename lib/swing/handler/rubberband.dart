@@ -3,13 +3,13 @@
  */
 part of graph.swing.handler;
 
-//import graph.swing.GraphComponent;
-//import graph.swing.GraphControl;
-//import graph.swing.util.SwingConstants;
-//import graph.util.Event;
-//import graph.util.EventObj;
-//import graph.util.Utils;
-//import graph.util.EventSource.IEventListener;
+import '../../swing/swing.dart' show GraphComponent;
+import '../../swing/swing.dart' show GraphControl;
+import '../../swing/util/util.dart' show SwingConstants;
+import '../../util/util.dart' show Event;
+import '../../util/util.dart' show EventObj;
+import '../../util/util.dart' show Utils;
+import '../../util/util.dart' show EventSource.IEventListener;
 
 //import java.awt.Color;
 //import java.awt.Graphics;
@@ -24,47 +24,47 @@ part of graph.swing.handler;
 /**
  * Implements a rubberband selection.
  */
-public class Rubberband implements MouseListener, MouseMotionListener
+class Rubberband implements MouseListener, MouseMotionListener
 {
 
 	/**
 	 * Defines the border color for drawing the rubberband selection.
 	 * Default is Constants.RUBBERBAND_BORDERCOLOR.
 	 */
-	protected Color _borderColor = SwingConstants.RUBBERBAND_BORDERCOLOR;
+	Color _borderColor = SwingConstants.RUBBERBAND_BORDERCOLOR;
 
 	/**
 	 * Defines the color to be used for filling the rubberband selection.
 	 * Default is Constants.RUBBERBAND_FILLCOLOR.
 	 */
-	protected Color _fillColor = SwingConstants.RUBBERBAND_FILLCOLOR;
+	Color _fillColor = SwingConstants.RUBBERBAND_FILLCOLOR;
 
 	/**
 	 * Reference to the enclosing graph container.
 	 */
-	protected GraphComponent _graphComponent;
+	GraphComponent _graphComponent;
 
 	/**
 	 * Specifies if the rubberband is enabled.
 	 */
-	protected boolean _enabled = true;
+	bool _enabled = true;
 
 	/**
 	 * Holds the point where the selection has started.
 	 */
-	protected transient Point _first;
+	transient Point _first;
 
 	/**
 	 * Holds the current rubberband bounds.
 	 */
-	protected transient Rectangle _bounds;
+	transient Rectangle _bounds;
 
 	/**
 	 * Constructs a new rubberband selection for the given graph component.
 	 * 
 	 * @param graphComponent Component that contains the rubberband.
 	 */
-	public Rubberband(final GraphComponent graphComponent)
+	Rubberband(final GraphComponent graphComponent)
 	{
 		this._graphComponent = graphComponent;
 
@@ -106,7 +106,7 @@ public class Rubberband implements MouseListener, MouseMotionListener
 	/**
 	 * Returns the enabled state.
 	 */
-	public boolean isEnabled()
+	bool isEnabled()
 	{
 		return _enabled;
 	}
@@ -114,7 +114,7 @@ public class Rubberband implements MouseListener, MouseMotionListener
 	/**
 	 * Sets the enabled state.
 	 */
-	public void setEnabled(boolean enabled)
+	void setEnabled(bool enabled)
 	{
 		this._enabled = enabled;
 	}
@@ -122,7 +122,7 @@ public class Rubberband implements MouseListener, MouseMotionListener
 	/**
 	 * Returns the border color.
 	 */
-	public Color getBorderColor()
+	Color getBorderColor()
 	{
 		return _borderColor;
 	}
@@ -130,7 +130,7 @@ public class Rubberband implements MouseListener, MouseMotionListener
 	/**
 	 * Sets the border color.
 	 */
-	public void setBorderColor(Color value)
+	void setBorderColor(Color value)
 	{
 		_borderColor = value;
 	}
@@ -138,7 +138,7 @@ public class Rubberband implements MouseListener, MouseMotionListener
 	/**
 	 * Returns the fill color.
 	 */
-	public Color getFillColor()
+	Color getFillColor()
 	{
 		return _fillColor;
 	}
@@ -146,7 +146,7 @@ public class Rubberband implements MouseListener, MouseMotionListener
 	/**
 	 * Sets the fill color.
 	 */
-	public void setFillColor(Color value)
+	void setFillColor(Color value)
 	{
 		_fillColor = value;
 	}
@@ -154,7 +154,7 @@ public class Rubberband implements MouseListener, MouseMotionListener
 	/**
 	 * Returns true if the given event should start the rubberband selection.
 	 */
-	public boolean isRubberbandTrigger(MouseEvent e)
+	bool isRubberbandTrigger(MouseEvent e)
 	{
 		return true;
 	}
@@ -162,7 +162,7 @@ public class Rubberband implements MouseListener, MouseMotionListener
 	/**
 	 * Starts the rubberband selection at the given point.
 	 */
-	public void start(Point point)
+	void start(Point point)
 	{
 		_first = point;
 		_bounds = new Rectangle(_first);
@@ -171,7 +171,7 @@ public class Rubberband implements MouseListener, MouseMotionListener
 	/**
 	 * Resets the rubberband selection without carrying out the selection.
 	 */
-	public void reset()
+	void reset()
 	{
 		_first = null;
 
@@ -187,7 +187,7 @@ public class Rubberband implements MouseListener, MouseMotionListener
 	 * @param rect
 	 * @param e
 	 */
-	public Object[] select(Rectangle rect, MouseEvent e)
+	Object[] select(Rectangle rect, MouseEvent e)
 	{
 		return _graphComponent.selectRegion(rect, e);
 	}
@@ -195,7 +195,7 @@ public class Rubberband implements MouseListener, MouseMotionListener
 	/**
 	 * 
 	 */
-	public void paintRubberband(Graphics g)
+	void paintRubberband(Graphics g)
 	{
 		if (_first != null && _bounds != null
 				&& _graphComponent.isSignificant(_bounds.width, _bounds.height))
@@ -213,7 +213,7 @@ public class Rubberband implements MouseListener, MouseMotionListener
 	/**
 	 * 
 	 */
-	public void mousePressed(MouseEvent e)
+	void mousePressed(MouseEvent e)
 	{
 		if (!e.isConsumed() && isEnabled() && isRubberbandTrigger(e)
 				&& !e.isPopupTrigger())
@@ -226,7 +226,7 @@ public class Rubberband implements MouseListener, MouseMotionListener
 	/**
 	 * 
 	 */
-	public void mouseDragged(MouseEvent e)
+	void mouseDragged(MouseEvent e)
 	{
 		if (!e.isConsumed() && _first != null)
 		{
@@ -290,7 +290,7 @@ public class Rubberband implements MouseListener, MouseMotionListener
 	/**
 	 * 
 	 */
-	public void mouseReleased(MouseEvent e)
+	void mouseReleased(MouseEvent e)
 	{
 		Rectangle rect = _bounds;
 		reset();
@@ -308,7 +308,7 @@ public class Rubberband implements MouseListener, MouseMotionListener
 	 * (non-Javadoc)
 	 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
 	 */
-	public void mouseClicked(MouseEvent arg0)
+	void mouseClicked(MouseEvent arg0)
 	{
 		// empty
 	}
@@ -317,7 +317,7 @@ public class Rubberband implements MouseListener, MouseMotionListener
 	 * (non-Javadoc)
 	 * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
 	 */
-	public void mouseEntered(MouseEvent arg0)
+	void mouseEntered(MouseEvent arg0)
 	{
 		// empty
 	}
@@ -326,7 +326,7 @@ public class Rubberband implements MouseListener, MouseMotionListener
 	 * (non-Javadoc)
 	 * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
 	 */
-	public void mouseExited(MouseEvent arg0)
+	void mouseExited(MouseEvent arg0)
 	{
 		// empty
 	}
@@ -335,7 +335,7 @@ public class Rubberband implements MouseListener, MouseMotionListener
 	 * (non-Javadoc)
 	 * @see java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent)
 	 */
-	public void mouseMoved(MouseEvent arg0)
+	void mouseMoved(MouseEvent arg0)
 	{
 		// empty
 	}

@@ -8,7 +8,7 @@ part of graph.util;
 /**
  * Implements a 2-dimensional point with double precision coordinates.
  */
-public class Image implements Serializable, Cloneable
+class Image implements Serializable, Cloneable
 {
 
 	/**
@@ -19,17 +19,17 @@ public class Image implements Serializable, Cloneable
 	/**
 	 * Holds the path or URL for the image.
 	 */
-	protected String _src;
+	String _src;
 
 	/**
 	 * Holds the image width and height.
 	 */
-	protected int _width, _height;
+	int _width, _height;
 
 	/**
 	 * Constructs a new point at (0, 0).
 	 */
-	public Image(String src, int width, int height)
+	Image(String src, int width, int height)
 	{
 		this._src = src;
 		this._width = width;
@@ -39,7 +39,7 @@ public class Image implements Serializable, Cloneable
 	/**
 	 * @return the src
 	 */
-	public String getSrc()
+	String getSrc()
 	{
 		return _src;
 	}
@@ -47,7 +47,7 @@ public class Image implements Serializable, Cloneable
 	/**
 	 * @param src the src to set
 	 */
-	public void setSrc(String src)
+	void setSrc(String src)
 	{
 		this._src = src;
 	}
@@ -55,7 +55,7 @@ public class Image implements Serializable, Cloneable
 	/**
 	 * @return the width
 	 */
-	public int getWidth()
+	int getWidth()
 	{
 		return _width;
 	}
@@ -63,7 +63,7 @@ public class Image implements Serializable, Cloneable
 	/**
 	 * @param width the width to set
 	 */
-	public void setWidth(int width)
+	void setWidth(int width)
 	{
 		this._width = width;
 	}
@@ -71,7 +71,7 @@ public class Image implements Serializable, Cloneable
 	/**
 	 * @return the height
 	 */
-	public int getHeight()
+	int getHeight()
 	{
 		return _height;
 	}
@@ -79,7 +79,7 @@ public class Image implements Serializable, Cloneable
 	/**
 	 * @param height the height to set
 	 */
-	public void setHeight(int height)
+	void setHeight(int height)
 	{
 		this._height = height;
 	}

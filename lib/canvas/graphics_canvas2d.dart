@@ -1,8 +1,8 @@
 part of graph.canvas;
 
-//import graph.util.Constants;
-//import graph.util.LightweightLabel;
-//import graph.util.Utils;
+import '../util/util.dart' show Constants;
+import '../util/util.dart' show LightweightLabel;
+import '../util/util.dart' show Utils;
 
 //import java.awt.AlphaComposite;
 //import java.awt.BasicStroke;
@@ -47,113 +47,113 @@ part of graph.canvas;
  * word wrapping. CSS support is limited to the following:
  * http://docs.oracle.com/javase/6/docs/api/index.html?javax/swing/text/html/CSS.html
  */
-public class GraphicsCanvas2D implements ICanvas2D
+class GraphicsCanvas2D implements ICanvas2D
 {
 
 	/**
 	 * Specifies the image scaling quality. Default is Image.SCALE_SMOOTH.
 	 * See {@link #_scaleImage(Image, int, int)}
 	 */
-	public static int IMAGE_SCALING = Image.SCALE_SMOOTH;
+	static int IMAGE_SCALING = Image.SCALE_SMOOTH;
 
 	/**
 	 * Specifies the size of the cache used to store parsed colors
 	 */
-	public static int COLOR_CACHE_SIZE = 100;
+	static int COLOR_CACHE_SIZE = 100;
 
 	/**
 	 * Reference to the graphics instance for painting.
 	 */
-	protected Graphics2D _graphics;
+	Graphics2D _graphics;
 
 	/**
 	 * Specifies if text output should be rendered. Default is true.
 	 */
-	protected boolean _textEnabled = true;
+	bool _textEnabled = true;
 
 	/**
 	 * Represents the current state of the canvas.
 	 */
-	protected transient _CanvasState _state = new _CanvasState();
+	transient _CanvasState _state = new _CanvasState();
 
 	/**
 	 * Stack of states for save/restore.
 	 */
-	protected transient Stack<_CanvasState> _stack = new Stack<_CanvasState>();
+	transient Stack<_CanvasState> _stack = new Stack<_CanvasState>();
 
 	/**
 	 * Holds the current path.
 	 */
-	protected transient GeneralPath _currentPath;
+	transient GeneralPath _currentPath;
 
 	/**
 	 * Optional renderer pane to be used for HTML label rendering.
 	 */
-	protected CellRendererPane _rendererPane;
+	CellRendererPane _rendererPane;
 
 	/**
 	 * Font caching.
 	 */
-	protected transient Font _lastFont = null;
+	transient Font _lastFont = null;
 
 	/**
 	 * Font caching.
 	 */
-	protected transient int _lastFontStyle = 0;
+	transient int _lastFontStyle = 0;
 
 	/**
 	 * Font caching.
 	 */
-	protected transient int _lastFontSize = 0;
+	transient int _lastFontSize = 0;
 
 	/**
 	 * Font caching.
 	 */
-	protected transient String _lastFontFamily = "";
+	transient String _lastFontFamily = "";
 
 	/**
 	 * Stroke caching.
 	 */
-	protected transient Stroke _lastStroke = null;
+	transient Stroke _lastStroke = null;
 
 	/**
 	 * Stroke caching.
 	 */
-	protected transient float _lastStrokeWidth = 0;
+	transient float _lastStrokeWidth = 0;
 
 	/**
 	 * Stroke caching.
 	 */
-	protected transient int _lastCap = 0;
+	transient int _lastCap = 0;
 
 	/**
 	 * Stroke caching.
 	 */
-	protected transient int _lastJoin = 0;
+	transient int _lastJoin = 0;
 
 	/**
 	 * Stroke caching.
 	 */
-	protected transient float _lastMiterLimit = 0;
+	transient float _lastMiterLimit = 0;
 
 	/**
 	 * Stroke caching.
 	 */
-	protected transient boolean _lastDashed = false;
+	transient bool _lastDashed = false;
 
 	/**
 	 * Stroke caching.
 	 */
-	protected transient Object _lastDashPattern = "";
+	transient Object _lastDashPattern = "";
 
 	/**
 	 * Caches parsed colors.
 	 */
 	@SuppressWarnings("serial")
-	protected transient LinkedHashMap<String, Color> _colorCache = new LinkedHashMap<String, Color>()
+	transient LinkedHashMap<String, Color> _colorCache = new LinkedHashMap<String, Color>()
 	{
 		@Override
-		protected boolean removeEldestEntry(Map.Entry<String, Color> eldest)
+		protected bool removeEldestEntry(Map.Entry<String, Color> eldest)
 		{
 			return size() > COLOR_CACHE_SIZE;
 		}
@@ -162,7 +162,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * Constructs a new graphics export canvas.
 	 */
-	public GraphicsCanvas2D(Graphics2D g)
+	GraphicsCanvas2D(Graphics2D g)
 	{
 		setGraphics(g);
 		_state.g = g;
@@ -181,7 +181,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * Sets the graphics instance.
 	 */
-	public void setGraphics(Graphics2D value)
+	void setGraphics(Graphics2D value)
 	{
 		_graphics = value;
 	}
@@ -189,7 +189,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * Returns the graphics instance.
 	 */
-	public Graphics2D getGraphics()
+	Graphics2D getGraphics()
 	{
 		return _graphics;
 	}
@@ -197,7 +197,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * Returns true if text should be rendered.
 	 */
-	public boolean isTextEnabled()
+	bool isTextEnabled()
 	{
 		return _textEnabled;
 	}
@@ -205,7 +205,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * Disables or enables text rendering.
 	 */
-	public void setTextEnabled(boolean value)
+	void setTextEnabled(bool value)
 	{
 		_textEnabled = value;
 	}
@@ -213,7 +213,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * Saves the current canvas state.
 	 */
-	public void save()
+	void save()
 	{
 		_stack.push(_state);
 		_state = _cloneState(_state);
@@ -223,7 +223,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * Restores the last canvas state.
 	 */
-	public void restore()
+	void restore()
 	{
 		_state = _stack.pop();
 	}
@@ -231,7 +231,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * Returns a clone of thec given state.
 	 */
-	protected _CanvasState _cloneState(_CanvasState state)
+	_CanvasState _cloneState(_CanvasState state)
 	{
 		try
 		{
@@ -248,7 +248,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	public void scale(double value)
+	void scale(double value)
 	{
 		// This implementation uses custom scale/translate and built-in rotation
 		_state.scale = _state.scale * value;
@@ -257,7 +257,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	public void translate(double dx, double dy)
+	void translate(double dx, double dy)
 	{
 		// This implementation uses custom scale/translate and built-in rotation
 		_state.dx += dx;
@@ -267,7 +267,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	public void rotate(double theta, boolean flipH, boolean flipV, double cx, double cy)
+	void rotate(double theta, bool flipH, bool flipV, double cx, double cy)
 	{
 		cx += _state.dx;
 		cy += _state.dy;
@@ -304,7 +304,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	public void setStrokeWidth(double value)
+	void setStrokeWidth(double value)
 	{
 		// Lazy and cached instantiation strategy for all stroke properties
 		if (value != _state.strokeWidth)
@@ -316,7 +316,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * Caches color conversion as it is expensive.
 	 */
-	public void setStrokeColor(String value)
+	void setStrokeColor(String value)
 	{
 		// Lazy and cached instantiation strategy for all stroke properties
 		if (_state.strokeColorValue == null || !_state.strokeColorValue.equals(value))
@@ -329,7 +329,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	public void setDashed(boolean value)
+	void setDashed(bool value)
 	{
 		// Lazy and cached instantiation strategy for all stroke properties
 		if (value != _state.dashed)
@@ -341,7 +341,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	public void setDashPattern(String value)
+	void setDashPattern(String value)
 	{
 		if (value != null && value.length() > 0)
 		{
@@ -360,7 +360,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	public void setLineCap(String value)
+	void setLineCap(String value)
 	{
 		if (!_state.lineCap.equals(value))
 		{
@@ -371,7 +371,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	public void setLineJoin(String value)
+	void setLineJoin(String value)
 	{
 		if (!_state.lineJoin.equals(value))
 		{
@@ -382,7 +382,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	public void setMiterLimit(double value)
+	void setMiterLimit(double value)
 	{
 		if (value != _state.miterLimit)
 		{
@@ -393,7 +393,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	public void setFontSize(double value)
+	void setFontSize(double value)
 	{
 		if (value != _state.fontSize)
 		{
@@ -404,7 +404,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	public void setFontColor(String value)
+	void setFontColor(String value)
 	{
 		if (_state.fontColorValue == null || !_state.fontColorValue.equals(value))
 		{
@@ -416,7 +416,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	public void setFontBackgroundColor(String value)
+	void setFontBackgroundColor(String value)
 	{
 		if (_state.fontBackgroundColorValue == null || !_state.fontBackgroundColorValue.equals(value))
 		{
@@ -428,7 +428,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	public void setFontBorderColor(String value)
+	void setFontBorderColor(String value)
 	{
 		if (_state.fontBorderColorValue == null || !_state.fontBorderColorValue.equals(value))
 		{
@@ -440,7 +440,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	public void setFontFamily(String value)
+	void setFontFamily(String value)
 	{
 		if (!_state.fontFamily.equals(value))
 		{
@@ -451,7 +451,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	public void setFontStyle(int value)
+	void setFontStyle(int value)
 	{
 		if (value != _state.fontStyle)
 		{
@@ -462,7 +462,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	public void setAlpha(double value)
+	void setAlpha(double value)
 	{
 		if (_state.alpha != value)
 		{
@@ -474,7 +474,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	public void setFillColor(String value)
+	void setFillColor(String value)
 	{
 		if (_state.fillColorValue == null || !_state.fillColorValue.equals(value))
 		{
@@ -489,7 +489,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	public void setGradient(String color1, String color2, double x, double y, double w, double h, String direction, double alpha1,
+	void setGradient(String color1, String color2, double x, double y, double w, double h, String direction, double alpha1,
 			double alpha2)
 	{
 		// LATER: Add lazy instantiation and check if paint already created
@@ -540,7 +540,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * Helper method that uses {@link Utils#parseColor(String)}.
 	 */
-	protected Color _parseColor(String hex)
+	Color _parseColor(String hex)
 	{
 		Color result = _colorCache.get(hex);
 
@@ -556,7 +556,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 *
 	 */
-	public void rect(double x, double y, double w, double h)
+	void rect(double x, double y, double w, double h)
 	{
 		_currentPath = new GeneralPath();
 		_currentPath.append(new Rectangle2D.Double((_state.dx + x) * _state.scale, (_state.dy + y) * _state.scale, w * _state.scale, h
@@ -566,7 +566,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * Implements a rounded rectangle using a path.
 	 */
-	public void roundrect(double x, double y, double w, double h, double dx, double dy)
+	void roundrect(double x, double y, double w, double h, double dx, double dy)
 	{
 		// LATER: Use arc here or quad in VML/SVG for exact match
 		begin();
@@ -584,7 +584,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	public void ellipse(double x, double y, double w, double h)
+	void ellipse(double x, double y, double w, double h)
 	{
 		_currentPath = new GeneralPath();
 		_currentPath.append(new Ellipse2D.Double((_state.dx + x) * _state.scale, (_state.dy + y) * _state.scale, w * _state.scale, h
@@ -594,7 +594,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	public void image(double x, double y, double w, double h, String src, boolean aspect, boolean flipH, boolean flipV)
+	void image(double x, double y, double w, double h, String src, bool aspect, bool flipH, bool flipV)
 	{
 		if (src != null && w > 0 && h > 0)
 		{
@@ -616,7 +616,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	protected void _drawImage(Graphics2D graphics, Image image, int x, int y)
+	void _drawImage(Graphics2D graphics, Image image, int x, int y)
 	{
 		graphics.drawImage(image, x, y, null);
 	}
@@ -624,7 +624,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * Hook for image caching.
 	 */
-	protected Image _loadImage(String src)
+	Image _loadImage(String src)
 	{
 		return Utils.loadImage(src);
 	}
@@ -632,7 +632,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	protected final Rectangle _getImageBounds(Image img, double x, double y, double w, double h, boolean aspect)
+	final Rectangle _getImageBounds(Image img, double x, double y, double w, double h, bool aspect)
 	{
 		x = (_state.dx + x) * _state.scale;
 		y = (_state.dy + y) * _state.scale;
@@ -662,7 +662,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * Returns the size for the given image.
 	 */
-	protected Dimension _getImageSize(Image image)
+	Dimension _getImageSize(Image image)
 	{
 		return new Dimension(image.getWidth(null), image.getHeight(null));
 	}
@@ -670,7 +670,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * Uses {@link #IMAGE_SCALING} to scale the given image.
 	 */
-	protected Image _scaleImage(Image img, int w, int h)
+	Image _scaleImage(Image img, int w, int h)
 	{
 		Dimension size = _getImageSize(img);
 
@@ -687,7 +687,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * Creates a graphic instance for rendering an image.
 	 */
-	protected final Graphics2D _createImageGraphics(double x, double y, double w, double h, boolean flipH, boolean flipV)
+	final Graphics2D _createImageGraphics(double x, double y, double w, double h, bool flipH, bool flipV)
 	{
 		Graphics2D g2 = _state.g;
 
@@ -729,7 +729,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * Creates a HTML document around the given markup.
 	 */
-	protected String _createHtmlDocument(String text, String align, String valign, int w, int h, boolean wrap, String overflow, boolean clip)
+	String _createHtmlDocument(String text, String align, String valign, int w, int h, bool wrap, String overflow, bool clip)
 	{
 		StringBuffer css = new StringBuffer();
 		css.append("display:inline;");
@@ -739,7 +739,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 		// KNOWN: Line-height ignored in JLabel
 		css.append("line-height:" + ((Constants.ABSOLUTE_LINE_HEIGHT) ? Math.round(_state.fontSize * Constants.LINE_HEIGHT) + " pt" : Constants.LINE_HEIGHT));
 		
-		boolean setWidth = false;
+		bool setWidth = false;
 		
 		if ((_state.fontStyle & Constants.FONT_BOLD) == Constants.FONT_BOLD)
 		{
@@ -830,7 +830,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	 * Hook to return the renderer for HTML formatted text. This implementation returns
 	 * the shared instance of mxLighweightLabel.
 	 */
-	protected JLabel _getTextRenderer()
+	JLabel _getTextRenderer()
 	{
 		return LightweightLabel.getSharedInstance();
 	}
@@ -838,7 +838,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	protected Point2D _getMargin(String align, String valign)
+	Point2D _getMargin(String align, String valign)
 	{
 		double dx = 0;
 		double dy = 0;
@@ -873,8 +873,8 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * Draws the given HTML text.
 	 */
-	protected void _htmlText(double x, double y, double w, double h, String str, String align, String valign, boolean wrap, String format,
-			String overflow, boolean clip, double rotation)
+	void _htmlText(double x, double y, double w, double h, String str, String align, String valign, bool wrap, String format,
+			String overflow, bool clip, double rotation)
 	{
 		x += _state.dx;
 		y += _state.dy;
@@ -891,8 +891,8 @@ public class GraphicsCanvas2D implements ICanvas2D
 
 			// Renders the scaled text with a correction factor of
 			// PX_PER_PIXEL for px in HTML vs pixels in the bitmap
-			boolean widthFill = false;
-			boolean fill = false;
+			bool widthFill = false;
+			bool fill = false;
 			
 			String original = str;
 			
@@ -975,8 +975,8 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * Draws the given text.
 	 */
-	public void text(double x, double y, double w, double h, String str, String align, String valign, boolean wrap, String format,
-			String overflow, boolean clip, double rotation)
+	void text(double x, double y, double w, double h, String str, String align, String valign, bool wrap, String format,
+			String overflow, bool clip, double rotation)
 	{
 		if (format != null && format.equals("html"))
 		{
@@ -991,8 +991,8 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * Draws the given text.
 	 */
-	public void plainText(double x, double y, double w, double h, String str, String align, String valign, boolean wrap, String format,
-			String overflow, boolean clip, double rotation)
+	void plainText(double x, double y, double w, double h, String str, String align, String valign, bool wrap, String format,
+			String overflow, bool clip, double rotation)
 	{
 		if (_state.fontColor == null)
 		{
@@ -1104,7 +1104,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	 * Returns a new graphics instance with the correct color and font for
 	 * text rendering.
 	 */
-	protected final Graphics2D _createTextGraphics(double x, double y, double w, double h, double rotation, boolean clip, String align, String valign)
+	final Graphics2D _createTextGraphics(double x, double y, double w, double h, double rotation, bool clip, String align, String valign)
 	{
 		Graphics2D g2 = _state.g;
 		_updateFont();
@@ -1137,7 +1137,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	public void begin()
+	void begin()
 	{
 		_currentPath = new GeneralPath();
 	}
@@ -1145,7 +1145,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	public void moveTo(double x, double y)
+	void moveTo(double x, double y)
 	{
 		if (_currentPath != null)
 		{
@@ -1156,7 +1156,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	public void lineTo(double x, double y)
+	void lineTo(double x, double y)
 	{
 		if (_currentPath != null)
 		{
@@ -1167,7 +1167,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	public void quadTo(double x1, double y1, double x2, double y2)
+	void quadTo(double x1, double y1, double x2, double y2)
 	{
 		if (_currentPath != null)
 		{
@@ -1179,7 +1179,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	public void curveTo(double x1, double y1, double x2, double y2, double x3, double y3)
+	void curveTo(double x1, double y1, double x2, double y2, double x3, double y3)
 	{
 		if (_currentPath != null)
 		{
@@ -1192,7 +1192,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * Closes the current path.
 	 */
-	public void close()
+	void close()
 	{
 		if (_currentPath != null)
 		{
@@ -1203,7 +1203,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	public void stroke()
+	void stroke()
 	{
 		_paintCurrentPath(false, true);
 	}
@@ -1211,7 +1211,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	public void fill()
+	void fill()
 	{
 		_paintCurrentPath(true, false);
 	}
@@ -1219,7 +1219,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	public void fillAndStroke()
+	void fillAndStroke()
 	{
 		_paintCurrentPath(true, true);
 	}
@@ -1227,7 +1227,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	protected void _paintCurrentPath(boolean filled, boolean stroked)
+	void _paintCurrentPath(bool filled, bool stroked)
 	{
 		if (_currentPath != null)
 		{
@@ -1291,7 +1291,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	protected void _paintShadow(boolean filled, boolean stroked)
+	void _paintShadow(bool filled, bool stroked)
 	{
 		if (_state.shadowColor == null)
 		{
@@ -1347,7 +1347,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	public void setShadow(boolean value)
+	void setShadow(bool value)
 	{
 		_state.shadow = value;
 	}
@@ -1355,7 +1355,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	public void setShadowColor(String value)
+	void setShadowColor(String value)
 	{
 		_state.shadowColorValue = value;
 	}
@@ -1363,7 +1363,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	public void setShadowAlpha(double value)
+	void setShadowAlpha(double value)
 	{
 		_state.shadowAlpha = value;
 	}
@@ -1371,7 +1371,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	public void setShadowOffset(double dx, double dy)
+	void setShadowOffset(double dx, double dy)
 	{
 		_state.shadowOffsetX = dx;
 		_state.shadowOffsetY = dy;
@@ -1380,7 +1380,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	protected void _updateFont()
+	void _updateFont()
 	{
 		int size = (int) Math.round(_state.fontSize * _state.scale);
 		int style = ((_state.fontStyle & Constants.FONT_BOLD) == Constants.FONT_BOLD) ? Font.BOLD : Font.PLAIN;
@@ -1400,7 +1400,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * Hook for subclassers to implement font caching.
 	 */
-	protected Font _createFont(String family, int style, int size)
+	Font _createFont(String family, int style, int size)
 	{
 		return new Font(_getFontName(family), style, size);
 	}
@@ -1410,7 +1410,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	 * This implementation returns the first entry for comma-separated
 	 * lists of entries.
 	 */
-	protected String _getFontName(String family)
+	String _getFontName(String family)
 	{
 		if (family != null)
 		{
@@ -1428,7 +1428,7 @@ public class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * 
 	 */
-	protected void _updateStroke()
+	void _updateStroke()
 	{
 		float sw = (float) Math.max(1, _state.strokeWidth * _state.scale);
 		int cap = BasicStroke.CAP_BUTT;
@@ -1527,12 +1527,12 @@ class _CanvasState implements Cloneable
   /**
    * 
    */
-  protected boolean flipV = false;
+  protected bool flipV = false;
 
   /**
    * 
    */
-  protected boolean flipH = false;
+  protected bool flipH = false;
 
   /**
    * 
@@ -1627,7 +1627,7 @@ class _CanvasState implements Cloneable
   /**
    * 
    */
-  protected boolean dashed = false;
+  protected bool dashed = false;
 
   /**
    * 
@@ -1637,7 +1637,7 @@ class _CanvasState implements Cloneable
   /**
    * 
    */
-  protected boolean shadow = false;
+  protected bool shadow = false;
 
   /**
    * 

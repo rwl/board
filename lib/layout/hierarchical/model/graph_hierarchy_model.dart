@@ -1,10 +1,10 @@
 /**
  * Copyright (c) 2005-2012, JGraph Ltd
  */
-library graph.layout.hierarchical.model;
+part of graph.layout.hierarchical.model;
 
-//import graph.layout.hierarchical.HierarchicalLayout;
-//import graph.view.Graph;
+import '../../../layout/hierarchical/hierarchical.dart' show HierarchicalLayout;
+import '../../../view/view.dart' show Graph;
 
 //import java.util.ArrayList;
 //import java.util.Arrays;
@@ -19,12 +19,6 @@ library graph.layout.hierarchical.model;
 //import java.util.Map;
 //import java.util.Set;
 
-part 'graph_abstract_hierarchy_cell.dart';
-part 'graph_hierarchy_edge.dart';
-part 'graph_hierarchy_model.dart';
-part 'graph_hierarchy_node.dart';
-part 'graph_hierarchy_rank.dart';
-
 /**
  * Internal model of a hierarchical graph. This model stores nodes and edges
  * equivalent to the real graph nodes and edges, but also stores the rank of the
@@ -32,43 +26,43 @@ part 'graph_hierarchy_rank.dart';
  * The internal model also reverses edge direction were appropriate , ignores
  * self-loop and groups parallels together under one edge object.
  */
-public class GraphHierarchyModel
+class GraphHierarchyModel
 {
 	/**
 	 * Stores the largest rank number allocated
 	 */
-	public int maxRank;
+	int maxRank;
 
 	/**
 	 * Map from graph vertices to internal model nodes
 	 */
-	protected Map<Object, GraphHierarchyNode> _vertexMapper = null;
+	Map<Object, GraphHierarchyNode> _vertexMapper = null;
 
 	/**
 	 * Map from graph edges to internal model edges
 	 */
-	protected Map<Object, GraphHierarchyEdge> _edgeMapper = null;
+	Map<Object, GraphHierarchyEdge> _edgeMapper = null;
 
 	/**
 	 * Mapping from rank number to actual rank
 	 */
-	public Map<Integer, GraphHierarchyRank> ranks = null;
+	Map<Integer, GraphHierarchyRank> ranks = null;
 
 	/**
 	 * Store of roots of this hierarchy model, these are real graph cells, not
 	 * internal cells
 	 */
-	public List<Object> roots;
+	List<Object> roots;
 
 	/**
 	 * The parent cell whose children are being laid out
 	 */
-	public Object parent = null;
+	Object parent = null;
 
 	/**
 	 * Count of the number of times the ancestor dfs has been used
 	 */
-	protected int _dfsCount = 0;
+	int _dfsCount = 0;
 
 	/** High value to start source layering scan rank value from */
 	private final int _SOURCESCANSTARTRANK = 100000000;
@@ -82,7 +76,7 @@ public class GraphHierarchyModel
 	 * @param vertices
 	 *            the vertices for this hierarchy
 	 */
-	public GraphHierarchyModel(HierarchicalLayout layout,
+	GraphHierarchyModel(HierarchicalLayout layout,
 			Object[] vertices, List<Object> roots, Object parent)
 	{
 		Graph graph = layout.getGraph();
@@ -172,7 +166,7 @@ public class GraphHierarchyModel
 	 *            the blank internal vertices to have their information filled
 	 *            in using the real vertices
 	 */
-	protected void _createInternalCells(HierarchicalLayout layout,
+	void _createInternalCells(HierarchicalLayout layout,
 			Object[] vertices, GraphHierarchyNode[] internalVertices)
 	{
 		Graph graph = layout.getGraph();
@@ -271,7 +265,7 @@ public class GraphHierarchyModel
 	 * or sinks and working through each node in the relevant edge direction.
 	 * Starting at the sinks is basically a longest path layering algorithm.
 	 */
-	public void initialRank()
+	void initialRank()
 	{
 		Collection<GraphHierarchyNode> internalNodes = _vertexMapper.values();
 		LinkedList<GraphHierarchyNode> startNodes = new LinkedList<GraphHierarchyNode>();
@@ -315,7 +309,7 @@ public class GraphHierarchyModel
 
 			// flag to keep track of whether or not all layer determining
 			// edges have been scanned
-			boolean allEdgesScanned = true;
+			bool allEdgesScanned = true;
 
 			// Work out the layer of this node from the layer determining
 			// edges
@@ -439,7 +433,7 @@ public class GraphHierarchyModel
 	 * Fixes the layer assignments to the values stored in the nodes. Also needs
 	 * to create dummy nodes for edges that cross layers.
 	 */
-	public void fixRanks()
+	void fixRanks()
 	{
 		final GraphHierarchyRank[] rankList = new GraphHierarchyRank[maxRank + 1];
 		ranks = new LinkedHashMap<Integer, GraphHierarchyRank>(maxRank + 1);
@@ -524,8 +518,8 @@ public class GraphHierarchyModel
 	 *            whether or not the search is to keep track all nodes directly
 	 *            above this one in the search path
 	 */
-	public void visit(CellVisitor visitor, GraphHierarchyNode[] dfsRoots,
-			boolean trackAncestors, Set<GraphHierarchyNode> seenNodes)
+	void visit(CellVisitor visitor, GraphHierarchyNode[] dfsRoots,
+			bool trackAncestors, Set<GraphHierarchyNode> seenNodes)
 	{
 		// Run dfs through on all roots
 		if (dfsRoots != null)
@@ -579,7 +573,7 @@ public class GraphHierarchyModel
 	 * @param layer
 	 *            the layer on the dfs tree ( not the same as the model ranks )
 	 */
-	public void dfs(GraphHierarchyNode parent, GraphHierarchyNode root,
+	void dfs(GraphHierarchyNode parent, GraphHierarchyNode root,
 			GraphHierarchyEdge connectingEdge, CellVisitor visitor,
 			Set<GraphHierarchyNode> seen, int layer)
 	{
@@ -636,7 +630,7 @@ public class GraphHierarchyModel
 	 * @param layer
 	 *            the layer on the dfs tree ( not the same as the model ranks )
 	 */
-	public void dfs(GraphHierarchyNode parent, GraphHierarchyNode root,
+	void dfs(GraphHierarchyNode parent, GraphHierarchyNode root,
 			GraphHierarchyEdge connectingEdge, CellVisitor visitor,
 			Set<GraphHierarchyNode> seen, int[] ancestors, int childHash,
 			int layer)
@@ -712,7 +706,7 @@ public class GraphHierarchyModel
 	 * graph information during depth first search (dfs) or other tree-traversal
 	 * strategies implemented by subclassers.
 	 */
-	public interface CellVisitor
+	interface CellVisitor
 	{
 
 		/**
@@ -739,7 +733,7 @@ public class GraphHierarchyModel
 	/**
 	 * @return Returns the vertexMapping.
 	 */
-	public Map<Object, GraphHierarchyNode> getVertexMapper()
+	Map<Object, GraphHierarchyNode> getVertexMapper()
 	{
 		if (_vertexMapper == null)
 		{
@@ -752,7 +746,7 @@ public class GraphHierarchyModel
 	 * @param vertexMapping
 	 *            The vertexMapping to set.
 	 */
-	public void setVertexMapper(Map<Object, GraphHierarchyNode> vertexMapping)
+	void setVertexMapper(Map<Object, GraphHierarchyNode> vertexMapping)
 	{
 		this._vertexMapper = vertexMapping;
 	}
@@ -760,7 +754,7 @@ public class GraphHierarchyModel
 	/**
 	 * @return Returns the edgeMapper.
 	 */
-	public Map<Object, GraphHierarchyEdge> getEdgeMapper()
+	Map<Object, GraphHierarchyEdge> getEdgeMapper()
 	{
 		return _edgeMapper;
 	}
@@ -769,7 +763,7 @@ public class GraphHierarchyModel
 	 * @param edgeMapper
 	 *            The edgeMapper to set.
 	 */
-	public void setEdgeMapper(Map<Object, GraphHierarchyEdge> edgeMapper)
+	void setEdgeMapper(Map<Object, GraphHierarchyEdge> edgeMapper)
 	{
 		this._edgeMapper = edgeMapper;
 	}
@@ -777,7 +771,7 @@ public class GraphHierarchyModel
 	/**
 	 * @return Returns the dfsCount.
 	 */
-	public int getDfsCount()
+	int getDfsCount()
 	{
 		return _dfsCount;
 	}
@@ -786,7 +780,7 @@ public class GraphHierarchyModel
 	 * @param dfsCount
 	 *            The dfsCount to set.
 	 */
-	public void setDfsCount(int dfsCount)
+	void setDfsCount(int dfsCount)
 	{
 		this._dfsCount = dfsCount;
 	}

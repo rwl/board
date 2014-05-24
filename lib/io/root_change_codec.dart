@@ -3,8 +3,8 @@
  */
 part of graph.io;
 
-//import graph.model.ICell;
-//import graph.model.RootChange;
+import '../model/model.dart' show ICell;
+import '../model/model.dart' show RootChange;
 
 //import java.util.Map;
 
@@ -15,13 +15,13 @@ part of graph.io;
  * dynamically at load time and used implicitly via Codec
  * and the CodecRegistry.
  */
-public class RootChangeCodec extends ObjectCodec
+class RootChangeCodec extends ObjectCodec
 {
 
 	/**
 	 * Constructs a new model codec.
 	 */
-	public RootChangeCodec()
+	RootChangeCodec()
 	{
 		this(new RootChange(), new String[] { "model", "previous", "root" },
 				null, null);
@@ -30,7 +30,7 @@ public class RootChangeCodec extends ObjectCodec
 	/**
 	 * Constructs a new model codec for the given arguments.
 	 */
-	public RootChangeCodec(Object template, String[] exclude,
+	RootChangeCodec(Object template, String[] exclude,
 			String[] idrefs, Map<String, String> mapping)
 	{
 		super(template, exclude, idrefs, mapping);
@@ -40,7 +40,7 @@ public class RootChangeCodec extends ObjectCodec
 	 * @see graph.io.ObjectCodec#afterEncode(graph.io.Codec, java.lang.Object, org.w3c.dom.Node)
 	 */
 	@Override
-	public Node afterEncode(Codec enc, Object obj, Node node)
+	Node afterEncode(Codec enc, Object obj, Node node)
 	{
 		if (obj instanceof RootChange)
 		{
@@ -54,7 +54,7 @@ public class RootChangeCodec extends ObjectCodec
 	 * Reads the cells into the graph model. All cells are children of the root
 	 * element in the node.
 	 */
-	public Node beforeDecode(Codec dec, Node node, Object into)
+	Node beforeDecode(Codec dec, Node node, Object into)
 	{
 		if (into instanceof RootChange)
 		{
@@ -95,7 +95,7 @@ public class RootChangeCodec extends ObjectCodec
 	 * @see graph.io.ObjectCodec#afterDecode(graph.io.Codec, org.w3c.dom.Node, java.lang.Object)
 	 */
 	@Override
-	public Object afterDecode(Codec dec, Node node, Object obj)
+	Object afterDecode(Codec dec, Node node, Object obj)
 	{
 		if (obj instanceof RootChange)
 		{

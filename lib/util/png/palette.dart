@@ -1,21 +1,21 @@
 part of graph.util.png;
 
-public class Palette extends PngEncodeParam
+class Palette extends PngEncodeParam
 {
 
 	/** Constructs an instance of <code>PNGEncodeParam.Palette</code>. */
-	public Palette()
+	Palette()
 	{
 	}
 
 	// bKGD chunk
 
-	private boolean backgroundSet = false;
+	private bool backgroundSet = false;
 
 	/**
 	 * Suppresses the 'bKGD' chunk from being output.
 	 */
-	public void unsetBackground()
+	void unsetBackground()
 	{
 		backgroundSet = false;
 	}
@@ -23,7 +23,7 @@ public class Palette extends PngEncodeParam
 	/**
 	 * Returns true if a 'bKGD' chunk will be output.
 	 */
-	public boolean isBackgroundSet()
+	bool isBackgroundSet()
 	{
 		return backgroundSet;
 	}
@@ -33,7 +33,7 @@ public class Palette extends PngEncodeParam
 	 * depth must be one of 1, 2, 4, or 8, or else an
 	 * <code>IllegalArgumentException</code> will be thrown.
 	 */
-	public void setBitDepth(int bitDepth)
+	void setBitDepth(int bitDepth)
 	{
 		if (bitDepth != 1 && bitDepth != 2 && bitDepth != 4
 				&& bitDepth != 8)
@@ -48,7 +48,7 @@ public class Palette extends PngEncodeParam
 
 	private int[] palette = null;
 
-	private boolean paletteSet = false;
+	private bool paletteSet = false;
 
 	/**
 	 * Sets the RGB palette of the image to be encoded.
@@ -61,7 +61,7 @@ public class Palette extends PngEncodeParam
 	 *
 	 * @param rgb An array of <code>int</code>s.
 	 */
-	public void setPalette(int[] rgb)
+	void setPalette(int[] rgb)
 	{
 		if (rgb.length < 1 * 3 || rgb.length > 256 * 3)
 		{
@@ -86,7 +86,7 @@ public class Palette extends PngEncodeParam
 	 *
 	 * @return An array of <code>int</code>s.
 	 */
-	public int[] getPalette()
+	int[] getPalette()
 	{
 		if (!paletteSet)
 		{
@@ -98,7 +98,7 @@ public class Palette extends PngEncodeParam
 	/**
 	 * Suppresses the 'PLTE' chunk from being output.
 	 */
-	public void unsetPalette()
+	void unsetPalette()
 	{
 		palette = null;
 		paletteSet = false;
@@ -107,7 +107,7 @@ public class Palette extends PngEncodeParam
 	/**
 	 * Returns true if a 'PLTE' chunk will be output.
 	 */
-	public boolean isPaletteSet()
+	bool isPaletteSet()
 	{
 		return paletteSet;
 	}
@@ -121,7 +121,7 @@ public class Palette extends PngEncodeParam
 	 *
 	 * <p> The 'bKGD' chunk will encode this information.
 	 */
-	public void setBackgroundPaletteIndex(int index)
+	void setBackgroundPaletteIndex(int index)
 	{
 		backgroundPaletteIndex = index;
 		backgroundSet = true;
@@ -136,7 +136,7 @@ public class Palette extends PngEncodeParam
 	 *
 	 * @throws IllegalStateException if the palette index is not set.
 	 */
-	public int getBackgroundPaletteIndex()
+	int getBackgroundPaletteIndex()
 	{
 		if (!backgroundSet)
 		{
@@ -156,7 +156,7 @@ public class Palette extends PngEncodeParam
 	 *
 	 * <p> The 'tRNS' chunk will encode this information.
 	 */
-	public void setPaletteTransparency(byte[] alpha)
+	void setPaletteTransparency(byte[] alpha)
 	{
 		transparency = new int[alpha.length];
 		for (int i = 0; i < alpha.length; i++)
@@ -176,7 +176,7 @@ public class Palette extends PngEncodeParam
 	 * @throws IllegalStateException if the palette transparency is
 	 *        not set.
 	 */
-	public byte[] getPaletteTransparency()
+	byte[] getPaletteTransparency()
 	{
 		if (!transparencySet)
 		{

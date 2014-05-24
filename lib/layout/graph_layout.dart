@@ -3,15 +3,15 @@
  */
 part of graph.layout;
 
-//import graph.model.Geometry;
-//import graph.model.IGraphModel;
-//import graph.util.Constants;
-//import graph.util.Point2d;
-//import graph.util.Rect;
-//import graph.view.CellState;
-//import graph.view.Graph;
-//import graph.view.GraphView;
-//import graph.view.Graph.ICellVisitor;
+import '../../model/model.dart' show Geometry;
+import '../../model/model.dart' show IGraphModel;
+import '../../util/util.dart' show Constants;
+import '../../util/util.dart' show Point2d;
+import '../../util/util.dart' show Rect;
+import '../../view/view.dart' show CellState;
+import '../../view/view.dart' show Graph;
+import '../../view/view.dart' show GraphView;
+import '../../view/view.dart' show Graph.ICellVisitor;
 
 //import java.util.HashSet;
 //import java.util.List;
@@ -54,28 +54,28 @@ public abstract class GraphLayout implements IGraphLayout
 	/**
 	 * Holds the enclosing graph.
 	 */
-	protected Graph graph;
+	Graph graph;
 
 	/**
 	 * The parent cell of the layout, if any
 	 */
-	protected Object parent;
+	Object parent;
 
 	/**
 	 * Boolean indicating if the bounding box of the label should be used if
 	 * its available. Default is true.
 	 */
-	protected boolean useBoundingBox = true;
+	bool useBoundingBox = true;
 
 	/**
 	 * Constructs a new fast organic layout for the specified graph.
 	 */
-	public GraphLayout(Graph graph)
+	GraphLayout(Graph graph)
 	{
 		this.graph = graph;
 	}
 
-	public void execute(Object parent)
+	void execute(Object parent)
 	{
 		this.parent = parent;
 	}
@@ -83,7 +83,7 @@ public abstract class GraphLayout implements IGraphLayout
 	/* (non-Javadoc)
 	 * @see graph.layout.IGraphLayout#move(java.lang.Object, double, double)
 	 */
-	public void moveCell(Object cell, double x, double y)
+	void moveCell(Object cell, double x, double y)
 	{
 		// TODO: Map the position to a child index for
 		// the cell to be placed closest to the position
@@ -92,7 +92,7 @@ public abstract class GraphLayout implements IGraphLayout
 	/**
 	 * Returns the associated graph.
 	 */
-	public Graph getGraph()
+	Graph getGraph()
 	{
 		return graph;
 	}
@@ -105,7 +105,7 @@ public abstract class GraphLayout implements IGraphLayout
 	 * @param key Key of the constraint to be returned.
 	 * @param cell Cell whose constraint should be returned.
 	 */
-	public Object getConstraint(Object key, Object cell)
+	Object getConstraint(Object key, Object cell)
 	{
 		return getConstraint(key, cell, null, false);
 	}
@@ -120,11 +120,11 @@ public abstract class GraphLayout implements IGraphLayout
 	 * @param cell Cell whose constraint should be returned.
 	 * @param edge Optional cell that represents the connection whose constraint
 	 * should be returned. Default is null.
-	 * @param source Optional boolean that specifies if the connection is incoming
+	 * @param source Optional bool that specifies if the connection is incoming
 	 * or outgoing. Default is false.
 	 */
-	public Object getConstraint(Object key, Object cell, Object edge,
-			boolean source)
+	Object getConstraint(Object key, Object cell, Object edge,
+			bool source)
 	{
 		CellState state = graph.getView().getState(cell);
 		Map<String, Object> style = (state != null) ? state.getStyle() : graph
@@ -136,7 +136,7 @@ public abstract class GraphLayout implements IGraphLayout
 	/**
 	 * @return the useBoundingBox
 	 */
-	public boolean isUseBoundingBox()
+	bool isUseBoundingBox()
 	{
 		return useBoundingBox;
 	}
@@ -144,7 +144,7 @@ public abstract class GraphLayout implements IGraphLayout
 	/**
 	 * @param useBoundingBox the useBoundingBox to set
 	 */
-	public void setUseBoundingBox(boolean useBoundingBox)
+	void setUseBoundingBox(bool useBoundingBox)
 	{
 		this.useBoundingBox = useBoundingBox;
 	}
@@ -155,7 +155,7 @@ public abstract class GraphLayout implements IGraphLayout
 	 * @param vertex Object that represents the vertex to be tested.
 	 * @return Returns true if the vertex can be moved.
 	 */
-	public boolean isVertexMovable(Object vertex)
+	bool isVertexMovable(Object vertex)
 	{
 		return graph.isCellMovable(vertex);
 	}
@@ -166,7 +166,7 @@ public abstract class GraphLayout implements IGraphLayout
 	 * @param vertex Object that represents the vertex to be tested.
 	 * @return Returns true if the vertex should be ignored.
 	 */
-	public boolean isVertexIgnored(Object vertex)
+	bool isVertexIgnored(Object vertex)
 	{
 		return !graph.getModel().isVertex(vertex)
 				|| !graph.isCellVisible(vertex);
@@ -178,7 +178,7 @@ public abstract class GraphLayout implements IGraphLayout
 	 * @param edge Object that represents the edge to be tested.
 	 * @return Returns true if the edge should be ignored.
 	 */
-	public boolean isEdgeIgnored(Object edge)
+	bool isEdgeIgnored(Object edge)
 	{
 		IGraphModel model = graph.getModel();
 
@@ -190,7 +190,7 @@ public abstract class GraphLayout implements IGraphLayout
 	/**
 	 * Disables or enables the edge style of the given edge.
 	 */
-	public void setEdgeStyleEnabled(Object edge, boolean value)
+	void setEdgeStyleEnabled(Object edge, bool value)
 	{
 		graph.setCellStyles(Constants.STYLE_NOEDGESTYLE, (value) ? "0" : "1",
 				new Object[] { edge });
@@ -199,13 +199,13 @@ public abstract class GraphLayout implements IGraphLayout
 	/**
 	 * Disables or enables orthogonal end segments of the given edge
 	 */
-	public void setOrthogonalEdge(Object edge, boolean value)
+	void setOrthogonalEdge(Object edge, bool value)
 	{
 		graph.setCellStyles(Constants.STYLE_ORTHOGONAL, (value) ? "1" : "0",
 				new Object[] { edge });
 	}
 
-	public Point2d getParentOffset(Object parent)
+	Point2d getParentOffset(Object parent)
 	{
 		Point2d result = new Point2d();
 
@@ -236,7 +236,7 @@ public abstract class GraphLayout implements IGraphLayout
 	 * list of mxPoints. Set the points to null to remove all
 	 * existing points for an edge.
 	 */
-	public void setEdgePoints(Object edge, List<Point2d> points)
+	void setEdgePoints(Object edge, List<Point2d> points)
 	{
 		IGraphModel model = graph.getModel();
 		Geometry geometry = model.getGeometry(edge);
@@ -273,7 +273,7 @@ public abstract class GraphLayout implements IGraphLayout
 	 * Returns an <Rect> that defines the bounds of the given cell
 	 * or the bounding box if <useBoundingBox> is true.
 	 */
-	public Rect getVertexBounds(Object vertex)
+	Rect getVertexBounds(Object vertex)
 	{
 		Rect geo = graph.getModel().getGeometry(vertex);
 
@@ -330,7 +330,7 @@ public abstract class GraphLayout implements IGraphLayout
 	 * x - Integer that defines the x-coordinate of the new location.
 	 * y - Integer that defines the y-coordinate of the new location.
 	 */
-	public Rect setVertexLocation(Object vertex, double x, double y)
+	Rect setVertexLocation(Object vertex, double x, double y)
 	{
 		IGraphModel model = graph.getModel();
 		Geometry geometry = model.getGeometry(vertex);
@@ -401,7 +401,7 @@ public abstract class GraphLayout implements IGraphLayout
 	 * @param groups the groups to adjust
 	 * @param border the border applied to the adjusted groups
 	 */
-	public void arrangeGroups(Object[] groups, int border)
+	void arrangeGroups(Object[] groups, int border)
 	{
 		graph.getModel().beginUpdate();
 		try

@@ -41,11 +41,11 @@ part of graph.util.svg;
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
  * @version $Id: ExtendedGeneralPath.java,v 1.1 2012/11/15 13:26:45 gaudenz Exp $
  */
-public class ExtendedGeneralPath implements Shape, Cloneable
+class ExtendedGeneralPath implements Shape, Cloneable
 {
 
 	/** The enclosed general path. */
-	protected GeneralPath path;
+	GeneralPath path;
 
 	int numVals = 0;
 
@@ -60,7 +60,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	/**
 	  * Constructs a new <code>ExtendedGeneralPath</code>.
 	  */
-	public ExtendedGeneralPath()
+	ExtendedGeneralPath()
 	{
 		path = new GeneralPath();
 	}
@@ -70,7 +70,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	 * specified winding rule to control operations that require the
 	 * interior of the path to be defined.
 	 */
-	public ExtendedGeneralPath(int rule)
+	ExtendedGeneralPath(int rule)
 	{
 		path = new GeneralPath(rule);
 	}
@@ -80,7 +80,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	 * the specified winding rule and the specified initial capacity
 	 * to store path coordinates.
 	 */
-	public ExtendedGeneralPath(int rule, int initialCapacity)
+	ExtendedGeneralPath(int rule, int initialCapacity)
 	{
 		path = new GeneralPath(rule, initialCapacity);
 	}
@@ -89,7 +89,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	 * Constructs a new <code>ExtendedGeneralPath</code> object from
 	 * an arbitrary <code>Shape</code> object.
 	 */
-	public ExtendedGeneralPath(Shape s)
+	ExtendedGeneralPath(Shape s)
 	{
 		this();
 		append(s, false);
@@ -118,8 +118,8 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	 * @param x the absolute x coordinate of the final point of the arc.
 	 * @param y the absolute y coordinate of the final point of the arc.
 	 */
-	public synchronized void arcTo(float rx, float ry, float angle,
-			boolean largeArcFlag, boolean sweepFlag, float x, float y)
+	synchronized void arcTo(float rx, float ry, float angle,
+			bool largeArcFlag, bool sweepFlag, float x, float y)
 	{
 
 		// Ensure radii are valid
@@ -170,8 +170,8 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	 * AffineTransform.getRotateInstance
 	 *     (angle, arc.getX()+arc.getWidth()/2, arc.getY()+arc.getHeight()/2);
 	 */
-	public static Arc2D computeArc(double x0, double y0, double rx, double ry,
-			double angle, boolean largeArcFlag, boolean sweepFlag, double x,
+	static Arc2D computeArc(double x0, double y0, double rx, double ry,
+			double angle, bool largeArcFlag, bool sweepFlag, double x,
 			double y)
 	{
 		//
@@ -274,7 +274,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	/**
 	 * Delegates to the enclosed <code>GeneralPath</code>.
 	 */
-	public synchronized void moveTo(float x, float y)
+	synchronized void moveTo(float x, float y)
 	{
 		// Don't add moveto to general path unless there is a reason.
 		makeRoom(2);
@@ -287,7 +287,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	/**
 	 * Delegates to the enclosed <code>GeneralPath</code>.
 	 */
-	public synchronized void lineTo(float x, float y)
+	synchronized void lineTo(float x, float y)
 	{
 		checkMoveTo(); // check if prev command was moveto
 		path.lineTo(x, y);
@@ -301,7 +301,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	/**
 	 * Delegates to the enclosed <code>GeneralPath</code>.
 	 */
-	public synchronized void quadTo(float x1, float y1, float x2, float y2)
+	synchronized void quadTo(float x1, float y1, float x2, float y2)
 	{
 		checkMoveTo(); // check if prev command was moveto
 		path.quadTo(x1, y1, x2, y2);
@@ -317,7 +317,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	/**
 	 * Delegates to the enclosed <code>GeneralPath</code>.
 	 */
-	public synchronized void curveTo(float x1, float y1, float x2, float y2,
+	synchronized void curveTo(float x1, float y1, float x2, float y2,
 			float x3, float y3)
 	{
 		checkMoveTo(); // check if prev command was moveto
@@ -336,7 +336,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	/**
 	 * Delegates to the enclosed <code>GeneralPath</code>.
 	 */
-	public synchronized void closePath()
+	synchronized void closePath()
 	{
 		// Don't double close path.
 		if ((numSeg != 0) && (types[numSeg - 1] == PathIterator.SEG_CLOSE))
@@ -356,7 +356,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	 * Checks if previous command was a moveto command,
 	 * skipping a close command (if present).
 	 */
-	protected void checkMoveTo()
+	void checkMoveTo()
 	{
 		if (numSeg == 0)
 			return;
@@ -383,7 +383,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	/**
 	 * Delegates to the enclosed <code>GeneralPath</code>.
 	 */
-	public void append(Shape s, boolean connect)
+	void append(Shape s, bool connect)
 	{
 		append(s.getPathIterator(new AffineTransform()), connect);
 	}
@@ -391,7 +391,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	/**
 	 * Delegates to the enclosed <code>GeneralPath</code>.
 	 */
-	public void append(PathIterator pi, boolean connect)
+	void append(PathIterator pi, bool connect)
 	{
 		double[] vals = new double[6];
 
@@ -449,7 +449,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	/**
 	 * Delegates to the enclosed <code>GeneralPath</code>.
 	 */
-	public void append(ExtendedPathIterator epi, boolean connect)
+	void append(ExtendedPathIterator epi, bool connect)
 	{
 		float[] vals = new float[7];
 		while (!epi.isDone())
@@ -509,7 +509,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	/**
 	 * Delegates to the enclosed <code>GeneralPath</code>.
 	 */
-	public synchronized int getWindingRule()
+	synchronized int getWindingRule()
 	{
 		return path.getWindingRule();
 	}
@@ -517,7 +517,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	/**
 	 * Delegates to the enclosed <code>GeneralPath</code>.
 	 */
-	public void setWindingRule(int rule)
+	void setWindingRule(int rule)
 	{
 		path.setWindingRule(rule);
 	}
@@ -525,7 +525,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	/**
 	 * get the current position or <code>null</code>.
 	 */
-	public synchronized Point2D getCurrentPoint()
+	synchronized Point2D getCurrentPoint()
 	{
 		if (numVals == 0)
 			return null;
@@ -535,7 +535,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	/**
 	 * Delegates to the enclosed <code>GeneralPath</code>.
 	 */
-	public synchronized void reset()
+	synchronized void reset()
 	{
 		path.reset();
 
@@ -548,7 +548,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	/**
 	 * Delegates to the enclosed <code>GeneralPath</code>.
 	 */
-	public void transform(AffineTransform at)
+	void transform(AffineTransform at)
 	{
 		path.transform(at);
 	}
@@ -556,7 +556,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	/**
 	 * Delegates to the enclosed <code>GeneralPath</code>.
 	 */
-	public synchronized Shape createTransformedShape(AffineTransform at)
+	synchronized Shape createTransformedShape(AffineTransform at)
 	{
 		return path.createTransformedShape(at);
 	}
@@ -564,7 +564,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	/**
 	 * Delegates to the enclosed <code>GeneralPath</code>.
 	 */
-	public synchronized Rectangle getBounds()
+	synchronized Rectangle getBounds()
 	{
 		return path.getBounds();
 	}
@@ -572,7 +572,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	/**
 	 * Delegates to the enclosed <code>GeneralPath</code>.
 	 */
-	public synchronized Rectangle2D getBounds2D()
+	synchronized Rectangle2D getBounds2D()
 	{
 		return path.getBounds2D();
 	}
@@ -580,7 +580,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	/**
 	 * Delegates to the enclosed <code>GeneralPath</code>.
 	 */
-	public boolean contains(double x, double y)
+	bool contains(double x, double y)
 	{
 		return path.contains(x, y);
 	}
@@ -588,7 +588,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	/**
 	 * Delegates to the enclosed <code>GeneralPath</code>.
 	 */
-	public boolean contains(Point2D p)
+	bool contains(Point2D p)
 	{
 		return path.contains(p);
 	}
@@ -596,7 +596,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	/**
 	 * Delegates to the enclosed <code>GeneralPath</code>.
 	 */
-	public boolean contains(double x, double y, double w, double h)
+	bool contains(double x, double y, double w, double h)
 	{
 		return path.contains(x, y, w, h);
 	}
@@ -604,7 +604,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	/**
 	 * Delegates to the enclosed <code>GeneralPath</code>.
 	 */
-	public boolean contains(Rectangle2D r)
+	bool contains(Rectangle2D r)
 	{
 		return path.contains(r);
 	}
@@ -612,7 +612,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	/**
 	 * Delegates to the enclosed <code>GeneralPath</code>.
 	 */
-	public boolean intersects(double x, double y, double w, double h)
+	bool intersects(double x, double y, double w, double h)
 	{
 		return path.intersects(x, y, w, h);
 	}
@@ -620,7 +620,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	/**
 	 * Delegates to the enclosed <code>GeneralPath</code>.
 	 */
-	public boolean intersects(Rectangle2D r)
+	bool intersects(Rectangle2D r)
 	{
 		return path.intersects(r);
 	}
@@ -628,7 +628,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	/**
 	 * Delegates to the enclosed <code>GeneralPath</code>.
 	 */
-	public PathIterator getPathIterator(AffineTransform at)
+	PathIterator getPathIterator(AffineTransform at)
 	{
 		return path.getPathIterator(at);
 	}
@@ -636,7 +636,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	/**
 	 * Delegates to the enclosed <code>GeneralPath</code>.
 	 */
-	public PathIterator getPathIterator(AffineTransform at, double flatness)
+	PathIterator getPathIterator(AffineTransform at, double flatness)
 	{
 		return path.getPathIterator(at, flatness);
 	}
@@ -644,7 +644,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	/**
 	 * Delegates to the enclosed <code>GeneralPath</code>.
 	 */
-	public ExtendedPathIterator getExtendedPathIterator()
+	ExtendedPathIterator getExtendedPathIterator()
 	{
 		return new EPI();
 	}
@@ -732,7 +732,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 			return path.getWindingRule();
 		}
 
-		public boolean isDone()
+		public bool isDone()
 		{
 			return segNum == numSeg;
 		}
@@ -764,7 +764,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable
 	/**
 	 * Delegates to the enclosed <code>GeneralPath</code>.
 	 */
-	public Object clone()
+	Object clone()
 	{
 		try
 		{

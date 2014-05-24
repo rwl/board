@@ -15,7 +15,7 @@ part of graph.swing.view;
  */
 class NoLinefeedHtmlEditorKit extends HTMLEditorKit
 {
-	public void write(Writer out, Document doc, int pos, int len)
+	void write(Writer out, Document doc, int pos, int len)
 			throws IOException, BadLocationException
 	{
 		if (doc instanceof HTMLDocument)

@@ -11,7 +11,7 @@ part of graph.io.graphml;
 /**
  * Represents a Port element in the GML Structure.
  */
-public class GraphMlPort
+class GraphMlPort
 {
 	private String _name;
 
@@ -21,7 +21,7 @@ public class GraphMlPort
 	 * Construct a Port with name.
 	 * @param name Port Name
 	 */
-	public GraphMlPort(String name)
+	GraphMlPort(String name)
 	{
 		this._name = name;
 	}
@@ -30,7 +30,7 @@ public class GraphMlPort
 	 * Construct a Port from a xml port Element.
 	 * @param portElement Xml port Element.
 	 */
-	public GraphMlPort(Element portElement)
+	GraphMlPort(Element portElement)
 	{
 		this._name = portElement.getAttribute(GraphMlConstants.PORT_NAME);
 
@@ -46,22 +46,22 @@ public class GraphMlPort
 		}
 	}
 
-	public String getName()
+	String getName()
 	{
 		return _name;
 	}
 
-	public void setName(String name)
+	void setName(String name)
 	{
 		this._name = name;
 	}
 
-	public HashMap<String, GraphMlData> getPortDataMap()
+	HashMap<String, GraphMlData> getPortDataMap()
 	{
 		return _portDataMap;
 	}
 
-	public void setPortDataMap(HashMap<String, GraphMlData> nodeDataMap)
+	void setPortDataMap(HashMap<String, GraphMlData> nodeDataMap)
 	{
 		this._portDataMap = nodeDataMap;
 	}
@@ -71,7 +71,7 @@ public class GraphMlPort
 	 * @param document Document where the key Element will be inserted.
 	 * @return Returns the generated Elements.
 	 */
-	public Element generateElement(Document document)
+	Element generateElement(Document document)
 	{
 		Element node = document.createElement(GraphMlConstants.PORT);
 

@@ -3,7 +3,7 @@
  */
 part of graph.util;
 
-//import graph.model.IGraphModel;
+import '../model/model.dart' show IGraphModel;
 
 //import java.util.ArrayList;
 //import java.util.List;
@@ -11,7 +11,7 @@ part of graph.util;
 /**
  * Contains various style helper methods for use with Graph.
  */
-public class StyleUtils
+class StyleUtils
 {
 	/**
 	 * Returns the stylename in a style of the form stylename[;key=value] or an
@@ -21,7 +21,7 @@ public class StyleUtils
 	 *            String of the form stylename[;key=value].
 	 * @return Returns the stylename from the given formatted string.
 	 */
-	public static String getStylename(String style)
+	static String getStylename(String style)
 	{
 		if (style != null)
 		{
@@ -45,7 +45,7 @@ public class StyleUtils
 	 *            String of the form stylename[;stylename][;key=value].
 	 * @return Returns the stylename from the given formatted string.
 	 */
-	public static String[] getStylenames(String style)
+	static String[] getStylenames(String style)
 	{
 		List<String> result = new ArrayList<String>();
 
@@ -70,7 +70,7 @@ public class StyleUtils
 	 * -1 if the given stylename does not occur (as a stylename) in the given
 	 * style, otherwise it returns the index of the first character.
 	 */
-	public static int indexOfStylename(String style, String stylename)
+	static int indexOfStylename(String style, String stylename)
 	{
 		if (style != null && stylename != null)
 		{
@@ -95,7 +95,7 @@ public class StyleUtils
 	 * Adds the specified stylename to the given style if it does not already
 	 * contain the stylename.
 	 */
-	public static String addStylename(String style, String stylename)
+	static String addStylename(String style, String stylename)
 	{
 		if (indexOfStylename(style, stylename) < 0)
 		{
@@ -119,7 +119,7 @@ public class StyleUtils
 	 * Removes all occurrences of the specified stylename in the given style and
 	 * returns the updated style. Trailing semicolons are preserved.
 	 */
-	public static String removeStylename(String style, String stylename)
+	static String removeStylename(String style, String stylename)
 	{
 		StringBuffer buffer = new StringBuffer();
 
@@ -144,7 +144,7 @@ public class StyleUtils
 	 * Removes all stylenames from the given style and returns the updated
 	 * style.
 	 */
-	public static String removeAllStylenames(String style)
+	static String removeAllStylenames(String style)
 	{
 		StringBuffer buffer = new StringBuffer();
 
@@ -178,7 +178,7 @@ public class StyleUtils
 	 * @param value
 	 *            New value for the given key.
 	 */
-	public static void setCellStyles(IGraphModel model, Object[] cells,
+	static void setCellStyles(IGraphModel model, Object[] cells,
 			String key, String value)
 	{
 		if (cells != null && cells.length > 0)
@@ -216,9 +216,9 @@ public class StyleUtils
 	 *            New value for the given key.
 	 * @return Returns the new style.
 	 */
-	public static String setStyle(String style, String key, String value)
+	static String setStyle(String style, String key, String value)
 	{
-		boolean isValue = value != null && value.length() > 0;
+		bool isValue = value != null && value.length() > 0;
 
 		if (style == null || style.length() == 0)
 		{
@@ -279,9 +279,9 @@ public class StyleUtils
 	 * @param flag
 	 *            Integer for the bit to be changed.
 	 * @param value
-	 *            Optional boolean value for the flag.
+	 *            Optional bool value for the flag.
 	 */
-	public static void setCellStyleFlags(IGraphModel model, Object[] cells,
+	static void setCellStyleFlags(IGraphModel model, Object[] cells,
 			String key, int flag, Boolean value)
 	{
 		if (cells != null && cells.length > 0)
@@ -317,9 +317,9 @@ public class StyleUtils
 	 * @param flag
 	 *            Integer for the bit to be changed.
 	 * @param value
-	 *            Optional boolean value for the given flag.
+	 *            Optional bool value for the given flag.
 	 */
-	public static String setStyleFlag(String style, String key, int flag,
+	static String setStyleFlag(String style, String key, int flag,
 			Boolean value)
 	{
 		if (style == null || style.length() == 0)

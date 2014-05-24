@@ -4,11 +4,11 @@
 
 part of graph.layout;
 
-//import graph.model.GraphModel;
-//import graph.model.IGraphModel;
-//import graph.util.Rect;
-//import graph.view.Graph;
-//import graph.view.GraphView;
+import '../../model/model.dart' show GraphModel;
+import '../../model/model.dart' show IGraphModel;
+import '../../util/util.dart' show Rect;
+import '../../view/view.dart' show Graph;
+import '../../view/view.dart' show GraphView;
 
 //import java.awt.geom.Line2D;
 //import java.awt.geom.Point2D;
@@ -86,7 +86,7 @@ part of graph.layout;
  * that a finer granularity is required.
  * 
  */
-public class OrganicLayout extends GraphLayout
+class OrganicLayout extends GraphLayout
 {
 
 	/**
@@ -94,7 +94,7 @@ public class OrganicLayout extends GraphLayout
 	 * as an energy cost function. This function is CPU intensive and is best
 	 * only used in the fine tuning phase.
 	 */
-	protected boolean isOptimizeEdgeDistance = true;
+	bool isOptimizeEdgeDistance = true;
 
 	/**
 	 * Whether or not edges crosses will be calculated as an energy cost
@@ -103,13 +103,13 @@ public class OrganicLayout extends GraphLayout
 	 * of the algorithm using it, then use it intermittantly through the rest
 	 * of the layout.
 	 */
-	protected boolean isOptimizeEdgeCrossing = true;
+	bool isOptimizeEdgeCrossing = true;
 
 	/**
 	 * Whether or not edge lengths will be calculated as an energy cost
 	 * function. This function not CPU intensive.
 	 */
-	protected boolean isOptimizeEdgeLength = true;
+	bool isOptimizeEdgeLength = true;
 
 	/**
 	 * Whether or not nodes will contribute an energy cost as they approach
@@ -117,30 +117,30 @@ public class OrganicLayout extends GraphLayout
 	 * border and stays constant outside the bounds of the graph. This function
 	 * is not CPU intensive
 	 */
-	protected boolean isOptimizeBorderLine = true;
+	bool isOptimizeBorderLine = true;
 
 	/**
 	 * Whether or not node distribute will contribute an energy cost where
 	 * nodes are close together. The function is moderately CPU intensive.
 	 */
-	protected boolean isOptimizeNodeDistribution = true;
+	bool isOptimizeNodeDistribution = true;
 
 	/**
 	 * when {@link #moveRadius}reaches this value, the algorithm is terminated
 	 */
-	protected double minMoveRadius = 2.0;
+	double minMoveRadius = 2.0;
 
 	/**
 	 * The current radius around each node where the next position energy
 	 * values will be calculated for a possible move
 	 */
-	protected double moveRadius;
+	double moveRadius;
 
 	/**
 	 * The initial value of <code>moveRadius</code>. If this is set to zero
 	 * the layout will automatically determine a suitable value.
 	 */
-	protected double initialMoveRadius = 0.0;
+	double initialMoveRadius = 0.0;
 
 	/**
 	 * The factor by which the <code>moveRadius</code> is multiplied by after
@@ -149,14 +149,14 @@ public class OrganicLayout extends GraphLayout
 	 * minimum energy positions and decreasing it causes the minimum radius
 	 * termination condition to occur more quickly.
 	 */
-	protected double radiusScaleFactor = 0.75;
+	double radiusScaleFactor = 0.75;
 
 	/**
 	 * The average amount of area allocated per node. If <code> bounds</code>
 	 * is not set this value mutiplied by the number of nodes to find
 	 * the total graph area. The graph is assumed square.
 	 */
-	protected double averageNodeArea = 160000;
+	double averageNodeArea = 160000;
 
 	/**
 	 * The radius below which fine tuning of the layout should start
@@ -164,13 +164,13 @@ public class OrganicLayout extends GraphLayout
 	 * taken into account in the total energy calculation. If this is set to
 	 * zero, the layout will automatically determine a suitable value
 	 */
-	protected double fineTuningRadius = 40.0;
+	double fineTuningRadius = 40.0;
 
 	/**
 	 * Limit to the number of iterations that may take place. This is only
 	 * reached if one of the termination conditions does not occur first.
 	 */
-	protected int maxIterations = 1000;
+	int maxIterations = 1000;
 
 	/**
 	 * Cost factor applied to energy calculations involving the distance
@@ -179,7 +179,7 @@ public class OrganicLayout extends GraphLayout
 	 * <code>isOptimizeEdgeDistance</code> must be true for edge to nodes
 	 * distances to be taken into account.
 	 */
-	protected double edgeDistanceCostFactor = 3000;
+	double edgeDistanceCostFactor = 3000;
 
 	/**
 	 * Cost factor applied to energy calculations involving edges that cross
@@ -188,7 +188,7 @@ public class OrganicLayout extends GraphLayout
 	 * <code>isOptimizeEdgeCrossing</code> must be true for edge crossings
 	 * to be taken into account.
 	 */
-	protected double edgeCrossingCostFactor = 6000;
+	double edgeCrossingCostFactor = 6000;
 
 	/**
 	 * Cost factor applied to energy calculations involving the general node
@@ -198,7 +198,7 @@ public class OrganicLayout extends GraphLayout
 	 * <code>isOptimizeNodeDistribution</code> must be true for this general
 	 * distribution to be applied.
 	 */
-	protected double nodeDistributionCostFactor = 30000;
+	double nodeDistributionCostFactor = 30000;
 
 	/**
 	 * Cost factor applied to energy calculations for node promixity to the
@@ -208,7 +208,7 @@ public class OrganicLayout extends GraphLayout
 	 * <code>isOptimizeBorderLine</code> must be true for border
 	 * repulsion to be applied.
 	 */
-	protected double borderLineCostFactor = 5;
+	double borderLineCostFactor = 5;
 
 	/**
 	 * Cost factor applied to energy calculations for the edge lengths.
@@ -218,32 +218,32 @@ public class OrganicLayout extends GraphLayout
 	 * <code>isOptimizeEdgeLength</code> must be true for edge length
 	 * shortening to be applied.
 	 */
-	protected double edgeLengthCostFactor = 0.02;
+	double edgeLengthCostFactor = 0.02;
 
 	/**
 	 * The x coordinate of the final graph
 	 */
-	protected double boundsX = 0.0;
+	double boundsX = 0.0;
 
 	/**
 	 * The y coordinate of the final graph
 	 */
-	protected double boundsY = 0.0;
+	double boundsY = 0.0;
 
 	/**
 	 * The width coordinate of the final graph
 	 */
-	protected double boundsWidth = 0.0;
+	double boundsWidth = 0.0;
 
 	/**
 	 * The height coordinate of the final graph
 	 */
-	protected double boundsHeight = 0.0;
+	double boundsHeight = 0.0;
 
 	/**
 	 * current iteration number of the layout
 	 */
-	protected int iteration;
+	int iteration;
 
 	/**
 	 * determines, in how many segments the circle around cells is divided, to
@@ -252,41 +252,41 @@ public class OrganicLayout extends GraphLayout
 	 * <code>performRound</code> method might further improve accuracy for a
 	 * small performance hit. The change is described in the method comment.
 	 */
-	protected int triesPerCell = 8;
+	int triesPerCell = 8;
 
 	/**
 	 * prevents from dividing with zero and from creating excessive energy
 	 * values
 	 */
-	protected double minDistanceLimit = 2;
+	double minDistanceLimit = 2;
 
 	/**
 	 * cached version of <code>minDistanceLimit</code> squared
 	 */
-	protected double minDistanceLimitSquared;
+	double minDistanceLimitSquared;
 
 	/**
 	 * distance limit beyond which energy costs due to object repulsive is
 	 * not calculated as it would be too insignificant
 	 */
-	protected double maxDistanceLimit = 100;
+	double maxDistanceLimit = 100;
 
 	/**
 	 * cached version of <code>maxDistanceLimit</code> squared
 	 */
-	protected double maxDistanceLimitSquared;
+	double maxDistanceLimitSquared;
 
 	/**
 	 * Keeps track of how many consecutive round have passed without any energy
 	 * changes 
 	 */
-	protected int unchangedEnergyRoundCount;
+	int unchangedEnergyRoundCount;
 
 	/**
 	 * The number of round of no node moves taking placed that the layout
 	 * terminates
 	 */
-	protected int unchangedEnergyRoundTermination = 5;
+	int unchangedEnergyRoundTermination = 5;
 
 	/**
 	 * Whether or not to use approximate node dimensions or not. Set to true
@@ -294,17 +294,17 @@ public class OrganicLayout extends GraphLayout
 	 * radiusSquared variable of the CellWrapper contains the width squared
 	 * and heightSquared is used in the obvious manner.
 	 */
-	protected boolean approxNodeDimensions = true;
+	bool approxNodeDimensions = true;
 
 	/**
 	 * Internal models collection of nodes ( vertices ) to be laid out
 	 */
-	protected CellWrapper[] v;
+	CellWrapper[] v;
 
 	/**
 	 * Internal models collection of edges to be laid out
 	 */
-	protected CellWrapper[] e;
+	CellWrapper[] e;
 
 	/**
 	 * Array of the x portion of the normalised test vectors that 
@@ -312,7 +312,7 @@ public class OrganicLayout extends GraphLayout
 	 * of the combined x and y normals are multipled by the current 
 	 * radius to obtain test points for each vector in the array.
 	 */
-	protected double[] xNormTry;
+	double[] xNormTry;
 
 	/**
 	 * Array of the y portion of the normalised test vectors that 
@@ -320,7 +320,7 @@ public class OrganicLayout extends GraphLayout
 	 * of the combined x and y normals are multipled by the current 
 	 * radius to obtain test points for each vector in the array.
 	 */
-	protected double[] yNormTry;
+	double[] yNormTry;
 
 	/**
 	 * Whether or not fine tuning is on. The determines whether or not
@@ -333,24 +333,24 @@ public class OrganicLayout extends GraphLayout
 	 * before the algorithm runs mean the node to edge cost function
 	 * is always calculated.
 	 */
-	protected boolean isFineTuning = true;
+	bool isFineTuning = true;
 
 	/**
 	 *  Specifies if the STYLE_NOEDGESTYLE flag should be set on edges that are
 	 * modified by the result. Default is true.
 	 */
-	protected boolean disableEdgeStyle = true;
+	bool disableEdgeStyle = true;
 
 	/**
 	 * Specifies if all edge points of traversed edges should be removed.
 	 * Default is true.
 	 */
-	protected boolean resetEdges = false;
+	bool resetEdges = false;
 
 	/**
 	 * Constructor for OrganicLayout.
 	 */
-	public OrganicLayout(Graph graph)
+	OrganicLayout(Graph graph)
 	{
 		super(graph);
 	}
@@ -358,7 +358,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * Constructor for OrganicLayout.
 	 */
-	public OrganicLayout(Graph graph, Rectangle2D bounds)
+	OrganicLayout(Graph graph, Rectangle2D bounds)
 	{
 		super(graph);
 		boundsX = bounds.getX();
@@ -373,7 +373,7 @@ public class OrganicLayout extends GraphLayout
 	 * @param vertex Object that represents the vertex to be tested.
 	 * @return Returns true if the vertex should be ignored.
 	 */
-	public boolean isVertexIgnored(Object vertex)
+	bool isVertexIgnored(Object vertex)
 	{
 		return false;
 	}
@@ -381,7 +381,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * Implements <GraphLayout.execute>.
 	 */
-	public void execute(Object parent)
+	void execute(Object parent)
 	{
 		IGraphModel model = graph.getModel();
 		GraphView view = graph.getView();
@@ -636,12 +636,12 @@ public class OrganicLayout extends GraphLayout
 	 * almost always the lowest energy position. This adds about two loop
 	 * iterations to the inner loop and only makes sense with 16 tries or more.
 	 */
-	protected void performRound()
+	void performRound()
 	{
 		// sequential order cells are computed (every round the same order)
 
-		// boolean to keep track of whether any moves were made in this round
-		boolean energyHasChanged = false;
+		// bool to keep track of whether any moves were made in this round
+		bool energyHasChanged = false;
 		for (int i = 0; i < v.length; i++)
 		{
 			int index = i;
@@ -755,7 +755,7 @@ public class OrganicLayout extends GraphLayout
 	 * @return the delta of the new energy cost to the old energy cost
 	 * 
 	 */
-	protected double calcEnergyDelta(int index, double oldNodeDistribution,
+	double calcEnergyDelta(int index, double oldNodeDistribution,
 			double oldEdgeDistance, double oldEdgeCrossing,
 			double oldBorderLine, double oldEdgeLength,
 			double oldAdditionalFactorsEnergy)
@@ -790,7 +790,7 @@ public class OrganicLayout extends GraphLayout
 	 * @param i the index of the node in the array <code>v</code>
 	 * @return the total node distribution energy of the specified node 
 	 */
-	protected double getNodeDistribution(int i)
+	double getNodeDistribution(int i)
 	{
 		double energy = 0.0;
 
@@ -858,7 +858,7 @@ public class OrganicLayout extends GraphLayout
 	 * @param i the index of the node in the array <code>v</code>
 	 * @return the total border line energy of the specified node 
 	 */
-	protected double getBorderline(int i)
+	double getBorderline(int i)
 	{
 		double energy = 0.0;
 		if (isOptimizeBorderLine)
@@ -893,7 +893,7 @@ public class OrganicLayout extends GraphLayout
 	 * 				calculated
 	 * @return the total edge length energy of the connected edges 
 	 */
-	protected double getEdgeLengthAffectedEdges(int node)
+	double getEdgeLengthAffectedEdges(int node)
 	{
 		double energy = 0.0;
 		for (int i = 0; i < v[node].connectedEdges.length; i++)
@@ -911,7 +911,7 @@ public class OrganicLayout extends GraphLayout
 	 * @param i the index of the edge in the array <code>e</code>
 	 * @return the total edge length energy of the specified edge 
 	 */
-	protected double getEdgeLength(int i)
+	double getEdgeLength(int i)
 	{
 		if (isOptimizeEdgeLength)
 		{
@@ -934,7 +934,7 @@ public class OrganicLayout extends GraphLayout
 	 * 				calculated
 	 * @return the total edge crossing energy of the connected edges 
 	 */
-	protected double getEdgeCrossingAffectedEdges(int node)
+	double getEdgeCrossingAffectedEdges(int node)
 	{
 		double energy = 0.0;
 		for (int i = 0; i < v[node].connectedEdges.length; i++)
@@ -953,7 +953,7 @@ public class OrganicLayout extends GraphLayout
 	 * @param i the index of the edge in the array <code>e</code>
 	 * @return the total edge crossing energy of the specified edge 
 	 */
-	protected double getEdgeCrossing(int i)
+	double getEdgeCrossing(int i)
 	{
 		// TODO Could have a cost function per edge
 		int n = 0; // counts energy of edgecrossings through edge i
@@ -1051,7 +1051,7 @@ public class OrganicLayout extends GraphLayout
 						// otherwise. Because of ignoring the zero this code
 						// below can behave like only a 1 or -1 will be
 						// returned. See Lines2D.linesIntersects().
-						boolean intersects = ((Line2D.relativeCCW(iP1X, iP1Y,
+						bool intersects = ((Line2D.relativeCCW(iP1X, iP1Y,
 								iP2X, iP2Y, jP1X, jP1Y) != Line2D.relativeCCW(
 								iP1X, iP1Y, iP2X, iP2Y, jP2X, jP2Y)) && (Line2D
 								.relativeCCW(jP1X, jP1Y, jP2X, jP2Y, iP1X, iP1Y) != Line2D
@@ -1077,7 +1077,7 @@ public class OrganicLayout extends GraphLayout
 	 * @param i the index of the node in the array <code>v</code>
 	 * @return the total edge distance energy of the node
 	 */
-	protected double getEdgeDistanceFromNode(int i)
+	double getEdgeDistanceFromNode(int i)
 	{
 		double energy = 0.0;
 		// This function is only performed during fine tuning for performance
@@ -1120,7 +1120,7 @@ public class OrganicLayout extends GraphLayout
 	 * 				calculated
 	 * @return the total edge distance energy of the connected edges 
 	 */
-	protected double getEdgeDistanceAffectedNodes(int node)
+	double getEdgeDistanceAffectedNodes(int node)
 	{
 		double energy = 0.0;
 		for (int i = 0; i < (v[node].connectedEdges.length); i++)
@@ -1140,7 +1140,7 @@ public class OrganicLayout extends GraphLayout
 	 * @param i the index of the edge in the array <code>e</code>
 	 * @return the total edge distance energy of the edge
 	 */
-	protected double getEdgeDistanceFromEdge(int i)
+	double getEdgeDistanceFromEdge(int i)
 	{
 		double energy = 0.0;
 		// This function is only performed during fine tuning for performance
@@ -1180,7 +1180,7 @@ public class OrganicLayout extends GraphLayout
 	 * @param i the nodes whose energy is being calculated
 	 * @return the energy of this node caused by the additional factors
 	 */
-	protected double getAdditionFactorsEnergy(int i)
+	double getAdditionFactorsEnergy(int i)
 	{
 		return 0.0;
 	}
@@ -1192,7 +1192,7 @@ public class OrganicLayout extends GraphLayout
 	 *            the cell index to which the edges are not connected
 	 * @return Array of all interesting Edges
 	 */
-	protected int[] getRelevantEdges(int cellIndex)
+	int[] getRelevantEdges(int cellIndex)
 	{
 		ArrayList<Integer> relevantEdgeList = new ArrayList<Integer>(e.length);
 
@@ -1227,7 +1227,7 @@ public class OrganicLayout extends GraphLayout
 	 *            the cell index to which the edges are connected
 	 * @return Array of all connected Edges
 	 */
-	protected int[] getConnectedEdges(int cellIndex)
+	int[] getConnectedEdges(int cellIndex)
 	{
 		ArrayList<Integer> connectedEdgeList = new ArrayList<Integer>(e.length);
 
@@ -1259,7 +1259,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * Returns <code>Organic</code>, the name of this algorithm.
 	 */
-	public String toString()
+	String toString()
 	{
 		return "Organic";
 	}
@@ -1268,7 +1268,7 @@ public class OrganicLayout extends GraphLayout
 	 * Internal representation of a node or edge that holds cached information
 	 * to enable the layout to perform more quickly and to simplify the code
 	 */
-	public class CellWrapper
+	class CellWrapper
 	{
 
 		/**
@@ -1470,7 +1470,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @return Returns the averageNodeArea.
 	 */
-	public double getAverageNodeArea()
+	double getAverageNodeArea()
 	{
 		return averageNodeArea;
 	}
@@ -1478,7 +1478,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @param averageNodeArea The averageNodeArea to set.
 	 */
-	public void setAverageNodeArea(double averageNodeArea)
+	void setAverageNodeArea(double averageNodeArea)
 	{
 		this.averageNodeArea = averageNodeArea;
 	}
@@ -1486,7 +1486,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @return Returns the borderLineCostFactor.
 	 */
-	public double getBorderLineCostFactor()
+	double getBorderLineCostFactor()
 	{
 		return borderLineCostFactor;
 	}
@@ -1494,7 +1494,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @param borderLineCostFactor The borderLineCostFactor to set.
 	 */
-	public void setBorderLineCostFactor(double borderLineCostFactor)
+	void setBorderLineCostFactor(double borderLineCostFactor)
 	{
 		this.borderLineCostFactor = borderLineCostFactor;
 	}
@@ -1502,7 +1502,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @return Returns the edgeCrossingCostFactor.
 	 */
-	public double getEdgeCrossingCostFactor()
+	double getEdgeCrossingCostFactor()
 	{
 		return edgeCrossingCostFactor;
 	}
@@ -1510,7 +1510,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @param edgeCrossingCostFactor The edgeCrossingCostFactor to set.
 	 */
-	public void setEdgeCrossingCostFactor(double edgeCrossingCostFactor)
+	void setEdgeCrossingCostFactor(double edgeCrossingCostFactor)
 	{
 		this.edgeCrossingCostFactor = edgeCrossingCostFactor;
 	}
@@ -1518,7 +1518,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @return Returns the edgeDistanceCostFactor.
 	 */
-	public double getEdgeDistanceCostFactor()
+	double getEdgeDistanceCostFactor()
 	{
 		return edgeDistanceCostFactor;
 	}
@@ -1526,7 +1526,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @param edgeDistanceCostFactor The edgeDistanceCostFactor to set.
 	 */
-	public void setEdgeDistanceCostFactor(double edgeDistanceCostFactor)
+	void setEdgeDistanceCostFactor(double edgeDistanceCostFactor)
 	{
 		this.edgeDistanceCostFactor = edgeDistanceCostFactor;
 	}
@@ -1534,7 +1534,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @return Returns the edgeLengthCostFactor.
 	 */
-	public double getEdgeLengthCostFactor()
+	double getEdgeLengthCostFactor()
 	{
 		return edgeLengthCostFactor;
 	}
@@ -1542,7 +1542,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @param edgeLengthCostFactor The edgeLengthCostFactor to set.
 	 */
-	public void setEdgeLengthCostFactor(double edgeLengthCostFactor)
+	void setEdgeLengthCostFactor(double edgeLengthCostFactor)
 	{
 		this.edgeLengthCostFactor = edgeLengthCostFactor;
 	}
@@ -1550,7 +1550,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @return Returns the fineTuningRadius.
 	 */
-	public double getFineTuningRadius()
+	double getFineTuningRadius()
 	{
 		return fineTuningRadius;
 	}
@@ -1558,7 +1558,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @param fineTuningRadius The fineTuningRadius to set.
 	 */
-	public void setFineTuningRadius(double fineTuningRadius)
+	void setFineTuningRadius(double fineTuningRadius)
 	{
 		this.fineTuningRadius = fineTuningRadius;
 	}
@@ -1566,7 +1566,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @return Returns the initialMoveRadius.
 	 */
-	public double getInitialMoveRadius()
+	double getInitialMoveRadius()
 	{
 		return initialMoveRadius;
 	}
@@ -1574,7 +1574,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @param initialMoveRadius The initialMoveRadius to set.
 	 */
-	public void setInitialMoveRadius(double initialMoveRadius)
+	void setInitialMoveRadius(double initialMoveRadius)
 	{
 		this.initialMoveRadius = initialMoveRadius;
 	}
@@ -1582,7 +1582,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @return Returns the isFineTuning.
 	 */
-	public boolean isFineTuning()
+	bool isFineTuning()
 	{
 		return isFineTuning;
 	}
@@ -1590,7 +1590,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @param isFineTuning The isFineTuning to set.
 	 */
-	public void setFineTuning(boolean isFineTuning)
+	void setFineTuning(bool isFineTuning)
 	{
 		this.isFineTuning = isFineTuning;
 	}
@@ -1598,7 +1598,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @return Returns the isOptimizeBorderLine.
 	 */
-	public boolean isOptimizeBorderLine()
+	bool isOptimizeBorderLine()
 	{
 		return isOptimizeBorderLine;
 	}
@@ -1606,7 +1606,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @param isOptimizeBorderLine The isOptimizeBorderLine to set.
 	 */
-	public void setOptimizeBorderLine(boolean isOptimizeBorderLine)
+	void setOptimizeBorderLine(bool isOptimizeBorderLine)
 	{
 		this.isOptimizeBorderLine = isOptimizeBorderLine;
 	}
@@ -1614,7 +1614,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @return Returns the isOptimizeEdgeCrossing.
 	 */
-	public boolean isOptimizeEdgeCrossing()
+	bool isOptimizeEdgeCrossing()
 	{
 		return isOptimizeEdgeCrossing;
 	}
@@ -1622,7 +1622,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @param isOptimizeEdgeCrossing The isOptimizeEdgeCrossing to set.
 	 */
-	public void setOptimizeEdgeCrossing(boolean isOptimizeEdgeCrossing)
+	void setOptimizeEdgeCrossing(bool isOptimizeEdgeCrossing)
 	{
 		this.isOptimizeEdgeCrossing = isOptimizeEdgeCrossing;
 	}
@@ -1630,7 +1630,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @return Returns the isOptimizeEdgeDistance.
 	 */
-	public boolean isOptimizeEdgeDistance()
+	bool isOptimizeEdgeDistance()
 	{
 		return isOptimizeEdgeDistance;
 	}
@@ -1638,7 +1638,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @param isOptimizeEdgeDistance The isOptimizeEdgeDistance to set.
 	 */
-	public void setOptimizeEdgeDistance(boolean isOptimizeEdgeDistance)
+	void setOptimizeEdgeDistance(bool isOptimizeEdgeDistance)
 	{
 		this.isOptimizeEdgeDistance = isOptimizeEdgeDistance;
 	}
@@ -1646,7 +1646,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @return Returns the isOptimizeEdgeLength.
 	 */
-	public boolean isOptimizeEdgeLength()
+	bool isOptimizeEdgeLength()
 	{
 		return isOptimizeEdgeLength;
 	}
@@ -1654,7 +1654,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @param isOptimizeEdgeLength The isOptimizeEdgeLength to set.
 	 */
-	public void setOptimizeEdgeLength(boolean isOptimizeEdgeLength)
+	void setOptimizeEdgeLength(bool isOptimizeEdgeLength)
 	{
 		this.isOptimizeEdgeLength = isOptimizeEdgeLength;
 	}
@@ -1662,7 +1662,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @return Returns the isOptimizeNodeDistribution.
 	 */
-	public boolean isOptimizeNodeDistribution()
+	bool isOptimizeNodeDistribution()
 	{
 		return isOptimizeNodeDistribution;
 	}
@@ -1670,7 +1670,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @param isOptimizeNodeDistribution The isOptimizeNodeDistribution to set.
 	 */
-	public void setOptimizeNodeDistribution(boolean isOptimizeNodeDistribution)
+	void setOptimizeNodeDistribution(bool isOptimizeNodeDistribution)
 	{
 		this.isOptimizeNodeDistribution = isOptimizeNodeDistribution;
 	}
@@ -1678,7 +1678,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @return Returns the maxIterations.
 	 */
-	public int getMaxIterations()
+	int getMaxIterations()
 	{
 		return maxIterations;
 	}
@@ -1686,7 +1686,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @param maxIterations The maxIterations to set.
 	 */
-	public void setMaxIterations(int maxIterations)
+	void setMaxIterations(int maxIterations)
 	{
 		this.maxIterations = maxIterations;
 	}
@@ -1694,7 +1694,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @return Returns the minDistanceLimit.
 	 */
-	public double getMinDistanceLimit()
+	double getMinDistanceLimit()
 	{
 		return minDistanceLimit;
 	}
@@ -1702,7 +1702,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @param minDistanceLimit The minDistanceLimit to set.
 	 */
-	public void setMinDistanceLimit(double minDistanceLimit)
+	void setMinDistanceLimit(double minDistanceLimit)
 	{
 		this.minDistanceLimit = minDistanceLimit;
 	}
@@ -1710,7 +1710,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @return Returns the minMoveRadius.
 	 */
-	public double getMinMoveRadius()
+	double getMinMoveRadius()
 	{
 		return minMoveRadius;
 	}
@@ -1718,7 +1718,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @param minMoveRadius The minMoveRadius to set.
 	 */
-	public void setMinMoveRadius(double minMoveRadius)
+	void setMinMoveRadius(double minMoveRadius)
 	{
 		this.minMoveRadius = minMoveRadius;
 	}
@@ -1726,7 +1726,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @return Returns the nodeDistributionCostFactor.
 	 */
-	public double getNodeDistributionCostFactor()
+	double getNodeDistributionCostFactor()
 	{
 		return nodeDistributionCostFactor;
 	}
@@ -1734,7 +1734,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @param nodeDistributionCostFactor The nodeDistributionCostFactor to set.
 	 */
-	public void setNodeDistributionCostFactor(double nodeDistributionCostFactor)
+	void setNodeDistributionCostFactor(double nodeDistributionCostFactor)
 	{
 		this.nodeDistributionCostFactor = nodeDistributionCostFactor;
 	}
@@ -1742,7 +1742,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @return Returns the radiusScaleFactor.
 	 */
-	public double getRadiusScaleFactor()
+	double getRadiusScaleFactor()
 	{
 		return radiusScaleFactor;
 	}
@@ -1750,7 +1750,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @param radiusScaleFactor The radiusScaleFactor to set.
 	 */
-	public void setRadiusScaleFactor(double radiusScaleFactor)
+	void setRadiusScaleFactor(double radiusScaleFactor)
 	{
 		this.radiusScaleFactor = radiusScaleFactor;
 	}
@@ -1758,7 +1758,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @return Returns the triesPerCell.
 	 */
-	public int getTriesPerCell()
+	int getTriesPerCell()
 	{
 		return triesPerCell;
 	}
@@ -1766,7 +1766,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @param triesPerCell The triesPerCell to set.
 	 */
-	public void setTriesPerCell(int triesPerCell)
+	void setTriesPerCell(int triesPerCell)
 	{
 		this.triesPerCell = triesPerCell;
 	}
@@ -1774,7 +1774,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @return Returns the unchangedEnergyRoundTermination.
 	 */
-	public int getUnchangedEnergyRoundTermination()
+	int getUnchangedEnergyRoundTermination()
 	{
 		return unchangedEnergyRoundTermination;
 	}
@@ -1782,7 +1782,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @param unchangedEnergyRoundTermination The unchangedEnergyRoundTermination to set.
 	 */
-	public void setUnchangedEnergyRoundTermination(
+	void setUnchangedEnergyRoundTermination(
 			int unchangedEnergyRoundTermination)
 	{
 		this.unchangedEnergyRoundTermination = unchangedEnergyRoundTermination;
@@ -1791,7 +1791,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @return Returns the maxDistanceLimit.
 	 */
-	public double getMaxDistanceLimit()
+	double getMaxDistanceLimit()
 	{
 		return maxDistanceLimit;
 	}
@@ -1799,7 +1799,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @param maxDistanceLimit The maxDistanceLimit to set.
 	 */
-	public void setMaxDistanceLimit(double maxDistanceLimit)
+	void setMaxDistanceLimit(double maxDistanceLimit)
 	{
 		this.maxDistanceLimit = maxDistanceLimit;
 	}
@@ -1807,7 +1807,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @return the approxNodeDimensions
 	 */
-	public boolean isApproxNodeDimensions()
+	bool isApproxNodeDimensions()
 	{
 		return approxNodeDimensions;
 	}
@@ -1815,7 +1815,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @param approxNodeDimensions the approxNodeDimensions to set
 	 */
-	public void setApproxNodeDimensions(boolean approxNodeDimensions)
+	void setApproxNodeDimensions(bool approxNodeDimensions)
 	{
 		this.approxNodeDimensions = approxNodeDimensions;
 	}
@@ -1823,7 +1823,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @return the disableEdgeStyle
 	 */
-	public boolean isDisableEdgeStyle()
+	bool isDisableEdgeStyle()
 	{
 		return disableEdgeStyle;
 	}
@@ -1831,7 +1831,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @param disableEdgeStyle the disableEdgeStyle to set
 	 */
-	public void setDisableEdgeStyle(boolean disableEdgeStyle)
+	void setDisableEdgeStyle(bool disableEdgeStyle)
 	{
 		this.disableEdgeStyle = disableEdgeStyle;
 	}
@@ -1839,7 +1839,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @return the resetEdges
 	 */
-	public boolean isResetEdges()
+	bool isResetEdges()
 	{
 		return resetEdges;
 	}
@@ -1847,7 +1847,7 @@ public class OrganicLayout extends GraphLayout
 	/**
 	 * @param resetEdges the resetEdges to set
 	 */
-	public void setResetEdges(boolean resetEdges)
+	void setResetEdges(bool resetEdges)
 	{
 		this.resetEdges = resetEdges;
 	}

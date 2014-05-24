@@ -1,22 +1,22 @@
 part of graph.shape;
 
-//import graph.canvas.Graphics2DCanvas;
-//import graph.util.Constants;
-//import graph.util.Point2d;
-//import graph.util.Utils;
-//import graph.view.CellState;
+import '../canvas/canvas.dart' show Graphics2DCanvas;
+import '../util/util.dart' show Constants;
+import '../util/util.dart' show Point2d;
+import '../util/util.dart' show Utils;
+import '../view/view.dart' show CellState;
 
-public class LineShape extends BasicShape
+class LineShape extends BasicShape
 {
 
 	/**
 	 * 
 	 */
-	public void paintShape(Graphics2DCanvas canvas, CellState state)
+	void paintShape(Graphics2DCanvas canvas, CellState state)
 	{
 		if (_configureGraphics(canvas, state, false))
 		{
-			boolean rounded = Utils.isTrue(state.getStyle(),
+			bool rounded = Utils.isTrue(state.getStyle(),
 					Constants.STYLE_ROUNDED, false)
 					&& canvas.getScale() > Constants.MIN_SCALE_FOR_ROUNDED_LINES;
 
@@ -27,7 +27,7 @@ public class LineShape extends BasicShape
 	/**
 	 * 
 	 */
-	public Point2d[] createPoints(Graphics2DCanvas canvas, CellState state)
+	Point2d[] createPoints(Graphics2DCanvas canvas, CellState state)
 	{
 		String direction = Utils.getString(state.getStyle(),
 				Constants.STYLE_DIRECTION, Constants.DIRECTION_EAST);

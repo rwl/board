@@ -5,7 +5,7 @@ part of graph.util;
 
 //import java.util.List;
 
-public class Spline
+class Spline
 {
 	/** 
 	 *	Array representing the relative proportion of the total distance
@@ -23,7 +23,7 @@ public class Spline
 	 */
 	private double _length;
 
-	public Spline(List<Point2d> points)
+	Spline(List<Point2d> points)
 	{
 		if (points != null)
 		{
@@ -46,12 +46,12 @@ public class Spline
 	 * @param x
 	 * @param y
 	 */
-	public void Spline2D(double[] x, double[] y)
+	void Spline2D(double[] x, double[] y)
 	{
 		_init(x, y);
 	}
 
-	protected void _init(double[] x, double[] y)
+	void _init(double[] x, double[] y)
 	{
 		if (x.length != y.length)
 		{
@@ -110,7 +110,7 @@ public class Spline
 	/**
 	 * @param t 0 <= t <= 1
 	 */
-	public Point2d getPoint(double t)
+	Point2d getPoint(double t)
 	{
 		Point2d result = new Point2d(_splineX.getValue(t), _splineY.getValue(t));
 
@@ -120,32 +120,32 @@ public class Spline
 	/**
 	 * Used to check the correctness of this spline
 	 */
-	public boolean checkValues()
+	bool checkValues()
 	{
 		return (_splineX._len.length > 1 && _splineY._len.length > 1);
 	}
 
-	public double getDx(double t)
+	double getDx(double t)
 	{
 		return _splineX.getDx(t);
 	}
 
-	public double getDy(double t)
+	double getDy(double t)
 	{
 		return _splineY.getDx(t);
 	}
 
-	public Spline1D getSplineX()
+	Spline1D getSplineX()
 	{
 		return _splineX;
 	}
 
-	public Spline1D getSplineY()
+	Spline1D getSplineY()
 	{
 		return _splineY;
 	}
 
-	public double getLength()
+	double getLength()
 	{
 		return _length;
 	}

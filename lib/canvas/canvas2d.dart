@@ -1,6 +1,6 @@
 part of graph.canvas;
 
-//import graph.util.Constants;
+import '../util/util.dart' show Constants;
 
 /**
  * Requirements for implementing technologies:
@@ -53,7 +53,7 @@ public interface ICanvas2D
 	 * @param cx X-coordinate of the center point.
 	 * @param cy Y-coordinate of the center point.
 	 */
-	void rotate(double theta, boolean flipH, boolean flipV, double cx, double cy);
+	void rotate(double theta, bool flipH, bool flipV, double cx, double cy);
 
 	/**
 	 * Sets the stroke width. This should default to 1 if unset.
@@ -76,7 +76,7 @@ public interface ICanvas2D
 	 * 
 	 * @param value Boolean representing the dashed state.
 	 */
-	void setDashed(boolean value);
+	void setDashed(bool value);
 
 	/**
 	 * Sets the dash pattern. This should default to "3 3" if unset.
@@ -184,7 +184,7 @@ public interface ICanvas2D
 	 * 
 	 * @param enabled Whether the shadow should be enabled.
 	 */
-	void setShadow(boolean enabled);
+	void setShadow(bool enabled);
 
 	/**
 	 * Default value {@link Constants#NONE}.
@@ -254,7 +254,7 @@ public interface ICanvas2D
 	 * @param flipV
 	 */
 	void image(double x, double y, double w, double h, String src,
-			boolean aspect, boolean flipH, boolean flipV);
+			bool aspect, bool flipH, bool flipV);
 
 	/**
 	 * Draws the given string. Possible values for format are empty string for
@@ -270,7 +270,7 @@ public interface ICanvas2D
 	 * @param vertical
 	 */
 	void text(double x, double y, double w, double h, String str, String align, String valign,
-			boolean wrap, String format, String overflow, boolean clip, double rotation);
+			bool wrap, String format, String overflow, bool clip, double rotation);
 
 	/**
 	 * Begins a new path.

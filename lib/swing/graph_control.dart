@@ -1,15 +1,15 @@
 part of graph.swing;
 
-//import graph.canvas.Graphics2DCanvas;
-//import graph.canvas.ICanvas;
-//import graph.model.IGraphModel;
-//import graph.util.Constants;
-//import graph.util.Event;
-//import graph.util.EventObj;
-//import graph.util.Rect;
-//import graph.util.Resources;
-//import graph.util.Utils;
-//import graph.view.CellState;
+import '../canvas/canvas.dart' show Graphics2DCanvas;
+import '../canvas/canvas.dart' show ICanvas;
+import '../model/model.dart' show IGraphModel;
+import '../util/util.dart' show Constants;
+import '../util/util.dart' show Event;
+import '../util/util.dart' show EventObj;
+import '../util/util.dart' show Rect;
+import '../util/util.dart' show Resources;
+import '../util/util.dart' show Utils;
+import '../view/view.dart' show CellState;
 
 //import java.awt.Dimension;
 //import java.awt.Graphics;
@@ -28,7 +28,7 @@ part of graph.swing;
  * @author gaudenz
  * 
  */
-public class GraphControl extends JComponent
+class GraphControl extends JComponent
 {
 
 	/**
@@ -46,13 +46,13 @@ public class GraphControl extends JComponent
 	 * mouse drags and must be reset after any interactive repaints. Default
 	 * is (0,0). This should not be null.
 	 */
-	protected Point translate = new Point(0, 0);
+	Point translate = new Point(0, 0);
 
 	/**
 	 * @param graphComponent TODO
 	 * 
 	 */
-	public GraphControl(GraphComponent graphComponent)
+	GraphControl(GraphComponent graphComponent)
 	{
 		this.graphComponent = graphComponent;
 		addMouseListener(new MouseAdapter()
@@ -71,7 +71,7 @@ public class GraphControl extends JComponent
 	/**
 	 * Returns the translate.
 	 */
-	public Point getTranslate()
+	Point getTranslate()
 	{
 		return translate;
 	}
@@ -79,7 +79,7 @@ public class GraphControl extends JComponent
 	/**
 	 * Sets the translate.
 	 */
-	public void setTranslate(Point value)
+	void setTranslate(Point value)
 	{
 		translate = value;
 	}
@@ -87,7 +87,7 @@ public class GraphControl extends JComponent
 	/**
 	 * 
 	 */
-	public GraphComponent getGraphContainer()
+	GraphComponent getGraphContainer()
 	{
 		return this.graphComponent;
 	}
@@ -96,7 +96,7 @@ public class GraphControl extends JComponent
 	 * Overrides parent method to add extend flag for making the control
 	 * larger during previews.
 	 */
-	public void scrollRectToVisible(Rectangle aRect, boolean extend)
+	void scrollRectToVisible(Rectangle aRect, bool extend)
 	{
 		super.scrollRectToVisible(aRect);
 
@@ -111,7 +111,7 @@ public class GraphControl extends JComponent
 	 * extension below the origin (into negative space) the translate will
 	 * temporaly be used and reset with the next mouse released event.
 	 */
-	protected void extendComponent(Rectangle rect)
+	void extendComponent(Rectangle rect)
 	{
 		int right = rect.x + rect.width;
 		int bottom = rect.y + rect.height;
@@ -120,7 +120,7 @@ public class GraphControl extends JComponent
 		Dimension sp = this.graphComponent._getScaledPreferredSizeForGraph();
 		Rect min = this.graphComponent._graph.getMinimumGraphSize();
 		double scale = this.graphComponent._graph.getView().getScale();
-		boolean update = false;
+		bool update = false;
 
 		if (rect.x < 0)
 		{
@@ -173,7 +173,7 @@ public class GraphControl extends JComponent
 	/**
 	 * 
 	 */
-	public String getToolTipText(MouseEvent e)
+	String getToolTipText(MouseEvent e)
 	{
 		String tip = this.graphComponent.getSelectionCellsHandler().getToolTipText(e);
 
@@ -206,7 +206,7 @@ public class GraphControl extends JComponent
 	 * Updates the preferred size for the given scale if the page size
 	 * should be preferred or the page is visible.
 	 */
-	public void updatePreferredSize()
+	void updatePreferredSize()
 	{
 		double scale = this.graphComponent._graph.getView().getScale();
 		Dimension d = null;
@@ -250,7 +250,7 @@ public class GraphControl extends JComponent
 	/**
 	 * 
 	 */
-	public void paint(Graphics g)
+	void paint(Graphics g)
 	{
 		g.translate(translate.x, translate.y);
 		this.graphComponent._eventSource.fireEvent(new EventObj(Event.BEFORE_PAINT, "g",
@@ -264,7 +264,7 @@ public class GraphControl extends JComponent
 	/**
 	 * 
 	 */
-	public void paintComponent(Graphics g)
+	void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
 
@@ -312,10 +312,10 @@ public class GraphControl extends JComponent
 	/**
 	 * 
 	 */
-	public void drawGraph(Graphics2D g, boolean drawLabels)
+	void drawGraph(Graphics2D g, bool drawLabels)
 	{
 		Graphics2D previousGraphics = this.graphComponent._canvas.getGraphics();
-		boolean previousDrawLabels = this.graphComponent._canvas.isDrawLabels();
+		bool previousDrawLabels = this.graphComponent._canvas.isDrawLabels();
 		Point previousTranslate = this.graphComponent._canvas.getTranslate();
 		double previousScale = this.graphComponent._canvas.getScale();
 
@@ -341,7 +341,7 @@ public class GraphControl extends JComponent
 	/**
 	 * Hook to draw the root cell into the canvas.
 	 */
-	protected void drawFromRootCell()
+	void drawFromRootCell()
 	{
 		drawCell(this.graphComponent._canvas, this.graphComponent._graph.getModel().getRoot());
 	}
@@ -349,7 +349,7 @@ public class GraphControl extends JComponent
 	/**
 	 * 
 	 */
-	protected boolean hitClip(Graphics2DCanvas canvas, CellState state)
+	bool hitClip(Graphics2DCanvas canvas, CellState state)
 	{
 		Rectangle rect = getExtendedCellBounds(state);
 
@@ -361,7 +361,7 @@ public class GraphControl extends JComponent
 	 * @param state the cached state of the cell whose extended bounds are to be calculated
 	 * @return the bounds of the cell, including the label and shadow and allowing for rotation
 	 */
-	protected Rectangle getExtendedCellBounds(CellState state)
+	Rectangle getExtendedCellBounds(CellState state)
 	{
 		Rectangle rect = null;
 
@@ -405,7 +405,7 @@ public class GraphControl extends JComponent
 	 * @param cell
 	 *            Cell that should be drawn onto the canvas.
 	 */
-	public void drawCell(ICanvas canvas, Object cell)
+	void drawCell(ICanvas canvas, Object cell)
 	{
 		CellState state = this.graphComponent._graph.getView().getState(cell);
 
@@ -420,8 +420,8 @@ public class GraphControl extends JComponent
 
 		// Handles special ordering for edges (all in foreground
 		// or background) or draws all children in order
-		boolean edgesFirst = this.graphComponent._graph.isKeepEdgesInBackground();
-		boolean edgesLast = this.graphComponent._graph.isKeepEdgesInForeground();
+		bool edgesFirst = this.graphComponent._graph.isKeepEdgesInBackground();
+		bool edgesLast = this.graphComponent._graph.isKeepEdgesInForeground();
 
 		if (edgesFirst)
 		{
@@ -443,9 +443,9 @@ public class GraphControl extends JComponent
 
 	/**
 	 * Draws the child edges and/or all other children in the given cell
-	 * depending on the boolean arguments.
+	 * depending on the bool arguments.
 	 */
-	protected void drawChildren(Object cell, boolean edges, boolean others)
+	void drawChildren(Object cell, bool edges, bool others)
 	{
 		IGraphModel model = this.graphComponent._graph.getModel();
 		int childCount = model.getChildCount(cell);
@@ -453,7 +453,7 @@ public class GraphControl extends JComponent
 		for (int i = 0; i < childCount; i++)
 		{
 			Object child = model.getChildAt(cell, i);
-			boolean isEdge = model.isEdge(child);
+			bool isEdge = model.isEdge(child);
 
 			if ((others && !isEdge) || (edges && isEdge))
 			{
@@ -465,7 +465,7 @@ public class GraphControl extends JComponent
 	/**
 	 * 
 	 */
-	protected void cellDrawn(ICanvas canvas, CellState state)
+	void cellDrawn(ICanvas canvas, CellState state)
 	{
 		if (this.graphComponent.isFoldingEnabled() && canvas instanceof Graphics2DCanvas)
 		{
@@ -474,7 +474,7 @@ public class GraphControl extends JComponent
 			Graphics2D g2 = g2c.getGraphics();
 
 			// Draws the collapse/expand icons
-			boolean isEdge = model.isEdge(state.getCell());
+			bool isEdge = model.isEdge(state.getCell());
 
 			if (state.getCell() != this.graphComponent._graph.getCurrentRoot()
 					&& (model.isVertex(state.getCell()) || isEdge))
@@ -496,7 +496,7 @@ public class GraphControl extends JComponent
 	 * the model. This can be overridden to not render certain cells in the
 	 * graph display.
 	 */
-	protected boolean isCellDisplayable(Object cell)
+	bool isCellDisplayable(Object cell)
 	{
 		return cell != this.graphComponent._graph.getView().getCurrentRoot()
 				&& cell != this.graphComponent._graph.getModel().getRoot();

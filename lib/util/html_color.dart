@@ -10,21 +10,21 @@ part of graph.util;
 /**
  * Contains various helper methods for use with Graph.
  */
-public class HtmlColor
+class HtmlColor
 {
 
 	/**
 	 * HTML color lookup table. Supports the 147 CSS color names.
 	 */
-	protected static HashMap<String, Color> _htmlColors = new HashMap<String, Color>();
+	static HashMap<String, Color> _htmlColors = new HashMap<String, Color>();
 
-	protected static final Pattern _rgbRegex = Pattern.compile(
+	static final Pattern _rgbRegex = Pattern.compile(
 			"rgba?\\([^)]*\\)", Pattern.CASE_INSENSITIVE);
 
 	/**
 	 * 
 	 */
-	public static String hexString(Color color)
+	static String hexString(Color color)
 	{
 		int r = color.getRed();
 		int g = color.getGreen();
@@ -40,7 +40,7 @@ public class HtmlColor
 	 *            Color to return the hex string for.
 	 * @return Returns a hex string for the given color.
 	 */
-	public static String getHexColorString(Color color)
+	static String getHexColorString(Color color)
 	{
 		return Integer.toHexString((color.getRGB() & 0x00FFFFFF)
 				| (color.getAlpha() << 24));
@@ -60,7 +60,7 @@ public class HtmlColor
 	 *                if the specified string cannot be interpreted as a
 	 *                hexidecimal integer
 	 */
-	public static Color parseColor(String str) throws NumberFormatException
+	static Color parseColor(String str) throws NumberFormatException
 	{
 		if (str == null || str.equals(Constants.NONE))
 		{
@@ -116,7 +116,7 @@ public class HtmlColor
 		return new Color(value);
 	}
 
-	protected static Color _parseRgb(String rgbString)
+	static Color _parseRgb(String rgbString)
 	{
 		String[] values = rgbString.split("[,()]");
 
@@ -134,7 +134,7 @@ public class HtmlColor
 				_parseValue(blue, 255), _parseAlpha(alpha));
 	}
 
-	protected static float _parseValue(String val, int max)
+	static float _parseValue(String val, int max)
 	{
 		if (val.endsWith("%"))
 		{
@@ -144,12 +144,12 @@ public class HtmlColor
 		return (float) (Integer.parseInt(val) / max);
 	}
 
-	protected static double _parsePercent(String perc)
+	static double _parsePercent(String perc)
 	{
 		return Integer.parseInt(perc.substring(0, perc.length() - 1)) / 100.0;
 	}
 
-	protected static float _parseAlpha(String alpha)
+	static float _parseAlpha(String alpha)
 	{
 		return Float.parseFloat(alpha);
 	}

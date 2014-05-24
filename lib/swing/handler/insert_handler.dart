@@ -1,14 +1,14 @@
 part of graph.swing.handler;
 
-//import graph.swing.GraphComponent;
-//import graph.swing.util.MouseAdapter;
-//import graph.util.Event;
-//import graph.util.EventObj;
-//import graph.util.EventSource;
-//import graph.util.Point2d;
-//import graph.util.Rect;
-//import graph.util.EventSource.IEventListener;
-//import graph.view.Graph;
+import '../../swing/swing.dart' show GraphComponent;
+import '../../swing/util/util.dart' show MouseAdapter;
+import '../../util/util.dart' show Event;
+import '../../util/util.dart' show EventObj;
+import '../../util/util.dart' show EventSource;
+import '../../util/util.dart' show Point2d;
+import '../../util/util.dart' show Rect;
+import '../../util/util.dart' show EventSource.IEventListener;
+import '../../view/view.dart' show Graph;
 
 //import java.awt.BasicStroke;
 //import java.awt.Color;
@@ -18,58 +18,58 @@ part of graph.swing.handler;
 //import java.awt.Rectangle;
 //import java.awt.event.MouseEvent;
 
-public class InsertHandler extends MouseAdapter
+class InsertHandler extends MouseAdapter
 {
 
 	/**
 	 * Reference to the enclosing graph component.
 	 */
-	protected GraphComponent _graphComponent;
+	GraphComponent _graphComponent;
 
 	/**
 	 * Specifies if this handler is enabled. Default is true.
 	 */
-	protected boolean _enabled = true;
+	bool _enabled = true;
 
 	/**
 	 * 
 	 */
-	protected String _style;
+	String _style;
 
 	/**
 	 * 
 	 */
-	protected Point _first;
+	Point _first;
 
 	/**
 	 * 
 	 */
-	protected float _lineWidth = 1;
+	float _lineWidth = 1;
 
 	/**
 	 * 
 	 */
-	protected Color _lineColor = Color.black;
+	Color _lineColor = Color.black;
 
 	/**
 	 * 
 	 */
-	protected boolean _rounded = false;
+	bool _rounded = false;
 
 	/**
 	 * 
 	 */
-	protected Rect _current;
+	Rect _current;
 
 	/**
 	 * 
 	 */
-	protected EventSource _eventSource = new EventSource(this);
+	EventSource _eventSource = new EventSource(this);
 
 	/**
 	 * 
 	 */
-	public InsertHandler(GraphComponent graphComponent, String style)
+	InsertHandler(GraphComponent graphComponent, String style)
 	{
 		this._graphComponent = graphComponent;
 		this._style = style;
@@ -92,7 +92,7 @@ public class InsertHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public GraphComponent getGraphComponent()
+	GraphComponent getGraphComponent()
 	{
 		return _graphComponent;
 	}
@@ -100,7 +100,7 @@ public class InsertHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public boolean isEnabled()
+	bool isEnabled()
 	{
 		return _enabled;
 	}
@@ -108,7 +108,7 @@ public class InsertHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void setEnabled(boolean value)
+	void setEnabled(bool value)
 	{
 		_enabled = value;
 	}
@@ -116,7 +116,7 @@ public class InsertHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public boolean isStartEvent(MouseEvent e)
+	bool isStartEvent(MouseEvent e)
 	{
 		return true;
 	}
@@ -124,7 +124,7 @@ public class InsertHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void start(MouseEvent e)
+	void start(MouseEvent e)
 	{
 		_first = e.getPoint();
 	}
@@ -132,7 +132,7 @@ public class InsertHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void mousePressed(MouseEvent e)
+	void mousePressed(MouseEvent e)
 	{
 		if (_graphComponent.isEnabled() && isEnabled() && !e.isConsumed()
 				&& isStartEvent(e))
@@ -145,7 +145,7 @@ public class InsertHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void mouseDragged(MouseEvent e)
+	void mouseDragged(MouseEvent e)
 	{
 		if (_graphComponent.isEnabled() && isEnabled() && !e.isConsumed()
 				&& _first != null)
@@ -176,7 +176,7 @@ public class InsertHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void mouseReleased(MouseEvent e)
+	void mouseReleased(MouseEvent e)
 	{
 		if (_graphComponent.isEnabled() && isEnabled() && !e.isConsumed()
 				&& _current != null)
@@ -201,7 +201,7 @@ public class InsertHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public Object insertCell(Rect bounds)
+	Object insertCell(Rect bounds)
 	{
 		// FIXME: Clone prototype cell for insert
 		return _graphComponent.getGraph().insertVertex(null, null, "",
@@ -212,7 +212,7 @@ public class InsertHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void reset()
+	void reset()
 	{
 		Rectangle dirty = null;
 
@@ -235,7 +235,7 @@ public class InsertHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	public void paint(Graphics g)
+	void paint(Graphics g)
 	{
 		if (_first != null && _current != null)
 		{
@@ -257,7 +257,7 @@ public class InsertHandler extends MouseAdapter
 	/**
 	 *
 	 */
-	public void addListener(String eventName, IEventListener listener)
+	void addListener(String eventName, IEventListener listener)
 	{
 		_eventSource.addListener(eventName, listener);
 	}
@@ -265,7 +265,7 @@ public class InsertHandler extends MouseAdapter
 	/**
 	 *
 	 */
-	public void removeListener(IEventListener listener)
+	void removeListener(IEventListener listener)
 	{
 		removeListener(listener, null);
 	}
@@ -273,7 +273,7 @@ public class InsertHandler extends MouseAdapter
 	/**
 	 *
 	 */
-	public void removeListener(IEventListener listener, String eventName)
+	void removeListener(IEventListener listener, String eventName)
 	{
 		_eventSource.removeListener(listener, eventName);
 	}

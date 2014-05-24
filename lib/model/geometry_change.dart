@@ -1,24 +1,24 @@
 part of graph.model;
 
-//import graph.model.IGraphModel.AtomicGraphModelChange;
+import '../model/model.dart' show AtomicGraphModelChange;
 
-public class GeometryChange extends AtomicGraphModelChange
+class GeometryChange extends AtomicGraphModelChange
 {
 
 	/**
 	 *
 	 */
-	protected Object cell;
+	Object cell;
 
 	/**
 	 * 
 	 */
-	protected Geometry geometry, previous;
+	Geometry geometry, previous;
 
 	/**
 	 * 
 	 */
-	public GeometryChange()
+	GeometryChange()
 	{
 		this(null, null, null);
 	}
@@ -26,7 +26,7 @@ public class GeometryChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	public GeometryChange(GraphModel model, Object cell,
+	GeometryChange(GraphModel model, Object cell,
 			Geometry geometry)
 	{
 		super(model);
@@ -38,7 +38,7 @@ public class GeometryChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	public void setCell(Object value)
+	void setCell(Object value)
 	{
 		cell = value;
 	}
@@ -46,7 +46,7 @@ public class GeometryChange extends AtomicGraphModelChange
 	/**
 	 * @return the cell
 	 */
-	public Object getCell()
+	Object getCell()
 	{
 		return cell;
 	}
@@ -54,7 +54,7 @@ public class GeometryChange extends AtomicGraphModelChange
 	/**
 	 *
 	 */
-	public void setGeometry(Geometry value)
+	void setGeometry(Geometry value)
 	{
 		geometry = value;
 	}
@@ -62,7 +62,7 @@ public class GeometryChange extends AtomicGraphModelChange
 	/**
 	 * @return the geometry
 	 */
-	public Geometry getGeometry()
+	Geometry getGeometry()
 	{
 		return geometry;
 	}
@@ -70,7 +70,7 @@ public class GeometryChange extends AtomicGraphModelChange
 	/**
 	 *
 	 */
-	public void setPrevious(Geometry value)
+	void setPrevious(Geometry value)
 	{
 		previous = value;
 	}
@@ -78,7 +78,7 @@ public class GeometryChange extends AtomicGraphModelChange
 	/**
 	 * @return the previous
 	 */
-	public Geometry getPrevious()
+	Geometry getPrevious()
 	{
 		return previous;
 	}
@@ -86,7 +86,7 @@ public class GeometryChange extends AtomicGraphModelChange
 	/**
 	 * Changes the root of the model.
 	 */
-	public void execute()
+	void execute()
 	{
 		geometry = previous;
 		previous = ((GraphModel) model)._geometryForCellChanged(cell,

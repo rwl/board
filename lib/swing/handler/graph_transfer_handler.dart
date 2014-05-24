@@ -3,12 +3,12 @@
  */
 part of graph.swing.handler;
 
-//import graph.swing.GraphComponent;
-//import graph.swing.util.GraphTransferable;
-//import graph.util.CellRenderer;
-//import graph.util.Point2d;
-//import graph.util.Rect;
-//import graph.view.Graph;
+import '../../swing/swing.dart' show GraphComponent;
+import '../../swing/util/util.dart' show GraphTransferable;
+import '../../util/util.dart' show CellRenderer;
+import '../../util/util.dart' show Point2d;
+import '../../util/util.dart' show Rect;
+import '../../view/view.dart' show Graph;
 
 //import java.awt.Color;
 //import java.awt.Image;
@@ -23,7 +23,7 @@ part of graph.swing.handler;
 /**
  * 
  */
-public class GraphTransferHandler extends TransferHandler
+class GraphTransferHandler extends TransferHandler
 {
 
 	/**
@@ -35,62 +35,62 @@ public class GraphTransferHandler extends TransferHandler
 	 * Boolean that specifies if an image of the cells should be created for
 	 * each transferable. Default is true.
 	 */
-	public static boolean DEFAULT_TRANSFER_IMAGE_ENABLED = true;
+	static bool DEFAULT_TRANSFER_IMAGE_ENABLED = true;
 
 	/**
 	 * Specifies the background color of the transfer image. If no
 	 * color is given here then the background color of the enclosing
 	 * graph component is used. Default is Color.WHITE.
 	 */
-	public static Color DEFAULT_BACKGROUNDCOLOR = Color.WHITE;
+	static Color DEFAULT_BACKGROUNDCOLOR = Color.WHITE;
 
 	/**
 	 * Reference to the original cells for removal after a move.
 	 */
-	protected Object[] _originalCells;
+	Object[] _originalCells;
 
 	/**
 	 * Reference to the last imported cell array.
 	 */
-	protected Transferable _lastImported;
+	Transferable _lastImported;
 
 	/**
 	 * Sets the value for the initialImportCount. Default is 1. Updated in
 	 * exportDone to contain 0 after a cut and 1 after a copy.
 	 */
-	protected int _initialImportCount = 1;
+	int _initialImportCount = 1;
 
 	/**
 	 * Counter for the last imported cell array.
 	 */
-	protected int _importCount = 0;
+	int _importCount = 0;
 
 	/**
 	 * Specifies if a transfer image should be created for the transferable.
 	 * Default is DEFAULT_TRANSFER_IMAGE.
 	 */
-	protected boolean _transferImageEnabled = DEFAULT_TRANSFER_IMAGE_ENABLED;
+	bool _transferImageEnabled = DEFAULT_TRANSFER_IMAGE_ENABLED;
 
 	/**
 	 * Specifies the background color for the transfer image. Default is
 	 * DEFAULT_BACKGROUNDCOLOR.
 	 */
-	protected Color _transferImageBackground = DEFAULT_BACKGROUNDCOLOR;
+	Color _transferImageBackground = DEFAULT_BACKGROUNDCOLOR;
 
 	/**
 	 * 
 	 */
-	protected Point _location;
+	Point _location;
 
 	/**
 	 * 
 	 */
-	protected Point _offset;
+	Point _offset;
 
 	/**
 	 * 
 	 */
-	public int getImportCount()
+	int getImportCount()
 	{
 		return _importCount;
 	}
@@ -98,7 +98,7 @@ public class GraphTransferHandler extends TransferHandler
 	/**
 	 * 
 	 */
-	public void setImportCount(int value)
+	void setImportCount(int value)
 	{
 		_importCount = value;
 	}
@@ -106,7 +106,7 @@ public class GraphTransferHandler extends TransferHandler
 	/**
 	 * 
 	 */
-	public void setTransferImageEnabled(boolean transferImageEnabled)
+	void setTransferImageEnabled(bool transferImageEnabled)
 	{
 		this._transferImageEnabled = transferImageEnabled;
 	}
@@ -114,7 +114,7 @@ public class GraphTransferHandler extends TransferHandler
 	/**
 	 * 
 	 */
-	public boolean isTransferImageEnabled()
+	bool isTransferImageEnabled()
 	{
 		return this._transferImageEnabled;
 	}
@@ -122,7 +122,7 @@ public class GraphTransferHandler extends TransferHandler
 	/**
 	 * 
 	 */
-	public void setTransferImageBackground(Color transferImageBackground)
+	void setTransferImageBackground(Color transferImageBackground)
 	{
 		this._transferImageBackground = transferImageBackground;
 	}
@@ -130,7 +130,7 @@ public class GraphTransferHandler extends TransferHandler
 	/**
 	 * 
 	 */
-	public Color getTransferImageBackground()
+	Color getTransferImageBackground()
 	{
 		return this._transferImageBackground;
 	}
@@ -138,7 +138,7 @@ public class GraphTransferHandler extends TransferHandler
 	/**
 	 * Returns true if the DnD operation started from this handler.
 	 */
-	public boolean isLocalDrag()
+	bool isLocalDrag()
 	{
 		return _originalCells != null;
 	}
@@ -146,7 +146,7 @@ public class GraphTransferHandler extends TransferHandler
 	/**
 	 * 
 	 */
-	public void setLocation(Point value)
+	void setLocation(Point value)
 	{
 		_location = value;
 	}
@@ -154,7 +154,7 @@ public class GraphTransferHandler extends TransferHandler
 	/**
 	 * 
 	 */
-	public void setOffset(Point value)
+	void setOffset(Point value)
 	{
 		_offset = value;
 	}
@@ -162,7 +162,7 @@ public class GraphTransferHandler extends TransferHandler
 	/**
 	 * 
 	 */
-	public boolean canImport(JComponent comp, DataFlavor[] flavors)
+	bool canImport(JComponent comp, DataFlavor[] flavors)
 	{
 		for (int i = 0; i < flavors.length; i++)
 		{
@@ -181,7 +181,7 @@ public class GraphTransferHandler extends TransferHandler
 	 * 
 	 * @see javax.swing.TransferHandler#createTransferable(javax.swing.JComponent)
 	 */
-	public Transferable createTransferable(JComponent c)
+	Transferable createTransferable(JComponent c)
 	{
 		if (c instanceof GraphComponent)
 		{
@@ -210,7 +210,7 @@ public class GraphTransferHandler extends TransferHandler
 	/**
 	 * 
 	 */
-	public GraphTransferable createGraphTransferable(
+	GraphTransferable createGraphTransferable(
 			GraphComponent graphComponent, Object[] cells, ImageIcon icon)
 	{
 		Graph graph = graphComponent.getGraph();
@@ -231,7 +231,7 @@ public class GraphTransferHandler extends TransferHandler
 	/**
 	 * 
 	 */
-	public GraphTransferable createGraphTransferable(
+	GraphTransferable createGraphTransferable(
 			GraphComponent graphComponent, Object[] cells,
 			Rect bounds, ImageIcon icon)
 	{
@@ -242,7 +242,7 @@ public class GraphTransferHandler extends TransferHandler
 	/**
 	 * 
 	 */
-	public ImageIcon createTransferableImage(GraphComponent graphComponent,
+	ImageIcon createTransferableImage(GraphComponent graphComponent,
 			Object[] cells)
 	{
 		ImageIcon icon = null;
@@ -263,7 +263,7 @@ public class GraphTransferHandler extends TransferHandler
 	/**
 	 * 
 	 */
-	public void exportDone(JComponent c, Transferable data, int action)
+	void exportDone(JComponent c, Transferable data, int action)
 	{
 		_initialImportCount = 1;
 		
@@ -272,7 +272,7 @@ public class GraphTransferHandler extends TransferHandler
 		{
 			// Requires that the graph handler resets the location to null if the drag leaves the
 			// component. This is the condition to identify a cross-component move.
-			boolean isLocalDrop = _location != null;
+			bool isLocalDrop = _location != null;
 
 			if (action == TransferHandler.MOVE && !isLocalDrop)
 			{
@@ -289,7 +289,7 @@ public class GraphTransferHandler extends TransferHandler
 	/**
 	 * 
 	 */
-	protected void _removeCells(GraphComponent graphComponent, Object[] cells)
+	void _removeCells(GraphComponent graphComponent, Object[] cells)
 	{
 		graphComponent.getGraph().removeCells(cells);
 	}
@@ -297,7 +297,7 @@ public class GraphTransferHandler extends TransferHandler
 	/**
 	 * 
 	 */
-	public int getSourceActions(JComponent c)
+	int getSourceActions(JComponent c)
 	{
 		return COPY_OR_MOVE;
 	}
@@ -306,9 +306,9 @@ public class GraphTransferHandler extends TransferHandler
 	 * Checks if the GraphTransferable data flavour is supported and calls
 	 * importGraphTransferable if possible.
 	 */
-	public boolean importData(JComponent c, Transferable t)
+	bool importData(JComponent c, Transferable t)
 	{
-		boolean result = false;
+		bool result = false;
 
 		if (isLocalDrag())
 		{
@@ -351,7 +351,7 @@ public class GraphTransferHandler extends TransferHandler
 	/**
 	 * Counts the number of times that the given transferable has been imported.
 	 */
-	protected void _updateImportCount(Transferable t)
+	void _updateImportCount(Transferable t)
 	{
 		if (_lastImported != t)
 		{
@@ -368,10 +368,10 @@ public class GraphTransferHandler extends TransferHandler
 	/**
 	 * Returns true if the cells have been imported using importCells.
 	 */
-	protected boolean _importGraphTransferable(GraphComponent graphComponent,
+	bool _importGraphTransferable(GraphComponent graphComponent,
 			GraphTransferable gt)
 	{
-		boolean result = false;
+		bool result = false;
 
 		try
 		{
@@ -427,7 +427,7 @@ public class GraphTransferHandler extends TransferHandler
 	/**
 	 * Returns the drop target for the given transferable and location.
 	 */
-	protected Object _getDropTarget(GraphComponent graphComponent,
+	Object _getDropTarget(GraphComponent graphComponent,
 			GraphTransferable gt)
 	{
 		Object[] cells = gt.getCells();
@@ -457,7 +457,7 @@ public class GraphTransferHandler extends TransferHandler
 	 * Graph.isSplitTarget. Selects and returns the cells that have been
 	 * imported.
 	 */
-	protected Object[] _importCells(GraphComponent graphComponent,
+	Object[] _importCells(GraphComponent graphComponent,
 			GraphTransferable gt, double dx, double dy)
 	{
 		Object target = _getDropTarget(graphComponent, gt);

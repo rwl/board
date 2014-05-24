@@ -25,14 +25,14 @@ part of graph.util.svg;
  * @version $Id: DefaultErrorHandler.java,v 1.1 2012/11/15 13:26:45 gaudenz Exp $
  */
 
-public class DefaultErrorHandler implements ErrorHandler
+class DefaultErrorHandler implements ErrorHandler
 {
 
 	/**
 	 * Implements {@link ErrorHandler#error(ParseException)}.
 	 * Throws the given exception.
 	 */
-	public void error(ParseException e) throws ParseException
+	void error(ParseException e) throws ParseException
 	{
 		throw e;
 	}

@@ -1,62 +1,62 @@
 part of graph.layout;
 
-//import graph.model.Geometry;
-//import graph.model.ICell;
-//import graph.model.IGraphModel;
-//import graph.util.Rect;
-//import graph.view.CellState;
-//import graph.view.Graph;
+import '../../model/model.dart' show Geometry;
+import '../../model/model.dart' show ICell;
+import '../../model/model.dart' show IGraphModel;
+import '../../util/util.dart' show Rect;
+import '../../view/view.dart' show CellState;
+import '../../view/view.dart' show Graph;
 
-public class StackLayout extends GraphLayout
+class StackLayout extends GraphLayout
 {
 
 	/**
 	 * Specifies the orientation of the layout. Default is true.
 	 */
-	protected boolean horizontal;
+	bool horizontal;
 
 	/**
 	 * Specifies the spacing between the cells. Default is 0.
 	 */
-	protected int spacing;
+	int spacing;
 
 	/**
 	 * Specifies the horizontal origin of the layout. Default is 0.
 	 */
-	protected int x0;
+	int x0;
 
 	/**
 	 * Specifies the vertical origin of the layout. Default is 0.
 	 */
-	protected int y0;
+	int y0;
 	
 	/**
 	 * Border to be added if fill is true. Default is 0.
 	 */
-	protected int border;
+	int border;
 
 	/**
 	 * Boolean indicating if dimension should be changed to fill out the parent
 	 * cell. Default is false.
 	 */
-	protected boolean fill = false;
+	bool fill = false;
 
 	/**
 	 * If the parent should be resized to match the width/height of the
 	 * stack. Default is false.
 	 */
-	protected boolean resizeParent = false;
+	bool resizeParent = false;
 
 	/**
 	 * Value at which a new column or row should be created. Default is 0.
 	 */
-	protected int wrap = 0;
+	int wrap = 0;
 
 	/**
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	public StackLayout(Graph graph)
+	StackLayout(Graph graph)
 	{
 		this(graph, true);
 	}
@@ -65,7 +65,7 @@ public class StackLayout extends GraphLayout
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	public StackLayout(Graph graph, boolean horizontal)
+	StackLayout(Graph graph, bool horizontal)
 	{
 		this(graph, horizontal, 0);
 	}
@@ -74,7 +74,7 @@ public class StackLayout extends GraphLayout
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	public StackLayout(Graph graph, boolean horizontal, int spacing)
+	StackLayout(Graph graph, bool horizontal, int spacing)
 	{
 		this(graph, horizontal, spacing, 0, 0, 0);
 	}
@@ -83,7 +83,7 @@ public class StackLayout extends GraphLayout
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	public StackLayout(Graph graph, boolean horizontal, int spacing,
+	StackLayout(Graph graph, bool horizontal, int spacing,
 			int x0, int y0, int border)
 	{
 		super(graph);
@@ -97,7 +97,7 @@ public class StackLayout extends GraphLayout
 	/**
 	 * 
 	 */
-	public boolean isHorizontal()
+	bool isHorizontal()
 	{
 		return horizontal;
 	}
@@ -106,11 +106,11 @@ public class StackLayout extends GraphLayout
 	 * (non-Javadoc)
 	 * @see graph.layout.GraphLayout#move(java.lang.Object, double, double)
 	 */
-	public void moveCell(Object cell, double x, double y)
+	void moveCell(Object cell, double x, double y)
 	{
 		IGraphModel model = graph.getModel();
 		Object parent = model.getParent(cell);
-		boolean horizontal = isHorizontal();
+		bool horizontal = isHorizontal();
 
 		if (cell instanceof ICell && parent instanceof ICell)
 		{
@@ -160,7 +160,7 @@ public class StackLayout extends GraphLayout
 	/**
 	 * Hook for subclassers to return the container size.
 	 */
-	public Rect getContainerSize()
+	Rect getContainerSize()
 	{
 		return new Rect();
 	}
@@ -169,11 +169,11 @@ public class StackLayout extends GraphLayout
 	 * (non-Javadoc)
 	 * @see graph.layout.IGraphLayout#execute(java.lang.Object)
 	 */
-	public void execute(Object parent)
+	void execute(Object parent)
 	{
 		if (parent != null)
 		{
-			boolean horizontal = isHorizontal();
+			bool horizontal = isHorizontal();
 			IGraphModel model = graph.getModel();
 			Geometry pgeo = model.getGeometry(parent);
 

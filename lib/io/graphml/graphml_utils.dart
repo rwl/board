@@ -15,7 +15,7 @@ part of graph.io.graphml;
 /**
  * This class implements several GML utility methods.
  */
-public class GraphMlUtils
+class GraphMlUtils
 {
 	/**
 	 * Checks if the NodeList has a Node with name = tag.
@@ -23,9 +23,9 @@ public class GraphMlUtils
 	 * @param tag Name of the node.
 	 * @return Returns <code>true</code> if the Node List has a Node with name = tag.
 	 */
-	public static boolean nodeListHasTag(NodeList nl, String tag)
+	static bool nodeListHasTag(NodeList nl, String tag)
 	{
-		boolean has = false;
+		bool has = false;
 
 		if (nl != null)
 		{
@@ -46,12 +46,12 @@ public class GraphMlUtils
 	 * @param tag Name of the Element
 	 * @return Element with name = 'tag'.
 	 */
-	public static Element nodeListTag(NodeList nl, String tag)
+	static Element nodeListTag(NodeList nl, String tag)
 	{
 		if (nl != null)
 		{
 			int length = nl.getLength();
-			boolean has = false;
+			bool has = false;
 
 			for (int i = 0; (i < length) && !has; i++)
 			{
@@ -73,7 +73,7 @@ public class GraphMlUtils
 	 * @param tag name of the Element.
 	 * @return List with the indicated elements.
 	 */
-	public static List<Element> nodeListTags(NodeList nl, String tag)
+	static List<Element> nodeListTags(NodeList nl, String tag)
 	{
 		ArrayList<Element> ret = new ArrayList<Element>();
 
@@ -98,11 +98,11 @@ public class GraphMlUtils
 	 * @param tag Name of the node.
 	 * @return Returns <code>true</code> if the childrens of element has a Node with name = tag.
 	 */
-	public static boolean childsHasTag(Element element, String tag)
+	static bool childsHasTag(Element element, String tag)
 	{
 		NodeList nl = element.getChildNodes();
 
-		boolean has = false;
+		bool has = false;
 
 		if (nl != null)
 		{
@@ -122,14 +122,14 @@ public class GraphMlUtils
 	 * @param tag Name of the Element
 	 * @return Element with name = 'tag'.
 	 */
-	public static Element childsTag(Element element, String tag)
+	static Element childsTag(Element element, String tag)
 	{
 		NodeList nl = element.getChildNodes();
 
 		if (nl != null)
 		{
 			int length = nl.getLength();
-			boolean has = false;
+			bool has = false;
 
 			for (int i = 0; (i < length) && !has; i++)
 			{
@@ -152,7 +152,7 @@ public class GraphMlUtils
 	 * @param tag name of the Element.
 	 * @return List with the indicated elements.
 	 */
-	public static List<Element> childsTags(Element element, String tag)
+	static List<Element> childsTags(Element element, String tag)
 	{
 		NodeList nl = element.getChildNodes();
 
@@ -178,7 +178,7 @@ public class GraphMlUtils
 	 * @param nodeList Node List.
 	 * @return List with the elements of nodeList.
 	 */
-	public static List<Node> copyNodeList(NodeList nodeList)
+	static List<Node> copyNodeList(NodeList nodeList)
 	{
 		ArrayList<Node> copy = new ArrayList<Node>();
 		int length = nodeList.getLength();
@@ -197,7 +197,7 @@ public class GraphMlUtils
 	 * @param asig Asignation simbol used in 'style'.
 	 * @return Map with the style properties.
 	 */
-	public static HashMap<String, Object> getStyleMap(String style, String asig)
+	static HashMap<String, Object> getStyleMap(String style, String asig)
 	{
 		HashMap<String, Object> styleMap = new HashMap<String, Object>();
 		String key = "";
@@ -234,7 +234,7 @@ public class GraphMlUtils
 	 * @param styleMap Map with the styles values
 	 * @return string that represents the style.
 	 */
-	public static String getStyleString(Map<String, Object> styleMap,
+	static String getStyleString(Map<String, Object> styleMap,
 			String asig)
 	{
 		String style = "";

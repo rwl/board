@@ -3,15 +3,15 @@
  */
 part of graph.swing.view;
 
-//import graph.canvas.Graphics2DCanvas;
-//import graph.model.Geometry;
-//import graph.model.IGraphModel;
-//import graph.swing.GraphComponent;
-//import graph.util.Point2d;
-//import graph.util.Rect;
-//import graph.util.Utils;
-//import graph.view.CellState;
-//import graph.view.Graph;
+import '../../canvas/canvas.dart' show Graphics2DCanvas;
+import '../../model/model.dart' show Geometry;
+import '../../model/model.dart' show IGraphModel;
+import '../../swing/swing.dart' show GraphComponent;
+import '../../util/util.dart' show Point2d;
+import '../../util/util.dart' show Rect;
+import '../../util/util.dart' show Utils;
+import '../../view/view.dart' show CellState;
+import '../../view/view.dart' show Graph;
 
 //import java.awt.AlphaComposite;
 //import java.awt.Composite;
@@ -27,43 +27,43 @@ part of graph.swing.view;
 /**
  * Represents the current state of a cell in a given graph view.
  */
-public class CellStatePreview
+class CellStatePreview
 {
 	/**
 	 * 
 	 */
-	protected Map<CellState, Point2d> _deltas = new LinkedHashMap<CellState, Point2d>();
+	Map<CellState, Point2d> _deltas = new LinkedHashMap<CellState, Point2d>();
 
 	/**
 	 * 
 	 */
-	protected int _count = 0;
+	int _count = 0;
 
 	/**
 	 * 
 	 */
-	protected GraphComponent _graphComponent;
+	GraphComponent _graphComponent;
 
 	/**
 	 * Specifies if cell states should be cloned or changed in-place.
 	 */
-	protected boolean _cloned;
+	bool _cloned;
 
 	/**
 	 * 
 	 */
-	protected float _opacity = 1;
+	float _opacity = 1;
 
 	/**
 	 * 
 	 */
-	protected List<CellState> _cellStates;
+	List<CellState> _cellStates;
 
 	/**
 	 * Constructs a new state preview. The paint handler to invoke the paint
 	 * method must be installed elsewhere.
 	 */
-	public CellStatePreview(GraphComponent graphComponent, boolean cloned)
+	CellStatePreview(GraphComponent graphComponent, bool cloned)
 	{
 		this._graphComponent = graphComponent;
 		this._cloned = cloned;
@@ -72,7 +72,7 @@ public class CellStatePreview
 	/**
 	 * 
 	 */
-	public boolean isCloned()
+	bool isCloned()
 	{
 		return _cloned;
 	}
@@ -80,7 +80,7 @@ public class CellStatePreview
 	/**
 	 * 
 	 */
-	public void setCloned(boolean value)
+	void setCloned(bool value)
 	{
 		_cloned = value;
 	}
@@ -88,7 +88,7 @@ public class CellStatePreview
 	/**
 	 * 
 	 */
-	public boolean isEmpty()
+	bool isEmpty()
 	{
 		return _count == 0;
 	}
@@ -96,7 +96,7 @@ public class CellStatePreview
 	/**
 	 * 
 	 */
-	public int getCount()
+	int getCount()
 	{
 		return _count;
 	}
@@ -104,7 +104,7 @@ public class CellStatePreview
 	/**
 	 * 
 	 */
-	public Map<CellState, Point2d> getDeltas()
+	Map<CellState, Point2d> getDeltas()
 	{
 		return _deltas;
 	}
@@ -112,7 +112,7 @@ public class CellStatePreview
 	/**
 	 * 
 	 */
-	public void setOpacity(float value)
+	void setOpacity(float value)
 	{
 		_opacity = value;
 	}
@@ -120,7 +120,7 @@ public class CellStatePreview
 	/**
 	 * 
 	 */
-	public float getOpacity()
+	float getOpacity()
 	{
 		return _opacity;
 	}
@@ -128,7 +128,7 @@ public class CellStatePreview
 	/**
 	 * 
 	 */
-	public Point2d moveState(CellState state, double dx, double dy)
+	Point2d moveState(CellState state, double dx, double dy)
 	{
 		return moveState(state, dx, dy, true, true);
 	}
@@ -136,8 +136,8 @@ public class CellStatePreview
 	/**
 	 * 
 	 */
-	public Point2d moveState(CellState state, double dx, double dy,
-			boolean add, boolean includeEdges)
+	Point2d moveState(CellState state, double dx, double dy,
+			bool add, bool includeEdges)
 	{
 		Point2d delta = _deltas.get(state);
 
@@ -172,7 +172,7 @@ public class CellStatePreview
 	/**
 	 * Returns a dirty rectangle to be repainted in GraphControl.
 	 */
-	public Rect show()
+	Rect show()
 	{
 		Graph graph = _graphComponent.getGraph();
 		IGraphModel model = graph.getModel();
@@ -256,7 +256,7 @@ public class CellStatePreview
 	/**
 	 * 
 	 */
-	public void restore(List<CellState> snapshot)
+	void restore(List<CellState> snapshot)
 	{
 		Graph graph = _graphComponent.getGraph();
 		Iterator<CellState> it = snapshot.iterator();
@@ -276,7 +276,7 @@ public class CellStatePreview
 	/**
 	 * 
 	 */
-	public void restoreState(CellState state, CellState from)
+	void restoreState(CellState state, CellState from)
 	{
 		state.setLabelBounds(from.getLabelBounds());
 		state.setAbsolutePoints(from.getAbsolutePoints());
@@ -295,7 +295,7 @@ public class CellStatePreview
 	/**
 	 * 
 	 */
-	public List<CellState> snapshot(CellState state)
+	List<CellState> snapshot(CellState state)
 	{
 		List<CellState> result = new LinkedList<CellState>();
 
@@ -321,7 +321,7 @@ public class CellStatePreview
 	/**
 	 *
 	 */
-	protected void _translateState(CellState parentState, CellState state,
+	void _translateState(CellState parentState, CellState state,
 			double dx, double dy)
 	{
 		if (state != null)
@@ -360,7 +360,7 @@ public class CellStatePreview
 	/**
 	 *
 	 */
-	protected Rect _revalidateState(CellState parentState,
+	Rect _revalidateState(CellState parentState,
 			CellState state, double dx, double dy)
 	{
 		Rect dirty = null;
@@ -425,7 +425,7 @@ public class CellStatePreview
 	/**
 	 * 
 	 */
-	public void addEdges(CellState state)
+	void addEdges(CellState state)
 	{
 		Graph graph = _graphComponent.getGraph();
 		IGraphModel model = graph.getModel();
@@ -447,7 +447,7 @@ public class CellStatePreview
 	/**
 	 * 
 	 */
-	public void paint(Graphics g)
+	void paint(Graphics g)
 	{
 		if (_cellStates != null && _cellStates.size() > 0)
 		{
@@ -483,7 +483,7 @@ public class CellStatePreview
 	/**
 	 * 
 	 */
-	protected float _getOpacityForCell(Object cell)
+	float _getOpacityForCell(Object cell)
 	{
 		return _opacity;
 	}
@@ -491,7 +491,7 @@ public class CellStatePreview
 	/**
 	 * Draws the preview using the graphics canvas.
 	 */
-	protected void _paintPreview(Graphics2DCanvas canvas)
+	void _paintPreview(Graphics2DCanvas canvas)
 	{
 		Composite previousComposite = canvas.getGraphics().getComposite();
 
@@ -513,7 +513,7 @@ public class CellStatePreview
 	/**
 	 * Draws the preview using the graphics canvas.
 	 */
-	protected void _paintPreviewState(Graphics2DCanvas canvas,
+	void _paintPreviewState(Graphics2DCanvas canvas,
 			CellState state)
 	{
 		_graphComponent.getGraph().drawState(

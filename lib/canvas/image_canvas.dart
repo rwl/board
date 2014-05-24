@@ -3,8 +3,8 @@
  */
 part of graph.canvas;
 
-//import graph.util.Utils;
-//import graph.view.CellState;
+import '../util/util.dart' show Utils;
+import '../view/view.dart' show CellState;
 
 //import java.awt.Color;
 //import java.awt.Graphics2D;
@@ -18,29 +18,29 @@ part of graph.canvas;
  * 
  * <code>BufferedImage image = CellRenderer.createBufferedImage(graph, cells, 1, Color.white, true, null, canvas);</code> 
  */
-public class ImageCanvas implements ICanvas
+class ImageCanvas implements ICanvas
 {
 
 	/**
 	 * 
 	 */
-	protected Graphics2DCanvas _canvas;
+	Graphics2DCanvas _canvas;
 
 	/**
 	 * 
 	 */
-	protected Graphics2D _previousGraphics;
+	Graphics2D _previousGraphics;
 
 	/**
 	 * 
 	 */
-	protected BufferedImage _image;
+	BufferedImage _image;
 
 	/**
 	 * 
 	 */
-	public ImageCanvas(Graphics2DCanvas canvas, int width, int height,
-			Color background, boolean antiAlias)
+	ImageCanvas(Graphics2DCanvas canvas, int width, int height,
+			Color background, bool antiAlias)
 	{
 		this._canvas = canvas;
 		_previousGraphics = canvas.getGraphics();
@@ -57,7 +57,7 @@ public class ImageCanvas implements ICanvas
 	/**
 	 * 
 	 */
-	public Graphics2DCanvas getGraphicsCanvas()
+	Graphics2DCanvas getGraphicsCanvas()
 	{
 		return _canvas;
 	}
@@ -65,7 +65,7 @@ public class ImageCanvas implements ICanvas
 	/**
 	 * 
 	 */
-	public BufferedImage getImage()
+	BufferedImage getImage()
 	{
 		return _image;
 	}
@@ -73,7 +73,7 @@ public class ImageCanvas implements ICanvas
 	/**
 	 * 
 	 */
-	public Object drawCell(CellState state)
+	Object drawCell(CellState state)
 	{
 		return _canvas.drawCell(state);
 	}
@@ -81,7 +81,7 @@ public class ImageCanvas implements ICanvas
 	/**
 	 * 
 	 */
-	public Object drawLabel(String label, CellState state, boolean html)
+	Object drawLabel(String label, CellState state, bool html)
 	{
 		return _canvas.drawLabel(label, state, html);
 	}
@@ -89,7 +89,7 @@ public class ImageCanvas implements ICanvas
 	/**
 	 * 
 	 */
-	public double getScale()
+	double getScale()
 	{
 		return _canvas.getScale();
 	}
@@ -97,7 +97,7 @@ public class ImageCanvas implements ICanvas
 	/**
 	 * 
 	 */
-	public Point getTranslate()
+	Point getTranslate()
 	{
 		return _canvas.getTranslate();
 	}
@@ -105,7 +105,7 @@ public class ImageCanvas implements ICanvas
 	/**
 	 * 
 	 */
-	public void setScale(double scale)
+	void setScale(double scale)
 	{
 		_canvas.setScale(scale);
 	}
@@ -113,7 +113,7 @@ public class ImageCanvas implements ICanvas
 	/**
 	 * 
 	 */
-	public void setTranslate(int dx, int dy)
+	void setTranslate(int dx, int dy)
 	{
 		_canvas.setTranslate(dx, dy);
 	}
@@ -121,7 +121,7 @@ public class ImageCanvas implements ICanvas
 	/**
 	 * 
 	 */
-	public BufferedImage destroy()
+	BufferedImage destroy()
 	{
 		BufferedImage tmp = _image;
 

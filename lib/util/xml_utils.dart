@@ -22,7 +22,7 @@ part of graph.util;
 /**
  * Contains various XML helper methods for use with Graph.
  */
-public class XmlUtils
+class XmlUtils
 {
 	/**
 	 * Returns a new document for the given XML string.
@@ -31,7 +31,7 @@ public class XmlUtils
 	 *            String that represents the XML data.
 	 * @return Returns a new XML document.
 	 */
-	public static Document parseXml(String xml)
+	static Document parseXml(String xml)
 	{
 		try
 		{
@@ -56,7 +56,7 @@ public class XmlUtils
 	 *            Node to return the XML for.
 	 * @return Returns an XML string.
 	 */
-	public static String getXml(Node node)
+	static String getXml(Node node)
 	{
 		try
 		{

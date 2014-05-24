@@ -3,8 +3,8 @@
  */
 part of graph.sharing;
 
-//import graph.sharing.SharedState.DiagramChangeListener;
-//import graph.util.Utils;
+import '../sharing/sharing.dart' show DiagramChangeListener;
+import '../util/util.dart' show Utils;
 
 //import org.w3c.dom.Node;
 
@@ -16,32 +16,32 @@ part of graph.sharing;
  * for an amount of time or wakes up / returns immediately if the buffer is no
  * longer empty.
  */
-public class Session implements DiagramChangeListener
+class Session implements DiagramChangeListener
 {
 	/**
 	 * Default timeout is 10000 ms.
 	 */
-	public static int DEFAULT_TIMEOUT = 10000;
+	static int DEFAULT_TIMEOUT = 10000;
 
 	/**
 	 * Holds the session ID.
 	 */
-	protected String _id;
+	String _id;
 
 	/**
 	 * Reference to the shared diagram.
 	 */
-	protected SharedState _diagram;
+	SharedState _diagram;
 
 	/**
 	 * Holds the send buffer for this session.
 	 */
-	protected StringBuffer _buffer = new StringBuffer();
+	StringBuffer _buffer = new StringBuffer();
 
 	/**
 	 * Holds the last active time millis.
 	 */
-	protected long _lastTimeMillis = 0;
+	long _lastTimeMillis = 0;
 
 	/**
 	 * Constructs a new session with the given ID.
@@ -49,7 +49,7 @@ public class Session implements DiagramChangeListener
 	 * @param id Specifies the session ID to be used.
 	 * @param diagram Reference to the shared diagram.
 	 */
-	public Session(String id, SharedState diagram)
+	Session(String id, SharedState diagram)
 	{
 		this._id = id;
 		this._diagram = diagram;
@@ -61,7 +61,7 @@ public class Session implements DiagramChangeListener
 	/**
 	 * Returns the session ID.
 	 */
-	public String getId()
+	String getId()
 	{
 		return _id;
 	}
@@ -72,7 +72,7 @@ public class Session implements DiagramChangeListener
 	 *
 	 * @return Returns the initial state of the session.
 	 */
-	public synchronized String init()
+	synchronized String init()
 	{
 		synchronized (this)
 		{
@@ -89,7 +89,7 @@ public class Session implements DiagramChangeListener
 	 * namespace, which is used on the client side to prefix IDs of newly
 	 * created cells.
 	 */
-	public String getInitialMessage()
+	String getInitialMessage()
 	{
 		String ns = Utils.getMd5Hash(_id);
 
@@ -111,7 +111,7 @@ public class Session implements DiagramChangeListener
 	 * 
 	 * @param message XML that represents the change.
 	 */
-	public void receive(Node message)
+	void receive(Node message)
 	{
 		//System.out.println(getId() + ": " + Utils.getPrettyXml(message));
 		Node child = message.getFirstChild();
@@ -136,7 +136,7 @@ public class Session implements DiagramChangeListener
 	 * 
 	 * @return Returns a string representing the changes to the shared diagram.
 	 */
-	public String poll() throws InterruptedException
+	String poll() throws InterruptedException
 	{
 		return poll(DEFAULT_TIMEOUT);
 	}
@@ -149,7 +149,7 @@ public class Session implements DiagramChangeListener
 	 * @param timeout Time in milliseconds to wait for changes.
 	 * @return Returns a string representing the changes to the shared diagram.
 	 */
-	public String poll(long timeout) throws InterruptedException
+	String poll(long timeout) throws InterruptedException
 	{
 		_lastTimeMillis = System.currentTimeMillis();
 		StringBuffer result = new StringBuffer("<message>");
@@ -182,7 +182,7 @@ public class Session implements DiagramChangeListener
 	 * (non-Javadoc)
 	 * @see graph.sharing.mxSharedDiagram.mxDiagramChangeListener#diagramChanged(java.lang.Object, org.w3c.dom.Node)
 	 */
-	public synchronized void diagramChanged(Object sender, String edits)
+	synchronized void diagramChanged(Object sender, String edits)
 	{
 		if (sender != this)
 		{
@@ -197,7 +197,7 @@ public class Session implements DiagramChangeListener
 	/**
 	 * Returns the number of milliseconds this session has been inactive.
 	 */
-	public long inactiveTimeMillis()
+	long inactiveTimeMillis()
 	{
 		return System.currentTimeMillis() - _lastTimeMillis;
 	}
@@ -205,7 +205,7 @@ public class Session implements DiagramChangeListener
 	/**
 	 * Destroys the session and removes its listener from the shared diagram.
 	 */
-	public void destroy()
+	void destroy()
 	{
 		_diagram.removeDiagramChangeListener(this);
 	}

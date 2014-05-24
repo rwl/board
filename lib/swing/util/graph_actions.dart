@@ -3,8 +3,8 @@
  */
 part of graph.swing.util;
 
-//import graph.swing.GraphComponent;
-//import graph.view.Graph;
+import '../../swing/swing.dart' show GraphComponent;
+import '../../view/view.dart' show Graph;
 
 //import java.awt.event.ActionEvent;
 
@@ -14,7 +14,7 @@ part of graph.swing.util;
 /**
  *
  */
-public class GraphActions
+class GraphActions
 {
 
 	/**
@@ -144,7 +144,7 @@ public class GraphActions
 	 * 
 	 * @return the delete action
 	 */
-	public static Action getDeleteAction()
+	static Action getDeleteAction()
 	{
 		return deleteAction;
 	}
@@ -153,7 +153,7 @@ public class GraphActions
 	 * 
 	 * @return the edit action
 	 */
-	public static Action getEditAction()
+	static Action getEditAction()
 	{
 		return editAction;
 	}
@@ -162,7 +162,7 @@ public class GraphActions
 	 * 
 	 * @return the edit action
 	 */
-	public static Action getGroupAction()
+	static Action getGroupAction()
 	{
 		return groupAction;
 	}
@@ -171,7 +171,7 @@ public class GraphActions
 	 * 
 	 * @return the edit action
 	 */
-	public static Action getUngroupAction()
+	static Action getUngroupAction()
 	{
 		return ungroupAction;
 	}
@@ -180,7 +180,7 @@ public class GraphActions
 	 * 
 	 * @return the edit action
 	 */
-	public static Action getRemoveFromParentAction()
+	static Action getRemoveFromParentAction()
 	{
 		return removeFromParentAction;
 	}
@@ -189,7 +189,7 @@ public class GraphActions
 	 * 
 	 * @return the edit action
 	 */
-	public static Action getUpdateGroupBoundsAction()
+	static Action getUpdateGroupBoundsAction()
 	{
 		return updateGroupBoundsAction;
 	}
@@ -198,7 +198,7 @@ public class GraphActions
 	 * 
 	 * @return the select all action
 	 */
-	public static Action getSelectAllAction()
+	static Action getSelectAllAction()
 	{
 		return selectAllAction;
 	}
@@ -207,7 +207,7 @@ public class GraphActions
 	 * 
 	 * @return the select vertices action
 	 */
-	public static Action getSelectVerticesAction()
+	static Action getSelectVerticesAction()
 	{
 		return selectVerticesAction;
 	}
@@ -216,7 +216,7 @@ public class GraphActions
 	 * 
 	 * @return the select edges action
 	 */
-	public static Action getSelectEdgesAction()
+	static Action getSelectEdgesAction()
 	{
 		return selectEdgesAction;
 	}
@@ -225,7 +225,7 @@ public class GraphActions
 	 * 
 	 * @return the select none action
 	 */
-	public static Action getSelectNoneAction()
+	static Action getSelectNoneAction()
 	{
 		return selectNoneAction;
 	}
@@ -234,7 +234,7 @@ public class GraphActions
 	 * 
 	 * @return the select next action
 	 */
-	public static Action getSelectNextAction()
+	static Action getSelectNextAction()
 	{
 		return selectNextAction;
 	}
@@ -243,7 +243,7 @@ public class GraphActions
 	 * 
 	 * @return the select previous action
 	 */
-	public static Action getSelectPreviousAction()
+	static Action getSelectPreviousAction()
 	{
 		return selectPreviousAction;
 	}
@@ -252,7 +252,7 @@ public class GraphActions
 	 * 
 	 * @return the select parent action
 	 */
-	public static Action getSelectParentAction()
+	static Action getSelectParentAction()
 	{
 		return selectParentAction;
 	}
@@ -261,7 +261,7 @@ public class GraphActions
 	 * 
 	 * @return the select child action
 	 */
-	public static Action getSelectChildAction()
+	static Action getSelectChildAction()
 	{
 		return selectChildAction;
 	}
@@ -270,7 +270,7 @@ public class GraphActions
 	 * 
 	 * @return the go into action
 	 */
-	public static Action getEnterGroupAction()
+	static Action getEnterGroupAction()
 	{
 		return enterGroupAction;
 	}
@@ -279,7 +279,7 @@ public class GraphActions
 	 * 
 	 * @return the go up action
 	 */
-	public static Action getExitGroupAction()
+	static Action getExitGroupAction()
 	{
 		return exitGroupAction;
 	}
@@ -288,7 +288,7 @@ public class GraphActions
 	 * 
 	 * @return the home action
 	 */
-	public static Action getHomeAction()
+	static Action getHomeAction()
 	{
 		return homeAction;
 	}
@@ -297,7 +297,7 @@ public class GraphActions
 	 * 
 	 * @return the collapse action
 	 */
-	public static Action getCollapseAction()
+	static Action getCollapseAction()
 	{
 		return collapseAction;
 	}
@@ -306,7 +306,7 @@ public class GraphActions
 	 * 
 	 * @return the expand action
 	 */
-	public static Action getExpandAction()
+	static Action getExpandAction()
 	{
 		return expandAction;
 	}
@@ -315,7 +315,7 @@ public class GraphActions
 	 * 
 	 * @return the zoom actual action
 	 */
-	public static Action getZoomActualAction()
+	static Action getZoomActualAction()
 	{
 		return zoomActualAction;
 	}
@@ -324,7 +324,7 @@ public class GraphActions
 	 * 
 	 * @return the zoom in action
 	 */
-	public static Action getZoomInAction()
+	static Action getZoomInAction()
 	{
 		return zoomInAction;
 	}
@@ -333,7 +333,7 @@ public class GraphActions
 	 * 
 	 * @return the zoom out action
 	 */
-	public static Action getZoomOutAction()
+	static Action getZoomOutAction()
 	{
 		return zoomOutAction;
 	}
@@ -342,7 +342,7 @@ public class GraphActions
 	 * 
 	 * @return the action that moves cell(s) to the backmost layer
 	 */
-	public static Action getToBackAction()
+	static Action getToBackAction()
 	{
 		return toBackAction;
 	}
@@ -351,7 +351,7 @@ public class GraphActions
 	 * 
 	 * @return the action that moves cell(s) to the frontmost layer
 	 */
-	public static Action getToFrontAction()
+	static Action getToFrontAction()
 	{
 		return toFrontAction;
 	}
@@ -361,7 +361,7 @@ public class GraphActions
 	 * @param e
 	 * @return Returns the graph for the given action event.
 	 */
-	public static final Graph getGraph(ActionEvent e)
+	static final Graph getGraph(ActionEvent e)
 	{
 		Object source = e.getSource();
 
@@ -376,7 +376,7 @@ public class GraphActions
 	/**
 	 * 
 	 */
-	public static class EditAction extends AbstractAction
+	static class EditAction extends AbstractAction
 	{
 
 		/**
@@ -409,7 +409,7 @@ public class GraphActions
 	/**
 	 * 
 	 */
-	public static class DeleteAction extends AbstractAction
+	static class DeleteAction extends AbstractAction
 	{
 
 		/**
@@ -444,7 +444,7 @@ public class GraphActions
 	/**
 	 * 
 	 */
-	public static class GroupAction extends AbstractAction
+	static class GroupAction extends AbstractAction
 	{
 
 		/**
@@ -489,7 +489,7 @@ public class GraphActions
 	/**
 	 * 
 	 */
-	public static class UngroupAction extends AbstractAction
+	static class UngroupAction extends AbstractAction
 	{
 
 		/**
@@ -524,7 +524,7 @@ public class GraphActions
 	/**
 	 * 
 	 */
-	public static class RemoveFromParentAction extends AbstractAction
+	static class RemoveFromParentAction extends AbstractAction
 	{
 
 		/**
@@ -559,7 +559,7 @@ public class GraphActions
 	/**
 	 * 
 	 */
-	public static class UpdateGroupBoundsAction extends AbstractAction
+	static class UpdateGroupBoundsAction extends AbstractAction
 	{
 
 		/**
@@ -602,7 +602,7 @@ public class GraphActions
 	/**
 	 * 
 	 */
-	public static class LayerAction extends AbstractAction
+	static class LayerAction extends AbstractAction
 	{
 
 		/**
@@ -628,7 +628,7 @@ public class GraphActions
 
 			if (graph != null)
 			{
-				boolean toBack = getValue(Action.NAME).toString()
+				bool toBack = getValue(Action.NAME).toString()
 						.equalsIgnoreCase("toBack");
 				graph.orderCells(toBack);
 			}
@@ -639,7 +639,7 @@ public class GraphActions
 	/**
 	 * 
 	 */
-	public static class FoldAction extends AbstractAction
+	static class FoldAction extends AbstractAction
 	{
 
 		/**
@@ -665,7 +665,7 @@ public class GraphActions
 
 			if (graph != null)
 			{
-				boolean collapse = getValue(Action.NAME).toString()
+				bool collapse = getValue(Action.NAME).toString()
 						.equalsIgnoreCase("collapse");
 				graph.foldCells(collapse);
 			}
@@ -676,7 +676,7 @@ public class GraphActions
 	/**
 	 * 
 	 */
-	public static class DrillAction extends AbstractAction
+	static class DrillAction extends AbstractAction
 	{
 
 		/**
@@ -724,7 +724,7 @@ public class GraphActions
 	/**
 	 * 
 	 */
-	public static class ZoomAction extends AbstractAction
+	static class ZoomAction extends AbstractAction
 	{
 
 		/**
@@ -773,7 +773,7 @@ public class GraphActions
 	/**
 	 * 
 	 */
-	public static class SelectAction extends AbstractAction
+	static class SelectAction extends AbstractAction
 	{
 
 		/**

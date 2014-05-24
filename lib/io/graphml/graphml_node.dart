@@ -12,7 +12,7 @@ part of graph.io.graphml;
 /**
  * Represents a Data element in the GML Structure.
  */
-public class GraphMlNode
+class GraphMlNode
 {
 	private String _nodeId;
 
@@ -29,7 +29,7 @@ public class GraphMlNode
 	 * @param nodeId Node`s ID
 	 * @param nodeData Gml Data.
 	 */
-	public GraphMlNode(String nodeId, GraphMlData nodeData)
+	GraphMlNode(String nodeId, GraphMlData nodeData)
 	{
 		this._nodeId = nodeId;
 		this._nodeData = nodeData;
@@ -39,7 +39,7 @@ public class GraphMlNode
 	 * Construct a Node from a xml Node Element.
 	 * @param nodeElement Xml Node Element.
 	 */
-	public GraphMlNode(Element nodeElement)
+	GraphMlNode(Element nodeElement)
 	{
 		this._nodeId = nodeElement.getAttribute(GraphMlConstants.ID);
 
@@ -76,42 +76,42 @@ public class GraphMlNode
 		}
 	}
 
-	public String getNodeId()
+	String getNodeId()
 	{
 		return _nodeId;
 	}
 
-	public void setNodeId(String nodeId)
+	void setNodeId(String nodeId)
 	{
 		this._nodeId = nodeId;
 	}
 
-	public HashMap<String, GraphMlData> getNodeDataMap()
+	HashMap<String, GraphMlData> getNodeDataMap()
 	{
 		return _nodeDataMap;
 	}
 
-	public void setNodeDataMap(HashMap<String, GraphMlData> nodeDataMap)
+	void setNodeDataMap(HashMap<String, GraphMlData> nodeDataMap)
 	{
 		this._nodeDataMap = nodeDataMap;
 	}
 
-	public List<GraphMlGraph> getNodeGraph()
+	List<GraphMlGraph> getNodeGraph()
 	{
 		return _nodeGraphList;
 	}
 
-	public void setNodeGraph(List<GraphMlGraph> nodeGraph)
+	void setNodeGraph(List<GraphMlGraph> nodeGraph)
 	{
 		this._nodeGraphList = nodeGraph;
 	}
 
-	public HashMap<String, GraphMlPort> getNodePort()
+	HashMap<String, GraphMlPort> getNodePort()
 	{
 		return _nodePortMap;
 	}
 
-	public void setNodePort(HashMap<String, GraphMlPort> nodePort)
+	void setNodePort(HashMap<String, GraphMlPort> nodePort)
 	{
 		this._nodePortMap = nodePort;
 	}
@@ -121,7 +121,7 @@ public class GraphMlNode
 	 * @param document Document where the key Element will be inserted.
 	 * @return Returns the generated Elements.
 	 */
-	public Element generateElement(Document document)
+	Element generateElement(Document document)
 	{
 		Element node = document.createElement(GraphMlConstants.NODE);
 
@@ -145,12 +145,12 @@ public class GraphMlNode
 		return node;
 	}
 
-	public GraphMlData getNodeData()
+	GraphMlData getNodeData()
 	{
 		return _nodeData;
 	}
 
-	public void setNodeData(GraphMlData nodeData)
+	void setNodeData(GraphMlData nodeData)
 	{
 		this._nodeData = nodeData;
 	}

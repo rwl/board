@@ -3,15 +3,15 @@
  */
 part of graph.util;
 
-//import graph.canvas.Graphics2DCanvas;
-//import graph.canvas.HtmlCanvas;
-//import graph.canvas.ICanvas;
-//import graph.canvas.ImageCanvas;
-//import graph.canvas.SvgCanvas;
-//import graph.canvas.VmlCanvas;
-//import graph.view.Graph;
-//import graph.view.GraphView;
-//import graph.view.TemporaryCellStates;
+import '../canvas/canvas.dart' show Graphics2DCanvas;
+import '../canvas/canvas.dart' show HtmlCanvas;
+import '../canvas/canvas.dart' show ICanvas;
+import '../canvas/canvas.dart' show ImageCanvas;
+import '../canvas/canvas.dart' show SvgCanvas;
+import '../canvas/canvas.dart' show VmlCanvas;
+import '../view/view.dart' show Graph;
+import '../view/view.dart' show GraphView;
+import '../view/view.dart' show TemporaryCellStates;
 
 //import java.awt.Color;
 //import java.awt.Point;
@@ -20,7 +20,7 @@ part of graph.util;
 
 //import org.w3c.dom.Document;
 
-public class CellRenderer
+class CellRenderer
 {
 	/**
 	 * 
@@ -37,7 +37,7 @@ public class CellRenderer
 	 * @param graph Graph to be painted onto the canvas.
 	 * @return Returns the image that represents the canvas.
 	 */
-	public static ICanvas drawCells(Graph graph, Object[] cells,
+	static ICanvas drawCells(Graph graph, Object[] cells,
 			double scale, Rect clip, CanvasFactory factory)
 	{
 		ICanvas canvas = null;
@@ -53,7 +53,7 @@ public class CellRenderer
 		// Keeps the existing translation as the cells might
 		// be aligned to the grid in a different way in a graph
 		// that has a translation other than zero
-		boolean eventsEnabled = view.isEventsEnabled();
+		bool eventsEnabled = view.isEventsEnabled();
 
 		// Disables firing of scale events so that there is no
 		// repaint or update of the original graph
@@ -111,8 +111,8 @@ public class CellRenderer
 	/**
 	 * 
 	 */
-	public static BufferedImage createBufferedImage(Graph graph,
-			Object[] cells, double scale, Color background, boolean antiAlias,
+	static BufferedImage createBufferedImage(Graph graph,
+			Object[] cells, double scale, Color background, bool antiAlias,
 			Rect clip)
 	{
 		return createBufferedImage(graph, cells, scale, background, antiAlias,
@@ -122,9 +122,9 @@ public class CellRenderer
 	/**
 	 * 
 	 */
-	public static BufferedImage createBufferedImage(Graph graph,
+	static BufferedImage createBufferedImage(Graph graph,
 			Object[] cells, double scale, final Color background,
-			final boolean antiAlias, Rect clip,
+			final bool antiAlias, Rect clip,
 			final Graphics2DCanvas graphicsCanvas)
 	{
 		ImageCanvas canvas = (ImageCanvas) drawCells(graph, cells, scale,
@@ -144,7 +144,7 @@ public class CellRenderer
 	/**
 	 * 
 	 */
-	public static Document createHtmlDocument(Graph graph, Object[] cells,
+	static Document createHtmlDocument(Graph graph, Object[] cells,
 			double scale, Color background, Rect clip)
 	{
 		HtmlCanvas canvas = (HtmlCanvas) drawCells(graph, cells, scale,
@@ -163,7 +163,7 @@ public class CellRenderer
 	/**
 	 * 
 	 */
-	public static Document createSvgDocument(Graph graph, Object[] cells,
+	static Document createSvgDocument(Graph graph, Object[] cells,
 			double scale, Color background, Rect clip)
 	{
 		SvgCanvas canvas = (SvgCanvas) drawCells(graph, cells, scale, clip,
@@ -183,7 +183,7 @@ public class CellRenderer
 	/**
 	 * 
 	 */
-	public static Document createVmlDocument(Graph graph, Object[] cells,
+	static Document createVmlDocument(Graph graph, Object[] cells,
 			double scale, Color background, Rect clip)
 	{
 		VmlCanvas canvas = (VmlCanvas) drawCells(graph, cells, scale, clip,
@@ -202,7 +202,7 @@ public class CellRenderer
 	/**
 	 * 
 	 */
-	public static abstract class CanvasFactory
+	static abstract class CanvasFactory
 	{
 
 		/**

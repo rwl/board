@@ -1,7 +1,7 @@
 library graph.shape;
 
-//import graph.canvas.Graphics2DCanvas;
-//import graph.view.CellState;
+import '../canvas/canvas.dart' show Graphics2DCanvas;
+import '../view/view.dart' show CellState;
 
 part 'actor_shape.dart';
 part 'arrow_shape.dart';

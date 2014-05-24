@@ -1,10 +1,10 @@
 part of graph.shape;
 
-//import graph.canvas.Graphics2DCanvas;
-//import graph.util.Constants;
-//import graph.util.Rect;
-//import graph.util.Utils;
-//import graph.view.CellState;
+import '../canvas/canvas.dart' show Graphics2DCanvas;
+import '../util/util.dart' show Constants;
+import '../util/util.dart' show Rect;
+import '../util/util.dart' show Utils;
+import '../view/view.dart' show CellState;
 
 //import java.awt.Color;
 //import java.awt.GradientPaint;
@@ -12,13 +12,13 @@ part of graph.shape;
 //import java.awt.geom.GeneralPath;
 //import java.util.Map;
 
-public class LabelShape extends ImageShape
+class LabelShape extends ImageShape
 {
 
 	/**
 	 * 
 	 */
-	public void paintShape(Graphics2DCanvas canvas, CellState state)
+	void paintShape(Graphics2DCanvas canvas, CellState state)
 	{
 		super.paintShape(canvas, state);
 
@@ -31,7 +31,7 @@ public class LabelShape extends ImageShape
 	/**
 	 * Draws the glass effect
 	 */
-	public static void drawGlassEffect(Graphics2DCanvas canvas,
+	static void drawGlassEffect(Graphics2DCanvas canvas,
 			CellState state)
 	{
 		double size = 0.4;
@@ -62,7 +62,7 @@ public class LabelShape extends ImageShape
 	/**
 	 * 
 	 */
-	public Rectangle getImageBounds(Graphics2DCanvas canvas, CellState state)
+	Rectangle getImageBounds(Graphics2DCanvas canvas, CellState state)
 	{
 		Map<String, Object> style = state.getStyle();
 		double scale = canvas.getScale();
@@ -121,7 +121,7 @@ public class LabelShape extends ImageShape
 	/**
 	 * 
 	 */
-	public Color getFillColor(Graphics2DCanvas canvas, CellState state)
+	Color getFillColor(Graphics2DCanvas canvas, CellState state)
 	{
 		return Utils.getColor(state.getStyle(), Constants.STYLE_FILLCOLOR);
 	}
@@ -129,7 +129,7 @@ public class LabelShape extends ImageShape
 	/**
 	 * 
 	 */
-	public Color getStrokeColor(Graphics2DCanvas canvas, CellState state)
+	Color getStrokeColor(Graphics2DCanvas canvas, CellState state)
 	{
 		return Utils
 				.getColor(state.getStyle(), Constants.STYLE_STROKECOLOR);
@@ -138,7 +138,7 @@ public class LabelShape extends ImageShape
 	/**
 	 * 
 	 */
-	public boolean hasGradient(Graphics2DCanvas canvas, CellState state)
+	bool hasGradient(Graphics2DCanvas canvas, CellState state)
 	{
 		return true;
 	}

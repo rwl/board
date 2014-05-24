@@ -26,39 +26,39 @@ part of graph.util.svg;
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @version $Id: StringNormalizingReader.java,v 1.1 2012/11/15 13:26:45 gaudenz Exp $
  */
-public class StringNormalizingReader extends NormalizingReader
+class StringNormalizingReader extends NormalizingReader
 {
 
 	/**
 	 * The characters.
 	 */
-	protected String string;
+	String string;
 
 	/**
 	 * The length of the string.
 	 */
-	protected int length;
+	int length;
 
 	/**
 	 * The index of the next character.
 	 */
-	protected int next;
+	int next;
 
 	/**
 	 * The current line in the stream.
 	 */
-	protected int line = 1;
+	int line = 1;
 
 	/**
 	 * The current column in the stream.
 	 */
-	protected int column;
+	int column;
 
 	/**
 	 * Creates a new StringNormalizingReader.
 	 * @param s The string to read.
 	 */
-	public StringNormalizingReader(String s)
+	StringNormalizingReader(String s)
 	{
 		string = s;
 		length = s.length();
@@ -69,7 +69,7 @@ public class StringNormalizingReader extends NormalizingReader
 	 * character is available, an I/O error occurs, or the end of the
 	 * stream is reached.
 	 */
-	public int read() throws IOException
+	int read() throws IOException
 	{
 		int result = (length == next) ? -1 : string.charAt(next++);
 		if (result <= 13)
@@ -97,7 +97,7 @@ public class StringNormalizingReader extends NormalizingReader
 	/**
 	 * Returns the current line in the stream.
 	 */
-	public int getLine()
+	int getLine()
 	{
 		return line;
 	}
@@ -105,7 +105,7 @@ public class StringNormalizingReader extends NormalizingReader
 	/**
 	 * Returns the current column in the stream.
 	 */
-	public int getColumn()
+	int getColumn()
 	{
 		return column;
 	}
@@ -113,7 +113,7 @@ public class StringNormalizingReader extends NormalizingReader
 	/**
 	 * Close the stream.
 	 */
-	public void close() throws IOException
+	void close() throws IOException
 	{
 		string = null;
 	}

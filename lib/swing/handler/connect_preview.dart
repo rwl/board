@@ -3,20 +3,20 @@
  */
 part of graph.swing.handler;
 
-//import graph.canvas.Graphics2DCanvas;
-//import graph.model.Cell;
-//import graph.model.Geometry;
-//import graph.model.ICell;
-//import graph.model.IGraphModel;
-//import graph.swing.GraphComponent;
-//import graph.util.Event;
-//import graph.util.EventObj;
-//import graph.util.EventSource;
-//import graph.util.Point2d;
-//import graph.util.Rect;
-//import graph.util.Utils;
-//import graph.view.CellState;
-//import graph.view.Graph;
+import '../../canvas/canvas.dart' show Graphics2DCanvas;
+import '../../model/model.dart' show Cell;
+import '../../model/model.dart' show Geometry;
+import '../../model/model.dart' show ICell;
+import '../../model/model.dart' show IGraphModel;
+import '../../swing/swing.dart' show GraphComponent;
+import '../../util/util.dart' show Event;
+import '../../util/util.dart' show EventObj;
+import '../../util/util.dart' show EventSource;
+import '../../util/util.dart' show Point2d;
+import '../../util/util.dart' show Rect;
+import '../../util/util.dart' show Utils;
+import '../../view/view.dart' show CellState;
+import '../../view/view.dart' show Graph;
 
 //import java.awt.AlphaComposite;
 //import java.awt.Graphics;
@@ -29,33 +29,33 @@ part of graph.swing.handler;
  * Connection handler creates new connections between cells. This control is used to display the connector
  * icon, while the preview is used to draw the line.
  */
-public class ConnectPreview extends EventSource
+class ConnectPreview extends EventSource
 {
 	/**
 	 * 
 	 */
-	protected GraphComponent _graphComponent;
+	GraphComponent _graphComponent;
 
 	/**
 	 * 
 	 */
-	protected CellState _previewState;
+	CellState _previewState;
 
 	/**
 	 * 
 	 */
-	protected CellState _sourceState;
+	CellState _sourceState;
 
 	/**
 	 * 
 	 */
-	protected Point2d _startPoint;
+	Point2d _startPoint;
 
 	/**
 	 * 
 	 * @param graphComponent
 	 */
-	public ConnectPreview(GraphComponent graphComponent)
+	ConnectPreview(GraphComponent graphComponent)
 	{
 		this._graphComponent = graphComponent;
 
@@ -73,7 +73,7 @@ public class ConnectPreview extends EventSource
 	/**
 	 * Creates a new instance of mxShape for previewing the edge.
 	 */
-	protected Object _createCell(CellState startState, String style)
+	Object _createCell(CellState startState, String style)
 	{
 		Graph graph = _graphComponent.getGraph();
 		ICell cell = ((ICell) graph
@@ -88,7 +88,7 @@ public class ConnectPreview extends EventSource
 	/**
 	 * 
 	 */
-	public boolean isActive()
+	bool isActive()
 	{
 		return _sourceState != null;
 	}
@@ -96,7 +96,7 @@ public class ConnectPreview extends EventSource
 	/**
 	 * 
 	 */
-	public CellState getSourceState()
+	CellState getSourceState()
 	{
 		return _sourceState;
 	}
@@ -104,7 +104,7 @@ public class ConnectPreview extends EventSource
 	/**
 	 * 
 	 */
-	public CellState getPreviewState()
+	CellState getPreviewState()
 	{
 		return _previewState;
 	}
@@ -112,7 +112,7 @@ public class ConnectPreview extends EventSource
 	/**
 	 * 
 	 */
-	public Point2d getStartPoint()
+	Point2d getStartPoint()
 	{
 		return _startPoint;
 	}
@@ -120,7 +120,7 @@ public class ConnectPreview extends EventSource
 	/**
 	 * Updates the style of the edge preview from the incoming edge
 	 */
-	public void start(MouseEvent e, CellState startState, String style)
+	void start(MouseEvent e, CellState startState, String style)
 	{
 		Graph graph = _graphComponent.getGraph();
 		_sourceState = startState;
@@ -137,7 +137,7 @@ public class ConnectPreview extends EventSource
 	/**
 	 * 
 	 */
-	public void update(MouseEvent e, CellState targetState, double x, double y)
+	void update(MouseEvent e, CellState targetState, double x, double y)
 	{
 		Graph graph = _graphComponent.getGraph();
 		ICell cell = (ICell) _previewState.getCell();
@@ -181,7 +181,7 @@ public class ConnectPreview extends EventSource
 	/**
 	 * 
 	 */
-	protected Rectangle _getDirtyRect()
+	Rectangle _getDirtyRect()
 	{
 		return _getDirtyRect(null);
 	}
@@ -189,7 +189,7 @@ public class ConnectPreview extends EventSource
 	/**
 	 * 
 	 */
-	protected Rectangle _getDirtyRect(Rect dirty)
+	Rectangle _getDirtyRect(Rect dirty)
 	{
 		if (_previewState != null)
 		{
@@ -220,7 +220,7 @@ public class ConnectPreview extends EventSource
 	/**
 	 * 
 	 */
-	protected Point2d _transformScreenPoint(double x, double y)
+	Point2d _transformScreenPoint(double x, double y)
 	{
 		Graph graph = _graphComponent.getGraph();
 		Point2d tr = graph.getView().getTranslate();
@@ -233,7 +233,7 @@ public class ConnectPreview extends EventSource
 	/**
 	 * 
 	 */
-	public void revalidate(CellState state)
+	void revalidate(CellState state)
 	{
 		state.getView().invalidate(state.getCell());
 		state.getView().validateCellState(state.getCell());
@@ -242,7 +242,7 @@ public class ConnectPreview extends EventSource
 	/**
 	 * 
 	 */
-	public void paint(Graphics g)
+	void paint(Graphics g)
 	{
 		if (_previewState != null)
 		{
@@ -285,7 +285,7 @@ public class ConnectPreview extends EventSource
 	/**
 	 * Draws the preview using the graphics canvas.
 	 */
-	protected void _paintPreview(Graphics2DCanvas canvas)
+	void _paintPreview(Graphics2DCanvas canvas)
 	{
 		_graphComponent.getGraphControl().drawCell(_graphComponent.getCanvas(),
 				_previewState.getCell());
@@ -294,7 +294,7 @@ public class ConnectPreview extends EventSource
 	/**
 	 *
 	 */
-	public Object stop(boolean commit)
+	Object stop(bool commit)
 	{
 		return stop(commit, null);
 	}
@@ -302,7 +302,7 @@ public class ConnectPreview extends EventSource
 	/**
 	 *
 	 */
-	public Object stop(boolean commit, MouseEvent e)
+	Object stop(bool commit, MouseEvent e)
 	{
 		Object result = (_sourceState != null) ? _sourceState.getCell() : null;
 

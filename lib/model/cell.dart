@@ -73,49 +73,49 @@ public interface ICell
    * 
    * @return Returns true if the cell is a vertex.
    */
-  boolean isVertex();
+  bool isVertex();
 
   /**
    * Returns true if the cell is an edge.
    * 
    * @return Returns true if the cell is an edge.
    */
-  boolean isEdge();
+  bool isEdge();
 
   /**
    * Returns true if the cell is connectable.
    * 
    * @return Returns the connectable state.
    */
-  boolean isConnectable();
+  bool isConnectable();
 
   /**
    * Returns true if the cell is visibile.
    * 
    * @return Returns the visible state.
    */
-  boolean isVisible();
+  bool isVisible();
 
   /**
    * Specifies if the cell is visible.
    * 
    * @param visible Boolean that specifies the new visible state.
    */
-  void setVisible(boolean visible);
+  void setVisible(bool visible);
 
   /**
    * Returns true if the cell is collapsed.
    * 
    * @return Returns the collapsed state.
    */
-  boolean isCollapsed();
+  bool isCollapsed();
 
   /**
    * Sets the collapsed state.
    * 
    * @param collapsed Boolean that specifies the new collapsed state.
    */
-  void setCollapsed(boolean collapsed);
+  void setCollapsed(bool collapsed);
 
   /**
    * Returns the cell's parent.
@@ -138,7 +138,7 @@ public interface ICell
    * returned.
    * @return Returns the source or target terminal.
    */
-  ICell getTerminal(boolean source);
+  ICell getTerminal(bool source);
 
   /**
    * Sets the source or target terminal and returns the new terminal.
@@ -148,7 +148,7 @@ public interface ICell
    * should be set.
    * @return Returns the new terminal.
    */
-  ICell setTerminal(ICell terminal, boolean isSource);
+  ICell setTerminal(ICell terminal, bool isSource);
 
   /**
    * Returns the number of child cells.
@@ -250,7 +250,7 @@ public interface ICell
    * @param isOutgoing Boolean that specifies if the edge is outgoing.
    * @return Returns the new edge.
    */
-  ICell insertEdge(ICell edge, boolean isOutgoing);
+  ICell insertEdge(ICell edge, bool isOutgoing);
 
   /**
    * Removes the specified edge from the edge array and returns the edge.
@@ -260,7 +260,7 @@ public interface ICell
    * @param isOutgoing Boolean that specifies if the edge is outgoing.
    * @return Returns the edge that was removed.
    */
-  ICell removeEdge(ICell edge, boolean isOutgoing);
+  ICell removeEdge(ICell edge, bool isOutgoing);
 
   /**
    * Removes the edge from its source or target terminal.
@@ -268,7 +268,7 @@ public interface ICell
    * @param isSource Boolean that specifies if the edge should be removed
    * from its source or target terminal.
    */
-  void removeFromTerminal(boolean isSource);
+  void removeFromTerminal(bool isSource);
 
   /**
    * Returns a clone of this cell.
@@ -303,7 +303,7 @@ public interface ICell
  * geometry will have the same semantiv as the above for
  * edge labels.
  */
-public class Cell implements ICell, Cloneable, Serializable
+class Cell implements ICell, Cloneable, Serializable
 {
 
 	/**
@@ -314,46 +314,46 @@ public class Cell implements ICell, Cloneable, Serializable
 	/**
 	 * Holds the Id. Default is null.
 	 */
-	protected String _id;
+	String _id;
 
 	/**
 	 * Holds the user object. Default is null.
 	 */
-	protected Object _value;
+	Object _value;
 
 	/**
 	 * Holds the geometry. Default is null.
 	 */
-	protected Geometry _geometry;
+	Geometry _geometry;
 
 	/**
 	 * Holds the style as a string of the form
 	 * stylename[;key=value]. Default is null.
 	 */
-	protected String _style;
+	String _style;
 
 	/**
 	 * Specifies whether the cell is a vertex or edge and whether it is
 	 * connectable, visible and collapsed. Default values are false, false,
 	 * true, true and false respectively.
 	 */
-	protected boolean _vertex = false, _edge = false, _connectable = true,
+	bool _vertex = false, _edge = false, _connectable = true,
 			_visible = true, _collapsed = false;
 
 	/**
 	 * Reference to the parent cell and source and target terminals for edges.
 	 */
-	protected ICell _parent, _source, _target;
+	ICell _parent, _source, _target;
 
 	/**
 	 * Holds the child cells and connected edges.
 	 */
-	protected List<Object> _children, _edges;
+	List<Object> _children, _edges;
 
 	/**
 	 * Constructs a new cell with an empty user object.
 	 */
-	public Cell()
+	Cell()
 	{
 		this(null);
 	}
@@ -364,7 +364,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 * @param value
 	 *   Object that represents the value of the cell.
 	 */
-	public Cell(Object value)
+	Cell(Object value)
 	{
 		this(value, null, null);
 	}
@@ -376,7 +376,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 * @param geometry Specifies the geometry of the cell.
 	 * @param style Specifies the style as a formatted string.
 	 */
-	public Cell(Object value, Geometry geometry, String style)
+	Cell(Object value, Geometry geometry, String style)
 	{
 		setValue(value);
 		setGeometry(geometry);
@@ -386,7 +386,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#getId()
 	 */
-	public String getId()
+	String getId()
 	{
 		return _id;
 	}
@@ -394,7 +394,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#setId(String)
 	 */
-	public void setId(String id)
+	void setId(String id)
 	{
 		this._id = id;
 	}
@@ -402,7 +402,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#getValue()
 	 */
-	public Object getValue()
+	Object getValue()
 	{
 		return _value;
 	}
@@ -410,7 +410,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#setValue(Object)
 	 */
-	public void setValue(Object value)
+	void setValue(Object value)
 	{
 		this._value = value;
 	}
@@ -418,7 +418,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#getGeometry()
 	 */
-	public Geometry getGeometry()
+	Geometry getGeometry()
 	{
 		return _geometry;
 	}
@@ -426,7 +426,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#setGeometry(graph.model.Geometry)
 	 */
-	public void setGeometry(Geometry geometry)
+	void setGeometry(Geometry geometry)
 	{
 		this._geometry = geometry;
 	}
@@ -434,7 +434,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#getStyle()
 	 */
-	public String getStyle()
+	String getStyle()
 	{
 		return _style;
 	}
@@ -442,7 +442,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#setStyle(String)
 	 */
-	public void setStyle(String style)
+	void setStyle(String style)
 	{
 		this._style = style;
 	}
@@ -450,7 +450,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#isVertex()
 	 */
-	public boolean isVertex()
+	bool isVertex()
 	{
 		return _vertex;
 	}
@@ -458,7 +458,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#setVertex(boolean)
 	 */
-	public void setVertex(boolean vertex)
+	void setVertex(bool vertex)
 	{
 		this._vertex = vertex;
 	}
@@ -466,7 +466,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#isEdge()
 	 */
-	public boolean isEdge()
+	bool isEdge()
 	{
 		return _edge;
 	}
@@ -474,7 +474,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#setEdge(boolean)
 	 */
-	public void setEdge(boolean edge)
+	void setEdge(bool edge)
 	{
 		this._edge = edge;
 	}
@@ -482,7 +482,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#isConnectable()
 	 */
-	public boolean isConnectable()
+	bool isConnectable()
 	{
 		return _connectable;
 	}
@@ -490,7 +490,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#setConnectable(boolean)
 	 */
-	public void setConnectable(boolean connectable)
+	void setConnectable(bool connectable)
 	{
 		this._connectable = connectable;
 	}
@@ -498,7 +498,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#isVisible()
 	 */
-	public boolean isVisible()
+	bool isVisible()
 	{
 		return _visible;
 	}
@@ -506,7 +506,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#setVisible(boolean)
 	 */
-	public void setVisible(boolean visible)
+	void setVisible(bool visible)
 	{
 		this._visible = visible;
 	}
@@ -514,7 +514,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#isCollapsed()
 	 */
-	public boolean isCollapsed()
+	bool isCollapsed()
 	{
 		return _collapsed;
 	}
@@ -522,7 +522,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#setCollapsed(boolean)
 	 */
-	public void setCollapsed(boolean collapsed)
+	void setCollapsed(bool collapsed)
 	{
 		this._collapsed = collapsed;
 	}
@@ -530,7 +530,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#getParent()
 	 */
-	public ICell getParent()
+	ICell getParent()
 	{
 		return _parent;
 	}
@@ -538,7 +538,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#setParent(graph.model.ICell)
 	 */
-	public void setParent(ICell parent)
+	void setParent(ICell parent)
 	{
 		this._parent = parent;
 	}
@@ -546,7 +546,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/**
 	 * Returns the source terminal.
 	 */
-	public ICell getSource()
+	ICell getSource()
 	{
 		return _source;
 	}
@@ -556,7 +556,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 * 
 	 * @param source Cell that represents the new source terminal.
 	 */
-	public void setSource(ICell source)
+	void setSource(ICell source)
 	{
 		this._source = source;
 	}
@@ -564,7 +564,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/**
 	 * Returns the target terminal.
 	 */
-	public ICell getTarget()
+	ICell getTarget()
 	{
 		return _target;
 	}
@@ -574,7 +574,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 * 
 	 * @param target Cell that represents the new target terminal.
 	 */
-	public void setTarget(ICell target)
+	void setTarget(ICell target)
 	{
 		this._target = target;
 	}
@@ -582,7 +582,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#getTerminal(boolean)
 	 */
-	public ICell getTerminal(boolean source)
+	ICell getTerminal(bool source)
 	{
 		return (source) ? getSource() : getTarget();
 	}
@@ -590,7 +590,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#setTerminal(graph.model.ICell, boolean)
 	 */
-	public ICell setTerminal(ICell terminal, boolean isSource)
+	ICell setTerminal(ICell terminal, bool isSource)
 	{
 		if (isSource)
 		{
@@ -607,7 +607,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#getChildCount()
 	 */
-	public int getChildCount()
+	int getChildCount()
 	{
 		return (_children != null) ? _children.size() : 0;
 	}
@@ -615,7 +615,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#getIndex(graph.model.ICell)
 	 */
-	public int getIndex(ICell child)
+	int getIndex(ICell child)
 	{
 		return (_children != null) ? _children.indexOf(child) : -1;
 	}
@@ -623,7 +623,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#getChildAt(int)
 	 */
-	public ICell getChildAt(int index)
+	ICell getChildAt(int index)
 	{
 		return (_children != null) ? (ICell) _children.get(index) : null;
 	}
@@ -631,7 +631,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#insert(graph.model.ICell)
 	 */
-	public ICell insert(ICell child)
+	ICell insert(ICell child)
 	{
 		int index = getChildCount();
 		
@@ -646,7 +646,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#insert(graph.model.ICell, int)
 	 */
-	public ICell insert(ICell child, int index)
+	ICell insert(ICell child, int index)
 	{
 		if (child != null)
 		{
@@ -670,7 +670,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#remove(int)
 	 */
-	public ICell remove(int index)
+	ICell remove(int index)
 	{
 		ICell child = null;
 
@@ -686,7 +686,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#remove(graph.model.ICell)
 	 */
-	public ICell remove(ICell child)
+	ICell remove(ICell child)
 	{
 		if (child != null && _children != null)
 		{
@@ -700,7 +700,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#removeFromParent()
 	 */
-	public void removeFromParent()
+	void removeFromParent()
 	{
 		if (_parent != null)
 		{
@@ -711,7 +711,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#getEdgeCount()
 	 */
-	public int getEdgeCount()
+	int getEdgeCount()
 	{
 		return (_edges != null) ? _edges.size() : 0;
 	}
@@ -719,7 +719,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#getEdgeIndex(graph.model.ICell)
 	 */
-	public int getEdgeIndex(ICell edge)
+	int getEdgeIndex(ICell edge)
 	{
 		return (_edges != null) ? _edges.indexOf(edge) : -1;
 	}
@@ -727,7 +727,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#getEdgeAt(int)
 	 */
-	public ICell getEdgeAt(int index)
+	ICell getEdgeAt(int index)
 	{
 		return (_edges != null) ? (ICell) _edges.get(index) : null;
 	}
@@ -735,7 +735,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#insertEdge(graph.model.ICell, boolean)
 	 */
-	public ICell insertEdge(ICell edge, boolean isOutgoing)
+	ICell insertEdge(ICell edge, bool isOutgoing)
 	{
 		if (edge != null)
 		{
@@ -760,7 +760,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#removeEdge(graph.model.ICell, boolean)
 	 */
-	public ICell removeEdge(ICell edge, boolean isOutgoing)
+	ICell removeEdge(ICell edge, bool isOutgoing)
 	{
 		if (edge != null)
 		{
@@ -778,7 +778,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#removeFromTerminal(boolean)
 	 */
-	public void removeFromTerminal(boolean isSource)
+	void removeFromTerminal(bool isSource)
 	{
 		ICell terminal = getTerminal(isSource);
 
@@ -795,7 +795,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 * @param name Name of the attribute whose value should be returned.
 	 * @return Returns the value of the given attribute or null.
 	 */
-	public String getAttribute(String name)
+	String getAttribute(String name)
 	{
 		return getAttribute(name, null);
 	}
@@ -808,7 +808,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 * @param defaultValue Default value to use if the attribute has no value.
 	 * @return Returns the value of the given attribute or defaultValue.
 	 */
-	public String getAttribute(String name, String defaultValue)
+	String getAttribute(String name, String defaultValue)
 	{
 		Object userObject = getValue();
 		String val = null;
@@ -833,7 +833,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 * @param name Name of the attribute whose value should be set.
 	 * @param value New value of the attribute.
 	 */
-	public void setAttribute(String name, String value)
+	void setAttribute(String name, String value)
 	{
 		Object userObject = getValue();
 
@@ -847,7 +847,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	/**
 	 * Returns a clone of the cell.
 	 */
-	public Object clone() throws CloneNotSupportedException
+	Object clone() throws CloneNotSupportedException
 	{
 		Cell clone = (Cell) super.clone();
 
@@ -878,7 +878,7 @@ public class Cell implements ICell, Cloneable, Serializable
 	 * Returns a clone of the user object. This implementation clones any XML
 	 * nodes or otherwise returns the same user object instance.
 	 */
-	protected Object cloneValue()
+	Object cloneValue()
 	{
 		Object value = getValue();
 

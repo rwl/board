@@ -14,42 +14,42 @@ public abstract class GraphAbstractHierarchyCell
 	/**
 	 * The maximum rank this cell occupies
 	 */
-	public int maxRank = -1;
+	int maxRank = -1;
 
 	/**
 	 * The minimum rank this cell occupies
 	 */
-	public int minRank = -1;
+	int minRank = -1;
 
 	/**
 	 * The x position of this cell for each layer it occupies
 	 */
-	public double x[] = new double[1];
+	double x[] = new double[1];
 
 	/**
 	 * The y position of this cell for each layer it occupies
 	 */
-	public double y[] = new double[1];
+	double y[] = new double[1];
 
 	/**
 	 * The width of this cell
 	 */
-	public double width = 0.0;
+	double width = 0.0;
 
 	/**
 	 * The height of this cell
 	 */
-	public double height = 0.0;
+	double height = 0.0;
 
 	/**
 	 * A cached version of the cells this cell connects to on the next layer up
 	 */
-	protected List<GraphAbstractHierarchyCell>[] _nextLayerConnectedCells = null;
+	List<GraphAbstractHierarchyCell>[] _nextLayerConnectedCells = null;
 
 	/**
 	 * A cached version of the cells this cell connects to on the next layer down
 	 */
-	protected List<GraphAbstractHierarchyCell>[] _previousLayerConnectedCells = null;
+	List<GraphAbstractHierarchyCell>[] _previousLayerConnectedCells = null;
 
 	/**
 	 * Temporary variable for general use. Generally, try to avoid
@@ -59,33 +59,33 @@ public abstract class GraphAbstractHierarchyCell
 	 * be used for hashing the nodes in the model dfs and so hashCode
 	 * was created
 	 */
-	public int[] temp = new int[1];
+	int[] temp = new int[1];
 
 	/**
 	 * Returns the cells this cell connects to on the next layer up
 	 * @param layer the layer this cell is on
 	 * @return the cells this cell connects to on the next layer up
 	 */
-	public abstract List<GraphAbstractHierarchyCell> getNextLayerConnectedCells(int layer);
+	abstract List<GraphAbstractHierarchyCell> getNextLayerConnectedCells(int layer);
 
 	/**
 	 * Returns the cells this cell connects to on the next layer down
 	 * @param layer the layer this cell is on
 	 * @return the cells this cell connects to on the next layer down
 	 */
-	public abstract List<GraphAbstractHierarchyCell> getPreviousLayerConnectedCells(int layer);
+	abstract List<GraphAbstractHierarchyCell> getPreviousLayerConnectedCells(int layer);
 
 	/**
 	 * 
 	 * @return whether or not this cell is an edge
 	 */
-	public abstract boolean isEdge();
+	abstract bool isEdge();
 
 	/**
 	 * 
 	 * @return whether or not this cell is a node
 	 */
-	public abstract boolean isVertex();
+	abstract bool isVertex();
 
 	/**
 	 * Gets the value of temp for the specified layer
@@ -94,7 +94,7 @@ public abstract class GraphAbstractHierarchyCell
 	 *            the layer relating to a specific entry into temp
 	 * @return the value for that layer
 	 */
-	public abstract int getGeneralPurposeVariable(int layer);
+	abstract int getGeneralPurposeVariable(int layer);
 
 	/**
 	 * Set the value of temp for the specified layer
@@ -104,7 +104,7 @@ public abstract class GraphAbstractHierarchyCell
 	 * @param value
 	 *            the value for that layer
 	 */
-	public abstract void setGeneralPurposeVariable(int layer, int value);
+	abstract void setGeneralPurposeVariable(int layer, int value);
 
 	/**
 	 * Set the value of x for the specified layer
@@ -114,7 +114,7 @@ public abstract class GraphAbstractHierarchyCell
 	 * @param value
 	 *            the x value for that layer
 	 */
-	public void setX(int layer, double value)
+	void setX(int layer, double value)
 	{
 		if (isVertex())
 		{
@@ -131,7 +131,7 @@ public abstract class GraphAbstractHierarchyCell
 	 * @param layer the layer to obtain x for
 	 * @return the value of x on the specified layer
 	 */
-	public double getX(int layer)
+	double getX(int layer)
 	{
 		if (isVertex())
 		{
@@ -153,7 +153,7 @@ public abstract class GraphAbstractHierarchyCell
 	 * @param value
 	 *            the y value for that layer
 	 */
-	public void setY(int layer, double value)
+	void setY(int layer, double value)
 	{
 		if (isVertex())
 		{

@@ -3,29 +3,29 @@
  */
 part of graph.view;
 
-//import graph.util.Point2d;
+import '../util/util.dart' show Point2d;
 
 /**
  * Defines an object that contains the constraints about how to connect one
  * side of an edge to its terminal.
  */
-public class ConnectionConstraint
+class ConnectionConstraint
 {
 	/**
 	 * Point that specifies the fixed location of the connection point.
 	 */
-	protected Point2d _point;
+	Point2d _point;
 
 	/**
 	 * Boolean that specifies if the point should be projected onto the perimeter
 	 * of the terminal.
 	 */
-	protected boolean _perimeter;
+	bool _perimeter;
 
 	/**
 	 * Constructs an empty connection constraint.
 	 */
-	public ConnectionConstraint()
+	ConnectionConstraint()
 	{
 		this(null);
 	}
@@ -33,7 +33,7 @@ public class ConnectionConstraint
 	/**
 	 * Constructs a connection constraint for the given point.
 	 */
-	public ConnectionConstraint(Point2d point)
+	ConnectionConstraint(Point2d point)
 	{
 		this(point, true);
 	}
@@ -44,10 +44,10 @@ public class ConnectionConstraint
 	 * 
 	 * @param point Optional Point2d that specifies the fixed location of the point
 	 * in relative coordinates. Default is null.
-	 * @param perimeter Optional boolean that specifies if the fixed point should be
+	 * @param perimeter Optional bool that specifies if the fixed point should be
 	 * projected onto the perimeter of the terminal. Default is true.
 	 */
-	public ConnectionConstraint(Point2d point, boolean perimeter)
+	ConnectionConstraint(Point2d point, bool perimeter)
 	{
 		setPoint(point);
 		setPerimeter(perimeter);
@@ -56,7 +56,7 @@ public class ConnectionConstraint
 	/**
 	 * Returns the point.
 	 */
-	public Point2d getPoint()
+	Point2d getPoint()
 	{
 		return _point;
 	}
@@ -64,7 +64,7 @@ public class ConnectionConstraint
 	/**
 	 * Sets the point.
 	 */
-	public void setPoint(Point2d value)
+	void setPoint(Point2d value)
 	{
 		_point = value;
 	}
@@ -72,7 +72,7 @@ public class ConnectionConstraint
 	/**
 	 * Returns perimeter.
 	 */
-	public boolean isPerimeter()
+	bool isPerimeter()
 	{
 		return _perimeter;
 	}
@@ -80,7 +80,7 @@ public class ConnectionConstraint
 	/**
 	 * Sets perimeter.
 	 */
-	public void setPerimeter(boolean value)
+	void setPerimeter(bool value)
 	{
 		_perimeter = value;
 	}

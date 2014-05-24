@@ -1,21 +1,21 @@
 part of graph.shape;
 
-//import graph.canvas.Graphics2DCanvas;
-//import graph.util.Constants;
-//import graph.util.Utils;
-//import graph.view.CellState;
+import '../canvas/canvas.dart' show Graphics2DCanvas;
+import '../util/util.dart' show Constants;
+import '../util/util.dart' show Utils;
+import '../view/view.dart' show CellState;
 
 //import java.awt.Polygon;
 //import java.awt.Rectangle;
 //import java.awt.Shape;
 
-public class TriangleShape extends BasicShape
+class TriangleShape extends BasicShape
 {
 
 	/**
 	 * 
 	 */
-	public Shape createShape(Graphics2DCanvas canvas, CellState state)
+	Shape createShape(Graphics2DCanvas canvas, CellState state)
 	{
 		Rectangle temp = state.getRectangle();
 		int x = temp.x;

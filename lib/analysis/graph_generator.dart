@@ -3,15 +3,13 @@
  */
 part of graph.analysis;
 
-//import graph.costfunction.CostFunction;
-//import graph.costfunction.DoubleValCostFunction;
-//import graph.generatorfunction.GeneratorFunction;
-//import graph.generatorfunction.GeneratorRandomFunction;
-//import graph.model.Geometry;
-//import graph.model.IGraphModel;
-//import graph.view.CellState;
-//import graph.view.Graph;
-//import graph.view.GraphView;
+import '../cost_function/cost_function.dart' show CostFunction, DoubleValCostFunction;
+import '../generator_function/generator_function.dart' show GeneratorFunction, GeneratorRandomFunction;
+import '../model/model.dart' show Geometry;
+import '../model/model.dart' show IGraphModel;
+import '../view/view.dart' show CellState;
+import '../view/view.dart' show Graph;
+import '../view/view.dart' show GraphView;
 
 //import java.util.ArrayList;
 
@@ -19,7 +17,7 @@ part of graph.analysis;
  * @author Mate
  *
  */
-public class GraphGenerator
+class GraphGenerator
 {
 	// cost function class that implements ICostFunction
 	//	private GeneratorFunction generatorFunction = new GeneratorRandomFunction(0,1,2);
@@ -29,7 +27,7 @@ public class GraphGenerator
 
 	private CostFunction _costFunction = null;
 
-	public GraphGenerator(GeneratorFunction generatorFunction, CostFunction costFunction)
+	GraphGenerator(GeneratorFunction generatorFunction, CostFunction costFunction)
 	{
 		if (generatorFunction != null)
 		{
@@ -51,7 +49,7 @@ public class GraphGenerator
 	 * @param numVertexes 
 	 * @return a null graph
 	 */
-	public void getNullGraph(AnalysisGraph aGraph, int numVertices)
+	void getNullGraph(AnalysisGraph aGraph, int numVertices)
 	{
 		if (numVertices < 0)
 		{
@@ -71,7 +69,7 @@ public class GraphGenerator
 	 * @param numVertices number of vertices
 	 * @return A complete graph that has <b>numVertices</b> number of vertices
 	 */
-	public void getCompleteGraph(AnalysisGraph aGraph, int numVertices)
+	void getCompleteGraph(AnalysisGraph aGraph, int numVertices)
 	{
 		if (numVertices < 0)
 		{
@@ -109,7 +107,7 @@ public class GraphGenerator
 	 * @param numColumns - number of columns in the grid graph
 	 * @return Returns a <b>numColumns</b> x <b>numRows</b> grid graph
 	 */
-	public void getGridGraph(AnalysisGraph aGraph, int numColumns, int numRows)
+	void getGridGraph(AnalysisGraph aGraph, int numColumns, int numRows)
 	{
 		if (numColumns < 0 || numRows < 0)
 		{
@@ -159,7 +157,7 @@ public class GraphGenerator
 	 * @param numRows - number of rows in the grid graph
 	 * @param numColumns - number of columns in the grid graph
 	 */
-	public void setGridGraphSpacing(AnalysisGraph aGraph, double xSpacing, double ySpacing, int numColumns, int numRows)
+	void setGridGraphSpacing(AnalysisGraph aGraph, double xSpacing, double ySpacing, int numColumns, int numRows)
 	{
 		Graph graph = aGraph.getGraph();
 
@@ -190,7 +188,7 @@ public class GraphGenerator
 	 * @param numVerticesGroup2 number of vertices in group 2
 	 * @return a bipartite graph with group 1 containing <b>numVerticesGroup1</b> vertices and group 2 containing <b>numVerticesGroup2</b>
 	 */
-	public void getBipartiteGraph(AnalysisGraph aGraph, int numVerticesGroup1, int numVerticesGroup2)
+	void getBipartiteGraph(AnalysisGraph aGraph, int numVerticesGroup1, int numVerticesGroup2)
 	{
 		if (numVerticesGroup1 < 0 || numVerticesGroup2 < 0)
 		{
@@ -236,7 +234,7 @@ public class GraphGenerator
 	 * @param vertexSpacing - vertical spacing between vertices in the same group
 	 * @param groupSpacing - spacing between groups
 	 */
-	public void setBipartiteGraphSpacing(AnalysisGraph aGraph, int numVerticesGroup1, int numVerticesGroup2, double vertexSpacing,
+	void setBipartiteGraphSpacing(AnalysisGraph aGraph, int numVerticesGroup1, int numVerticesGroup2, double vertexSpacing,
 			double groupSpacing)
 	{
 		if (numVerticesGroup1 < 0 || numVerticesGroup2 < 0)
@@ -288,7 +286,7 @@ public class GraphGenerator
 	 * @param numVerticesGroup2 number of vertices in group 2
 	 * @return a bipartite graph with group 1 containing <b>numVerticesGroup1</b> vertices and group 2 containing <b>numVerticesGroup2</b>
 	 */
-	public void getCompleteBipartiteGraph(AnalysisGraph aGraph, int numVerticesGroup1, int numVerticesGroup2)
+	void getCompleteBipartiteGraph(AnalysisGraph aGraph, int numVerticesGroup1, int numVerticesGroup2)
 	{
 		if (numVerticesGroup1 < 0 || numVerticesGroup2 < 0)
 		{
@@ -323,7 +321,7 @@ public class GraphGenerator
 	 * @return a knight graph of size <b>xDim</b> x <b>yDim</b>
 	 * Note that the minimum size is 3x3
 	 */
-	public void getKnightGraph(AnalysisGraph aGraph, int xDim, int yDim)
+	void getKnightGraph(AnalysisGraph aGraph, int xDim, int yDim)
 	{
 		if (xDim < 3 || yDim < 3)
 		{
@@ -370,7 +368,7 @@ public class GraphGenerator
 	 * @return a list of ALL vertexes which would be valid moves from the current position, regardless if they were visited or not
 	 * Note that both dimensions and both coordinates must be positive
 	 */
-	public Object[] getKnightMoveVertexes(AnalysisGraph aGraph, int xDim, int yDim, int xCoord, int yCoord)
+	Object[] getKnightMoveVertexes(AnalysisGraph aGraph, int xDim, int yDim, int xCoord, int yCoord)
 	{
 		if (xCoord > xDim || yCoord > yDim || xDim < 1 || yDim < 1 || xCoord < 1 || yCoord < 1)
 		{
@@ -483,7 +481,7 @@ public class GraphGenerator
 	 * @return int[x,y] where x and y are the coordinates in the grid or chess-board
 	 * Note that both dimensions must be positive
 	 */
-	public int[] getVertexGridCoords(int xDim, int yDim, int value)
+	int[] getVertexGridCoords(int xDim, int yDim, int value)
 	{
 		if (value > ((yDim * xDim) - 1) || xDim < 0 || yDim < 0 || value < 0)
 		{
@@ -529,7 +527,7 @@ public class GraphGenerator
 	 * Return a king graph of size <b>xDim</b> x <b>yDim</b>
 	 * Note that the minimum size is 4x4
 	 */
-	public void getKingGraph(AnalysisGraph aGraph, int xDim, int yDim)
+	void getKingGraph(AnalysisGraph aGraph, int xDim, int yDim)
 	{
 		if (xDim < 2 || yDim < 2)
 		{
@@ -576,7 +574,7 @@ public class GraphGenerator
 	 * @return list of all possible moves of a king from the specified position
 	 * Note that both dimensions and both coordinates must be positive
 	 */
-	public Object[] getKingMoveVertexes(AnalysisGraph aGraph, int xDim, int yDim, int xCoord, int yCoord)
+	Object[] getKingMoveVertexes(AnalysisGraph aGraph, int xDim, int yDim, int xCoord, int yCoord)
 	{
 		if (xDim < 0 || yDim < 0 || xCoord < 0 || yCoord < 0)
 		{
@@ -678,7 +676,7 @@ public class GraphGenerator
 	 * @param aGraph
 	 * Returns a Petersen graph
 	 */
-	public void getPetersenGraph(AnalysisGraph aGraph)
+	void getPetersenGraph(AnalysisGraph aGraph)
 	{
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
@@ -711,7 +709,7 @@ public class GraphGenerator
 	 * @param numVertices
 	 * Returns a path graph
 	 */
-	public void getPathGraph(AnalysisGraph aGraph, int numVertices)
+	void getPathGraph(AnalysisGraph aGraph, int numVertices)
 	{
 		if (numVertices < 0)
 		{
@@ -739,7 +737,7 @@ public class GraphGenerator
 	 * @param aGraph
 	 * @param spacing
 	 */
-	public void setPathGraphSpacing(AnalysisGraph aGraph, double spacing)
+	void setPathGraphSpacing(AnalysisGraph aGraph, double spacing)
 	{
 		if (spacing < 0)
 		{
@@ -767,7 +765,7 @@ public class GraphGenerator
 	 * Returns a star graph
 	 * Note that minimum vertex number is 4
 	 */
-	public void getStarGraph(AnalysisGraph aGraph, int numVertices)
+	void getStarGraph(AnalysisGraph aGraph, int numVertices)
 	{
 		if (numVertices < 4)
 		{
@@ -796,7 +794,7 @@ public class GraphGenerator
 	 * @param aGraph
 	 * @param graphSize
 	 */
-	public void setStarGraphLayout(AnalysisGraph aGraph, double graphSize)
+	void setStarGraphLayout(AnalysisGraph aGraph, double graphSize)
 	{
 		if (graphSize < 4)
 		{
@@ -840,7 +838,7 @@ public class GraphGenerator
 	 * @param numVertices
 	 * Returns a wheel graph. Note that numVertices has to be at least 4.
 	 */
-	public void getWheelGraph(AnalysisGraph aGraph, int numVertices)
+	void getWheelGraph(AnalysisGraph aGraph, int numVertices)
 	{
 		if (numVertices < 4)
 		{
@@ -879,7 +877,7 @@ public class GraphGenerator
 	 * @param branchSize number of vertices in a single branch (minimum >= 2)
 	 * Returns a friendship windmill graph (aka Dutch windmill)
 	 */
-	public void getFriendshipWindmillGraph(AnalysisGraph aGraph, int numBranches, int branchSize)
+	void getFriendshipWindmillGraph(AnalysisGraph aGraph, int numBranches, int branchSize)
 	{
 		if (numBranches < 2 || branchSize < 2)
 		{
@@ -926,7 +924,7 @@ public class GraphGenerator
 	 * @param branchSize - number of vertices in a single branch (minimum >= 2)
 	 * Returns a windmill graph
 	 */
-	public void getWindmillGraph(AnalysisGraph aGraph, int numBranches, int branchSize)
+	void getWindmillGraph(AnalysisGraph aGraph, int numBranches, int branchSize)
 	{
 		if (numBranches < 2 || branchSize < 2)
 		{
@@ -984,7 +982,7 @@ public class GraphGenerator
 	 * @param numVerticesInBranch
 	 * @param graphSize
 	 */
-	public void setWindmillGraphLayout(AnalysisGraph aGraph, int numBranches, int numVerticesInBranch, double graphSize)
+	void setWindmillGraphLayout(AnalysisGraph aGraph, int numBranches, int numVerticesInBranch, double graphSize)
 	{
 		if (graphSize < 0 || numBranches < 2 || numVerticesInBranch < 1)
 		{
@@ -998,7 +996,7 @@ public class GraphGenerator
 		int vertexNum = vertices.length;
 		double centerX = graphSize / 2f;
 		double centerY = centerX;
-		boolean isBranchSizeEven = ((numVerticesInBranch) % 2 == 0);
+		bool isBranchSizeEven = ((numVerticesInBranch) % 2 == 0);
 		int middleIndex = (int) Math.ceil(numVerticesInBranch / 2f);
 
 		//create the circle
@@ -1078,7 +1076,7 @@ public class GraphGenerator
 		}
 
 		int middleIndex = 0;
-		boolean isBranchSizeEven = ((branchSize) % 2 == 0);
+		bool isBranchSizeEven = ((branchSize) % 2 == 0);
 
 		middleIndex = (int) Math.ceil(branchSize / 2f);
 
@@ -1104,8 +1102,8 @@ public class GraphGenerator
 	 * @param allowMultipleEdges if true, there will be a chance that multiple edges will be generated (multiple edges between the same two vertices)
 	 * @param forceConnected if true the resulting graph will be always connected, but this may alter <b>numEdges</b>
 	 */
-	public void getSimpleRandomGraph(AnalysisGraph aGraph, int numNodes, int numEdges, boolean allowSelfLoops,
-			boolean allowMultipleEdges, boolean forceConnected)
+	void getSimpleRandomGraph(AnalysisGraph aGraph, int numNodes, int numEdges, bool allowSelfLoops,
+			bool allowMultipleEdges, bool forceConnected)
 	{
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
@@ -1118,7 +1116,7 @@ public class GraphGenerator
 
 		for (int i = 0; i < numEdges; i++)
 		{
-			boolean goodPair = true;
+			bool goodPair = true;
 			Object startVertex;
 			Object endVertex;
 
@@ -1153,7 +1151,7 @@ public class GraphGenerator
 	 * @param aGraph
 	 * @param vertexCount
 	 */
-	public void getSimpleRandomTree(AnalysisGraph aGraph, int vertexCount)
+	void getSimpleRandomTree(AnalysisGraph aGraph, int vertexCount)
 	{
 		int edgeCount = (int) Math.round(vertexCount * 2);
 		this.getSimpleRandomGraph(aGraph, vertexCount, edgeCount, false, false, true);
@@ -1185,7 +1183,7 @@ public class GraphGenerator
 	 * @param aGraph
 	 * @return
 	 */
-	public Double getNewEdgeValue(AnalysisGraph aGraph)
+	Double getNewEdgeValue(AnalysisGraph aGraph)
 	{
 		if (getGeneratorFunction() != null)
 		{
@@ -1205,7 +1203,7 @@ public class GraphGenerator
 	 * @param maxWeight maximum edge weight if weighted
 	 * @return a generator function
 	 */
-	public static GeneratorFunction getGeneratorFunction(Graph graph, boolean weighted, double minWeight, double maxWeight)
+	static GeneratorFunction getGeneratorFunction(Graph graph, bool weighted, double minWeight, double maxWeight)
 	{
 		if (weighted)
 		{
@@ -1217,7 +1215,7 @@ public class GraphGenerator
 		}
 	};
 
-	public GeneratorFunction getGeneratorFunction()
+	GeneratorFunction getGeneratorFunction()
 	{
 		return this._generatorFunction;
 	};
@@ -1227,7 +1225,7 @@ public class GraphGenerator
 	 * @param maxValue
 	 * @return a random integer in the interval [minValue, maxValue]
 	 */
-	public int getRandomInt(int minValue, int maxValue)
+	int getRandomInt(int minValue, int maxValue)
 	{
 		if (minValue == maxValue)
 			return minValue;
@@ -1253,12 +1251,12 @@ public class GraphGenerator
 	 * Also, unconnected graphs are made connected!
 	 * @throws StructuralException the graph has to be simple (no self-loops and no multiple edges) 
 	 */
-	public void oneSpanningTree(AnalysisGraph aGraph, boolean forceConnected, boolean forceSimple) throws StructuralException
+	void oneSpanningTree(AnalysisGraph aGraph, bool forceConnected, bool forceSimple) throws StructuralException
 	{
 		Graph graph = aGraph.getGraph();
 
-		boolean isSimple = GraphStructure.isSimple(aGraph);
-		boolean isConnected = GraphStructure.isConnected(aGraph);
+		bool isSimple = GraphStructure.isSimple(aGraph);
+		bool isConnected = GraphStructure.isConnected(aGraph);
 
 		if (!isSimple)
 		{
@@ -1308,7 +1306,7 @@ public class GraphGenerator
 	 * @throws StructuralException not all size combinations are allowed, see wikipedia for a more detailed explanation
 	 * Returns a Knight's Tour graph
 	 */
-	public void getKnightTour(AnalysisGraph aGraph, int xDim, int yDim, int startVertexValue) throws StructuralException
+	void getKnightTour(AnalysisGraph aGraph, int xDim, int yDim, int startVertexValue) throws StructuralException
 	{
 		if (xDim < 5 || yDim < 5)
 		{
@@ -1534,12 +1532,12 @@ public class GraphGenerator
 		return (float) Math.sqrt(x * x + y * y);
 	}
 
-	public CostFunction getCostFunction()
+	CostFunction getCostFunction()
 	{
 		return _costFunction;
 	}
 
-	public void setCostFunction(CostFunction costFunction)
+	void setCostFunction(CostFunction costFunction)
 	{
 		this._costFunction = costFunction;
 	};

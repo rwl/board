@@ -10,11 +10,11 @@
  */
 part of graph.layout.hierarchical.stage;
 
-//import graph.layout.hierarchical.HierarchicalLayout;
-//import graph.layout.hierarchical.model.GraphHierarchyEdge;
-//import graph.layout.hierarchical.model.GraphHierarchyModel;
-//import graph.layout.hierarchical.model.GraphHierarchyNode;
-//import graph.view.Graph;
+import '../../../layout/hierarchical/hierarchical.dart' show HierarchicalLayout;
+import '../../../layout/hierarchical/model/model.dart' show GraphHierarchyEdge;
+import '../../../layout/hierarchical/model/model.dart' show GraphHierarchyModel;
+import '../../../layout/hierarchical/model/model.dart' show GraphHierarchyNode;
+import '../../../view/view.dart' show Graph;
 
 //import java.util.HashSet;
 //import java.util.Iterator;
@@ -25,18 +25,18 @@ part of graph.layout.hierarchical.stage;
  * An implementation of the first stage of the Sugiyama layout. Straightforward
  * longest path calculation of layer assignment
  */
-public class MinimumCycleRemover implements HierarchicalLayoutStage
+class MinimumCycleRemover implements HierarchicalLayoutStage
 {
 
 	/**
 	 * Reference to the enclosing layout algorithm
 	 */
-	protected HierarchicalLayout _layout;
+	HierarchicalLayout _layout;
 
 	/**
 	 * Constructor that has the roots specified
 	 */
-	public MinimumCycleRemover(HierarchicalLayout layout)
+	MinimumCycleRemover(HierarchicalLayout layout)
 	{
 		this._layout = layout;
 	}
@@ -44,7 +44,7 @@ public class MinimumCycleRemover implements HierarchicalLayoutStage
 	/**
 	 * Produces the layer assignmment using the graph information specified
 	 */
-	public void execute(Object parent)
+	void execute(Object parent)
 	{
 		GraphHierarchyModel model = _layout.getModel();
 		final Set<GraphHierarchyNode> seenNodes = new HashSet<GraphHierarchyNode>();

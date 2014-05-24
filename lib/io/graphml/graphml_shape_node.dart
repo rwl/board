@@ -6,7 +6,7 @@ part of graph.io.graphml;
 //import org.w3c.dom.Document;
 //import org.w3c.dom.Element;
 
-public class GraphMlShapeNode
+class GraphMlShapeNode
 {
 	private String _dataHeight = "";
 
@@ -28,7 +28,7 @@ public class GraphMlShapeNode
 	 * @param dataY Node's Y coordinate.
 	 * @param dataStyle Node's style.
 	 */
-	public GraphMlShapeNode(String dataHeight, String dataWidth, String dataX,
+	GraphMlShapeNode(String dataHeight, String dataWidth, String dataX,
 			String dataY, String dataStyle)
 	{
 		this._dataHeight = dataHeight;
@@ -41,7 +41,7 @@ public class GraphMlShapeNode
 	/**
 	 * Construct an empty shape Node
 	 */
-	public GraphMlShapeNode()
+	GraphMlShapeNode()
 	{
 	}
 
@@ -49,7 +49,7 @@ public class GraphMlShapeNode
 	 * Construct a Shape Node from a xml Shape Node Element.
 	 * @param shapeNodeElement Xml Shape Node Element.
 	 */
-	public GraphMlShapeNode(Element shapeNodeElement)
+	GraphMlShapeNode(Element shapeNodeElement)
 	{
 		//Defines Geometry
 		Element geometryElement = GraphMlUtils.childsTag(shapeNodeElement,
@@ -82,7 +82,7 @@ public class GraphMlShapeNode
 	 * @param document Document where the key Element will be inserted.
 	 * @return Returns the generated Elements.
 	 */
-	public Element generateElement(Document document)
+	Element generateElement(Document document)
 	{
 		Element dataShape = document.createElementNS(GraphMlConstants.JGRAPH_URL,
 				GraphMlConstants.JGRAPH + GraphMlConstants.SHAPENODE);
@@ -121,62 +121,62 @@ public class GraphMlShapeNode
 		return dataShape;
 	}
 
-	public String getDataHeight()
+	String getDataHeight()
 	{
 		return _dataHeight;
 	}
 
-	public void setDataHeight(String dataHeight)
+	void setDataHeight(String dataHeight)
 	{
 		this._dataHeight = dataHeight;
 	}
 
-	public String getDataWidth()
+	String getDataWidth()
 	{
 		return _dataWidth;
 	}
 
-	public void setDataWidth(String dataWidth)
+	void setDataWidth(String dataWidth)
 	{
 		this._dataWidth = dataWidth;
 	}
 
-	public String getDataX()
+	String getDataX()
 	{
 		return _dataX;
 	}
 
-	public void setDataX(String dataX)
+	void setDataX(String dataX)
 	{
 		this._dataX = dataX;
 	}
 
-	public String getDataY()
+	String getDataY()
 	{
 		return _dataY;
 	}
 
-	public void setDataY(String dataY)
+	void setDataY(String dataY)
 	{
 		this._dataY = dataY;
 	}
 
-	public String getDataLabel()
+	String getDataLabel()
 	{
 		return _dataLabel;
 	}
 
-	public void setDataLabel(String dataLabel)
+	void setDataLabel(String dataLabel)
 	{
 		this._dataLabel = dataLabel;
 	}
 
-	public String getDataStyle()
+	String getDataStyle()
 	{
 		return _dataStyle;
 	}
 
-	public void setDataStyle(String dataStyle)
+	void setDataStyle(String dataStyle)
 	{
 		this._dataStyle = dataStyle;
 	}

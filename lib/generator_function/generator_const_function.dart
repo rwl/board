@@ -1,22 +1,22 @@
 part of graph.generatorfunction;
 
-//import graph.view.CellState;
+import '../view/view.dart' show CellState;
 
 /**
  * @author Mate
  * A constant cost function that can be used during graph generation
  * All generated edges will have the weight <b>cost</b> 
  */
-public class GeneratorConstFunction extends GeneratorFunction
+class GeneratorConstFunction extends GeneratorFunction
 {
 	private double _cost;
 	
-	public GeneratorConstFunction(double cost)
+	GeneratorConstFunction(double cost)
 	{
 		this._cost = cost;
 	};
 	
-	public double getCost(CellState state)
+	double getCost(CellState state)
 	{
 		return _cost;
 	};

@@ -6,7 +6,7 @@ part of graph.layout.orthogonal.model;
 /**
  *
  */
-public class PointSequence
+class PointSequence
 {
 
 }

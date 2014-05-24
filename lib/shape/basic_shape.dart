@@ -3,24 +3,24 @@
  */
 part of graph.shape;
 
-//import graph.canvas.Graphics2DCanvas;
-//import graph.util.Constants;
-//import graph.util.Rect;
-//import graph.util.Utils;
-//import graph.view.CellState;
+import '../canvas/canvas.dart' show Graphics2DCanvas;
+import '../util/util.dart' show Constants;
+import '../util/util.dart' show Rect;
+import '../util/util.dart' show Utils;
+import '../view/view.dart' show CellState;
 
 //import java.awt.Color;
 //import java.awt.Paint;
 //import java.awt.Shape;
 //import java.util.Map;
 
-public class BasicShape implements IShape
+class BasicShape implements IShape
 {
 
 	/**
 	 * 
 	 */
-	public void paintShape(Graphics2DCanvas canvas, CellState state)
+	void paintShape(Graphics2DCanvas canvas, CellState state)
 	{
 		Shape shape = createShape(canvas, state);
 
@@ -43,7 +43,7 @@ public class BasicShape implements IShape
 	/**
 	 * 
 	 */
-	public Shape createShape(Graphics2DCanvas canvas, CellState state)
+	Shape createShape(Graphics2DCanvas canvas, CellState state)
 	{
 		return null;
 	}
@@ -56,8 +56,8 @@ public class BasicShape implements IShape
 	 * 			the shape paint
 	 * @return whether or not the shape is ready to be drawn
 	 */
-	protected boolean _configureGraphics(Graphics2DCanvas canvas,
-			CellState state, boolean background)
+	bool _configureGraphics(Graphics2DCanvas canvas,
+			CellState state, bool background)
 	{
 		Map<String, Object> style = state.getStyle();
 
@@ -96,7 +96,7 @@ public class BasicShape implements IShape
 	/**
 	 * 
 	 */
-	protected Rect _getGradientBounds(Graphics2DCanvas canvas,
+	Rect _getGradientBounds(Graphics2DCanvas canvas,
 			CellState state)
 	{
 		return state;
@@ -105,7 +105,7 @@ public class BasicShape implements IShape
 	/**
 	 * 
 	 */
-	public boolean hasGradient(Graphics2DCanvas canvas, CellState state)
+	bool hasGradient(Graphics2DCanvas canvas, CellState state)
 	{
 		return true;
 	}
@@ -113,7 +113,7 @@ public class BasicShape implements IShape
 	/**
 	 * 
 	 */
-	public boolean hasShadow(Graphics2DCanvas canvas, CellState state)
+	bool hasShadow(Graphics2DCanvas canvas, CellState state)
 	{
 		return Utils
 				.isTrue(state.getStyle(), Constants.STYLE_SHADOW, false);
@@ -122,7 +122,7 @@ public class BasicShape implements IShape
 	/**
 	 * 
 	 */
-	public Color getFillColor(Graphics2DCanvas canvas, CellState state)
+	Color getFillColor(Graphics2DCanvas canvas, CellState state)
 	{
 		return Utils.getColor(state.getStyle(), Constants.STYLE_FILLCOLOR);
 	}
@@ -130,7 +130,7 @@ public class BasicShape implements IShape
 	/**
 	 * 
 	 */
-	public Color getStrokeColor(Graphics2DCanvas canvas, CellState state)
+	Color getStrokeColor(Graphics2DCanvas canvas, CellState state)
 	{
 		return Utils
 				.getColor(state.getStyle(), Constants.STYLE_STROKECOLOR);

@@ -9,7 +9,7 @@ part of graph.io.graphml;
 /**
  * This class represents the properties of a JGraph edge.
  */
-public class GraphMlShapeEdge
+class GraphMlShapeEdge
 {
 	private String _text = "";
 
@@ -24,7 +24,7 @@ public class GraphMlShapeEdge
 	 * @param text
 	 * @param style
 	 */
-	public GraphMlShapeEdge(String text, String style)
+	GraphMlShapeEdge(String text, String style)
 	{
 		this._text = text;
 		this._style = style;
@@ -34,7 +34,7 @@ public class GraphMlShapeEdge
 	 * Constructs a ShapeEdge from a xml shapeEdgeElement.
 	 * @param shapeEdgeElement
 	 */
-	public GraphMlShapeEdge(Element shapeEdgeElement)
+	GraphMlShapeEdge(Element shapeEdgeElement)
 	{
 		Element labelElement = GraphMlUtils.childsTag(shapeEdgeElement,
 				GraphMlConstants.JGRAPH + GraphMlConstants.LABEL);
@@ -57,7 +57,7 @@ public class GraphMlShapeEdge
 	/**
 	 * Construct an empty Shape Edge Element.
 	 */
-	public GraphMlShapeEdge()
+	GraphMlShapeEdge()
 	{
 	}
 
@@ -66,7 +66,7 @@ public class GraphMlShapeEdge
 	 * @param document Document where the key Element will be inserted.
 	 * @return Returns the generated Elements.
 	 */
-	public Element generateElement(Document document)
+	Element generateElement(Document document)
 	{
 		Element dataEdge = document.createElementNS(GraphMlConstants.JGRAPH_URL,
 				GraphMlConstants.JGRAPH + GraphMlConstants.SHAPEEDGE);
@@ -93,42 +93,42 @@ public class GraphMlShapeEdge
 		return dataEdge;
 	}
 
-	public String getText()
+	String getText()
 	{
 		return _text;
 	}
 
-	public void setText(String text)
+	void setText(String text)
 	{
 		this._text = text;
 	}
 
-	public String getStyle()
+	String getStyle()
 	{
 		return _style;
 	}
 
-	public void setStyle(String style)
+	void setStyle(String style)
 	{
 		this._style = style;
 	}
 
-	public String getEdgeSource()
+	String getEdgeSource()
 	{
 		return _edgeSource;
 	}
 
-	public void setEdgeSource(String edgeSource)
+	void setEdgeSource(String edgeSource)
 	{
 		this._edgeSource = edgeSource;
 	}
 
-	public String getEdgeTarget()
+	String getEdgeTarget()
 	{
 		return _edgeTarget;
 	}
 
-	public void setEdgeTarget(String edgeTarget)
+	void setEdgeTarget(String edgeTarget)
 	{
 		this._edgeTarget = edgeTarget;
 	}

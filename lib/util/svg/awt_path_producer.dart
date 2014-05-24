@@ -28,45 +28,45 @@ part of graph.util.svg;
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @version $Id: AWTPathProducer.java,v 1.1 2012/11/15 13:26:45 gaudenz Exp $
  */
-public class AWTPathProducer implements PathHandler, ShapeProducer
+class AWTPathProducer implements PathHandler, ShapeProducer
 {
 
 	/**
 	 * The temporary value of extendedGeneralPath.
 	 */
-	protected ExtendedGeneralPath path;
+	ExtendedGeneralPath path;
 
 	/**
 	 * The current x position.
 	 */
-	protected float currentX;
+	float currentX;
 
 	/**
 	 * The current y position.
 	 */
-	protected float currentY;
+	float currentY;
 
 	/**
 	 * The reference x point for smooth arcs.
 	 */
-	protected float xCenter;
+	float xCenter;
 
 	/**
 	 * The reference y point for smooth arcs.
 	 */
-	protected float yCenter;
+	float yCenter;
 
 	/**
 	 * The winding rule to use to construct the path.
 	 */
-	protected int windingRule;
+	int windingRule;
 
 	/**
 	 * Utility method for creating an ExtendedGeneralPath.
 	 * @param text The text representation of the path specification.
 	 * @param wr The winding rule to use for creating the path.
 	 */
-	public static Shape createShape(String text, int wr) throws ParseException
+	static Shape createShape(String text, int wr) throws ParseException
 	{
 		AWTPathProducer ph = new AWTPathProducer();
 
@@ -80,7 +80,7 @@ public class AWTPathProducer implements PathHandler, ShapeProducer
 	/**
 	 * Sets the winding rule used to construct the path.
 	 */
-	public void setWindingRule(int i)
+	void setWindingRule(int i)
 	{
 		windingRule = i;
 	}
@@ -88,7 +88,7 @@ public class AWTPathProducer implements PathHandler, ShapeProducer
 	/**
 	 * Returns the current winding rule.
 	 */
-	public int getWindingRule()
+	int getWindingRule()
 	{
 		return windingRule;
 	}
@@ -98,7 +98,7 @@ public class AWTPathProducer implements PathHandler, ShapeProducer
 	 * @return the shape or null if this handler has not been used by
 	 *         a parser.
 	 */
-	public Shape getShape()
+	Shape getShape()
 	{
 		return path;
 	}
@@ -106,7 +106,7 @@ public class AWTPathProducer implements PathHandler, ShapeProducer
 	/**
 	 * Implements {@link PathHandler#startPath()}.
 	 */
-	public void startPath() throws ParseException
+	void startPath() throws ParseException
 	{
 		currentX = 0;
 		currentY = 0;
@@ -118,14 +118,14 @@ public class AWTPathProducer implements PathHandler, ShapeProducer
 	/**
 	 * Implements {@link PathHandler#endPath()}.
 	 */
-	public void endPath() throws ParseException
+	void endPath() throws ParseException
 	{
 	}
 
 	/**
 	 * Implements {@link PathHandler#movetoRel(float,float)}.
 	 */
-	public void movetoRel(float x, float y) throws ParseException
+	void movetoRel(float x, float y) throws ParseException
 	{
 		path.moveTo(xCenter = currentX += x, yCenter = currentY += y);
 	}
@@ -133,7 +133,7 @@ public class AWTPathProducer implements PathHandler, ShapeProducer
 	/**
 	 * Implements {@link PathHandler#movetoAbs(float,float)}.
 	 */
-	public void movetoAbs(float x, float y) throws ParseException
+	void movetoAbs(float x, float y) throws ParseException
 	{
 		path.moveTo(xCenter = currentX = x, yCenter = currentY = y);
 	}
@@ -141,7 +141,7 @@ public class AWTPathProducer implements PathHandler, ShapeProducer
 	/**
 	 * Implements {@link PathHandler#closePath()}.
 	 */
-	public void closePath() throws ParseException
+	void closePath() throws ParseException
 	{
 		path.closePath();
 		Point2D pt = path.getCurrentPoint();
@@ -152,7 +152,7 @@ public class AWTPathProducer implements PathHandler, ShapeProducer
 	/**
 	 * Implements {@link PathHandler#linetoRel(float,float)}.
 	 */
-	public void linetoRel(float x, float y) throws ParseException
+	void linetoRel(float x, float y) throws ParseException
 	{
 		path.lineTo(xCenter = currentX += x, yCenter = currentY += y);
 	}
@@ -160,7 +160,7 @@ public class AWTPathProducer implements PathHandler, ShapeProducer
 	/**
 	 * Implements {@link PathHandler#linetoAbs(float,float)}.
 	 */
-	public void linetoAbs(float x, float y) throws ParseException
+	void linetoAbs(float x, float y) throws ParseException
 	{
 		path.lineTo(xCenter = currentX = x, yCenter = currentY = y);
 	}
@@ -168,7 +168,7 @@ public class AWTPathProducer implements PathHandler, ShapeProducer
 	/**
 	 * Implements {@link PathHandler#linetoHorizontalRel(float)}.
 	 */
-	public void linetoHorizontalRel(float x) throws ParseException
+	void linetoHorizontalRel(float x) throws ParseException
 	{
 		path.lineTo(xCenter = currentX += x, yCenter = currentY);
 	}
@@ -176,7 +176,7 @@ public class AWTPathProducer implements PathHandler, ShapeProducer
 	/**
 	 * Implements {@link PathHandler#linetoHorizontalAbs(float)}.
 	 */
-	public void linetoHorizontalAbs(float x) throws ParseException
+	void linetoHorizontalAbs(float x) throws ParseException
 	{
 		path.lineTo(xCenter = currentX = x, yCenter = currentY);
 	}
@@ -184,7 +184,7 @@ public class AWTPathProducer implements PathHandler, ShapeProducer
 	/**
 	 * Implements {@link PathHandler#linetoVerticalRel(float)}.
 	 */
-	public void linetoVerticalRel(float y) throws ParseException
+	void linetoVerticalRel(float y) throws ParseException
 	{
 		path.lineTo(xCenter = currentX, yCenter = currentY += y);
 	}
@@ -192,7 +192,7 @@ public class AWTPathProducer implements PathHandler, ShapeProducer
 	/**
 	 * Implements {@link PathHandler#linetoVerticalAbs(float)}.
 	 */
-	public void linetoVerticalAbs(float y) throws ParseException
+	void linetoVerticalAbs(float y) throws ParseException
 	{
 		path.lineTo(xCenter = currentX, yCenter = currentY = y);
 	}
@@ -201,7 +201,7 @@ public class AWTPathProducer implements PathHandler, ShapeProducer
 	 * Implements {@link
 	 * PathHandler#curvetoCubicRel(float,float,float,float,float,float)}.
 	 */
-	public void curvetoCubicRel(float x1, float y1, float x2, float y2,
+	void curvetoCubicRel(float x1, float y1, float x2, float y2,
 			float x, float y) throws ParseException
 	{
 		path.curveTo(currentX + x1, currentY + y1, xCenter = currentX + x2,
@@ -212,7 +212,7 @@ public class AWTPathProducer implements PathHandler, ShapeProducer
 	 * Implements {@link
 	 * PathHandler#curvetoCubicAbs(float,float,float,float,float,float)}.
 	 */
-	public void curvetoCubicAbs(float x1, float y1, float x2, float y2,
+	void curvetoCubicAbs(float x1, float y1, float x2, float y2,
 			float x, float y) throws ParseException
 	{
 		path.curveTo(x1, y1, xCenter = x2, yCenter = y2, currentX = x,
@@ -223,7 +223,7 @@ public class AWTPathProducer implements PathHandler, ShapeProducer
 	 * Implements
 	 * {@link PathHandler#curvetoCubicSmoothRel(float,float,float,float)}.
 	 */
-	public void curvetoCubicSmoothRel(float x2, float y2, float x, float y)
+	void curvetoCubicSmoothRel(float x2, float y2, float x, float y)
 			throws ParseException
 	{
 		path.curveTo(currentX * 2 - xCenter, currentY * 2 - yCenter,
@@ -235,7 +235,7 @@ public class AWTPathProducer implements PathHandler, ShapeProducer
 	 * Implements
 	 * {@link PathHandler#curvetoCubicSmoothAbs(float,float,float,float)}.
 	 */
-	public void curvetoCubicSmoothAbs(float x2, float y2, float x, float y)
+	void curvetoCubicSmoothAbs(float x2, float y2, float x, float y)
 			throws ParseException
 	{
 		path.curveTo(currentX * 2 - xCenter, currentY * 2 - yCenter,
@@ -246,7 +246,7 @@ public class AWTPathProducer implements PathHandler, ShapeProducer
 	 * Implements
 	 * {@link PathHandler#curvetoQuadraticRel(float,float,float,float)}.
 	 */
-	public void curvetoQuadraticRel(float x1, float y1, float x, float y)
+	void curvetoQuadraticRel(float x1, float y1, float x, float y)
 			throws ParseException
 	{
 		path.quadTo(xCenter = currentX + x1, yCenter = currentY + y1,
@@ -257,7 +257,7 @@ public class AWTPathProducer implements PathHandler, ShapeProducer
 	 * Implements
 	 * {@link PathHandler#curvetoQuadraticAbs(float,float,float,float)}.
 	 */
-	public void curvetoQuadraticAbs(float x1, float y1, float x, float y)
+	void curvetoQuadraticAbs(float x1, float y1, float x, float y)
 			throws ParseException
 	{
 		path.quadTo(xCenter = x1, yCenter = y1, currentX = x, currentY = y);
@@ -266,7 +266,7 @@ public class AWTPathProducer implements PathHandler, ShapeProducer
 	/**
 	 * Implements {@link PathHandler#curvetoQuadraticSmoothRel(float,float)}.
 	 */
-	public void curvetoQuadraticSmoothRel(float x, float y)
+	void curvetoQuadraticSmoothRel(float x, float y)
 			throws ParseException
 	{
 		path.quadTo(xCenter = currentX * 2 - xCenter, yCenter = currentY * 2
@@ -276,7 +276,7 @@ public class AWTPathProducer implements PathHandler, ShapeProducer
 	/**
 	 * Implements {@link PathHandler#curvetoQuadraticSmoothAbs(float,float)}.
 	 */
-	public void curvetoQuadraticSmoothAbs(float x, float y)
+	void curvetoQuadraticSmoothAbs(float x, float y)
 			throws ParseException
 	{
 		path.quadTo(xCenter = currentX * 2 - xCenter, yCenter = currentY * 2
@@ -287,8 +287,8 @@ public class AWTPathProducer implements PathHandler, ShapeProducer
 	 * Implements {@link
 	 * PathHandler#arcRel(float,float,float,boolean,boolean,float,float)}.
 	 */
-	public void arcRel(float rx, float ry, float xAxisRotation,
-			boolean largeArcFlag, boolean sweepFlag, float x, float y)
+	void arcRel(float rx, float ry, float xAxisRotation,
+			bool largeArcFlag, bool sweepFlag, float x, float y)
 			throws ParseException
 	{
 		path.arcTo(rx, ry, xAxisRotation, largeArcFlag, sweepFlag,
@@ -299,8 +299,8 @@ public class AWTPathProducer implements PathHandler, ShapeProducer
 	 * Implements {@link
 	 * PathHandler#arcAbs(float,float,float,boolean,boolean,float,float)}.
 	 */
-	public void arcAbs(float rx, float ry, float xAxisRotation,
-			boolean largeArcFlag, boolean sweepFlag, float x, float y)
+	void arcAbs(float rx, float ry, float xAxisRotation,
+			bool largeArcFlag, bool sweepFlag, float x, float y)
 			throws ParseException
 	{
 		path.arcTo(rx, ry, xAxisRotation, largeArcFlag, sweepFlag,

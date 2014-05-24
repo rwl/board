@@ -3,10 +3,10 @@
  */
 part of graph.shape;
 
-//import graph.canvas.Graphics2DCanvas;
-//import graph.util.Constants;
-//import graph.util.Utils;
-//import graph.view.CellState;
+import '../canvas/canvas.dart' show Graphics2DCanvas;
+import '../util/util.dart' show Constants;
+import '../util/util.dart' show Utils;
+import '../view/view.dart' show CellState;
 
 //import java.awt.Color;
 //import java.awt.Font;
@@ -15,13 +15,13 @@ part of graph.shape;
 //import java.awt.Rectangle;
 //import java.util.Map;
 
-public class DefaultTextShape implements ITextShape
+class DefaultTextShape implements ITextShape
 {
 
 	/**
 	 * 
 	 */
-	public void paintShape(Graphics2DCanvas canvas, String text,
+	void paintShape(Graphics2DCanvas canvas, String text,
 			CellState state, Map<String, Object> style)
 	{
 		Rectangle rect = state.getLabelBounds().getRectangle();
@@ -29,7 +29,7 @@ public class DefaultTextShape implements ITextShape
 
 		if (g.getClipBounds() == null || g.getClipBounds().intersects(rect))
 		{
-			boolean horizontal = Utils.isTrue(style,
+			bool horizontal = Utils.isTrue(style,
 					Constants.STYLE_HORIZONTAL, true);
 			double scale = canvas.getScale();
 			int x = rect.x;
@@ -136,5 +136,5 @@ public class DefaultTextShape implements ITextShape
 	 * @param x the x co-ord of the baseline of the text line
 	 * @param y the y co-ord of the baseline of the text line
 	 */
-	protected void _postProcessLine(String text, String line, FontMetrics fm, Graphics2DCanvas canvas, int x, int y){}
+	void _postProcessLine(String text, String line, FontMetrics fm, Graphics2DCanvas canvas, int x, int y){}
 }

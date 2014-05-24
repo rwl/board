@@ -34,27 +34,27 @@ public abstract class AbstractParser implements Parser
 	/**
 	 * The default resource bundle base name.
 	 */
-	public static final String BUNDLE_CLASSNAME = "org.apache.batik.parser.resources.Messages";
+	static final String BUNDLE_CLASSNAME = "org.apache.batik.parser.resources.Messages";
 
 	/**
 	 * The error handler.
 	 */
-	protected ErrorHandler errorHandler = new DefaultErrorHandler();
+	ErrorHandler errorHandler = new DefaultErrorHandler();
 
 	/**
 	 * The normalizing reader.
 	 */
-	protected NormalizingReader reader;
+	NormalizingReader reader;
 
 	/**
 	 * The current character.
 	 */
-	protected int current;
+	int current;
 
 	/**
 	 * Returns the current character value.
 	 */
-	public int getCurrent()
+	int getCurrent()
 	{
 		return current;
 	}
@@ -71,7 +71,7 @@ public abstract class AbstractParser implements Parser
 	 * handler immediately.</p>
 	 * @param handler The error handler.
 	 */
-	public void setErrorHandler(ErrorHandler handler)
+	void setErrorHandler(ErrorHandler handler)
 	{
 		errorHandler = handler;
 	}
@@ -79,7 +79,7 @@ public abstract class AbstractParser implements Parser
 	/**
 	 * Parses the given string.
 	 */
-	public void parse(String s) throws ParseException
+	void parse(String s) throws ParseException
 	{
 		try
 		{
@@ -97,14 +97,14 @@ public abstract class AbstractParser implements Parser
 	 * Method responsible for actually parsing data after AbstractParser
 	 * has initialized itself.
 	 */
-	protected abstract void doParse() throws ParseException, IOException;
+	abstract void doParse() throws ParseException, IOException;
 
 	/**
 	 * Signals an error to the error handler.
 	 * @param key The message key in the resource bundle.
 	 * @param args The message arguments.
 	 */
-	protected void reportError(String key, Object[] args) throws ParseException
+	void reportError(String key, Object[] args) throws ParseException
 	{
 		errorHandler.error(new ParseException(createErrorMessage(key, args),
 				reader.getLine(), reader.getColumn()));
@@ -117,7 +117,7 @@ public abstract class AbstractParser implements Parser
 	 * @param expectedChar what caller expected
 	 * @param currentChar what caller found
 	 */
-	protected void reportCharacterExpectedError(char expectedChar,
+	void reportCharacterExpectedError(char expectedChar,
 			int currentChar)
 	{
 		reportError("character.expected", new Object[] {
@@ -131,7 +131,7 @@ public abstract class AbstractParser implements Parser
 	 *
 	 * @param currentChar what the caller found and didnt expect
 	 */
-	protected void reportUnexpectedCharacterError(int currentChar)
+	void reportUnexpectedCharacterError(int currentChar)
 	{
 		reportError("character.unexpected", new Object[] { new Integer(
 				currentChar) });
@@ -143,7 +143,7 @@ public abstract class AbstractParser implements Parser
 	 * @param key The message key in the resource bundle.
 	 * @param args The message arguments.
 	 */
-	protected String createErrorMessage(String key, Object[] args)
+	String createErrorMessage(String key, Object[] args)
 	{
 		try
 		{
@@ -161,7 +161,7 @@ public abstract class AbstractParser implements Parser
 	 * Returns the resource bundle base name.
 	 * @return BUNDLE_CLASSNAME.
 	 */
-	protected String getBundleClassName()
+	String getBundleClassName()
 	{
 		return BUNDLE_CLASSNAME;
 	}
@@ -169,7 +169,7 @@ public abstract class AbstractParser implements Parser
 	/**
 	 * Skips the whitespaces in the current reader.
 	 */
-	protected void skipSpaces() throws IOException
+	void skipSpaces() throws IOException
 	{
 		for (;;)
 		{
@@ -189,7 +189,7 @@ public abstract class AbstractParser implements Parser
 	/**
 	 * Skips the whitespaces and an optional comma.
 	 */
-	protected void skipCommaSpaces() throws IOException
+	void skipCommaSpaces() throws IOException
 	{
 		wsp1: for (;;)
 		{
