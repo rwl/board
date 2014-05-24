@@ -272,7 +272,7 @@ class GraphView extends EventSource
 	 * @param cells
 	 * @return Returns the bounding box for the given cells.
 	 */
-	Rect getBounds(Object[] cells)
+	Rect getBounds(List<Object> cells)
 	{
 		return getBounds(cells, false);
 	}
@@ -284,7 +284,7 @@ class GraphView extends EventSource
 	 * @param cells
 	 * @return Returns the bounding box for the given cells.
 	 */
-	Rect getBoundingBox(Object[] cells)
+	Rect getBoundingBox(List<Object> cells)
 	{
 		return getBounds(cells, true);
 	}
@@ -296,7 +296,7 @@ class GraphView extends EventSource
 	 * @param cells
 	 * @return Returns the bounding box for the given cells.
 	 */
-	Rect getBounds(Object[] cells, bool boundingBox)
+	Rect getBounds(List<Object> cells, bool boundingBox)
 	{
 		Rect result = null;
 
@@ -1109,7 +1109,7 @@ class GraphView extends EventSource
 	{
 		if (edge != null)
 		{
-			List<Point2d> pts = new ArrayList<Point2d>();
+			List<Point2d> pts = new List<Point2d>();
 			pts.add(edge.getAbsolutePoint(0));
 			EdgeStyleFunction edgeStyle = getEdgeStyle(edge, points, source,
 					target);
@@ -1171,7 +1171,7 @@ class GraphView extends EventSource
 		}
 
 		// Converts string values to objects
-		if (edgeStyle instanceof String)
+		if (edgeStyle is String)
 		{
 			String str = String.valueOf(edgeStyle);
 			Object tmp = StyleRegistry.getValue(str);
@@ -1184,7 +1184,7 @@ class GraphView extends EventSource
 			edgeStyle = tmp;
 		}
 
-		if (edgeStyle instanceof EdgeStyleFunction)
+		if (edgeStyle is EdgeStyleFunction)
 		{
 			return (EdgeStyleFunction) edgeStyle;
 		}
@@ -1252,7 +1252,7 @@ class GraphView extends EventSource
 				: Constants.STYLE_TARGET_PORT;
 		String id = Utils.getString(state._style, key);
 
-		if (id != null && _graph.getModel() instanceof GraphModel)
+		if (id != null && _graph.getModel() is GraphModel)
 		{
 			CellState tmp = getState(((GraphModel) _graph.getModel())
 					.getCell(id));
@@ -1365,7 +1365,7 @@ class GraphView extends EventSource
 		Object perimeter = state.getStyle().get(Constants.STYLE_PERIMETER);
 
 		// Converts string values to objects
-		if (perimeter instanceof String)
+		if (perimeter is String)
 		{
 			String str = String.valueOf(perimeter);
 			Object tmp = StyleRegistry.getValue(str);
@@ -1378,7 +1378,7 @@ class GraphView extends EventSource
 			perimeter = tmp;
 		}
 
-		if (perimeter instanceof PerimeterFunction)
+		if (perimeter is PerimeterFunction)
 		{
 			return (PerimeterFunction) perimeter;
 		}
@@ -1711,9 +1711,9 @@ class GraphView extends EventSource
 	 * states that are not null, that is, the returned array may have less
 	 * elements than the given array.
 	 */
-	CellState[] getCellStates(Object[] cells)
+	List<CellState> getCellStates(List<Object> cells)
 	{
-		List<CellState> result = new ArrayList<CellState>(cells.length);
+		List<CellState> result = new List<CellState>(cells.length);
 
 		for (int i = 0; i < cells.length; i++)
 		{
@@ -1725,7 +1725,7 @@ class GraphView extends EventSource
 			}
 		}
 
-		CellState[] resultArray = new CellState[result.size()];
+		List<CellState> resultArray = new CellState[result.size()];
 		return result.toArray(resultArray);
 	}
 
