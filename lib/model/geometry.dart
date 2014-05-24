@@ -328,7 +328,7 @@ class Geometry extends Rect
 
 		if (pts != null)
 		{
-			clone._points = new ArrayList<Point2d>(pts.size());
+			clone._points = new List<Point2d>(pts.size());
 
 			for (int i = 0; i < pts.size(); i++)
 			{

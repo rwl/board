@@ -655,7 +655,7 @@ class Cell implements ICell, Cloneable, Serializable
 
 			if (_children == null)
 			{
-				_children = new ArrayList<Object>();
+				_children = new List<Object>();
 				_children.add(child);
 			}
 			else
@@ -747,7 +747,7 @@ class Cell implements ICell, Cloneable, Serializable
 			{
 				if (_edges == null)
 				{
-					_edges = new ArrayList<Object>();
+					_edges = new List<Object>();
 				}
 
 				_edges.add(edge);
@@ -813,7 +813,7 @@ class Cell implements ICell, Cloneable, Serializable
 		Object userObject = getValue();
 		String val = null;
 
-		if (userObject instanceof Element)
+		if (userObject is Element)
 		{
 			Element element = (Element) userObject;
 			val = element.getAttribute(name);
@@ -837,7 +837,7 @@ class Cell implements ICell, Cloneable, Serializable
 	{
 		Object userObject = getValue();
 
-		if (userObject instanceof Element)
+		if (userObject is Element)
 		{
 			Element element = (Element) userObject;
 			element.setAttribute(name, value);
@@ -882,7 +882,7 @@ class Cell implements ICell, Cloneable, Serializable
 	{
 		Object value = getValue();
 
-		if (value instanceof Node)
+		if (value is Node)
 		{
 			value = ((Node) value).cloneNode(true);
 		}

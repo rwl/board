@@ -74,7 +74,7 @@ class GraphHierarchyModel
 	 *            the vertices for this hierarchy
 	 */
 	GraphHierarchyModel(HierarchicalLayout layout,
-			Object[] vertices, List<Object> roots, Object parent)
+			List<Object> vertices, List<Object> roots, Object parent)
 	{
 		Graph graph = layout.getGraph();
 		this.roots = roots;
@@ -164,7 +164,7 @@ class GraphHierarchyModel
 	 *            in using the real vertices
 	 */
 	void _createInternalCells(HierarchicalLayout layout,
-			Object[] vertices, GraphHierarchyNode[] internalVertices)
+			List<Object> vertices, GraphHierarchyNode[] internalVertices)
 	{
 		Graph graph = layout.getGraph();
 
@@ -175,7 +175,7 @@ class GraphHierarchyModel
 			_vertexMapper.put(vertices[i], internalVertices[i]);
 
 			// If the layout is deterministic, order the cells
-			Object[] conns = layout.getEdges(vertices[i]);
+			List<Object> conns = layout.getEdges(vertices[i]);
 			List<Object> outgoingCells = Arrays.asList(graph.getOpposites(
 					conns, vertices[i]));
 			internalVertices[i].connectsAsSource = new LinkedHashSet<GraphHierarchyEdge>(
@@ -207,9 +207,9 @@ class GraphHierarchyModel
 					// are the same. All the graph edges will have been assigned to
 					// an internal edge going the other way, so we don't want to 
 					// process them again
-					Object[] undirectEdges = graph.getEdgesBetween(vertices[i],
+					List<Object> undirectEdges = graph.getEdgesBetween(vertices[i],
 							cell, false);
-					Object[] directedEdges = graph.getEdgesBetween(vertices[i],
+					List<Object> directedEdges = graph.getEdgesBetween(vertices[i],
 							cell, true);
 
 					if (undirectEdges != null
@@ -218,7 +218,7 @@ class GraphHierarchyModel
 							&& (directedEdges.length * 2 >= undirectEdges.length))
 					{
 
-						ArrayList<Object> listEdges = new ArrayList<Object>(
+						ArrayList<Object> listEdges = new List<Object>(
 								undirectEdges.length);
 
 						for (int j = 0; j < undirectEdges.length; j++)
@@ -292,7 +292,7 @@ class GraphHierarchyModel
 			internalNode.temp[0] = -1;
 		}
 
-		List<GraphHierarchyNode> startNodesCopy = new ArrayList<GraphHierarchyNode>(
+		List<GraphHierarchyNode> startNodesCopy = new List<GraphHierarchyNode>(
 				startNodes);
 
 		while (!startNodes.isEmpty())
@@ -448,7 +448,7 @@ class GraphHierarchyModel
 
 		if (roots != null)
 		{
-			Object[] oldRootsArray = roots.toArray();
+			List<Object> oldRootsArray = roots.toArray();
 			rootsArray = new GraphHierarchyNode[oldRootsArray.length];
 
 			for (int i = 0; i < oldRootsArray.length; i++)
@@ -583,7 +583,7 @@ class GraphHierarchyModel
 
 				// Copy the connects as source list so that visitors
 				// can change the original for edge direction inversions
-				final Object[] outgoingEdges = root.connectsAsSource.toArray();
+				final List<Object> outgoingEdges = root.connectsAsSource.toArray();
 
 				for (int i = 0; i < outgoingEdges.length; i++)
 				{
@@ -678,7 +678,7 @@ class GraphHierarchyModel
 				seen.add(root);
 				// Copy the connects as source list so that visitors
 				// can change the original for edge direction inversions
-				final Object[] outgoingEdges = root.connectsAsSource.toArray();
+				final List<Object> outgoingEdges = root.connectsAsSource.toArray();
 
 				for (int i = 0; i < outgoingEdges.length; i++)
 				{

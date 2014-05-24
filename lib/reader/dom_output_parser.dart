@@ -59,7 +59,7 @@ class DomOutputParser
 	/**
 	 * 
 	 */
-	transient Map<String, IElementHandler> _handlers = new Hashtable<String, IElementHandler>();
+	/*transient*/ Map<String, IElementHandler> _handlers = new Hashtable<String, IElementHandler>();
 
 	/**
 	 * 
@@ -77,7 +77,7 @@ class DomOutputParser
 	{
 		while (node != null)
 		{
-			if (node instanceof Element)
+			if (node is Element)
 			{
 				Element elt = (Element) node;
 				IElementHandler handler = _handlers.get(elt.getNodeName());

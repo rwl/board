@@ -48,7 +48,7 @@ class ModelCodec extends ObjectCodec
 	 */
 	void _encodeObject(Codec enc, Object obj, Node node)
 	{
-		if (obj instanceof GraphModel)
+		if (obj is GraphModel)
 		{
 			Node rootNode = enc._document.createElement("root");
 			GraphModel model = (GraphModel) obj;
@@ -63,12 +63,12 @@ class ModelCodec extends ObjectCodec
 	 */
 	Node beforeDecode(Codec dec, Node node, Object into)
 	{
-		if (node instanceof Element)
+		if (node is Element)
 		{
 			Element elt = (Element) node;
 			GraphModel model = null;
 
-			if (into instanceof GraphModel)
+			if (into is GraphModel)
 			{
 				model = (GraphModel) into;
 			}

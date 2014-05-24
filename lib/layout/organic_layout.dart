@@ -379,7 +379,7 @@ class OrganicLayout extends GraphLayout
 	{
 		IGraphModel model = graph.getModel();
 		GraphView view = graph.getView();
-		Object[] vertices = graph.getChildVertices(parent);
+		List<Object> vertices = graph.getChildVertices(parent);
 		HashSet<Object> vertexSet = new HashSet<Object>(Arrays.asList(vertices));
 
 		HashSet<Object> validEdges = new HashSet<Object>();
@@ -387,7 +387,7 @@ class OrganicLayout extends GraphLayout
 		// Remove edges that do not have both source and target terminals visible
 		for (int i = 0; i < vertices.length; i++)
 		{
-			Object[] edges = GraphModel.getEdges(model, vertices[i], false, true, false);
+			List<Object> edges = GraphModel.getEdges(model, vertices[i], false, true, false);
 
 			for (int j = 0; j < edges.length; j++)
 			{
@@ -402,7 +402,7 @@ class OrganicLayout extends GraphLayout
 
 		}
 
-		Object[] edges = validEdges.toArray();
+		List<Object> edges = validEdges.toArray();
 
 		// If the bounds dimensions have not been set see if the average area
 		// per node has been
@@ -1188,7 +1188,7 @@ class OrganicLayout extends GraphLayout
 	 */
 	int[] getRelevantEdges(int cellIndex)
 	{
-		ArrayList<Integer> relevantEdgeList = new ArrayList<Integer>(e.length);
+		ArrayList<Integer> relevantEdgeList = new List<Integer>(e.length);
 
 		for (int i = 0; i < e.length; i++)
 		{
@@ -1223,7 +1223,7 @@ class OrganicLayout extends GraphLayout
 	 */
 	int[] getConnectedEdges(int cellIndex)
 	{
-		ArrayList<Integer> connectedEdgeList = new ArrayList<Integer>(e.length);
+		ArrayList<Integer> connectedEdgeList = new List<Integer>(e.length);
 
 		for (int i = 0; i < e.length; i++)
 		{

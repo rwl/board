@@ -70,7 +70,7 @@ class GraphGenerator
 
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
-		Object[] vertices = new Object[numVertices];
+		List<Object> vertices = new Object[numVertices];
 		
 		for (int i = 0; i < numVertices; i++)
 		{
@@ -109,7 +109,7 @@ class GraphGenerator
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
 		int numVertices = numColumns * numRows;
-		Object[] vertices = new Object[numVertices];
+		List<Object> vertices = new Object[numVertices];
 		
 		for (int i = 0; i < numVertices; i++)
 		{
@@ -159,7 +159,7 @@ class GraphGenerator
 		}
 
 		Object parent = graph.getDefaultParent();
-		Object[] vertices = aGraph.getChildVertices(parent);
+		List<Object> vertices = aGraph.getChildVertices(parent);
 		IGraphModel model = graph.getModel();
 
 		for (int i = 0; i < numRows; i++)
@@ -190,7 +190,7 @@ class GraphGenerator
 		int numVertices = numVerticesGroup1 + numVerticesGroup2;
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
-		Object[] vertices = new Object[numVertices];
+		List<Object> vertices = new Object[numVertices];
 		
 		for (int i = 0; i < numVertices; i++)
 		{
@@ -251,7 +251,7 @@ class GraphGenerator
 			group2StartY = (centerYtimes2 - (numVerticesGroup2 * vertexSpacing)) / 2;
 		}
 
-		Object[] vertices = aGraph.getChildVertices(parent);
+		List<Object> vertices = aGraph.getChildVertices(parent);
 
 		// position vertexes for group 1
 		for (int i = 0; i < numVerticesGroup1; i++)
@@ -288,7 +288,7 @@ class GraphGenerator
 		int numVertices = numVerticesGroup1 + numVerticesGroup2;
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
-		Object[] vertices = new Object[numVertices];
+		List<Object> vertices = new Object[numVertices];
 		
 		for (int i = 0; i < numVertices; i++)
 		{
@@ -323,7 +323,7 @@ class GraphGenerator
 		int numVertices = xDim * yDim;
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
-		Object[] vertices = new Object[numVertices];
+		List<Object> vertices = new Object[numVertices];
 		
 		for (int i = 0; i < numVertices; i++)
 		{
@@ -337,7 +337,7 @@ class GraphGenerator
 		for (int i = 0; i < (xDim * yDim); i++)
 		{
 			currCoords = getVertexGridCoords(xDim, yDim, i);
-			Object[] neighborMoves = getKnightMoveVertexes(aGraph, xDim, yDim, currCoords[0], currCoords[1]);
+			List<Object> neighborMoves = getKnightMoveVertexes(aGraph, xDim, yDim, currCoords[0], currCoords[1]);
 
 			for (int j = 0; j < neighborMoves.length; j++)
 			{
@@ -360,7 +360,7 @@ class GraphGenerator
 	 * @return a list of ALL vertexes which would be valid moves from the current position, regardless if they were visited or not
 	 * Note that both dimensions and both coordinates must be positive
 	 */
-	Object[] getKnightMoveVertexes(AnalysisGraph aGraph, int xDim, int yDim, int xCoord, int yCoord)
+	List<Object> getKnightMoveVertexes(AnalysisGraph aGraph, int xDim, int yDim, int xCoord, int yCoord)
 	{
 		if (xCoord > xDim || yCoord > yDim || xDim < 1 || yDim < 1 || xCoord < 1 || yCoord < 1)
 		{
@@ -368,14 +368,14 @@ class GraphGenerator
 		}
 
 		Graph graph = aGraph.getGraph();
-		Object[] vertices = aGraph.getChildVertices(graph.getDefaultParent());
+		List<Object> vertices = aGraph.getChildVertices(graph.getDefaultParent());
 
 		//check all possible 8 locations
 
 		//location 1
 		int currX = xCoord + 1;
 		int currY = yCoord - 2;
-		ArrayList<Object> possibleMoves = new ArrayList<Object>();
+		ArrayList<Object> possibleMoves = new List<Object>();
 		// check if in bounds
 		Object currVertex;
 
@@ -500,7 +500,7 @@ class GraphGenerator
 	 * @return vertex on the desired coordinates.
 	 * Note that both dimensions and both coordinates must be positive
 	 */
-	private Object _getVertexFromGrid(Object[] vertices, int xDim, int yDim, int xCoord, int yCoord)
+	private Object _getVertexFromGrid(List<Object> vertices, int xDim, int yDim, int xCoord, int yCoord)
 	{
 		if (xCoord > xDim || yCoord > yDim || xDim < 1 || yDim < 1 || xCoord < 1 || yCoord < 1)
 		{
@@ -529,7 +529,7 @@ class GraphGenerator
 		int numVertices = xDim * yDim;
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
-		Object[] vertices = new Object[numVertices];
+		List<Object> vertices = new Object[numVertices];
 		
 		for (int i = 0; i < numVertices; i++)
 		{
@@ -543,7 +543,7 @@ class GraphGenerator
 		for (int i = 0; i < (xDim * yDim); i++)
 		{
 			currCoords = getVertexGridCoords(xDim, yDim, i);
-			Object[] neighborMoves = getKingMoveVertexes(aGraph, xDim, yDim, currCoords[0], currCoords[1]);
+			List<Object> neighborMoves = getKingMoveVertexes(aGraph, xDim, yDim, currCoords[0], currCoords[1]);
 
 			for (int j = 0; j < neighborMoves.length; j++)
 			{
@@ -566,7 +566,7 @@ class GraphGenerator
 	 * @return list of all possible moves of a king from the specified position
 	 * Note that both dimensions and both coordinates must be positive
 	 */
-	Object[] getKingMoveVertexes(AnalysisGraph aGraph, int xDim, int yDim, int xCoord, int yCoord)
+	List<Object> getKingMoveVertexes(AnalysisGraph aGraph, int xDim, int yDim, int xCoord, int yCoord)
 	{
 		if (xDim < 0 || yDim < 0 || xCoord < 0 || yCoord < 0)
 		{
@@ -574,14 +574,14 @@ class GraphGenerator
 		}
 
 		Graph graph = aGraph.getGraph();
-		Object[] vertices = aGraph.getChildVertices(graph.getDefaultParent());
+		List<Object> vertices = aGraph.getChildVertices(graph.getDefaultParent());
 
 		//check all possible 8 locations
 
 		//location 1
 		int currX = xCoord + 1;
 		int currY = yCoord - 1;
-		ArrayList<Object> possibleMoves = new ArrayList<Object>();
+		ArrayList<Object> possibleMoves = new List<Object>();
 		// check if in bounds
 		Object currVertex;
 
@@ -672,7 +672,7 @@ class GraphGenerator
 	{
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
-		Object[] vertices = new Object[10];
+		List<Object> vertices = new Object[10];
 		
 		for (int i = 0; i < 10; i++)
 		{
@@ -710,7 +710,7 @@ class GraphGenerator
 
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
-		Object[] vertices = new Object[numVertices];
+		List<Object> vertices = new Object[numVertices];
 		
 		for (int i = 0; i < numVertices; i++)
 		{
@@ -738,7 +738,7 @@ class GraphGenerator
 
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
-		Object[] vertices = aGraph.getChildVertices(parent);
+		List<Object> vertices = aGraph.getChildVertices(parent);
 		IGraphModel model = graph.getModel();
 
 		for (int i = 0; i < vertices.length; i++)
@@ -766,7 +766,7 @@ class GraphGenerator
 
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
-		Object[] vertices = new Object[numVertices];
+		List<Object> vertices = new Object[numVertices];
 		
 		for (int i = 0; i < numVertices; i++)
 		{
@@ -795,7 +795,7 @@ class GraphGenerator
 
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
-		Object[] vertices = aGraph.getChildVertices(parent);
+		List<Object> vertices = aGraph.getChildVertices(parent);
 		IGraphModel model = graph.getModel();
 		int vertexNum = vertices.length;
 		double centerX = graphSize / 2f;
@@ -839,7 +839,7 @@ class GraphGenerator
 
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
-		Object[] vertices = new Object[numVertices];
+		List<Object> vertices = new Object[numVertices];
 		
 		for (int i = 0; i < numVertices; i++)
 		{
@@ -879,7 +879,7 @@ class GraphGenerator
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
 		int numVertices = numBranches * branchSize + 1;
-		Object[] vertices = new Object[numVertices];
+		List<Object> vertices = new Object[numVertices];
 		int vertexCount = 0;
 
 		for (int i = 0; i < numBranches; i++)
@@ -926,7 +926,7 @@ class GraphGenerator
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
 		int numVertices = numBranches * branchSize + 1;
-		Object[] vertices = new Object[numVertices];
+		List<Object> vertices = new Object[numVertices];
 		
 		int vertexCount = 0;
 
@@ -983,7 +983,7 @@ class GraphGenerator
 
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
-		Object[] vertices = aGraph.getChildVertices(parent);
+		List<Object> vertices = aGraph.getChildVertices(parent);
 		IGraphModel model = graph.getModel();
 		int vertexNum = vertices.length;
 		double centerX = graphSize / 2f;
@@ -1099,7 +1099,7 @@ class GraphGenerator
 	{
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
-		Object[] vertices = new Object[numNodes];
+		List<Object> vertices = new Object[numNodes];
 		
 		for (int i = 0; i < numNodes; i++)
 		{
@@ -1149,7 +1149,7 @@ class GraphGenerator
 		this.getSimpleRandomGraph(aGraph, vertexCount, edgeCount, false, false, true);
 
 		//still need to remove surplus edges
-		Object[] vertices = aGraph.getChildVertices(aGraph.getGraph().getDefaultParent());
+		List<Object> vertices = aGraph.getChildVertices(aGraph.getGraph().getDefaultParent());
 
 		try
 		{
@@ -1274,13 +1274,13 @@ class GraphGenerator
 			}
 		}
 
-		Object[] edges = aGraph.getChildEdges(graph.getDefaultParent());
+		List<Object> edges = aGraph.getChildEdges(graph.getDefaultParent());
 		int edgeCount = edges.length;
 
 		for (int i = 0; i < edgeCount; i++)
 		{
 			Object currEdge = edges[i];
-			graph.removeCells(new Object[] { currEdge });
+			graph.removeCells(new List<Object> { currEdge });
 
 			if (!GraphStructure.isConnected(aGraph))
 			{
@@ -1305,7 +1305,7 @@ class GraphGenerator
 			throw new IllegalArgumentException();
 		}
 
-		ArrayList<Object> resultPath = new ArrayList<Object>();
+		ArrayList<Object> resultPath = new List<Object>();
 		int vertexNum = xDim * yDim;
 
 		Graph graph = aGraph.getGraph();
@@ -1319,7 +1319,7 @@ class GraphGenerator
 		}
 
 		// we have the board set up
-		Object[] vertices = aGraph.getChildVertices(parent);
+		List<Object> vertices = aGraph.getChildVertices(parent);
 
 		//now we set up the starting conditions
 		int currValue = startVertexValue;
@@ -1365,7 +1365,7 @@ class GraphGenerator
 	 */
 	private Object _getNextKnightMove(AnalysisGraph aGraph, int xDim, int yDim, int xCoord, int yCoord, ArrayList<Object> resultPath)
 	{
-		Object[] possibleMoves = getKnightMoveVertexes(aGraph, xDim, yDim, xCoord, yCoord);
+		List<Object> possibleMoves = getKnightMoveVertexes(aGraph, xDim, yDim, xCoord, yCoord);
 		//get the position with minimum possible moves
 		int minMoveNum = 9;
 		float biggestDistance = 0;
@@ -1409,7 +1409,7 @@ class GraphGenerator
 		int currY = yCoord - 2;
 		int possibleMoveCount = 0;
 		Object parent = aGraph.getGraph().getDefaultParent();
-		Object[] vertices = aGraph.getChildVertices(parent);
+		List<Object> vertices = aGraph.getChildVertices(parent);
 
 		if (currX > 0 && currX <= xDim && currY > 0 && currY <= yDim)
 		{

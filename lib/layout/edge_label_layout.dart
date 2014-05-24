@@ -26,8 +26,8 @@ class EdgeLabelLayout extends GraphLayout
 		IGraphModel model = graph.getModel();
 
 		// Gets all vertices and edges inside the parent
-		List<Object> edges = new ArrayList<Object>();
-		List<Object> vertices = new ArrayList<Object>();
+		List<Object> edges = new List<Object>();
+		List<Object> vertices = new List<Object>();
 		int childCount = model.getChildCount(parent);
 
 		for (int i = 0; i < childCount; i++)
@@ -54,7 +54,7 @@ class EdgeLabelLayout extends GraphLayout
 	/**
 	 * 
 	 */
-	void placeLabels(Object[] v, Object[] e)
+	void placeLabels(List<Object> v, List<Object> e)
 	{
 		IGraphModel model = graph.getModel();
 

@@ -145,7 +145,7 @@ class GraphMlCodec
 	static GraphMlGraph decodeGraph(Graph graph, Object parent,
 			GraphMlGraph gmlGraph)
 	{
-		Object[] vertexes = graph.getChildVertices(parent);
+		List<Object> vertexes = graph.getChildVertices(parent);
 		List<GraphMlEdge> gmlEdges = gmlGraph.getEdges();
 		gmlEdges = _encodeEdges(gmlEdges, parent, graph);
 		gmlGraph.setEdges(gmlEdges);
@@ -285,7 +285,7 @@ class GraphMlCodec
 	private static List<GraphMlEdge> _encodeEdges(List<GraphMlEdge> Gmledges,
 			Object parent, Graph graph)
 	{
-		Object[] edges = graph.getChildEdges(parent);
+		List<Object> edges = graph.getChildEdges(parent);
 		for (Object edge : edges)
 		{
 			Cell e = (Cell) edge;

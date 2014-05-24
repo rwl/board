@@ -434,7 +434,7 @@ class CellState extends Rect
 		{
 			if (_absolutePoints == null)
 			{
-				_absolutePoints = new ArrayList<Point2d>();
+				_absolutePoints = new List<Point2d>();
 			}
 
 			if (_absolutePoints.size() == 0)
@@ -450,7 +450,7 @@ class CellState extends Rect
 		{
 			if (_absolutePoints == null)
 			{
-				_absolutePoints = new ArrayList<Point2d>();
+				_absolutePoints = new List<Point2d>();
 				_absolutePoints.add(null);
 				_absolutePoints.add(point);
 			}
@@ -524,7 +524,7 @@ class CellState extends Rect
 
 		if (_absolutePoints != null)
 		{
-			clone._absolutePoints = new ArrayList<Point2d>();
+			clone._absolutePoints = new List<Point2d>();
 
 			for (int i = 0; i < _absolutePoints.size(); i++)
 			{

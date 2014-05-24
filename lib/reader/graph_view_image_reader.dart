@@ -270,7 +270,7 @@ class GraphViewImageReader extends GraphViewReader
 		reader.setContentHandler(viewReader);
 		reader.parse(inputSource);
 
-		if (viewReader.getCanvas() instanceof ImageCanvas)
+		if (viewReader.getCanvas() is ImageCanvas)
 		{
 			result = ((ImageCanvas) viewReader.getCanvas()).destroy();
 		}

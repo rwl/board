@@ -196,7 +196,7 @@ class ChildChange extends AtomicGraphModelChange
 	 */
 	int getChildIndex(Object parent, Object child)
 	{
-		return (parent instanceof ICell && child instanceof ICell) ? ((ICell) parent)
+		return (parent is ICell && child is ICell) ? ((ICell) parent)
 				.getIndex((ICell) child) : 0;
 	}
 

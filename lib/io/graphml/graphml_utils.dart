@@ -75,7 +75,7 @@ class GraphMlUtils
 	 */
 	static List<Element> nodeListTags(NodeList nl, String tag)
 	{
-		ArrayList<Element> ret = new ArrayList<Element>();
+		ArrayList<Element> ret = new List<Element>();
 
 		if (nl != null)
 		{
@@ -156,7 +156,7 @@ class GraphMlUtils
 	{
 		NodeList nl = element.getChildNodes();
 
-		ArrayList<Element> ret = new ArrayList<Element>();
+		ArrayList<Element> ret = new List<Element>();
 		
 		if (nl != null)
 		{
@@ -180,7 +180,7 @@ class GraphMlUtils
 	 */
 	static List<Node> copyNodeList(NodeList nodeList)
 	{
-		ArrayList<Node> copy = new ArrayList<Node>();
+		ArrayList<Node> copy = new List<Node>();
 		int length = nodeList.getLength();
 
 		for (int i = 0; i < length; i++)

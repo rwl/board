@@ -101,27 +101,27 @@ class CellEditor implements ICellEditor
 	/**
 	 * 
 	 */
-	transient Object _editingCell;
+	/*transient*/ Object _editingCell;
 
 	/**
 	 * 
 	 */
-	transient EventObject _trigger;
+	/*transient*/ EventObject _trigger;
 
 	/**
 	 * 
 	 */
-	transient JScrollPane _scrollPane;
+	/*transient*/ JScrollPane _scrollPane;
 
 	/**
 	 * Holds the editor for plain text editing.
 	 */
-	transient JTextArea _textArea;
+	/*transient*/ JTextArea _textArea;
 
 	/**
 	 * Holds the editor for HTML editing.
 	 */
-	transient JEditorPane _editorPane;
+	/*transient*/ JEditorPane _editorPane;
 
 	/**
 	 * Specifies if the text content of the HTML body should be extracted
@@ -145,27 +145,27 @@ class CellEditor implements ICellEditor
 	/**
 	 * 
 	 */
-	transient Object editorEnterActionMapKey;
+	/*transient*/ Object editorEnterActionMapKey;
 
 	/**
 	 * 
 	 */
-	transient Object textEnterActionMapKey;
+	/*transient*/ Object textEnterActionMapKey;
 
 	/**
 	 * 
 	 */
-	transient KeyStroke escapeKeystroke = KeyStroke.getKeyStroke("ESCAPE");
+	/*transient*/ KeyStroke escapeKeystroke = KeyStroke.getKeyStroke("ESCAPE");
 
 	/**
 	 * 
 	 */
-	transient KeyStroke enterKeystroke = KeyStroke.getKeyStroke("ENTER");
+	/*transient*/ KeyStroke enterKeystroke = KeyStroke.getKeyStroke("ENTER");
 
 	/**
 	 * 
 	 */
-	transient KeyStroke shiftEnterKeystroke = KeyStroke
+	/*transient*/ KeyStroke shiftEnterKeystroke = KeyStroke
 			.getKeyStroke("shift ENTER");
 
 	/**

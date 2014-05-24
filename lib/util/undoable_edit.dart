@@ -33,7 +33,7 @@ class UndoableEdit
 	/**
 	 * Holds the list of changes that make up this undoable edit.
 	 */
-	List<UndoableChange> _changes = new ArrayList<UndoableChange>();
+	List<UndoableChange> _changes = new List<UndoableChange>();
 
 	/**
 	 * Specifies this undoable edit is significant. Default is true.

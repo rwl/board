@@ -183,7 +183,7 @@ public abstract class GraphLayout implements IGraphLayout
 	void setEdgeStyleEnabled(Object edge, bool value)
 	{
 		graph.setCellStyles(Constants.STYLE_NOEDGESTYLE, (value) ? "0" : "1",
-				new Object[] { edge });
+				new List<Object> { edge });
 	}
 
 	/**
@@ -192,7 +192,7 @@ public abstract class GraphLayout implements IGraphLayout
 	void setOrthogonalEdge(Object edge, bool value)
 	{
 		graph.setCellStyles(Constants.STYLE_ORTHOGONAL, (value) ? "1" : "0",
-				new Object[] { edge });
+				new List<Object> { edge });
 	}
 
 	Point2d getParentOffset(Object parent)
@@ -387,11 +387,11 @@ public abstract class GraphLayout implements IGraphLayout
 	 * this with the groups in parent to child order, top-most group first, eg.
 	 * 
 	 * arrangeGroups(graph, Utils.sortCells(Arrays.asList(
-	 *   new Object[] { v1, v3 }), true).toArray(), 10);
+	 *   new List<Object> { v1, v3 }), true).toArray(), 10);
 	 * @param groups the groups to adjust
 	 * @param border the border applied to the adjusted groups
 	 */
-	void arrangeGroups(Object[] groups, int border)
+	void arrangeGroups(List<Object> groups, int border)
 	{
 		graph.getModel().beginUpdate();
 		try
@@ -399,7 +399,7 @@ public abstract class GraphLayout implements IGraphLayout
 			for (int i = groups.length - 1; i >= 0; i--)
 			{
 				Object group = groups[i];
-				Object[] children = graph.getChildVertices(group);
+				List<Object> children = graph.getChildVertices(group);
 				Rect bounds = graph.getBoundingBoxFromGeometry(children);
 
 				Geometry geometry = graph.getCellGeometry(group);

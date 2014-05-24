@@ -45,7 +45,7 @@ class StyleUtils
 	 */
 	static String[] getStylenames(String style)
 	{
-		List<String> result = new ArrayList<String>();
+		List<String> result = new List<String>();
 
 		if (style != null)
 		{
@@ -176,7 +176,7 @@ class StyleUtils
 	 * @param value
 	 *            New value for the given key.
 	 */
-	static void setCellStyles(IGraphModel model, Object[] cells,
+	static void setCellStyles(IGraphModel model, List<Object> cells,
 			String key, String value)
 	{
 		if (cells != null && cells.length > 0)
@@ -279,7 +279,7 @@ class StyleUtils
 	 * @param value
 	 *            Optional bool value for the flag.
 	 */
-	static void setCellStyleFlags(IGraphModel model, Object[] cells,
+	static void setCellStyleFlags(IGraphModel model, List<Object> cells,
 			String key, int flag, Boolean value)
 	{
 		if (cells != null && cells.length > 0)

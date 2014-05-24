@@ -487,7 +487,7 @@ class MedianHybridCrossingReduction implements
 	private void _medianRank(int rankValue, bool downwardSweep)
 	{
 		int numCellsForRank = _nestedBestRanks[rankValue].length;
-		ArrayList<_MedianCellSorter> medianValues = new ArrayList<_MedianCellSorter>(numCellsForRank);
+		ArrayList<_MedianCellSorter> medianValues = new List<_MedianCellSorter>(numCellsForRank);
 		boolean[] reservedPositions = new boolean[numCellsForRank];
 
 		for (int i = 0; i < numCellsForRank; i++)

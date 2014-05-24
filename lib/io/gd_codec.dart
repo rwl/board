@@ -160,7 +160,7 @@ class GdCodec
 		StringBuilder builder = new StringBuilder();
 		
 		Object parent = graph.getDefaultParent();
-		Object[] vertices = GraphModel.getChildCells(graph.getModel(), parent, true, false);
+		List<Object> vertices = GraphModel.getChildCells(graph.getModel(), parent, true, false);
 		
 		builder.append("# Number of Nodes (0-" + String.valueOf(vertices.length - 1) + ")");
 		builder.append(String.valueOf(vertices.length));

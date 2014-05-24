@@ -42,7 +42,7 @@ class SpaceManager extends EventSource
 		{
 			if (isEnabled())
 			{
-				_cellsResized((Object[]) evt.getProperty("cells"));
+				_cellsResized((List<Object>) evt.getProperty("cells"));
 			}
 		}
 	};
@@ -166,7 +166,7 @@ class SpaceManager extends EventSource
 	/**
 	 * 
 	 */
-	void _cellsResized(Object[] cells)
+	void _cellsResized(List<Object> cells)
 	{
 		if (cells != null)
 		{
@@ -205,7 +205,7 @@ class SpaceManager extends EventSource
 
 		if (state != null && pstate != null)
 		{
-			Object[] cells = _getCellsToShift(state);
+			List<Object> cells = _getCellsToShift(state);
 			Geometry geo = model.getGeometry(cell);
 
 			if (cells != null && geo != null)
@@ -322,7 +322,7 @@ class SpaceManager extends EventSource
 	/**
 	 * 
 	 */
-	Object[] _getCellsToShift(CellState state)
+	List<Object> _getCellsToShift(CellState state)
 	{
 		Graph graph = this.getGraph();
 		Object parent = graph.getModel().getParent(state.getCell());

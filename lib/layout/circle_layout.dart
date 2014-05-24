@@ -175,7 +175,7 @@ class CircleLayout extends GraphLayout
 			double max = 0;
 			Double top = null;
 			Double left = null;
-			List<Object> vertices = new ArrayList<Object>();
+			List<Object> vertices = new List<Object>();
 			int childCount = model.getChildCount(parent);
 
 			for (int i = 0; i < childCount; i++)
@@ -244,7 +244,7 @@ class CircleLayout extends GraphLayout
 	 * Executes the circular layout for the specified array
 	 * of vertices and the given radius.
 	 */
-	void circle(Object[] vertices, double r, double left, double top)
+	void circle(List<Object> vertices, double r, double left, double top)
 	{
 		int vertexCount = vertices.length;
 		double phi = 2 * Math.PI / vertexCount;

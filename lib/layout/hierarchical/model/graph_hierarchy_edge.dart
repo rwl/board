@@ -91,7 +91,7 @@ class GraphHierarchyEdge extends GraphAbstractHierarchyCell
 			
 			for (int i = 0; i < _nextLayerConnectedCells.length; i++)
 			{
-				_nextLayerConnectedCells[i] = new ArrayList<GraphAbstractHierarchyCell>(2);
+				_nextLayerConnectedCells[i] = new List<GraphAbstractHierarchyCell>(2);
 				
 				if (i == _nextLayerConnectedCells.length - 1)
 				{
@@ -121,7 +121,7 @@ class GraphHierarchyEdge extends GraphAbstractHierarchyCell
 			
 			for (int i = 0; i < _previousLayerConnectedCells.length; i++)
 			{
-				_previousLayerConnectedCells[i] = new ArrayList<GraphAbstractHierarchyCell>(2);
+				_previousLayerConnectedCells[i] = new List<GraphAbstractHierarchyCell>(2);
 				
 				if (i == 0)
 				{

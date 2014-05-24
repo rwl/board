@@ -40,7 +40,7 @@ class GraphTransferHandler extends TransferHandler
 	/**
 	 * Reference to the original cells for removal after a move.
 	 */
-	Object[] _originalCells;
+	List<Object> _originalCells;
 
 	/**
 	 * Reference to the last imported cell array.
@@ -176,7 +176,7 @@ class GraphTransferHandler extends TransferHandler
 	 */
 	Transferable createTransferable(JComponent c)
 	{
-		if (c instanceof GraphComponent)
+		if (c is GraphComponent)
 		{
 			GraphComponent graphComponent = (GraphComponent) c;
 			Graph graph = graphComponent.getGraph();
@@ -204,7 +204,7 @@ class GraphTransferHandler extends TransferHandler
 	 * 
 	 */
 	GraphTransferable createGraphTransferable(
-			GraphComponent graphComponent, Object[] cells, ImageIcon icon)
+			GraphComponent graphComponent, List<Object> cells, ImageIcon icon)
 	{
 		Graph graph = graphComponent.getGraph();
 		Point2d tr = graph.getView().getTranslate();
@@ -225,7 +225,7 @@ class GraphTransferHandler extends TransferHandler
 	 * 
 	 */
 	GraphTransferable createGraphTransferable(
-			GraphComponent graphComponent, Object[] cells,
+			GraphComponent graphComponent, List<Object> cells,
 			Rect bounds, ImageIcon icon)
 	{
 		return new GraphTransferable(graphComponent.getGraph().cloneCells(
@@ -236,7 +236,7 @@ class GraphTransferHandler extends TransferHandler
 	 * 
 	 */
 	ImageIcon createTransferableImage(GraphComponent graphComponent,
-			Object[] cells)
+			List<Object> cells)
 	{
 		ImageIcon icon = null;
 		Color bg = (_transferImageBackground != null) ? _transferImageBackground
@@ -260,8 +260,8 @@ class GraphTransferHandler extends TransferHandler
 	{
 		_initialImportCount = 1;
 		
-		if (c instanceof GraphComponent
-				&& data instanceof GraphTransferable)
+		if (c is GraphComponent
+				&& data is GraphTransferable)
 		{
 			// Requires that the graph handler resets the location to null if the drag leaves the
 			// component. This is the condition to identify a cross-component move.
@@ -282,7 +282,7 @@ class GraphTransferHandler extends TransferHandler
 	/**
 	 * 
 	 */
-	void _removeCells(GraphComponent graphComponent, Object[] cells)
+	void _removeCells(GraphComponent graphComponent, List<Object> cells)
 	{
 		graphComponent.getGraph().removeCells(cells);
 	}
@@ -314,7 +314,7 @@ class GraphTransferHandler extends TransferHandler
 			{
 				_updateImportCount(t);
 
-				if (c instanceof GraphComponent)
+				if (c is GraphComponent)
 				{
 					GraphComponent graphComponent = (GraphComponent) c;
 
@@ -423,7 +423,7 @@ class GraphTransferHandler extends TransferHandler
 	Object _getDropTarget(GraphComponent graphComponent,
 			GraphTransferable gt)
 	{
-		Object[] cells = gt.getCells();
+		List<Object> cells = gt.getCells();
 		Object target = null;
 
 		// Finds the target cell at the given location and checks if the
@@ -450,12 +450,12 @@ class GraphTransferHandler extends TransferHandler
 	 * Graph.isSplitTarget. Selects and returns the cells that have been
 	 * imported.
 	 */
-	Object[] _importCells(GraphComponent graphComponent,
+	List<Object> _importCells(GraphComponent graphComponent,
 			GraphTransferable gt, double dx, double dy)
 	{
 		Object target = _getDropTarget(graphComponent, gt);
 		Graph graph = graphComponent.getGraph();
-		Object[] cells = gt.getCells();
+		List<Object> cells = gt.getCells();
 
 		cells = graphComponent.getImportableCells(cells);
 

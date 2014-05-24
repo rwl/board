@@ -413,7 +413,7 @@ class CompactTreeLayout extends GraphLayout
 	 */
 	List<Object> findTreeRoots(Object parent, bool invert)
 	{
-		List<Object> roots = new ArrayList<Object>();
+		List<Object> roots = new List<Object>();
 
 		if (parent != null)
 		{
@@ -428,7 +428,7 @@ class CompactTreeLayout extends GraphLayout
 
 				if (model.isVertex(cell) && graph.isCellVisible(cell))
 				{
-					Object[] conns = graph.getConnections(cell, parent, true);
+					List<Object> conns = graph.getConnections(cell, parent, true);
 					int fanOut = 0;
 					int fanIn = 0;
 
@@ -511,7 +511,7 @@ class CompactTreeLayout extends GraphLayout
 
 			IGraphModel model = graph.getModel();
 			_TreeNode prev = null;
-			Object[] out = graph.getEdges(cell, parent, _invert, !_invert, false,
+			List<Object> out = graph.getEdges(cell, parent, _invert, !_invert, false,
 					true);
 			GraphView view = graph.getView();
 
@@ -953,7 +953,7 @@ class CompactTreeLayout extends GraphLayout
 		Object parentCell = node.cell;
 
 		int childCount = 0;
-		List<_WeightedCellSorter> sortedCells = new ArrayList<_WeightedCellSorter>();
+		List<_WeightedCellSorter> sortedCells = new List<_WeightedCellSorter>();
 
 		while (child != null)
 		{
@@ -1005,10 +1005,10 @@ class CompactTreeLayout extends GraphLayout
 			Object childCell = sortedCellsArray[j].cell.cell;
 			Rect childBounds = getVertexBounds(childCell);
 
-			Object[] edges = GraphModel.getEdgesBetween(model, parentCell,
+			List<Object> edges = GraphModel.getEdgesBetween(model, parentCell,
 					childCell);
 
-			List<Point2d> newPoints = new ArrayList<Point2d>(3);
+			List<Point2d> newPoints = new List<Point2d>(3);
 			double x = 0;
 			double y = 0;
 
@@ -1112,7 +1112,7 @@ class _WeightedCellSorter implements Comparable<Object>
    */
   public int compareTo(Object arg0)
   {
-    if (arg0 instanceof _WeightedCellSorter)
+    if (arg0 is _WeightedCellSorter)
     {
       if (weightedValue > ((_WeightedCellSorter) arg0).weightedValue)
       {

@@ -105,7 +105,7 @@ class StackLayout extends GraphLayout
 		Object parent = model.getParent(cell);
 		bool horizontal = isHorizontal();
 
-		if (cell instanceof ICell && parent instanceof ICell)
+		if (cell is ICell && parent is ICell)
 		{
 			int i = 0;
 			double last = 0;

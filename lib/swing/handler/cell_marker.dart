@@ -165,17 +165,17 @@ class CellMarker extends JComponent
 	/**
 	 * Holds the current marker color.
 	 */
-	transient Color _currentColor;
+	/*transient*/ Color _currentColor;
 
 	/**
 	 * Holds the marked state if it is valid.
 	 */
-	transient CellState _validState;
+	/*transient*/ CellState _validState;
 
 	/**
 	 * Holds the marked state.
 	 */
-	transient CellState _markedState;
+	/*transient*/ CellState _markedState;
 
 	/**
 	 * Constructs a new marker for the given graph component.

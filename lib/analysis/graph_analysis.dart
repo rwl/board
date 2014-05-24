@@ -23,8 +23,8 @@ part of graph.analysis;
  * variables for the following examples:<br>
  * <code>
  * ICostFunction cf = DistanceCostFunction();
- * Object[] v = graph.getChildVertices(graph.getDefaultParent());
- * Object[] e = graph.getChildEdges(graph.getDefaultParent());
+ * List<Object> v = graph.getChildVertices(graph.getDefaultParent());
+ * List<Object> e = graph.getChildEdges(graph.getDefaultParent());
  * GraphAnalysis mga = GraphAnalysis.getInstance();
  * </code>
  * 
@@ -33,7 +33,7 @@ part of graph.analysis;
  * For example, to find the shortest path between the first and the second
  * selected cell in a graph use the following code: <br>
  * <br>
- * <code>Object[] path = mga.getShortestPath(graph, from, to, cf, v.length, true);</code>
+ * <code>List<Object> path = mga.getShortestPath(graph, from, to, cf, v.length, true);</code>
  * 
  * <h3>Minimum Spanning Tree</h3>
  * 
@@ -102,7 +102,7 @@ class GraphAnalysis
 	 * 
 	 * @see #_createPriorityQueue()
 	 */
-	Object[] getShortestPath(Graph graph, Object from, Object to,
+	List<Object> getShortestPath(Graph graph, Object from, Object to,
 			ICostFunction cf, int steps, bool directed)
 	{
 		// Sets up a pqueue and a hashtable to store the predecessor for each
@@ -128,15 +128,14 @@ class GraphAnalysis
 			}
 
 			// Gets all outgoing edges of the closest cell to the source
-			Object[] e = (directed) ? graph.getOutgoingEdges(obj) : graph
+			List<Object> e = (directed) ? graph.getOutgoingEdges(obj) : graph
 					.getConnections(obj);
 
 			if (e != null)
 			{
 				for (int i = 0; i < e.length; i++)
 				{
-					Object[] opp = graph.getOpposites(new Object[] { e[i] },
-							obj);
+					List<Object> opp = graph.getOpposites([ e[i] ], obj);
 
 					if (opp != null && opp.length > 0)
 					{
@@ -174,7 +173,7 @@ class GraphAnalysis
 
 		// Constructs a path array by walking backwards through the predessecor
 		// map and filling up a list of edges, which is subsequently returned.
-		ArrayList<Object> list = new ArrayList<Object>(2 * steps);
+		ArrayList<Object> list = new List<Object>(2 * steps);
 		Object obj = to;
 		Object edge = pred.get(obj);
 
@@ -201,7 +200,7 @@ class GraphAnalysis
 
 		return list.toArray();
 	}
-
+	
 	/**
 	 * Returns the minimum spanning tree (MST) for the graph defined by G=(E,V).
 	 * The MST is defined as the set of all vertices with minimal lengths that
@@ -222,10 +221,10 @@ class GraphAnalysis
 	 * 
 	 * @see #_createPriorityQueue()
 	 */
-	Object[] getMinimumSpanningTree(Graph graph, Object[] v,
+	List<Object> getMinimumSpanningTree(Graph graph, List<Object> v,
 			ICostFunction cf, bool directed)
 	{
-		ArrayList<Object> mst = new ArrayList<Object>(v.length);
+		List<Object> mst = new List<Object>(v.length);
 
 		// Sets up a pqueue and a hashtable to store the predecessor for each
 		// cell in tha graph traversal. The pqueue is initialized
@@ -233,7 +232,7 @@ class GraphAnalysis
 		FibonacciHeap q = _createPriorityQueue();
 		Hashtable<Object, Object> pred = new Hashtable<Object, Object>();
 		Object u = v[0];
-		q.decreaseKey(q.getNode(u, true), 0);
+		q.decreaseKey(q.getNode(u, true), 0.0);
 
 		for (int i = 1; i < v.length; i++)
 		{
@@ -246,7 +245,7 @@ class GraphAnalysis
 		{
 			_FibonacciHeapNode node = q.removeMin();
 			u = node.getUserObject();
-			Object edge = pred.get(u);
+			Object edge = pred[u];
 
 			if (edge != null)
 			{
@@ -254,9 +253,9 @@ class GraphAnalysis
 			}
 
 			// Gets all outgoing edges of the closest cell to the source
-			Object[] e = (directed) ? graph.getOutgoingEdges(u) : graph
+			List<Object> e = (directed) ? graph.getOutgoingEdges(u) : graph
 					.getConnections(u);
-			Object[] opp = graph.getOpposites(e, u);
+			List<Object> opp = graph.getOpposites(e, u);
 
 			if (e != null)
 			{
@@ -302,7 +301,7 @@ class GraphAnalysis
 	 * O(|E|) find and O(|V|) union calls on the union find structure, thus
 	 * yielding no more than O(|E|log|V|) steps. For a faster implementatin
 	 * 
-	 * @see #getMinimumSpanningTree(Graph, Object[], ICostFunction,
+	 * @see #getMinimumSpanningTree(Graph, List<Object>, ICostFunction,
 	 *      boolean)
 	 * 
 	 * @param graph The object that contains the graph.
@@ -312,10 +311,10 @@ class GraphAnalysis
 	 * 
 	 * @return Returns the MST as an array of edges.
 	 * 
-	 * @see #_createUnionFind(Object[])
+	 * @see #_createUnionFind(List<Object>)
 	 */
-	Object[] getMinimumSpanningTree(Graph graph, Object[] v,
-			Object[] e, ICostFunction cf)
+	List<Object> getMinimumSpanningTreeKruskal(Graph graph, List<Object> v,
+			List<Object> e, ICostFunction cf)
 	{
 		// Sorts all edges according to their lengths, then creates a union
 		// find structure for all vertices. Then walks through all edges by
@@ -326,8 +325,8 @@ class GraphAnalysis
 		// unified.
 		GraphView view = graph.getView();
 		UnionFind uf = _createUnionFind(v);
-		ArrayList<Object> result = new ArrayList<Object>(e.length);
-		CellState[] edgeStates = sort(view.getCellStates(e), cf);
+		ArrayList<Object> result = new List<Object>(e.length);
+		List<CellState> edgeStates = sort(view.getCellStates(e), cf);
 
 		for (int i = 0; i < edgeStates.length; i++)
 		{
@@ -356,10 +355,10 @@ class GraphAnalysis
 	 * @param e The edges of the graph.
 	 * @return Returns the connection components in G=(E,V)
 	 * 
-	 * @see #_createUnionFind(Object[])
+	 * @see #_createUnionFind(List<Object>)
 	 */
-	UnionFind getConnectionComponents(Graph graph, Object[] v,
-			Object[] e)
+	UnionFind getConnectionComponents(Graph graph, List<Object> v,
+			List<Object> e)
 	{
 		GraphView view = graph.getView();
 		UnionFind uf = _createUnionFind(v);
@@ -390,7 +389,7 @@ class GraphAnalysis
 	 * @return Returns an ordered set of <code>cells</code> wrt.
 	 *         <code>cf</code>
 	 */
-	CellState[] sort(CellState[] states, final ICostFunction cf)
+	List<CellState> sort(List<CellState> states, final ICostFunction cf)
 	{
 		List<CellState> result = Arrays.asList(states);
 
@@ -410,7 +409,7 @@ class GraphAnalysis
 
 		});
 
-		return (CellState[]) result.toArray();
+		return (List<CellState>) result.toArray();
 	}
 
 	/**
@@ -424,7 +423,7 @@ class GraphAnalysis
 	 * 
 	 * @return Returns the sum of all cell cost
 	 */
-	double sum(CellState[] states, ICostFunction cf)
+	double sum(List<CellState> states, ICostFunction cf)
 	{
 		double sum = 0;
 
@@ -444,7 +443,7 @@ class GraphAnalysis
 	 * 
 	 * @return Returns a union find structure for <code>v</code>
 	 */
-	UnionFind _createUnionFind(Object[] v)
+	UnionFind _createUnionFind(List<Object> v)
 	{
 		return new UnionFind(v);
 	}

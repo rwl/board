@@ -255,7 +255,7 @@ class StencilShape extends BasicShape
 	void _transformShape(Shape shape, double transX, double transY,
 			double widthRatio, double heightRatio)
 	{
-		if (shape instanceof Rectangle2D)
+		if (shape is Rectangle2D)
 		{
 			Rectangle2D rect = (Rectangle2D) shape;
 			if (transX != 0 || transY != 0)
@@ -271,7 +271,7 @@ class StencilShape extends BasicShape
 						rect.getHeight() * heightRatio);
 			}
 		}
-		else if (shape instanceof Line2D)
+		else if (shape is Line2D)
 		{
 			Line2D line = (Line2D) shape;
 			if (transX != 0 || transY != 0)
@@ -286,21 +286,21 @@ class StencilShape extends BasicShape
 						* heightRatio);
 			}
 		}
-		else if (shape instanceof GeneralPath)
+		else if (shape is GeneralPath)
 		{
 			GeneralPath path = (GeneralPath) shape;
 			_cachedTransform.setToScale(widthRatio, heightRatio);
 			_cachedTransform.translate(transX, transY);
 			path.transform(_cachedTransform);
 		}
-		else if (shape instanceof ExtendedGeneralPath)
+		else if (shape is ExtendedGeneralPath)
 		{
 			ExtendedGeneralPath path = (ExtendedGeneralPath) shape;
 			_cachedTransform.setToScale(widthRatio, heightRatio);
 			_cachedTransform.translate(transX, transY);
 			path.transform(_cachedTransform);
 		}
-		else if (shape instanceof Ellipse2D)
+		else if (shape is Ellipse2D)
 		{
 			Ellipse2D ellipse = (Ellipse2D) shape;
 			if (transX != 0 || transY != 0)
@@ -391,7 +391,7 @@ class StencilShape extends BasicShape
 	{
 		Element element = null;
 
-		if (root instanceof Element)
+		if (root is Element)
 		{
 			element = (Element) root;
 			String style = element.getAttribute("style");
@@ -791,7 +791,7 @@ class _svgShape
   {
     this.shape = shape;
     this.style = style;
-    subShapes = new ArrayList<_svgShape>();
+    subShapes = new List<_svgShape>();
   }
 
   public double getCurrentXScale()

@@ -455,7 +455,7 @@ class Utils
 	static String[] wordWrap(String text, FontMetrics metrics,
 			double width)
 	{
-		List<String> result = new ArrayList<String>();
+		List<String> result = new List<String>();
 		// First split the processing into lines already delimited by
 		// newlines. We want the result to retain all newlines in position.
 		String[] lines = text.split("\n");
@@ -1066,7 +1066,7 @@ class Utils
 
 		if (pts != null)
 		{
-			result = new ArrayList<Point2d>(pts.size());
+			result = new List<Point2d>(pts.size());
 			Iterator<Point2d> it = pts.iterator();
 
 			while (it.hasNext())
@@ -1130,7 +1130,7 @@ class Utils
 	/**
 	 * Sorts the given cells according to the order in the cell hierarchy.
 	 */
-	static Object[] sortCells(Object[] cells, final bool ascending)
+	static List<Object> sortCells(List<Object> cells, final bool ascending)
 	{
 		return sortCells(Arrays.asList(cells), ascending).toArray();
 	}
@@ -1160,7 +1160,7 @@ class Utils
 	/**
 	 * Returns true if the given array contains the given object.
 	 */
-	static bool contains(Object[] array, Object obj)
+	static bool contains(List<Object> array, Object obj)
 	{
 		return indexOf(array, obj) >= 0;
 	}
@@ -1169,7 +1169,7 @@ class Utils
 	 * Returns the index of the given object in the given array of -1 if the
 	 * object is not contained in the array.
 	 */
-	static int indexOf(Object[] array, Object obj)
+	static int indexOf(List<Object> array, Object obj)
 	{
 		if (obj != null && array != null)
 		{
@@ -1246,9 +1246,9 @@ class Utils
 	 *            Key of the style to be changed.
 	 * @param value
 	 *            New value for the given key.
-	 * @deprecated Use <code>StyleUtils.setCellStyles(IGraphModel, Object[], String, String)</code> (Jan 2012)
+	 * @deprecated Use <code>StyleUtils.setCellStyles(IGraphModel, List<Object>, String, String)</code> (Jan 2012)
 	 */
-	static void setCellStyles(IGraphModel model, Object[] cells,
+	static void setCellStyles(IGraphModel model, List<Object> cells,
 			String key, String value)
 	{
 		StyleUtils.setCellStyles(model, cells, key, value);
@@ -1296,9 +1296,9 @@ class Utils
 	 *            Integer for the bit to be changed.
 	 * @param value
 	 *            Optional bool value for the flag.
-	 * @deprecated Use <code>StyleUtils.setCellStyleFlags(IGraphModel, Object[],String, int, Boolean)</code> (Jan 2012)
+	 * @deprecated Use <code>StyleUtils.setCellStyleFlags(IGraphModel, List<Object>,String, int, Boolean)</code> (Jan 2012)
 	 */
-	static void setCellStyleFlags(IGraphModel model, Object[] cells,
+	static void setCellStyleFlags(IGraphModel model, List<Object> cells,
 			String key, int flag, Boolean value)
 	{
 		StyleUtils.setCellStyleFlags(model, cells, key, flag, value);
@@ -1834,7 +1834,7 @@ class Utils
 
 			for (int i = 0; i < digest.length; i++)
 			{
-				f.format("%02x", new Object[] { new Byte(digest[i]) });
+				f.format("%02x", new List<Object> { new Byte(digest[i]) });
 			}
 		}
 		catch (NoSuchAlgorithmException ex)
@@ -1880,7 +1880,7 @@ class Utils
 	static bool isNode(Object value, String nodeName,
 			String attributeName, String attributeValue)
 	{
-		if (value instanceof Element)
+		if (value is Element)
 		{
 			Element element = (Element) value;
 
@@ -2400,7 +2400,7 @@ class Utils
 	 */
 	static Node findNode(Node node, String attr, String value)
 	{
-		String tmp = (node instanceof Element) ? ((Element) node)
+		String tmp = (node is Element) ? ((Element) node)
 				.getAttribute(attr) : null;
 
 		if (tmp != null && tmp.equals(value))

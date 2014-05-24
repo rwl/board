@@ -10,7 +10,7 @@ part of graph.analysis;
  * <code>new DistanceCostFunction(graph)</code> or
  * <code>new ConstantCostFunction(1)</code>.
  */
-public interface ICostFunction
+abstract class ICostFunction
 {
 
 	/**

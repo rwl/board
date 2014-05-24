@@ -196,7 +196,7 @@ class Multiplicity
 	{
 		if (value != null)
 		{
-			if (value instanceof Element)
+			if (value is Element)
 			{
 				return Utils.isNode(value, type, attr, attrValue);
 			}

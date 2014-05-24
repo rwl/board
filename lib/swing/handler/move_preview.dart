@@ -54,37 +54,37 @@ class MovePreview extends EventSource
 	/**
 	 * 
 	 */
-	transient CellState _startState;
+	/*transient*/ CellState _startState;
 
 	/**
 	 * 
 	 */
-	transient CellState[] _previewStates;
+	/*transient*/ List<CellState> _previewStates;
 
 	/**
 	 * 
 	 */
-	transient Object[] _movingCells;
+	/*transient*/ List<Object> _movingCells;
 
 	/**
 	 * 
 	 */
-	transient Rectangle _initialPlaceholder;
+	/*transient*/ Rectangle _initialPlaceholder;
 
 	/**
 	 * 
 	 */
-	transient Rectangle _placeholder;
+	/*transient*/ Rectangle _placeholder;
 
 	/**
 	 * 
 	 */
-	transient Rect _lastDirty;
+	/*transient*/ Rect _lastDirty;
 
 	/**
 	 * 
 	 */
-	transient CellStatePreview _preview;
+	/*transient*/ CellStatePreview _preview;
 
 	/**
 	 * Constructs a new rubberband selection for the given graph component.
@@ -197,7 +197,7 @@ class MovePreview extends EventSource
 	/**
 	 * FIXME: Cells should be assigned outside of getPreviewStates
 	 */
-	Object[] getMovingCells()
+	List<Object> getMovingCells()
 	{
 		return _movingCells;
 	}
@@ -205,7 +205,7 @@ class MovePreview extends EventSource
 	/**
 	 * 
 	 */
-	Object[] getCells(CellState initialState)
+	List<Object> getCells(CellState initialState)
 	{
 		Graph graph = _graphComponent.getGraph();
 
@@ -215,7 +215,7 @@ class MovePreview extends EventSource
 	/**
 	 * Returns the states that are affected by the move operation.
 	 */
-	CellState[] _getPreviewStates()
+	List<CellState> _getPreviewStates()
 	{
 		Graph graph = _graphComponent.getGraph();
 		Collection<CellState> result = new LinkedList<CellState>();
@@ -236,7 +236,7 @@ class MovePreview extends EventSource
 
 				if (isContextPreview())
 				{
-					Object[] edges = graph.getAllEdges(new Object[] { cell });
+					List<Object> edges = graph.getAllEdges(new List<Object> { cell });
 
 					for (Object edge : edges)
 					{
@@ -446,10 +446,10 @@ class MovePreview extends EventSource
 	/**
 	 *
 	 */
-	Object[] stop(bool commit, MouseEvent e, double dx, double dy,
+	List<Object> stop(bool commit, MouseEvent e, double dx, double dy,
 			bool clone, Object target)
 	{
-		Object[] cells = _movingCells;
+		List<Object> cells = _movingCells;
 		_reset();
 
 		Graph graph = _graphComponent.getGraph();

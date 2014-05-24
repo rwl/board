@@ -137,7 +137,7 @@ class GraphSelectionModel extends EventSource
 	/**
 	 * Returns the selection cells.
 	 */
-	Object[] getCells()
+	List<Object> getCells()
 	{
 		return _cells.toArray();
 	}
@@ -149,7 +149,7 @@ class GraphSelectionModel extends EventSource
 	{
 		if (cell != null)
 		{
-			setCells(new Object[] { cell });
+			setCells(new List<Object> { cell });
 		}
 		else
 		{
@@ -160,16 +160,16 @@ class GraphSelectionModel extends EventSource
 	/**
 	 * Clears the selection and adds the given cells.
 	 */
-	void setCells(Object[] cells)
+	void setCells(List<Object> cells)
 	{
 		if (cells != null)
 		{
 			if (_singleSelection)
 			{
-				cells = new Object[] { _getFirstSelectableCell(cells) };
+				cells = new List<Object> { _getFirstSelectableCell(cells) };
 			}
 
-			List<Object> tmp = new ArrayList<Object>(cells.length);
+			List<Object> tmp = new List<Object>(cells.length);
 
 			for (int i = 0; i < cells.length; i++)
 			{
@@ -193,7 +193,7 @@ class GraphSelectionModel extends EventSource
 	 * @param cells Array of cells to return the first selectable cell for.
 	 * @return Returns the first cell that may be selected.
 	 */
-	Object _getFirstSelectableCell(Object[] cells)
+	Object _getFirstSelectableCell(List<Object> cells)
 	{
 		if (cells != null)
 		{
@@ -216,14 +216,14 @@ class GraphSelectionModel extends EventSource
 	{
 		if (cell != null)
 		{
-			addCells(new Object[] { cell });
+			addCells(new List<Object> { cell });
 		}
 	}
 
 	/**
 	 * 
 	 */
-	void addCells(Object[] cells)
+	void addCells(List<Object> cells)
 	{
 		if (cells != null)
 		{
@@ -232,10 +232,10 @@ class GraphSelectionModel extends EventSource
 			if (_singleSelection)
 			{
 				remove = this._cells;
-				cells = new Object[] { _getFirstSelectableCell(cells) };
+				cells = new List<Object> { _getFirstSelectableCell(cells) };
 			}
 
-			List<Object> tmp = new ArrayList<Object>(cells.length);
+			List<Object> tmp = new List<Object>(cells.length);
 
 			for (int i = 0; i < cells.length; i++)
 			{
@@ -256,18 +256,18 @@ class GraphSelectionModel extends EventSource
 	{
 		if (cell != null)
 		{
-			removeCells(new Object[] { cell });
+			removeCells(new List<Object> { cell });
 		}
 	}
 
 	/**
 	 * 
 	 */
-	void removeCells(Object[] cells)
+	void removeCells(List<Object> cells)
 	{
 		if (cells != null)
 		{
-			List<Object> tmp = new ArrayList<Object>(cells.length);
+			List<Object> tmp = new List<Object>(cells.length);
 
 			for (int i = 0; i < cells.length; i++)
 			{
@@ -347,8 +347,8 @@ class GraphSelectionModel extends EventSource
 				Collection<Object> added, Collection<Object> removed)
 		{
 			this.model = model;
-			this.added = (added != null) ? new ArrayList<Object>(added) : null;
-			this.removed = (removed != null) ? new ArrayList<Object>(removed)
+			this.added = (added != null) ? new List<Object>(added) : null;
+			this.removed = (removed != null) ? new List<Object>(removed)
 					: null;
 		}
 

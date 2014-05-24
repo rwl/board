@@ -140,7 +140,7 @@ class SharedState extends EventSource
 	{
 		if (_diagramChangeListeners == null)
 		{
-			_diagramChangeListeners = new ArrayList<DiagramChangeListener>();
+			_diagramChangeListeners = new List<DiagramChangeListener>();
 		}
 
 		_diagramChangeListeners.add(listener);

@@ -5,6 +5,10 @@ library graph.analysis;
  * shortest path and minimum spanning tree.
  */
 
+import 'dart:collection' show HashMap;
+
+import '../graph.dart';
+
 import '../cost_function/cost_function.dart' show CostFunction, DoubleValCostFunction;
 import '../generator_function/generator_function.dart' show GeneratorFunction, GeneratorRandomFunction;
 import '../model/model.dart' show IGraphModel, Geometry, Cell;

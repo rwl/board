@@ -160,7 +160,7 @@ class PathParser extends NumberParser
 		skipSpaces();
 		if (current != -1)
 		{
-			reportError("end.of.stream.expected", new Object[] { new Integer(
+			reportError("end.of.stream.expected", new List<Object> { new Integer(
 					current) });
 		}
 

@@ -24,9 +24,9 @@ class GraphMlGraph
 
 	private String _edgedefault = "";
 
-	private List<GraphMlNode> _nodes = new ArrayList<GraphMlNode>();
+	private List<GraphMlNode> _nodes = new List<GraphMlNode>();
 
-	private List<GraphMlEdge> _edges = new ArrayList<GraphMlEdge>();
+	private List<GraphMlEdge> _edges = new List<GraphMlEdge>();
 
 	/**
 	 * Constructs a graph with id and edge default direction.

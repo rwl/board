@@ -69,7 +69,7 @@ class Curve
 	 * these guiding points and creates a finer set of internal points
 	 * that visually appears to be a curve when linked by straight lines
 	 */
-	List<Point2d> guidePoints = new ArrayList<Point2d>();
+	List<Point2d> guidePoints = new List<Point2d>();
 
 	/**
 	 * Whether or not the curve currently holds valid values
@@ -122,7 +122,7 @@ class Curve
 
 		if (!nullPoints)
 		{
-			guidePoints = new ArrayList<Point2d>(points);
+			guidePoints = new List<Point2d>(points);
 		}
 	}
 
@@ -310,7 +310,7 @@ class Curve
 					+ segVectorX * distanceAlongSeg, firstPointOfSeg.getY()
 					+ segVectorY * distanceAlongSeg);
 
-			List<Point2d> result = new ArrayList<Point2d>();
+			List<Point2d> result = new List<Point2d>();
 			result.add(startPoint);
 
 			double current = start;
@@ -851,8 +851,8 @@ class Curve
 		// take this into account.
 		double intervalChange = 1;
 
-		List<Point2d> coreCurve = new ArrayList<Point2d>();
-		List<Double> coreIntervals = new ArrayList<Double>();
+		List<Point2d> coreCurve = new List<Point2d>();
+		List<Double> coreIntervals = new List<Double>();
 		bool twoLoopsComplete = false;
 
 		for (double t = 0; t <= 1.5; t += interval)
@@ -1032,7 +1032,7 @@ class Curve
 
 		bool labelReversed = isLabelReversed();
 
-		List<Point2d> labelCurvePoints = new ArrayList<Point2d>();
+		List<Point2d> labelCurvePoints = new List<Point2d>();
 
 		// Lower and upper curve start from the very ends
 		// of their curves, so given that their middle points
@@ -1229,7 +1229,7 @@ class Curve
 						}
 					}
 
-					guidePoints = new ArrayList<Point2d>(newPoints);
+					guidePoints = new List<Point2d>(newPoints);
 					_minXBounds += transX;
 					_minYBounds += transY;
 					_maxXBounds += transX;
@@ -1244,7 +1244,7 @@ class Curve
 
 		if (pointsChanged)
 		{
-			guidePoints = new ArrayList<Point2d>(newPoints);
+			guidePoints = new List<Point2d>(newPoints);
 			_points = new Hashtable<String, Point2d[]>();
 			_valid = false;
 		}

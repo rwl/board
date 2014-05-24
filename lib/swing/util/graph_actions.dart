@@ -362,7 +362,7 @@ class GraphActions
 	{
 		Object source = e.getSource();
 
-		if (source instanceof GraphComponent)
+		if (source is GraphComponent)
 		{
 			return ((GraphComponent) source).getGraph();
 		}
@@ -395,7 +395,7 @@ class GraphActions
 		 */
 		public void actionPerformed(ActionEvent e)
 		{
-			if (e.getSource() instanceof GraphComponent)
+			if (e.getSource() is GraphComponent)
 			{
 				((GraphComponent) e.getSource()).startEditing();
 			}
@@ -745,7 +745,7 @@ class GraphActions
 		{
 			Object source = e.getSource();
 
-			if (source instanceof GraphComponent)
+			if (source is GraphComponent)
 			{
 				String name = getValue(Action.NAME).toString();
 				GraphComponent graphComponent = (GraphComponent) source;

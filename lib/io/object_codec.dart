@@ -203,17 +203,17 @@ class ObjectCodec
 			// as attributes in this case. This is
 			// required because in JavaScript, the
 			// map and array object are the same.
-			if (obj instanceof Collection)
+			if (obj is Collection)
 			{
 				node = node.getFirstChild();
 
 				// Skips text nodes
-				while (node != null && !(node instanceof Element))
+				while (node != null && !(node is Element))
 				{
 					node = node.getNextSibling();
 				}
 
-				if (node != null && node instanceof Element
+				if (node != null && node is Element
 						&& ((Element) node).hasAttribute("as"))
 				{
 					obj = new Hashtable<Object, Object>();
@@ -383,14 +383,14 @@ class ObjectCodec
 	{
 		if (obj.getClass().isArray())
 		{
-			Object[] tmp = (Object[]) obj;
+			List<Object> tmp = (List<Object>) obj;
 
 			for (int i = 0; i < tmp.length; i++)
 			{
 				_encodeValue(enc, obj, null, tmp[i], node);
 			}
 		}
-		else if (obj instanceof Map)
+		else if (obj is Map)
 		{
 			Iterator<Map.Entry> it = ((Map) obj).entrySet().iterator();
 
@@ -401,7 +401,7 @@ class ObjectCodec
 						node);
 			}
 		}
-		else if (obj instanceof Collection)
+		else if (obj is Collection)
 		{
 			Iterator<?> it = ((Collection<?>) obj).iterator();
 
@@ -463,11 +463,11 @@ class ObjectCodec
 	 */
 	bool _isPrimitiveValue(Object value)
 	{
-		return value instanceof String || value instanceof Boolean
-				|| value instanceof Character || value instanceof Byte
-				|| value instanceof Short || value instanceof Integer
-				|| value instanceof Long || value instanceof Float
-				|| value instanceof Double || value.getClass().isPrimitive();
+		return value is String || value is Boolean
+				|| value is Character || value is Byte
+				|| value is Short || value is Integer
+				|| value is Long || value is Float
+				|| value is Double || value.getClass().isPrimitive();
 	}
 
 	/**
@@ -495,7 +495,7 @@ class ObjectCodec
 	void _writePrimitiveAttribute(Codec enc, Object obj,
 			String attr, Object value, Node node)
 	{
-		if (attr == null || obj instanceof Map)
+		if (attr == null || obj is Map)
 		{
 			Node child = enc._document.createElement("add");
 
@@ -542,7 +542,7 @@ class ObjectCodec
 	 */
 	Object _convertValueToXml(Object value)
 	{
-		if (value instanceof Boolean)
+		if (value is Boolean)
 		{
 			value = ((Boolean) value).booleanValue() ? "1" : "0";
 		}
@@ -555,7 +555,7 @@ class ObjectCodec
 	 */
 	Object _convertValueFromXml(Class<?> type, Object value)
 	{
-		if (value instanceof String)
+		if (value is String)
 		{
 			String tmp = (String) value;
 
@@ -837,7 +837,7 @@ class ObjectCodec
 
 				if (method != null)
 				{
-					value = method.invoke(obj, (Object[]) null);
+					value = method.invoke(obj, (List<Object>) null);
 				}
 			}
 			catch (Exception e2)
@@ -908,14 +908,14 @@ class ObjectCodec
 					value = _convertValueFromXml(type, value);
 
 					// Converts collection to a typed array before setting
-					if (type.isArray() && value instanceof Collection)
+					if (type.isArray() && value is Collection)
 					{
 						Collection<?> coll = (Collection<?>) value;
-						value = coll.toArray((Object[]) Array.newInstance(
+						value = coll.toArray((List<Object>) Array.newInstance(
 								type.getComponentType(), coll.size()));
 					}
 
-					method.invoke(obj, new Object[] { value });
+					method.invoke(obj, new List<Object> { value });
 				}
 			}
 			catch (Exception e2)
@@ -1011,7 +1011,7 @@ class ObjectCodec
 	{
 		Object obj = null;
 
-		if (node instanceof Element)
+		if (node is Element)
 		{
 			String id = ((Element) node).getAttribute("id");
 			obj = dec._objects.get(id);
@@ -1170,7 +1170,7 @@ class ObjectCodec
 			template = null;
 		}
 		// Collections are cleared
-		else if (template instanceof Collection)
+		else if (template is Collection)
 		{
 			((Collection<?>) template).clear();
 		}
@@ -1191,7 +1191,7 @@ class ObjectCodec
 	{
 		if (value != null && !value.equals(template))
 		{
-			if (fieldname != null && obj instanceof Map)
+			if (fieldname != null && obj is Map)
 			{
 				((Map) obj).put(fieldname, value);
 			}
@@ -1201,7 +1201,7 @@ class ObjectCodec
 			}
 			// Arrays are treated as collections and
 			// converted in setFieldValue
-			else if (obj instanceof Collection)
+			else if (obj is Collection)
 			{
 				((Collection) obj).add(value);
 			}

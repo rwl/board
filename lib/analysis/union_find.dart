@@ -30,7 +30,7 @@ class UnionFind
 	 * 
 	 * @param elements
 	 */
-	UnionFind(Object[] elements)
+	UnionFind(List<Object> elements)
 	{
 		for (int i = 0; i < elements.length; i++)
 		{

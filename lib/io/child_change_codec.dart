@@ -41,7 +41,7 @@ class ChildChangeCodec extends ObjectCodec
 	bool isReference(Object obj, String attr, Object value,
 			bool isWrite)
 	{
-		if (attr.equals("child") && obj instanceof ChildChange
+		if (attr.equals("child") && obj is ChildChange
 				&& (((ChildChange) obj).getPrevious() != null || !isWrite))
 		{
 			return true;
@@ -56,7 +56,7 @@ class ChildChangeCodec extends ObjectCodec
 	@Override
 	Node afterEncode(Codec enc, Object obj, Node node)
 	{
-		if (obj instanceof ChildChange)
+		if (obj is ChildChange)
 		{
 			ChildChange change = (ChildChange) obj;
 			Object child = change.getChild();
@@ -86,7 +86,7 @@ class ChildChangeCodec extends ObjectCodec
 	 */
 	Node beforeDecode(Codec dec, Node node, Object into)
 	{
-		if (into instanceof ChildChange)
+		if (into is ChildChange)
 		{
 			ChildChange change = (ChildChange) into;
 
@@ -143,7 +143,7 @@ class ChildChangeCodec extends ObjectCodec
 	@Override
 	Object afterDecode(Codec dec, Node node, Object obj)
 	{
-		if (obj instanceof ChildChange)
+		if (obj is ChildChange)
 		{
 			ChildChange change = (ChildChange) obj;
 

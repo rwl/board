@@ -306,7 +306,7 @@ class RotationHandler extends MouseAdapter
 			{
 				_graphComponent.getGraph().setCellStyles(
 						Constants.STYLE_ROTATION, String.valueOf(deg),
-						new Object[] { cell });
+						new List<Object> { cell });
 
 				_graphComponent.getGraphControl().repaint();
 

@@ -36,12 +36,12 @@ class VertexHandler extends CellHandler
 	/**
 	 * Workaround for alt-key-state not correct in mouseReleased.
 	 */
-	transient bool _gridEnabledEvent = false;
+	/*transient*/ bool _gridEnabledEvent = false;
 
 	/**
 	 * Workaround for shift-key-state not correct in mouseReleased.
 	 */
-	transient bool _constrainedEvent = false;
+	/*transient*/ bool _constrainedEvent = false;
 
 	/**
 	 * 

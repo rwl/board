@@ -31,7 +31,7 @@ class PanningHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	transient Point _start;
+	/*transient*/ Point _start;
 
 	/**
 	 * 

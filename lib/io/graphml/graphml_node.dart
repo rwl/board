@@ -18,7 +18,7 @@ class GraphMlNode
 
 	private GraphMlData _nodeData;
 
-	private List<GraphMlGraph> _nodeGraphList = new ArrayList<GraphMlGraph>();
+	private List<GraphMlGraph> _nodeGraphList = new List<GraphMlGraph>();
 
 	private HashMap<String, GraphMlData> _nodeDataMap = new HashMap<String, GraphMlData>();
 

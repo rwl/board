@@ -18,7 +18,7 @@ class NoLinefeedHtmlEditorKit extends HTMLEditorKit
 	void write(Writer out, Document doc, int pos, int len)
 			throws IOException, BadLocationException
 	{
-		if (doc instanceof HTMLDocument)
+		if (doc is HTMLDocument)
 		{
 			NoLinefeedHtmlWriter w = new NoLinefeedHtmlWriter(out,
 					(HTMLDocument) doc, pos, len);
@@ -31,7 +31,7 @@ class NoLinefeedHtmlEditorKit extends HTMLEditorKit
 			w.setLineLength(Integer.MAX_VALUE);
 			w.write();
 		}
-		else if (doc instanceof StyledDocument)
+		else if (doc is StyledDocument)
 		{
 			MinimalHTMLWriter w = new MinimalHTMLWriter(out,
 					(StyledDocument) doc, pos, len);

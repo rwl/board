@@ -179,7 +179,7 @@ public abstract class GraphViewReader extends DefaultHandler
 	 */
 	static List<Point2d> parsePoints(String pts)
 	{
-		List<Point2d> result = new ArrayList<Point2d>();
+		List<Point2d> result = new List<Point2d>();
 
 		if (pts != null)
 		{

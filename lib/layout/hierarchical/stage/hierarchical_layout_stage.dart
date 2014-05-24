@@ -64,7 +64,7 @@ class _MedianCellSorter implements Comparable<Object>
    */
   public int compareTo(Object arg0)
   {
-    if (arg0 instanceof _MedianCellSorter)
+    if (arg0 is _MedianCellSorter)
     {
       if (medianValue < ((_MedianCellSorter) arg0).medianValue)
       {
@@ -135,7 +135,7 @@ class _WeightedCellSorter implements Comparable<Object>
    */
   public int compareTo(Object arg0)
   {
-    if (arg0 instanceof _WeightedCellSorter)
+    if (arg0 is _WeightedCellSorter)
     {
       if (weightedValue > ((_WeightedCellSorter) arg0).weightedValue)
       {

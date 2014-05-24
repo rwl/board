@@ -362,9 +362,9 @@ class CoordinateAssignment implements HierarchicalLayoutStage
 			int rankValue = cellWrapper.weightedValue;
 			int rankIndex = cellWrapper.rankIndex;
 
-			Object[] nextLayerConnectedCells = cell.getNextLayerConnectedCells(
+			List<Object> nextLayerConnectedCells = cell.getNextLayerConnectedCells(
 					rankValue).toArray();
-			Object[] previousLayerConnectedCells = cell
+			List<Object> previousLayerConnectedCells = cell
 					.getPreviousLayerConnectedCells(rankValue).toArray();
 
 			int numNextLayerConnected = nextLayerConnectedCells.length;
@@ -538,7 +538,7 @@ class CoordinateAssignment implements HierarchicalLayoutStage
 			GraphHierarchyModel model, int nextRankValue)
 	{
 		GraphHierarchyRank rankSet = model.ranks.get(new Integer(rankValue));
-		Object[] rank = rankSet.toArray();
+		List<Object> rank = rankSet.toArray();
 		// Form an array of the order in which the cells are to be processed
 		// , the order is given by the weighted sum of the in or out edges,
 		// depending on whether we're travelling up or down the hierarchy.
@@ -580,7 +580,7 @@ class CoordinateAssignment implements HierarchicalLayoutStage
 		{
 			int numConnectionsNextLevel = 0;
 			GraphAbstractHierarchyCell cell = weightedValues[i].cell;
-			Object[] nextLayerConnectedCells = null;
+			List<Object> nextLayerConnectedCells = null;
 			int medianNextLevel = 0;
 
 			if (nextRankValue < rankValue)
@@ -747,7 +747,7 @@ class CoordinateAssignment implements HierarchicalLayoutStage
 	 *            the layer number of this rank
 	 * @return the median rank order ( not x position ) of the connected cells
 	 */
-	private int _medianXValue(Object[] connectedCells, int rankValue)
+	private int _medianXValue(List<Object> connectedCells, int rankValue)
 	{
 		if (connectedCells.length == 0)
 		{
@@ -1531,7 +1531,7 @@ class CoordinateAssignment implements HierarchicalLayoutStage
 				Object realEdge = parallelEdges.next();
 				Object realSource = _layout.getGraph().getView().getVisibleTerminal(realEdge, true);
 				
-				List<Point2d> newPoints = new ArrayList<Point2d>(edge.x.length);
+				List<Point2d> newPoints = new List<Point2d>(edge.x.length);
 
 				// Single length reversed edges end up with the jettys in the wrong
 				// places. Since single length edges only have jettys, not segment

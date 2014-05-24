@@ -38,17 +38,17 @@ class EdgeHandler extends CellHandler
 	/**
 	 * 
 	 */
-	transient String _error;
+	/*transient*/ String _error;
 
 	/**
 	 * Workaround for alt-key-state not correct in mouseReleased.
 	 */
-	transient bool _gridEnabledEvent = false;
+	/*transient*/ bool _gridEnabledEvent = false;
 
 	/**
 	 * Workaround for shift-key-state not correct in mouseReleased.
 	 */
-	transient bool _constrainedEvent = false;
+	/*transient*/ bool _constrainedEvent = false;
 
 	/**
 	 * 
@@ -526,7 +526,7 @@ class EdgeHandler extends CellHandler
 					}
 					else if (_index - 1 < points.size())
 					{
-						points = new ArrayList<Point2d>(points);
+						points = new List<Point2d>(points);
 						points.set(_index - 1, point);
 					}
 
@@ -715,7 +715,7 @@ class EdgeHandler extends CellHandler
 
 					if (pts == null)
 					{
-						pts = new ArrayList<Point2d>();
+						pts = new List<Point2d>();
 						geometry.setPoints(pts);
 					}
 
@@ -759,10 +759,10 @@ class EdgeHandler extends CellHandler
 		{
 			if (isClone)
 			{
-				Object clone = graph.cloneCells(new Object[] { edge })[0];
+				Object clone = graph.cloneCells(new List<Object> { edge })[0];
 
 				Object parent = model.getParent(edge);
-				graph.addCells(new Object[] { clone }, parent);
+				graph.addCells(new List<Object> { clone }, parent);
 
 				Object other = model.getTerminal(edge, !isSource);
 				graph.connectCell(clone, other, !isSource);

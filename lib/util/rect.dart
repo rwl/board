@@ -247,7 +247,7 @@ class Rect extends Point2d
 	 */
 	bool equals(Object obj)
 	{
-		if (obj instanceof Rect)
+		if (obj is Rect)
 		{
 			Rect rect = (Rect) obj;
 

@@ -19,7 +19,7 @@ class ConnectorShape extends BasicShape
 		if (state.getAbsolutePointCount() > 1
 				&& _configureGraphics(canvas, state, false))
 		{
-			List<Point2d> pts = new ArrayList<Point2d>(
+			List<Point2d> pts = new List<Point2d>(
 					state.getAbsolutePoints());
 			Map<String, Object> style = state.getStyle();
 

@@ -42,22 +42,22 @@ class CellHandler
 	/**
 	 * Holds the bounding box of the handler.
 	 */
-	transient Rectangle _bounds;
+	/*transient*/ Rectangle _bounds;
 
 	/**
 	 * Holds the component that is used for preview.
 	 */
-	transient JComponent _preview;
+	/*transient*/ JComponent _preview;
 
 	/**
 	 * Holds the start location of the mouse gesture.
 	 */
-	transient Point _first;
+	/*transient*/ Point _first;
 
 	/**
 	 * Holds the index of the handle that was clicked.
 	 */
-	transient int _index;
+	/*transient*/ int _index;
 
 	/**
 	 * Constructs a new cell handler for the given cell state.

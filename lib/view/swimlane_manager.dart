@@ -52,7 +52,7 @@ class SwimlaneManager extends EventSource
 		{
 			if (isEnabled() && isAddEnabled())
 			{
-				_cellsAdded((Object[]) evt.getProperty("cells"));
+				_cellsAdded((List<Object>) evt.getProperty("cells"));
 			}
 		}
 	};
@@ -66,7 +66,7 @@ class SwimlaneManager extends EventSource
 		{
 			if (isEnabled() && isResizeEnabled())
 			{
-				_cellsResized((Object[]) evt.getProperty("cells"));
+				_cellsResized((List<Object>) evt.getProperty("cells"));
 			}
 		}
 	};
@@ -201,7 +201,7 @@ class SwimlaneManager extends EventSource
 	 * Called if any cells have been added. Calls swimlaneAdded for all swimlanes
 	 * where isSwimlaneIgnored returns false.
 	 */
-	void _cellsAdded(Object[] cells)
+	void _cellsAdded(List<Object> cells)
 	{
 		if (cells != null)
 		{
@@ -266,7 +266,7 @@ class SwimlaneManager extends EventSource
 	 * Called if any cells have been resizes. Calls swimlaneResized for all
 	 * swimlanes where isSwimlaneIgnored returns false.
 	 */
-	void _cellsResized(Object[] cells)
+	void _cellsResized(List<Object> cells)
 	{
 		if (cells != null)
 		{

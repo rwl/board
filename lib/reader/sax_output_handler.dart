@@ -24,7 +24,7 @@ class SaxOutputHandler extends DefaultHandler
 	/**
 	 * 
 	 */
-	transient Map<String, IElementHandler> _handlers = new Hashtable<String, IElementHandler>();
+	/*transient*/ Map<String, IElementHandler> _handlers = new Hashtable<String, IElementHandler>();
 
 	/**
 	 * 

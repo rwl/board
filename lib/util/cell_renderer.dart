@@ -27,14 +27,14 @@ class CellRenderer
 	 * @param graph Graph to be painted onto the canvas.
 	 * @return Returns the image that represents the canvas.
 	 */
-	static ICanvas drawCells(Graph graph, Object[] cells,
+	static ICanvas drawCells(Graph graph, List<Object> cells,
 			double scale, Rect clip, CanvasFactory factory)
 	{
 		ICanvas canvas = null;
 
 		if (cells == null)
 		{
-			cells = new Object[] { graph.getModel().getRoot() };
+			cells = new List<Object> { graph.getModel().getRoot() };
 		}
 
 		// Gets the current state of the view
@@ -102,7 +102,7 @@ class CellRenderer
 	 * 
 	 */
 	static BufferedImage createBufferedImage(Graph graph,
-			Object[] cells, double scale, Color background, bool antiAlias,
+			List<Object> cells, double scale, Color background, bool antiAlias,
 			Rect clip)
 	{
 		return createBufferedImage(graph, cells, scale, background, antiAlias,
@@ -113,7 +113,7 @@ class CellRenderer
 	 * 
 	 */
 	static BufferedImage createBufferedImage(Graph graph,
-			Object[] cells, double scale, final Color background,
+			List<Object> cells, double scale, final Color background,
 			final bool antiAlias, Rect clip,
 			final Graphics2DCanvas graphicsCanvas)
 	{
@@ -134,7 +134,7 @@ class CellRenderer
 	/**
 	 * 
 	 */
-	static Document createHtmlDocument(Graph graph, Object[] cells,
+	static Document createHtmlDocument(Graph graph, List<Object> cells,
 			double scale, Color background, Rect clip)
 	{
 		HtmlCanvas canvas = (HtmlCanvas) drawCells(graph, cells, scale,
@@ -153,7 +153,7 @@ class CellRenderer
 	/**
 	 * 
 	 */
-	static Document createSvgDocument(Graph graph, Object[] cells,
+	static Document createSvgDocument(Graph graph, List<Object> cells,
 			double scale, Color background, Rect clip)
 	{
 		SvgCanvas canvas = (SvgCanvas) drawCells(graph, cells, scale, clip,
@@ -173,7 +173,7 @@ class CellRenderer
 	/**
 	 * 
 	 */
-	static Document createVmlDocument(Graph graph, Object[] cells,
+	static Document createVmlDocument(Graph graph, List<Object> cells,
 			double scale, Color background, Rect clip)
 	{
 		VmlCanvas canvas = (VmlCanvas) drawCells(graph, cells, scale, clip,

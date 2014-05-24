@@ -104,7 +104,7 @@ public abstract class AbstractParser implements Parser
 	 * @param key The message key in the resource bundle.
 	 * @param args The message arguments.
 	 */
-	void reportError(String key, Object[] args) throws ParseException
+	void reportError(String key, List<Object> args) throws ParseException
 	{
 		errorHandler.error(new ParseException(createErrorMessage(key, args),
 				reader.getLine(), reader.getColumn()));
@@ -120,7 +120,7 @@ public abstract class AbstractParser implements Parser
 	void reportCharacterExpectedError(char expectedChar,
 			int currentChar)
 	{
-		reportError("character.expected", new Object[] {
+		reportError("character.expected", new List<Object> {
 				new Character(expectedChar), new Integer(currentChar) });
 
 	}
@@ -133,7 +133,7 @@ public abstract class AbstractParser implements Parser
 	 */
 	void reportUnexpectedCharacterError(int currentChar)
 	{
-		reportError("character.unexpected", new Object[] { new Integer(
+		reportError("character.unexpected", new List<Object> { new Integer(
 				currentChar) });
 
 	}
@@ -143,7 +143,7 @@ public abstract class AbstractParser implements Parser
 	 * @param key The message key in the resource bundle.
 	 * @param args The message arguments.
 	 */
-	String createErrorMessage(String key, Object[] args)
+	String createErrorMessage(String key, List<Object> args)
 	{
 		try
 		{

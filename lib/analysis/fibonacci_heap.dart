@@ -32,12 +32,12 @@ class FibonacciHeap
 	 */
 	_FibonacciHeapNode getNode(Object element, bool create)
 	{
-		_FibonacciHeapNode node = _nodes.get(element);
+		_FibonacciHeapNode node = _nodes[element];
 
 		if (node == null && create)
 		{
 			node = new _FibonacciHeapNode(element, Double.MAX_VALUE);
-			_nodes.put(element, node);
+			_nodes[element] = node;
 			insert(node, node.getKey());
 		}
 		return node;
@@ -331,7 +331,7 @@ class FibonacciHeap
 	void _consolidate()
 	{
 		int arraySize = _size + 1;
-		_FibonacciHeapNode[] array = new _FibonacciHeapNode[arraySize];
+		List<_FibonacciHeapNode> array = new List<_FibonacciHeapNode>(arraySize);
 
 		// Initialize degree array
 		for (int i = 0; i < arraySize; i++)
@@ -565,7 +565,7 @@ class _FibonacciHeapNode
    * 
    * @param key The initial key for node.
    */
-  public _FibonacciHeapNode(Object userObject, double key)
+  _FibonacciHeapNode(Object userObject, double key)
   {
     this._userObject = userObject;
     _right = this;
@@ -578,7 +578,7 @@ class _FibonacciHeapNode
    * 
    * @return the key
    */
-  public final double getKey()
+  /*final*/ double getKey()
   {
     return _key;
   }
@@ -586,7 +586,7 @@ class _FibonacciHeapNode
   /**
    * @return Returns the userObject.
    */
-  public Object getUserObject()
+  Object getUserObject()
   {
     return _userObject;
   }
@@ -594,7 +594,7 @@ class _FibonacciHeapNode
   /**
    * @param userObject The userObject to set.
    */
-  public void setUserObject(Object userObject)
+  void setUserObject(Object userObject)
   {
     this._userObject = userObject;
   }

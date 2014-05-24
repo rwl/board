@@ -39,7 +39,7 @@ class TerminalChangeCodec extends ObjectCodec
 	@Override
 	Object afterDecode(Codec dec, Node node, Object obj)
 	{
-		if (obj instanceof TerminalChange)
+		if (obj is TerminalChange)
 		{
 			TerminalChange change = (TerminalChange) obj;
 

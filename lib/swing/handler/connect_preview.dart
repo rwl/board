@@ -128,7 +128,7 @@ class ConnectPreview extends EventSource
 		ICell cell = (ICell) _previewState.getCell();
 
 		Rect dirty = _graphComponent.getGraph().getPaintBounds(
-				new Object[] { _previewState.getCell() });
+				new List<Object> { _previewState.getCell() });
 
 		if (cell.getTerminal(false) != null)
 		{
@@ -179,7 +179,7 @@ class ConnectPreview extends EventSource
 		if (_previewState != null)
 		{
 			Rect tmp = _graphComponent.getGraph().getPaintBounds(
-					new Object[] { _previewState.getCell() });
+					new List<Object> { _previewState.getCell() });
 
 			if (dirty != null)
 			{

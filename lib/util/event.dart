@@ -287,7 +287,7 @@ class Event
 	 * addListener(
 	 *   Event.MARK, new mxEventListener()
 	 *   {
-	 *     public void invoke(Object source, Object[] args)
+	 *     public void invoke(Object source, List<Object> args)
 	 *     {
 	 *       cellMarked((CellMarker) source, (CellState) args[0]);
 	 *     }

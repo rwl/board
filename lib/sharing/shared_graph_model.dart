@@ -166,7 +166,7 @@ class SharedGraphModel extends SharedState
 				change = _codec.decode(node);
 			}
 
-			if (change instanceof AtomicGraphModelChange)
+			if (change is AtomicGraphModelChange)
 			{
 				AtomicGraphModelChange ac = (AtomicGraphModelChange) change;
 
@@ -176,7 +176,7 @@ class SharedGraphModel extends SharedState
 				// Workaround for references not being resolved if cells have
 				// been removed from the model prior to being referenced. This
 				// adds removed cells in the codec object lookup table.
-				if (ac instanceof ChildChange
+				if (ac is ChildChange
 						&& ((ChildChange) ac).getParent() == null)
 				{
 					cellRemoved(((ChildChange) ac).getChild());

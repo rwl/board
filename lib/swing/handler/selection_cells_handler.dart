@@ -65,12 +65,12 @@ class SelectionCellsHandler implements MouseListener,
 	/**
 	 * Maps from cells to handlers in the order of the selection cells.
 	 */
-	transient LinkedHashMap<Object, CellHandler> _handlers = new LinkedHashMap<Object, CellHandler>();
+	/*transient*/ LinkedHashMap<Object, CellHandler> _handlers = new LinkedHashMap<Object, CellHandler>();
 
 	/**
 	 * 
 	 */
-	transient IEventListener _refreshHandler = new IEventListener()
+	/*transient*/ IEventListener _refreshHandler = new IEventListener()
 	{
 		public void invoke(Object source, EventObj evt)
 		{
@@ -84,7 +84,7 @@ class SelectionCellsHandler implements MouseListener,
 	/**
 	 * 
 	 */
-	transient PropertyChangeListener _labelMoveHandler = new PropertyChangeListener()
+	/*transient*/ PropertyChangeListener _labelMoveHandler = new PropertyChangeListener()
 	{
 
 		/*
@@ -364,7 +364,7 @@ class SelectionCellsHandler implements MouseListener,
 		_handlers = new LinkedHashMap<Object, CellHandler>();
 
 		// Creates handles for all selection cells
-		Object[] tmp = graph.getSelectionCells();
+		List<Object> tmp = graph.getSelectionCells();
 		bool handlesVisible = tmp.length <= getMaxHandlers();
 		Rectangle handleBounds = null;
 

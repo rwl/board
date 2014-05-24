@@ -130,83 +130,83 @@ class GraphHandler extends MouseAdapter implements
 	/**
 	 * Holds the cells that are being moved by this handler.
 	 */
-	transient Object[] _cells;
+	/*transient*/ List<Object> _cells;
 
 	/**
 	 * Holds the image that is being used for the preview.
 	 */
-	transient ImageIcon _dragImage;
+	/*transient*/ ImageIcon _dragImage;
 
 	/**
 	 * Holds the start location of the mouse gesture.
 	 */
-	transient Point _first;
+	/*transient*/ Point _first;
 
 	/**
 	 * 
 	 */
-	transient Object _cell;
+	/*transient*/ Object _cell;
 
 	/**
 	 * 
 	 */
-	transient Object _initialCell;
+	/*transient*/ Object _initialCell;
 
 	/**
 	 * 
 	 */
-	transient Object[] _dragCells;
+	/*transient*/ List<Object> _dragCells;
 
 	/**
 	 * 
 	 */
-	transient CellMarker _marker;
+	/*transient*/ CellMarker _marker;
 
 	/**
 	 * 
 	 */
-	transient bool _canImport;
+	/*transient*/ bool _canImport;
 
 	/**
 	 * Scaled, translated bounds of the selection cells.
 	 */
-	transient Rect _cellBounds;
+	/*transient*/ Rect _cellBounds;
 
 	/**
 	 * Scaled, translated bounding box of the selection cells.
 	 */
-	transient Rect _bbox;
+	/*transient*/ Rect _bbox;
 
 	/**
 	 * Unscaled, untranslated bounding box of the selection cells.
 	 */
-	transient Rect _transferBounds;
+	/*transient*/ Rect _transferBounds;
 
 	/**
 	 * 
 	 */
-	transient bool _visible = false;
+	/*transient*/ bool _visible = false;
 
 	/**
 	 * 
 	 */
-	transient Rectangle _previewBounds = null;
+	/*transient*/ Rectangle _previewBounds = null;
 
 	/**
 	 * Workaround for alt-key-state not correct in mouseReleased. Note: State
 	 * of the alt-key is not available during drag-and-drop.
 	 */
-	transient bool _gridEnabledEvent = false;
+	/*transient*/ bool _gridEnabledEvent = false;
 
 	/**
 	 * Workaround for shift-key-state not correct in mouseReleased.
 	 */
-	transient bool _constrainedEvent = false;
+	/*transient*/ bool _constrainedEvent = false;
 
 	/**
 	 * Reference to the current drop target.
 	 */
-	transient DropTarget _currentDropTarget = null;
+	/*transient*/ DropTarget _currentDropTarget = null;
 
 	/**
 	 * 
@@ -273,7 +273,7 @@ class GraphHandler extends MouseAdapter implements
 					final TransferHandler th = _graphComponent
 							.getTransferHandler();
 
-					if (th instanceof GraphTransferHandler)
+					if (th is GraphTransferHandler)
 					{
 						final GraphTransferable t = (GraphTransferable) ((GraphTransferHandler) th)
 								.createTransferable(_graphComponent);
@@ -435,12 +435,12 @@ class GraphHandler extends MouseAdapter implements
 			{
 				IGraphModel model = _graphComponent.getGraph().getModel();
 				TransferHandler th = _graphComponent.getTransferHandler();
-				bool isLocal = th instanceof GraphTransferHandler
+				bool isLocal = th is GraphTransferHandler
 						&& ((GraphTransferHandler) th).isLocalDrag();
 
 				Graph graph = _graphComponent.getGraph();
 				Object cell = super._getCell(e);
-				Object[] cells = (isLocal) ? graph.getSelectionCells()
+				List<Object> cells = (isLocal) ? graph.getSelectionCells()
 						: _dragCells;
 				cell = graph.getDropTarget(cells, e.getPoint(), cell);
 
@@ -648,7 +648,7 @@ class GraphHandler extends MouseAdapter implements
 	/**
 	 * 
 	 */
-	void updateDragImage(Object[] cells)
+	void updateDragImage(List<Object> cells)
 	{
 		_dragImage = null;
 
@@ -726,7 +726,7 @@ class GraphHandler extends MouseAdapter implements
 	{
 		JComponent component = _getDropTarget(e);
 		TransferHandler th = component.getTransferHandler();
-		bool isLocal = th instanceof GraphTransferHandler
+		bool isLocal = th is GraphTransferHandler
 				&& ((GraphTransferHandler) th).isLocalDrag();
 
 		if (isLocal)
@@ -781,7 +781,7 @@ class GraphHandler extends MouseAdapter implements
 							}
 							else
 							{
-								Object[] tmp = _graphComponent
+								List<Object> tmp = _graphComponent
 										.getImportableCells(_dragCells);
 								updateDragImage(tmp);
 
@@ -854,7 +854,7 @@ class GraphHandler extends MouseAdapter implements
 	/**
 	 * 
 	 */
-	Object[] getCells(Object initialCell)
+	List<Object> getCells(Object initialCell)
 	{
 		Graph graph = _graphComponent.getGraph();
 
@@ -1279,7 +1279,7 @@ class GraphHandler extends MouseAdapter implements
 
 				bool clone = isCloneEnabled()
 						&& _graphComponent.isCloneEvent(e);
-				Object[] result = _movePreview.stop(true, e, dx, dy, clone,
+				List<Object> result = _movePreview.stop(true, e, dx, dy, clone,
 						target);
 
 				if (_cells != result)
@@ -1331,7 +1331,7 @@ class GraphHandler extends MouseAdapter implements
 	{
 		bool collapse = !_graphComponent.getGraph().isCellCollapsed(cell);
 		_graphComponent.getGraph().foldCells(collapse, false,
-				new Object[] { cell });
+				new List<Object> { cell });
 	}
 
 	/**
@@ -1358,7 +1358,7 @@ class GraphHandler extends MouseAdapter implements
 	 * Returns true if the given cells should be removed from the parent for the specified
 	 * mousereleased event.
 	 */
-	bool _shouldRemoveCellFromParent(Object parent, Object[] cells,
+	bool _shouldRemoveCellFromParent(Object parent, List<Object> cells,
 			MouseEvent e)
 	{
 		if (_graphComponent.getGraph().getModel().isVertex(parent))
@@ -1378,7 +1378,7 @@ class GraphHandler extends MouseAdapter implements
 	 * @param dy
 	 * @param e
 	 */
-	void _moveCells(Object[] cells, double dx, double dy,
+	void _moveCells(List<Object> cells, double dx, double dy,
 			Object target, MouseEvent e)
 	{
 		Graph graph = _graphComponent.getGraph();
@@ -1400,7 +1400,7 @@ class GraphHandler extends MouseAdapter implements
 				target = graph.getDefaultParent();
 			}
 	
-			Object[] tmp = graph.moveCells(cells, dx, dy, clone, target,
+			List<Object> tmp = graph.moveCells(cells, dx, dy, clone, target,
 					e.getPoint());
 	
 			if (isSelectEnabled() && clone && tmp != null
@@ -1454,12 +1454,12 @@ class GraphHandler extends MouseAdapter implements
 		Point location = null;
 		int action = 0;
 
-		if (e instanceof DropTargetDropEvent)
+		if (e is DropTargetDropEvent)
 		{
 			location = ((DropTargetDropEvent) e).getLocation();
 			action = ((DropTargetDropEvent) e).getDropAction();
 		}
-		else if (e instanceof DropTargetDragEvent)
+		else if (e is DropTargetDragEvent)
 		{
 			location = ((DropTargetDragEvent) e).getLocation();
 			action = ((DropTargetDragEvent) e).getDropAction();
@@ -1492,7 +1492,7 @@ class GraphHandler extends MouseAdapter implements
 		JComponent component = _getDropTarget(e);
 		TransferHandler transferHandler = component.getTransferHandler();
 
-		if (transferHandler instanceof GraphTransferHandler)
+		if (transferHandler is GraphTransferHandler)
 		{
 			return (GraphTransferHandler) transferHandler;
 		}

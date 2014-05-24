@@ -78,7 +78,7 @@ class PartitionLayout extends GraphLayout
 		IGraphModel model = graph.getModel();
 		Object parent = model.getParent(cell);
 
-		if (cell instanceof ICell && parent instanceof ICell)
+		if (cell is ICell && parent is ICell)
 		{
 			int i = 0;
 			double last = 0;
@@ -142,7 +142,7 @@ class PartitionLayout extends GraphLayout
 		if (pgeo != null)
 		{
 			int childCount = model.getChildCount(parent);
-			List<Object> children = new ArrayList<Object>(childCount);
+			List<Object> children = new List<Object>(childCount);
 
 			for (int i = 0; i < childCount; i++)
 			{

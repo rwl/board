@@ -77,7 +77,7 @@ class LayoutManager extends EventSource
 		{
 			if (isEnabled())
 			{
-				_cellsMoved((Object[]) evt.getProperty("cells"), (Point) evt
+				_cellsMoved((List<Object>) evt.getProperty("cells"), (Point) evt
 						.getProperty("location"));
 			}
 		}
@@ -164,7 +164,7 @@ class LayoutManager extends EventSource
 	/**
 	 * 
 	 */
-	void _cellsMoved(Object[] cells, Point location)
+	void _cellsMoved(List<Object> cells, Point location)
 	{
 		if (cells != null && location != null)
 		{
@@ -193,7 +193,7 @@ class LayoutManager extends EventSource
 
 		if (isBubbling())
 		{
-			Object[] tmp = GraphModel.getParents(model, cells.toArray());
+			List<Object> tmp = GraphModel.getParents(model, cells.toArray());
 
 			while (tmp.length > 0)
 			{
@@ -218,7 +218,7 @@ class LayoutManager extends EventSource
 		{
 			UndoableChange change = it.next();
 
-			if (change instanceof RootChange)
+			if (change is RootChange)
 			{
 				return new HashSet<Object>();
 			}
@@ -239,7 +239,7 @@ class LayoutManager extends EventSource
 		IGraphModel model = getGraph().getModel();
 		Set<Object> result = new HashSet<Object>();
 
-		if (change instanceof ChildChange)
+		if (change is ChildChange)
 		{
 			ChildChange cc = (ChildChange) change;
 			Object parent = model.getParent(cc.getChild());
@@ -259,10 +259,10 @@ class LayoutManager extends EventSource
 				result.add(cc.getPrevious());
 			}
 		}
-		else if (change instanceof TerminalChange
-				|| change instanceof GeometryChange)
+		else if (change is TerminalChange
+				|| change is GeometryChange)
 		{
-			Object cell = (change instanceof TerminalChange) ? ((TerminalChange) change)
+			Object cell = (change is TerminalChange) ? ((TerminalChange) change)
 					.getCell()
 					: ((GeometryChange) change).getCell();
 
@@ -284,7 +284,7 @@ class LayoutManager extends EventSource
 	/**
 	 * 
 	 */
-	void _layoutCells(Object[] cells)
+	void _layoutCells(List<Object> cells)
 	{
 		if (cells.length > 0)
 		{

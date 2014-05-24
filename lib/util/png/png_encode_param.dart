@@ -118,7 +118,7 @@ public abstract class PngEncodeParam
 	static PngEncodeParam getDefaultEncodeParam(RenderedImage im)
 	{
 		ColorModel colorModel = im.getColorModel();
-		if (colorModel instanceof IndexColorModel)
+		if (colorModel is IndexColorModel)
 		{
 			return new Palette();
 		}
@@ -890,9 +890,9 @@ public abstract class PngEncodeParam
 
 	// Other chunk types
 
-	List<String> chunkType = new ArrayList<String>();
+	List<String> chunkType = new List<String>();
 
-	List<byte[]> chunkData = new ArrayList<byte[]>();
+	List<byte[]> chunkData = new List<byte[]>();
 
 	/**
 	 * Adds a private chunk, in binary form, to the list of chunks to
@@ -945,8 +945,8 @@ public abstract class PngEncodeParam
 	 */
 	synchronized void removeUnsafeToCopyPrivateChunks()
 	{
-		List<String> newChunkType = new ArrayList<String>();
-		List<byte[]> newChunkData = new ArrayList<byte[]>();
+		List<String> newChunkType = new List<String>();
+		List<byte[]> newChunkData = new List<byte[]>();
 
 		int len = getNumPrivateChunks();
 		for (int i = 0; i < len; i++)
@@ -969,8 +969,8 @@ public abstract class PngEncodeParam
 	 */
 	synchronized void removeAllPrivateChunks()
 	{
-		chunkType = new ArrayList<String>();
-		chunkData = new ArrayList<byte[]>();
+		chunkType = new List<String>();
+		chunkData = new List<byte[]>();
 	}
 
 	/**

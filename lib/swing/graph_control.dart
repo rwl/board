@@ -400,7 +400,7 @@ class GraphControl extends JComponent
 
 		if (state != null
 				&& isCellDisplayable(state.getCell())
-				&& (!(canvas instanceof Graphics2DCanvas) || hitClip(
+				&& (!(canvas is Graphics2DCanvas) || hitClip(
 						(Graphics2DCanvas) canvas, state)))
 		{
 			this.graphComponent._graph.drawState(canvas, state,
@@ -456,7 +456,7 @@ class GraphControl extends JComponent
 	 */
 	void cellDrawn(ICanvas canvas, CellState state)
 	{
-		if (this.graphComponent.isFoldingEnabled() && canvas instanceof Graphics2DCanvas)
+		if (this.graphComponent.isFoldingEnabled() && canvas is Graphics2DCanvas)
 		{
 			IGraphModel model = this.graphComponent._graph.getModel();
 			Graphics2DCanvas g2c = (Graphics2DCanvas) canvas;

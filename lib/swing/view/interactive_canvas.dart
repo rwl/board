@@ -110,7 +110,7 @@ class InteractiveCanvas extends Graphics2DCanvas
 				{
 					IShape shape = getShape(state.getStyle());
 
-					if (shape instanceof BasicShape)
+					if (shape is BasicShape)
 					{
 						realShape = ((BasicShape) shape).createShape(this,
 								state);

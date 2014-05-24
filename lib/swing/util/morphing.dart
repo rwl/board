@@ -43,17 +43,17 @@ class Morphing extends Animation
 	/**
 	 * Optional array of cells to limit the animation to. 
 	 */
-	Object[] _cells;
+	List<Object> _cells;
 
 	/**
 	 * 
 	 */
-	transient Rect _dirty;
+	/*transient*/ Rect _dirty;
 
 	/**
 	 * 
 	 */
-	transient CellStatePreview _preview;
+	/*transient*/ CellStatePreview _preview;
 
 	/**
 	 * Constructs a new morphing instance for the given graph.
@@ -122,7 +122,7 @@ class Morphing extends Animation
 	 * then all cells are checked and animated if they have been moved
 	 * in the current transaction.
 	 */
-	void setCells(Object[] value)
+	void setCells(List<Object> value)
 	{
 		_cells = value;
 	}

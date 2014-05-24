@@ -84,7 +84,7 @@ class ParallelEdgeLayout extends GraphLayout
 				{
 					if (!lookup.containsKey(id))
 					{
-						lookup.put(id, new ArrayList<Object>());
+						lookup.put(id, new List<Object>());
 					}
 
 					lookup.get(id).add(child);
@@ -107,7 +107,7 @@ class ParallelEdgeLayout extends GraphLayout
 		Object trg = (state != null) ? state.getVisibleTerminal(false) : view
 				.getVisibleTerminal(edge, false);
 
-		if (src instanceof ICell && trg instanceof ICell)
+		if (src is ICell && trg is ICell)
 		{
 			String srcId = CellPath.create((ICell) src);
 			String trgId = CellPath.create((ICell) trg);

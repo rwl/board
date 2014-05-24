@@ -51,7 +51,7 @@ class MinimumCycleRemover implements HierarchicalLayoutStage
 
 		if (model.roots != null)
 		{
-			Object[] modelRoots = model.roots.toArray();
+			List<Object> modelRoots = model.roots.toArray();
 			rootsArray = new GraphHierarchyNode[modelRoots.length];
 
 			for (int i = 0; i < modelRoots.length; i++)

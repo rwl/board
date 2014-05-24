@@ -24,7 +24,7 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell
 	/**
 	 * Shared empty connection map to return instead of null in applyMap.
 	 */
-	static Collection<GraphHierarchyEdge> emptyConnectionMap = new ArrayList<GraphHierarchyEdge>(0);
+	static Collection<GraphHierarchyEdge> emptyConnectionMap = new List<GraphHierarchyEdge>(0);
 
 	/**
 	 * The graph cell this object represents.
@@ -76,7 +76,7 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell
 		if (_nextLayerConnectedCells == null)
 		{
 			_nextLayerConnectedCells = new ArrayList[1];
-			_nextLayerConnectedCells[0] = new ArrayList<GraphAbstractHierarchyCell>(connectsAsTarget.size());
+			_nextLayerConnectedCells[0] = new List<GraphAbstractHierarchyCell>(connectsAsTarget.size());
 			Iterator<GraphHierarchyEdge> iter = connectsAsTarget.iterator();
 			
 			while (iter.hasNext())
@@ -111,7 +111,7 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell
 		if (_previousLayerConnectedCells == null)
 		{
 			_previousLayerConnectedCells = new ArrayList[1];
-			_previousLayerConnectedCells[0] = new ArrayList<GraphAbstractHierarchyCell>(connectsAsSource
+			_previousLayerConnectedCells[0] = new List<GraphAbstractHierarchyCell>(connectsAsSource
 					.size());
 			Iterator<GraphHierarchyEdge> iter = connectsAsSource.iterator();
 

@@ -70,7 +70,7 @@ class UndoManager extends EventSource
 	 */
 	void clear()
 	{
-		_history = new ArrayList<UndoableEdit>(_size);
+		_history = new List<UndoableEdit>(_size);
 		_indexOfNextAdd = 0;
 		fireEvent(new EventObj(Event.CLEAR));
 	}

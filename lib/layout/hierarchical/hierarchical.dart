@@ -202,7 +202,7 @@ JGraphLayout.Stoppable*/
 
 			if (isResizeParent() && !graph.isCellCollapsed(parent))
 			{
-				graph.updateGroupBounds(new Object[] { parent },
+				graph.updateGroupBounds(new List<Object> { parent },
 						getParentBorder(), isMoveParent());
 			}
 		}
@@ -224,7 +224,7 @@ JGraphLayout.Stoppable*/
 	 */
 	List<Object> findRoots(Object parent, Set<Object> vertices)
 	{
-		List<Object> roots = new ArrayList<Object>();
+		List<Object> roots = new List<Object>();
 
 		Object best = null;
 		int maxDiff = -100000;
@@ -234,7 +234,7 @@ JGraphLayout.Stoppable*/
 		{
 			if (model.isVertex(vertex) && graph.isCellVisible(vertex))
 			{
-				Object[] conns = this.getEdges(vertex);
+				List<Object> conns = this.getEdges(vertex);
 				int fanOut = 0;
 				int fanIn = 0;
 
@@ -281,11 +281,11 @@ JGraphLayout.Stoppable*/
 	 * @param cell
 	 * @return
 	 */
-	Object[] getEdges(Object cell)
+	List<Object> getEdges(Object cell)
 	{
 		IGraphModel model = graph.getModel();
 		bool isCollapsed = graph.isCellCollapsed(cell);
-		List<Object> edges = new ArrayList<Object>();
+		List<Object> edges = new List<Object>();
 		int childCount = model.getChildCount(cell);
 
 		for (int i = 0; i < childCount; i++)
@@ -301,7 +301,7 @@ JGraphLayout.Stoppable*/
 
 		edges.addAll(Arrays.asList(GraphModel.getEdges(model, cell, true,
 				true, false)));
-		List<Object> result = new ArrayList<Object>(edges.size());
+		List<Object> result = new List<Object>(edges.size());
 		Iterator<Object> it = edges.iterator();
 
 		while (it.hasNext())
@@ -332,14 +332,14 @@ JGraphLayout.Stoppable*/
 	void run(Object parent)
 	{
 		// Separate out unconnected hierarchies
-		List<Set<Object>> hierarchyVertices = new ArrayList<Set<Object>>();
+		List<Set<Object>> hierarchyVertices = new List<Set<Object>>();
 		Set<Object> allVertexSet = new LinkedHashSet<Object>();
 
 		if (this._roots == null && parent != null)
 		{
 			Set<Object> filledVertexSet = filterDescendants(parent);
 
-			this._roots = new ArrayList<Object>();
+			this._roots = new List<Object>();
 
 			while (!filledVertexSet.isEmpty())
 			{

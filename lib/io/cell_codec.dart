@@ -50,7 +50,7 @@ class CellCodec extends ObjectCodec
 			bool write)
 	{
 		return _exclude.contains(attr)
-				|| (write && attr.equals("value") && value instanceof Node && ((Node) value)
+				|| (write && attr.equals("value") && value is Node && ((Node) value)
 						.getNodeType() == Node.ELEMENT_NODE);
 	}
 
@@ -60,11 +60,11 @@ class CellCodec extends ObjectCodec
 	 */
 	Node afterEncode(Codec enc, Object obj, Node node)
 	{
-		if (obj instanceof Cell)
+		if (obj is Cell)
 		{
 			Cell cell = (Cell) obj;
 
-			if (cell.getValue() instanceof Node)
+			if (cell.getValue() is Node)
 			{
 				// Wraps the graphical annotation up in the
 				// user object (inversion) by putting the
@@ -96,7 +96,7 @@ class CellCodec extends ObjectCodec
 	{
 		Element inner = (Element) node;
 
-		if (obj instanceof Cell)
+		if (obj is Cell)
 		{
 			Cell cell = (Cell) obj;
 			String classname = getName();

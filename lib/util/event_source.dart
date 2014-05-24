@@ -7,33 +7,34 @@ part of graph.util;
 //import java.util.List;
 
 /**
+ * Defines the requirements for an object that listens to an event source.
+ */
+//interface IEventListener
+//{
+//
+//  /**
+//   * Called when the graph model has changed.
+//   * 
+//   * @param sender Reference to the source of the event.
+//   * @param evt Event object to be dispatched.
+//   */
+//  void invoke(Object sender, EventObj evt);
+//
+//}
+typedef IEventListener(Object sender, EventObj evt);
+  
+/**
  * Base class for objects that dispatch named events.
  */
 class EventSource
 {
 
 	/**
-	 * Defines the requirements for an object that listens to an event source.
-	 */
-	interface IEventListener
-	{
-
-		/**
-		 * Called when the graph model has changed.
-		 * 
-		 * @param sender Reference to the source of the event.
-		 * @param evt Event object to be dispatched.
-		 */
-		void invoke(Object sender, EventObj evt);
-
-	}
-
-	/**
 	 * Holds the event names and associated listeners in an array. The array
 	 * contains the event name followed by the respective listener for each
 	 * registered listener.
 	 */
-	transient List<Object> _eventListeners = null;
+	/*transient*/ List<Object> _eventListeners = null;
 
 	/**
 	 * Holds the source object for this event source.
@@ -48,15 +49,15 @@ class EventSource
 	/**
 	 * Constructs a new event source using this as the source object.
 	 */
-	EventSource()
-	{
-		this(null);
-	}
+//	EventSource()
+//	{
+//		this(null);
+//	}
 
 	/**
 	 * Constructs a new event source for the given source object.
 	 */
-	EventSource(Object source)
+	EventSource([Object source=null])
 	{
 		setEventSource(source);
 	}
@@ -101,7 +102,7 @@ class EventSource
 	{
 		if (_eventListeners == null)
 		{
-			_eventListeners = new ArrayList<Object>();
+			_eventListeners = new List<Object>();
 		}
 
 		_eventListeners.add(eventName);
@@ -113,17 +114,17 @@ class EventSource
 	 *
 	 * Removes all occurances of the given listener from the list of listeners.
 	 */
-	void removeListener(IEventListener listener)
-	{
-		removeListener(listener, null);
-	}
+//	void removeListener(IEventListener listener)
+//	{
+//		removeListener(listener, null);
+//	}
 
 	/**
 	 * Function: removeListener
 	 *
 	 * Removes all occurances of the given listener from the list of listeners.
 	 */
-	void removeListener(IEventListener listener, String eventName)
+	void removeListener(IEventListener listener, [String eventName=null])
 	{
 		if (_eventListeners != null)
 		{
@@ -145,16 +146,16 @@ class EventSource
 	 * <code>fireEvent(new EventObj("eventName", key1, val1, .., keyN, valN))</code>
 	 * 
 	 */
-	void fireEvent(EventObj evt)
-	{
-		fireEvent(evt, null);
-	}
+//	void fireEvent(EventObj evt)
+//	{
+//		fireEvent(evt, null);
+//	}
 
 	/**
 	 * Dispatches the given event name, passing all arguments after the given
 	 * name to the registered listeners for the event.
 	 */
-	void fireEvent(EventObj evt, Object sender)
+	void fireEvent(EventObj evt, [Object sender=null])
 	{
 		if (_eventListeners != null && !_eventListeners.isEmpty()
 				&& isEventsEnabled())
@@ -169,14 +170,13 @@ class EventSource
 				sender = this;
 			}
 
-			for (int i = 0; i < _eventListeners.size(); i += 2)
+			for (int i = 0; i < _eventListeners.length; i += 2)
 			{
-				String listen = (String) _eventListeners.get(i);
+				String listen = (String) _eventListeners[i];
 
 				if (listen == null || listen.equals(evt.getName()))
 				{
-					((IEventListener) _eventListeners.get(i + 1)).invoke(
-							sender, evt);
+					((IEventListener) _eventListeners[i + 1])(sender, evt);
 				}
 			}
 		}

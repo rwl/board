@@ -50,7 +50,7 @@ class StylesheetCodec extends ObjectCodec
 	{
 		Element node = enc._document.createElement(getName());
 
-		if (obj instanceof Stylesheet)
+		if (obj is Stylesheet)
 		{
 			Stylesheet stylesheet = (Stylesheet) obj;
 			Iterator<Map.Entry<String, Map<String, Object>>> it = stylesheet
@@ -93,7 +93,7 @@ class StylesheetCodec extends ObjectCodec
 	 */
 	String _getStringValue(Map.Entry<String, Object> entry)
 	{
-		if (entry.getValue() instanceof Boolean)
+		if (entry.getValue() is Boolean)
 		{
 			return ((Boolean) entry.getValue()) ? "1" : "0";
 		}
@@ -108,7 +108,7 @@ class StylesheetCodec extends ObjectCodec
 	{
 		Object obj = null;
 
-		if (node instanceof Element)
+		if (node is Element)
 		{
 			String id = ((Element) node).getAttribute("id");
 			obj = dec._objects.get(id);
@@ -134,7 +134,7 @@ class StylesheetCodec extends ObjectCodec
 			{
 				if (!processInclude(dec, node, obj)
 						&& node.getNodeName().equals("add")
-						&& node instanceof Element)
+						&& node is Element)
 				{
 					String as = ((Element) node).getAttribute("as");
 
@@ -157,7 +157,7 @@ class StylesheetCodec extends ObjectCodec
 
 						while (entry != null)
 						{
-							if (entry instanceof Element)
+							if (entry is Element)
 							{
 								Element entryElement = (Element) entry;
 								String key = entryElement.getAttribute("as");

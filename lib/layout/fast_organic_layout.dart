@@ -82,7 +82,7 @@ class FastOrganicLayout extends GraphLayout
 	/**
 	 * An array of all vertices to be laid out.
 	 */
-	Object[] vertexArray;
+	List<Object> vertexArray;
 
 	/**
 	 * An array of locally stored X co-ordinate displacements for the vertices.
@@ -312,8 +312,8 @@ class FastOrganicLayout extends GraphLayout
 		IGraphModel model = graph.getModel();
 
 		// Finds the relevant vertices for the layout
-		Object[] vertices = graph.getChildVertices(parent);
-		List<Object> tmp = new ArrayList<Object>(vertices.length);
+		List<Object> vertices = graph.getChildVertices(parent);
+		List<Object> tmp = new List<Object>(vertices.length);
 
 		for (int i = 0; i < vertices.length; i++)
 		{
@@ -388,7 +388,7 @@ class FastOrganicLayout extends GraphLayout
 				// Get lists of neighbours to all vertices, translate the cells
 				// obtained in indices into vertexArray and store as an array
 				// against the original cell index
-				Object[] edges = graph.getConnections(vertexArray[i], parent);
+				List<Object> edges = graph.getConnections(vertexArray[i], parent);
 				for (int k = 0; k < edges.length; k++)
 				{
 					if (isResetEdges())
@@ -402,7 +402,7 @@ class FastOrganicLayout extends GraphLayout
 					}
 				}
 				
-				Object[] cells = graph.getOpposites(edges, vertexArray[i]);
+				List<Object> cells = graph.getOpposites(edges, vertexArray[i]);
 
 				neighbours[i] = new int[cells.length];
 

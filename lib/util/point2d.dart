@@ -119,7 +119,7 @@ class Point2d implements Serializable, Cloneable
 	 */
 	bool equals(Object obj)
 	{
-		if (obj instanceof Point2d)
+		if (obj is Point2d)
 		{
 			Point2d pt = (Point2d) obj;
 

@@ -1302,7 +1302,7 @@ class GraphComponent extends JScrollPane implements Printable
 	 * and returns the inserted cells. This shortcut is used if cells are
 	 * inserted via datatransfer.
 	 */
-	Object[] importCells(Object[] cells, double dx, double dy,
+	List<Object> importCells(List<Object> cells, double dx, double dy,
 			Object target, Point location)
 	{
 		return _graph.moveCells(cells, dx, dy, true, target, location);
@@ -1913,9 +1913,9 @@ class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	Object[] selectRegion(Rectangle rect, MouseEvent e)
+	List<Object> selectRegion(Rectangle rect, MouseEvent e)
 	{
-		Object[] cells = getCells(rect);
+		List<Object> cells = getCells(rect);
 
 		if (cells.length > 0)
 		{
@@ -1934,7 +1934,7 @@ class GraphComponent extends JScrollPane implements Printable
 	 * 
 	 * @return Returns the cells inside the given rectangle.
 	 */
-	Object[] getCells(Rectangle rect)
+	List<Object> getCells(Rectangle rect)
 	{
 		return getCells(rect, null);
 	}
@@ -1947,9 +1947,9 @@ class GraphComponent extends JScrollPane implements Printable
 	 * 
 	 * @return Returns the children inside the given rectangle.
 	 */
-	Object[] getCells(Rectangle rect, Object parent)
+	List<Object> getCells(Rectangle rect, Object parent)
 	{
-		Collection<Object> result = new ArrayList<Object>();
+		Collection<Object> result = new List<Object>();
 
 		if (rect.width > 0 || rect.height > 0)
 		{
@@ -2007,7 +2007,7 @@ class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * Selects the cells for the given event.
 	 */
-	void selectCellsForEvent(Object[] cells, MouseEvent event)
+	void selectCellsForEvent(List<Object> cells, MouseEvent event)
 	{
 		if (isToggleEvent(event))
 		{
@@ -2474,7 +2474,7 @@ class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * Returns all cells which may be imported via datatransfer.
 	 */
-	Object[] getImportableCells(Object[] cells)
+	List<Object> getImportableCells(List<Object> cells)
 	{
 		return GraphModel.filterCells(cells, new Filter()
 		{
@@ -2517,7 +2517,7 @@ class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * Returns all cells which may be exported via datatransfer.
 	 */
-	Object[] getExportableCells(Object[] cells)
+	List<Object> getExportableCells(List<Object> cells)
 	{
 		return GraphModel.filterCells(cells, new Filter()
 		{
@@ -3176,7 +3176,7 @@ class GraphComponent extends JScrollPane implements Printable
 			if (arr != null)
 			{
 				// TODO: Use arraycopy from/to same array to speed this up
-				List<ICellOverlay> list = new ArrayList<ICellOverlay>(
+				List<ICellOverlay> list = new List<ICellOverlay>(
 						Arrays.asList(arr));
 
 				if (list.remove(overlay))
@@ -3224,7 +3224,7 @@ class GraphComponent extends JScrollPane implements Printable
 	void _removeCellOverlayComponent(ICellOverlay overlay,
 			Object cell)
 	{
-		if (overlay instanceof Component)
+		if (overlay is Component)
 		{
 			Component comp = (Component) overlay;
 
@@ -3246,7 +3246,7 @@ class GraphComponent extends JScrollPane implements Printable
 	void _updateCellOverlayComponent(CellState state,
 			ICellOverlay overlay)
 	{
-		if (overlay instanceof Component)
+		if (overlay is Component)
 		{
 			Component comp = (Component) overlay;
 

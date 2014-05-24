@@ -211,7 +211,7 @@ class Codec
 		{
 			id = reference(obj);
 
-			if (id == null && obj instanceof ICell)
+			if (id == null && obj is ICell)
 			{
 				id = ((ICell) obj).getId();
 
@@ -264,7 +264,7 @@ class Codec
 			}
 			else
 			{
-				if (obj instanceof Node)
+				if (obj is Node)
 				{
 					node = ((Node) obj).cloneNode(true);
 				}
@@ -389,11 +389,11 @@ class Codec
 			// Tries to find the codec for the cell inside the user object.
 			// This assumes all node names inside the user object are either
 			// not registered or they correspond to a class for cells.
-			if (!(decoder instanceof CellCodec))
+			if (!(decoder is CellCodec))
 			{
 				Node child = node.getFirstChild();
 
-				while (child != null && !(decoder instanceof CellCodec))
+				while (child != null && !(decoder is CellCodec))
 				{
 					decoder = CodecRegistry.getCodec(child.getNodeName());
 					child = child.getNextSibling();
@@ -403,7 +403,7 @@ class Codec
 				decoder = CodecRegistry.getCodec(name);
 			}
 
-			if (!(decoder instanceof CellCodec))
+			if (!(decoder is CellCodec))
 			{
 				String name = Cell.class.getSimpleName();
 				decoder = CodecRegistry.getCodec(name);

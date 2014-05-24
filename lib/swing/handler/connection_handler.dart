@@ -95,37 +95,37 @@ class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	transient Point _first;
+	/*transient*/ Point _first;
 
 	/**
 	 * 
 	 */
-	transient bool _active = false;
+	/*transient*/ bool _active = false;
 
 	/**
 	 * 
 	 */
-	transient Rectangle _bounds;
+	/*transient*/ Rectangle _bounds;
 
 	/**
 	 * 
 	 */
-	transient CellState _source;
+	/*transient*/ CellState _source;
 
 	/**
 	 * 
 	 */
-	transient CellMarker _marker;
+	/*transient*/ CellMarker _marker;
 
 	/**
 	 * 
 	 */
-	transient String _error;
+	/*transient*/ String _error;
 
 	/**
 	 * 
 	 */
-	transient IEventListener _resetHandler = new IEventListener()
+	/*transient*/ IEventListener _resetHandler = new IEventListener()
 	{
 		public void invoke(Object source, EventObj evt)
 		{
@@ -480,7 +480,7 @@ class ConnectionHandler extends MouseAdapter
 	Object createTargetVertex(MouseEvent e, Object source)
 	{
 		Graph graph = _graphComponent.getGraph();
-		Object clone = graph.cloneCells(new Object[] { source })[0];
+		Object clone = graph.cloneCells(new List<Object> { source })[0];
 		IGraphModel model = graph.getModel();
 		Geometry geo = model.getGeometry(clone);
 
@@ -688,7 +688,7 @@ class ConnectionHandler extends MouseAdapter
 						{
 							Object vertex = createTargetVertex(e, _source.getCell());
 							dropTarget = graph.getDropTarget(
-									new Object[] { vertex }, e.getPoint(),
+									new List<Object> { vertex }, e.getPoint(),
 									_graphComponent.getCellAt(e.getX(), e.getY()));
 	
 							if (vertex != null)
@@ -715,7 +715,7 @@ class ConnectionHandler extends MouseAdapter
 									dropTarget = graph.getDefaultParent();
 								}
 	
-								graph.addCells(new Object[] { vertex }, dropTarget);
+								graph.addCells(new List<Object> { vertex }, dropTarget);
 							}
 	
 							// FIXME: Here we pre-create the state for the vertex to be

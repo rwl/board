@@ -134,7 +134,7 @@ class GraphOutline extends JComponent
 	/**
 	 * 
 	 */
-	transient bool _zoomGesture = false;
+	/*transient*/ bool _zoomGesture = false;
 
 	/**
 	 * 

@@ -44,12 +44,12 @@ class Rubberband implements MouseListener, MouseMotionListener
 	/**
 	 * Holds the point where the selection has started.
 	 */
-	transient Point _first;
+	/*transient*/ Point _first;
 
 	/**
 	 * Holds the current rubberband bounds.
 	 */
-	transient Rectangle _bounds;
+	/*transient*/ Rectangle _bounds;
 
 	/**
 	 * Constructs a new rubberband selection for the given graph component.
@@ -179,7 +179,7 @@ class Rubberband implements MouseListener, MouseMotionListener
 	 * @param rect
 	 * @param e
 	 */
-	Object[] select(Rectangle rect, MouseEvent e)
+	List<Object> select(Rectangle rect, MouseEvent e)
 	{
 		return _graphComponent.selectRegion(rect, e);
 	}

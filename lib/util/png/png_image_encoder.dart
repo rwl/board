@@ -808,7 +808,7 @@ class PngImageEncoder
 		{
 			ChunkStream cs = new ChunkStream("tRNS");
 
-			if (param instanceof Palette)
+			if (param is Palette)
 			{
 				byte[] t = ((Palette) param)
 						.getPaletteTransparency();
@@ -817,12 +817,12 @@ class PngImageEncoder
 					cs.writeByte(t[i]);
 				}
 			}
-			else if (param instanceof Gray)
+			else if (param is Gray)
 			{
 				int t = ((Gray) param).getTransparentGray();
 				cs.writeShort(t);
 			}
-			else if (param instanceof RGB)
+			else if (param is RGB)
 			{
 				int[] t = ((RGB) param).getTransparentRGB();
 				cs.writeShort(t[0]);
@@ -1051,7 +1051,7 @@ class PngImageEncoder
 		this.bitShift = 0;
 
 		// Allow user to override the bit depth of gray images
-		if (param instanceof Gray)
+		if (param is Gray)
 		{
 			Gray paramg = (Gray) param;
 			if (paramg.isBitDepthSet())
@@ -1103,7 +1103,7 @@ class PngImageEncoder
 		this.bpp = numBands * ((bitDepth == 16) ? 2 : 1);
 
 		ColorModel colorModel = image.getColorModel();
-		if (colorModel instanceof IndexColorModel)
+		if (colorModel is IndexColorModel)
 		{
 			if (bitDepth < 1 || bitDepth > 8)
 			{
@@ -1141,7 +1141,7 @@ class PngImageEncoder
 				param = new Palette();
 			}
 
-			if (param instanceof Palette)
+			if (param is Palette)
 			{
 				// If palette not set in param, create one from the ColorModel.
 				Palette parami = (Palette) param;
@@ -1161,7 +1161,7 @@ class PngImageEncoder
 				}
 				this.colorType = PNG_COLOR_PALETTE;
 			}
-			else if (param instanceof Gray)
+			else if (param is Gray)
 			{
 				redPalette = greenPalette = bluePalette = alphaPalette = null;
 				this.colorType = PNG_COLOR_GRAY;

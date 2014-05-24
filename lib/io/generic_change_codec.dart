@@ -47,7 +47,7 @@ class GenericChangeCodec extends ObjectCodec
 	{
 		Object cell = _getFieldValue(obj, "cell");
 
-		if (cell instanceof Node)
+		if (cell is Node)
 		{
 			_setFieldValue(obj, "cell", dec.decodeCell((Node) cell, false));
 		}

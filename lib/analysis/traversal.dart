@@ -60,8 +60,8 @@ class Traversal
 				visitor.visit(cell, edge);
 				seen.add(cell);
 
-				final Object[] edges = aGraph.getEdges(cell, null, false, true);
-				final Object[] opposites = aGraph.getOpposites(edges, cell);
+				final List<Object> edges = aGraph.getEdges(cell, null, false, true);
+				final List<Object> opposites = aGraph.getOpposites(edges, cell);
 
 				for (int i = 0; i < opposites.length; i++)
 				{
@@ -95,8 +95,8 @@ class Traversal
 		if (aGraph != null && startVertex != null && visitor != null)
 		{
 			Set<Object> queued = new HashSet<Object>();
-			LinkedList<Object[]> queue = new LinkedList<Object[]>();
-			Object[] q = { startVertex, null };
+			LinkedList<List<Object>> queue = new LinkedList<List<Object>>();
+			List<Object> q = { startVertex, null };
 			queue.addLast(q);
 			queued.add(startVertex);
 
@@ -111,26 +111,26 @@ class Traversal
 	 * @param queue
 	 * @param visitor
 	 */
-	private static void _bfsRec(AnalysisGraph aGraph, Set<Object> queued, LinkedList<Object[]> queue, ICellVisitor visitor)
+	private static void _bfsRec(AnalysisGraph aGraph, Set<Object> queued, LinkedList<List<Object>> queue, ICellVisitor visitor)
 	{
 		if (queue.size() > 0)
 		{
-			Object[] q = queue.removeFirst();
+			List<Object> q = queue.removeFirst();
 			Object cell = q[0];
 			Object incomingEdge = q[1];
 
 			visitor.visit(cell, incomingEdge);
 
-			final Object[] edges = aGraph.getEdges(cell, null, false, false);
+			final List<Object> edges = aGraph.getEdges(cell, null, false, false);
 
 			for (int i = 0; i < edges.length; i++)
 			{
-				Object[] currEdge = { edges[i] };
+				List<Object> currEdge = { edges[i] };
 				Object opposite = aGraph.getOpposites(currEdge, cell)[0];
 
 				if (!queued.contains(opposite))
 				{
-					Object[] current = { opposite, edges[i] };
+					List<Object> current = { opposite, edges[i] };
 					queue.addLast(current);
 					queued.add(opposite);
 				}
@@ -171,14 +171,14 @@ class Traversal
 		}
 
 		Object parent = aGraph.getGraph().getDefaultParent();
-		Object[] vertexes = aGraph.getChildVertices(parent);
+		List<Object> vertexes = aGraph.getChildVertices(parent);
 		int vertexCount = vertexes.length;
 		double[] distances = new double[vertexCount];
 		//		parents[][0] is the traveled vertex
 		//		parents[][1] is the traveled outgoing edge
-		Object[][] parents = new Object[vertexCount][2];
-		ArrayList<Object> vertexList = new ArrayList<Object>();
-		ArrayList<Object> vertexListStatic = new ArrayList<Object>();
+		List<Object>[] parents = new Object[vertexCount][2];
+		ArrayList<Object> vertexList = new List<Object>();
+		ArrayList<Object> vertexListStatic = new List<Object>();
 
 		for (int i = 0; i < vertexCount; i++)
 		{
@@ -223,7 +223,7 @@ class Traversal
 			vertexList.remove(closestVertex);
 
 			Object currEdge = new Object();
-			Object[] neighborVertices = aGraph.getOpposites(aGraph.getEdges(closestVertex, null, true, true, false, true), closestVertex,
+			List<Object> neighborVertices = aGraph.getOpposites(aGraph.getEdges(closestVertex, null, true, true, false, true), closestVertex,
 					true, true);
 
 			for (int j = 0; j < neighborVertices.length; j++)
@@ -233,7 +233,7 @@ class Traversal
 				if (vertexList.contains(currNeighbor))
 				{
 					//find edge that connects to the current vertex
-					Object[] neighborEdges = aGraph.getEdges(currNeighbor, null, true, true, false, true);
+					List<Object> neighborEdges = aGraph.getEdges(currNeighbor, null, true, true, false, true);
 					Object connectingEdge = null;
 
 					for (int k = 0; k < neighborEdges.length; k++)
@@ -267,7 +267,7 @@ class Traversal
 			}
 		}
 
-		ArrayList<Object[]> resultList = new ArrayList<Object[]>();
+		ArrayList<List<Object>> resultList = new List<List<Object>>();
 		Object currVertex = endVertex;
 
 		while (currVertex != startVertex)
@@ -277,7 +277,7 @@ class Traversal
 			resultList.add(0, parents[currIndex]);
 		}
 
-		resultList.add(resultList.size(), new Object[] { endVertex, null });
+		resultList.add(resultList.size(), new List<Object> { endVertex, null });
 
 		for (int i = 0; i < resultList.size(); i++)
 		{
@@ -296,8 +296,8 @@ class Traversal
 	static List<Map<Object, Object>> bellmanFord(AnalysisGraph aGraph, Object startVertex) throws StructuralException
 	{
 		Graph graph = aGraph.getGraph();
-		Object[] vertices = aGraph.getChildVertices(graph.getDefaultParent());
-		Object[] edges = aGraph.getChildEdges(graph.getDefaultParent());
+		List<Object> vertices = aGraph.getChildVertices(graph.getDefaultParent());
+		List<Object> edges = aGraph.getChildEdges(graph.getDefaultParent());
 		int vertexNum = vertices.length;
 		int edgeNum = edges.length;
 		Map<Object, Object> distanceMap = new HashMap<Object, Object>();
@@ -359,7 +359,7 @@ class Traversal
 			}
 		}
 
-		List<Map<Object, Object>> result = new ArrayList<Map<Object, Object>>();
+		List<Map<Object, Object>> result = new List<Map<Object, Object>>();
 		result.add(distanceMap);
 		result.add(parentMap);
 
@@ -373,12 +373,12 @@ class Traversal
 	 * @return an ArrayList where ArrayList(0) is the distance map and List(1) is the path map. See the example in GraphConfigDialog.java
 	 * @throws StructuralException - The Floyd-Roy-Warshall algorithm only works for graphs without negative cycles
 	 */
-	static ArrayList<Object[][]> floydRoyWarshall(AnalysisGraph aGraph) throws StructuralException
+	static ArrayList<List<Object>[]> floydRoyWarshall(AnalysisGraph aGraph) throws StructuralException
 	{
 
-		Object[] vertices = aGraph.getChildVertices(aGraph.getGraph().getDefaultParent());
+		List<Object> vertices = aGraph.getChildVertices(aGraph.getGraph().getDefaultParent());
 		Double[][] dist = new Double[vertices.length][vertices.length];
-		Object[][] paths = new Object[vertices.length][vertices.length];
+		List<Object>[] paths = new Object[vertices.length][vertices.length];
 		Map<Object, Integer> indexMap = new HashMap<Object, Integer>();
 
 		for (int i = 0; i < vertices.length; i++)
@@ -386,7 +386,7 @@ class Traversal
 			indexMap.put(vertices[i], i);
 		}
 
-		Object[] edges = aGraph.getChildEdges(aGraph.getGraph().getDefaultParent());
+		List<Object> edges = aGraph.getChildEdges(aGraph.getGraph().getDefaultParent());
 		dist = _initializeWeight(aGraph, vertices, edges, indexMap);
 
 		for (int k = 0; k < vertices.length; k++)
@@ -412,7 +412,7 @@ class Traversal
 			}
 		}
 
-		ArrayList<Object[][]> result = new ArrayList<Object[][]>();
+		ArrayList<List<Object>[]> result = new List<List<Object>[]>();
 		result.add(dist);
 		result.add(paths);
 		return result;
@@ -426,7 +426,7 @@ class Traversal
 	 * @param indexMap
 	 * @return
 	 */
-	private static Double[][] _initializeWeight(AnalysisGraph aGraph, Object[] nodes, Object[] edges, Map<Object, Integer> indexMap)
+	private static Double[][] _initializeWeight(AnalysisGraph aGraph, List<Object> nodes, List<Object> edges, Map<Object, Integer> indexMap)
 	{
 		Double[][] weight = new Double[nodes.length][nodes.length];
 
@@ -469,11 +469,11 @@ class Traversal
 	 * @return returns the shortest path from <b>startVertex</b> to <b>endVertex</b>
 	 * @throws StructuralException - The Floyd-Roy-Warshall algorithm only works for graphs without negative cycles
 	 */
-	static Object[] getWFIPath(AnalysisGraph aGraph, ArrayList<Object[][]> FWIresult, Object startVertex, Object targetVertex)
+	static List<Object> getWFIPath(AnalysisGraph aGraph, ArrayList<List<Object>[]> FWIresult, Object startVertex, Object targetVertex)
 			throws StructuralException
 	{
-		Object[][] dist = FWIresult.get(0);
-		Object[][] paths = FWIresult.get(1);
+		List<Object>[] dist = FWIresult.get(0);
+		List<Object>[] paths = FWIresult.get(1);
 		ArrayList<Object> result = null;
 
 		if (aGraph == null || paths == null || startVertex == null || targetVertex == null)
@@ -493,7 +493,7 @@ class Traversal
 		{
 			CostFunction cf = aGraph.getGenerator().getCostFunction();
 			GraphView view = aGraph.getGraph().getView();
-			ArrayList<Object> currPath = new ArrayList<Object>();
+			ArrayList<Object> currPath = new List<Object>();
 			currPath.add(startVertex);
 
 			while (startVertex != targetVertex)
@@ -505,7 +505,7 @@ class Traversal
 
 		if (result == null)
 		{
-			result = new ArrayList<Object>();
+			result = new List<Object>();
 		}
 
 		return result.toArray();
@@ -523,11 +523,11 @@ class Traversal
 	 * @return
 	 * @throws StructuralException
 	 */
-	private static ArrayList<Object> _getWFIPathRec(AnalysisGraph aGraph, Object[][] paths, Object startVertex, Object targetVertex,
+	private static ArrayList<Object> _getWFIPathRec(AnalysisGraph aGraph, List<Object>[] paths, Object startVertex, Object targetVertex,
 			ArrayList<Object> currPath, CostFunction cf, GraphView view) throws StructuralException
 	{
 		Double sourceIndexD = (Double) cf.getCost(view.getState(startVertex));
-		Object[] parents = paths[sourceIndexD.intValue()];
+		List<Object> parents = paths[sourceIndexD.intValue()];
 		Double targetIndexD = (Double) cf.getCost(view.getState(targetVertex));
 		int tIndex = targetIndexD.intValue();
 

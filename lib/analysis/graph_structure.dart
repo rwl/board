@@ -29,7 +29,7 @@ class GraphStructure
 	 */
 	static bool isConnected(AnalysisGraph aGraph)
 	{
-		Object[] vertices = aGraph.getChildVertices(aGraph.getGraph().getDefaultParent());
+		List<Object> vertices = aGraph.getChildVertices(aGraph.getGraph().getDefaultParent());
 		int vertexNum = vertices.length;
 
 		if (vertexNum == 0)
@@ -47,7 +47,7 @@ class GraphStructure
 			visited[i] = 0;
 		}
 
-		ArrayList<Object> queue = new ArrayList<Object>();
+		ArrayList<Object> queue = new List<Object>();
 		queue.add(vertices[0]);
 
 		//repeat the algorithm until the queue is empty
@@ -58,7 +58,7 @@ class GraphStructure
 			queue.remove(0);
 
 			//fill the queue with neighboring but unvisited vertexes
-			Object[] neighborVertices = aGraph.getOpposites(aGraph.getEdges(currVertex, null, true, true, false, true), currVertex, true,
+			List<Object> neighborVertices = aGraph.getOpposites(aGraph.getEdges(currVertex, null, true, true, false, true), currVertex, true,
 					true);
 
 			for (int j = 0; j < neighborVertices.length; j++)
@@ -103,7 +103,7 @@ class GraphStructure
 	{
 		Graph graph = aGraph.getGraph();
 		IGraphModel model = graph.getModel();
-		Object[] cells = model.cloneCells(aGraph.getChildCells(graph.getDefaultParent(), true, true), true);
+		List<Object> cells = model.cloneCells(aGraph.getChildCells(graph.getDefaultParent(), true, true), true);
 		GraphModel modelCopy = new GraphModel();
 		Graph graphCopy = new Graph(modelCopy);
 		Object parentCopy = graphCopy.getDefaultParent();
@@ -114,7 +114,7 @@ class GraphStructure
 		aGraphCopy.setGenerator(aGraph.getGenerator());
 		aGraphCopy.setProperties(aGraph.getProperties());
 
-		Object[] leaf = new Object[1];
+		List<Object> leaf = new Object[1];
 
 		do
 		{
@@ -148,7 +148,7 @@ class GraphStructure
 	private static Object getUndirectedLeaf(AnalysisGraph aGraph)
 	{
 		Object parent = aGraph.getGraph().getDefaultParent();
-		Object[] vertices = aGraph.getChildVertices(parent);
+		List<Object> vertices = aGraph.getChildVertices(parent);
 		int vertexNum = vertices.length;
 		Object currVertex;
 
@@ -173,7 +173,7 @@ class GraphStructure
 	static bool isSimple(AnalysisGraph aGraph)
 	{
 		Object parent = aGraph.getGraph().getDefaultParent();
-		Object[] edges = aGraph.getChildEdges(parent);
+		List<Object> edges = aGraph.getChildEdges(parent);
 
 		// self loop detection
 		for (int i = 0; i < edges.length; i++)
@@ -228,9 +228,9 @@ class GraphStructure
 	 * @param omitVertex vertices in this array will be omitted, set this parameter to null if you don't want this feature
 	 * @return a vertex that has lowest degree, or one of those in case if there are more
 	 */
-	static public Object getLowestDegreeVertex(AnalysisGraph aGraph, Object[] omitVertex)
+	static public Object getLowestDegreeVertex(AnalysisGraph aGraph, List<Object> omitVertex)
 	{
-		Object[] vertices = aGraph.getChildVertices(aGraph.getGraph().getDefaultParent());
+		List<Object> vertices = aGraph.getChildVertices(aGraph.getGraph().getDefaultParent());
 		int vertexCount = vertices.length;
 
 		int lowestEdgeCount = Integer.MAX_VALUE;
@@ -290,7 +290,7 @@ class GraphStructure
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
 
-		Object[] edges = aGraph.getChildEdges(parent);
+		List<Object> edges = aGraph.getChildEdges(parent);
 		//removing self-loops
 		for (int i = 0; i < edges.length; i++)
 		{
@@ -298,13 +298,13 @@ class GraphStructure
 
 			if (aGraph.getTerminal(currEdge, true) == aGraph.getTerminal(currEdge, false))
 			{
-				graph.removeCells(new Object[] { currEdge });
+				graph.removeCells(new List<Object> { currEdge });
 			}
 		}
 
 		edges = graph.getChildEdges(parent);
 		Set<Set<Object>> vertexSet = new HashSet<Set<Object>>();
-		ArrayList<Object> duplicateEdges = new ArrayList<Object>();
+		ArrayList<Object> duplicateEdges = new List<Object>();
 
 		for (int i = 0; i < edges.length; i++)
 		{
@@ -326,7 +326,7 @@ class GraphStructure
 			}
 		}
 
-		Object[] duplEdges = duplicateEdges.toArray();
+		List<Object> duplEdges = duplicateEdges.toArray();
 
 		graph.removeCells(duplEdges);
 	};
@@ -343,7 +343,7 @@ class GraphStructure
 			return;
 		}
 
-		Object[][] components = getGraphComponents(aGraph);
+		List<Object>[] components = getGraphComponents(aGraph);
 		int componentNum = components.length;
 
 		if (componentNum < 2)
@@ -367,10 +367,10 @@ class GraphStructure
 	 * @param aGraph
 	 * @return Object[components][vertices] 
 	 */
-	static Object[][] getGraphComponents(AnalysisGraph aGraph)
+	static List<Object>[] getGraphComponents(AnalysisGraph aGraph)
 	{
 		Object parent = aGraph.getGraph().getDefaultParent();
-		Object[] vertices = aGraph.getChildVertices(parent);
+		List<Object> vertices = aGraph.getChildVertices(parent);
 		int vertexCount = vertices.length;
 
 		if (vertexCount == 0)
@@ -378,8 +378,8 @@ class GraphStructure
 			return null;
 		}
 
-		ArrayList<ArrayList<Object>> componentList = new ArrayList<ArrayList<Object>>();
-		ArrayList<Object> unvisitedVertexList = new ArrayList<Object>(Arrays.asList(vertices));
+		ArrayList<ArrayList<Object>> componentList = new List<ArrayList<Object>>();
+		ArrayList<Object> unvisitedVertexList = new List<Object>(Arrays.asList(vertices));
 		bool oldDirectedness = GraphProperties.isDirected(aGraph.getProperties(), GraphProperties.DEFAULT_DIRECTED);
 		GraphProperties.setDirected(aGraph.getProperties(), false);
 
@@ -403,7 +403,7 @@ class GraphStructure
 			//if not, create a new component and run a BFS populating the component and reducing the unvisited list
 			if (!isInComponent)
 			{
-				final ArrayList<Object> currVertexList = new ArrayList<Object>();
+				final ArrayList<Object> currVertexList = new List<Object>();
 
 				Traversal.bfs(aGraph, currVertex, new ICellVisitor()
 				{
@@ -424,14 +424,14 @@ class GraphStructure
 		}
 
 		GraphProperties.setDirected(aGraph.getProperties(), oldDirectedness);
-		Object[][] result = new Object[componentList.size()][];
+		List<Object>[] result = new Object[componentList.size()][];
 
 		for (int i = 0; i < componentList.size(); i++)
 		{
 			result[i] = componentList.get(i).toArray();
 		}
 
-		return (Object[][]) result;
+		return (List<Object>[]) result;
 	};
 
 	/**
@@ -445,7 +445,7 @@ class GraphStructure
 		if (isTree(aGraph))
 		{
 			GraphProperties.setDirected(aGraph.getProperties(), false);
-			final ArrayList<Object> bFSList = new ArrayList<Object>();
+			final ArrayList<Object> bFSList = new List<Object>();
 			Graph graph = aGraph.getGraph();
 			final IGraphModel model = graph.getModel();
 			Object parent = graph.getDefaultParent();
@@ -463,7 +463,7 @@ class GraphStructure
 			{
 				Object parentVertex = bFSList.get(i);
 				Object currEdges[] = aGraph.getEdges(parentVertex, parent, true, true, false, true);
-				Object[] neighbors = aGraph.getOpposites(currEdges, parentVertex, true, true);
+				List<Object> neighbors = aGraph.getOpposites(currEdges, parentVertex, true, true);
 
 				for (int j = 0; j < neighbors.length; j++)
 				{
@@ -499,7 +499,7 @@ class GraphStructure
 	static Object getConnectingEdge(AnalysisGraph aGraph, Object vertexOne, Object vertexTwo)
 	{
 		IGraphModel model = aGraph.getGraph().getModel();
-		Object[] edges = aGraph.getEdges(vertexOne, null, true, true, false, true);
+		List<Object> edges = aGraph.getEdges(vertexOne, null, true, true, false, true);
 
 		for (int i = 0; i < edges.length; i++)
 		{
@@ -530,7 +530,7 @@ class GraphStructure
 	{
 		Graph graph = aGraph.getGraph();
 		IGraphModel model = graph.getModel();
-		Object[] cells = model.cloneCells(aGraph.getChildCells(graph.getDefaultParent(), true, true), true);
+		List<Object> cells = model.cloneCells(aGraph.getChildCells(graph.getDefaultParent(), true, true), true);
 		GraphModel modelCopy = new GraphModel();
 		Graph graphCopy = new Graph(modelCopy);
 		Object parentCopy = graphCopy.getDefaultParent();
@@ -540,7 +540,7 @@ class GraphStructure
 		aGraphCopy.setGenerator(aGraph.getGenerator());
 		aGraphCopy.setProperties(aGraph.getProperties());
 
-		Object[] leaf = new Object[1];
+		List<Object> leaf = new Object[1];
 
 		do
 		{
@@ -573,7 +573,7 @@ class GraphStructure
 	 */
 	static Object getDirectedLeaf(AnalysisGraph aGraph, Object parent)
 	{
-		Object[] vertices = aGraph.getChildVertices(parent);
+		List<Object> vertices = aGraph.getChildVertices(parent);
 		int vertexNum = vertices.length;
 		Object currVertex;
 
@@ -598,11 +598,11 @@ class GraphStructure
 	 */
 	static void complementaryGraph(AnalysisGraph aGraph)
 	{
-		ArrayList<ArrayList<Cell>> oldConnections = new ArrayList<ArrayList<Cell>>();
+		ArrayList<ArrayList<Cell>> oldConnections = new List<ArrayList<Cell>>();
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
 		//replicate the edge connections in oldConnections
-		Object[] vertices = aGraph.getChildVertices(parent);
+		List<Object> vertices = aGraph.getChildVertices(parent);
 		int vertexCount = vertices.length;
 
 		for (int i = 0; i < vertexCount; i++)
@@ -610,7 +610,7 @@ class GraphStructure
 			Cell currVertex = (Cell) vertices[i];
 			int edgeCount = currVertex.getEdgeCount();
 			Cell currEdge = new Cell();
-			ArrayList<Cell> neighborVertexes = new ArrayList<Cell>();
+			ArrayList<Cell> neighborVertexes = new List<Cell>();
 
 			for (int j = 0; j < edgeCount; j++)
 			{
@@ -634,12 +634,12 @@ class GraphStructure
 		}
 
 		//delete all edges and make a complementary model
-		Object[] edges = aGraph.getChildEdges(parent);
+		List<Object> edges = aGraph.getChildEdges(parent);
 		graph.removeCells(edges);
 
 		for (int i = 0; i < vertexCount; i++)
 		{
-			ArrayList<Cell> oldNeighbors = new ArrayList<Cell>();
+			ArrayList<Cell> oldNeighbors = new List<Cell>();
 			oldNeighbors = oldConnections.get(i);
 			Cell currVertex = (Cell) vertices[i];
 
@@ -679,7 +679,7 @@ class GraphStructure
 	{
 		Graph graph = aGraph.getGraph();
 
-		Object[] vertices = aGraph.getChildVertices(aGraph.getGraph().getDefaultParent());
+		List<Object> vertices = aGraph.getChildVertices(aGraph.getGraph().getDefaultParent());
 
 		int childNum = vertices.length;
 		int vertexValue = 0;
@@ -709,7 +709,7 @@ class GraphStructure
 	{
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
-		Object[] vertices = aGraph.getChildVertices(parent);
+		List<Object> vertices = aGraph.getChildVertices(parent);
 		IGraphModel model = graph.getModel();
 
 		for (int i = 0; i < vertices.length; i++)
@@ -717,7 +717,7 @@ class GraphStructure
 			model.setStyle(vertices[i], basicVertexStyleString);
 		}
 
-		Object[] edges = aGraph.getChildEdges(parent);
+		List<Object> edges = aGraph.getChildEdges(parent);
 		bool isDirected = GraphProperties.isDirected(aGraph.getProperties(), GraphProperties.DEFAULT_DIRECTED);
 		String edgeString = basicEdgeStyleString;
 
@@ -757,7 +757,7 @@ class GraphStructure
 	static int regularity(AnalysisGraph aGraph) throws StructuralException
 	{
 		Graph graph = aGraph.getGraph();
-		Object[] vertices = aGraph.getChildVertices(graph.getDefaultParent());
+		List<Object> vertices = aGraph.getChildVertices(graph.getDefaultParent());
 		int vertexCount = vertices.length;
 		Object currVertex = vertices[0];
 		int regularity = aGraph.getEdges(currVertex, null, true, true).length;
@@ -826,7 +826,7 @@ class GraphStructure
 
 		if (aGraph.getEdges(vertex, null, true, true, false, true).length >= 2)
 		{
-			Object[] cells = model.cloneCells(aGraph.getChildCells(graph.getDefaultParent(), true, true), true);
+			List<Object> cells = model.cloneCells(aGraph.getChildCells(graph.getDefaultParent(), true, true), true);
 			GraphModel modelCopy = new GraphModel();
 			Graph graphCopy = new Graph(modelCopy);
 			graphCopy.addCells(cells);
@@ -838,9 +838,9 @@ class GraphStructure
 			Object newVertex = getVertexWithValue(aGraphCopy,
 					(int) aGraph.getGenerator().getCostFunction().getCost(new CellState(graph.getView(), vertex, null)));
 
-			graphCopy.removeCells(new Object[] { newVertex }, true);
-			Object[][] oldComponents = getGraphComponents(aGraph);
-			Object[][] newComponents = getGraphComponents(aGraphCopy);
+			graphCopy.removeCells(new List<Object> { newVertex }, true);
+			List<Object>[] oldComponents = getGraphComponents(aGraph);
+			List<Object>[] newComponents = getGraphComponents(aGraphCopy);
 
 			if (newComponents.length > oldComponents.length)
 			{
@@ -855,10 +855,10 @@ class GraphStructure
 	 * @param aGraph
 	 * @return all cut vertices of <b>aGraph</b>
 	 */
-	static Object[] getCutVertices(AnalysisGraph aGraph)
+	static List<Object> getCutVertices(AnalysisGraph aGraph)
 	{
-		ArrayList<Object> cutVertexList = new ArrayList<Object>();
-		Object[] vertexes = aGraph.getChildVertices(aGraph.getGraph().getDefaultParent());
+		ArrayList<Object> cutVertexList = new List<Object>();
+		List<Object> vertexes = aGraph.getChildVertices(aGraph.getGraph().getDefaultParent());
 		int vertexNum = vertexes.length;
 
 		for (int i = 0; i < vertexNum; i++)
@@ -889,7 +889,7 @@ class GraphStructure
 
 		if (aGraph.getTerminal(edge, false) != null || aGraph.getTerminal(edge, true) != null)
 		{
-			Object[] cells = model.cloneCells(aGraph.getChildCells(graph.getDefaultParent(), true, true), true);
+			List<Object> cells = model.cloneCells(aGraph.getChildCells(graph.getDefaultParent(), true, true), true);
 			GraphModel modelCopy = new GraphModel();
 			Graph graphCopy = new Graph(modelCopy);
 			graphCopy.addCells(cells);
@@ -898,7 +898,7 @@ class GraphStructure
 			aGraphCopy.setGenerator(aGraph.getGenerator());
 			aGraphCopy.setProperties(aGraph.getProperties());
 
-			Object[] edges = aGraphCopy.getChildEdges(aGraphCopy.getGraph().getDefaultParent());
+			List<Object> edges = aGraphCopy.getChildEdges(aGraphCopy.getGraph().getDefaultParent());
 			Object currEdge = edges[0];
 			CostFunction costFunctionCopy = aGraphCopy.getGenerator().getCostFunction();
 			GraphView viewCopy = graphCopy.getView();
@@ -915,9 +915,9 @@ class GraphStructure
 				currDestValue = Integer.parseInt((String) modelCopy.getValue(aGraphCopy.getTerminal(currEdge, false)));
 			}
 
-			graphCopy.removeCells(new Object[] { currEdge }, true);
-			Object[][] oldComponents = getGraphComponents(aGraph);
-			Object[][] newComponents = getGraphComponents(aGraphCopy);
+			graphCopy.removeCells(new List<Object> { currEdge }, true);
+			List<Object>[] oldComponents = getGraphComponents(aGraph);
+			List<Object>[] newComponents = getGraphComponents(aGraphCopy);
 
 			if (newComponents.length > oldComponents.length)
 			{
@@ -932,10 +932,10 @@ class GraphStructure
 	 * @param aGraph
 	 * @return all cut edges of <b>aGraph</b>
 	 */
-	static Object[] getCutEdges(AnalysisGraph aGraph)
+	static List<Object> getCutEdges(AnalysisGraph aGraph)
 	{
-		ArrayList<Object> cutEdgeList = new ArrayList<Object>();
-		Object[] edges = aGraph.getChildEdges(aGraph.getGraph().getDefaultParent());
+		ArrayList<Object> cutEdgeList = new List<Object>();
+		List<Object> edges = aGraph.getChildEdges(aGraph.getGraph().getDefaultParent());
 		int edgeNum = edges.length;
 
 		for (int i = 0; i < edgeNum; i++)
@@ -954,21 +954,21 @@ class GraphStructure
 	 * @return all source vertices of <b>aGraph</b>
 	 * @throws StructuralException the graph must be directed
 	 */
-	static Object[] getSourceVertices(AnalysisGraph aGraph) throws StructuralException
+	static List<Object> getSourceVertices(AnalysisGraph aGraph) throws StructuralException
 	{
 		if (!GraphProperties.isDirected(aGraph.getProperties(), GraphProperties.DEFAULT_DIRECTED))
 		{
 			throw new StructuralException("The graph is undirected, so it can't have source vertices.");
 		}
 
-		ArrayList<Object> sourceList = new ArrayList<Object>();
-		Object[] vertices = aGraph.getChildVertices(aGraph.getGraph().getDefaultParent());
+		ArrayList<Object> sourceList = new List<Object>();
+		List<Object> vertices = aGraph.getChildVertices(aGraph.getGraph().getDefaultParent());
 
 		for (int i = 0; i < vertices.length; i++)
 		{
 			Object currVertex = vertices[i];
-			Object[] outEdges = aGraph.getEdges(vertices[i], null, false, true, true, true);
-			Object[] inEdges = aGraph.getEdges(vertices[i], null, true, false, true, true);
+			List<Object> outEdges = aGraph.getEdges(vertices[i], null, false, true, true, true);
+			List<Object> inEdges = aGraph.getEdges(vertices[i], null, true, false, true, true);
 
 			if (inEdges.length == 0 && outEdges.length > 0)
 			{
@@ -984,21 +984,21 @@ class GraphStructure
 	 * @return all sink vertices of <b>aGraph</b>
 	 * @throws StructuralException the graph must be directed
 	 */
-	static Object[] getSinkVertices(AnalysisGraph aGraph) throws StructuralException
+	static List<Object> getSinkVertices(AnalysisGraph aGraph) throws StructuralException
 	{
 		if (!GraphProperties.isDirected(aGraph.getProperties(), GraphProperties.DEFAULT_DIRECTED))
 		{
 			throw new StructuralException("The graph is undirected, so it can't have sink vertices.");
 		}
 
-		ArrayList<Object> sourceList = new ArrayList<Object>();
-		Object[] vertices = aGraph.getChildVertices(aGraph.getGraph().getDefaultParent());
+		ArrayList<Object> sourceList = new List<Object>();
+		List<Object> vertices = aGraph.getChildVertices(aGraph.getGraph().getDefaultParent());
 
 		for (int i = 0; i < vertices.length; i++)
 		{
 			Object currVertex = vertices[i];
-			Object[] outEdges = aGraph.getEdges(vertices[i], null, false, true, true, true);
-			Object[] inEdges = aGraph.getEdges(vertices[i], null, true, false, true, true);
+			List<Object> outEdges = aGraph.getEdges(vertices[i], null, false, true, true, true);
+			List<Object> inEdges = aGraph.getEdges(vertices[i], null, true, false, true, true);
 
 			if (inEdges.length > 0 && outEdges.length == 0)
 			{

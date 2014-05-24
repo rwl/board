@@ -32,7 +32,7 @@ class EventObj
 	 */
 	EventObj(String name)
 	{
-		this(name, (Object[]) null);
+		this(name, (List<Object>) null);
 	}
 
 	/**

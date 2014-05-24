@@ -84,7 +84,7 @@ class GraphTransferable implements Transferable, UIResource,
 	/**
 	 * 
 	 */
-	Object[] _cells;
+	List<Object> _cells;
 
 	/**
 	 * 
@@ -99,7 +99,7 @@ class GraphTransferable implements Transferable, UIResource,
 	/**
 	 * 
 	 */
-	GraphTransferable(Object[] cells, Rect bounds)
+	GraphTransferable(List<Object> cells, Rect bounds)
 	{
 		this(cells, bounds, null);
 	}
@@ -107,7 +107,7 @@ class GraphTransferable implements Transferable, UIResource,
 	/**
 	 * 
 	 */
-	GraphTransferable(Object[] cells, Rect bounds,
+	GraphTransferable(List<Object> cells, Rect bounds,
 			ImageIcon image)
 	{
 		this._cells = cells;
@@ -118,7 +118,7 @@ class GraphTransferable implements Transferable, UIResource,
 	/**
 	 * @return Returns the cells.
 	 */
-	Object[] getCells()
+	List<Object> getCells()
 	{
 		return _cells;
 	}
@@ -247,7 +247,7 @@ class GraphTransferable implements Transferable, UIResource,
 		}
 		else if (_isImageFlavor(flavor))
 		{
-			if (_image != null && _image.getImage() instanceof RenderedImage)
+			if (_image != null && _image.getImage() is RenderedImage)
 			{
 				if (flavor.equals(DataFlavor.imageFlavor))
 				{

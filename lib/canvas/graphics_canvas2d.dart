@@ -70,17 +70,17 @@ class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * Represents the current state of the canvas.
 	 */
-	transient _CanvasState _state = new _CanvasState();
+	/*transient*/ _CanvasState _state = new _CanvasState();
 
 	/**
 	 * Stack of states for save/restore.
 	 */
-	transient Stack<_CanvasState> _stack = new Stack<_CanvasState>();
+	/*transient*/ Stack<_CanvasState> _stack = new Stack<_CanvasState>();
 
 	/**
 	 * Holds the current path.
 	 */
-	transient GeneralPath _currentPath;
+	/*transient*/ GeneralPath _currentPath;
 
 	/**
 	 * Optional renderer pane to be used for HTML label rendering.
@@ -90,63 +90,63 @@ class GraphicsCanvas2D implements ICanvas2D
 	/**
 	 * Font caching.
 	 */
-	transient Font _lastFont = null;
+	/*transient*/ Font _lastFont = null;
 
 	/**
 	 * Font caching.
 	 */
-	transient int _lastFontStyle = 0;
+	/*transient*/ int _lastFontStyle = 0;
 
 	/**
 	 * Font caching.
 	 */
-	transient int _lastFontSize = 0;
+	/*transient*/ int _lastFontSize = 0;
 
 	/**
 	 * Font caching.
 	 */
-	transient String _lastFontFamily = "";
+	/*transient*/ String _lastFontFamily = "";
 
 	/**
 	 * Stroke caching.
 	 */
-	transient Stroke _lastStroke = null;
+	/*transient*/ Stroke _lastStroke = null;
 
 	/**
 	 * Stroke caching.
 	 */
-	transient float _lastStrokeWidth = 0;
+	/*transient*/ float _lastStrokeWidth = 0;
 
 	/**
 	 * Stroke caching.
 	 */
-	transient int _lastCap = 0;
+	/*transient*/ int _lastCap = 0;
 
 	/**
 	 * Stroke caching.
 	 */
-	transient int _lastJoin = 0;
+	/*transient*/ int _lastJoin = 0;
 
 	/**
 	 * Stroke caching.
 	 */
-	transient float _lastMiterLimit = 0;
+	/*transient*/ float _lastMiterLimit = 0;
 
 	/**
 	 * Stroke caching.
 	 */
-	transient bool _lastDashed = false;
+	/*transient*/ bool _lastDashed = false;
 
 	/**
 	 * Stroke caching.
 	 */
-	transient Object _lastDashPattern = "";
+	/*transient*/ Object _lastDashPattern = "";
 
 	/**
 	 * Caches parsed colors.
 	 */
 	@SuppressWarnings("serial")
-	transient LinkedHashMap<String, Color> _colorCache = new LinkedHashMap<String, Color>()
+	/*transient*/ LinkedHashMap<String, Color> _colorCache = new LinkedHashMap<String, Color>()
 	{
 		@Override
 		protected bool removeEldestEntry(Map.Entry<String, Color> eldest)

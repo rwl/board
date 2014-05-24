@@ -30,7 +30,7 @@ class CodecRegistry
 	 * Holds the list of known packages. Packages are used to prefix short
 	 * class names (eg. Cell) in XML markup.
 	 */
-	static List<String> _packages = new ArrayList<String>();
+	static List<String> _packages = new List<String>();
 
 	// Registers the known codecs and package names
 	static
@@ -42,7 +42,7 @@ class CodecRegistry
 		addPackage("java.lang");
 		addPackage("java.util");
 
-		register(new ObjectCodec(new ArrayList<Object>()));
+		register(new ObjectCodec(new List<Object>()));
 		register(new ModelCodec());
 		register(new CellCodec());
 		register(new StylesheetCodec());
