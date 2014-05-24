@@ -1,4 +1,4 @@
-package graph.shape;
+part of graph.shape;
 
 //import java.awt.Shape;
 //import java.util.ArrayList;

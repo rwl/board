@@ -1,4 +1,4 @@
-package graph.swing.view;
+part of graph.swing.view;
 
 //import java.io.Writer;
 

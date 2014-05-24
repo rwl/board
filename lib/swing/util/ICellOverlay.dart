@@ -1,4 +1,4 @@
-package graph.swing.util;
+part of graph.swing.util;
 
 //import graph.util.Rect;
 //import graph.view.CellState;

@@ -1,4 +1,4 @@
-package graph.swing;
+part of graph.swing;
 
 //import graph.view.GraphView;
 

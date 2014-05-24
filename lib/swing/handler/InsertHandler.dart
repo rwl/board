@@ -1,4 +1,4 @@
-package graph.swing.handler;
+part of graph.swing.handler;
 
 //import graph.swing.GraphComponent;
 //import graph.swing.util.MouseAdapter;

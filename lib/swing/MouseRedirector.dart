@@ -1,4 +1,4 @@
-package graph.swing;
+part of graph.swing;
 
 //import java.awt.event.MouseEvent;
 //import java.awt.event.MouseListener;

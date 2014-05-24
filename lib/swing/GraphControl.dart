@@ -1,4 +1,4 @@
-package graph.swing;
+part of graph.swing;
 
 //import graph.canvas.Graphics2DCanvas;
 //import graph.canvas.ICanvas;

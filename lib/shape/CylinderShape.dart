@@ -1,4 +1,4 @@
-package graph.shape;
+part of graph.shape;
 
 //import graph.canvas.Graphics2DCanvas;
 //import graph.view.CellState;

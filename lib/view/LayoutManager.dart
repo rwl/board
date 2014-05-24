@@ -1,4 +1,4 @@
-package graph.view;
+part of graph.view;
 
 //import graph.layout.IGraphLayout;
 //import graph.model.ChildChange;

@@ -1,4 +1,4 @@
-package graph.view;
+part of graph.view;
 
 //import graph.model.Cell;
 //import graph.util.Rect;

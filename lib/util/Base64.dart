@@ -1,4 +1,4 @@
-package graph.util;
+part of graph.util;
 
 //import java.util.Arrays;
 

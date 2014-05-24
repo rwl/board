@@ -1,4 +1,4 @@
-package graph.view;
+part of graph.view;
 
 //import graph.model.Geometry;
 //import graph.model.IGraphModel;

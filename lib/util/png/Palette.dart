@@ -1,4 +1,4 @@
-package graph.util.png;
+part of graph.util.png;
 
 public class Palette extends PngEncodeParam
 {
