@@ -1,15 +1,14 @@
 /**
- * $Id: Cell.java,v 1.1 2012/11/15 13:26:47 gaudenz Exp $
  * Copyright (c) 2007, Gaudenz Alder
  */
-package graph.model;
+part of graph.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+//import java.io.Serializable;
+//import java.util.ArrayList;
+//import java.util.List;
 
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
+//import org.w3c.dom.Element;
+//import org.w3c.dom.Node;
 
 /**
  * Cells are the elements of the graph model. They represent the state

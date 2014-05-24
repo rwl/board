@@ -31,9 +31,9 @@
  * You acknowledge that Software is not designed,licensed or intended for use in 
  * the design, construction, operation or maintenance of any nuclear facility.
  */
-package graph.util.png;
+part of graph.util.png;
 
-import java.io.Serializable;
+//import java.io.Serializable;
 
 /**
  * A class representing the fields of a PNG suggested palette entry.

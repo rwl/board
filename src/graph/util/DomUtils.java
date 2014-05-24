@@ -1,14 +1,13 @@
 /**
- * $Id: DomUtils.java,v 1.1 2012/11/15 13:26:39 gaudenz Exp $
  * Copyright (c) 2007-2012, JGraph Ltd
  */
-package graph.util;
+part of graph.util;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+//import javax.xml.parsers.DocumentBuilder;
+//import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
+//import org.w3c.dom.Document;
+//import org.w3c.dom.Element;
 
 /**
  * Contains various DOM API helper methods for use with Graph.

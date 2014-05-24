@@ -1,55 +1,54 @@
 /**
- * $Id: Graphics2DCanvas.java,v 1.3 2014/02/08 14:05:57 gaudenz Exp $
  * Copyright (c) 2007-2012, JGraph Ltd
  */
-package graph.canvas;
+part of graph.canvas;
 
-import graph.shape.ActorShape;
-import graph.shape.ArrowShape;
-import graph.shape.CloudShape;
-import graph.shape.ConnectorShape;
-import graph.shape.CurveShape;
-import graph.shape.CylinderShape;
-import graph.shape.DefaultTextShape;
-import graph.shape.DoubleEllipseShape;
-import graph.shape.DoubleRectangleShape;
-import graph.shape.EllipseShape;
-import graph.shape.HexagonShape;
-import graph.shape.HtmlTextShape;
-import graph.shape.IShape;
-import graph.shape.ITextShape;
-import graph.shape.ImageShape;
-import graph.shape.LabelShape;
-import graph.shape.LineShape;
-import graph.shape.RectangleShape;
-import graph.shape.RhombusShape;
-import graph.shape.StencilRegistry;
-import graph.shape.SwimlaneShape;
-import graph.shape.TriangleShape;
-import graph.swing.util.SwingConstants;
-import graph.util.Constants;
-import graph.util.Point2d;
-import graph.util.Rect;
-import graph.util.Utils;
-import graph.view.CellState;
+//import graph.shape.ActorShape;
+//import graph.shape.ArrowShape;
+//import graph.shape.CloudShape;
+//import graph.shape.ConnectorShape;
+//import graph.shape.CurveShape;
+//import graph.shape.CylinderShape;
+//import graph.shape.DefaultTextShape;
+//import graph.shape.DoubleEllipseShape;
+//import graph.shape.DoubleRectangleShape;
+//import graph.shape.EllipseShape;
+//import graph.shape.HexagonShape;
+//import graph.shape.HtmlTextShape;
+//import graph.shape.IShape;
+//import graph.shape.ITextShape;
+//import graph.shape.ImageShape;
+//import graph.shape.LabelShape;
+//import graph.shape.LineShape;
+//import graph.shape.RectangleShape;
+//import graph.shape.RhombusShape;
+//import graph.shape.StencilRegistry;
+//import graph.shape.SwimlaneShape;
+//import graph.shape.TriangleShape;
+//import graph.swing.util.SwingConstants;
+//import graph.util.Constants;
+//import graph.util.Point2d;
+//import graph.util.Rect;
+//import graph.util.Utils;
+//import graph.view.CellState;
 
-import java.awt.AlphaComposite;
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Paint;
-import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.Stroke;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.GeneralPath;
-import java.util.HashMap;
-import java.util.Map;
+//import java.awt.AlphaComposite;
+//import java.awt.BasicStroke;
+//import java.awt.Color;
+//import java.awt.Dimension;
+//import java.awt.GradientPaint;
+//import java.awt.Graphics2D;
+//import java.awt.Image;
+//import java.awt.Paint;
+//import java.awt.Rectangle;
+//import java.awt.Shape;
+//import java.awt.Stroke;
+//import java.awt.geom.AffineTransform;
+//import java.awt.geom.GeneralPath;
+//import java.util.HashMap;
+//import java.util.Map;
 
-import javax.swing.CellRendererPane;
+//import javax.swing.CellRendererPane;
 
 /**
  * An implementation of a canvas that uses Graphics2D for painting.

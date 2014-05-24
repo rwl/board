@@ -8,18 +8,18 @@
  * installation directory. If you are unable to locate this file please
  * contact JGraph sales for another copy.
  */
-package graph.layout.hierarchical.stage;
+part of graph.layout.hierarchical.stage;
 
-import graph.layout.hierarchical.HierarchicalLayout;
-import graph.layout.hierarchical.model.GraphHierarchyEdge;
-import graph.layout.hierarchical.model.GraphHierarchyModel;
-import graph.layout.hierarchical.model.GraphHierarchyNode;
-import graph.view.Graph;
+//import graph.layout.hierarchical.HierarchicalLayout;
+//import graph.layout.hierarchical.model.GraphHierarchyEdge;
+//import graph.layout.hierarchical.model.GraphHierarchyModel;
+//import graph.layout.hierarchical.model.GraphHierarchyNode;
+//import graph.view.Graph;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+//import java.util.HashSet;
+//import java.util.Iterator;
+//import java.util.List;
+//import java.util.Set;
 
 /**
  * An implementation of the first stage of the Sugiyama layout. Straightforward

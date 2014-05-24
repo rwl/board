@@ -1,16 +1,15 @@
 /**
- * $Id: CellCodec.java,v 1.1 2012/11/15 13:26:47 gaudenz Exp $
  * Copyright (c) 2006, Gaudenz Alder
  */
-package graph.io;
+part of graph.io;
 
-import graph.model.Cell;
+//import graph.model.Cell;
 
-import java.util.Iterator;
-import java.util.Map;
+//import java.util.Iterator;
+//import java.util.Map;
 
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
+//import org.w3c.dom.Element;
+//import org.w3c.dom.Node;
 
 /**
  * Codec for mxCells. This class is created and registered

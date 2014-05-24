@@ -1,25 +1,24 @@
 /**
- * $Id: GraphTransferHandler.java,v 1.1 2012/11/15 13:26:44 gaudenz Exp $
  * Copyright (c) 2008, Gaudenz Alder
  */
-package graph.swing.handler;
+part of graph.swing.handler;
 
-import graph.swing.GraphComponent;
-import graph.swing.util.GraphTransferable;
-import graph.util.CellRenderer;
-import graph.util.Point2d;
-import graph.util.Rect;
-import graph.view.Graph;
+//import graph.swing.GraphComponent;
+//import graph.swing.util.GraphTransferable;
+//import graph.util.CellRenderer;
+//import graph.util.Point2d;
+//import graph.util.Rect;
+//import graph.view.Graph;
 
-import java.awt.Color;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
+//import java.awt.Color;
+//import java.awt.Image;
+//import java.awt.Point;
+//import java.awt.datatransfer.DataFlavor;
+//import java.awt.datatransfer.Transferable;
 
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.TransferHandler;
+//import javax.swing.ImageIcon;
+//import javax.swing.JComponent;
+//import javax.swing.TransferHandler;
 
 /**
  * 

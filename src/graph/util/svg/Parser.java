@@ -16,7 +16,7 @@
    limitations under the License.
 
  */
-package graph.util.svg;
+part of graph.util.svg;
 
 /**
  * This interface represents a parser.

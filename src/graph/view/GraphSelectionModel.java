@@ -7,20 +7,20 @@
  * See LICENSE file for license details. If you are unable to locate
  * this file please contact info (at) jgraph (dot) com.
  */
-package graph.view;
+part of graph.view;
 
-import graph.util.Event;
-import graph.util.EventObj;
-import graph.util.EventSource;
-import graph.util.UndoableEdit;
-import graph.util.UndoableEdit.UndoableChange;
+//import graph.util.Event;
+//import graph.util.EventObj;
+//import graph.util.EventSource;
+//import graph.util.UndoableEdit;
+//import graph.util.UndoableEdit.UndoableChange;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+//import java.util.ArrayList;
+//import java.util.Collection;
+//import java.util.Iterator;
+//import java.util.LinkedHashSet;
+//import java.util.List;
+//import java.util.Set;
 
 /**
  * Implements the selection model for a graph.

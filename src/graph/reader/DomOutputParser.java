@@ -1,14 +1,14 @@
 package graph.reader;
 
-import graph.canvas.ICanvas2D;
-import graph.reader.SaxOutputHandler.IElementHandler;
+//import graph.canvas.ICanvas2D;
+//import graph.reader.SaxOutputHandler.IElementHandler;
 
-import java.util.Hashtable;
-import java.util.Map;
+//import java.util.Hashtable;
+//import java.util.Map;
 
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.xml.sax.Attributes;
+//import org.w3c.dom.Element;
+//import org.w3c.dom.Node;
+//import org.xml.sax.Attributes;
 
 /**
  *

@@ -1,15 +1,14 @@
 /**
- * $Id: CellTracker.java,v 1.1 2012/11/15 13:26:44 gaudenz Exp $
  * Copyright (c) 2008, Gaudenz Alder
  */
-package graph.swing.handler;
+part of graph.swing.handler;
 
-import graph.swing.GraphComponent;
+//import graph.swing.GraphComponent;
 
-import java.awt.Color;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+//import java.awt.Color;
+//import java.awt.event.MouseEvent;
+//import java.awt.event.MouseListener;
+//import java.awt.event.MouseMotionListener;
 
 /**
  * Event handler that highlights cells. Inherits from CellMarker.

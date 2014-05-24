@@ -1,15 +1,14 @@
 /**
- * $Id: RootChangeCodec.java,v 1.2 2013/10/28 08:45:08 gaudenz Exp $
  * Copyright (c) 2006-2013, Gaudenz Alder, David Benson
  */
-package graph.io;
+part of graph.io;
 
-import graph.model.ICell;
-import graph.model.RootChange;
+//import graph.model.ICell;
+//import graph.model.RootChange;
 
-import java.util.Map;
+//import java.util.Map;
 
-import org.w3c.dom.Node;
+//import org.w3c.dom.Node;
 
 /**
  * Codec for mxChildChanges. This class is created and registered

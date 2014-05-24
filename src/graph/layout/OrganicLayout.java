@@ -1,25 +1,24 @@
 /**
- * $Id: OrganicLayout.java,v 1.2 2012/12/22 22:39:40 david Exp $
  * Copyright (c) 2007-2013, JGraph Ltd
  */
 
 package graph.layout;
 
-import graph.model.GraphModel;
-import graph.model.IGraphModel;
-import graph.util.Rect;
-import graph.view.Graph;
-import graph.view.GraphView;
+//import graph.model.GraphModel;
+//import graph.model.IGraphModel;
+//import graph.util.Rect;
+//import graph.view.Graph;
+//import graph.view.GraphView;
 
-import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map;
+//import java.awt.geom.Line2D;
+//import java.awt.geom.Point2D;
+//import java.awt.geom.Rectangle2D;
+//import java.util.ArrayList;
+//import java.util.Arrays;
+//import java.util.HashSet;
+//import java.util.Hashtable;
+//import java.util.Iterator;
+//import java.util.Map;
 
 /**
  * An implementation of a simulated annealing layout, based on "Drawing Graphs

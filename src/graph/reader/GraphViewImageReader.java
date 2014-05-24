@@ -1,29 +1,28 @@
 /**
- * $Id: GraphViewImageReader.java,v 1.1 2012/11/15 13:26:45 gaudenz Exp $
  * Copyright (c) 2007, Gaudenz Alder
  */
 
 package graph.reader;
 
-import graph.canvas.Graphics2DCanvas;
-import graph.canvas.ICanvas;
-import graph.canvas.ImageCanvas;
-import graph.util.Rect;
-import graph.util.Utils;
+//import graph.canvas.Graphics2DCanvas;
+//import graph.canvas.ICanvas;
+//import graph.canvas.ImageCanvas;
+//import graph.util.Rect;
+//import graph.util.Utils;
 
-import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Map;
+//import java.awt.Color;
+//import java.awt.image.BufferedImage;
+//import java.io.FileInputStream;
+//import java.io.IOException;
+//import java.util.Map;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
+//import javax.xml.parsers.ParserConfigurationException;
+//import javax.xml.parsers.SAXParser;
+//import javax.xml.parsers.SAXParserFactory;
 
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
+//import org.xml.sax.InputSource;
+//import org.xml.sax.SAXException;
+//import org.xml.sax.XMLReader;
 
 /**
  * A converter that renders display XML data onto a graphics canvas. This

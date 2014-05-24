@@ -1,14 +1,14 @@
 package graph.swing.view;
 
-import java.io.IOException;
-import java.io.Writer;
+//import java.io.IOException;
+//import java.io.Writer;
 
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
-import javax.swing.text.StyledDocument;
-import javax.swing.text.html.HTMLDocument;
-import javax.swing.text.html.HTMLEditorKit;
-import javax.swing.text.html.MinimalHTMLWriter;
+//import javax.swing.text.BadLocationException;
+//import javax.swing.text.Document;
+//import javax.swing.text.StyledDocument;
+//import javax.swing.text.html.HTMLDocument;
+//import javax.swing.text.html.HTMLEditorKit;
+//import javax.swing.text.html.MinimalHTMLWriter;
 
 /**
  * Workaround for inserted linefeeds when getting text from HTML editor.

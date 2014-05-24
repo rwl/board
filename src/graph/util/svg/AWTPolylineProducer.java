@@ -16,10 +16,10 @@
    limitations under the License.
 
  */
-package graph.util.svg;
+part of graph.util.svg;
 
-import java.awt.Shape;
-import java.awt.geom.GeneralPath;
+//import java.awt.Shape;
+//import java.awt.geom.GeneralPath;
 
 /**
  * This class produces a polyline shape from a reader.

@@ -1,12 +1,12 @@
 package graph.shape;
 
-import graph.canvas.Graphics2DCanvas;
-import graph.util.Constants;
-import graph.util.Rect;
-import graph.util.Utils;
-import graph.view.CellState;
+//import graph.canvas.Graphics2DCanvas;
+//import graph.util.Constants;
+//import graph.util.Rect;
+//import graph.util.Utils;
+//import graph.view.CellState;
 
-import java.awt.Rectangle;
+//import java.awt.Rectangle;
 
 public class SwimlaneShape extends BasicShape
 {

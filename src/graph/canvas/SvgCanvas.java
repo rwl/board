@@ -1,28 +1,27 @@
 /**
- * $Id: SvgCanvas.java,v 1.1 2012/11/15 13:26:47 gaudenz Exp $
  * Copyright (c) 2007, Gaudenz Alder
  */
-package graph.canvas;
+part of graph.canvas;
 
-import graph.util.Base64;
-import graph.util.Constants;
-import graph.util.Point2d;
-import graph.util.Rect;
-import graph.util.Utils;
-import graph.view.CellState;
+//import graph.util.Base64;
+//import graph.util.Constants;
+//import graph.util.Point2d;
+//import graph.util.Rect;
+//import graph.util.Utils;
+//import graph.view.CellState;
 
-import java.awt.Font;
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
+//import java.awt.Font;
+//import java.io.BufferedInputStream;
+//import java.io.ByteArrayOutputStream;
+//import java.io.IOException;
+//import java.io.InputStream;
+//import java.net.URL;
+//import java.util.Hashtable;
+//import java.util.List;
+//import java.util.Map;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
+//import org.w3c.dom.Document;
+//import org.w3c.dom.Element;
 
 /**
  * An implementation of a canvas that uses SVG for painting. This canvas

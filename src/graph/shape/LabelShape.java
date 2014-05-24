@@ -1,16 +1,16 @@
 package graph.shape;
 
-import graph.canvas.Graphics2DCanvas;
-import graph.util.Constants;
-import graph.util.Rect;
-import graph.util.Utils;
-import graph.view.CellState;
+//import graph.canvas.Graphics2DCanvas;
+//import graph.util.Constants;
+//import graph.util.Rect;
+//import graph.util.Utils;
+//import graph.view.CellState;
 
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Rectangle;
-import java.awt.geom.GeneralPath;
-import java.util.Map;
+//import java.awt.Color;
+//import java.awt.GradientPaint;
+//import java.awt.Rectangle;
+//import java.awt.geom.GeneralPath;
+//import java.util.Map;
 
 public class LabelShape extends ImageShape
 {

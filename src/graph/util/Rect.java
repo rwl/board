@@ -1,11 +1,10 @@
 /**
- * $Id: Rect.java,v 1.1 2012/11/15 13:26:39 gaudenz Exp $
  * Copyright (c) 2007-2010, Gaudenz Alder, David Benson
  */
-package graph.util;
+part of graph.util;
 
-import java.awt.Rectangle;
-import java.awt.geom.Rectangle2D;
+//import java.awt.Rectangle;
+//import java.awt.geom.Rectangle2D;
 
 /**
  * Implements a 2-dimensional rectangle with double precision coordinates.

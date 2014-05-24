@@ -1,20 +1,19 @@
 /**
- * $Id: CodecRegistry.java,v 1.1 2012/11/15 13:26:47 gaudenz Exp $
  * Copyright (c) 2007, Gaudenz Alder
  */
-package graph.io;
+part of graph.io;
 
-import graph.model.CollapseChange;
-import graph.model.GeometryChange;
-import graph.model.StyleChange;
-import graph.model.ValueChange;
-import graph.model.VisibleChange;
+//import graph.model.CollapseChange;
+//import graph.model.GeometryChange;
+//import graph.model.StyleChange;
+//import graph.model.ValueChange;
+//import graph.model.VisibleChange;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
+//import java.util.ArrayList;
+//import java.util.Collection;
+//import java.util.Hashtable;
+//import java.util.List;
+//import java.util.Map;
 
 /**
  * Singleton class that acts as a global registry for codecs. See

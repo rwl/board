@@ -1,12 +1,11 @@
 /**
- * $Id: DoubleValCostFunction.java,v 1.2 2012/11/21 14:16:01 mate Exp $
  * Copyright (c) 2012, JGraph Ltd
  * Returns the value of a cell, which is assumed a Double
  */
-package graph.costfunction;
+part of graph.costfunction;
 
-import graph.view.CellState;
-import graph.view.Graph;
+//import graph.view.CellState;
+//import graph.view.Graph;
 
 /**
  * A cost function that assumes that edge value is of type "double" or "String" and returns that value. Default edge weight is 1.0 (if no double value can be retrieved)

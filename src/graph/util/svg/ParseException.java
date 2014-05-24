@@ -16,7 +16,7 @@
    limitations under the License.
 
  */
-package graph.util.svg;
+part of graph.util.svg;
 
 /**
  * This class encapsulates a general parse error or warning.

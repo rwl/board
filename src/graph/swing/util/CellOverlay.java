@@ -1,15 +1,15 @@
 package graph.swing.util;
 
-import graph.util.Constants;
-import graph.util.Point2d;
-import graph.util.Rect;
-import graph.view.CellState;
+//import graph.util.Constants;
+//import graph.util.Point2d;
+//import graph.util.Rect;
+//import graph.view.CellState;
 
-import java.awt.Cursor;
-import java.awt.Graphics;
+//import java.awt.Cursor;
+//import java.awt.Graphics;
 
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
+//import javax.swing.ImageIcon;
+//import javax.swing.JComponent;
 
 public class CellOverlay extends JComponent implements ICellOverlay
 {

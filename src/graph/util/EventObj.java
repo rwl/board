@@ -1,11 +1,10 @@
 /**
- * $Id: EventObj.java,v 1.1 2012/11/15 13:26:39 gaudenz Exp $
  * Copyright (c) 2007, Gaudenz Alder
  */
-package graph.util;
+part of graph.util;
 
-import java.util.Hashtable;
-import java.util.Map;
+//import java.util.Hashtable;
+//import java.util.Map;
 
 /**
  * Base class for objects that dispatch named events.

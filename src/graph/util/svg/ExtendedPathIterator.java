@@ -16,9 +16,9 @@
    limitations under the License.
 
  */
-package graph.util.svg;
+part of graph.util.svg;
 
-import java.awt.geom.PathIterator;
+//import java.awt.geom.PathIterator;
 
 /**
  * The <code>ExtendedPathIterator</code> class represents a geometric

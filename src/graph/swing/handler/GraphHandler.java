@@ -1,5 +1,4 @@
 /**
- * $Id: GraphHandler.java,v 1.2 2014/02/16 09:54:20 gaudenz Exp $
  * Copyright (c) 2008-2012, JGraph Ltd
  * 
  * Known issue: Drag image size depends on the initial position and may sometimes
@@ -7,53 +6,53 @@
  * and height at the initial position may be different than that at the current
  * position as the left and bottom side of the shape must align to the grid lines.
  */
-package graph.swing.handler;
+part of graph.swing.handler;
 
-import graph.model.IGraphModel;
-import graph.swing.GraphComponent;
-import graph.swing.util.GraphTransferable;
-import graph.swing.util.MouseAdapter;
-import graph.swing.util.SwingConstants;
-import graph.util.CellRenderer;
-import graph.util.Event;
-import graph.util.EventObj;
-import graph.util.Point2d;
-import graph.util.Rect;
-import graph.util.Utils;
-import graph.util.EventSource.IEventListener;
-import graph.view.CellState;
-import graph.view.Graph;
+//import graph.model.IGraphModel;
+//import graph.swing.GraphComponent;
+//import graph.swing.util.GraphTransferable;
+//import graph.swing.util.MouseAdapter;
+//import graph.swing.util.SwingConstants;
+//import graph.util.CellRenderer;
+//import graph.util.Event;
+//import graph.util.EventObj;
+//import graph.util.Point2d;
+//import graph.util.Rect;
+//import graph.util.Utils;
+//import graph.util.EventSource.IEventListener;
+//import graph.view.CellState;
+//import graph.view.Graph;
 
-import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.datatransfer.Transferable;
-import java.awt.dnd.DnDConstants;
-import java.awt.dnd.DragGestureEvent;
-import java.awt.dnd.DragGestureListener;
-import java.awt.dnd.DragSource;
-import java.awt.dnd.DragSourceAdapter;
-import java.awt.dnd.DragSourceDropEvent;
-import java.awt.dnd.DropTarget;
-import java.awt.dnd.DropTargetDragEvent;
-import java.awt.dnd.DropTargetDropEvent;
-import java.awt.dnd.DropTargetEvent;
-import java.awt.dnd.DropTargetListener;
-import java.awt.event.InputEvent;
-import java.awt.event.MouseEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.TooManyListenersException;
+//import java.awt.AlphaComposite;
+//import java.awt.Color;
+//import java.awt.Cursor;
+//import java.awt.Graphics;
+//import java.awt.Graphics2D;
+//import java.awt.Image;
+//import java.awt.Point;
+//import java.awt.Rectangle;
+//import java.awt.datatransfer.Transferable;
+//import java.awt.dnd.DnDConstants;
+//import java.awt.dnd.DragGestureEvent;
+//import java.awt.dnd.DragGestureListener;
+//import java.awt.dnd.DragSource;
+//import java.awt.dnd.DragSourceAdapter;
+//import java.awt.dnd.DragSourceDropEvent;
+//import java.awt.dnd.DropTarget;
+//import java.awt.dnd.DropTargetDragEvent;
+//import java.awt.dnd.DropTargetDropEvent;
+//import java.awt.dnd.DropTargetEvent;
+//import java.awt.dnd.DropTargetListener;
+//import java.awt.event.InputEvent;
+//import java.awt.event.MouseEvent;
+//import java.beans.PropertyChangeEvent;
+//import java.beans.PropertyChangeListener;
+//import java.util.TooManyListenersException;
 
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.SwingUtilities;
-import javax.swing.TransferHandler;
+//import javax.swing.ImageIcon;
+//import javax.swing.JComponent;
+//import javax.swing.SwingUtilities;
+//import javax.swing.TransferHandler;
 
 public class GraphHandler extends MouseAdapter implements
 		DropTargetListener

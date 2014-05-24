@@ -1,20 +1,19 @@
 /**
- * $Id: ConnectorShape.java,v 1.2 2013/08/28 06:32:23 gaudenz Exp $
  * Copyright (c) 2010, Gaudenz Alder, David Benson
  */
-package graph.shape;
+part of graph.shape;
 
-import graph.canvas.Graphics2DCanvas;
-import graph.util.Constants;
-import graph.util.Line;
-import graph.util.Point2d;
-import graph.util.Utils;
-import graph.view.CellState;
+//import graph.canvas.Graphics2DCanvas;
+//import graph.util.Constants;
+//import graph.util.Line;
+//import graph.util.Point2d;
+//import graph.util.Utils;
+//import graph.view.CellState;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+//import java.awt.Color;
+//import java.util.ArrayList;
+//import java.util.List;
+//import java.util.Map;
 
 public class ConnectorShape extends BasicShape
 {

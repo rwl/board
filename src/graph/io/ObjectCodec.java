@@ -1,26 +1,25 @@
 /**
- * $Id: ObjectCodec.java,v 1.1 2012/11/15 13:26:47 gaudenz Exp $
  * Copyright (c) 2006, Gaudenz Alder
  */
-package graph.io;
+part of graph.io;
 
-import graph.util.Utils;
+//import graph.util.Utils;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+//import java.lang.reflect.Array;
+//import java.lang.reflect.Field;
+//import java.lang.reflect.Method;
+//import java.lang.reflect.Modifier;
+//import java.util.Collection;
+//import java.util.HashMap;
+//import java.util.HashSet;
+//import java.util.Hashtable;
+//import java.util.Iterator;
+//import java.util.Map;
+//import java.util.Set;
 
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
+//import org.w3c.dom.Element;
+//import org.w3c.dom.NamedNodeMap;
+//import org.w3c.dom.Node;
 
 /**
  * Generic codec for Java objects. See below for a detailed description of

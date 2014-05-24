@@ -1,10 +1,9 @@
 /**
- * $Id: GraphAbstractHierarchyCell.java,v 1.1 2012/11/15 13:26:42 gaudenz Exp $
  * Copyright (c) 2005-2010, David Benson, Gaudenz Alder
  */
-package graph.layout.hierarchical.model;
+part of graph.layout.hierarchical.model;
 
-import java.util.List;
+//import java.util.List;
 
 /**
  * An abstraction of an internal hierarchy node or edge

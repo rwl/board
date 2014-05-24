@@ -1,23 +1,22 @@
 /**
- * $Id: GraphLayout.java,v 1.1 2012/11/15 13:26:37 gaudenz Exp $
  * Copyright (c) 2008-2009, JGraph Ltd
  */
-package graph.layout;
+part of graph.layout;
 
-import graph.model.Geometry;
-import graph.model.IGraphModel;
-import graph.util.Constants;
-import graph.util.Point2d;
-import graph.util.Rect;
-import graph.view.CellState;
-import graph.view.Graph;
-import graph.view.GraphView;
-import graph.view.Graph.ICellVisitor;
+//import graph.model.Geometry;
+//import graph.model.IGraphModel;
+//import graph.util.Constants;
+//import graph.util.Point2d;
+//import graph.util.Rect;
+//import graph.view.CellState;
+//import graph.view.Graph;
+//import graph.view.GraphView;
+//import graph.view.Graph.ICellVisitor;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+//import java.util.HashSet;
+//import java.util.List;
+//import java.util.Map;
+//import java.util.Set;
 
 /**
  * Abstract bass class for layouts

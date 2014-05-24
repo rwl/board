@@ -1,12 +1,12 @@
 package graph.canvas;
 
-import graph.util.Constants;
-import graph.util.Utils;
+//import graph.util.Constants;
+//import graph.util.Utils;
 
-import java.awt.Point;
-import java.awt.image.BufferedImage;
-import java.util.Hashtable;
-import java.util.Map;
+//import java.awt.Point;
+//import java.awt.image.BufferedImage;
+//import java.util.Hashtable;
+//import java.util.Map;
 
 public abstract class BasicCanvas implements ICanvas
 {

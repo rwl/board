@@ -8,9 +8,9 @@
  * installation directory. If you are unable to locate this file please
  * contact JGraph sales for another copy.
  */
-package graph.layout.hierarchical.model;
+part of graph.layout.hierarchical.model;
 
-import java.util.LinkedHashSet;
+//import java.util.LinkedHashSet;
 
 /**
  * An abstraction of a rank in the hierarchy layout. Should be ordered, perform

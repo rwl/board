@@ -1,27 +1,26 @@
 /**
- * $Id: GraphModel.java,v 1.1 2012/11/15 13:26:47 gaudenz Exp $
  * Copyright (c) 2007, Gaudenz Alder
  */
-package graph.model;
+part of graph.model;
 
-import graph.util.Event;
-import graph.util.EventObj;
-import graph.util.EventSource;
-import graph.util.Point2d;
-import graph.util.UndoableEdit;
+//import graph.util.Event;
+//import graph.util.EventObj;
+//import graph.util.EventSource;
+//import graph.util.Point2d;
+//import graph.util.UndoableEdit;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+//import java.io.IOException;
+//import java.io.ObjectInputStream;
+//import java.io.Serializable;
+//import java.util.ArrayList;
+//import java.util.Arrays;
+//import java.util.Collection;
+//import java.util.HashSet;
+//import java.util.Hashtable;
+//import java.util.Iterator;
+//import java.util.List;
+//import java.util.Map;
+//import java.util.Set;
 
 /**
  * Extends EventSource to implement a graph model. The graph model acts as

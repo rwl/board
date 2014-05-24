@@ -1,22 +1,21 @@
 /**
- * $Id: Morphing.java,v 1.1 2012/11/15 13:26:46 gaudenz Exp $
  * Copyright (c) 2007, Gaudenz Alder
  */
-package graph.swing.util;
+part of graph.swing.util;
 
-import graph.model.Geometry;
-import graph.swing.GraphComponent;
-import graph.swing.view.CellStatePreview;
-import graph.util.Event;
-import graph.util.EventObj;
-import graph.util.Point2d;
-import graph.util.Rect;
-import graph.view.CellState;
-import graph.view.Graph;
+//import graph.model.Geometry;
+//import graph.swing.GraphComponent;
+//import graph.swing.view.CellStatePreview;
+//import graph.util.Event;
+//import graph.util.EventObj;
+//import graph.util.Point2d;
+//import graph.util.Rect;
+//import graph.view.CellState;
+//import graph.view.Graph;
 
-import java.awt.Graphics;
-import java.util.HashMap;
-import java.util.Map;
+//import java.awt.Graphics;
+//import java.util.HashMap;
+//import java.util.Map;
 
 /**
  * Provides animation effects.

@@ -1,15 +1,14 @@
 /**
- * $Id: Curve.java,v 1.1 2012/11/15 13:26:39 gaudenz Exp $
  * Copyright (c) 2009-2012, JGraph Ltd
  */
-package graph.util;
+part of graph.util;
 
-import java.awt.Rectangle;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
+//import java.awt.Rectangle;
+//import java.util.ArrayList;
+//import java.util.Collection;
+//import java.util.Hashtable;
+//import java.util.List;
+//import java.util.Map;
 
 public class Curve
 {

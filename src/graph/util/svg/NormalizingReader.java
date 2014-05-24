@@ -16,10 +16,10 @@
    limitations under the License.
 
  */
-package graph.util.svg;
+part of graph.util.svg;
 
-import java.io.IOException;
-import java.io.Reader;
+//import java.io.IOException;
+//import java.io.Reader;
 
 /**
  * This class represents a reader which normalizes the line break: \n,

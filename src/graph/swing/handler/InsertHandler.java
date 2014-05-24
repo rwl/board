@@ -1,22 +1,22 @@
 package graph.swing.handler;
 
-import graph.swing.GraphComponent;
-import graph.swing.util.MouseAdapter;
-import graph.util.Event;
-import graph.util.EventObj;
-import graph.util.EventSource;
-import graph.util.Point2d;
-import graph.util.Rect;
-import graph.util.EventSource.IEventListener;
-import graph.view.Graph;
+//import graph.swing.GraphComponent;
+//import graph.swing.util.MouseAdapter;
+//import graph.util.Event;
+//import graph.util.EventObj;
+//import graph.util.EventSource;
+//import graph.util.Point2d;
+//import graph.util.Rect;
+//import graph.util.EventSource.IEventListener;
+//import graph.view.Graph;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.event.MouseEvent;
+//import java.awt.BasicStroke;
+//import java.awt.Color;
+//import java.awt.Graphics;
+//import java.awt.Graphics2D;
+//import java.awt.Point;
+//import java.awt.Rectangle;
+//import java.awt.event.MouseEvent;
 
 public class InsertHandler extends MouseAdapter
 {

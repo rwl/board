@@ -1,12 +1,11 @@
 /**
- * $Id: MouseAdapter.java,v 1.1 2012/11/15 13:26:46 gaudenz Exp $
  * Copyright (c) 2008, Gaudenz Alder
  */
-package graph.swing.util;
+part of graph.swing.util;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+//import java.awt.event.MouseEvent;
+//import java.awt.event.MouseListener;
+//import java.awt.event.MouseMotionListener;
 
 /**
  *

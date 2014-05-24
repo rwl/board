@@ -1,26 +1,25 @@
 /**
- * $Id: GraphTransferable.java,v 1.2 2013/11/26 16:24:53 gaudenz Exp $
  * Copyright (c) 2008, Gaudenz Alder
  */
-package graph.swing.util;
+part of graph.swing.util;
 
-import graph.util.Rect;
+//import graph.util.Rect;
 
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.image.RenderedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
-import java.io.Serializable;
-import java.io.StringReader;
+//import java.awt.datatransfer.DataFlavor;
+//import java.awt.datatransfer.Transferable;
+//import java.awt.datatransfer.UnsupportedFlavorException;
+//import java.awt.image.RenderedImage;
+//import java.io.ByteArrayInputStream;
+//import java.io.ByteArrayOutputStream;
+//import java.io.IOException;
+//import java.io.InputStream;
+//import java.io.Reader;
+//import java.io.Serializable;
+//import java.io.StringReader;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.plaf.UIResource;
+//import javax.imageio.ImageIO;
+//import javax.swing.ImageIcon;
+//import javax.swing.plaf.UIResource;
 
 /**
  *

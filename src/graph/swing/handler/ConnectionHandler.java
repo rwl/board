@@ -1,36 +1,35 @@
 /**
- * $Id: ConnectionHandler.java,v 1.1 2012/11/15 13:26:44 gaudenz Exp $
  * Copyright (c) 2008, Gaudenz Alder
  */
-package graph.swing.handler;
+part of graph.swing.handler;
 
-import graph.model.Geometry;
-import graph.model.IGraphModel;
-import graph.swing.GraphComponent;
-import graph.swing.GraphControl;
-import graph.swing.util.MouseAdapter;
-import graph.util.Constants;
-import graph.util.Event;
-import graph.util.EventObj;
-import graph.util.EventSource;
-import graph.util.Point2d;
-import graph.util.Rect;
-import graph.util.EventSource.IEventListener;
-import graph.view.CellState;
-import graph.view.Graph;
-import graph.view.GraphView;
+//import graph.model.Geometry;
+//import graph.model.IGraphModel;
+//import graph.swing.GraphComponent;
+//import graph.swing.GraphControl;
+//import graph.swing.util.MouseAdapter;
+//import graph.util.Constants;
+//import graph.util.Event;
+//import graph.util.EventObj;
+//import graph.util.EventSource;
+//import graph.util.Point2d;
+//import graph.util.Rect;
+//import graph.util.EventSource.IEventListener;
+//import graph.view.CellState;
+//import graph.view.Graph;
+//import graph.view.GraphView;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Graphics;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.event.MouseEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+//import java.awt.Color;
+//import java.awt.Cursor;
+//import java.awt.Graphics;
+//import java.awt.Point;
+//import java.awt.Rectangle;
+//import java.awt.event.MouseEvent;
+//import java.beans.PropertyChangeEvent;
+//import java.beans.PropertyChangeListener;
 
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
+//import javax.swing.ImageIcon;
+//import javax.swing.JOptionPane;
 
 /**
  * Connection handler creates new connections between cells. This control is used to display the connector

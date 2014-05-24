@@ -1,19 +1,19 @@
 package graph.layout;
 
-import graph.model.GraphModel;
-import graph.model.IGraphModel;
-import graph.util.Point2d;
-import graph.util.Rect;
-import graph.util.Utils;
-import graph.view.CellState;
-import graph.view.Graph;
-import graph.view.GraphView;
+//import graph.model.GraphModel;
+//import graph.model.IGraphModel;
+//import graph.util.Point2d;
+//import graph.util.Rect;
+//import graph.util.Utils;
+//import graph.view.CellState;
+//import graph.view.Graph;
+//import graph.view.GraphView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+//import java.util.ArrayList;
+//import java.util.Arrays;
+//import java.util.HashSet;
+//import java.util.List;
+//import java.util.Set;
 
 public class CompactTreeLayout extends GraphLayout
 {

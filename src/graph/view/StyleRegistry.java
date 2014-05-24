@@ -1,14 +1,13 @@
 /**
- * $Id: StyleRegistry.java,v 1.2 2013/02/20 11:41:05 gaudenz Exp $
  * Copyright (c) 2007, Gaudenz Alder
  */
-package graph.view;
+part of graph.view;
 
-import graph.util.Constants;
+//import graph.util.Constants;
 
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map;
+//import java.util.Hashtable;
+//import java.util.Iterator;
+//import java.util.Map;
 
 /**
  * Singleton class that acts as a global converter from string to object values

@@ -1,8 +1,8 @@
 package graph.shape;
 
-import graph.canvas.Graphics2DCanvas;
-import graph.util.Point2d;
-import graph.view.CellState;
+//import graph.canvas.Graphics2DCanvas;
+//import graph.util.Point2d;
+//import graph.view.CellState;
 
 public interface IMarker
 {

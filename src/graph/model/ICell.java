@@ -1,8 +1,7 @@
 /**
- * $Id: ICell.java,v 1.1 2012/11/15 13:26:47 gaudenz Exp $
  * Copyright (c) 2007, Gaudenz Alder
  */
-package graph.model;
+part of graph.model;
 
 /**
  * Defines the requirements for a cell that can be used in an GraphModel.

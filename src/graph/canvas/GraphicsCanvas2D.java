@@ -1,34 +1,34 @@
 package graph.canvas;
 
-import graph.util.Constants;
-import graph.util.LightweightLabel;
-import graph.util.Utils;
+//import graph.util.Constants;
+//import graph.util.LightweightLabel;
+//import graph.util.Utils;
 
-import java.awt.AlphaComposite;
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Composite;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.Stroke;
-import java.awt.font.TextAttribute;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.text.AttributedString;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Stack;
+//import java.awt.AlphaComposite;
+//import java.awt.BasicStroke;
+//import java.awt.Color;
+//import java.awt.Composite;
+//import java.awt.Dimension;
+//import java.awt.Font;
+//import java.awt.FontMetrics;
+//import java.awt.GradientPaint;
+//import java.awt.Graphics2D;
+//import java.awt.Image;
+//import java.awt.Rectangle;
+//import java.awt.Stroke;
+//import java.awt.font.TextAttribute;
+//import java.awt.geom.AffineTransform;
+//import java.awt.geom.Ellipse2D;
+//import java.awt.geom.GeneralPath;
+//import java.awt.geom.Point2D;
+//import java.awt.geom.Rectangle2D;
+//import java.text.AttributedString;
+//import java.util.LinkedHashMap;
+//import java.util.Map;
+//import java.util.Stack;
 
-import javax.swing.CellRendererPane;
-import javax.swing.JLabel;
+//import javax.swing.CellRendererPane;
+//import javax.swing.JLabel;
 
 /**
  * Used for exporting images. To render to an image from a given XML string,

@@ -1,17 +1,16 @@
 /**
- * $Id: RectangleShape.java,v 1.1 2012/11/15 13:26:44 gaudenz Exp $
  * Copyright (c) 2007-2012, JGraph Ltd
  */
-package graph.shape;
+part of graph.shape;
 
-import graph.canvas.Graphics2DCanvas;
-import graph.swing.util.SwingConstants;
-import graph.util.Constants;
-import graph.util.Utils;
-import graph.view.CellState;
+//import graph.canvas.Graphics2DCanvas;
+//import graph.swing.util.SwingConstants;
+//import graph.util.Constants;
+//import graph.util.Utils;
+//import graph.view.CellState;
 
-import java.awt.Rectangle;
-import java.util.Map;
+//import java.awt.Rectangle;
+//import java.util.Map;
 
 public class RectangleShape extends BasicShape
 {

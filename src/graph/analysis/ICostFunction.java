@@ -1,10 +1,9 @@
 /**
- * $Id: ICostFunction.java,v 1.2 2012/11/21 14:16:01 mate Exp $
  * Copyright (c) 2007, Gaudenz Alder
  */
-package graph.analysis;
+part of graph.analysis;
 
-import graph.view.CellState;
+//import graph.view.CellState;
 
 /**
  * The cost function takes a cell and returns it's cost as a double. Two typical

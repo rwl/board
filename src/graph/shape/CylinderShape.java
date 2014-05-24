@@ -1,11 +1,11 @@
 package graph.shape;
 
-import graph.canvas.Graphics2DCanvas;
-import graph.view.CellState;
+//import graph.canvas.Graphics2DCanvas;
+//import graph.view.CellState;
 
-import java.awt.Rectangle;
-import java.awt.geom.Area;
-import java.awt.geom.Ellipse2D;
+//import java.awt.Rectangle;
+//import java.awt.geom.Area;
+//import java.awt.geom.Ellipse2D;
 
 public class CylinderShape extends BasicShape
 {

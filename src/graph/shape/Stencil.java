@@ -1,21 +1,20 @@
 /**
- * $Id: Stencil.java,v 1.3 2013/05/23 10:29:43 gaudenz Exp $
  * Copyright (c) 2010-2012, JGraph Ltd
  */
-package graph.shape;
+part of graph.shape;
 
-import graph.canvas.Graphics2DCanvas;
-import graph.canvas.GraphicsCanvas2D;
-import graph.util.Constants;
-import graph.util.Point2d;
-import graph.util.Rect;
-import graph.util.Utils;
-import graph.view.CellState;
+//import graph.canvas.Graphics2DCanvas;
+//import graph.canvas.GraphicsCanvas2D;
+//import graph.util.Constants;
+//import graph.util.Point2d;
+//import graph.util.Rect;
+//import graph.util.Utils;
+//import graph.view.CellState;
 
-import java.util.Map;
+//import java.util.Map;
 
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
+//import org.w3c.dom.Element;
+//import org.w3c.dom.Node;
 
 /**
  * Implements a stencil for the given XML definition. This class implements the Graph

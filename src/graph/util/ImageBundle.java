@@ -1,11 +1,10 @@
 /**
- * $Id: ImageBundle.java,v 1.1 2012/11/15 13:26:39 gaudenz Exp $
  * Copyright (c) 2010, Gaudenz Alder
  */
-package graph.util;
+part of graph.util;
 
-import java.util.Hashtable;
-import java.util.Map;
+//import java.util.Hashtable;
+//import java.util.Map;
 
 /**
  * Maps from keys to base64 encoded images or file locations. All values must

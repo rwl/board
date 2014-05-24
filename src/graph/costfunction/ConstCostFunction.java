@@ -1,6 +1,6 @@
 package graph.costfunction;
 
-import graph.view.CellState;
+//import graph.view.CellState;
 
 /**
  * @author Mate

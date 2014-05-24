@@ -1,19 +1,18 @@
 /**
- * $Id: SwingConstants.java,v 1.1 2012/11/15 13:26:46 gaudenz Exp $
  * Copyright (c) 2007-2012, JGraph Ltd
  */
-package graph.swing.util;
+part of graph.swing.util;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Stroke;
-import java.awt.image.BufferedImage;
+//import java.awt.BasicStroke;
+//import java.awt.Color;
+//import java.awt.Component;
+//import java.awt.Graphics;
+//import java.awt.Graphics2D;
+//import java.awt.Stroke;
+//import java.awt.image.BufferedImage;
 
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
+//import javax.swing.border.Border;
+//import javax.swing.border.LineBorder;
 
 public class SwingConstants
 {

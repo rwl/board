@@ -1,9 +1,9 @@
 package graph.swing.view;
 
-import java.io.Writer;
+//import java.io.Writer;
 
-import javax.swing.text.html.HTMLDocument;
-import javax.swing.text.html.HTMLWriter;
+//import javax.swing.text.html.HTMLDocument;
+//import javax.swing.text.html.HTMLWriter;
 
 /**
  * Subclassed to make setLineLength visible for the custom editor kit.

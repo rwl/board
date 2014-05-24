@@ -16,9 +16,9 @@
    limitations under the License.
 
  */
-package graph.util.svg;
+part of graph.util.svg;
 
-import java.awt.Shape;
+//import java.awt.Shape;
 
 /**
  * This interface represents objects which creates Shape objects.

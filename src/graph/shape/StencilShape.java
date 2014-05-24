@@ -1,35 +1,34 @@
 /**
- * $Id: StencilShape.java,v 1.1 2012/11/15 13:26:44 gaudenz Exp $
  * Copyright (c) 2010-2012, JGraph Ltd
  */
-package graph.shape;
+part of graph.shape;
 
-import org.w3c.dom.Node;
+//import org.w3c.dom.Node;
 
-import graph.canvas.Graphics2DCanvas;
-import graph.util.Utils;
-import graph.util.XmlUtils;
-import graph.util.svg.AWTPathProducer;
-import graph.util.svg.AWTPolygonProducer;
-import graph.util.svg.AWTPolylineProducer;
-import graph.util.svg.CSSConstants;
-import graph.util.svg.ExtendedGeneralPath;
-import graph.view.CellState;
+//import graph.canvas.Graphics2DCanvas;
+//import graph.util.Utils;
+//import graph.util.XmlUtils;
+//import graph.util.svg.AWTPathProducer;
+//import graph.util.svg.AWTPolygonProducer;
+//import graph.util.svg.AWTPolylineProducer;
+//import graph.util.svg.CSSConstants;
+//import graph.util.svg.ExtendedGeneralPath;
+//import graph.view.CellState;
 
-import java.awt.Color;
-import java.awt.Shape;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.geom.RoundRectangle2D;
-import java.util.Hashtable;
-import java.util.Map;
+//import java.awt.Color;
+//import java.awt.Shape;
+//import java.awt.geom.AffineTransform;
+//import java.awt.geom.Ellipse2D;
+//import java.awt.geom.GeneralPath;
+//import java.awt.geom.Line2D;
+//import java.awt.geom.Rectangle2D;
+//import java.awt.geom.RoundRectangle2D;
+//import java.util.Hashtable;
+//import java.util.Map;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
+//import org.w3c.dom.Document;
+//import org.w3c.dom.Element;
+//import org.w3c.dom.NodeList;
 
 /**
  * Stencil shape drawing that takes an XML definition of the shape and renders

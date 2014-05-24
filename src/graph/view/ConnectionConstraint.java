@@ -1,10 +1,9 @@
 /**
- * $Id: ConnectionConstraint.java,v 1.1 2012/11/15 13:26:46 gaudenz Exp $
  * Copyright (c) 2007, Gaudenz Alder
  */
-package graph.view;
+part of graph.view;
 
-import graph.util.Point2d;
+//import graph.util.Point2d;
 
 /**
  * Defines an object that contains the constraints about how to connect one

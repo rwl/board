@@ -1,6 +1,6 @@
 package graph.util;
 
-import java.util.Arrays;
+//import java.util.Arrays;
 
 /** A very fast and memory efficient class to encode and decode to and from BASE64 in full accordance
  * with RFC 2045.<br><br>

@@ -1,30 +1,29 @@
 /**
- * $Id: ConnectPreview.java,v 1.2 2014/02/19 09:41:00 gaudenz Exp $
  * Copyright (c) 2008-2010, Gaudenz Alder, David Benson
  */
-package graph.swing.handler;
+part of graph.swing.handler;
 
-import graph.canvas.Graphics2DCanvas;
-import graph.model.Cell;
-import graph.model.Geometry;
-import graph.model.ICell;
-import graph.model.IGraphModel;
-import graph.swing.GraphComponent;
-import graph.util.Event;
-import graph.util.EventObj;
-import graph.util.EventSource;
-import graph.util.Point2d;
-import graph.util.Rect;
-import graph.util.Utils;
-import graph.view.CellState;
-import graph.view.Graph;
+//import graph.canvas.Graphics2DCanvas;
+//import graph.model.Cell;
+//import graph.model.Geometry;
+//import graph.model.ICell;
+//import graph.model.IGraphModel;
+//import graph.swing.GraphComponent;
+//import graph.util.Event;
+//import graph.util.EventObj;
+//import graph.util.EventSource;
+//import graph.util.Point2d;
+//import graph.util.Rect;
+//import graph.util.Utils;
+//import graph.view.CellState;
+//import graph.view.Graph;
 
-import java.awt.AlphaComposite;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.event.MouseEvent;
+//import java.awt.AlphaComposite;
+//import java.awt.Graphics;
+//import java.awt.Graphics2D;
+//import java.awt.Point;
+//import java.awt.Rectangle;
+//import java.awt.event.MouseEvent;
 
 /**
  * Connection handler creates new connections between cells. This control is used to display the connector

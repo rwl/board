@@ -1,10 +1,10 @@
 package graph.shape;
 
-import graph.canvas.Graphics2DCanvas;
-import graph.util.Constants;
-import graph.util.Point2d;
-import graph.util.Utils;
-import graph.view.CellState;
+//import graph.canvas.Graphics2DCanvas;
+//import graph.util.Constants;
+//import graph.util.Point2d;
+//import graph.util.Utils;
+//import graph.view.CellState;
 
 public class LineShape extends BasicShape
 {

@@ -1,15 +1,14 @@
 /**
- * $Id: Resources.java,v 1.1 2012/11/15 13:26:39 gaudenz Exp $
  * Copyright (c) 2010, Gaudenz Alder
  */
-package graph.util;
+part of graph.util;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Locale;
-import java.util.MissingResourceException;
-import java.util.PropertyResourceBundle;
-import java.util.ResourceBundle;
+//import java.util.Iterator;
+//import java.util.LinkedList;
+//import java.util.Locale;
+//import java.util.MissingResourceException;
+//import java.util.PropertyResourceBundle;
+//import java.util.ResourceBundle;
 
 public class Resources
 {

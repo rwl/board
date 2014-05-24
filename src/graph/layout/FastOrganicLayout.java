@@ -1,17 +1,16 @@
 /**
- * $Id: FastOrganicLayout.java,v 1.2 2012/11/20 09:08:08 gaudenz Exp $
  * Copyright (c) 2007, Gaudenz Alder
  */
-package graph.layout;
+part of graph.layout;
 
-import graph.model.Geometry;
-import graph.model.IGraphModel;
-import graph.util.Rect;
-import graph.view.Graph;
+//import graph.model.Geometry;
+//import graph.model.IGraphModel;
+//import graph.util.Rect;
+//import graph.view.Graph;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
+//import java.util.ArrayList;
+//import java.util.Hashtable;
+//import java.util.List;
 
 /**
  * Fast organic layout algorithm.

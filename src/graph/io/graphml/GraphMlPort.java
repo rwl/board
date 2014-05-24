@@ -1,13 +1,12 @@
 /**
- * $Id: GraphMlPort.java,v 1.1 2012/11/15 13:26:45 gaudenz Exp $
  * Copyright (c) 2010 David Benson, Gaudenz Alder
  */
-package graph.io.graphml;
+part of graph.io.graphml;
 
-import java.util.HashMap;
-import java.util.List;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
+//import java.util.HashMap;
+//import java.util.List;
+//import org.w3c.dom.Document;
+//import org.w3c.dom.Element;
 
 /**
  * Represents a Port element in the GML Structure.

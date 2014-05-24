@@ -9,18 +9,18 @@
  * installation directory. If you are unable to locate this file please
  * contact JGraph sales for another copy.
  */
-package graph.analysis;
+part of graph.analysis;
 
-import graph.view.CellState;
-import graph.view.Graph;
-import graph.view.GraphView;
+//import graph.view.CellState;
+//import graph.view.Graph;
+//import graph.view.GraphView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Hashtable;
-import java.util.List;
+//import java.util.ArrayList;
+//import java.util.Arrays;
+//import java.util.Collections;
+//import java.util.Comparator;
+//import java.util.Hashtable;
+//import java.util.List;
 
 /**
  * A singleton class that provides algorithms for graphs. Assume these

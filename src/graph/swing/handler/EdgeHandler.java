@@ -1,36 +1,35 @@
 /**
- * $Id: EdgeHandler.java,v 1.1 2012/11/15 13:26:44 gaudenz Exp $
  * Copyright (c) 2008-2012, JGraph Ltd
  */
-package graph.swing.handler;
+part of graph.swing.handler;
 
-import graph.model.Geometry;
-import graph.model.IGraphModel;
-import graph.swing.GraphComponent;
-import graph.swing.util.SwingConstants;
-import graph.util.Constants;
-import graph.util.Point2d;
-import graph.view.CellState;
-import graph.view.ConnectionConstraint;
-import graph.view.Graph;
-import graph.view.GraphView;
+//import graph.model.Geometry;
+//import graph.model.IGraphModel;
+//import graph.swing.GraphComponent;
+//import graph.swing.util.SwingConstants;
+//import graph.util.Constants;
+//import graph.util.Point2d;
+//import graph.view.CellState;
+//import graph.view.ConnectionConstraint;
+//import graph.view.Graph;
+//import graph.view.GraphView;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.Stroke;
-import java.awt.event.MouseEvent;
-import java.awt.geom.Line2D;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+//import java.awt.Color;
+//import java.awt.Cursor;
+//import java.awt.Graphics;
+//import java.awt.Graphics2D;
+//import java.awt.Point;
+//import java.awt.Rectangle;
+//import java.awt.Stroke;
+//import java.awt.event.MouseEvent;
+//import java.awt.geom.Line2D;
+//import java.util.ArrayList;
+//import java.util.Arrays;
+//import java.util.List;
 
-import javax.swing.JComponent;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+//import javax.swing.JComponent;
+//import javax.swing.JOptionPane;
+//import javax.swing.JPanel;
 
 /**
  *

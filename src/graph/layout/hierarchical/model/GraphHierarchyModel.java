@@ -2,23 +2,23 @@
  * $Id: GraphHierarchyModel.java,v 1.1 2012/11/15 13:26:42 gaudenz Exp $
  * Copyright (c) 2005-2012, JGraph Ltd
  */
-package graph.layout.hierarchical.model;
+part of graph.layout.hierarchical.model;
 
-import graph.layout.hierarchical.HierarchicalLayout;
-import graph.view.Graph;
+//import graph.layout.hierarchical.HierarchicalLayout;
+//import graph.view.Graph;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+//import java.util.ArrayList;
+//import java.util.Arrays;
+//import java.util.Collection;
+//import java.util.HashSet;
+//import java.util.Hashtable;
+//import java.util.Iterator;
+//import java.util.LinkedHashMap;
+//import java.util.LinkedHashSet;
+//import java.util.LinkedList;
+//import java.util.List;
+//import java.util.Map;
+//import java.util.Set;
 
 /**
  * Internal model of a hierarchical graph. This model stores nodes and edges

@@ -1,16 +1,15 @@
 /**
- * $Id: ImageCanvas.java,v 1.1 2012/11/15 13:26:47 gaudenz Exp $
  * Copyright (c) 2007-2010, Gaudenz Alder, David Benson
  */
-package graph.canvas;
+part of graph.canvas;
 
-import graph.util.Utils;
-import graph.view.CellState;
+//import graph.util.Utils;
+//import graph.view.CellState;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.image.BufferedImage;
+//import java.awt.Color;
+//import java.awt.Graphics2D;
+//import java.awt.Point;
+//import java.awt.image.BufferedImage;
 
 /**
  * An implementation of a canvas that uses Graphics2D for painting. To use an

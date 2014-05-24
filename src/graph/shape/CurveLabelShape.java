@@ -1,35 +1,34 @@
 /**
- * $Id: CurveLabelShape.java,v 1.1 2012/11/15 13:26:44 gaudenz Exp $
  * Copyright (c) 2010, David Benson, Gaudenz Alder
  */
-package graph.shape;
+part of graph.shape;
 
-import graph.canvas.Graphics2DCanvas;
-import graph.util.Constants;
-import graph.util.Curve;
-import graph.util.Line;
-import graph.util.Point2d;
-import graph.util.Rect;
-import graph.util.Utils;
-import graph.view.CellState;
+//import graph.canvas.Graphics2DCanvas;
+//import graph.util.Constants;
+//import graph.util.Curve;
+//import graph.util.Line;
+//import graph.util.Point2d;
+//import graph.util.Rect;
+//import graph.util.Utils;
+//import graph.view.CellState;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
-import java.awt.Shape;
-import java.awt.font.FontRenderContext;
-import java.awt.font.GlyphVector;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Line2D;
-import java.text.Bidi;
-import java.text.BreakIterator;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+//import java.awt.Color;
+//import java.awt.Font;
+//import java.awt.FontMetrics;
+//import java.awt.Graphics2D;
+//import java.awt.Rectangle;
+//import java.awt.RenderingHints;
+//import java.awt.Shape;
+//import java.awt.font.FontRenderContext;
+//import java.awt.font.GlyphVector;
+//import java.awt.geom.AffineTransform;
+//import java.awt.geom.Line2D;
+//import java.text.Bidi;
+//import java.text.BreakIterator;
+//import java.util.ArrayList;
+//import java.util.List;
+//import java.util.Locale;
+//import java.util.Map;
 
 /**
  * Draws the edge label along a curve derived from the curve describing

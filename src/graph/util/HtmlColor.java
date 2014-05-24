@@ -1,12 +1,11 @@
 /**
- * $Id: HtmlColor.java,v 1.4 2013/08/28 06:32:23 gaudenz Exp $
  * Copyright (c) 2007-2012, JGraph Ltd
  */
-package graph.util;
+part of graph.util;
 
-import java.awt.Color;
-import java.util.HashMap;
-import java.util.regex.Pattern;
+//import java.awt.Color;
+//import java.util.HashMap;
+//import java.util.regex.Pattern;
 
 /**
  * Contains various helper methods for use with Graph.

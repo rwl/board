@@ -1,10 +1,9 @@
 /**
- * $Id: Image.java,v 1.1 2012/11/15 13:26:39 gaudenz Exp $
  * Copyright (c) 2007, Gaudenz Alder
  */
-package graph.util;
+part of graph.util;
 
-import java.io.Serializable;
+//import java.io.Serializable;
 
 /**
  * Implements a 2-dimensional point with double precision coordinates.

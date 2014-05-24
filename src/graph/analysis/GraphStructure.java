@@ -1,23 +1,22 @@
 /**
- * $Id: GraphStructure.java,v 1.3 2012/11/21 14:16:01 mate Exp $
  * Copyright (c) 2012, JGraph Ltd
  */
-package graph.analysis;
+part of graph.analysis;
 
-import graph.costfunction.CostFunction;
-import graph.model.Cell;
-import graph.model.GraphModel;
-import graph.model.IGraphModel;
-import graph.view.CellState;
-import graph.view.Graph;
-import graph.view.GraphView;
-import graph.view.Graph.ICellVisitor;
+//import graph.costfunction.CostFunction;
+//import graph.model.Cell;
+//import graph.model.GraphModel;
+//import graph.model.IGraphModel;
+//import graph.view.CellState;
+//import graph.view.Graph;
+//import graph.view.GraphView;
+//import graph.view.Graph.ICellVisitor;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+//import java.util.ArrayList;
+//import java.util.Arrays;
+//import java.util.HashSet;
+//import java.util.List;
+//import java.util.Set;
 
 public class GraphStructure
 {

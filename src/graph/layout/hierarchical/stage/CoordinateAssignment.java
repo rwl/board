@@ -1,36 +1,35 @@
 /**
- * $Id: CoordinateAssignment.java,v 1.2 2013/04/26 21:35:56 david Exp $
  * Copyright (c) 2005-2012, JGraph Ltd
  */
 
 package graph.layout.hierarchical.stage;
 
-import graph.layout.hierarchical.HierarchicalLayout;
-import graph.layout.hierarchical.model.GraphAbstractHierarchyCell;
-import graph.layout.hierarchical.model.GraphHierarchyEdge;
-import graph.layout.hierarchical.model.GraphHierarchyModel;
-import graph.layout.hierarchical.model.GraphHierarchyNode;
-import graph.layout.hierarchical.model.GraphHierarchyRank;
-import graph.util.Point2d;
-import graph.util.Rect;
-import graph.util.Utils;
-import graph.view.Graph;
+//import graph.layout.hierarchical.HierarchicalLayout;
+//import graph.layout.hierarchical.model.GraphAbstractHierarchyCell;
+//import graph.layout.hierarchical.model.GraphHierarchyEdge;
+//import graph.layout.hierarchical.model.GraphHierarchyModel;
+//import graph.layout.hierarchical.model.GraphHierarchyNode;
+//import graph.layout.hierarchical.model.GraphHierarchyRank;
+//import graph.util.Point2d;
+//import graph.util.Rect;
+//import graph.util.Utils;
+//import graph.view.Graph;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+//import java.util.ArrayList;
+//import java.util.Arrays;
+//import java.util.Collection;
+//import java.util.HashMap;
+//import java.util.HashSet;
+//import java.util.Hashtable;
+//import java.util.Iterator;
+//import java.util.LinkedList;
+//import java.util.List;
+//import java.util.Map;
+//import java.util.Set;
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
 
-import javax.swing.SwingConstants;
+//import javax.swing.SwingConstants;
 
 /**
  * Sets the horizontal locations of node and edge dummy nodes on each layer.

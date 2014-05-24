@@ -1,12 +1,11 @@
 /**
- * $Id: ICanvas.java,v 1.1 2012/11/15 13:26:47 gaudenz Exp $
  * Copyright (c) 2007-2010, Gaudenz Alder, David Benson
  */
-package graph.canvas;
+part of graph.canvas;
 
-import graph.view.CellState;
+//import graph.view.CellState;
 
-import java.awt.Point;
+//import java.awt.Point;
 
 /**
  * Defines the requirements for a canvas that paints the vertices and edges of

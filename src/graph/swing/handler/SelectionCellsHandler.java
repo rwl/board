@@ -1,5 +1,4 @@
 /**
- * $Id: SelectionCellsHandler.java,v 1.1 2012/11/15 13:26:44 gaudenz Exp $
  * Copyright (c) 2008, Gaudenz Alder
  * 
  * Known issue: Drag image size depends on the initial position and may sometimes
@@ -7,28 +6,28 @@
  * and height at the initial position may be different than that at the current
  * position as the left and bottom side of the shape must align to the grid lines.
  */
-package graph.swing.handler;
+part of graph.swing.handler;
 
-import graph.swing.GraphComponent;
-import graph.util.Event;
-import graph.util.EventObj;
-import graph.util.EventSource.IEventListener;
-import graph.view.CellState;
-import graph.view.Graph;
+//import graph.swing.GraphComponent;
+//import graph.util.Event;
+//import graph.util.EventObj;
+//import graph.util.EventSource.IEventListener;
+//import graph.view.CellState;
+//import graph.view.Graph;
 
-import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.awt.Stroke;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
+//import java.awt.Graphics;
+//import java.awt.Rectangle;
+//import java.awt.Stroke;
+//import java.awt.event.MouseEvent;
+//import java.awt.event.MouseListener;
+//import java.awt.event.MouseMotionListener;
+//import java.beans.PropertyChangeEvent;
+//import java.beans.PropertyChangeListener;
+//import java.util.Iterator;
+//import java.util.LinkedHashMap;
+//import java.util.Map;
 
-import javax.swing.SwingUtilities;
+//import javax.swing.SwingUtilities;
 
 public class SelectionCellsHandler implements MouseListener,
 		MouseMotionListener

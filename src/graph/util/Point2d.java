@@ -1,12 +1,11 @@
 /**
- * $Id: Point2d.java,v 1.1 2012/11/15 13:26:39 gaudenz Exp $
  * Copyright (c) 2007-2010, Gaudenz Alder, David Benson
  */
-package graph.util;
+part of graph.util;
 
-import java.awt.Point;
-import java.awt.geom.Point2D;
-import java.io.Serializable;
+//import java.awt.Point;
+//import java.awt.geom.Point2D;
+//import java.io.Serializable;
 
 /**
  * Implements a 2-dimensional point with double precision coordinates.

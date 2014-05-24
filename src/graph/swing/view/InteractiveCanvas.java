@@ -1,23 +1,22 @@
 /**
- * $Id: InteractiveCanvas.java,v 1.1 2012/11/15 13:26:49 gaudenz Exp $
  * Copyright (c) 2007-2010, Gaudenz Alder, David Benson
  */
-package graph.swing.view;
+part of graph.swing.view;
 
-import graph.canvas.Graphics2DCanvas;
-import graph.shape.BasicShape;
-import graph.shape.IShape;
-import graph.swing.GraphComponent;
-import graph.util.Constants;
-import graph.util.Point2d;
-import graph.util.Utils;
-import graph.view.CellState;
+//import graph.canvas.Graphics2DCanvas;
+//import graph.shape.BasicShape;
+//import graph.shape.IShape;
+//import graph.swing.GraphComponent;
+//import graph.util.Constants;
+//import graph.util.Point2d;
+//import graph.util.Utils;
+//import graph.view.CellState;
 
-import java.awt.Dimension;
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.image.ImageObserver;
+//import java.awt.Dimension;
+//import java.awt.Image;
+//import java.awt.Rectangle;
+//import java.awt.Shape;
+//import java.awt.image.ImageObserver;
 
 public class InteractiveCanvas extends Graphics2DCanvas
 {

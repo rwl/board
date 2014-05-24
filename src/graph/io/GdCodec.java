@@ -1,15 +1,14 @@
 /**
- * $Id: GdCodec.java,v 1.1 2012/11/15 13:26:47 gaudenz Exp $
  * Copyright (c) 2010-2012, JGraph Ltd
  */
-package graph.io;
+part of graph.io;
 
-import graph.model.GraphModel;
-import graph.view.Graph;
+//import graph.model.GraphModel;
+//import graph.view.Graph;
 
-import java.io.BufferedReader;
-import java.io.StringReader;
-import java.util.HashMap;
+//import java.io.BufferedReader;
+//import java.io.StringReader;
+//import java.util.HashMap;
 
 /**
  * Parses a GD .txt file and imports it in the given graph.<br/>

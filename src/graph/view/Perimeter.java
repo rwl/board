@@ -1,13 +1,12 @@
 /**
- * $Id: Perimeter.java,v 1.1 2012/11/15 13:26:46 gaudenz Exp $
  * Copyright (c) 2007-2010, Gaudenz Alder, David Benson
  */
-package graph.view;
+part of graph.view;
 
-import graph.util.Constants;
-import graph.util.Point2d;
-import graph.util.Rect;
-import graph.util.Utils;
+//import graph.util.Constants;
+//import graph.util.Point2d;
+//import graph.util.Rect;
+//import graph.util.Utils;
 
 /**
  * Provides various perimeter functions to be used in a style

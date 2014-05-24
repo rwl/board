@@ -1,19 +1,18 @@
 /**
- * $Id: SwimlaneManager.java,v 1.2 2013/08/29 09:19:41 gaudenz Exp $
  * Copyright (c) 2007, Gaudenz Alder
  */
-package graph.view;
+part of graph.view;
 
-import graph.model.Geometry;
-import graph.model.IGraphModel;
-import graph.util.Constants;
-import graph.util.Event;
-import graph.util.EventObj;
-import graph.util.EventSource;
-import graph.util.Rect;
-import graph.util.Utils;
+//import graph.model.Geometry;
+//import graph.model.IGraphModel;
+//import graph.util.Constants;
+//import graph.util.Event;
+//import graph.util.EventObj;
+//import graph.util.EventSource;
+//import graph.util.Rect;
+//import graph.util.Utils;
 
-import java.util.Map;
+//import java.util.Map;
 
 /**
  * Manager for swimlanes and nested swimlanes that sets the size of newly added

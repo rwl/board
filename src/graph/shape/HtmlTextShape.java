@@ -1,20 +1,19 @@
 /**
- * $Id: HtmlTextShape.java,v 1.2 2013/12/04 16:35:31 gaudenz Exp $
  * Copyright (c) 2010, Gaudenz Alder, David Benson
  */
-package graph.shape;
+part of graph.shape;
 
-import graph.canvas.Graphics2DCanvas;
-import graph.util.Constants;
-import graph.util.LightweightLabel;
-import graph.util.Utils;
-import graph.view.CellState;
+//import graph.canvas.Graphics2DCanvas;
+//import graph.util.Constants;
+//import graph.util.LightweightLabel;
+//import graph.util.Utils;
+//import graph.view.CellState;
 
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.util.Map;
+//import java.awt.Graphics2D;
+//import java.awt.Rectangle;
+//import java.util.Map;
 
-import javax.swing.CellRendererPane;
+//import javax.swing.CellRendererPane;
 
 /**
  * To set global CSS for all HTML labels, use the following code:

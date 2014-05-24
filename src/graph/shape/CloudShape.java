@@ -1,11 +1,11 @@
 package graph.shape;
 
-import graph.canvas.Graphics2DCanvas;
-import graph.view.CellState;
+//import graph.canvas.Graphics2DCanvas;
+//import graph.view.CellState;
 
-import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.geom.GeneralPath;
+//import java.awt.Rectangle;
+//import java.awt.Shape;
+//import java.awt.geom.GeneralPath;
 
 public class CloudShape extends BasicShape
 {

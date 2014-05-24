@@ -1,19 +1,18 @@
 /**
- * $Id: CurveShape.java,v 1.1 2012/11/15 13:26:44 gaudenz Exp $
  * Copyright (c) 2009-2010, David Benson, Gaudenz Alder
  */
-package graph.shape;
+part of graph.shape;
 
-import graph.canvas.Graphics2DCanvas;
-import graph.util.Constants;
-import graph.util.Curve;
-import graph.util.Line;
-import graph.util.Point2d;
-import graph.view.CellState;
+//import graph.canvas.Graphics2DCanvas;
+//import graph.util.Constants;
+//import graph.util.Curve;
+//import graph.util.Line;
+//import graph.util.Point2d;
+//import graph.view.CellState;
 
-import java.awt.RenderingHints;
-import java.util.List;
-import java.util.Map;
+//import java.awt.RenderingHints;
+//import java.util.List;
+//import java.util.Map;
 
 public class CurveShape extends ConnectorShape
 {

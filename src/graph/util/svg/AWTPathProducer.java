@@ -16,10 +16,10 @@
    limitations under the License.
 
  */
-package graph.util.svg;
+part of graph.util.svg;
 
-import java.awt.Shape;
-import java.awt.geom.Point2D;
+//import java.awt.Shape;
+//import java.awt.geom.Point2D;
 
 /**
  * This class provides an implementation of the PathHandler that initializes

@@ -1,33 +1,32 @@
 /**
- * $Id: GraphOutline.java,v 1.1 2012/11/15 13:26:50 gaudenz Exp $
  * Copyright (c) 2008, Gaudenz Alder
  */
-package graph.swing;
+part of graph.swing;
 
-import graph.util.Event;
-import graph.util.EventObj;
-import graph.util.Point2d;
-import graph.util.Rect;
-import graph.util.Utils;
-import graph.util.EventSource.IEventListener;
+//import graph.util.Event;
+//import graph.util.EventObj;
+//import graph.util.Point2d;
+//import graph.util.Rect;
+//import graph.util.Utils;
+//import graph.util.EventSource.IEventListener;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.Stroke;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
+//import java.awt.BasicStroke;
+//import java.awt.Color;
+//import java.awt.Dimension;
+//import java.awt.Graphics;
+//import java.awt.Graphics2D;
+//import java.awt.Point;
+//import java.awt.Rectangle;
+//import java.awt.Stroke;
+//import java.awt.event.AdjustmentEvent;
+//import java.awt.event.AdjustmentListener;
+//import java.awt.event.ComponentAdapter;
+//import java.awt.event.ComponentEvent;
+//import java.awt.event.ComponentListener;
+//import java.awt.geom.AffineTransform;
+//import java.awt.image.BufferedImage;
 
-import javax.swing.JComponent;
+//import javax.swing.JComponent;
 
 /**
  * An outline view for a specific graph component.

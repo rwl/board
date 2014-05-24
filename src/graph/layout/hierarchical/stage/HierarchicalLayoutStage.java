@@ -8,7 +8,7 @@
  * installation directory. If you are unable to locate this file please
  * contact JGraph sales for another copy.
  */
-package graph.layout.hierarchical.stage;
+part of graph.layout.hierarchical.stage;
 
 /**
  * The specific layout interface for hierarchical layouts. It adds a

@@ -1,26 +1,25 @@
 /**
- * $Id: Rubberband.java,v 1.1 2012/11/15 13:26:44 gaudenz Exp $
  * Copyright (c) 2008-2012, JGraph Ltd
  */
-package graph.swing.handler;
+part of graph.swing.handler;
 
-import graph.swing.GraphComponent;
-import graph.swing.GraphControl;
-import graph.swing.util.SwingConstants;
-import graph.util.Event;
-import graph.util.EventObj;
-import graph.util.Utils;
-import graph.util.EventSource.IEventListener;
+//import graph.swing.GraphComponent;
+//import graph.swing.GraphControl;
+//import graph.swing.util.SwingConstants;
+//import graph.util.Event;
+//import graph.util.EventObj;
+//import graph.util.Utils;
+//import graph.util.EventSource.IEventListener;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+//import java.awt.Color;
+//import java.awt.Graphics;
+//import java.awt.Point;
+//import java.awt.Rectangle;
+//import java.awt.event.KeyAdapter;
+//import java.awt.event.KeyEvent;
+//import java.awt.event.MouseEvent;
+//import java.awt.event.MouseListener;
+//import java.awt.event.MouseMotionListener;
 
 /**
  * Implements a rubberband selection.

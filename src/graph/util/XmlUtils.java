@@ -1,24 +1,23 @@
 /**
- * $Id: XmlUtils.java,v 1.1 2012/11/15 13:26:39 gaudenz Exp $
  * Copyright (c) 2007-2012, JGraph Ltd
  */
-package graph.util;
+part of graph.util;
 
-import java.io.StringReader;
-import java.io.StringWriter;
+//import java.io.StringReader;
+//import java.io.StringWriter;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
+//import javax.xml.parsers.DocumentBuilder;
+//import javax.xml.parsers.DocumentBuilderFactory;
+//import javax.xml.transform.OutputKeys;
+//import javax.xml.transform.Transformer;
+//import javax.xml.transform.TransformerFactory;
+//import javax.xml.transform.dom.DOMSource;
+//import javax.xml.transform.stream.StreamResult;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
+//import org.w3c.dom.Document;
+//import org.w3c.dom.Node;
 
-import org.xml.sax.InputSource;
+//import org.xml.sax.InputSource;
 
 /**
  * Contains various XML helper methods for use with Graph.

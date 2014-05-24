@@ -16,17 +16,17 @@
    limitations under the License.
 
  */
-package graph.util.svg;
+part of graph.util.svg;
 
-import java.awt.Shape;
-import java.awt.Rectangle;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Arc2D;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.PathIterator;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.util.Arrays;
+//import java.awt.Shape;
+//import java.awt.Rectangle;
+//import java.awt.geom.AffineTransform;
+//import java.awt.geom.Arc2D;
+//import java.awt.geom.GeneralPath;
+//import java.awt.geom.PathIterator;
+//import java.awt.geom.Point2D;
+//import java.awt.geom.Rectangle2D;
+//import java.util.Arrays;
 
 /**
  * The <code>ExtendedGeneralPath</code> class represents a geometric

@@ -1,26 +1,26 @@
 package graph.view;
 
-import graph.layout.IGraphLayout;
-import graph.model.ChildChange;
-import graph.model.GeometryChange;
-import graph.model.GraphModel;
-import graph.model.IGraphModel;
-import graph.model.RootChange;
-import graph.model.TerminalChange;
-import graph.util.Event;
-import graph.util.EventObj;
-import graph.util.EventSource;
-import graph.util.UndoableEdit;
-import graph.util.Utils;
-import graph.util.UndoableEdit.UndoableChange;
+//import graph.layout.IGraphLayout;
+//import graph.model.ChildChange;
+//import graph.model.GeometryChange;
+//import graph.model.GraphModel;
+//import graph.model.IGraphModel;
+//import graph.model.RootChange;
+//import graph.model.TerminalChange;
+//import graph.util.Event;
+//import graph.util.EventObj;
+//import graph.util.EventSource;
+//import graph.util.UndoableEdit;
+//import graph.util.Utils;
+//import graph.util.UndoableEdit.UndoableChange;
 
-import java.awt.Point;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+//import java.awt.Point;
+//import java.util.Arrays;
+//import java.util.Collection;
+//import java.util.HashSet;
+//import java.util.Iterator;
+//import java.util.List;
+//import java.util.Set;
 
 /**
  * Implements a layout manager that updates the layout for a given transaction.

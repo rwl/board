@@ -2,30 +2,30 @@
  * $Id: HierarchicalLayout.java,v 1.1 2012/11/15 13:26:50 gaudenz Exp $
  * Copyright (c) 2005-2012, JGraph Ltd
  */
-package graph.layout.hierarchical;
+part of graph.layout.hierarchical;
 
-import graph.layout.GraphLayout;
-import graph.layout.hierarchical.model.GraphHierarchyModel;
-import graph.layout.hierarchical.stage.CoordinateAssignment;
-import graph.layout.hierarchical.stage.HierarchicalLayoutStage;
-import graph.layout.hierarchical.stage.MedianHybridCrossingReduction;
-import graph.layout.hierarchical.stage.MinimumCycleRemover;
-import graph.model.GraphModel;
-import graph.model.IGraphModel;
-import graph.view.CellState;
-import graph.view.Graph;
-import graph.view.GraphView;
+//import graph.layout.GraphLayout;
+//import graph.layout.hierarchical.model.GraphHierarchyModel;
+//import graph.layout.hierarchical.stage.CoordinateAssignment;
+//import graph.layout.hierarchical.stage.HierarchicalLayoutStage;
+//import graph.layout.hierarchical.stage.MedianHybridCrossingReduction;
+//import graph.layout.hierarchical.stage.MinimumCycleRemover;
+//import graph.model.GraphModel;
+//import graph.model.IGraphModel;
+//import graph.view.CellState;
+//import graph.view.Graph;
+//import graph.view.GraphView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+//import java.util.ArrayList;
+//import java.util.Arrays;
+//import java.util.Iterator;
+//import java.util.LinkedHashSet;
+//import java.util.List;
+//import java.util.Set;
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
 
-import javax.swing.SwingConstants;
+//import javax.swing.SwingConstants;
 
 /**
  * The top level compound layout of the hierarchical layout. The individual

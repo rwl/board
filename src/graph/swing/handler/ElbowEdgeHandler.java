@@ -1,21 +1,20 @@
 /**
- * $Id: ElbowEdgeHandler.java,v 1.1 2012/11/15 13:26:44 gaudenz Exp $
  * Copyright (c) 2008, Gaudenz Alder
  */
-package graph.swing.handler;
+part of graph.swing.handler;
 
-import graph.model.Geometry;
-import graph.swing.GraphComponent;
-import graph.util.Constants;
-import graph.util.Point2d;
-import graph.util.Resources;
-import graph.view.CellState;
-import graph.view.GraphView;
+//import graph.model.Geometry;
+//import graph.swing.GraphComponent;
+//import graph.util.Constants;
+//import graph.util.Point2d;
+//import graph.util.Resources;
+//import graph.view.CellState;
+//import graph.view.GraphView;
 
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.event.MouseEvent;
-import java.util.List;
+//import java.awt.Point;
+//import java.awt.Rectangle;
+//import java.awt.event.MouseEvent;
+//import java.util.List;
 
 /**
  * @author Administrator

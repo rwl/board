@@ -1,15 +1,15 @@
 package graph.layout;
 
-import graph.model.Geometry;
-import graph.model.IGraphModel;
-import graph.util.Point2d;
-import graph.view.CellState;
-import graph.view.Graph;
-import graph.view.GraphView;
+//import graph.model.Geometry;
+//import graph.model.IGraphModel;
+//import graph.util.Point2d;
+//import graph.view.CellState;
+//import graph.view.Graph;
+//import graph.view.GraphView;
 
-import java.awt.Rectangle;
-import java.util.ArrayList;
-import java.util.List;
+//import java.awt.Rectangle;
+//import java.util.ArrayList;
+//import java.util.List;
 
 public class EdgeLabelLayout extends GraphLayout
 {

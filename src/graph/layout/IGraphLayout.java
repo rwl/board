@@ -1,8 +1,7 @@
 /**
- * $Id: IGraphLayout.java,v 1.1 2012/11/15 13:26:37 gaudenz Exp $
  * Copyright (c) 2007, Gaudenz Alder
  */
-package graph.layout;
+part of graph.layout;
 
 /**
  * Defines the requirements for an object that implements a graph layout.

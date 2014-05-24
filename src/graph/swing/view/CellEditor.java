@@ -1,32 +1,31 @@
 /**
- * $Id: CellEditor.java,v 1.1 2012/11/15 13:26:49 gaudenz Exp $
  * Copyright (c) 2008, Gaudenz Alder
  */
-package graph.swing.view;
+part of graph.swing.view;
 
-import graph.model.Geometry;
-import graph.model.IGraphModel;
-import graph.swing.GraphComponent;
-import graph.util.Constants;
-import graph.util.Utils;
-import graph.view.CellState;
+//import graph.model.Geometry;
+//import graph.model.IGraphModel;
+//import graph.swing.GraphComponent;
+//import graph.util.Constants;
+//import graph.util.Utils;
+//import graph.view.CellState;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.util.EventObject;
+//import java.awt.BorderLayout;
+//import java.awt.Color;
+//import java.awt.Component;
+//import java.awt.Rectangle;
+//import java.awt.event.ActionEvent;
+//import java.util.EventObject;
 
-import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
-import javax.swing.InputMap;
-import javax.swing.JEditorPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.KeyStroke;
-import javax.swing.text.JTextComponent;
+//import javax.swing.AbstractAction;
+//import javax.swing.BorderFactory;
+//import javax.swing.InputMap;
+//import javax.swing.JEditorPane;
+//import javax.swing.JPanel;
+//import javax.swing.JScrollPane;
+//import javax.swing.JTextArea;
+//import javax.swing.KeyStroke;
+//import javax.swing.text.JTextComponent;
 
 /**
  * To control this editor, use Graph.invokesStopCellEditing, Graph.

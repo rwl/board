@@ -1,11 +1,10 @@
 /**
- * $Id: UnionFind.java,v 1.2 2012/11/21 14:16:01 mate Exp $
  * Copyright (c) 2007, Gaudenz Alder
  */
-package graph.analysis;
+part of graph.analysis;
 
-import java.util.Hashtable;
-import java.util.Map;
+//import java.util.Hashtable;
+//import java.util.Map;
 
 /**
  * Implements a union find structure that uses union by rank and path

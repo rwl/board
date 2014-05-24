@@ -1,13 +1,13 @@
 package graph.reader;
 
-import graph.canvas.ICanvas2D;
+//import graph.canvas.ICanvas2D;
 
-import java.util.Hashtable;
-import java.util.Map;
+//import java.util.Hashtable;
+//import java.util.Map;
 
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
+//import org.xml.sax.Attributes;
+//import org.xml.sax.SAXException;
+//import org.xml.sax.helpers.DefaultHandler;
 
 /**
 	XMLReader reader = SAXParserFactory.newInstance().newSAXParser()

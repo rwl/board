@@ -1,58 +1,57 @@
 /**
- * $Id: Graph.java,v 1.6 2014/02/19 09:40:59 gaudenz Exp $
  * Copyright (c) 2007, Gaudenz Alder
  */
-package graph.view;
+part of graph.view;
 
-import graph.canvas.Graphics2DCanvas;
-import graph.canvas.ICanvas;
-import graph.canvas.ImageCanvas;
-import graph.model.Cell;
-import graph.model.ChildChange;
-import graph.model.CollapseChange;
-import graph.model.Filter;
-import graph.model.Geometry;
-import graph.model.GeometryChange;
-import graph.model.GraphModel;
-import graph.model.ICell;
-import graph.model.IGraphModel;
-import graph.model.RootChange;
-import graph.model.StyleChange;
-import graph.model.TerminalChange;
-import graph.model.ValueChange;
-import graph.model.VisibleChange;
-import graph.util.Constants;
-import graph.util.Event;
-import graph.util.EventObj;
-import graph.util.EventSource;
-import graph.util.ImageBundle;
-import graph.util.Point2d;
-import graph.util.Rect;
-import graph.util.Resources;
-import graph.util.StyleUtils;
-import graph.util.UndoableEdit;
-import graph.util.Utils;
-import graph.util.UndoableEdit.UndoableChange;
+//import graph.canvas.Graphics2DCanvas;
+//import graph.canvas.ICanvas;
+//import graph.canvas.ImageCanvas;
+//import graph.model.Cell;
+//import graph.model.ChildChange;
+//import graph.model.CollapseChange;
+//import graph.model.Filter;
+//import graph.model.Geometry;
+//import graph.model.GeometryChange;
+//import graph.model.GraphModel;
+//import graph.model.ICell;
+//import graph.model.IGraphModel;
+//import graph.model.RootChange;
+//import graph.model.StyleChange;
+//import graph.model.TerminalChange;
+//import graph.model.ValueChange;
+//import graph.model.VisibleChange;
+//import graph.util.Constants;
+//import graph.util.Event;
+//import graph.util.EventObj;
+//import graph.util.EventSource;
+//import graph.util.ImageBundle;
+//import graph.util.Point2d;
+//import graph.util.Rect;
+//import graph.util.Resources;
+//import graph.util.StyleUtils;
+//import graph.util.UndoableEdit;
+//import graph.util.Utils;
+//import graph.util.UndoableEdit.UndoableChange;
 
-import java.awt.Graphics;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.Shape;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+//import java.awt.Graphics;
+//import java.awt.Point;
+//import java.awt.Rectangle;
+//import java.awt.Shape;
+//import java.beans.PropertyChangeListener;
+//import java.beans.PropertyChangeSupport;
+//import java.util.ArrayList;
+//import java.util.Arrays;
+//import java.util.Collection;
+//import java.util.HashSet;
+//import java.util.Hashtable;
+//import java.util.Iterator;
+//import java.util.LinkedHashSet;
+//import java.util.LinkedList;
+//import java.util.List;
+//import java.util.Map;
+//import java.util.Set;
 
-import org.w3c.dom.Element;
+//import org.w3c.dom.Element;
 
 /**
  * Implements a graph object that allows to create diagrams from a graph model

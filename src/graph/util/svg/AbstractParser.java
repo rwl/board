@@ -16,10 +16,10 @@
    limitations under the License.
 
  */
-package graph.util.svg;
+part of graph.util.svg;
 
-import java.io.IOException;
-import java.util.MissingResourceException;
+//import java.io.IOException;
+//import java.util.MissingResourceException;
 
 /**
  * This class is the superclass of all parsers. It provides localization

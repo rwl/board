@@ -1,17 +1,16 @@
 /**
- * $Id: Animation.java,v 1.2 2014/02/15 10:31:28 gaudenz Exp $
  * Copyright (c) 2007, Gaudenz Alder
  */
-package graph.swing.util;
+part of graph.swing.util;
 
-import graph.util.Event;
-import graph.util.EventObj;
-import graph.util.EventSource;
+//import graph.util.Event;
+//import graph.util.EventObj;
+//import graph.util.EventSource;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+//import java.awt.event.ActionEvent;
+//import java.awt.event.ActionListener;
 
-import javax.swing.Timer;
+//import javax.swing.Timer;
 
 /**
  * Baseclass for all timer-based animations. Fires Event.DONE when the

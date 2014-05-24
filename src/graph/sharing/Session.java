@@ -1,13 +1,12 @@
 /**
- * $Id: Session.java,v 1.1 2012/11/15 13:26:50 gaudenz Exp $
  * Copyright (c) 2007-2012, JGraph Ltd
  */
-package graph.sharing;
+part of graph.sharing;
 
-import graph.sharing.SharedState.DiagramChangeListener;
-import graph.util.Utils;
+//import graph.sharing.SharedState.DiagramChangeListener;
+//import graph.util.Utils;
 
-import org.w3c.dom.Node;
+//import org.w3c.dom.Node;
 
 /**
  * Implements a session that may be attached to a shared diagram. The session

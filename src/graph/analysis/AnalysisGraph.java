@@ -1,17 +1,16 @@
 /**
- * $Id: AnalysisGraph.java,v 1.2 2012/11/21 14:16:01 mate Exp $
  * Copyright (c) 2012, JGraph Ltd
  */
-package graph.analysis;
+part of graph.analysis;
 
-import graph.costfunction.DoubleValCostFunction;
-import graph.model.IGraphModel;
-import graph.view.Graph;
+//import graph.costfunction.DoubleValCostFunction;
+//import graph.model.IGraphModel;
+//import graph.view.Graph;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+//import java.util.ArrayList;
+//import java.util.HashMap;
+//import java.util.List;
+//import java.util.Map;
 
 /**
  * Implements a collection of utility methods abstracting the graph structure

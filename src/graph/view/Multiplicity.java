@@ -1,12 +1,12 @@
 package graph.view;
 
-import graph.model.IGraphModel;
-import graph.util.Utils;
+//import graph.model.IGraphModel;
+//import graph.util.Utils;
 
-import java.util.Collection;
-import java.util.Iterator;
+//import java.util.Collection;
+//import java.util.Iterator;
 
-import org.w3c.dom.Element;
+//import org.w3c.dom.Element;
 
 public class Multiplicity
 {

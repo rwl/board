@@ -1,9 +1,9 @@
 package graph.view;
 
-import graph.model.Cell;
-import graph.util.Rect;
+//import graph.model.Cell;
+//import graph.util.Rect;
 
-import java.util.Hashtable;
+//import java.util.Hashtable;
 
 public class TemporaryCellStates
 {

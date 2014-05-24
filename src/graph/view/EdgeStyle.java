@@ -1,16 +1,15 @@
 /**
- * $Id: EdgeStyle.java,v 1.4 2013/04/05 12:43:17 gaudenz Exp $
  * Copyright (c) 2007, Gaudenz Alder
  */
-package graph.view;
+part of graph.view;
 
-import graph.model.Geometry;
-import graph.model.IGraphModel;
-import graph.util.Constants;
-import graph.util.Point2d;
-import graph.util.Utils;
+//import graph.model.Geometry;
+//import graph.model.IGraphModel;
+//import graph.util.Constants;
+//import graph.util.Point2d;
+//import graph.util.Utils;
 
-import java.util.List;
+//import java.util.List;
 
 /**
  * Provides various edge styles to be used as the values for

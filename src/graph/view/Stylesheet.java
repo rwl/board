@@ -1,13 +1,12 @@
 /**
- * $Id: Stylesheet.java,v 1.1 2012/11/15 13:26:46 gaudenz Exp $
  * Copyright (c) 2007, Gaudenz Alder
  */
-package graph.view;
+part of graph.view;
 
-import graph.util.Constants;
+//import graph.util.Constants;
 
-import java.util.Hashtable;
-import java.util.Map;
+//import java.util.Hashtable;
+//import java.util.Map;
 
 /**
  * Defines the appearance of the cells in a graph. The following example

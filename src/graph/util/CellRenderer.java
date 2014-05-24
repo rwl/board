@@ -1,25 +1,24 @@
 /**
- * $Id: CellRenderer.java,v 1.1 2012/11/15 13:26:39 gaudenz Exp $
  * Copyright (c) 2007-2012, JGraph Ltd
  */
-package graph.util;
+part of graph.util;
 
-import graph.canvas.Graphics2DCanvas;
-import graph.canvas.HtmlCanvas;
-import graph.canvas.ICanvas;
-import graph.canvas.ImageCanvas;
-import graph.canvas.SvgCanvas;
-import graph.canvas.VmlCanvas;
-import graph.view.Graph;
-import graph.view.GraphView;
-import graph.view.TemporaryCellStates;
+//import graph.canvas.Graphics2DCanvas;
+//import graph.canvas.HtmlCanvas;
+//import graph.canvas.ICanvas;
+//import graph.canvas.ImageCanvas;
+//import graph.canvas.SvgCanvas;
+//import graph.canvas.VmlCanvas;
+//import graph.view.Graph;
+//import graph.view.GraphView;
+//import graph.view.TemporaryCellStates;
 
-import java.awt.Color;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
+//import java.awt.Color;
+//import java.awt.Point;
+//import java.awt.Rectangle;
+//import java.awt.image.BufferedImage;
 
-import org.w3c.dom.Document;
+//import org.w3c.dom.Document;
 
 public class CellRenderer
 {

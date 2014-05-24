@@ -1,12 +1,11 @@
 /**
- * $Id: GenericChangeCodec.java,v 1.1 2012/11/15 13:26:47 gaudenz Exp $
  * Copyright (c) 2006, Gaudenz Alder
  */
-package graph.io;
+part of graph.io;
 
-import java.util.Map;
+//import java.util.Map;
 
-import org.w3c.dom.Node;
+//import org.w3c.dom.Node;
 
 /**
  * Codec for mxChildChanges. This class is created and registered

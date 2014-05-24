@@ -8,10 +8,10 @@
  * installation directory. If you are unable to locate this file please
  * contact JGraph sales for another copy.
  */
-package graph.layout.hierarchical.model;
+part of graph.layout.hierarchical.model;
 
-import java.util.ArrayList;
-import java.util.List;
+//import java.util.ArrayList;
+//import java.util.List;
 
 /**
  * An abstraction of a hierarchical edge for the hierarchy layout

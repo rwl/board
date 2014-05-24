@@ -1,29 +1,28 @@
 /**
- * $Id: CellStatePreview.java,v 1.2 2014/02/19 09:41:00 gaudenz Exp $
  * Copyright (c) 2007, Gaudenz Alder
  */
-package graph.swing.view;
+part of graph.swing.view;
 
-import graph.canvas.Graphics2DCanvas;
-import graph.model.Geometry;
-import graph.model.IGraphModel;
-import graph.swing.GraphComponent;
-import graph.util.Point2d;
-import graph.util.Rect;
-import graph.util.Utils;
-import graph.view.CellState;
-import graph.view.Graph;
+//import graph.canvas.Graphics2DCanvas;
+//import graph.model.Geometry;
+//import graph.model.IGraphModel;
+//import graph.swing.GraphComponent;
+//import graph.util.Point2d;
+//import graph.util.Rect;
+//import graph.util.Utils;
+//import graph.view.CellState;
+//import graph.view.Graph;
 
-import java.awt.AlphaComposite;
-import java.awt.Composite;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+//import java.awt.AlphaComposite;
+//import java.awt.Composite;
+//import java.awt.Graphics;
+//import java.awt.Graphics2D;
+//import java.awt.Point;
+//import java.util.Iterator;
+//import java.util.LinkedHashMap;
+//import java.util.LinkedList;
+//import java.util.List;
+//import java.util.Map;
 
 /**
  * Represents the current state of a cell in a given graph view.

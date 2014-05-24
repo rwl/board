@@ -1,6 +1,6 @@
 package graph.model;
 
-import graph.model.IGraphModel.AtomicGraphModelChange;
+//import graph.model.IGraphModel.AtomicGraphModelChange;
 
 public class RootChange extends AtomicGraphModelChange
 {

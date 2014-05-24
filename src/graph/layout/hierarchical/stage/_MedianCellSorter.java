@@ -1,6 +1,6 @@
 package graph.layout.hierarchical.stage;
 
-import graph.layout.hierarchical.model.GraphAbstractHierarchyCell;
+//import graph.layout.hierarchical.model.GraphAbstractHierarchyCell;
 
 /**
  * A utility class used to track cells whilst sorting occurs on the median

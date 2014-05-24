@@ -1,11 +1,10 @@
 /**
- * $Id: DistanceCostFunction.java,v 1.2 2012/11/21 14:16:01 mate Exp $
  * Copyright (c) 2007-2009, JGraph Ltd
  */
-package graph.analysis;
+part of graph.analysis;
 
-import graph.util.Point2d;
-import graph.view.CellState;
+//import graph.util.Point2d;
+//import graph.view.CellState;
 
 /**
  * Implements a cost function for the Euclidean length of an edge.

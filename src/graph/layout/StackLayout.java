@@ -1,11 +1,11 @@
 package graph.layout;
 
-import graph.model.Geometry;
-import graph.model.ICell;
-import graph.model.IGraphModel;
-import graph.util.Rect;
-import graph.view.CellState;
-import graph.view.Graph;
+//import graph.model.Geometry;
+//import graph.model.ICell;
+//import graph.model.IGraphModel;
+//import graph.util.Rect;
+//import graph.view.CellState;
+//import graph.view.Graph;
 
 public class StackLayout extends GraphLayout
 {

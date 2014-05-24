@@ -1,16 +1,15 @@
 /**
- * $Id: GraphActions.java,v 1.1 2012/11/15 13:26:46 gaudenz Exp $
  * Copyright (c) 2008, Gaudenz Alder
  */
-package graph.swing.util;
+part of graph.swing.util;
 
-import graph.swing.GraphComponent;
-import graph.view.Graph;
+//import graph.swing.GraphComponent;
+//import graph.view.Graph;
 
-import java.awt.event.ActionEvent;
+//import java.awt.event.ActionEvent;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
+//import javax.swing.AbstractAction;
+//import javax.swing.Action;
 
 /**
  *

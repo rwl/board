@@ -1,11 +1,10 @@
 /**
- * $Id: IGraphModel.java,v 1.1 2012/11/15 13:26:47 gaudenz Exp $
  * Copyright (c) 2007, Gaudenz Alder
  */
-package graph.model;
+part of graph.model;
 
-import graph.util.EventSource.IEventListener;
-import graph.util.UndoableEdit.UndoableChange;
+//import graph.util.EventSource.IEventListener;
+//import graph.util.UndoableEdit.UndoableChange;
 
 /**
  * Defines the requirements for a graph model to be used with Graph.

@@ -1,6 +1,6 @@
 package graph.generatorfunction;
 
-import graph.analysis.ICostFunction;
+//import graph.analysis.ICostFunction;
 
 /**
  * @author Mate

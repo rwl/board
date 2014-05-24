@@ -1,16 +1,15 @@
 /**
- * $Id: PngTextDecoder.java,v 1.1 2012/11/15 13:26:39 gaudenz Exp $
  * Copyright (c) 2010, David Benson, Gaudenz Alder
  */
-package graph.util.png;
+part of graph.util.png;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
-import java.io.InputStream;
-import java.util.Hashtable;
-import java.util.Map;
-import java.util.zip.InflaterInputStream;
+//import java.io.BufferedInputStream;
+//import java.io.ByteArrayInputStream;
+//import java.io.DataInputStream;
+//import java.io.InputStream;
+//import java.util.Hashtable;
+//import java.util.Map;
+//import java.util.zip.InflaterInputStream;
 
 /**
  * Utility class to extract the compression text portion of a PNG

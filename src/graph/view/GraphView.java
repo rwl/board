@@ -1,30 +1,29 @@
 /**
- * $Id: GraphView.java,v 1.3 2014/02/19 09:40:59 gaudenz Exp $
  * Copyright (c) 2007-2010, Gaudenz Alder, David Benson
  */
-package graph.view;
+part of graph.view;
 
-import graph.model.Geometry;
-import graph.model.GraphModel;
-import graph.model.ICell;
-import graph.model.IGraphModel;
-import graph.util.Constants;
-import graph.util.Event;
-import graph.util.EventObj;
-import graph.util.EventSource;
-import graph.util.Point2d;
-import graph.util.Rect;
-import graph.util.UndoableEdit;
-import graph.util.Utils;
-import graph.util.UndoableEdit.UndoableChange;
-import graph.view.EdgeStyle.EdgeStyleFunction;
-import graph.view.Perimeter.PerimeterFunction;
+//import graph.model.Geometry;
+//import graph.model.GraphModel;
+//import graph.model.ICell;
+//import graph.model.IGraphModel;
+//import graph.util.Constants;
+//import graph.util.Event;
+//import graph.util.EventObj;
+//import graph.util.EventSource;
+//import graph.util.Point2d;
+//import graph.util.Rect;
+//import graph.util.UndoableEdit;
+//import graph.util.Utils;
+//import graph.util.UndoableEdit.UndoableChange;
+//import graph.view.EdgeStyle.EdgeStyleFunction;
+//import graph.view.Perimeter.PerimeterFunction;
 
-import java.awt.geom.Line2D;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
+//import java.awt.geom.Line2D;
+//import java.util.ArrayList;
+//import java.util.Hashtable;
+//import java.util.List;
+//import java.util.Map;
 
 /**
  * Implements a view for the graph. This class is in charge of computing the

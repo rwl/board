@@ -1,15 +1,14 @@
 /**
- * $Id: CellState.java,v 1.2 2013/08/28 06:01:37 gaudenz Exp $
  * Copyright (c) 2007, Gaudenz Alder
  */
-package graph.view;
+part of graph.view;
 
-import graph.util.Point2d;
-import graph.util.Rect;
+//import graph.util.Point2d;
+//import graph.util.Rect;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+//import java.util.ArrayList;
+//import java.util.List;
+//import java.util.Map;
 
 /**
  * Represents the current state of a cell in a given graph view.

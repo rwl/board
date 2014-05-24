@@ -1,20 +1,19 @@
 /**
- * $Id: GraphGenerator.java,v 1.3 2012/11/21 14:16:01 mate Exp $
  * Copyright (c) 2012, JGraph Ltd
  */
-package graph.analysis;
+part of graph.analysis;
 
-import graph.costfunction.CostFunction;
-import graph.costfunction.DoubleValCostFunction;
-import graph.generatorfunction.GeneratorFunction;
-import graph.generatorfunction.GeneratorRandomFunction;
-import graph.model.Geometry;
-import graph.model.IGraphModel;
-import graph.view.CellState;
-import graph.view.Graph;
-import graph.view.GraphView;
+//import graph.costfunction.CostFunction;
+//import graph.costfunction.DoubleValCostFunction;
+//import graph.generatorfunction.GeneratorFunction;
+//import graph.generatorfunction.GeneratorRandomFunction;
+//import graph.model.Geometry;
+//import graph.model.IGraphModel;
+//import graph.view.CellState;
+//import graph.view.Graph;
+//import graph.view.GraphView;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 
 /**
  * @author Mate

@@ -1,8 +1,7 @@
 /**
- * $Id: GraphMlConstants.java,v 1.1 2012/11/15 13:26:45 gaudenz Exp $
  * Copyright (c) 2010 David Benson, Gaudenz Alder
  */
-package graph.io.graphml;
+part of graph.io.graphml;
 
 /**
  * This class contains constants used in the Import of gml documents.

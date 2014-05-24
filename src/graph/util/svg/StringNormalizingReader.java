@@ -16,9 +16,9 @@
    limitations under the License.
 
  */
-package graph.util.svg;
+part of graph.util.svg;
 
-import java.io.IOException;
+//import java.io.IOException;
 
 /**
  * This class represents a NormalizingReader which handles Strings.

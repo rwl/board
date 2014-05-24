@@ -1,17 +1,16 @@
 /**
- * $Id: SharedState.java,v 1.1 2012/11/15 13:26:50 gaudenz Exp $
  * Copyright (c) 2007-2012, JGraph Ltd
  */
-package graph.sharing;
+part of graph.sharing;
 
-import graph.util.EventSource;
-import graph.util.XmlUtils;
+//import graph.util.EventSource;
+//import graph.util.XmlUtils;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+//import java.util.ArrayList;
+//import java.util.Iterator;
+//import java.util.List;
 
-import org.w3c.dom.Node;
+//import org.w3c.dom.Node;
 
 /**
  * Implements a diagram that may be shared among multiple sessions. This

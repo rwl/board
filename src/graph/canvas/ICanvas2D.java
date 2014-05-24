@@ -1,6 +1,6 @@
 package graph.canvas;
 
-import graph.util.Constants;
+//import graph.util.Constants;
 
 /**
  * Requirements for implementing technologies:

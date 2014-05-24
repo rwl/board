@@ -1,17 +1,16 @@
 /**
- * $Id: GraphMlUtils.java,v 1.1 2012/11/15 13:26:45 gaudenz Exp $
  * Copyright (c) 2010 David Benson, Gaudenz Alder
  */
-package graph.io.graphml;
+part of graph.io.graphml;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+//import java.util.ArrayList;
+//import java.util.HashMap;
+//import java.util.Iterator;
+//import java.util.List;
+//import java.util.Map;
+//import org.w3c.dom.Element;
+//import org.w3c.dom.Node;
+//import org.w3c.dom.NodeList;
 
 /**
  * This class implements several GML utility methods.

@@ -1,34 +1,33 @@
 /**
- * $Id: GraphMlCodec.java,v 1.1 2012/11/15 13:26:47 gaudenz Exp $
  * Copyright (c) 2010-2012, JGraph Ltd
  */
-package graph.io;
+part of graph.io;
 
-import graph.io.graphml.GraphMlConstants;
-import graph.io.graphml.GraphMlData;
-import graph.io.graphml.GraphMlEdge;
-import graph.io.graphml.GraphMlGraph;
-import graph.io.graphml.GraphMlKey;
-import graph.io.graphml.GraphMlKeyManager;
-import graph.io.graphml.GraphMlNode;
-import graph.io.graphml.GraphMlShapeEdge;
-import graph.io.graphml.GraphMlShapeNode;
-import graph.io.graphml.GraphMlUtils;
-import graph.model.Cell;
-import graph.util.Constants;
-import graph.util.DomUtils;
-import graph.util.Point2d;
-import graph.view.CellState;
-import graph.view.ConnectionConstraint;
-import graph.view.Graph;
-import graph.view.GraphView;
+//import graph.io.graphml.GraphMlConstants;
+//import graph.io.graphml.GraphMlData;
+//import graph.io.graphml.GraphMlEdge;
+//import graph.io.graphml.GraphMlGraph;
+//import graph.io.graphml.GraphMlKey;
+//import graph.io.graphml.GraphMlKeyManager;
+//import graph.io.graphml.GraphMlNode;
+//import graph.io.graphml.GraphMlShapeEdge;
+//import graph.io.graphml.GraphMlShapeNode;
+//import graph.io.graphml.GraphMlUtils;
+//import graph.model.Cell;
+//import graph.util.Constants;
+//import graph.util.DomUtils;
+//import graph.util.Point2d;
+//import graph.view.CellState;
+//import graph.view.ConnectionConstraint;
+//import graph.view.Graph;
+//import graph.view.GraphView;
 
-import java.util.HashMap;
-import java.util.List;
+//import java.util.HashMap;
+//import java.util.List;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
+//import org.w3c.dom.Document;
+//import org.w3c.dom.Element;
+//import org.w3c.dom.NodeList;
 
 /**
  * Parses a GraphML .graphml file and imports it in the given graph.<br/>

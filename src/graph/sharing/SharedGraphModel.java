@@ -1,22 +1,21 @@
 /**
- * $Id: SharedGraphModel.java,v 1.1 2012/11/15 13:26:50 gaudenz Exp $
  * Copyright (c) 2007-2012, JGraph Ltd
  */
-package graph.sharing;
+part of graph.sharing;
 
-import graph.io.Codec;
-import graph.model.ChildChange;
-import graph.model.GraphModel;
-import graph.model.ICell;
-import graph.model.IGraphModel.AtomicGraphModelChange;
-import graph.util.Event;
-import graph.util.EventObj;
-import graph.util.UndoableEdit;
-import graph.util.XmlUtils;
+//import graph.io.Codec;
+//import graph.model.ChildChange;
+//import graph.model.GraphModel;
+//import graph.model.ICell;
+//import graph.model.IGraphModel.AtomicGraphModelChange;
+//import graph.util.Event;
+//import graph.util.EventObj;
+//import graph.util.UndoableEdit;
+//import graph.util.XmlUtils;
 
-import java.util.LinkedList;
+//import java.util.LinkedList;
 
-import org.w3c.dom.Node;
+//import org.w3c.dom.Node;
 
 /**
  * Implements a diagram that may be shared among multiple sessions.

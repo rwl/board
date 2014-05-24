@@ -1,14 +1,13 @@
 /**
- * $Id: LightweightLabel.java,v 1.1 2012/11/15 13:26:39 gaudenz Exp $
  * Copyright (c) 2007, Gaudenz Alder
  */
-package graph.util;
+part of graph.util;
 
-import java.awt.Font;
-import java.awt.Rectangle;
+//import java.awt.Font;
+//import java.awt.Rectangle;
 
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+//import javax.swing.JLabel;
+//import javax.swing.SwingConstants;
 
 /**
  * @author Administrator

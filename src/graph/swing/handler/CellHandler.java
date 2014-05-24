@@ -1,24 +1,23 @@
 /**
- * $Id: CellHandler.java,v 1.1 2012/11/15 13:26:44 gaudenz Exp $
  * Copyright (c) 2008-2012, JGraph Ltd
  */
-package graph.swing.handler;
+part of graph.swing.handler;
 
-import graph.swing.GraphComponent;
-import graph.swing.util.SwingConstants;
-import graph.util.Rect;
-import graph.view.CellState;
-import graph.view.Graph;
+//import graph.swing.GraphComponent;
+//import graph.swing.util.SwingConstants;
+//import graph.util.Rect;
+//import graph.view.CellState;
+//import graph.view.Graph;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Graphics;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.Stroke;
-import java.awt.event.MouseEvent;
+//import java.awt.Color;
+//import java.awt.Cursor;
+//import java.awt.Graphics;
+//import java.awt.Point;
+//import java.awt.Rectangle;
+//import java.awt.Stroke;
+//import java.awt.event.MouseEvent;
 
-import javax.swing.JComponent;
+//import javax.swing.JComponent;
 
 /**
  * @author Administrator

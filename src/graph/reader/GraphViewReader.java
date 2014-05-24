@@ -1,23 +1,22 @@
 /**
- * $Id: GraphViewReader.java,v 1.1 2012/11/15 13:26:45 gaudenz Exp $
  * Copyright (c) 2007, Gaudenz Alder
  */
-package graph.reader;
+part of graph.reader;
 
-import graph.canvas.ICanvas;
-import graph.util.Point2d;
-import graph.util.Rect;
-import graph.util.Utils;
-import graph.view.CellState;
+//import graph.canvas.ICanvas;
+//import graph.util.Point2d;
+//import graph.util.Rect;
+//import graph.util.Utils;
+//import graph.view.CellState;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
+//import java.util.ArrayList;
+//import java.util.Hashtable;
+//import java.util.List;
+//import java.util.Map;
 
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
+//import org.xml.sax.Attributes;
+//import org.xml.sax.SAXException;
+//import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * An abstract converter that renders display XML data onto a canvas.

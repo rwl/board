@@ -1,7 +1,7 @@
 package graph.swing.util;
 
-import graph.util.Rect;
-import graph.view.CellState;
+//import graph.util.Rect;
+//import graph.view.CellState;
 
 public interface ICellOverlay
 {

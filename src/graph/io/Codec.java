@@ -1,21 +1,20 @@
 /**
- * $Id: Codec.java,v 1.1 2012/11/15 13:26:47 gaudenz Exp $
  * Copyright (c) 2012, JGraph Ltd
  */
-package graph.io;
+part of graph.io;
 
-import graph.model.Cell;
-import graph.model.CellPath;
-import graph.model.ICell;
-import graph.util.DomUtils;
-import graph.util.Utils;
+//import graph.model.Cell;
+//import graph.model.CellPath;
+//import graph.model.ICell;
+//import graph.util.DomUtils;
+//import graph.util.Utils;
 
-import java.util.Hashtable;
-import java.util.Map;
+//import java.util.Hashtable;
+//import java.util.Map;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
+//import org.w3c.dom.Document;
+//import org.w3c.dom.Element;
+//import org.w3c.dom.Node;
 
 /**
  * XML codec for Java object graphs. In order to resolve forward references

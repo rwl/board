@@ -1,20 +1,20 @@
 package graph.layout;
 
-import graph.model.CellPath;
-import graph.model.Geometry;
-import graph.model.ICell;
-import graph.model.IGraphModel;
-import graph.util.Point2d;
-import graph.view.CellState;
-import graph.view.Graph;
-import graph.view.GraphView;
+//import graph.model.CellPath;
+//import graph.model.Geometry;
+//import graph.model.ICell;
+//import graph.model.IGraphModel;
+//import graph.util.Point2d;
+//import graph.view.CellState;
+//import graph.view.Graph;
+//import graph.view.GraphView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+//import java.util.ArrayList;
+//import java.util.Arrays;
+//import java.util.Hashtable;
+//import java.util.Iterator;
+//import java.util.List;
+//import java.util.Map;
 
 public class ParallelEdgeLayout extends GraphLayout
 {

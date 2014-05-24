@@ -1,64 +1,63 @@
 /**
- * $Id: Utils.java,v 1.10 2014/01/16 14:39:49 gaudenz Exp $
  * Copyright (c) 2007-2012, JGraph Ltd
  */
-package graph.util;
+part of graph.util;
 
-import graph.io.CodecRegistry;
-import graph.model.CellPath;
-import graph.model.ICell;
-import graph.model.IGraphModel;
-import graph.view.CellState;
+//import graph.io.CodecRegistry;
+//import graph.model.CellPath;
+//import graph.model.ICell;
+//import graph.model.IGraphModel;
+//import graph.view.CellState;
 
-import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
-import java.awt.font.FontRenderContext;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Formatter;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedSet;
-import java.util.Stack;
-import java.util.TreeSet;
+//import java.awt.AlphaComposite;
+//import java.awt.Color;
+//import java.awt.Dimension;
+//import java.awt.Font;
+//import java.awt.FontMetrics;
+//import java.awt.Graphics;
+//import java.awt.Graphics2D;
+//import java.awt.Rectangle;
+//import java.awt.RenderingHints;
+//import java.awt.font.FontRenderContext;
+//import java.awt.geom.Line2D;
+//import java.awt.geom.Rectangle2D;
+//import java.awt.image.BufferedImage;
+//import java.awt.image.ImageObserver;
+//import java.io.BufferedReader;
+//import java.io.ByteArrayInputStream;
+//import java.io.FileInputStream;
+//import java.io.FileWriter;
+//import java.io.IOException;
+//import java.io.InputStream;
+//import java.io.InputStreamReader;
+//import java.net.URL;
+//import java.security.MessageDigest;
+//import java.security.NoSuchAlgorithmException;
+//import java.util.ArrayList;
+//import java.util.Arrays;
+//import java.util.Collection;
+//import java.util.Comparator;
+//import java.util.Formatter;
+//import java.util.Iterator;
+//import java.util.List;
+//import java.util.Map;
+//import java.util.SortedSet;
+//import java.util.Stack;
+//import java.util.TreeSet;
 
-import javax.imageio.ImageIO;
-import javax.swing.text.html.HTMLDocument;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
+//import javax.imageio.ImageIO;
+//import javax.swing.text.html.HTMLDocument;
+//import javax.xml.parsers.DocumentBuilder;
+//import javax.xml.parsers.DocumentBuilderFactory;
+//import javax.xml.xpath.XPath;
+//import javax.xml.xpath.XPathConstants;
+//import javax.xml.xpath.XPathExpressionException;
+//import javax.xml.xpath.XPathFactory;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
+//import org.w3c.dom.Document;
+//import org.w3c.dom.Element;
+//import org.w3c.dom.NamedNodeMap;
+//import org.w3c.dom.Node;
 
 /**
  * Contains various helper methods for use with Graph.

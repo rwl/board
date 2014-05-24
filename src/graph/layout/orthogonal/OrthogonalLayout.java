@@ -1,12 +1,11 @@
 /**
- * $Id: OrthogonalLayout.java,v 1.1 2012/11/15 13:26:49 gaudenz Exp $
  * Copyright (c) 2008-2009, JGraph Ltd
  */
-package graph.layout.orthogonal;
+part of graph.layout.orthogonal;
 
-import graph.layout.GraphLayout;
-import graph.layout.orthogonal.model.OrthogonalModel;
-import graph.view.Graph;
+//import graph.layout.GraphLayout;
+//import graph.layout.orthogonal.model.OrthogonalModel;
+//import graph.view.Graph;
 
 /**
  *
