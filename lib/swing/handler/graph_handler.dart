@@ -8,21 +8,6 @@
  */
 part of graph.swing.handler;
 
-import '../../model/model.dart' show IGraphModel;
-import '../../swing/swing.dart' show GraphComponent;
-import '../../swing/util/util.dart' show GraphTransferable;
-import '../../swing/util/util.dart' show MouseAdapter;
-import '../../swing/util/util.dart' show SwingConstants;
-import '../../util/util.dart' show CellRenderer;
-import '../../util/util.dart' show Event;
-import '../../util/util.dart' show EventObj;
-import '../../util/util.dart' show Point2d;
-import '../../util/util.dart' show Rect;
-import '../../util/util.dart' show Utils;
-import '../../util/util.dart' show EventSource.IEventListener;
-import '../../view/view.dart' show CellState;
-import '../../view/view.dart' show Graph;
-
 //import java.awt.AlphaComposite;
 //import java.awt.Color;
 //import java.awt.Cursor;

@@ -3,9 +3,6 @@
  */
 part of graph.canvas;
 
-import '../util/util.dart' show Utils;
-import '../view/view.dart' show CellState;
-
 //import java.awt.Color;
 //import java.awt.Graphics2D;
 //import java.awt.Point;

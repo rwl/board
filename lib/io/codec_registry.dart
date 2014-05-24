@@ -3,12 +3,6 @@
  */
 part of graph.io;
 
-import '../model/model.dart' show CollapseChange;
-import '../model/model.dart' show GeometryChange;
-import '../model/model.dart' show StyleChange;
-import '../model/model.dart' show ValueChange;
-import '../model/model.dart' show VisibleChange;
-
 //import java.util.ArrayList;
 //import java.util.Collection;
 //import java.util.Hashtable;

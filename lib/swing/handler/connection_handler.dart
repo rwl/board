@@ -3,22 +3,6 @@
  */
 part of graph.swing.handler;
 
-import '../../model/model.dart' show Geometry;
-import '../../model/model.dart' show IGraphModel;
-import '../../swing/swing.dart' show GraphComponent;
-import '../../swing/swing.dart' show GraphControl;
-import '../../swing/util/util.dart' show MouseAdapter;
-import '../../util/util.dart' show Constants;
-import '../../util/util.dart' show Event;
-import '../../util/util.dart' show EventObj;
-import '../../util/util.dart' show EventSource;
-import '../../util/util.dart' show Point2d;
-import '../../util/util.dart' show Rect;
-import '../../util/util.dart' show EventSource.IEventListener;
-import '../../view/view.dart' show CellState;
-import '../../view/view.dart' show Graph;
-import '../../view/view.dart' show GraphView;
-
 //import java.awt.Color;
 //import java.awt.Cursor;
 //import java.awt.Graphics;

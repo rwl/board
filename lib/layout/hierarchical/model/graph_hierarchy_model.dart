@@ -3,9 +3,6 @@
  */
 part of graph.layout.hierarchical.model;
 
-import '../../../layout/hierarchical/hierarchical.dart' show HierarchicalLayout;
-import '../../../view/view.dart' show Graph;
-
 //import java.util.ArrayList;
 //import java.util.Arrays;
 //import java.util.Collection;

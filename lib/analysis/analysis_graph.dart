@@ -3,10 +3,6 @@
  */
 part of graph.analysis;
 
-import '../cost_function/cost_function.dart' show DoubleValCostFunction;
-import '../model/model.dart' show IGraphModel;
-import '../view/view.dart' show Graph;
-
 //import java.util.ArrayList;
 //import java.util.HashMap;
 //import java.util.List;

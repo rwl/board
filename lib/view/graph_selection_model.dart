@@ -9,12 +9,6 @@
  */
 part of graph.view;
 
-import '../util/util.dart' show Event;
-import '../util/util.dart' show EventObj;
-import '../util/util.dart' show EventSource;
-import '../util/util.dart' show UndoableEdit;
-import '../util/util.dart' show UndoableChange;
-
 //import java.util.ArrayList;
 //import java.util.Collection;
 //import java.util.Iterator;

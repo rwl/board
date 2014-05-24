@@ -3,9 +3,6 @@
  */
 part of graph.swing.handler;
 
-import '../../swing/swing.dart' show GraphComponent;
-import '../../swing/util/util.dart' show GraphActions;
-
 //import javax.swing.ActionMap;
 //import javax.swing.InputMap;
 //import javax.swing.JComponent;

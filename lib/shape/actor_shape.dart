@@ -1,8 +1,5 @@
 part of graph.shape;
 
-import '../canvas/canvas.dart' show Graphics2DCanvas;
-import '../view/view.dart' show CellState;
-
 //import java.awt.Rectangle;
 //import java.awt.Shape;
 //import java.awt.geom.GeneralPath;

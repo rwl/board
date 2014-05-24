@@ -1,15 +1,5 @@
 part of graph.swing.handler;
 
-import '../../swing/swing.dart' show GraphComponent;
-import '../../swing/util/util.dart' show MouseAdapter;
-import '../../util/util.dart' show Constants;
-import '../../util/util.dart' show Event;
-import '../../util/util.dart' show EventObj;
-import '../../util/util.dart' show Rect;
-import '../../util/util.dart' show Utils;
-import '../../util/util.dart' show EventSource.IEventListener;
-import '../../view/view.dart' show CellState;
-
 //import java.awt.Cursor;
 //import java.awt.Graphics;
 //import java.awt.Graphics2D;

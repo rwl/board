@@ -3,12 +3,6 @@
  */
 part of graph.reader;
 
-import '../canvas/canvas.dart' show ICanvas;
-import '../util/util.dart' show Point2d;
-import '../util/util.dart' show Rect;
-import '../util/util.dart' show Utils;
-import '../view/view.dart' show CellState;
-
 //import java.util.ArrayList;
 //import java.util.Hashtable;
 //import java.util.List;

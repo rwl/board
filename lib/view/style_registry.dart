@@ -3,8 +3,6 @@
  */
 part of graph.view;
 
-import '../util/util.dart' show Constants;
-
 //import java.util.Hashtable;
 //import java.util.Iterator;
 //import java.util.Map;

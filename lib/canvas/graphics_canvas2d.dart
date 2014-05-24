@@ -1,9 +1,5 @@
 part of graph.canvas;
 
-import '../util/util.dart' show Constants;
-import '../util/util.dart' show LightweightLabel;
-import '../util/util.dart' show Utils;
-
 //import java.awt.AlphaComposite;
 //import java.awt.BasicStroke;
 //import java.awt.Color;

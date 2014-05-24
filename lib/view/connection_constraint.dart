@@ -3,8 +3,6 @@
  */
 part of graph.view;
 
-import '../util/util.dart' show Point2d;
-
 /**
  * Defines an object that contains the constraints about how to connect one
  * side of an edge to its terminal.

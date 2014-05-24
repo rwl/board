@@ -3,16 +3,6 @@
  */
 part of graph.swing.handler;
 
-import '../../swing/swing.dart' show GraphComponent;
-import '../../swing/util/util.dart' show SwingConstants;
-import '../../swing/swing.dart' show view.CellStatePreview;
-import '../../util/util.dart' show Event;
-import '../../util/util.dart' show EventObj;
-import '../../util/util.dart' show EventSource;
-import '../../util/util.dart' show Rect;
-import '../../view/view.dart' show CellState;
-import '../../view/view.dart' show Graph;
-
 //import java.awt.Graphics;
 //import java.awt.Rectangle;
 //import java.awt.event.MouseEvent;

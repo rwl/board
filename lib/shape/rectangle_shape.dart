@@ -3,12 +3,6 @@
  */
 part of graph.shape;
 
-import '../canvas/canvas.dart' show Graphics2DCanvas;
-import '../swing/util/util.dart' show SwingConstants;
-import '../util/util.dart' show Constants;
-import '../util/util.dart' show Utils;
-import '../view/view.dart' show CellState;
-
 //import java.awt.Rectangle;
 //import java.util.Map;
 

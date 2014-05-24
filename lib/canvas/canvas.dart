@@ -8,7 +8,35 @@ library graph.canvas;
  * different technologies, such as Graphics2D, HTML, SVG or VML.
  */
 
+//import '../shape/shape.dart' show ActorShape;
+//import '../shape/shape.dart' show ArrowShape;
+//import '../shape/shape.dart' show CloudShape;
+//import '../shape/shape.dart' show ConnectorShape;
+//import '../shape/shape.dart' show CurveShape;
+//import '../shape/shape.dart' show CylinderShape;
+//import '../shape/shape.dart' show DefaultTextShape;
+//import '../shape/shape.dart' show DoubleEllipseShape;
+//import '../shape/shape.dart' show DoubleRectangleShape;
+//import '../shape/shape.dart' show EllipseShape;
+//import '../shape/shape.dart' show HexagonShape;
+//import '../shape/shape.dart' show HtmlTextShape;
+//import '../shape/shape.dart' show IShape;
+//import '../shape/shape.dart' show ITextShape;
+//import '../shape/shape.dart' show ImageShape;
+//import '../shape/shape.dart' show LabelShape;
+//import '../shape/shape.dart' show LineShape;
+//import '../shape/shape.dart' show RectangleShape;
+//import '../shape/shape.dart' show RhombusShape;
+//import '../shape/shape.dart' show StencilRegistry;
+//import '../shape/shape.dart' show SwimlaneShape;
+//import '../shape/shape.dart' show TriangleShape;
+import '../shape/shape.dart';
+
+import '../swing/util/util.dart' show SwingConstants;
+
 import '../view/view.dart' show CellState;
+
+import '../util/util.dart' show Constants, Utils, LightweightLabel, Point2d, Rect, Base64;
 
 //import java.awt.Point;
 

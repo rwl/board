@@ -1,7 +1,5 @@
 part of graph.costfunction;
 
-import '../view/view.dart' show CellState;
-
 /**
  * @author Mate
  * A constant cost function that returns <b>const</b> regardless of edge value

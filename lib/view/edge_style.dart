@@ -3,12 +3,6 @@
  */
 part of graph.view;
 
-import '../model/model.dart' show Geometry;
-import '../model/model.dart' show IGraphModel;
-import '../util/util.dart' show Constants;
-import '../util/util.dart' show Point2d;
-import '../util/util.dart' show Utils;
-
 //import java.util.List;
 
 /**

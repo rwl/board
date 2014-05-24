@@ -1,16 +1,5 @@
 part of graph.swing;
 
-import '../canvas/canvas.dart' show Graphics2DCanvas;
-import '../canvas/canvas.dart' show ICanvas;
-import '../model/model.dart' show IGraphModel;
-import '../util/util.dart' show Constants;
-import '../util/util.dart' show Event;
-import '../util/util.dart' show EventObj;
-import '../util/util.dart' show Rect;
-import '../util/util.dart' show Resources;
-import '../util/util.dart' show Utils;
-import '../view/view.dart' show CellState;
-
 //import java.awt.Dimension;
 //import java.awt.Graphics;
 //import java.awt.Graphics2D;

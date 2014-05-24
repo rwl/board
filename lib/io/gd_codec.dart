@@ -3,9 +3,6 @@
  */
 part of graph.io;
 
-import '../model/model.dart' show GraphModel;
-import '../view/view.dart' show Graph;
-
 //import java.io.BufferedReader;
 //import java.io.StringReader;
 //import java.util.HashMap;

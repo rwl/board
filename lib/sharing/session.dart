@@ -3,9 +3,6 @@
  */
 part of graph.sharing;
 
-import '../sharing/sharing.dart' show DiagramChangeListener;
-import '../util/util.dart' show Utils;
-
 //import org.w3c.dom.Node;
 
 /**

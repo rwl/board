@@ -3,23 +3,6 @@
  */
 part of graph.view;
 
-
-import '../model/model.dart' show Geometry;
-import '../model/model.dart' show GraphModel;
-import '../model/model.dart' show ICell;
-import '../model/model.dart' show IGraphModel;
-import '../util/util.dart' show Constants;
-import '../util/util.dart' show Event;
-import '../util/util.dart' show EventObj;
-import '../util/util.dart' show EventSource;
-import '../util/util.dart' show Point2d;
-import '../util/util.dart' show Rect;
-import '../util/util.dart' show UndoableEdit;
-import '../util/util.dart' show Utils;
-import '../util/util.dart' show UndoableChange;
-import '../view/view.dart' show EdgeStyleFunction;
-import '../view/view.dart' show PerimeterFunction;
-
 //import java.awt.geom.Line2D;
 //import java.util.ArrayList;
 //import java.util.Hashtable;

@@ -3,8 +3,6 @@
  */
 part of graph.io.graphml;
 
-import '../../util/util.dart' show Constants;
-
 //import java.util.HashMap;
 //import java.util.Hashtable;
 //import java.util.List;

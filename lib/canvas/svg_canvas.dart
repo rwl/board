@@ -3,7 +3,6 @@
  */
 part of graph.canvas;
 
-import '../util/util.dart' show Base64;
 import '../util/util.dart' show Constants;
 import '../util/util.dart' show Point2d;
 import '../util/util.dart' show Rect;

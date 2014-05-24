@@ -1,19 +1,5 @@
 part of graph.view;
 
-import '../layout.IGraphLayout;
-import '../model/model.dart' show ChildChange;
-import '../model/model.dart' show GeometryChange;
-import '../model/model.dart' show GraphModel;
-import '../model/model.dart' show IGraphModel;
-import '../model/model.dart' show RootChange;
-import '../model/model.dart' show TerminalChange;
-import '../util/util.dart' show Event;
-import '../util/util.dart' show EventObj;
-import '../util/util.dart' show EventSource;
-import '../util/util.dart' show UndoableEdit;
-import '../util/util.dart' show Utils;
-import '../util/util.dart' show UndoableChange;
-
 //import java.awt.Point;
 //import java.util.Arrays;
 //import java.util.Collection;

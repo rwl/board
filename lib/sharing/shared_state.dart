@@ -3,9 +3,6 @@
  */
 part of graph.sharing;
 
-import '../util/util.dart' show EventSource;
-import '../util/util.dart' show XmlUtils;
-
 //import java.util.ArrayList;
 //import java.util.Iterator;
 //import java.util.List;

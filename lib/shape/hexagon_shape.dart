@@ -1,10 +1,5 @@
 part of graph.shape;
 
-import '../canvas/canvas.dart' show Graphics2DCanvas;
-import '../util/util.dart' show Constants;
-import '../util/util.dart' show Utils;
-import '../view/view.dart' show CellState;
-
 //import java.awt.Polygon;
 //import java.awt.Rectangle;
 //import java.awt.Shape;

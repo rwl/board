@@ -1,12 +1,5 @@
 part of graph.view;
 
-import '../model/model.dart' show Geometry;
-import '../model/model.dart' show IGraphModel;
-import '../util/util.dart' show Event;
-import '../util/util.dart' show EventObj;
-import '../util/util.dart' show EventSource;
-import '../util/util.dart' show Point2d;
-
 class SpaceManager extends EventSource
 {
 

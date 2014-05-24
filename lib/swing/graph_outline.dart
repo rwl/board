@@ -3,13 +3,6 @@
  */
 part of graph.swing;
 
-import '../util/util.dart' show Event;
-import '../util/util.dart' show EventObj;
-import '../util/util.dart' show Point2d;
-import '../util/util.dart' show Rect;
-import '../util/util.dart' show Utils;
-import '../util/util.dart' show EventSource.IEventListener;
-
 //import java.awt.BasicStroke;
 //import java.awt.Color;
 //import java.awt.Dimension;

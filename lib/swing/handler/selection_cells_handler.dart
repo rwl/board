@@ -8,13 +8,6 @@
  */
 part of graph.swing.handler;
 
-import '../../swing/swing.dart' show GraphComponent;
-import '../../util/util.dart' show Event;
-import '../../util/util.dart' show EventObj;
-import '../../util/util.dart' show EventSource.IEventListener;
-import '../../view/view.dart' show CellState;
-import '../../view/view.dart' show Graph;
-
 //import java.awt.Graphics;
 //import java.awt.Rectangle;
 //import java.awt.Stroke;

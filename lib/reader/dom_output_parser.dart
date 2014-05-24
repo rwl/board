@@ -1,8 +1,5 @@
 part of graph.reader;
 
-import '../canvas/canvas.dart' show ICanvas2D;
-import '../reader/reader.dart' show IElementHandler;
-
 //import java.util.Hashtable;
 //import java.util.Map;
 

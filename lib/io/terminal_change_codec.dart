@@ -3,8 +3,6 @@
  */
 part of graph.io;
 
-import '../model/model.dart' show TerminalChange;
-
 //import java.util.Map;
 
 //import org.w3c.dom.Node;

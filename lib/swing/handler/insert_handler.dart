@@ -1,15 +1,5 @@
 part of graph.swing.handler;
 
-import '../../swing/swing.dart' show GraphComponent;
-import '../../swing/util/util.dart' show MouseAdapter;
-import '../../util/util.dart' show Event;
-import '../../util/util.dart' show EventObj;
-import '../../util/util.dart' show EventSource;
-import '../../util/util.dart' show Point2d;
-import '../../util/util.dart' show Rect;
-import '../../util/util.dart' show EventSource.IEventListener;
-import '../../view/view.dart' show Graph;
-
 //import java.awt.BasicStroke;
 //import java.awt.Color;
 //import java.awt.Graphics;

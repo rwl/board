@@ -1,7 +1,5 @@
 part of graph.generatorfunction;
 
-import '../view/view.dart' show CellState;
-
 /**
  * @author Mate
  * A generator random cost function

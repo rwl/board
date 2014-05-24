@@ -3,13 +3,6 @@
  */
 part of graph.swing.handler;
 
-import '../../swing/swing.dart' show GraphComponent;
-import '../../swing/util/util.dart' show GraphTransferable;
-import '../../util/util.dart' show CellRenderer;
-import '../../util/util.dart' show Point2d;
-import '../../util/util.dart' show Rect;
-import '../../view/view.dart' show Graph;
-
 //import java.awt.Color;
 //import java.awt.Image;
 //import java.awt.Point;

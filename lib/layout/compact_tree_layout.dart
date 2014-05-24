@@ -1,14 +1,5 @@
 part of graph.layout;
 
-import '../../model/model.dart' show GraphModel;
-import '../../model/model.dart' show IGraphModel;
-import '../../util/util.dart' show Point2d;
-import '../../util/util.dart' show Rect;
-import '../../util/util.dart' show Utils;
-import '../../view/view.dart' show CellState;
-import '../../view/view.dart' show Graph;
-import '../../view/view.dart' show GraphView;
-
 //import java.util.ArrayList;
 //import java.util.Arrays;
 //import java.util.HashSet;

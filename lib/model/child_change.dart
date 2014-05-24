@@ -1,7 +1,5 @@
 part of graph.model;
 
-import '../model/model.dart' show AtomicGraphModelChange;
-
 class ChildChange extends AtomicGraphModelChange
 {
 

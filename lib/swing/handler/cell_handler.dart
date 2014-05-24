@@ -3,12 +3,6 @@
  */
 part of graph.swing.handler;
 
-import '../../swing/swing.dart' show GraphComponent;
-import '../../swing/util/util.dart' show SwingConstants;
-import '../../util/util.dart' show Rect;
-import '../../view/view.dart' show CellState;
-import '../../view/view.dart' show Graph;
-
 //import java.awt.Color;
 //import java.awt.Cursor;
 //import java.awt.Graphics;

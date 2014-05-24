@@ -3,35 +3,6 @@
  */
 part of graph.canvas;
 
-import '../shape/shape.dart' show ActorShape;
-import '../shape/shape.dart' show ArrowShape;
-import '../shape/shape.dart' show CloudShape;
-import '../shape/shape.dart' show ConnectorShape;
-import '../shape/shape.dart' show CurveShape;
-import '../shape/shape.dart' show CylinderShape;
-import '../shape/shape.dart' show DefaultTextShape;
-import '../shape/shape.dart' show DoubleEllipseShape;
-import '../shape/shape.dart' show DoubleRectangleShape;
-import '../shape/shape.dart' show EllipseShape;
-import '../shape/shape.dart' show HexagonShape;
-import '../shape/shape.dart' show HtmlTextShape;
-import '../shape/shape.dart' show IShape;
-import '../shape/shape.dart' show ITextShape;
-import '../shape/shape.dart' show ImageShape;
-import '../shape/shape.dart' show LabelShape;
-import '../shape/shape.dart' show LineShape;
-import '../shape/shape.dart' show RectangleShape;
-import '../shape/shape.dart' show RhombusShape;
-import '../shape/shape.dart' show StencilRegistry;
-import '../shape/shape.dart' show SwimlaneShape;
-import '../shape/shape.dart' show TriangleShape;
-import '../swing/util/util.dart' show SwingConstants;
-import '../util/util.dart' show Constants;
-import '../util/util.dart' show Point2d;
-import '../util/util.dart' show Rect;
-import '../util/util.dart' show Utils;
-import '../view/view.dart' show CellState;
-
 //import java.awt.AlphaComposite;
 //import java.awt.BasicStroke;
 //import java.awt.Color;

@@ -4,17 +4,6 @@
 
 part of graph.layout.hierarchical.stage;
 
-import '../../../layout/hierarchical/hierarchical.dart' show HierarchicalLayout;
-import '../../../layout/hierarchical/model/model.dart' show GraphAbstractHierarchyCell;
-import '../../../layout/hierarchical/model/model.dart' show GraphHierarchyEdge;
-import '../../../layout/hierarchical/model/model.dart' show GraphHierarchyModel;
-import '../../../layout/hierarchical/model/model.dart' show GraphHierarchyNode;
-import '../../../layout/hierarchical/model/model.dart' show GraphHierarchyRank;
-import '../../../util/util.dart' show Point2d;
-import '../../../util/util.dart' show Rect;
-import '../../../util/util.dart' show Utils;
-import '../../../view/view.dart' show Graph;
-
 //import java.util.ArrayList;
 //import java.util.Arrays;
 //import java.util.Collection;

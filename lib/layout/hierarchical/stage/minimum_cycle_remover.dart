@@ -10,12 +10,6 @@
  */
 part of graph.layout.hierarchical.stage;
 
-import '../../../layout/hierarchical/hierarchical.dart' show HierarchicalLayout;
-import '../../../layout/hierarchical/model/model.dart' show GraphHierarchyEdge;
-import '../../../layout/hierarchical/model/model.dart' show GraphHierarchyModel;
-import '../../../layout/hierarchical/model/model.dart' show GraphHierarchyNode;
-import '../../../view/view.dart' show Graph;
-
 //import java.util.HashSet;
 //import java.util.Iterator;
 //import java.util.List;

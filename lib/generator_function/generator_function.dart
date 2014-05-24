@@ -1,6 +1,7 @@
 library graph.generatorfunction;
 
 import '../analysis/analysis.dart' show ICostFunction;
+import '../view/view.dart' show CellState;
 
 part 'generator_const_function.dart';
 part 'generator_random_function.dart';

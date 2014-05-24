@@ -3,13 +3,6 @@
  */
 part of graph.swing.view;
 
-import '../../model/model.dart' show Geometry;
-import '../../model/model.dart' show IGraphModel;
-import '../../swing/swing.dart' show GraphComponent;
-import '../../util/util.dart' show Constants;
-import '../../util/util.dart' show Utils;
-import '../../view/view.dart' show CellState;
-
 //import java.awt.BorderLayout;
 //import java.awt.Color;
 //import java.awt.Component;

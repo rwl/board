@@ -3,12 +3,6 @@
  */
 part of graph.canvas;
 
-import '../util/util.dart' show Constants;
-import '../util/util.dart' show Point2d;
-import '../util/util.dart' show Rect;
-import '../util/util.dart' show Utils;
-import '../view/view.dart' show CellState;
-
 //import java.util.Hashtable;
 //import java.util.List;
 //import java.util.Map;

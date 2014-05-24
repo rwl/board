@@ -3,9 +3,6 @@
  */
 part of graph.view;
 
-import '../util/util.dart' show Point2d;
-import '../util/util.dart' show Rect;
-
 //import java.util.ArrayList;
 //import java.util.List;
 //import java.util.Map;

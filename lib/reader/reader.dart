@@ -5,6 +5,11 @@ library graph.reader;
  * into an image using SAX and without having to create a graph model.
  */
 
+import '../canvas/canvas.dart' show ICanvas2D, Graphics2DCanvas, ICanvas, ImageCanvas;
+import '../reader/reader.dart' show IElementHandler;
+import '../view/view.dart' show CellState;
+import '../util/util.dart' show Rect, Utils, Point2d;
+
 part 'dom_output_parser.dart';
 part 'graph_view_image_reader.dart';
 part 'graph_view_reader.dart';

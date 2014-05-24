@@ -1,5 +1,9 @@
 library graph.io.graphml;
 
+import '../../util/util.dart' show Constants, Point2d;
+import '../../model/model.dart' show Cell;
+import '../../view/view.dart' show ConnectionConstraint, Graph;
+
 part 'graphml_constants.dart';
 part 'graphml_data.dart';
 part 'graphml_edge.dart';

@@ -3,7 +3,6 @@
  */
 part of graph.analysis;
 
-import '../view/view.dart' show CellState;
 
 /**
  * Implements a cost function for a constant cost per traversed cell.

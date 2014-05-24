@@ -4,9 +4,6 @@
  */
 part of graph.costfunction;
 
-import '../view/view.dart' show CellState;
-import '../view/view.dart' show Graph;
-
 /**
  * A cost function that assumes that edge value is of type "double" or "String" and returns that value. Default edge weight is 1.0 (if no double value can be retrieved)
  */

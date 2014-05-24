@@ -1,7 +1,5 @@
 part of graph.canvas;
 
-import '../util/util.dart' show Constants;
-
 /**
  * Requirements for implementing technologies:
  * 

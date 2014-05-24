@@ -4,12 +4,6 @@
 
 part of graph.layout;
 
-import '../../model/model.dart' show GraphModel;
-import '../../model/model.dart' show IGraphModel;
-import '../../util/util.dart' show Rect;
-import '../../view/view.dart' show Graph;
-import '../../view/view.dart' show GraphView;
-
 //import java.awt.geom.Line2D;
 //import java.awt.geom.Point2D;
 //import java.awt.geom.Rectangle2D;

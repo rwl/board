@@ -3,39 +3,6 @@
  */
 part of graph.swing;
 
-import '../canvas/canvas.dart' show Graphics2DCanvas;
-import '../model/model.dart' show Filter;
-import '../model/model.dart' show GraphModel;
-import '../model/model.dart' show IGraphModel;
-import '../swing/handler/handler.dart' show CellHandler;
-import '../swing/handler/handler.dart' show ConnectionHandler;
-import '../swing/handler/handler.dart' show EdgeHandler;
-import '../swing/handler/handler.dart' show ElbowEdgeHandler;
-import '../swing/handler/handler.dart' show GraphHandler;
-import '../swing/handler/handler.dart' show GraphTransferHandler;
-import '../swing/handler/handler.dart' show PanningHandler;
-import '../swing/handler/handler.dart' show SelectionCellsHandler;
-import '../swing/handler/handler.dart' show VertexHandler;
-import '../swing/util/util.dart' show CellOverlay;
-import '../swing/util/util.dart' show ICellOverlay;
-import '../swing/swing.dart' show view.CellEditor;
-import '../swing/swing.dart' show view.ICellEditor;
-import '../swing/swing.dart' show view.InteractiveCanvas;
-import '../util/util.dart' show Event;
-import '../util/util.dart' show EventObj;
-import '../util/util.dart' show EventSource;
-import '../util/util.dart' show Point2d;
-import '../util/util.dart' show Rect;
-import '../util/util.dart' show Resources;
-import '../util/util.dart' show Utils;
-import '../util/util.dart' show EventSource.IEventListener;
-import '../view/view.dart' show CellState;
-import '../view/view.dart' show EdgeStyle;
-import '../view/view.dart' show Graph;
-import '../view/view.dart' show GraphView;
-import '../view/view.dart' show TemporaryCellStates;
-import '../view/view.dart' show EdgeStyle.EdgeStyleFunction;
-
 //import java.awt.BasicStroke;
 //import java.awt.Color;
 //import java.awt.Component;

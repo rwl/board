@@ -1,8 +1,5 @@
 part of graph.view;
 
-import '../model/model.dart' show Cell;
-import '../util/util.dart' show Rect;
-
 //import java.util.Hashtable;
 
 class TemporaryCellStates

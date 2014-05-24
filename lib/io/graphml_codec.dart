@@ -3,25 +3,6 @@
  */
 part of graph.io;
 
-import '../io/graphml/graphml.dart' show GraphMlConstants;
-import '../io/graphml/graphml.dart' show GraphMlData;
-import '../io/graphml/graphml.dart' show GraphMlEdge;
-import '../io/graphml/graphml.dart' show GraphMlGraph;
-import '../io/graphml/graphml.dart' show GraphMlKey;
-import '../io/graphml/graphml.dart' show GraphMlKeyManager;
-import '../io/graphml/graphml.dart' show GraphMlNode;
-import '../io/graphml/graphml.dart' show GraphMlShapeEdge;
-import '../io/graphml/graphml.dart' show GraphMlShapeNode;
-import '../io/graphml/graphml.dart' show GraphMlUtils;
-import '../model/model.dart' show Cell;
-import '../util/util.dart' show Constants;
-import '../util/util.dart' show DomUtils;
-import '../util/util.dart' show Point2d;
-import '../view/view.dart' show CellState;
-import '../view/view.dart' show ConnectionConstraint;
-import '../view/view.dart' show Graph;
-import '../view/view.dart' show GraphView;
-
 //import java.util.HashMap;
 //import java.util.List;
 

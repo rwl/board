@@ -4,12 +4,6 @@
 
 part of graph.reader;
 
-import '../canvas/canvas.dart' show Graphics2DCanvas;
-import '../canvas/canvas.dart' show ICanvas;
-import '../canvas/canvas.dart' show ImageCanvas;
-import '../util/util.dart' show Rect;
-import '../util/util.dart' show Utils;
-
 //import java.awt.Color;
 //import java.awt.image.BufferedImage;
 //import java.io.FileInputStream;

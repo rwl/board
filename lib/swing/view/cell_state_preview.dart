@@ -3,16 +3,6 @@
  */
 part of graph.swing.view;
 
-import '../../canvas/canvas.dart' show Graphics2DCanvas;
-import '../../model/model.dart' show Geometry;
-import '../../model/model.dart' show IGraphModel;
-import '../../swing/swing.dart' show GraphComponent;
-import '../../util/util.dart' show Point2d;
-import '../../util/util.dart' show Rect;
-import '../../util/util.dart' show Utils;
-import '../../view/view.dart' show CellState;
-import '../../view/view.dart' show Graph;
-
 //import java.awt.AlphaComposite;
 //import java.awt.Composite;
 //import java.awt.Graphics;

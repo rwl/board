@@ -1,8 +1,5 @@
 part of graph.canvas;
 
-import '../util/util.dart' show Constants;
-import '../util/util.dart' show Utils;
-
 //import java.awt.Point;
 //import java.awt.image.BufferedImage;
 //import java.util.Hashtable;

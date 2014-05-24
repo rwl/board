@@ -3,14 +3,6 @@
  */
 part of graph.swing.handler;
 
-import '../../swing/swing.dart' show GraphComponent;
-import '../../swing/swing.dart' show GraphControl;
-import '../../swing/util/util.dart' show SwingConstants;
-import '../../util/util.dart' show Event;
-import '../../util/util.dart' show EventObj;
-import '../../util/util.dart' show Utils;
-import '../../util/util.dart' show EventSource.IEventListener;
-
 //import java.awt.Color;
 //import java.awt.Graphics;
 //import java.awt.Point;

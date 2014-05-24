@@ -6,6 +6,37 @@ library graph.swing.handler;
  * and keystroke handling.
  */
 
+import '../../swing/swing.dart' show GraphComponent;
+import '../../swing/swing.dart' show GraphControl;
+import '../../swing/util/util.dart' show MouseAdapter;
+import '../../swing/util/util.dart' show SwingConstants;
+import '../../swing/util/util.dart' show GraphTransferable;
+import '../../swing/util/util.dart' show GraphActions;
+import '../../swing/view/view.dart' show CellStatePreview;
+
+import '../../canvas/canvas.dart' show Graphics2DCanvas;
+
+import '../../model/model.dart' show Cell;
+import '../../model/model.dart' show Geometry;
+import '../../model/model.dart' show ICell;
+import '../../model/model.dart' show IGraphModel;
+
+import '../../util/util.dart' show Point2d;
+import '../../util/util.dart' show Rect;
+import '../../util/util.dart' show Constants;
+import '../../util/util.dart' show Event;
+import '../../util/util.dart' show EventObj;
+import '../../util/util.dart' show EventSource;
+import '../../util/util.dart' show Utils;
+import '../../util/util.dart' show IEventListener;
+import '../../util/util.dart' show Resources;
+import '../../util/util.dart' show CellRenderer;
+
+import '../../view/view.dart' show CellState;
+import '../../view/view.dart' show GraphView;
+import '../../view/view.dart' show Graph;
+import '../../view/view.dart' show ConnectionConstraint;
+
 part 'cell_handler.dart';
 part 'cell_marker.dart';
 part 'cell_tracker.dart';

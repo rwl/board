@@ -3,16 +3,6 @@
  */
 part of graph.swing.util;
 
-import '../../model/model.dart' show Geometry;
-import '../../swing/swing.dart' show GraphComponent;
-import '../../swing/swing.dart' show view.CellStatePreview;
-import '../../util/util.dart' show Event;
-import '../../util/util.dart' show EventObj;
-import '../../util/util.dart' show Point2d;
-import '../../util/util.dart' show Rect;
-import '../../view/view.dart' show CellState;
-import '../../view/view.dart' show Graph;
-
 //import java.awt.Graphics;
 //import java.util.HashMap;
 //import java.util.Map;

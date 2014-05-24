@@ -3,9 +3,6 @@
  */
 part of graph.io;
 
-import '../util/util.dart' show Utils;
-import '../view/view.dart' show Stylesheet;
-
 //import java.util.Hashtable;
 //import java.util.Iterator;
 //import java.util.Map;

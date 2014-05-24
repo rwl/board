@@ -3,8 +3,6 @@
  */
 part of graph.io;
 
-import '../util/util.dart' show Utils;
-
 //import java.lang.reflect.Array;
 //import java.lang.reflect.Field;
 //import java.lang.reflect.Method;

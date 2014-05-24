@@ -3,9 +3,6 @@
  */
 part of graph.swing.util;
 
-import '../../swing/swing.dart' show GraphComponent;
-import '../../view/view.dart' show Graph;
-
 //import java.awt.event.ActionEvent;
 
 //import javax.swing.AbstractAction;

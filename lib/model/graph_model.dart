@@ -3,12 +3,6 @@
  */
 part of graph.model;
 
-import '../util/util.dart' show Event;
-import '../util/util.dart' show EventObj;
-import '../util/util.dart' show EventSource;
-import '../util/util.dart' show Point2d;
-import '../util/util.dart' show UndoableEdit;
-
 //import java.io.IOException;
 //import java.io.ObjectInputStream;
 //import java.io.Serializable;

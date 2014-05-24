@@ -1,12 +1,5 @@
 part of graph.layout;
 
-import '../../model/model.dart' show Geometry;
-import '../../model/model.dart' show IGraphModel;
-import '../../util/util.dart' show Point2d;
-import '../../view/view.dart' show CellState;
-import '../../view/view.dart' show Graph;
-import '../../view/view.dart' show GraphView;
-
 //import java.awt.Rectangle;
 //import java.util.ArrayList;
 //import java.util.List;

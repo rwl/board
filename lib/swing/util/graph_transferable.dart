@@ -3,8 +3,6 @@
  */
 part of graph.swing.util;
 
-import '../../util/util.dart' show Rect;
-
 //import java.awt.datatransfer.DataFlavor;
 //import java.awt.datatransfer.Transferable;
 //import java.awt.datatransfer.UnsupportedFlavorException;

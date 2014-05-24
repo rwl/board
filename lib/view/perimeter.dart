@@ -3,11 +3,6 @@
  */
 part of graph.view;
 
-import '../util/util.dart' show Constants;
-import '../util/util.dart' show Point2d;
-import '../util/util.dart' show Rect;
-import '../util/util.dart' show Utils;
-
 /**
  * Provides various perimeter functions to be used in a style
  * as the value of Constants.STYLE_PERIMETER. Alternately, the Constants.

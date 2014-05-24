@@ -3,9 +3,6 @@
  */
 part of graph.analysis;
 
-import '../util/util.dart' show Point2d;
-import '../view/view.dart' show CellState;
-
 /**
  * Implements a cost function for the Euclidean length of an edge.
  */

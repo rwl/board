@@ -1,7 +1,27 @@
 library graph.shape;
 
 import '../canvas/canvas.dart' show Graphics2DCanvas;
+
 import '../view/view.dart' show CellState;
+
+import '../util/util.dart' show Constants;
+import '../util/util.dart' show Point2d;
+import '../util/util.dart' show Rect;
+import '../util/util.dart' show Utils;
+import '../util/util.dart' show Line;
+import '../util/util.dart' show Curve;
+import '../util/util.dart' show LightweightLabel;
+
+import '../swing/util/util.dart' show SwingConstants;
+
+// stencil
+import '../util/util.dart' show XmlUtils;
+import '../util/svg/svg.dart' show AWTPathProducer;
+import '../util/svg/svg.dart' show AWTPolygonProducer;
+import '../util/svg/svg.dart' show AWTPolylineProducer;
+import '../util/svg/svg.dart' show CSSConstants;
+import '../util/svg/svg.dart' show ExtendedGeneralPath;
+import '../canvas/canvas.dart' show GraphicsCanvas2D;
 
 part 'actor_shape.dart';
 part 'arrow_shape.dart';

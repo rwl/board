@@ -11,11 +11,6 @@
 
 part of graph.layout.hierarchical.stage;
 
-import '../../../layout/hierarchical/hierarchical.dart' show HierarchicalLayout;
-import '../../../layout/hierarchical/model/model.dart' show GraphAbstractHierarchyCell;
-import '../../../layout/hierarchical/model/model.dart' show GraphHierarchyModel;
-import '../../../layout/hierarchical/model/model.dart' show GraphHierarchyRank;
-
 //import java.util.ArrayList;
 //import java.util.Arrays;
 //import java.util.Collection;

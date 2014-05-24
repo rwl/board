@@ -5,16 +5,6 @@ part of graph.shape;
 
 //import org.w3c.dom.Node;
 
-import '../canvas/canvas.dart' show Graphics2DCanvas;
-import '../util/util.dart' show Utils;
-import '../util/util.dart' show XmlUtils;
-import '../util/util.dart' show svg.AWTPathProducer;
-import '../util/util.dart' show svg.AWTPolygonProducer;
-import '../util/util.dart' show svg.AWTPolylineProducer;
-import '../util/util.dart' show svg.CSSConstants;
-import '../util/util.dart' show svg.ExtendedGeneralPath;
-import '../view/view.dart' show CellState;
-
 //import java.awt.Color;
 //import java.awt.Shape;
 //import java.awt.geom.AffineTransform;

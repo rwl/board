@@ -1,10 +1,5 @@
 part of graph.swing.util;
 
-import '../../util/util.dart' show Constants;
-import '../../util/util.dart' show Point2d;
-import '../../util/util.dart' show Rect;
-import '../../view/view.dart' show CellState;
-
 //import java.awt.Cursor;
 //import java.awt.Graphics;
 

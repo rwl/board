@@ -3,16 +3,6 @@
  */
 part of graph.sharing;
 
-import '../io/io.dart' show Codec;
-import '../model/model.dart' show ChildChange;
-import '../model/model.dart' show GraphModel;
-import '../model/model.dart' show ICell;
-import '../model/model.dart' show AtomicGraphModelChange;
-import '../util/util.dart' show Event;
-import '../util/util.dart' show EventObj;
-import '../util/util.dart' show UndoableEdit;
-import '../util/util.dart' show XmlUtils;
-
 //import java.util.LinkedList;
 
 //import org.w3c.dom.Node;

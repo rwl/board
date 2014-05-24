@@ -3,9 +3,6 @@
  */
 part of graph.shape;
 
-import '../canvas/canvas.dart' show Graphics2DCanvas;
-import '../view/view.dart' show CellState;
-
 //import java.util.Map;
 
 public interface ITextShape

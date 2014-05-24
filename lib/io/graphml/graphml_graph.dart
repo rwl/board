@@ -3,11 +3,6 @@
  */
 part of graph.io.graphml;
 
-import '../../model/model.dart' show Cell;
-import '../../util/util.dart' show Point2d;
-import '../../view/view.dart' show ConnectionConstraint;
-import '../../view/view.dart' show Graph;
-
 //import java.util.ArrayList;
 //import java.util.HashMap;
 //import java.util.List;

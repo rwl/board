@@ -1,8 +1,5 @@
 part of graph.view;
 
-import '../model/model.dart' show IGraphModel;
-import '../util/util.dart' show Utils;
-
 //import java.util.Collection;
 //import java.util.Iterator;
 

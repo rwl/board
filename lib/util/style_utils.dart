@@ -3,8 +3,6 @@
  */
 part of graph.util;
 
-import '../model/model.dart' show IGraphModel;
-
 //import java.util.ArrayList;
 //import java.util.List;
 

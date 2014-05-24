@@ -3,9 +3,6 @@
  */
 part of graph.swing.handler;
 
-import '../../swing/swing.dart' show GraphComponent;
-import '../../swing/util/util.dart' show MouseAdapter;
-
 //import java.awt.Point;
 //import java.awt.Rectangle;
 //import java.awt.event.MouseEvent;

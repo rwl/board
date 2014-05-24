@@ -3,14 +3,6 @@
  */
 part of graph.shape;
 
-import '../canvas/canvas.dart' show Graphics2DCanvas;
-import '../canvas/canvas.dart' show GraphicsCanvas2D;
-import '../util/util.dart' show Constants;
-import '../util/util.dart' show Point2d;
-import '../util/util.dart' show Rect;
-import '../util/util.dart' show Utils;
-import '../view/view.dart' show CellState;
-
 //import java.util.Map;
 
 //import org.w3c.dom.Element;

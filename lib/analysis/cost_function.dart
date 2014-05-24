@@ -3,8 +3,6 @@
  */
 part of graph.analysis;
 
-import '../view/view.dart' show CellState;
-
 /**
  * The cost function takes a cell and returns it's cost as a double. Two typical
  * examples of cost functions are the euclidian length of edges or a constant

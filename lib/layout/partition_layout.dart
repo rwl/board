@@ -1,11 +1,5 @@
 part of graph.layout;
 
-import '../../model/model.dart' show Geometry;
-import '../../model/model.dart' show ICell;
-import '../../model/model.dart' show IGraphModel;
-import '../../util/util.dart' show Rect;
-import '../../view/view.dart' show Graph;
-
 //import java.util.ArrayList;
 //import java.util.List;
 

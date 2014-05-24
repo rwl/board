@@ -3,10 +3,6 @@
  */
 part of graph.swing.util;
 
-import '../../util/util.dart' show Event;
-import '../../util/util.dart' show EventObj;
-import '../../util/util.dart' show EventSource;
-
 //import java.awt.event.ActionEvent;
 //import java.awt.event.ActionListener;
 

@@ -3,36 +3,6 @@
  */
 part of graph.view;
 
-import '../canvas/canvas.dart' show Graphics2DCanvas;
-import '../canvas/canvas.dart' show ICanvas;
-import '../canvas/canvas.dart' show ImageCanvas;
-import '../model/model.dart' show Cell;
-import '../model/model.dart' show ChildChange;
-import '../model/model.dart' show CollapseChange;
-import '../model/model.dart' show Filter;
-import '../model/model.dart' show Geometry;
-import '../model/model.dart' show GeometryChange;
-import '../model/model.dart' show GraphModel;
-import '../model/model.dart' show ICell;
-import '../model/model.dart' show IGraphModel;
-import '../model/model.dart' show RootChange;
-import '../model/model.dart' show StyleChange;
-import '../model/model.dart' show TerminalChange;
-import '../model/model.dart' show ValueChange;
-import '../model/model.dart' show VisibleChange;
-import '../util/util.dart' show Constants;
-import '../util/util.dart' show Event;
-import '../util/util.dart' show EventObj;
-import '../util/util.dart' show EventSource;
-import '../util/util.dart' show ImageBundle;
-import '../util/util.dart' show Point2d;
-import '../util/util.dart' show Rect;
-import '../util/util.dart' show Resources;
-import '../util/util.dart' show StyleUtils;
-import '../util/util.dart' show UndoableEdit;
-import '../util/util.dart' show Utils;
-import '../util/util.dart' show UndoableChange;
-
 //import java.awt.Graphics;
 //import java.awt.Point;
 //import java.awt.Rectangle;

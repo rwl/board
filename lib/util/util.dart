@@ -9,10 +9,22 @@ library graph.util;
  * history.
  */
 
+import '../canvas/canvas.dart' show Graphics2DCanvas;
+import '../canvas/canvas.dart' show HtmlCanvas;
+import '../canvas/canvas.dart' show ICanvas;
+import '../canvas/canvas.dart' show ImageCanvas;
+import '../canvas/canvas.dart' show SvgCanvas;
+import '../canvas/canvas.dart' show VmlCanvas;
+
 import '../io/io.dart' show CodecRegistry;
+
 import '../model/model.dart' show CellPath;
 import '../model/model.dart' show ICell;
 import '../model/model.dart' show IGraphModel;
+
+import '../view/view.dart' show Graph;
+import '../view/view.dart' show GraphView;
+import '../view/view.dart' show TemporaryCellStates;
 import '../view/view.dart' show CellState;
 
 //import java.awt.AlphaComposite;

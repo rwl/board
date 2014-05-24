@@ -3,14 +3,6 @@
  */
 part of graph.swing.handler;
 
-import '../../model/model.dart' show Geometry;
-import '../../swing/swing.dart' show GraphComponent;
-import '../../util/util.dart' show Constants;
-import '../../util/util.dart' show Point2d;
-import '../../util/util.dart' show Resources;
-import '../../view/view.dart' show CellState;
-import '../../view/view.dart' show GraphView;
-
 //import java.awt.Point;
 //import java.awt.Rectangle;
 //import java.awt.event.MouseEvent;
