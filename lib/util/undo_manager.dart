@@ -43,15 +43,15 @@ class UndoManager extends EventSource
 	/**
 	 * Constructs a new undo manager with a default history size.
 	 */
-	UndoManager()
-	{
-		this(100);
-	}
+//	UndoManager()
+//	{
+//		this(100);
+//	}
 
 	/**
 	 * Constructs a new undo manager for the specified size.
 	 */
-	UndoManager(int size)
+	UndoManager([int size=100])
 	{
 		this._size = size;
 		clear();

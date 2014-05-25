@@ -14,15 +14,15 @@ part of graph.io.graphml;
  */
 class GraphMlData
 {
-	private String _dataId = "";
+	String _dataId = "";
 
-	private String _dataKey = "";
+	String _dataKey = "";
 
-	private String _dataValue = "";//not using
+	String _dataValue = "";//not using
 
-	private GraphMlShapeNode _dataShapeNode;
+	GraphMlShapeNode _dataShapeNode;
 
-	private GraphMlShapeEdge _dataShapeEdge;
+	GraphMlShapeEdge _dataShapeEdge;
 
 	/**
 	 * Construct a data with the params values.

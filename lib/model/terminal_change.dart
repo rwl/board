@@ -16,16 +16,16 @@ class TerminalChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	TerminalChange()
-	{
-		this(null, null, null, false);
-	}
+//	TerminalChange()
+//	{
+//		this(null, null, null, false);
+//	}
 
 	/**
 	 * 
 	 */
-	TerminalChange(GraphModel model, Object cell,
-			Object terminal, bool source)
+	TerminalChange([GraphModel model=null, Object cell=null,
+			Object terminal=null, bool source=false])
 	{
 		super(model);
 		this.cell = cell;
@@ -104,7 +104,7 @@ class TerminalChange extends AtomicGraphModelChange
 	void execute()
 	{
 		terminal = previous;
-		previous = ((GraphModel) model)._terminalForCellChanged(cell,
+		previous = (model as GraphModel)._terminalForCellChanged(cell,
 				previous, source);
 	}
 

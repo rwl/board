@@ -8,17 +8,17 @@ part of graph.io.graphml;
 
 class GraphMlShapeNode
 {
-	private String _dataHeight = "";
+	String _dataHeight = "";
 
-	private String _dataWidth = "";
+	String _dataWidth = "";
 
-	private String _dataX = "";
+	String _dataX = "";
 
-	private String _dataY = "";
+	String _dataY = "";
 
-	private String _dataLabel = "";
+	String _dataLabel = "";
 
-	private String _dataStyle = "";
+	String _dataStyle = "";
 
 	/**
 	 * Construct a shape Node with the given parameters

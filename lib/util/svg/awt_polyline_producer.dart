@@ -49,7 +49,7 @@ class AWTPolylineProducer implements PointsHandler, ShapeProducer
 	 * @param text The text representation of the path specification.
 	 * @param wr The winding rule to use for creating the path.
 	 */
-	static Shape createShape(String text, int wr) throws ParseException
+	static Shape createShape(String text, int wr) //throws ParseException
 	{
 		AWTPolylineProducer ph = new AWTPolylineProducer();
 
@@ -89,7 +89,7 @@ class AWTPolylineProducer implements PointsHandler, ShapeProducer
 	/**
 	 * Implements {@link PointsHandler#startPoints()}.
 	 */
-	void startPoints() throws ParseException
+	void startPoints() //throws ParseException
 	{
 		path = new GeneralPath(windingRule);
 		newPath = true;
@@ -98,7 +98,7 @@ class AWTPolylineProducer implements PointsHandler, ShapeProducer
 	/**
 	 * Implements {@link PointsHandler#point(float,float)}.
 	 */
-	void point(float x, float y) throws ParseException
+	void point(float x, float y) //throws ParseException
 	{
 		if (newPath)
 		{
@@ -114,7 +114,7 @@ class AWTPolylineProducer implements PointsHandler, ShapeProducer
 	/**
 	 * Implements {@link PointsHandler#endPoints()}.
 	 */
-	void endPoints() throws ParseException
+	void endPoints() //throws ParseException
 	{
 	}
 }

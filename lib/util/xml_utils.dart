@@ -41,7 +41,7 @@ class XmlUtils
 
 			return docBuilder.parse(new InputSource(new StringReader(xml)));
 		}
-		catch (Exception e)
+		on Exception catch (e)
 		{
 			e.printStackTrace();
 		}
@@ -70,7 +70,7 @@ class XmlUtils
 
 			return dest.getWriter().toString();
 		}
-		catch (Exception e)
+		on Exception catch (e)
 		{
 			// ignore
 		}

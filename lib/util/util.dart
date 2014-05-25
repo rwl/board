@@ -1528,8 +1528,8 @@ class Utils
 	 *            Default value to return if the key is undefined.
 	 * @return Returns the float array value for key in dict.
 	 */
-//	static float[] getFloatArray(Map<String, Object> dict, String key,
-//			float[] defaultValue)
+//	static List<float> getFloatArray(Map<String, Object> dict, String key,
+//			List<float> defaultValue)
 //	{
 //		return getFloatArray(dict, key, defaultValue, ",");
 //	}

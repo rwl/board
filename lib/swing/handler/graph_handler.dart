@@ -46,7 +46,7 @@ class GraphHandler extends MouseAdapter implements
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 3241109976696510225L;
+	static final long serialVersionUID = 3241109976696510225L;
 
 	/**
 	 * Default is Cursor.DEFAULT_CURSOR.
@@ -326,7 +326,7 @@ class GraphHandler extends MouseAdapter implements
 				_currentDropTarget = dropTarget;
 			}
 		}
-		catch (TooManyListenersException tmle)
+		on TooManyListenersException catch (tmle)
 		{
 			// should not happen... swing drop target is multicast
 		}
@@ -803,7 +803,7 @@ class GraphHandler extends MouseAdapter implements
 
 				e.acceptDrag(TransferHandler.COPY_OR_MOVE);
 			}
-			catch (Exception ex)
+			on Exception catch (ex)
 			{
 				// do nothing
 				ex.printStackTrace();

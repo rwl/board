@@ -22,7 +22,7 @@ class GraphTransferHandler extends TransferHandler
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6443287704811197675L;
+	static final long serialVersionUID = -6443287704811197675L;
 
 	/**
 	 * Boolean that specifies if an image of the cells should be created for
@@ -332,7 +332,7 @@ class GraphTransferHandler extends TransferHandler
 					}
 				}
 			}
-			catch (Exception ex)
+			on Exception catch (ex)
 			{
 				ex.printStackTrace();
 			}
@@ -409,7 +409,7 @@ class GraphTransferHandler extends TransferHandler
 			// Requests the focus after an import
 			graphComponent.requestFocus();
 		}
-		catch (Exception e)
+		on Exception catch (e)
 		{
 			e.printStackTrace();
 		}

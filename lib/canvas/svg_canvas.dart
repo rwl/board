@@ -39,12 +39,12 @@ class SvgCanvas extends BasicCanvas
 	 * Used internally for looking up elements. Workaround for getElementById
 	 * not working.
 	 */
-	private Map<String, Element> _gradients = new Hashtable<String, Element>();
+	Map<String, Element> _gradients = new Hashtable<String, Element>();
 
 	/**
 	 * Used internally for looking up images.
 	 */
-	private Map<String, Element> _images = new Hashtable<String, Element>();
+	Map<String, Element> _images = new Hashtable<String, Element>();
 
 	/**
 	 * 
@@ -277,7 +277,7 @@ class SvgCanvas extends BasicCanvas
 		{
 			stream = new BufferedInputStream(new URL(src).openStream());
 		}
-		catch (Exception e1)
+		on Exception catch (e1)
 		{
 			stream = getClass().getResourceAsStream(src);
 		}
@@ -289,7 +289,7 @@ class SvgCanvas extends BasicCanvas
 	 * @throws IOException 
 	 * 
 	 */
-	String _createDataUrl(String src) throws IOException
+	String _createDataUrl(String src) //throws IOException
 	{
 		String result = null;
 		InputStream inputStream = _isImageResource(src) ? _getResource(src) : null;
@@ -297,7 +297,7 @@ class SvgCanvas extends BasicCanvas
 		if (inputStream != null)
 		{
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream(1024);
-			byte[] bytes = new byte[512];
+			List<byte> bytes = new byte[512];
 
 			// Read bytes from the input stream in bytes.length-sized chunks and write
 			// them into the output stream
@@ -357,7 +357,7 @@ class SvgCanvas extends BasicCanvas
 						src = tmp;
 					}
 				}
-				catch (IOException e)
+				on IOException catch (e)
 				{
 					// ignore
 				}
@@ -1410,7 +1410,7 @@ class SvgCanvas extends BasicCanvas
 			swingFontStyle += ((fontStyle & Constants.FONT_ITALIC) == Constants.FONT_ITALIC) ? Font.ITALIC
 					: Font.PLAIN;
 
-			String[] lines = text.split("\n");
+			List<String> lines = text.split("\n");
 			y += fontSize
 					+ (h - lines.length * (fontSize + Constants.LINESPACING))
 					/ 2 - 2;

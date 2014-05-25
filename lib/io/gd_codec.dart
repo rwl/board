@@ -88,7 +88,7 @@ class GdCodec
 						}
 						else if (!line.equals(""))
 						{
-							String[] items = line.split(",");
+							List<String> items = line.split(",");
 							if (items.length != 5)
 							{
 								throw new Exception("Error in parsing");
@@ -118,7 +118,7 @@ class GdCodec
 					{
 						if (!line.equals(""))
 						{
-							String[] items = line.split(" ");
+							List<String> items = line.split(" ");
 							if (items.length != 2)
 							{
 								throw new Exception("Error in parsing");
@@ -139,7 +139,7 @@ class GdCodec
 			}
 		}
 		
-		catch (Exception e)
+		on Exception catch (e)
 		{
 			e.printStackTrace();
 		}

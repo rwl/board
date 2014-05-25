@@ -197,7 +197,7 @@ class SharedGraphModel extends SharedState
 	 */
 	void cellRemoved(Object cell)
 	{
-		_codec.putObject(((ICell) cell).getId(), cell);
+		_codec.putObject((cell as ICell).getId(), cell);
 
 		int childCount = _model.getChildCount(cell);
 

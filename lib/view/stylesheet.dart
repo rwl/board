@@ -163,7 +163,7 @@ class Stylesheet
 
 		if (name != null && name.length() > 0)
 		{
-			String[] pairs = name.split(";");
+			List<String> pairs = name.split(";");
 
 			if (style != null && !name.startsWith(";"))
 			{

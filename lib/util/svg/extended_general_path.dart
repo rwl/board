@@ -51,9 +51,9 @@ class ExtendedGeneralPath implements Shape, Cloneable
 
 	int numSeg = 0;
 
-	float[] values = null;
+	List<float> values = null;
 
-	int[] types = null;
+	List<int> types = null;
 
 	float mx, my, cx, cy;
 
@@ -451,7 +451,7 @@ class ExtendedGeneralPath implements Shape, Cloneable
 	 */
 	void append(ExtendedPathIterator epi, bool connect)
 	{
-		float[] vals = new float[7];
+		List<float> vals = new float[7];
 		while (!epi.isDone())
 		{
 			Arrays.fill(vals, 0);
@@ -702,7 +702,7 @@ class ExtendedGeneralPath implements Shape, Cloneable
 			return ret;
 		}
 
-		public int currentSegment(float[] coords)
+		public int currentSegment(List<float> coords)
 		{
 			int ret = types[segNum];
 			switch (ret)
@@ -787,7 +787,7 @@ class ExtendedGeneralPath implements Shape, Cloneable
 
 			return result;
 		}
-		catch (CloneNotSupportedException ex)
+		on CloneNotSupportedException catch (ex)
 		{
 		}
 		return null;
@@ -800,7 +800,7 @@ class ExtendedGeneralPath implements Shape, Cloneable
 	 *
 	 * @param numValues number of requested coordinates
 	 */
-	private void makeRoom(int numValues)
+	void makeRoom(int numValues)
 	{
 		if (values == null)
 		{
@@ -818,14 +818,14 @@ class ExtendedGeneralPath implements Shape, Cloneable
 			if (nlen < newSize)
 				nlen = newSize;
 
-			float[] nvals = new float[nlen];
+			List<float> nvals = new float[nlen];
 			System.arraycopy(values, 0, nvals, 0, numVals);
 			values = nvals;
 		}
 
 		if (numSeg == types.length)
 		{
-			int[] ntypes = new int[types.length * 2];
+			List<int> ntypes = new int[types.length * 2];
 			System.arraycopy(types, 0, ntypes, 0, types.length);
 			types = ntypes;
 		}

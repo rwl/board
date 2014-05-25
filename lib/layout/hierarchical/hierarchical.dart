@@ -115,7 +115,7 @@ JGraphLayout.Stoppable*/
 	 */
 	//protected JGraphLayoutProgress progress = new JGraphLayoutProgress();
 	/** The logger for this class */
-	private static Logger _logger = Logger
+	static Logger _logger = Logger
 			.getLogger("com.jgraph.layout.hierarchical.JGraphHierarchicalLayout");
 
 	/**
@@ -720,7 +720,7 @@ JGraphLayout.Stoppable*/
 		{
 			_logger.setLevel(level);
 		}
-		catch (SecurityException e)
+		on SecurityException catch (e)
 		{
 			// Probably running in an applet
 		}

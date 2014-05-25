@@ -19,7 +19,7 @@ class Spline1D
 	List<double> _d;
 
 	/** tracks the last index found since that is mostly commonly the next one used */
-	private int _storageIndex = 0;
+	int _storageIndex = 0;
 	
 	/**
 	 * Creates a new Spline.
@@ -71,7 +71,7 @@ class Spline1D
 			}
 			else
 			{
-				return Double.NaN;
+				return double.NaN;
 			}
 		}
 
@@ -156,13 +156,13 @@ class Spline1D
 	/**
 	 * Calculates the Spline coefficients.
 	 */
-	private void _calculateCoefficients()
+	void _calculateCoefficients()
 	{
 		int N = _pos1D.length;
-		_a = new double[N];
-		_b = new double[N];
-		_c = new double[N];
-		_d = new double[N];
+		_a = new List<double>(N);
+		_b = new List<double>(N);
+		_c = new List<double>(N);
+		_d = new List<double>(N);
 		
 		if (N == 2) {
 			_a[0] = _pos1D[0];
@@ -170,7 +170,7 @@ class Spline1D
 			return;
 		}
 
-		List<double> h = new double[N - 1];
+		List<double> h = new List<double>(N - 1);
 		
 		for (int i = 0; i < N - 1; i++)
 		{
@@ -185,10 +185,12 @@ class Spline1D
 		}
 		_a[N - 1] = _pos1D[N - 1];
 
-		List<double>[] A = new double[N - 2][N - 2];
-		List<double> y = new double[N - 2];
+		List<List<double>> A = new List<double>(N - 2);//[N - 2];
+		List<double> y = new List<double>(N - 2);
 		for (int i = 0; i < N - 2; i++)
 		{
+		  A[i][i] = new List<double>(N - 2);
+		  
 			y[i] =
 				3
 					* ((_pos1D[i + 2] - _pos1D[i + 1]) / h[i
@@ -229,7 +231,7 @@ class Spline1D
 	/**
 	 * Solves Ax=b and stores the solution in b.
 	 */
-	void solve(List<double>[] A, List<double> b) {
+	void solve(List<List<double>> A, List<double> b) {
 		int n = b.length;
 		
 		for (int i = 1; i < n; i++)

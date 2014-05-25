@@ -69,7 +69,7 @@ class StringNormalizingReader extends NormalizingReader
 	 * character is available, an I/O error occurs, or the end of the
 	 * stream is reached.
 	 */
-	int read() throws IOException
+	int read() //throws IOException
 	{
 		int result = (length == next) ? -1 : string.charAt(next++);
 		if (result <= 13)
@@ -113,7 +113,7 @@ class StringNormalizingReader extends NormalizingReader
 	/**
 	 * Close the stream.
 	 */
-	void close() throws IOException
+	void close() //throws IOException
 	{
 		string = null;
 	}

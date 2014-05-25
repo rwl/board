@@ -11,15 +11,15 @@ class ValueChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	ValueChange()
-	{
-		this(null, null, null);
-	}
+//	ValueChange()
+//	{
+//		this(null, null, null);
+//	}
 
 	/**
 	 * 
 	 */
-	ValueChange(GraphModel model, Object cell, Object value)
+	ValueChange([GraphModel model=null, Object cell=null, Object value=null])
 	{
 		super(model);
 		this.cell = cell;
@@ -81,7 +81,7 @@ class ValueChange extends AtomicGraphModelChange
 	void execute()
 	{
 		value = previous;
-		previous = ((GraphModel) model)._valueForCellChanged(cell,
+		previous = (model as GraphModel)._valueForCellChanged(cell,
 				previous);
 	}
 

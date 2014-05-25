@@ -110,7 +110,7 @@ class CellMarker extends JComponent
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 614473367053597572L;
+	static final long serialVersionUID = 614473367053597572L;
 
 	/**
 	 * Specifies if the highlights should appear on top of everything

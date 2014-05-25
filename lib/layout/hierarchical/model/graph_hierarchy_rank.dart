@@ -22,5 +22,5 @@ class GraphHierarchyRank extends LinkedHashSet<GraphAbstractHierarchyCell>
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -2781491210687143878L;
+	static final long serialVersionUID = -2781491210687143878L;
 }

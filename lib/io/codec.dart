@@ -321,7 +321,7 @@ class Codec
 					((Element) obj).removeAttribute("as");
 				}
 			}
-			catch (Exception e)
+			on Exception catch (e)
 			{
 				System.err.println("Cannot decode " + node.getNodeName() + ": "
 						+ e.getMessage());

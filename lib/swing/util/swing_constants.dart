@@ -28,7 +28,7 @@ class SwingConstants
 			SwingConstants.EMPTY_IMAGE = new BufferedImage(1, 1,
 					BufferedImage.TYPE_INT_RGB);
 		}
-		catch (Exception e)
+		on Exception catch (e)
 		{
 			// Occurs when running on GAE, BufferedImage is a
 			// blacklisted class
@@ -113,7 +113,7 @@ class SwingConstants
 			SwingConstants.EDGE_SELECTION_COLOR = Color.green;
 			SwingConstants.VERTEX_SELECTION_COLOR = Color.green;
 		}
-		catch (Exception e)
+		on Exception catch (e)
 		{
 			// Occurs when running on GAE, Color is a
 			// blacklisted class
@@ -137,7 +137,7 @@ class SwingConstants
 	 * line.
 	 */
 	static Stroke EDGE_SELECTION_STROKE = new BasicStroke(1,
-			BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, new float[] {
+			BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, new List<float> {
 					3, 3 }, 0.0f);
 
 	/**
@@ -145,7 +145,7 @@ class SwingConstants
 	 * Default is a dashed line.
 	 */
 	static Stroke VERTEX_SELECTION_STROKE = new BasicStroke(1,
-			BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, new float[] {
+			BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, new List<float> {
 					3, 3 }, 0.0f);
 
 	/**
@@ -153,7 +153,7 @@ class SwingConstants
 	 * that are being changed. Default is a dashed line.
 	 */
 	static Stroke PREVIEW_STROKE = new BasicStroke(1,
-			BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, new float[] {
+			BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, new List<float> {
 					3, 3 }, 0.0f);
 
 	/**

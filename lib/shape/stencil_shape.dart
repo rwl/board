@@ -490,7 +490,7 @@ class StencilShape extends BasicShape
 								width, height), styleMap);
 					}
 				}
-				catch (Exception e)
+				on Exception catch (e)
 				{
 					// TODO log something useful
 				}
@@ -642,7 +642,7 @@ class StencilShape extends BasicShape
 	/*
 	 *
 	 */
-	private bool _isRectangle(String tag)
+	bool _isRectangle(String tag)
 	{
 		return tag.equals("svg:rect") || tag.equals("rect");
 	}
@@ -650,7 +650,7 @@ class StencilShape extends BasicShape
 	/*
 	 *
 	 */
-	private bool _isPath(String tag)
+	bool _isPath(String tag)
 	{
 		return tag.equals("svg:path") || tag.equals("path");
 	}
@@ -658,7 +658,7 @@ class StencilShape extends BasicShape
 	/*
 	 *
 	 */
-	private bool _isEllipse(String tag)
+	bool _isEllipse(String tag)
 	{
 		return tag.equals("svg:ellipse") || tag.equals("ellipse");
 	}
@@ -666,7 +666,7 @@ class StencilShape extends BasicShape
 	/*
 	 *
 	 */
-	private bool _isLine(String tag)
+	bool _isLine(String tag)
 	{
 		return tag.equals("svg:line") || tag.equals("line");
 	}
@@ -674,7 +674,7 @@ class StencilShape extends BasicShape
 	/*
 	 *
 	 */
-	private bool _isPolyline(String tag)
+	bool _isPolyline(String tag)
 	{
 		return tag.equals("svg:polyline") || tag.equals("polyline");
 	}
@@ -682,7 +682,7 @@ class StencilShape extends BasicShape
 	/*
 	 *
 	 */
-	private bool _isCircle(String tag)
+	bool _isCircle(String tag)
 	{
 		return tag.equals("svg:circle") || tag.equals("circle");
 	}
@@ -690,12 +690,12 @@ class StencilShape extends BasicShape
 	/*
 	 *
 	 */
-	private bool _isPolygon(String tag)
+	bool _isPolygon(String tag)
 	{
 		return tag.equals("svg:polygon") || tag.equals("polygon");
 	}
 
-	private bool _isGroup(String tag)
+	bool _isGroup(String tag)
 	{
 		return tag.equals("svg:g") || tag.equals("g");
 	}
@@ -716,11 +716,11 @@ class StencilShape extends BasicShape
 
 			if (style != null)
 			{
-				String[] pairs = style.split(";");
+				List<String> pairs = style.split(";");
 
 				for (int i = 0; i < pairs.length; i++)
 				{
-					String[] keyValue = pairs[i].split(":");
+					List<String> keyValue = pairs[i].split(":");
 
 					if (keyValue.length == 2)
 					{

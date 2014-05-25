@@ -168,7 +168,7 @@ class GraphicsCanvas2D implements ICanvas2D
 		{
 			_rendererPane = new CellRendererPane();
 		}
-		catch (Exception e)
+		on Exception catch (e)
 		{
 			// ignore
 		}
@@ -233,7 +233,7 @@ class GraphicsCanvas2D implements ICanvas2D
 		{
 			return (_CanvasState) state.clone();
 		}
-		catch (CloneNotSupportedException e)
+		on CloneNotSupportedException catch (e)
 		{
 			e.printStackTrace();
 		}
@@ -341,8 +341,8 @@ class GraphicsCanvas2D implements ICanvas2D
 	{
 		if (value != null && value.length() > 0)
 		{
-			String[] tokens = value.split(" ");
-			float[] dashpattern = new float[tokens.length];
+			List<String> tokens = value.split(" ");
+			List<float> dashpattern = new float[tokens.length];
 
 			for (int i = 0; i < tokens.length; i++)
 			{
@@ -1005,9 +1005,9 @@ class GraphicsCanvas2D implements ICanvas2D
 			// Font-metrics needed below this line
 			Graphics2D g2 = _createTextGraphics(x, y, w, h, rotation, clip, align, valign);
 			FontMetrics fm = g2.getFontMetrics();
-			String[] lines = str.split("\n");
+			List<String> lines = str.split("\n");
 			
-			int[] stringWidths = new int[lines.length];
+			List<int> stringWidths = new int[lines.length];
 			int textWidth = 0;
 			
 			for (int i = 0; i < lines.length; i++)
@@ -1454,7 +1454,7 @@ class GraphicsCanvas2D implements ICanvas2D
 		if (_lastStroke == null || _lastStrokeWidth != sw || _lastCap != cap || _lastJoin != join || _lastMiterLimit != miterlimit
 				|| _lastDashed != _state.dashed || (_state.dashed && _lastDashPattern != _state.dashPattern))
 		{
-			float[] dash = null;
+			List<float> dash = null;
 
 			if (_state.dashed)
 			{
@@ -1628,7 +1628,7 @@ class _CanvasState implements Cloneable
   /**
    * 
    */
-  protected float[] dashPattern = { 3, 3 };
+  protected List<float> dashPattern = { 3, 3 };
 
   /**
    * 
@@ -1668,7 +1668,7 @@ class _CanvasState implements Cloneable
   /**
    * 
    */
-  public Object clone() throws CloneNotSupportedException
+  public Object clone() //throws CloneNotSupportedException
   {
     return super.clone();
   }

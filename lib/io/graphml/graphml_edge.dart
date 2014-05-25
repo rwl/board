@@ -15,24 +15,24 @@ part of graph.io.graphml;
  */
 class GraphMlEdge
 {
-	private String _edgeId;
+	String _edgeId;
 
-	private String _edgeSource;
+	String _edgeSource;
 
-	private String _edgeSourcePort;
+	String _edgeSourcePort;
 
-	private String _edgeTarget;
+	String _edgeTarget;
 
-	private String _edgeTargetPort;
+	String _edgeTargetPort;
 
-	private String _edgeDirected;
+	String _edgeDirected;
 
-	private GraphMlData _edgeData;
+	GraphMlData _edgeData;
 
 	/**
 	 * Map with the data. The key is the key attribute
 	 */
-	private HashMap<String, GraphMlData> _edgeDataMap = new HashMap<String, GraphMlData>();
+	HashMap<String, GraphMlData> _edgeDataMap = new HashMap<String, GraphMlData>();
 
 	/**
 	 * Construct an edge with source and target.

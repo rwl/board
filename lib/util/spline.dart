@@ -12,26 +12,26 @@ class Spline
 	 *	of each point in the line ( i.e. first point is 0.0, end point is
 	 *	1.0, a point halfway on line is 0.5 ).
 	 */
-	private List<double> _t;
+	List<double> _t;
 
-	private Spline1D _splineX;
+	Spline1D _splineX;
 
-	private Spline1D _splineY;
+	Spline1D _splineY;
 
 	/**
 	 * Total length tracing the points on the spline
 	 */
-	private double _length;
+	double _length;
 
 	Spline(List<Point2d> points)
 	{
 		if (points != null)
 		{
-			List<double> x = new double[points.size()];
-			List<double> y = new double[points.size()];
+			List<double> x = new List<double>(points.size());
+			List<double> y = new List<double>(points.size());
 			int i = 0;
 
-			for (Point2d point : points)
+			for (Point2d point in points)
 			{
 				x[i] = point.getX();
 				y[i++] = point.getY();
@@ -67,7 +67,7 @@ class Spline
 			return;
 		}
 
-		_t = new double[x.length];
+		_t = new List<double>(x.length);
 		_t[0] = 0.0; // start point is always 0.0
 		_length = 0.0;
 

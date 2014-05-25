@@ -40,7 +40,7 @@ class RotationHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	private static double _PI4 = Math.PI / 4;
+	static double _PI4 = Math.PI / 4;
 
 	/**
 	 * Reference to the enclosing graph component.

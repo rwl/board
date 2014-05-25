@@ -7,9 +7,9 @@ part of graph.generatorfunction;
  */
 class GeneratorRandomIntFunction extends GeneratorFunction
 {
-	private double _maxWeight = 10;
+	double _maxWeight = 10;
 
-	private double _minWeight = 0;
+	double _minWeight = 0;
 
 	GeneratorRandomIntFunction(double minWeight, double maxWeight)
 	{

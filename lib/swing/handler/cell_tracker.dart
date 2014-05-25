@@ -18,7 +18,7 @@ class CellTracker extends CellMarker implements MouseListener,
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 7372144804885125688L;
+	static final long serialVersionUID = 7372144804885125688L;
 
 	/**
 	 * Constructs an event handler that highlights cells.

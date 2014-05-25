@@ -75,7 +75,7 @@ class PointsParser extends NumberParser
 	/**
 	 * Parses the current stream.
 	 */
-	void doParse() throws ParseException, IOException
+	void doParse() //throws ParseException, IOException
 	{
 		pointsHandler.startPoints();
 

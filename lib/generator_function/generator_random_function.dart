@@ -7,11 +7,11 @@ part of graph.generatorfunction;
  */
 class GeneratorRandomFunction extends GeneratorFunction
 {
-	private double _maxWeight = 1;
+	double _maxWeight = 1;
 
-	private double _minWeight = 0;
+	double _minWeight = 0;
 
-	private int _roundToDecimals = 2;
+	int _roundToDecimals = 2;
 
 	GeneratorRandomFunction(double minWeight, double maxWeight, int roundToDecimals)
 	{

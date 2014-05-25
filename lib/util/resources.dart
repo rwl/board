@@ -58,39 +58,39 @@ class Resources
 	 * @param basename
 	 *            The basename of the resource bundle to add.
 	 */
-	static void add(String basename, Locale locale)
-	{
-		_bundles.addFirst(PropertyResourceBundle.getBundle(basename, locale));
-	}
+//	static void add(String basename, Locale locale)
+//	{
+//		_bundles.addFirst(PropertyResourceBundle.getBundle(basename, locale));
+//	}
 
 	/**
 	 * 
 	 */
-	static String get(String key)
-	{
-		return get(key, null, null);
-	}
+//	static String get(String key)
+//	{
+//		return get(key, null, null);
+//	}
 
 	/**
 	 * 
 	 */
-	static String get(String key, String defaultValue)
-	{
-		return get(key, null, defaultValue);
-	}
+//	static String get(String key, [String defaultValue=null])
+//	{
+//		return get(key, null, defaultValue);
+//	}
 
 	/**
 	 * Returns the value for the specified resource key.
 	 */
-	static String get(String key, String[] params)
-	{
-		return get(key, params, null);
-	}
+//	static String get(String key, List<String> params)
+//	{
+//		return get(key, params, null);
+//	}
 
 	/**
 	 * Returns the value for the specified resource key.
 	 */
-	static String get(String key, String[] params, String defaultValue)
+	static String get(String key, [List<String> params=null, String defaultValue=null])
 	{
 		String value = _getResource(key);
 
@@ -156,7 +156,7 @@ class Resources
 			{
 				return it.next().getString(key);
 			}
-			catch (MissingResourceException mrex)
+			on MissingResourceException catch (mrex)
 			{
 				// continue
 			}

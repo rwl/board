@@ -160,7 +160,7 @@ class Graph extends EventSource
 		{
 			Resources.add("graph.resources.graph");
 		}
-		catch (Exception e)
+		on Exception catch (e)
 		{
 			// ignore
 		}
@@ -7962,7 +7962,7 @@ class Graph extends EventSource
 	/**
 	 * Prints the version number on the console. 
 	 */
-//	static void main(String[] args)
+//	static void main(List<String> args)
 //	{
 //		System.out.println("Graph version \"" + VERSION + "\"");
 //	}

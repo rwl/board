@@ -14,14 +14,14 @@ class GraphStructure
 	/**
 	 * The default style for vertexes
 	 */
-	private static String basicVertexStyleString = "ellipse;strokeColor=black;fillColor=orange;gradientColor=none";
+	static String basicVertexStyleString = "ellipse;strokeColor=black;fillColor=orange;gradientColor=none";
 
 	/**
 	 * The default style for edges 
 	 */
-	private static String basicEdgeStyleString = "strokeColor=red;noEdgeStyle=1;";
+	static String basicEdgeStyleString = "strokeColor=red;noEdgeStyle=1;";
 
-	private static String basicArrowStyleString = "endArrow=block;";
+	static String basicArrowStyleString = "endArrow=block;";
 
 	/**
 	 * @param aGraph
@@ -39,7 +39,7 @@ class GraphStructure
 
 		//data preparation
 		int connectedVertices = 1;
-		int[] visited = new int[vertexNum];
+		List<int> visited = new int[vertexNum];
 		visited[0] = 1;
 
 		for (int i = 1; i < vertexNum; i++)
@@ -145,7 +145,7 @@ class GraphStructure
 	 * @param aGraph
 	 * @return the first undirected leaf that could be found in the graph, null if none
 	 */
-	private static Object getUndirectedLeaf(AnalysisGraph aGraph)
+	static Object getUndirectedLeaf(AnalysisGraph aGraph)
 	{
 		Object parent = aGraph.getGraph().getDefaultParent();
 		List<Object> vertices = aGraph.getChildVertices(parent);
@@ -343,7 +343,7 @@ class GraphStructure
 			return;
 		}
 
-		List<Object>[] components = getGraphComponents(aGraph);
+		List<List<Object>> components = getGraphComponents(aGraph);
 		int componentNum = components.length;
 
 		if (componentNum < 2)
@@ -367,7 +367,7 @@ class GraphStructure
 	 * @param aGraph
 	 * @return Object[components][vertices] 
 	 */
-	static List<Object>[] getGraphComponents(AnalysisGraph aGraph)
+	static List<List<Object>> getGraphComponents(AnalysisGraph aGraph)
 	{
 		Object parent = aGraph.getGraph().getDefaultParent();
 		List<Object> vertices = aGraph.getChildVertices(parent);
@@ -424,14 +424,14 @@ class GraphStructure
 		}
 
 		GraphProperties.setDirected(aGraph.getProperties(), oldDirectedness);
-		List<Object>[] result = new Object[componentList.size()][];
+		List<List<Object>> result = new Object[componentList.size()][];
 
 		for (int i = 0; i < componentList.size(); i++)
 		{
 			result[i] = componentList.get(i).toArray();
 		}
 
-		return (List<Object>[]) result;
+		return (List<List<Object>>) result;
 	};
 
 	/**
@@ -440,7 +440,7 @@ class GraphStructure
 	 * @param startVertex - this vertex will be root of the tree (the only source node)
 	 * @throws StructuralException - the graph must be a tree (edge direction doesn't matter)
 	 */
-	static void makeTreeDirected(AnalysisGraph aGraph, Object startVertex) throws StructuralException
+	static void makeTreeDirected(AnalysisGraph aGraph, Object startVertex) //throws StructuralException
 	{
 		if (isTree(aGraph))
 		{
@@ -754,7 +754,7 @@ class GraphStructure
 	 * @return the regularity of the graph
 	 * @throws StructuralException if the graph is irregular
 	 */
-	static int regularity(AnalysisGraph aGraph) throws StructuralException
+	static int regularity(AnalysisGraph aGraph) //throws StructuralException
 	{
 		Graph graph = aGraph.getGraph();
 		List<Object> vertices = aGraph.getChildVertices(graph.getDefaultParent());
@@ -839,8 +839,8 @@ class GraphStructure
 					(int) aGraph.getGenerator().getCostFunction().getCost(new CellState(graph.getView(), vertex, null)));
 
 			graphCopy.removeCells(new List<Object> { newVertex }, true);
-			List<Object>[] oldComponents = getGraphComponents(aGraph);
-			List<Object>[] newComponents = getGraphComponents(aGraphCopy);
+			List<List<Object>> oldComponents = getGraphComponents(aGraph);
+			List<List<Object>> newComponents = getGraphComponents(aGraphCopy);
 
 			if (newComponents.length > oldComponents.length)
 			{
@@ -916,8 +916,8 @@ class GraphStructure
 			}
 
 			graphCopy.removeCells(new List<Object> { currEdge }, true);
-			List<Object>[] oldComponents = getGraphComponents(aGraph);
-			List<Object>[] newComponents = getGraphComponents(aGraphCopy);
+			List<List<Object>> oldComponents = getGraphComponents(aGraph);
+			List<List<Object>> newComponents = getGraphComponents(aGraphCopy);
 
 			if (newComponents.length > oldComponents.length)
 			{
@@ -954,7 +954,7 @@ class GraphStructure
 	 * @return all source vertices of <b>aGraph</b>
 	 * @throws StructuralException the graph must be directed
 	 */
-	static List<Object> getSourceVertices(AnalysisGraph aGraph) throws StructuralException
+	static List<Object> getSourceVertices(AnalysisGraph aGraph) //throws StructuralException
 	{
 		if (!GraphProperties.isDirected(aGraph.getProperties(), GraphProperties.DEFAULT_DIRECTED))
 		{
@@ -984,7 +984,7 @@ class GraphStructure
 	 * @return all sink vertices of <b>aGraph</b>
 	 * @throws StructuralException the graph must be directed
 	 */
-	static List<Object> getSinkVertices(AnalysisGraph aGraph) throws StructuralException
+	static List<Object> getSinkVertices(AnalysisGraph aGraph) //throws StructuralException
 	{
 		if (!GraphProperties.isDirected(aGraph.getProperties(), GraphProperties.DEFAULT_DIRECTED))
 		{

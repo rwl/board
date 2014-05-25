@@ -166,7 +166,7 @@ class MedianHybridCrossingReduction implements
 	 * @return the current number of edge crossings in the hierarchy graph model
 	 *         in the current candidate layout
 	 */
-	private int _calculateCrossings(GraphHierarchyModel model)
+	int _calculateCrossings(GraphHierarchyModel model)
 	{
 		// The intra-rank order of cells are stored within the temp variables
 		// on cells
@@ -200,7 +200,7 @@ class MedianHybridCrossingReduction implements
 		// Create an array of connections between these two levels
 		int currentRankSize = rank.size();
 		int previousRankSize = previousRank.size();
-		int[][] connections = new int[currentRankSize][previousRankSize];
+		List<int>[] connections = new int[currentRankSize][previousRankSize];
 
 		// Iterate over the top rank and fill in the connection information
 		Iterator<GraphAbstractHierarchyCell> iter = rank.iterator();
@@ -272,7 +272,7 @@ class MedianHybridCrossingReduction implements
 	 * @param model
 	 *            the internal model describing the hierarchy
 	 */
-	private void _transpose(int mainLoopIteration, GraphHierarchyModel model)
+	void _transpose(int mainLoopIteration, GraphHierarchyModel model)
 	{
 		bool improved = true;
 
@@ -307,10 +307,10 @@ class MedianHybridCrossingReduction implements
 				List<GraphAbstractHierarchyCell> rightCellAboveConnections = null;
 				List<GraphAbstractHierarchyCell> rightCellBelowConnections = null;
 
-				int[] leftAbovePositions = null;
-				int[] leftBelowPositions = null;
-				int[] rightAbovePositions = null;
-				int[] rightBelowPositions = null;
+				List<int> leftAbovePositions = null;
+				List<int> leftBelowPositions = null;
+				List<int> rightAbovePositions = null;
+				List<int> rightBelowPositions = null;
 
 				GraphAbstractHierarchyCell leftCell = null;
 				GraphAbstractHierarchyCell rightCell = null;
@@ -454,7 +454,7 @@ class MedianHybridCrossingReduction implements
 	 * @param model
 	 *            the internal model describing the hierarchy
 	 */
-	private void _weightedMedian(int iteration, GraphHierarchyModel model)
+	void _weightedMedian(int iteration, GraphHierarchyModel model)
 	{
 		// Reverse sweep direction each time through this method
 		bool downwardSweep = (iteration % 2 == 0);
@@ -484,7 +484,7 @@ class MedianHybridCrossingReduction implements
 	 * @param downwardSweep
 	 *            whether or not this is a downward sweep through the graph
 	 */
-	private void _medianRank(int rankValue, bool downwardSweep)
+	void _medianRank(int rankValue, bool downwardSweep)
 	{
 		int numCellsForRank = _nestedBestRanks[rankValue].length;
 		ArrayList<_MedianCellSorter> medianValues = new List<_MedianCellSorter>(numCellsForRank);
@@ -567,7 +567,7 @@ class MedianHybridCrossingReduction implements
 	 *            the rank that the connected cell lie upon
 	 * @return the median rank ordering value of the connected cells
 	 */
-	private double _medianValue(
+	double _medianValue(
 			Collection<GraphAbstractHierarchyCell> connectedCells,
 			int rankValue)
 	{

@@ -10,7 +10,7 @@ class Palette extends PngEncodeParam
 
 	// bKGD chunk
 
-	private bool backgroundSet = false;
+	bool backgroundSet = false;
 
 	/**
 	 * Suppresses the 'bKGD' chunk from being output.
@@ -46,9 +46,9 @@ class Palette extends PngEncodeParam
 
 	// PLTE chunk
 
-	private int[] palette = null;
+	List<int> palette = null;
 
-	private bool paletteSet = false;
+	bool paletteSet = false;
 
 	/**
 	 * Sets the RGB palette of the image to be encoded.
@@ -61,7 +61,7 @@ class Palette extends PngEncodeParam
 	 *
 	 * @param rgb An array of <code>int</code>s.
 	 */
-	void setPalette(int[] rgb)
+	void setPalette(List<int> rgb)
 	{
 		if (rgb.length < 1 * 3 || rgb.length > 256 * 3)
 		{
@@ -86,7 +86,7 @@ class Palette extends PngEncodeParam
 	 *
 	 * @return An array of <code>int</code>s.
 	 */
-	int[] getPalette()
+	List<int> getPalette()
 	{
 		if (!paletteSet)
 		{
@@ -114,7 +114,7 @@ class Palette extends PngEncodeParam
 
 	// bKGD chunk
 
-	private int backgroundPaletteIndex;
+	int backgroundPaletteIndex;
 
 	/**
 	 * Sets the palette index of the suggested background color.
@@ -147,7 +147,7 @@ class Palette extends PngEncodeParam
 
 	// tRNS chunk
 
-	private int[] transparency;
+	List<int> transparency;
 
 	/**
 	 * Sets the alpha values associated with each palette entry.
@@ -156,7 +156,7 @@ class Palette extends PngEncodeParam
 	 *
 	 * <p> The 'tRNS' chunk will encode this information.
 	 */
-	void setPaletteTransparency(byte[] alpha)
+	void setPaletteTransparency(List<byte> alpha)
 	{
 		transparency = new int[alpha.length];
 		for (int i = 0; i < alpha.length; i++)
@@ -176,13 +176,13 @@ class Palette extends PngEncodeParam
 	 * @throws IllegalStateException if the palette transparency is
 	 *        not set.
 	 */
-	byte[] getPaletteTransparency()
+	List<byte> getPaletteTransparency()
 	{
 		if (!transparencySet)
 		{
 			throw new IllegalStateException("PNGEncodeParam5");
 		}
-		byte[] alpha = new byte[transparency.length];
+		List<byte> alpha = new byte[transparency.length];
 		for (int i = 0; i < alpha.length; i++)
 		{
 			alpha[i] = (byte) transparency[i];

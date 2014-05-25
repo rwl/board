@@ -10,7 +10,7 @@ class RGB extends PngEncodeParam
 
 	// bKGD chunk
 
-	private bool backgroundSet = false;
+	bool backgroundSet = false;
 
 	/**
 	 * Suppresses the 'bKGD' chunk from being output.
@@ -44,7 +44,7 @@ class RGB extends PngEncodeParam
 
 	// bKGD chunk
 
-	private int[] backgroundRGB;
+	List<int> backgroundRGB;
 
 	/**
 	 * Sets the RGB value of the suggested background color.
@@ -52,7 +52,7 @@ class RGB extends PngEncodeParam
 	 *
 	 * <p> The 'bKGD' chunk will encode this information.
 	 */
-	void setBackgroundRGB(int[] rgb)
+	void setBackgroundRGB(List<int> rgb)
 	{
 		if (rgb.length != 3)
 		{
@@ -70,7 +70,7 @@ class RGB extends PngEncodeParam
 	 *
 	 * @throws IllegalStateException if the background color is not set.
 	 */
-	int[] getBackgroundRGB()
+	List<int> getBackgroundRGB()
 	{
 		if (!backgroundSet)
 		{
@@ -81,7 +81,7 @@ class RGB extends PngEncodeParam
 
 	// tRNS chunk
 
-	private int[] transparency;
+	List<int> transparency;
 
 	/**
 	 * Sets the RGB value to be used to denote transparency.
@@ -91,7 +91,7 @@ class RGB extends PngEncodeParam
 	 *
 	 * <p> The 'tRNS' chunk will encode this information.
 	 */
-	void setTransparentRGB(int[] transparentRGB)
+	void setTransparentRGB(List<int> transparentRGB)
 	{
 		transparency = (transparentRGB.clone());
 		transparencySet = true;
@@ -106,7 +106,7 @@ class RGB extends PngEncodeParam
 	 *
 	 * @throws IllegalStateException if the transparent color is not set.
 	 */
-	int[] getTransparentRGB()
+	List<int> getTransparentRGB()
 	{
 		if (!transparencySet)
 		{

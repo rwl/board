@@ -23,12 +23,12 @@ class GraphControl extends JComponent
 	/**
 	 * 
 	 */
-	private final GraphComponent graphComponent;
+	final GraphComponent graphComponent;
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -8916603170766739124L;
+	static final long serialVersionUID = -8916603170766739124L;
 
 	/**
 	 * Specifies a translation for painting. This should only be used during

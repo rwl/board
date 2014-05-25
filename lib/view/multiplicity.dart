@@ -226,7 +226,7 @@ class Multiplicity
 		{
 			return Integer.parseInt(_max);
 		}
-		catch (NumberFormatException e)
+		on NumberFormatException catch (e)
 		{
 			// ignore
 		}

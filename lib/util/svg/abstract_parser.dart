@@ -79,14 +79,14 @@ public abstract class AbstractParser implements Parser
 	/**
 	 * Parses the given string.
 	 */
-	void parse(String s) throws ParseException
+	void parse(String s) //throws ParseException
 	{
 		try
 		{
 			reader = new StringNormalizingReader(s);
 			doParse();
 		}
-		catch (IOException e)
+		on IOException catch (e)
 		{
 			errorHandler.error(new ParseException(createErrorMessage(
 					"io.exception", null), e));
@@ -97,14 +97,14 @@ public abstract class AbstractParser implements Parser
 	 * Method responsible for actually parsing data after AbstractParser
 	 * has initialized itself.
 	 */
-	abstract void doParse() throws ParseException, IOException;
+	abstract void doParse() //throws ParseException, IOException;
 
 	/**
 	 * Signals an error to the error handler.
 	 * @param key The message key in the resource bundle.
 	 * @param args The message arguments.
 	 */
-	void reportError(String key, List<Object> args) throws ParseException
+	void reportError(String key, List<Object> args) //throws ParseException
 	{
 		errorHandler.error(new ParseException(createErrorMessage(key, args),
 				reader.getLine(), reader.getColumn()));
@@ -151,7 +151,7 @@ public abstract class AbstractParser implements Parser
 			// return formatMessage(key, args);
 			return "";
 		}
-		catch (MissingResourceException e)
+		on MissingResourceException catch (e)
 		{
 			return key;
 		}
@@ -169,7 +169,7 @@ public abstract class AbstractParser implements Parser
 	/**
 	 * Skips the whitespaces in the current reader.
 	 */
-	void skipSpaces() throws IOException
+	void skipSpaces() //throws IOException
 	{
 		for (;;)
 		{
@@ -189,7 +189,7 @@ public abstract class AbstractParser implements Parser
 	/**
 	 * Skips the whitespaces and an optional comma.
 	 */
-	void skipCommaSpaces() throws IOException
+	void skipCommaSpaces() //throws IOException
 	{
 		wsp1: for (;;)
 		{

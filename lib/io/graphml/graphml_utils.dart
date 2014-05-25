@@ -206,7 +206,7 @@ class GraphMlUtils
 		
 		if (!style.equals(""))
 		{
-			String[] entries = style.split(";");
+			List<String> entries = style.split(";");
 
 			for (String entry : entries)
 			{

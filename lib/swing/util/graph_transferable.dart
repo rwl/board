@@ -29,7 +29,7 @@ class GraphTransferable implements Transferable, UIResource,
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 5123819419918087664L;
+	static final long serialVersionUID = 5123819419918087664L;
 
 	/**
 	 * Global switch to disable image support in transferables. Set this to false as a workaround
@@ -64,22 +64,22 @@ class GraphTransferable implements Transferable, UIResource,
 	/**
 	 * 
 	 */
-	private static DataFlavor[] _htmlFlavors;
+	static DataFlavor[] _htmlFlavors;
 
 	/**
 	 * 
 	 */
-	private static DataFlavor[] _stringFlavors;
+	static DataFlavor[] _stringFlavors;
 
 	/**
 	 * 
 	 */
-	private static DataFlavor[] _plainFlavors;
+	static DataFlavor[] _plainFlavors;
 
 	/**
 	 * 
 	 */
-	private static DataFlavor[] _imageFlavors;
+	static DataFlavor[] _imageFlavors;
 
 	/**
 	 * 
@@ -239,7 +239,7 @@ class GraphTransferable implements Transferable, UIResource,
 	 *                if the requested data flavor is not supported.
 	 */
 	Object getTransferData(DataFlavor flavor)
-			throws UnsupportedFlavorException, IOException
+			//throws UnsupportedFlavorException, IOException
 	{
 		if (_isRicherFlavor(flavor))
 		{
@@ -342,7 +342,7 @@ class GraphTransferable implements Transferable, UIResource,
 	 * @throws UnsupportedFlavorException
 	 */
 	Object getRicherData(DataFlavor flavor)
-			throws UnsupportedFlavorException
+			//throws UnsupportedFlavorException
 	{
 		if (flavor.equals(dataFlavor))
 		{
@@ -516,7 +516,7 @@ class GraphTransferable implements Transferable, UIResource,
 			_imageFlavors[0] = DataFlavor.imageFlavor;
 			_imageFlavors[1] = new DataFlavor("image/png");
 		}
-		catch (ClassNotFoundException cle)
+		on ClassNotFoundException catch (cle)
 		{
 			System.err
 					.println("error initializing javax.swing.plaf.basic.BasicTranserable");
@@ -527,7 +527,7 @@ class GraphTransferable implements Transferable, UIResource,
 			dataFlavor = new DataFlavor(DataFlavor.javaSerializedObjectMimeType
 					+ "; class=graph.swing.util.GraphTransferable");
 		}
-		catch (ClassNotFoundException cnfe)
+		on ClassNotFoundException catch (cnfe)
 		{
 			// do nothing
 		}

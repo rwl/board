@@ -11,15 +11,15 @@ class RootChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	RootChange()
-	{
-		this(null, null);
-	}
+//	RootChange()
+//	{
+//		this(null, null);
+//	}
 
 	/**
 	 * 
 	 */
-	RootChange(GraphModel model, Object root)
+	RootChange([GraphModel model=null, Object root=null])
 	{
 		super(model);
 		this.root = root;
@@ -64,7 +64,7 @@ class RootChange extends AtomicGraphModelChange
 	void execute()
 	{
 		root = previous;
-		previous = ((GraphModel) model)._rootChanged(previous);
+		previous = (model as GraphModel)._rootChanged(previous);
 	}
 
 }

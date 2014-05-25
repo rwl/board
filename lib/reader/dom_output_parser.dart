@@ -9,7 +9,7 @@ part of graph.reader;
 
 /**
  *
-	static void main(String[] args)
+	static void main(List<String> args)
 	{
 		try
 		{
@@ -36,7 +36,7 @@ part of graph.reader;
 			ImageIO.write(img, "PNG", new File(
 					"C:\\Users\\Gaudenz\\Desktop\\test.png"));
 		}
-		catch (Exception e)
+		on Exception catch (e)
 		{
 			e.printStackTrace();
 		}

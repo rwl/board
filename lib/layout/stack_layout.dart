@@ -143,7 +143,7 @@ class StackLayout extends GraphLayout
 			}
 
 			// Changes child order in parent
-			int idx = ((ICell) parent).getIndex((ICell) cell);
+			int idx = ((ICell) parent).getIndex(cell as ICell);
 			idx = Math.max(0, i - ((i > idx) ? 1 : 0));
 
 			model.add(parent, cell, idx);

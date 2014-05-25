@@ -59,7 +59,7 @@ public abstract class GraphAbstractHierarchyCell
 	 * be used for hashing the nodes in the model dfs and so hashCode
 	 * was created
 	 */
-	int[] temp = new int[1];
+	List<int> temp = new int[1];
 
 	/**
 	 * Returns the cells this cell connects to on the next layer up

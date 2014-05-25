@@ -15,7 +15,7 @@ class CellState extends Rect
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 7588335615324083354L;
+	static final long serialVersionUID = 7588335615324083354L;
 
 	/**
 	 * Reference to the enclosing graph view.

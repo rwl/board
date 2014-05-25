@@ -23,7 +23,7 @@ class StyleUtils
 	{
 		if (style != null)
 		{
-			String[] pairs = style.split(";");
+			List<String> pairs = style.split(";");
 			String stylename = pairs[0];
 
 			if (stylename.indexOf("=") < 0)
@@ -43,13 +43,13 @@ class StyleUtils
 	 *            String of the form stylename[;stylename][;key=value].
 	 * @return Returns the stylename from the given formatted string.
 	 */
-	static String[] getStylenames(String style)
+	static List<String> getStylenames(String style)
 	{
 		List<String> result = new List<String>();
 
 		if (style != null)
 		{
-			String[] pairs = style.split(";");
+			List<String> pairs = style.split(";");
 
 			for (int i = 0; i < pairs.length; i++)
 			{
@@ -60,7 +60,7 @@ class StyleUtils
 			}
 		}
 
-		return result.toArray(new String[result.size()]);
+		return result.toArray(new List<String>(result.size()));
 	}
 
 	/**
@@ -72,7 +72,7 @@ class StyleUtils
 	{
 		if (style != null && stylename != null)
 		{
-			String[] tokens = style.split(";");
+			List<String> tokens = style.split(";");
 			int pos = 0;
 
 			for (int i = 0; i < tokens.length; i++)
@@ -123,7 +123,7 @@ class StyleUtils
 
 		if (style != null)
 		{
-			String[] tokens = style.split(";");
+			List<String> tokens = style.split(";");
 
 			for (int i = 0; i < tokens.length; i++)
 			{
@@ -148,7 +148,7 @@ class StyleUtils
 
 		if (style != null)
 		{
-			String[] tokens = style.split(";");
+			List<String> tokens = style.split(";");
 
 			for (int i = 0; i < tokens.length; i++)
 			{

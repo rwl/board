@@ -33,7 +33,7 @@ class EdgeHandler extends CellHandler
 	/**
 	 * 
 	 */
-	Point[] _p;
+	PoList<int> _p;
 
 	/**
 	 * 
@@ -275,9 +275,9 @@ class EdgeHandler extends CellHandler
 	/**
 	 * 
 	 */
-	Point[] _createPoints(CellState s)
+	PoList<int> _createPoints(CellState s)
 	{
-		Point[] pts = new Point[s.getAbsolutePointCount()];
+		PoList<int> pts = new Point[s.getAbsolutePointCount()];
 
 		for (int i = 0; i < pts.length; i++)
 		{

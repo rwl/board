@@ -8,13 +8,13 @@ part of graph.util;
 /**
  * Implements a line with double precision coordinates.
  */
-
 class Line extends Point2d
 {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -4730972599169158546L;
+//	private static final long serialVersionUID = -4730972599169158546L;
+	
 	/**
 	 * The end point of the line
 	 */
@@ -23,7 +23,7 @@ class Line extends Point2d
 	/**
 	 * Creates a new line
 	 */
-	Line(Point2d startPt, Point2d endPt)
+	factory Line.between(Point2d startPt, Point2d endPt)
 	{
 		this.setX(startPt.getX());
 		this.setY(startPt.getY());
@@ -80,7 +80,7 @@ class Line extends Point2d
 	 */
 	double ptLineDistSq(Point2d pt)
 	{
-		return new Line2D.Double(getX(), getY(), _endPoint.getX(), _endPoint
+		return new /*Line2D.*/Double(getX(), getY(), _endPoint.getX(), _endPoint
 				.getY()).ptLineDistSq(pt.getX(), pt.getY());
 	}
 
@@ -93,7 +93,7 @@ class Line extends Point2d
 	 */
 	double ptSegDistSq(Point2d pt)
 	{
-		return new Line2D.Double(getX(), getY(), _endPoint.getX(), _endPoint
+		return new /*Line2D.*/Double(getX(), getY(), _endPoint.getX(), _endPoint
 				.getY()).ptSegDistSq(pt.getX(), pt.getY());
 	}
 

@@ -55,7 +55,7 @@ class SaxOutputHandler extends DefaultHandler
 	 * 
 	 */
 	void startElement(String uri, String localName, String qName,
-			Attributes atts) throws SAXException
+			Attributes atts) //throws SAXException
 	{
 		IElementHandler handler = _handlers.get(qName.toLowerCase());
 

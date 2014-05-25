@@ -16,15 +16,15 @@ class VisibleChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	VisibleChange()
-	{
-		this(null, null, false);
-	}
+//	VisibleChange()
+//	{
+//		this(null, null, false);
+//	}
 
 	/**
 	 * 
 	 */
-	VisibleChange(GraphModel model, Object cell, bool visible)
+	VisibleChange([GraphModel model=null, Object cell=null, bool visible=false])
 	{
 		super(model);
 		this.cell = cell;
@@ -86,7 +86,7 @@ class VisibleChange extends AtomicGraphModelChange
 	void execute()
 	{
 		visible = previous;
-		previous = ((GraphModel) model)._visibleStateForCellChanged(cell,
+		previous = (model as GraphModel)._visibleStateForCellChanged(cell,
 				previous);
 	}
 

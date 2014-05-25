@@ -712,7 +712,7 @@ class EdgeStyle
 	/**
 	 * The default routing patterns for orthogonal connections
 	 */
-	static int[][][] routePatterns = new int[][][] {
+	static List<int>[][] routePatterns = new List<int>[][] {
 			{ { 513, 2308, 2081, 2562 }, { 513, 1090, 514, 2184, 2114, 2561 },
 					{ 513, 1090, 514, 2564, 2184, 2562 },
 					{ 513, 2308, 2561, 1090, 514, 2568, 2308 } },
@@ -730,7 +730,7 @@ class EdgeStyle
 	 * Overriden routing patterns for orthogonal connections
 	 * where the vertices have 
 	 */
-	static int[][][] inlineRoutePatterns = new int[][][] {
+	static List<int>[][] inlineRoutePatterns = new List<int>[][] {
 			{ null, { 2114, 2568 }, null, null },
 			{ null, { 514, 2081, 2114, 2568 }, null, null },
 			{ null, { 2114, 2561 }, null, null },
@@ -801,7 +801,7 @@ class EdgeStyle
 				// Determine the side(s) of the source and target vertices
 				// that the edge may connect to
 				// portConstraint -> [source, target];
-				int portConstraint[] = new int[2];
+				int portConstraList<int> = new int[2];
 				portConstraint[0] = Utils.getPortConstraints(source, state,
 						true);
 				portConstraint[1] = Utils.getPortConstraints(target, state,
@@ -877,7 +877,7 @@ class EdgeStyle
 				Point2d currentTerm = p0;
 
 				// constraint[source, target] [x, y]
-				double constraint[][] = new List<double>[] { { 0.5, 0.5 },
+				double constraList<int>[] = new List<double>[] { { 0.5, 0.5 },
 						{ 0.5, 0.5 } };
 
 				for (int i = 0; i < 2; i++)
@@ -1066,7 +1066,7 @@ class EdgeStyle
 				//==============================================================
 				// End of source and target direction determination
 
-				int[] routePattern = getRoutePattern(dir, quad, dx, dy);
+				List<int> routePattern = getRoutePattern(dir, quad, dx, dy);
 
 				if (dx == 0 || dy == 0)
 				{
@@ -1228,7 +1228,7 @@ class EdgeStyle
 		 * @param dy 
 		 * @return
 		 */
-		protected int[] getRoutePattern(int[] dir, double quad, double dx,
+		protected List<int> getRoutePattern(List<int> dir, double quad, double dx,
 				double dy)
 		{
 			int sourceIndex = dir[0] == Constants.DIRECTION_MASK_EAST ? 3
@@ -1248,7 +1248,7 @@ class EdgeStyle
 				targetIndex += 4;
 			}
 
-			int[] result = routePatterns[sourceIndex - 1][targetIndex - 1];
+			List<int> result = routePatterns[sourceIndex - 1][targetIndex - 1];
 
 			if (dx == 0 || dy == 0)
 			{

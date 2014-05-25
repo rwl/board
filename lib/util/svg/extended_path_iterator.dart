@@ -109,7 +109,7 @@ abstract class ExtendedPathIterator
 
 	int currentSegment(List<double> coords);
 
-	int currentSegment(float[] coords);
+	int currentSegment(List<float> coords);
 
 	int getWindingRule();
 

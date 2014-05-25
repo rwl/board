@@ -90,7 +90,7 @@ class DefaultTextShape implements ITextShape
 			}
 
 			// Draws the text line by line
-			String[] lines = text.split("\n");
+			List<String> lines = text.split("\n");
 			
 			for (int i = 0; i < lines.length; i++)
 			{

@@ -84,7 +84,7 @@ class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -30203858391633447L;
+	static final long serialVersionUID = -30203858391633447L;
 
 	/**
 	 * 
@@ -410,7 +410,7 @@ class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * Internal flag to not reset zoomPolicy when zoom was set automatically.
 	 */
-	private transient bool _zooming = false;
+	transient bool _zooming = false;
 
 	/**
 	 * Specifies the factor used for zoomIn and zoomOut. Default is 1.2 (120%).
@@ -453,7 +453,7 @@ class GraphComponent extends JScrollPane implements Printable
 	/**
 	 * Boolean flag to disable centering after the first time.
 	 */
-	private transient bool _centerOnResize = true;
+	transient bool _centerOnResize = true;
 
 	/**
 	 * Updates the heavyweight component structure after any changes.
@@ -3532,7 +3532,7 @@ class GraphComponent extends JScrollPane implements Printable
 			Stroke previousStroke = g2.getStroke();
 
 			g2.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT,
-					BasicStroke.JOIN_MITER, 10.0f, new float[] { 1, 2 }, 0));
+					BasicStroke.JOIN_MITER, 10.0f, new List<float> { 1, 2 }, 0));
 			g2.setColor(_pageBreakColor);
 
 			for (int i = 1; i <= _horizontalPageCount - 1; i++)
@@ -3708,16 +3708,16 @@ class GraphComponent extends JScrollPane implements Printable
 					// for each direction
 					Stroke[] strokes = new Stroke[] {
 							new BasicStroke(1, BasicStroke.CAP_BUTT,
-									BasicStroke.JOIN_MITER, 1, new float[] { 3,
+									BasicStroke.JOIN_MITER, 1, new List<float> { 3,
 											1 }, Math.max(0, iys) % 4),
 							new BasicStroke(1, BasicStroke.CAP_BUTT,
-									BasicStroke.JOIN_MITER, 1, new float[] { 2,
+									BasicStroke.JOIN_MITER, 1, new List<float> { 2,
 											2 }, Math.max(0, iys) % 4),
 							new BasicStroke(1, BasicStroke.CAP_BUTT,
-									BasicStroke.JOIN_MITER, 1, new float[] { 1,
+									BasicStroke.JOIN_MITER, 1, new List<float> { 1,
 											1 }, 0),
 							new BasicStroke(1, BasicStroke.CAP_BUTT,
-									BasicStroke.JOIN_MITER, 1, new float[] { 2,
+									BasicStroke.JOIN_MITER, 1, new List<float> { 2,
 											2 }, Math.max(0, iys) % 4) };
 
 					for (double x = xs; x <= xe; x += stepping)
@@ -3739,16 +3739,16 @@ class GraphComponent extends JScrollPane implements Printable
 
 					strokes = new Stroke[] {
 							new BasicStroke(1, BasicStroke.CAP_BUTT,
-									BasicStroke.JOIN_MITER, 1, new float[] { 3,
+									BasicStroke.JOIN_MITER, 1, new List<float> { 3,
 											1 }, Math.max(0, ixs) % 4),
 							new BasicStroke(1, BasicStroke.CAP_BUTT,
-									BasicStroke.JOIN_MITER, 1, new float[] { 2,
+									BasicStroke.JOIN_MITER, 1, new List<float> { 2,
 											2 }, Math.max(0, ixs) % 4),
 							new BasicStroke(1, BasicStroke.CAP_BUTT,
-									BasicStroke.JOIN_MITER, 1, new float[] { 1,
+									BasicStroke.JOIN_MITER, 1, new List<float> { 1,
 											1 }, 0),
 							new BasicStroke(1, BasicStroke.CAP_BUTT,
-									BasicStroke.JOIN_MITER, 1, new float[] { 2,
+									BasicStroke.JOIN_MITER, 1, new List<float> { 2,
 											2 }, Math.max(0, ixs) % 4) };
 
 					for (double y = ys; y <= ye; y += stepping)
@@ -3860,7 +3860,7 @@ class GraphComponent extends JScrollPane implements Printable
 			// Repaints the complete buffer
 			repaintTripleBuffer(null);
 		}
-		catch (OutOfMemoryError error)
+		on OutOfMemoryError catch (error)
 		{
 			// ignore
 		}

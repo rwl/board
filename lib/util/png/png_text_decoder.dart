@@ -47,7 +47,7 @@ class PngTextDecoder
 				throw new RuntimeException("PNGImageDecoder0");
 			}
 		}
-		catch (Exception e)
+		on Exception catch (e)
 		{
 			e.printStackTrace();
 			throw new RuntimeException("PNGImageDecoder1");
@@ -59,7 +59,7 @@ class PngTextDecoder
 			{
 				int length = distream.readInt();
 				int type = distream.readInt();
-				byte[] data = new byte[length];
+				List<byte> data = new byte[length];
 				distream.readFully(data);
 				distream.readInt(); // Move past the crc
 
@@ -96,13 +96,13 @@ class PngTextDecoder
 
 						result.put(String.valueOf(key), String.valueOf(value));
 					}
-					catch (Exception e)
+					on Exception catch (e)
 					{
 						e.printStackTrace();
 					}
 				}
 			}
-			catch (Exception e)
+			on Exception catch (e)
 			{
 				e.printStackTrace();
 				return null;

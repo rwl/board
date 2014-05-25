@@ -133,7 +133,7 @@ class Session implements DiagramChangeListener
 	 * 
 	 * @return Returns a string representing the changes to the shared diagram.
 	 */
-	String poll() throws InterruptedException
+	String poll() //throws InterruptedException
 	{
 		return poll(DEFAULT_TIMEOUT);
 	}
@@ -146,7 +146,7 @@ class Session implements DiagramChangeListener
 	 * @param timeout Time in milliseconds to wait for changes.
 	 * @return Returns a string representing the changes to the shared diagram.
 	 */
-	String poll(long timeout) throws InterruptedException
+	String poll(long timeout) //throws InterruptedException
 	{
 		_lastTimeMillis = System.currentTimeMillis();
 		StringBuffer result = new StringBuffer("<message>");

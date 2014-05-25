@@ -34,7 +34,7 @@ abstract class PointsHandler
 	 * @exception ParseException if an error occured while processing the
 	 *                           points
 	 */
-	void startPoints() throws ParseException;
+	void startPoints() //throws ParseException;
 
 	/**
 	 * Invoked when a point has been parsed.
@@ -43,12 +43,12 @@ abstract class PointsHandler
 	 * @exception ParseException if an error occured while processing the
 	 *                           points
 	 */
-	void point(float x, float y) throws ParseException;
+	void point(float x, float y) //throws ParseException;
 
 	/**
 	 * Invoked when the points attribute ends.
 	 * @exception ParseException if an error occured while processing the
 	 *                           points
 	 */
-	void endPoints() throws ParseException;
+	void endPoints() //throws ParseException;
 }

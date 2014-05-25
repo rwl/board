@@ -47,7 +47,7 @@ class GraphView extends EventSource
 	/**
 	 *
 	 */
-	private static Point2d _EMPTY_POINT = new Point2d();
+	static Point2d _EMPTY_POINT = new Point2d();
 
 	/**
 	 * Reference to the enclosing graph.
@@ -821,7 +821,7 @@ class GraphView extends EventSource
 			// font size/scale factor still stays within the bounds. All this ensures
 			// the wrapped lines are constant overing scaling, at the expense the 
 			// label bounds will vary.
-			String[] lines = Utils.wordWrap(label,
+			List<String> lines = Utils.wordWrap(label,
 					Utils.getFontMetrics(Utils.getFont(state.getStyle())),
 					w * Constants.LABEL_SCALE_BUFFER);
 

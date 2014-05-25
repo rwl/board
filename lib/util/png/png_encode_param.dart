@@ -173,7 +173,7 @@ public abstract class PngEncodeParam
 		_bitDepthSet = false;
 	}
 
-	private bool _useInterlacing = false;
+	bool _useInterlacing = false;
 
 	/**
 	 * Turns Adam7 interlacing on or off.
@@ -228,9 +228,9 @@ public abstract class PngEncodeParam
 
 	// cHRM chunk
 
-	private float[] _chromaticity = null;
+	List<float> _chromaticity = null;
 
-	private bool _chromaticitySet = false;
+	bool _chromaticitySet = false;
 
 	/**
 	 * Sets the white point and primary chromaticities in CIE (x, y)
@@ -243,7 +243,7 @@ public abstract class PngEncodeParam
 	 *
 	 * <p> The 'cHRM' chunk will encode this information.
 	 */
-	void setChromaticity(float[] chromaticity)
+	void setChromaticity(List<float> chromaticity)
 	{
 		if (chromaticity.length != 8)
 		{
@@ -260,7 +260,7 @@ public abstract class PngEncodeParam
 			float redX, float redY, float greenX, float greenY, float blueX,
 			float blueY)
 	{
-		float[] chroma = new float[8];
+		List<float> chroma = new float[8];
 		chroma[0] = whitePointX;
 		chroma[1] = whitePointY;
 		chroma[2] = redX;
@@ -284,7 +284,7 @@ public abstract class PngEncodeParam
 	 *
 	 * @throws IllegalStateException if the chromaticity is not set.
 	 */
-	float[] getChromaticity()
+	List<float> getChromaticity()
 	{
 		if (!_chromaticitySet)
 		{
@@ -312,9 +312,9 @@ public abstract class PngEncodeParam
 
 	// gAMA chunk
 
-	private float _gamma;
+	float _gamma;
 
-	private bool _gammaSet = false;
+	bool _gammaSet = false;
 
 	/**
 	 * Sets the file gamma value for the image.
@@ -362,9 +362,9 @@ public abstract class PngEncodeParam
 
 	// hIST chunk
 
-	private int[] _paletteHistogram = null;
+	List<int> _paletteHistogram = null;
 
-	private bool _paletteHistogramSet = false;
+	bool _paletteHistogramSet = false;
 
 	/**
 	 * Sets the palette histogram to be stored with this image.
@@ -373,7 +373,7 @@ public abstract class PngEncodeParam
 	 *
 	 * <p> The 'hIST' chunk will encode this information.
 	 */
-	void setPaletteHistogram(int[] paletteHistogram)
+	void setPaletteHistogram(List<int> paletteHistogram)
 	{
 		this._paletteHistogram = (paletteHistogram.clone());
 		_paletteHistogramSet = true;
@@ -387,7 +387,7 @@ public abstract class PngEncodeParam
 	 *
 	 * @throws IllegalStateException if the histogram is not set.
 	 */
-	int[] getPaletteHistogram()
+	List<int> getPaletteHistogram()
 	{
 		if (!_paletteHistogramSet)
 		{
@@ -415,9 +415,9 @@ public abstract class PngEncodeParam
 
 	// iCCP chunk
 
-	private byte[] _ICCProfileData = null;
+	List<byte> _ICCProfileData = null;
 
-	private bool _ICCProfileDataSet = false;
+	bool _ICCProfileDataSet = false;
 
 	/**
 	 * Sets the ICC profile data to be stored with this image.
@@ -425,7 +425,7 @@ public abstract class PngEncodeParam
 	 *
 	 * <p> The 'iCCP' chunk will encode this information.
 	 */
-	void setICCProfileData(byte[] ICCProfileData)
+	void setICCProfileData(List<byte> ICCProfileData)
 	{
 		this._ICCProfileData = (ICCProfileData.clone());
 		_ICCProfileDataSet = true;
@@ -439,7 +439,7 @@ public abstract class PngEncodeParam
 	 *
 	 * @throws IllegalStateException if the ICC profile is not set.
 	 */
-	byte[] getICCProfileData()
+	List<byte> getICCProfileData()
 	{
 		if (!_ICCProfileDataSet)
 		{
@@ -467,9 +467,9 @@ public abstract class PngEncodeParam
 
 	// pHYS chunk
 
-	private int[] _physicalDimension = null;
+	List<int> _physicalDimension = null;
 
-	private bool _physicalDimensionSet = false;
+	bool _physicalDimensionSet = false;
 
 	/**
 	 * Sets the physical dimension information to be stored with this
@@ -480,7 +480,7 @@ public abstract class PngEncodeParam
 	 *
 	 * <p> The 'pHYS' chunk will encode this information.
 	 */
-	void setPhysicalDimension(int[] physicalDimension)
+	void setPhysicalDimension(List<int> physicalDimension)
 	{
 		this._physicalDimension = (physicalDimension.clone());
 		_physicalDimensionSet = true;
@@ -492,7 +492,7 @@ public abstract class PngEncodeParam
 	void setPhysicalDimension(int xPixelsPerUnit, int yPixelsPerUnit,
 			int unitSpecifier)
 	{
-		int[] pd = new int[3];
+		List<int> pd = new int[3];
 		pd[0] = xPixelsPerUnit;
 		pd[1] = yPixelsPerUnit;
 		pd[2] = unitSpecifier;
@@ -511,7 +511,7 @@ public abstract class PngEncodeParam
 	 * @throws IllegalStateException if the physical dimension information
 	 *        is not set.
 	 */
-	int[] getPhysicalDimension()
+	List<int> getPhysicalDimension()
 	{
 		if (!_physicalDimensionSet)
 		{
@@ -539,9 +539,9 @@ public abstract class PngEncodeParam
 
 	// sPLT chunk
 
-	private PngSuggestedPaletteEntry[] _suggestedPalette = null;
+	PngSuggestedPaletteEntry[] _suggestedPalette = null;
 
-	private bool _suggestedPaletteSet = false;
+	bool _suggestedPaletteSet = false;
 
 	/**
 	 * Sets the suggested palette information to be stored with this
@@ -595,9 +595,9 @@ public abstract class PngEncodeParam
 
 	// sBIT chunk
 
-	private int[] _significantBits = null;
+	List<int> _significantBits = null;
 
-	private bool _significantBitsSet = false;
+	bool _significantBitsSet = false;
 
 	/**
 	 * Sets the number of significant bits for each band of the image.
@@ -609,7 +609,7 @@ public abstract class PngEncodeParam
 	 *
 	 * <p> The 'sBIT' chunk will encode this information.
 	 */
-	void setSignificantBits(int[] significantBits)
+	void setSignificantBits(List<int> significantBits)
 	{
 		this._significantBits = (significantBits.clone());
 		_significantBitsSet = true;
@@ -625,7 +625,7 @@ public abstract class PngEncodeParam
 	 * @throws IllegalStateException if the significant bits values are
 	 *        not set.
 	 */
-	int[] getSignificantBits()
+	List<int> getSignificantBits()
 	{
 		if (!_significantBitsSet)
 		{
@@ -653,9 +653,9 @@ public abstract class PngEncodeParam
 
 	// sRGB chunk
 
-	private int _SRGBIntent;
+	int _SRGBIntent;
 
-	private bool _SRGBIntentSet = false;
+	bool _SRGBIntentSet = false;
 
 	/**
 	 * Sets the sRGB rendering intent to be stored with this image.
@@ -706,9 +706,9 @@ public abstract class PngEncodeParam
 
 	// tEXt chunk
 
-	private String[] _text = null;
+	List<String> _text = null;
 
-	private bool _textSet = false;
+	bool _textSet = false;
 
 	/**
 	 * Sets the textual data to be stored in uncompressed form with this
@@ -717,7 +717,7 @@ public abstract class PngEncodeParam
 	 *
 	 * <p> The 'tEXt' chunk will encode this information.
 	 */
-	void setText(String[] text)
+	void setText(List<String> text)
 	{
 		this._text = text;
 		_textSet = true;
@@ -732,7 +732,7 @@ public abstract class PngEncodeParam
 	 *
 	 * @throws IllegalStateException if the text strings are not set.
 	 */
-	String[] getText()
+	List<String> getText()
 	{
 		if (!_textSet)
 		{
@@ -760,9 +760,9 @@ public abstract class PngEncodeParam
 
 	// tIME chunk
 
-	private Date _modificationTime;
+	Date _modificationTime;
 
-	private bool _modificationTimeSet = false;
+	bool _modificationTimeSet = false;
 
 	/**
 	 * Sets the modification time, as a <code>Date</code>, to be
@@ -834,9 +834,9 @@ public abstract class PngEncodeParam
 
 	// zTXT chunk
 
-	private String[] _zText = null;
+	List<String> _zText = null;
 
-	private bool _zTextSet = false;
+	bool _zTextSet = false;
 
 	/**
 	 * Sets the text strings to be stored in compressed form with this
@@ -845,7 +845,7 @@ public abstract class PngEncodeParam
 	 *
 	 * <p> The 'zTXt' chunk will encode this information.
 	 */
-	void setCompressedText(String[] text)
+	void setCompressedText(List<String> text)
 	{
 		this._zText = text;
 		_zTextSet = true;
@@ -862,7 +862,7 @@ public abstract class PngEncodeParam
 	 * @throws IllegalStateException if the compressed text strings are
 	 *        not set.
 	 */
-	String[] getCompressedText()
+	List<String> getCompressedText()
 	{
 		if (!_zTextSet)
 		{
@@ -892,7 +892,7 @@ public abstract class PngEncodeParam
 
 	List<String> chunkType = new List<String>();
 
-	List<byte[]> chunkData = new List<byte[]>();
+	List<List<byte>> chunkData = new List<List<byte>>();
 
 	/**
 	 * Adds a private chunk, in binary form, to the list of chunks to
@@ -902,7 +902,7 @@ public abstract class PngEncodeParam
 	 * @param data an array of <code>byte</code>s containing the
 	 *        chunk data.
 	 */
-	synchronized void addPrivateChunk(String type, byte[] data)
+	synchronized void addPrivateChunk(String type, List<byte> data)
 	{
 		chunkType.add(type);
 		chunkData.add(data.clone());
@@ -933,7 +933,7 @@ public abstract class PngEncodeParam
 	 * smaller than the return value of
 	 * <code>getNumPrivateChunks</code>.
 	 */
-	synchronized byte[] getPrivateChunkData(int index)
+	synchronized List<byte> getPrivateChunkData(int index)
 	{
 		return chunkData.get(index);
 	}
@@ -946,7 +946,7 @@ public abstract class PngEncodeParam
 	synchronized void removeUnsafeToCopyPrivateChunks()
 	{
 		List<String> newChunkType = new List<String>();
-		List<byte[]> newChunkData = new List<byte[]>();
+		List<List<byte>> newChunkData = new List<List<byte>>();
 
 		int len = getNumPrivateChunks();
 		for (int i = 0; i < len; i++)
@@ -970,13 +970,13 @@ public abstract class PngEncodeParam
 	synchronized void removeAllPrivateChunks()
 	{
 		chunkType = new List<String>();
-		chunkData = new List<byte[]>();
+		chunkData = new List<List<byte>>();
 	}
 
 	/**
 	 * An abs() function for use by the Paeth predictor.
 	 */
-	private static final int _abs(int x)
+	static final int _abs(int x)
 	{
 		return (x < 0) ? -x : x;
 	}
@@ -1064,11 +1064,11 @@ public abstract class PngEncodeParam
 	 * @return The filter type to be used.  The entry of
 	 *         <code>scratchRows[]</code> at this index holds the
 	 *         filtered data.  */
-	int filterRow(byte[] currRow, byte[] prevRow, byte[][] scratchRows,
+	int filterRow(List<byte> currRow, List<byte> prevRow, List<byte>[] scratchRows,
 			int bytesPerRow, int bytesPerPixel)
 	{
 
-		int[] badness = { 0, 0, 0, 0, 0 };
+		List<int> badness = { 0, 0, 0, 0, 0 };
 		int curr, left, up, upleft, diff;
 		int pa, pb, pc;
 		for (int i = bytesPerPixel; i < bytesPerRow + bytesPerPixel; i++)

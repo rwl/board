@@ -72,7 +72,7 @@ part of graph.util.png;
 class CRC
 {
 
-	private static int[] _crcTable = new int[256];
+	static List<int> _crcTable = new int[256];
 
 	static
 	{
@@ -96,7 +96,7 @@ class CRC
 		}
 	}
 
-	static int updateCRC(int crc, byte[] data, int off, int len)
+	static int updateCRC(int crc, List<byte> data, int off, int len)
 	{
 		int c = crc;
 
@@ -112,11 +112,11 @@ class CRC
 class ChunkStream extends OutputStream implements DataOutput
 {
 
-	private String _type;
+	String _type;
 
-	private ByteArrayOutputStream _baos;
+	ByteArrayOutputStream _baos;
 
-	private DataOutputStream _dos;
+	DataOutputStream _dos;
 
 	ChunkStream(String type)
 	{
@@ -126,79 +126,79 @@ class ChunkStream extends OutputStream implements DataOutput
 		this._dos = new DataOutputStream(_baos);
 	}
 
-	void write(byte[] b) throws IOException
+	void write(List<byte> b) //throws IOException
 	{
 		_dos.write(b);
 	}
 
-	void write(byte[] b, int off, int len) throws IOException
+	void write(List<byte> b, int off, int len) //throws IOException
 	{
 		_dos.write(b, off, len);
 	}
 
-	void write(int b) throws IOException
+	void write(int b) //throws IOException
 	{
 		_dos.write(b);
 	}
 
-	void writeBoolean(bool v) throws IOException
+	void writeBoolean(bool v) //throws IOException
 	{
 		_dos.writeBoolean(v);
 	}
 
-	void writeByte(int v) throws IOException
+	void writeByte(int v) //throws IOException
 	{
 		_dos.writeByte(v);
 	}
 
-	void writeBytes(String s) throws IOException
+	void writeBytes(String s) //throws IOException
 	{
 		_dos.writeBytes(s);
 	}
 
-	void writeChar(int v) throws IOException
+	void writeChar(int v) //throws IOException
 	{
 		_dos.writeChar(v);
 	}
 
-	void writeChars(String s) throws IOException
+	void writeChars(String s) //throws IOException
 	{
 		_dos.writeChars(s);
 	}
 
-	void writeDouble(double v) throws IOException
+	void writeDouble(double v) //throws IOException
 	{
 		_dos.writeDouble(v);
 	}
 
-	void writeFloat(float v) throws IOException
+	void writeFloat(float v) //throws IOException
 	{
 		_dos.writeFloat(v);
 	}
 
-	void writeInt(int v) throws IOException
+	void writeInt(int v) //throws IOException
 	{
 		_dos.writeInt(v);
 	}
 
-	void writeLong(long v) throws IOException
+	void writeLong(long v) //throws IOException
 	{
 		_dos.writeLong(v);
 	}
 
-	void writeShort(int v) throws IOException
+	void writeShort(int v) //throws IOException
 	{
 		_dos.writeShort(v);
 	}
 
-	void writeUTF(String str) throws IOException
+	void writeUTF(String str) //throws IOException
 	{
 		_dos.writeUTF(str);
 	}
 
-	void writeToStream(DataOutputStream output) throws IOException
+	void writeToStream(DataOutputStream output) //throws IOException
 	{
-		byte[] typeSignature = new byte[4];
+		List<byte> typeSignature = new byte[4];
 		typeSignature[0] = (byte) _type.charAt(0);
 		typeSignature[1] = (byte) _type.charAt(1);
 		typeSignature[2] = (byte) _type.charAt(2);
@@ -207,7 +207,7 @@ class ChunkStream extends OutputStream implements DataOutput
 		_dos.flush();
 		_baos.flush();
 
-		byte[] data = _baos.toByteArray();
+		List<byte> data = _baos.toByteArray();
 		int len = data.length;
 
 		output.writeInt(len);
@@ -226,7 +226,7 @@ class ChunkStream extends OutputStream implements DataOutput
 	 * 
 	 * @throws IOException
 	 */
-	void close() throws IOException
+	void close() //throws IOException
 	{
 
 		if (_baos != null)
@@ -245,14 +245,14 @@ class ChunkStream extends OutputStream implements DataOutput
 class IDATOutputStream extends FilterOutputStream
 {
 
-	private static final byte[] _typeSignature = { (byte) 'I', (byte) 'D',
+	static final List<byte> _typeSignature = { (byte) 'I', (byte) 'D',
 			(byte) 'A', (byte) 'T' };
 
-	private int _bytesWritten = 0;
+	int _bytesWritten = 0;
 
-	private int _segmentLength;
+	int _segmentLength;
 
-	byte[] buffer;
+	List<byte> buffer;
 
 	IDATOutputStream(OutputStream output, int segmentLength)
 	{
@@ -261,12 +261,12 @@ class IDATOutputStream extends FilterOutputStream
 		this.buffer = new byte[segmentLength];
 	}
 
-	void close() throws IOException
+	void close() //throws IOException
 	{
 		flush();
 	}
 
-	private void _writeInt(int x) throws IOException
+	void _writeInt(int x) //throws IOException
 	{
 		out.write(x >> 24);
 		out.write((x >> 16) & 0xff);
@@ -274,7 +274,7 @@ class IDATOutputStream extends FilterOutputStream
 		out.write(x & 0xff);
 	}
 
-	void flush() throws IOException
+	void flush() //throws IOException
 	{
 		// Length
 		_writeInt(_bytesWritten);
@@ -294,12 +294,12 @@ class IDATOutputStream extends FilterOutputStream
 		_bytesWritten = 0;
 	}
 
-	void write(byte[] b) throws IOException
+	void write(List<byte> b) //throws IOException
 	{
 		this.write(b, 0, b.length);
 	}
 
-	void write(byte[] b, int off, int len) throws IOException
+	void write(List<byte> b, int off, int len) //throws IOException
 	{
 		while (len > 0)
 		{
@@ -316,7 +316,7 @@ class IDATOutputStream extends FilterOutputStream
 		}
 	}
 
-	void write(int b) throws IOException
+	void write(int b) //throws IOException
 	{
 		buffer[_bytesWritten++] = (byte) b;
 		if (_bytesWritten == _segmentLength)
@@ -335,52 +335,52 @@ class IDATOutputStream extends FilterOutputStream
 class PngImageEncoder
 {
 
-	private static final int PNG_COLOR_GRAY = 0;
+	static final int PNG_COLOR_GRAY = 0;
 
-	private static final int PNG_COLOR_RGB = 2;
+	static final int PNG_COLOR_RGB = 2;
 
-	private static final int PNG_COLOR_PALETTE = 3;
+	static final int PNG_COLOR_PALETTE = 3;
 
-	private static final int PNG_COLOR_GRAY_ALPHA = 4;
+	static final int PNG_COLOR_GRAY_ALPHA = 4;
 
-	private static final int PNG_COLOR_RGB_ALPHA = 6;
+	static final int PNG_COLOR_RGB_ALPHA = 6;
 
-	private static final byte[] magic = { (byte) 137, (byte) 80, (byte) 78,
+	static final List<byte> magic = { (byte) 137, (byte) 80, (byte) 78,
 			(byte) 71, (byte) 13, (byte) 10, (byte) 26, (byte) 10 };
 
-	private PngEncodeParam param;
+	PngEncodeParam param;
 
-	private RenderedImage image;
+	RenderedImage image;
 
-	private int width;
+	int width;
 
-	private int height;
+	int height;
 
-	private int bitDepth;
+	int bitDepth;
 
-	private int bitShift;
+	int bitShift;
 
-	private int numBands;
+	int numBands;
 
-	private int colorType;
+	int colorType;
 
-	private int bpp; // bytes per pixel, rounded up
+	int bpp; // bytes per pixel, rounded up
 
-	private bool skipAlpha = false;
+	bool skipAlpha = false;
 
-	private bool compressGray = false;
+	bool compressGray = false;
 
-	private bool interlace;
+	bool interlace;
 
-	private byte[] redPalette = null;
+	List<byte> redPalette = null;
 
-	private byte[] greenPalette = null;
+	List<byte> greenPalette = null;
 
-	private byte[] bluePalette = null;
+	List<byte> bluePalette = null;
 
-	private byte[] alphaPalette = null;
+	List<byte> alphaPalette = null;
 
-	private DataOutputStream dataOutput;
+	DataOutputStream dataOutput;
 
 	/** The OutputStream associcted with this ImageEncoder. */
 	OutputStream output;
@@ -415,12 +415,12 @@ class PngImageEncoder
 		return output;
 	}
 
-	private void writeMagic() throws IOException
+	void writeMagic() //throws IOException
 	{
 		dataOutput.write(magic);
 	}
 
-	private void writeIHDR() throws IOException
+	void writeIHDR() //throws IOException
 	{
 		ChunkStream cs = new ChunkStream("IHDR");
 		cs.writeInt(width);
@@ -435,14 +435,14 @@ class PngImageEncoder
 		cs.close();
 	}
 
-	private byte[] prevRow = null;
+	List<byte> prevRow = null;
 
-	private byte[] currRow = null;
+	List<byte> currRow = null;
 
-	private byte[][] filteredRows = null;
+	List<byte>[] filteredRows = null;
 
-	private void encodePass(OutputStream os, Raster ras, int xOffset,
-			int yOffset, int xSkip, int ySkip) throws IOException
+	void encodePass(OutputStream os, Raster ras, int xOffset,
+			int yOffset, int xSkip, int ySkip) //throws IOException
 	{
 		int minX = ras.getMinX();
 		int minY = ras.getMinY();
@@ -455,7 +455,7 @@ class PngImageEncoder
 		int samplesPerByte = 8 / bitDepth;
 
 		int numSamples = width * numBands;
-		int[] samples = new int[numSamples];
+		List<int> samples = new int[numSamples];
 
 		int pixels = (numSamples - xOffset + xSkip - 1) / xSkip;
 		int bytesPerRow = pixels * numBands;
@@ -560,13 +560,13 @@ class PngImageEncoder
 			os.write(filteredRows[filterType], bpp, bytesPerRow);
 
 			// Swap current and previous rows
-			byte[] swap = currRow;
+			List<byte> swap = currRow;
 			currRow = prevRow;
 			prevRow = swap;
 		}
 	}
 
-	private void writeIDAT() throws IOException
+	void writeIDAT() //throws IOException
 	{
 		IDATOutputStream ios = new IDATOutputStream(dataOutput, 8192);
 		DeflaterOutputStream dos = new DeflaterOutputStream(ios,
@@ -595,7 +595,7 @@ class PngImageEncoder
 		if (skipAlpha)
 		{
 			int numBands = ras.getNumBands() - 1;
-			int[] bandList = new int[numBands];
+			List<int> bandList = new int[numBands];
 			for (int i = 0; i < numBands; i++)
 			{
 				bandList[i] = i;
@@ -630,23 +630,23 @@ class PngImageEncoder
 		ios.flush();
 	}
 
-	private void writeIEND() throws IOException
+	void writeIEND() //throws IOException
 	{
 		ChunkStream cs = new ChunkStream("IEND");
 		cs.writeToStream(dataOutput);
 		cs.close();
 	}
 
-	private static final float[] srgbChroma = { 0.31270F, 0.329F, 0.64F, 0.33F,
+	static final List<float> srgbChroma = { 0.31270F, 0.329F, 0.64F, 0.33F,
 			0.3F, 0.6F, 0.15F, 0.06F };
 
-	private void writeCHRM() throws IOException
+	void writeCHRM() //throws IOException
 	{
 		if (param.isChromaticitySet() || param.isSRGBIntentSet())
 		{
 			ChunkStream cs = new ChunkStream("cHRM");
 
-			float[] chroma;
+			List<float> chroma;
 			if (!param.isSRGBIntentSet())
 			{
 				chroma = param.getChromaticity();
@@ -665,7 +665,7 @@ class PngImageEncoder
 		}
 	}
 
-	private void writeGAMA() throws IOException
+	void writeGAMA() //throws IOException
 	{
 		if (param.isGammaSet() || param.isSRGBIntentSet())
 		{
@@ -688,24 +688,24 @@ class PngImageEncoder
 		}
 	}
 
-	private void writeICCP() throws IOException
+	void writeICCP() //throws IOException
 	{
 		if (param.isICCProfileDataSet())
 		{
 			ChunkStream cs = new ChunkStream("iCCP");
-			byte[] ICCProfileData = param.getICCProfileData();
+			List<byte> ICCProfileData = param.getICCProfileData();
 			cs.write(ICCProfileData);
 			cs.writeToStream(dataOutput);
 			cs.close();
 		}
 	}
 
-	private void writeSBIT() throws IOException
+	void writeSBIT() //throws IOException
 	{
 		if (param.isSignificantBitsSet())
 		{
 			ChunkStream cs = new ChunkStream("sBIT");
-			int[] significantBits = param.getSignificantBits();
+			List<int> significantBits = param.getSignificantBits();
 			int len = significantBits.length;
 			for (int i = 0; i < len; i++)
 			{
@@ -716,7 +716,7 @@ class PngImageEncoder
 		}
 	}
 
-	private void writeSRGB() throws IOException
+	void writeSRGB() //throws IOException
 	{
 		if (param.isSRGBIntentSet())
 		{
@@ -729,7 +729,7 @@ class PngImageEncoder
 		}
 	}
 
-	private void writePLTE() throws IOException
+	void writePLTE() //throws IOException
 	{
 		if (redPalette == null)
 		{
@@ -748,7 +748,7 @@ class PngImageEncoder
 		cs.close();
 	}
 
-	private void writeBKGD() throws IOException
+	void writeBKGD() //throws IOException
 	{
 		if (param.isBackgroundSet())
 		{
@@ -771,7 +771,7 @@ class PngImageEncoder
 
 				case PNG_COLOR_RGB:
 				case PNG_COLOR_RGB_ALPHA:
-					int[] rgb = ((RGB) param)
+					List<int> rgb = ((RGB) param)
 							.getBackgroundRGB();
 					cs.writeShort(rgb[0]);
 					cs.writeShort(rgb[1]);
@@ -784,13 +784,13 @@ class PngImageEncoder
 		}
 	}
 
-	private void writeHIST() throws IOException
+	void writeHIST() //throws IOException
 	{
 		if (param.isPaletteHistogramSet())
 		{
 			ChunkStream cs = new ChunkStream("hIST");
 
-			int[] hist = param.getPaletteHistogram();
+			List<int> hist = param.getPaletteHistogram();
 			for (int i = 0; i < hist.length; i++)
 			{
 				cs.writeShort(hist[i]);
@@ -801,7 +801,7 @@ class PngImageEncoder
 		}
 	}
 
-	private void writeTRNS() throws IOException
+	void writeTRNS() //throws IOException
 	{
 		if (param.isTransparencySet() && (colorType != PNG_COLOR_GRAY_ALPHA)
 				&& (colorType != PNG_COLOR_RGB_ALPHA))
@@ -810,7 +810,7 @@ class PngImageEncoder
 
 			if (param is Palette)
 			{
-				byte[] t = ((Palette) param)
+				List<byte> t = ((Palette) param)
 						.getPaletteTransparency();
 				for (int i = 0; i < t.length; i++)
 				{
@@ -824,7 +824,7 @@ class PngImageEncoder
 			}
 			else if (param is RGB)
 			{
-				int[] t = ((RGB) param).getTransparentRGB();
+				List<int> t = ((RGB) param).getTransparentRGB();
 				cs.writeShort(t[0]);
 				cs.writeShort(t[1]);
 				cs.writeShort(t[2]);
@@ -858,13 +858,13 @@ class PngImageEncoder
 		}
 	}
 
-	private void writePHYS() throws IOException
+	void writePHYS() //throws IOException
 	{
 		if (param.isPhysicalDimensionSet())
 		{
 			ChunkStream cs = new ChunkStream("pHYs");
 
-			int[] dims = param.getPhysicalDimension();
+			List<int> dims = param.getPhysicalDimension();
 			cs.writeInt(dims[0]);
 			cs.writeInt(dims[1]);
 			cs.writeByte((byte) dims[2]);
@@ -874,7 +874,7 @@ class PngImageEncoder
 		}
 	}
 
-	private void writeSPLT() throws IOException
+	void writeSPLT() //throws IOException
 	{
 		if (param.isSuggestedPaletteSet())
 		{
@@ -887,7 +887,7 @@ class PngImageEncoder
 		}
 	}
 
-	private void writeTIME() throws IOException
+	void writeTIME() //throws IOException
 	{
 		if (param.isModificationTimeSet())
 		{
@@ -918,16 +918,16 @@ class PngImageEncoder
 		}
 	}
 
-	private void writeTEXT() throws IOException
+	void writeTEXT() //throws IOException
 	{
 		if (param.isTextSet())
 		{
-			String[] text = param.getText();
+			List<String> text = param.getText();
 
 			for (int i = 0; i < text.length / 2; i++)
 			{
-				byte[] keyword = text[2 * i].getBytes();
-				byte[] value = text[2 * i + 1].getBytes();
+				List<byte> keyword = text[2 * i].getBytes();
+				List<byte> value = text[2 * i + 1].getBytes();
 
 				ChunkStream cs = new ChunkStream("tEXt");
 
@@ -941,16 +941,16 @@ class PngImageEncoder
 		}
 	}
 
-	private void writeZTXT() throws IOException
+	void writeZTXT() //throws IOException
 	{
 		if (param.isCompressedTextSet())
 		{
-			String[] text = param.getCompressedText();
+			List<String> text = param.getCompressedText();
 
 			for (int i = 0; i < text.length / 2; i++)
 			{
-				byte[] keyword = text[2 * i].getBytes();
-				byte[] value = text[2 * i + 1].getBytes();
+				List<byte> keyword = text[2 * i].getBytes();
+				List<byte> value = text[2 * i + 1].getBytes();
 
 				ChunkStream cs = new ChunkStream("zTXt");
 
@@ -969,13 +969,13 @@ class PngImageEncoder
 		}
 	}
 
-	private void writePrivateChunks() throws IOException
+	void writePrivateChunks() //throws IOException
 	{
 		int numChunks = param.getNumPrivateChunks();
 		for (int i = 0; i < numChunks; i++)
 		{
 			String type = param.getPrivateChunkType(i);
-			byte[] data = param.getPrivateChunkData(i);
+			List<byte> data = param.getPrivateChunkData(i);
 
 			ChunkStream cs = new ChunkStream(type);
 			cs.write(data);
@@ -992,8 +992,8 @@ class PngImageEncoder
 	 * a suitable instance of PNGEncodeParam.Gray; otherwise it
 	 * returns null.
 	 */
-	private Gray createGrayParam(byte[] redPalette,
-			byte[] greenPalette, byte[] bluePalette, byte[] alphaPalette)
+	Gray createGrayParam(List<byte> redPalette,
+			List<byte> greenPalette, List<byte> bluePalette, List<byte> alphaPalette)
 	{
 		Gray param = new Gray();
 		int numTransparent = 0;
@@ -1036,7 +1036,7 @@ class PngImageEncoder
 	 * the end of the operation, this should be done if needed
 	 * by the caller of this method.
 	 */
-	void encode(RenderedImage im) throws IOException
+	void encode(RenderedImage im) //throws IOException
 	{
 		this.image = im;
 		this.width = image.getWidth();
@@ -1044,7 +1044,7 @@ class PngImageEncoder
 
 		SampleModel sampleModel = image.getSampleModel();
 
-		int[] sampleSize = sampleModel.getSampleSize();
+		List<int> sampleSize = sampleModel.getSampleSize();
 
 		// Set bitDepth to a sentinel value
 		this.bitDepth = -1;
@@ -1147,7 +1147,7 @@ class PngImageEncoder
 				Palette parami = (Palette) param;
 				if (parami.isPaletteSet())
 				{
-					int[] palette = parami.getPalette();
+					List<int> palette = parami.getPalette();
 					size = palette.length / 3;
 
 					int index = 0;

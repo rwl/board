@@ -231,10 +231,10 @@ class Rect extends Point2d
 	 */
 	Rectangle getRectangle()
 	{
-		int ix = (int) Math.round(_x);
-		int iy = (int) Math.round(_y);
-		int iw = (int) Math.round(_width - ix + _x);
-		int ih = (int) Math.round(_height - iy + _y);
+		int ix = Math.round(_x) as int;
+		int iy = Math.round(_y) as int;
+		int iw = Math.round(_width - ix + _x) as int;
+		int ih = Math.round(_height - iy + _y) as int;
 
 		return new Rectangle(ix, iy, iw, ih);
 	}
@@ -247,7 +247,7 @@ class Rect extends Point2d
 	{
 		if (obj is Rect)
 		{
-			Rect rect = (Rect) obj;
+			Rect rect = obj;
 
 			return rect.getX() == getX() && rect.getY() == getY()
 					&& rect.getWidth() == getWidth()
@@ -262,7 +262,7 @@ class Rect extends Point2d
 	 */
 	Object clone()
 	{
-		Rect clone = (Rect) super.clone();
+		Rect clone = super.clone() as Rect;
 
 		clone.setWidth(getWidth());
 		clone.setHeight(getHeight());
@@ -278,7 +278,6 @@ class Rect extends Point2d
 	 */
 	String toString()
 	{
-		return getClass().getName() + "[x=" + _x + ",y=" + _y + ",w=" + _width
-				+ ",h=" + _height + "]";
+		return getClass().getName() + "[x=$_x,y=$_y,w=$_width,h=$_height]";
 	}
 }

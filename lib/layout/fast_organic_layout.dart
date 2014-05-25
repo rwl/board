@@ -117,7 +117,7 @@ class FastOrganicLayout extends GraphLayout
 	/**
 	 * Local copy of cell neighbours.
 	 */
-	int[][] neighbours;
+	List<int>[] neighbours;
 
 	/**
 	 * Boolean flag that specifies if the layout is allowed to run. If this is

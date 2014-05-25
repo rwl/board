@@ -29,7 +29,7 @@ class SelectionCellsHandler implements MouseListener,
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -882368002120921842L;
+	static final long serialVersionUID = -882368002120921842L;
 
 	/**
 	 * Defines the default value for maxHandlers. Default is 100.

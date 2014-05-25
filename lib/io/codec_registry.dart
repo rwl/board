@@ -118,7 +118,7 @@ class CodecRegistry
 					codec = new ObjectCodec(instance);
 					register(codec);
 				}
-				catch (Exception e)
+				on Exception catch (e)
 				{
 					// ignore
 				}
@@ -161,7 +161,7 @@ class CodecRegistry
 				{
 					return clazz.newInstance();
 				}
-				catch (Exception e)
+				on Exception catch (e)
 				{
 					// ignore
 				}
@@ -183,7 +183,7 @@ class CodecRegistry
 		{
 			return Class.forName(name);
 		}
-		catch (Exception e)
+		on Exception catch (e)
 		{
 			// ignore
 		}
@@ -196,7 +196,7 @@ class CodecRegistry
 
 				return Class.forName(s + "." + name);
 			}
-			catch (Exception e)
+			on Exception catch (e)
 			{
 				// ignore
 			}

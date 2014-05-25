@@ -27,15 +27,15 @@ class GraphMlKey
 		BOOLEAN, INT, LONG, FLOAT, DOUBLE, STRING
 	}
 
-	private String _keyDefault;
+	String _keyDefault;
 
-	private String _keyId;
+	String _keyId;
 
-	private keyForValues _keyFor;
+	keyForValues _keyFor;
 
-	private String _keyName;
+	String _keyName;
 
-	private keyTypeValues _keyType;
+	keyTypeValues _keyType;
 
 	/**
 	 * Construct a key with the given parameters.
@@ -123,7 +123,7 @@ class GraphMlKey
 	 * Returns the default value of the keyDefault attribute according
 	 * the keyType.
 	 */
-	private String _defaultValue()
+	String _defaultValue()
 	{
 		String val = "";
 		switch (this._keyType)

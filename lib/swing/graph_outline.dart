@@ -30,7 +30,7 @@ class GraphOutline extends JComponent
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -2521103946905154267L;
+	static final long serialVersionUID = -2521103946905154267L;
 
 	/**
 	 * 
@@ -453,7 +453,7 @@ class GraphOutline extends JComponent
 			// Repaints the complete buffer
 			repaintTripleBuffer(null);
 		}
-		catch (OutOfMemoryError error)
+		on OutOfMemoryError catch (error)
 		{
 			// ignore
 		}

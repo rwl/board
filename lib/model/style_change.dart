@@ -16,15 +16,15 @@ class StyleChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	StyleChange()
-	{
-		this(null, null, null);
-	}
+//	StyleChange()
+//	{
+//		this(null, null, null);
+//	}
 
 	/**
 	 * 
 	 */
-	StyleChange(GraphModel model, Object cell, String style)
+	StyleChange([GraphModel model=null, Object cell=null, String style=null])
 	{
 		super(model);
 		this.cell = cell;
@@ -86,7 +86,7 @@ class StyleChange extends AtomicGraphModelChange
 	void execute()
 	{
 		style = previous;
-		previous = ((GraphModel) model)._styleForCellChanged(cell,
+		previous = (model as GraphModel)._styleForCellChanged(cell,
 				previous);
 	}
 

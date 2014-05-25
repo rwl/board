@@ -706,7 +706,7 @@ class Constants
 
 	/**
 	 * Defines the key for the dashed pattern style. The type of this value
-	 * is <code>float[]</code> and the value specifies the dashed pattern 
+	 * is <code>List<float></code> and the value specifies the dashed pattern 
 	 * to apply to edges drawn with this style. This style allows the user
 	 * to specify a custom-defined dash pattern. This is done using a series
 	 * of numbers. Dash styles are defined in terms of the length of the dash

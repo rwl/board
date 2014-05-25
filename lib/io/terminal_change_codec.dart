@@ -20,15 +20,15 @@ class TerminalChangeCodec extends ObjectCodec
 	 */
 	TerminalChangeCodec()
 	{
-		this(new TerminalChange(), new String[] { "model", "previous" },
-				new String[] { "cell", "terminal" }, null);
+		this(new TerminalChange(), new List<String> { "model", "previous" },
+				new List<String> { "cell", "terminal" }, null);
 	}
 
 	/**
 	 * Constructs a new model codec for the given arguments.
 	 */
-	TerminalChangeCodec(Object template, String[] exclude,
-			String[] idrefs, Map<String, String> mapping)
+	TerminalChangeCodec(Object template, List<String> exclude,
+			List<String> idrefs, Map<String, String> mapping)
 	{
 		super(template, exclude, idrefs, mapping);
 	}

@@ -7,7 +7,7 @@ part of graph.generatorfunction;
  */
 class GeneratorConstFunction extends GeneratorFunction
 {
-	private double _cost;
+	double _cost;
 	
 	GeneratorConstFunction(double cost)
 	{

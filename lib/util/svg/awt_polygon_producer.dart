@@ -33,7 +33,7 @@ class AWTPolygonProducer extends AWTPolylineProducer
 	 * @param text The text representation of the path specification.
 	 * @param wr The winding rule to use for creating the path.
 	 */
-	static Shape createShape(String text, int wr) throws ParseException
+	static Shape createShape(String text, int wr) //throws ParseException
 	{
 		AWTPolygonProducer ph = new AWTPolygonProducer();
 
@@ -47,7 +47,7 @@ class AWTPolygonProducer extends AWTPolylineProducer
 	/**
 	 * Implements {@link PointsHandler#endPoints()}.
 	 */
-	void endPoints() throws ParseException
+	void endPoints() //throws ParseException
 	{
 		path.closePath();
 	}

@@ -19,7 +19,7 @@ class MouseTracker implements MouseListener, MouseMotionListener
 	/**
 	 * 
 	 */
-	private final GraphOutline graphOutline;
+	final GraphOutline graphOutline;
 
 	/**
 	 * @param graphOutline

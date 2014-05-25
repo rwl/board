@@ -21,15 +21,15 @@ class ChildChangeCodec extends ObjectCodec
 	 */
 	ChildChangeCodec()
 	{
-		this(new ChildChange(), new String[] { "model", "child",
-				"previousIndex" }, new String[] { "parent", "previous" }, null);
+		this(new ChildChange(), new List<String> { "model", "child",
+				"previousIndex" }, new List<String> { "parent", "previous" }, null);
 	}
 
 	/**
 	 * Constructs a new model codec for the given arguments.
 	 */
-	ChildChangeCodec(Object template, String[] exclude,
-			String[] idrefs, Map<String, String> mapping)
+	ChildChangeCodec(Object template, List<String> exclude,
+			List<String> idrefs, Map<String, String> mapping)
 	{
 		super(template, exclude, idrefs, mapping);
 	}

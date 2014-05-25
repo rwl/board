@@ -50,17 +50,17 @@ class CellEditor implements ICellEditor
 	/**
 	 * 
 	 */
-	private static final String _CANCEL_EDITING = "cancel-editing";
+	static final String _CANCEL_EDITING = "cancel-editing";
 
 	/**
 	 * 
 	 */
-	private static final String _INSERT_BREAK = "insert-break";
+	static final String _INSERT_BREAK = "insert-break";
 
 	/**
 	 * 
 	 */
-	private static final String _SUBMIT_TEXT = "submit-text";
+	static final String _SUBMIT_TEXT = "submit-text";
 
 	/**
 	 * 

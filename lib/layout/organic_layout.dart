@@ -1077,7 +1077,7 @@ class OrganicLayout extends GraphLayout
 		// This function is only performed during fine tuning for performance
 		if (isOptimizeEdgeDistance && isFineTuning)
 		{
-			int[] edges = v[i].relevantEdges;
+			List<int> edges = v[i].relevantEdges;
 			for (int j = 0; j < edges.length; j++)
 			{
 				// Note that the distance value is squared
@@ -1186,7 +1186,7 @@ class OrganicLayout extends GraphLayout
 	 *            the cell index to which the edges are not connected
 	 * @return Array of all interesting Edges
 	 */
-	int[] getRelevantEdges(int cellIndex)
+	List<int> getRelevantEdges(int cellIndex)
 	{
 		ArrayList<Integer> relevantEdgeList = new List<Integer>(e.length);
 
@@ -1199,7 +1199,7 @@ class OrganicLayout extends GraphLayout
 			}
 		}
 
-		int[] relevantEdgeArray = new int[relevantEdgeList.size()];
+		List<int> relevantEdgeArray = new int[relevantEdgeList.size()];
 		Iterator<Integer> iter = relevantEdgeList.iterator();
 
 		//Reform the list into an array but replace Integer values with ints
@@ -1221,7 +1221,7 @@ class OrganicLayout extends GraphLayout
 	 *            the cell index to which the edges are connected
 	 * @return Array of all connected Edges
 	 */
-	int[] getConnectedEdges(int cellIndex)
+	List<int> getConnectedEdges(int cellIndex)
 	{
 		ArrayList<Integer> connectedEdgeList = new List<Integer>(e.length);
 
@@ -1234,7 +1234,7 @@ class OrganicLayout extends GraphLayout
 			}
 		}
 
-		int[] connectedEdgeArray = new int[connectedEdgeList.size()];
+		List<int> connectedEdgeArray = new int[connectedEdgeList.size()];
 		Iterator<Integer> iter = connectedEdgeList.iterator();
 
 		// Reform the list into an array but replace Integer values with ints
@@ -1274,13 +1274,13 @@ class OrganicLayout extends GraphLayout
 		 * All edge that repel this cell, only used for nodes. This array
 		 * is equivalent to all edges unconnected to this node
 		 */
-		protected int[] relevantEdges = null;
+		protected List<int> relevantEdges = null;
 
 		/**
 		 * the index of all connected edges in the <code>e</code> array
 		 * to this node. This is only used for nodes.
 		 */
-		protected int[] connectedEdges = null;
+		protected List<int> connectedEdges = null;
 
 		/**
 		 * The x-coordinate position of this cell, nodes only
@@ -1327,7 +1327,7 @@ class OrganicLayout extends GraphLayout
 		/**
 		 * @return the relevantEdges
 		 */
-		public int[] getRelevantEdges()
+		public List<int> getRelevantEdges()
 		{
 			return relevantEdges;
 		}
@@ -1335,7 +1335,7 @@ class OrganicLayout extends GraphLayout
 		/**
 		 * @param relevantEdges the relevantEdges to set
 		 */
-		public void setRelevantEdges(int[] relevantEdges)
+		public void setRelevantEdges(List<int> relevantEdges)
 		{
 			this.relevantEdges = relevantEdges;
 		}
@@ -1343,7 +1343,7 @@ class OrganicLayout extends GraphLayout
 		/**
 		 * @return the connectedEdges
 		 */
-		public int[] getConnectedEdges()
+		public List<int> getConnectedEdges()
 		{
 			return connectedEdges;
 		}
@@ -1351,7 +1351,7 @@ class OrganicLayout extends GraphLayout
 		/**
 		 * @param connectedEdges the connectedEdges to set
 		 */
-		public void setConnectedEdges(int[] connectedEdges)
+		public void setConnectedEdges(List<int> connectedEdges)
 		{
 			this.connectedEdges = connectedEdges;
 		}

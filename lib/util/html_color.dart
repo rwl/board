@@ -60,7 +60,7 @@ class HtmlColor
 	 *                if the specified string cannot be interpreted as a
 	 *                hexidecimal integer
 	 */
-	static Color parseColor(String str) throws NumberFormatException
+	static Color parseColor(String str) //throws NumberFormatException
 	{
 		if (str == null || str.equals(Constants.NONE))
 		{
@@ -84,9 +84,9 @@ class HtmlColor
 		{
 			// Adds support for special short notation of hex colors, eg. #abc=#aabbcc
 			str = new String(
-					new char[] { '#', str.charAt(1), str.charAt(1),
+					[ '#', str.charAt(1), str.charAt(1),
 							str.charAt(2), str.charAt(2), str.charAt(3),
-							str.charAt(3) });
+							str.charAt(3) ]);
 		}
 
 		int value = 0;
@@ -99,15 +99,15 @@ class HtmlColor
 				tmp = tmp.substring(1);
 			}
 
-			value = (int) Long.parseLong(tmp, 16);
+			value = Long.parse(tmp, 16) as int;
 		}
-		catch (NumberFormatException nfe)
+		on NumberFormatException catch (nfe)
 		{
 			try
 			{
 				value = Long.decode(str).intValue();
 			}
-			catch (NumberFormatException e)
+			on NumberFormatException catch (e)
 			{
 				// ignores exception and returns black
 			}
@@ -118,7 +118,7 @@ class HtmlColor
 
 	static Color _parseRgb(String rgbString)
 	{
-		String[] values = rgbString.split("[,()]");
+		List<String> values = rgbString.split("[,()]");
 
 		String red = values[1].trim();
 		String green = values[2].trim();
@@ -157,7 +157,7 @@ class HtmlColor
 	/**
 	 * Initializes HTML color table.
 	 */
-	static
+	init()
 	{
 		_htmlColors.put("aliceblue", parseColor("#F0F8FF"));
 		_htmlColors.put("antiquewhite", parseColor("#FAEBD7"));

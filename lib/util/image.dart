@@ -8,13 +8,13 @@ part of graph.util;
 /**
  * Implements a 2-dimensional point with double precision coordinates.
  */
-class Image implements Serializable, Cloneable
+class Image //implements Serializable, Cloneable
 {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 8541229679513497585L;
+//	private static final long serialVersionUID = 8541229679513497585L;
 
 	/**
 	 * Holds the path or URL for the image.

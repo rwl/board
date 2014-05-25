@@ -62,7 +62,7 @@ class GraphHierarchyModel
 	int _dfsCount = 0;
 
 	/** High value to start source layering scan rank value from */
-	private final int _SOURCESCANSTARTRANK = 100000000;
+	final int _SOURCESCANSTARTRANK = 100000000;
 
 	/**
 	 * Creates an internal ordered graph model using the vertices passed in. If
@@ -629,7 +629,7 @@ class GraphHierarchyModel
 	 */
 	void dfs(GraphHierarchyNode parent, GraphHierarchyNode root,
 			GraphHierarchyEdge connectingEdge, CellVisitor visitor,
-			Set<GraphHierarchyNode> seen, int[] ancestors, int childHash,
+			Set<GraphHierarchyNode> seen, List<int> ancestors, int childHash,
 			int layer)
 	{
 		// Explanation of custom hash set. Previously, the ancestors variable

@@ -24,15 +24,15 @@ class GenericChangeCodec extends ObjectCodec
 	 */
 	GenericChangeCodec(Object template, String fieldname)
 	{
-		this(template, new String[] { "model", "previous" },
-				new String[] { "cell" }, null, fieldname);
+		this(template, new List<String> { "model", "previous" },
+				new List<String> { "cell" }, null, fieldname);
 	}
 
 	/**
 	 * Constructs a new model codec for the given arguments.
 	 */
-	GenericChangeCodec(Object template, String[] exclude,
-			String[] idrefs, Map<String, String> mapping, String fieldname)
+	GenericChangeCodec(Object template, List<String> exclude,
+			List<String> idrefs, Map<String, String> mapping, String fieldname)
 	{
 		super(template, exclude, idrefs, mapping);
 

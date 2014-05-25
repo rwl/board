@@ -18,15 +18,15 @@ class GraphMlGraph
 	/**
 	 * Map with the vertex cells added in the addNode method.
 	 */
-	private static HashMap<String, Object> _cellsMap = new HashMap<String, Object>();
+	static HashMap<String, Object> _cellsMap = new HashMap<String, Object>();
 
-	private String _id = "";
+	String _id = "";
 
-	private String _edgedefault = "";
+	String _edgedefault = "";
 
-	private List<GraphMlNode> _nodes = new List<GraphMlNode>();
+	List<GraphMlNode> _nodes = new List<GraphMlNode>();
 
-	private List<GraphMlEdge> _edges = new List<GraphMlEdge>();
+	List<GraphMlEdge> _edges = new List<GraphMlEdge>();
 
 	/**
 	 * Constructs a graph with id and edge default direction.
@@ -191,7 +191,7 @@ class GraphMlGraph
 	 * @param node Gml Node
 	 * @return The inserted Vertex cell.
 	 */
-	private Cell _addNode(Graph graph, Object parent, GraphMlNode node)
+	Cell _addNode(Graph graph, Object parent, GraphMlNode node)
 	{
 		Cell v1;
 		String id = node.getNodeId();
@@ -232,7 +232,7 @@ class GraphMlGraph
 	 * @param source Port Name.
 	 * @return point that represent the port value.
 	 */
-	private static Point2d _portValue(String source)
+	static Point2d _portValue(String source)
 	{
 		Point2d fromConstraint = null;
 
@@ -278,12 +278,12 @@ class GraphMlGraph
 			{
 				try
 				{
-					String[] s = source.split(",");
+					List<String> s = source.split(",");
 					Double x = Double.valueOf(s[0]);
 					Double y = Double.valueOf(s[1]);
 					fromConstraint = new Point2d(x, y);
 				}
-				catch (Exception e)
+				on Exception catch (e)
 				{
 					e.printStackTrace();
 				}
@@ -299,7 +299,7 @@ class GraphMlGraph
 	 * @param edge Gml Edge
 	 * @return The inserted edge cell.
 	 */
-	private static Cell _addEdge(Graph graph, Object parent, GraphMlEdge edge)
+	static Cell _addEdge(Graph graph, Object parent, GraphMlEdge edge)
 	{
 		//Get source and target vertex
 		Point2d fromConstraint = null;

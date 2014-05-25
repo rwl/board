@@ -19,14 +19,14 @@ class GraphMlKeyManager
 	 * Map with the key elements of the document.<br/>
 	 * The key is the key's ID.
 	 */
-	private HashMap<String, GraphMlKey> _keyMap = new HashMap<String, GraphMlKey>();
+	HashMap<String, GraphMlKey> _keyMap = new HashMap<String, GraphMlKey>();
 
-	private static GraphMlKeyManager _keyManager = null;
+	static GraphMlKeyManager _keyManager = null;
 
 	/**
 	 * Singleton pattern requires private constructor.
 	 */
-	private GraphMlKeyManager()
+	GraphMlKeyManager()
 	{
 	}
 

@@ -45,7 +45,7 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell
 	 * Assigns a unique hashcode for each node. Used by the model dfs instead
 	 * of copying HashSets
 	 */
-	int[] hashCode;
+	List<int> hashCode;
 
 	/**
 	 * Constructs an internal node to represent the specified real graph cell

@@ -53,7 +53,7 @@ class GraphMlCodec
 	/**
 	 * Remove all the elements in the Defined Maps.
 	 */
-	private static void _cleanMaps()
+	static void _cleanMaps()
 	{
 		GraphMlKeyManager.getInstance().getKeyMap().clear();
 	}
@@ -120,7 +120,7 @@ class GraphMlCodec
 	/**
 	 * Creates the key elements for the encode.
 	 */
-	private static void _createKeyElements()
+	static void _createKeyElements()
 	{
 		HashMap<String, GraphMlKey> keyMap = GraphMlKeyManager.getInstance()
 				.getKeyMap();
@@ -227,7 +227,7 @@ class GraphMlCodec
 	 * @param point Point2d
 	 * @return Name of the port
 	 */
-	private static String _pointToPortString(Point2d point)
+	static String _pointToPortString(Point2d point)
 	{
 		String port = "";
 		if (point != null)
@@ -282,7 +282,7 @@ class GraphMlCodec
 	 * @param graph Graph that contains the edges.
 	 * @return Returns the list Gmledges with the elements added.
 	 */
-	private static List<GraphMlEdge> _encodeEdges(List<GraphMlEdge> Gmledges,
+	static List<GraphMlEdge> _encodeEdges(List<GraphMlEdge> Gmledges,
 			Object parent, Graph graph)
 	{
 		List<Object> edges = graph.getChildEdges(parent);

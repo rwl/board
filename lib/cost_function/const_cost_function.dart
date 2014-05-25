@@ -6,7 +6,7 @@ part of graph.costfunction;
  */
 class ConstCostFunction extends CostFunction
 {
-	private double _cost;
+	double _cost;
 	
 	ConstCostFunction(double cost)
 	{

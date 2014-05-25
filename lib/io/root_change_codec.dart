@@ -22,15 +22,15 @@ class RootChangeCodec extends ObjectCodec
 	 */
 	RootChangeCodec()
 	{
-		this(new RootChange(), new String[] { "model", "previous", "root" },
+		this(new RootChange(), new List<String> { "model", "previous", "root" },
 				null, null);
 	}
 
 	/**
 	 * Constructs a new model codec for the given arguments.
 	 */
-	RootChangeCodec(Object template, String[] exclude,
-			String[] idrefs, Map<String, String> mapping)
+	RootChangeCodec(Object template, List<String> exclude,
+			List<String> idrefs, Map<String, String> mapping)
 	{
 		super(template, exclude, idrefs, mapping);
 	}

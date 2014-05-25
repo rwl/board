@@ -179,7 +179,7 @@ class CoordinateAssignment implements HierarchicalLayoutStage
 	GraphAbstractHierarchyCell[][] _previousLayerConnectedCache;
 
 	/** The logger for this class */
-	private static Logger _logger = Logger
+	static Logger _logger = Logger
 			.getLogger("com.jgraph.layout.hierarchical.JGraphCoordinateAssignment");
 
 	/**
@@ -318,7 +318,7 @@ class CoordinateAssignment implements HierarchicalLayoutStage
 	 * @param model
 	 *            an internal model of the hierarchical layout
 	 */
-	private void _minNode(GraphHierarchyModel model)
+	void _minNode(GraphHierarchyModel model)
 	{
 		// Queue all nodes
 		LinkedList<_WeightedCellSorter> nodeList = new LinkedList<_WeightedCellSorter>();
@@ -502,7 +502,7 @@ class CoordinateAssignment implements HierarchicalLayoutStage
 	 * @param model
 	 *            an internal model of the hierarchical layout
 	 */
-	private void _medianPos(int i, GraphHierarchyModel model)
+	void _medianPos(int i, GraphHierarchyModel model)
 	{
 		// Reverse sweep direction each time through this method
 		bool downwardSweep = (i % 2 == 0);
@@ -709,7 +709,7 @@ class CoordinateAssignment implements HierarchicalLayoutStage
 	 *            the cells the specified cell is connected to
 	 * @return the total weighted of the edges between these cells
 	 */
-	private int _calculatedWeightedValue(
+	int _calculatedWeightedValue(
 			GraphAbstractHierarchyCell currentCell,
 			Collection<GraphAbstractHierarchyCell> collection)
 	{
@@ -747,14 +747,14 @@ class CoordinateAssignment implements HierarchicalLayoutStage
 	 *            the layer number of this rank
 	 * @return the median rank order ( not x position ) of the connected cells
 	 */
-	private int _medianXValue(List<Object> connectedCells, int rankValue)
+	int _medianXValue(List<Object> connectedCells, int rankValue)
 	{
 		if (connectedCells.length == 0)
 		{
 			return 0;
 		}
 
-		int[] medianValues = new int[connectedCells.length];
+		List<int> medianValues = new int[connectedCells.length];
 
 		for (int i = 0; i < connectedCells.length; i++)
 		{
@@ -789,7 +789,7 @@ class CoordinateAssignment implements HierarchicalLayoutStage
 	 * @param model
 	 *            an internal model of the hierarchical layout
 	 */
-	private void _initialCoords(Graph facade, GraphHierarchyModel model)
+	void _initialCoords(Graph facade, GraphHierarchyModel model)
 	{
 		_calculateWidestRank(facade, model);
 
@@ -1828,7 +1828,7 @@ class CoordinateAssignment implements HierarchicalLayoutStage
 		{
 			_logger.setLevel(level);
 		}
-		catch (SecurityException e)
+		on SecurityException catch (e)
 		{
 			// Probably running in an applet
 		}

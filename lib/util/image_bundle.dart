@@ -62,7 +62,7 @@ class ImageBundle
 	 */
 	void putImage(String key, String value)
 	{
-		_images.put(key, value);
+		_images[key] = value;
 	}
 
 	/**
@@ -72,7 +72,7 @@ class ImageBundle
 	{
 		if (key != null)
 		{
-			return _images.get(key);
+			return _images[key];
 		}
 		
 		return null;

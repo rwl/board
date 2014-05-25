@@ -536,7 +536,7 @@ class Stencil implements IShape
 
 			if (value != null)
 			{
-				String[] tmp = value.split(" ");
+				List<String> tmp = value.split(" ");
 				StringBuffer pat = new StringBuffer();
 
 				for (int i = 0; i < tmp.length; i++)
@@ -604,7 +604,7 @@ class Stencil implements IShape
 			{
 				defaultValue = (int) Math.floor(Float.parseFloat(value));
 			}
-			catch (NumberFormatException e)
+			on NumberFormatException catch (e)
 			{
 				// ignore
 			}
@@ -635,7 +635,7 @@ class Stencil implements IShape
 			{
 				defaultValue = Double.parseDouble(value);
 			}
-			catch (NumberFormatException e)
+			on NumberFormatException catch (e)
 			{
 				// ignore
 			}

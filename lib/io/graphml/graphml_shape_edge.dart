@@ -11,13 +11,13 @@ part of graph.io.graphml;
  */
 class GraphMlShapeEdge
 {
-	private String _text = "";
+	String _text = "";
 
-	private String _style = "";
+	String _style = "";
 
-	private String _edgeSource;
+	String _edgeSource;
 
-	private String _edgeTarget;
+	String _edgeTarget;
 
 	/**
 	 * Construct a Shape Edge with text and style.

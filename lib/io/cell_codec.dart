@@ -22,7 +22,7 @@ class CellCodec extends ObjectCodec
 	 */
 	CellCodec()
 	{
-		this(new Cell(), null, new String[] { "parent", "source", "target" },
+		this(new Cell(), null, new List<String> { "parent", "source", "target" },
 				null);
 	}
 
@@ -37,7 +37,7 @@ class CellCodec extends ObjectCodec
 	/**
 	 * Constructs a new cell codec for the given arguments.
 	 */
-	CellCodec(Object template, String[] exclude, String[] idrefs,
+	CellCodec(Object template, List<String> exclude, List<String> idrefs,
 			Map<String, String> mapping)
 	{
 		super(template, exclude, idrefs, mapping);

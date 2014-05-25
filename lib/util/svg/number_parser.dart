@@ -32,7 +32,7 @@ public abstract class NumberParser extends AbstractParser
 	/**
 	 * Parses the content of the buffer and converts it to a float.
 	 */
-	float parseFloat() throws ParseException, IOException
+	float parseFloat() //throws ParseException, IOException
 	{
 		int mant = 0;
 		int mantDig = 0;
@@ -358,7 +358,7 @@ public abstract class NumberParser extends AbstractParser
 	/**
 	 * Array of powers of ten. Using double instead of float gives a tiny bit more precision.
 	 */
-	private static final List<double> pow10 = new double[128];
+	static final List<double> pow10 = new double[128];
 
 	static
 	{

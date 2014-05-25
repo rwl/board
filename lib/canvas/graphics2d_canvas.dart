@@ -108,7 +108,7 @@ class Graphics2DCanvas extends BasicCanvas
 		{
 			_rendererPane = new CellRendererPane();
 		}
-		catch (Exception e)
+		on Exception catch (e)
 		{
 			// ignore
 		}
@@ -486,10 +486,10 @@ class Graphics2DCanvas extends BasicCanvas
 		bool dashed = Utils.isTrue(style, Constants.STYLE_DASHED);
 		if (dashed)
 		{
-			float[] dashPattern = Utils.getFloatArray(style,
+			List<float> dashPattern = Utils.getFloatArray(style,
 					Constants.STYLE_DASH_PATTERN,
 					Constants.DEFAULT_DASHED_PATTERN, " ");
-			float[] scaledDashPattern = new float[dashPattern.length];
+			List<float> scaledDashPattern = new float[dashPattern.length];
 
 			for (int i = 0; i < dashPattern.length; i++)
 			{

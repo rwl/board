@@ -29,7 +29,7 @@ class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -2543899557644889853L;
+	static final long serialVersionUID = -2543899557644889853L;
 
 	/**
 	 * 

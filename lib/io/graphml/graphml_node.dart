@@ -14,15 +14,15 @@ part of graph.io.graphml;
  */
 class GraphMlNode
 {
-	private String _nodeId;
+	String _nodeId;
 
-	private GraphMlData _nodeData;
+	GraphMlData _nodeData;
 
-	private List<GraphMlGraph> _nodeGraphList = new List<GraphMlGraph>();
+	List<GraphMlGraph> _nodeGraphList = new List<GraphMlGraph>();
 
-	private HashMap<String, GraphMlData> _nodeDataMap = new HashMap<String, GraphMlData>();
+	HashMap<String, GraphMlData> _nodeDataMap = new HashMap<String, GraphMlData>();
 
-	private HashMap<String, GraphMlPort> _nodePortMap = new HashMap<String, GraphMlPort>();
+	HashMap<String, GraphMlPort> _nodePortMap = new HashMap<String, GraphMlPort>();
 
 	/**
 	 * Construct a node with Id and one data element

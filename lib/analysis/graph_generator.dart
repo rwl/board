@@ -15,9 +15,9 @@ class GraphGenerator
 	//	private GeneratorFunction generatorFunction = new GeneratorRandomFunction(0,1,2);
 	//	private GeneratorFunction generatorFunction = new GeneratorConstFunction(1.5);
 	//	private GeneratorFunction generatorFunction = new GeneratorRandomIntFunction(0, 20);
-	private GeneratorFunction _generatorFunction = null;
+	GeneratorFunction _generatorFunction = null;
 
-	private CostFunction _costFunction = null;
+	CostFunction _costFunction = null;
 
 	GraphGenerator(GeneratorFunction generatorFunction, CostFunction costFunction)
 	{
@@ -331,7 +331,7 @@ class GraphGenerator
 		}
 
 		//now we set up the starting conditions
-		int[] currCoords = new int[2];
+		List<int> currCoords = new int[2];
 
 		//the main loop
 		for (int i = 0; i < (xDim * yDim); i++)
@@ -473,7 +473,7 @@ class GraphGenerator
 	 * @return int[x,y] where x and y are the coordinates in the grid or chess-board
 	 * Note that both dimensions must be positive
 	 */
-	int[] getVertexGridCoords(int xDim, int yDim, int value)
+	List<int> getVertexGridCoords(int xDim, int yDim, int value)
 	{
 		if (value > ((yDim * xDim) - 1) || xDim < 0 || yDim < 0 || value < 0)
 		{
@@ -484,7 +484,7 @@ class GraphGenerator
 		int xCoord = (value - yCoord * xDim) + 1;
 		yCoord += 1;
 
-		int[] coords = new int[2];
+		List<int> coords = new int[2];
 		coords[0] = xCoord;
 		coords[1] = yCoord;
 		return coords;
@@ -500,7 +500,7 @@ class GraphGenerator
 	 * @return vertex on the desired coordinates.
 	 * Note that both dimensions and both coordinates must be positive
 	 */
-	private Object _getVertexFromGrid(List<Object> vertices, int xDim, int yDim, int xCoord, int yCoord)
+	Object _getVertexFromGrid(List<Object> vertices, int xDim, int yDim, int xCoord, int yCoord)
 	{
 		if (xCoord > xDim || yCoord > yDim || xDim < 1 || yDim < 1 || xCoord < 1 || yCoord < 1)
 		{
@@ -537,7 +537,7 @@ class GraphGenerator
 		}
 
 		//now we set up the starting conditions
-		int[] currCoords = new int[2];
+		List<int> currCoords = new int[2];
 
 		//the main loop
 		for (int i = 0; i < (xDim * yDim); i++)
@@ -1060,7 +1060,7 @@ class GraphGenerator
 	 * @param fullSize
 	 * @return ring size
 	 */
-	private double _getRingSize(int currIndex, int branchSize, double fullSize)
+	double _getRingSize(int currIndex, int branchSize, double fullSize)
 	{
 		if (currIndex < 1 || currIndex > branchSize || branchSize < 1 || fullSize < 0)
 		{
@@ -1155,7 +1155,7 @@ class GraphGenerator
 		{
 			oneSpanningTree(aGraph, true, true);
 		}
-		catch (StructuralException e)
+		on StructuralException catch (e)
 		{
 			System.out.println(e);
 		}
@@ -1164,7 +1164,7 @@ class GraphGenerator
 		{
 			GraphStructure.makeTreeDirected(aGraph, vertices[(int) Math.round(Math.random() * (vertices.length - 1))]);
 		}
-		catch (StructuralException e)
+		on StructuralException catch (e)
 		{
 			System.out.println(e);
 		}
@@ -1243,7 +1243,7 @@ class GraphGenerator
 	 * Also, unconnected graphs are made connected!
 	 * @throws StructuralException the graph has to be simple (no self-loops and no multiple edges) 
 	 */
-	void oneSpanningTree(AnalysisGraph aGraph, bool forceConnected, bool forceSimple) throws StructuralException
+	void oneSpanningTree(AnalysisGraph aGraph, bool forceConnected, bool forceSimple) //throws StructuralException
 	{
 		Graph graph = aGraph.getGraph();
 
@@ -1298,7 +1298,7 @@ class GraphGenerator
 	 * @throws StructuralException not all size combinations are allowed, see wikipedia for a more detailed explanation
 	 * Returns a Knight's Tour graph
 	 */
-	void getKnightTour(AnalysisGraph aGraph, int xDim, int yDim, int startVertexValue) throws StructuralException
+	void getKnightTour(AnalysisGraph aGraph, int xDim, int yDim, int startVertexValue) //throws StructuralException
 	{
 		if (xDim < 5 || yDim < 5)
 		{
@@ -1323,7 +1323,7 @@ class GraphGenerator
 
 		//now we set up the starting conditions
 		int currValue = startVertexValue;
-		int[] currCoords = new int[2];
+		List<int> currCoords = new int[2];
 		Object oldMove = vertices[startVertexValue];
 		currCoords = getVertexGridCoords(xDim, yDim, startVertexValue);
 		resultPath.add(oldMove);
@@ -1363,7 +1363,7 @@ class GraphGenerator
 	 * @param resultPath
 	 * @return
 	 */
-	private Object _getNextKnightMove(AnalysisGraph aGraph, int xDim, int yDim, int xCoord, int yCoord, ArrayList<Object> resultPath)
+	Object _getNextKnightMove(AnalysisGraph aGraph, int xDim, int yDim, int xCoord, int yCoord, ArrayList<Object> resultPath)
 	{
 		List<Object> possibleMoves = getKnightMoveVertexes(aGraph, xDim, yDim, xCoord, yCoord);
 		//get the position with minimum possible moves
@@ -1376,7 +1376,7 @@ class GraphGenerator
 		for (int i = 0; i < possibleMoves.length; i++)
 		{
 			int currValue = (int) costFunction.getCost(new CellState(view, possibleMoves[i], null));
-			int[] currCoords = getVertexGridCoords(xDim, yDim, currValue);
+			List<int> currCoords = getVertexGridCoords(xDim, yDim, currValue);
 			int currMoveNum = _getPossibleKnightMoveCount(aGraph, xDim, yDim, currCoords[0], currCoords[1]);
 			float currDistance = _getDistanceFromGridCenter(xDim, yDim, currValue);
 
@@ -1400,7 +1400,7 @@ class GraphGenerator
 	 * @param yCoord
 	 * @return
 	 */
-	private int _getPossibleKnightMoveCount(AnalysisGraph aGraph, int xDim, int yDim, int xCoord, int yCoord)
+	int _getPossibleKnightMoveCount(AnalysisGraph aGraph, int xDim, int yDim, int xCoord, int yCoord)
 	{
 		//check all possible 8 locations
 
@@ -1513,11 +1513,11 @@ class GraphGenerator
 	 * @param currValue
 	 * @return
 	 */
-	private float _getDistanceFromGridCenter(int xDim, int yDim, int currValue)
+	float _getDistanceFromGridCenter(int xDim, int yDim, int currValue)
 	{
 		float centerX = (xDim + 1) / 2f;
 		float centerY = (yDim + 1) / 2f;
-		int[] currCoords = getVertexGridCoords(xDim, yDim, currValue);
+		List<int> currCoords = getVertexGridCoords(xDim, yDim, currValue);
 		float x = Math.abs(centerX - currCoords[0]);
 		float y = Math.abs(centerY - currCoords[1]);
 

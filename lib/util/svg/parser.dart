@@ -30,7 +30,7 @@ abstract class Parser
 	/**
 	 * Parses the given string
 	 */
-	void parse(String s) throws ParseException;
+	void parse(String s) //throws ParseException;
 
 	/**
 	 * Allows an application to register an error event handler.

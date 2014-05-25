@@ -12,7 +12,7 @@ part of graph.util;
  * about 50% faster for decoding large arrays. This implementation is about twice as fast on very small
  * arrays (&lt 30 bytes). If source/destination is a <code>String</code> this
  * version is about three times as fast due to the fact that the Commons Codec result has to be recoded
- * to a <code>String</code> from <code>byte[]</code>, which is very expensive.<br><br>
+ * to a <code>String</code> from <code>List<byte></code>, which is very expensive.<br><br>
  *
  * This encode/decode algorithm doesn't create any temporary arrays as many other codecs do, it only
  * allocates the resulting array. This produces less garbage and it is possible to handle arrays twice
@@ -72,10 +72,10 @@ part of graph.util;
 
 class Base64
 {
-	private static final char[] _CA = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+	static final char[] _CA = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
 			.toCharArray();
 
-	private static final int[] _IA = new int[256];
+	static final List<int> _IA = new int[256];
 	static
 	{
 		Arrays.fill(_IA, -1);
@@ -95,7 +95,7 @@ class Base64
 	 * little faster.
 	 * @return A BASE64 encoded array. Never <code>null</code>.
 	 */
-	final static char[] encodeToChar(byte[] sArr, bool lineSep)
+	final static char[] encodeToChar(List<byte> sArr, bool lineSep)
 	{
 		// Check special case
 		int sLen = sArr != null ? sArr.length : 0;
@@ -152,7 +152,7 @@ class Base64
 	 * @return The decoded array of bytes. May be of length 0. Will be <code>null</code> if the legal characters
 	 * (including '=') isn't divideable by 4.  (I.e. definitely corrupted).
 	 */
-	final static byte[] decode(char[] sArr)
+	final static List<byte> decode(char[] sArr)
 	{
 		// Check special case
 		int sLen = sArr != null ? sArr.length : 0;
@@ -178,7 +178,7 @@ class Base64
 
 		int len = ((sLen - sepCnt) * 6 >> 3) - pad;
 
-		byte[] dArr = new byte[len]; // Preallocate byte[] of exact length
+		List<byte> dArr = new byte[len]; // Preallocate List<byte> of exact length
 
 		for (int s = 0, d = 0; d < len;)
 		{
@@ -213,7 +213,7 @@ class Base64
 	 * @param sArr The source array. Length 0 will return an empty array. <code>null</code> will throw an exception.
 	 * @return The decoded array of bytes. May be of length 0.
 	 */
-	final static byte[] decodeFast(char[] sArr)
+	final static List<byte> decodeFast(char[] sArr)
 	{
 		// Check special case
 		int sLen = sArr.length;
@@ -236,7 +236,7 @@ class Base64
 		int sepCnt = sLen > 76 ? (sArr[76] == '\r' ? cCnt / 78 : 0) << 1 : 0;
 
 		int len = ((cCnt - sepCnt) * 6 >> 3) - pad; // The number of decoded bytes
-		byte[] dArr = new byte[len]; // Preallocate byte[] of exact length
+		List<byte> dArr = new byte[len]; // Preallocate List<byte> of exact length
 
 		// Decode all but the last 0 - 2 bytes.
 		int d = 0;
@@ -274,17 +274,17 @@ class Base64
 	}
 
 	// ****************************************************************************************
-	// *  byte[] version
+	// *  List<byte> version
 	// ****************************************************************************************
 
-	/** Encodes a raw byte array into a BASE64 <code>byte[]</code> representation i accordance with RFC 2045.
+	/** Encodes a raw byte array into a BASE64 <code>List<byte></code> representation i accordance with RFC 2045.
 	 * @param sArr The bytes to convert. If <code>null</code> or length 0 an empty array will be returned.
 	 * @param lineSep Optional "\r\n" after 76 characters, unless end of file.<br>
 	 * No line separator will be in breach of RFC 2045 which specifies max 76 per line but will be a
 	 * little faster.
 	 * @return A BASE64 encoded array. Never <code>null</code>.
 	 */
-	final static byte[] encodeToByte(byte[] sArr, bool lineSep)
+	final static List<byte> encodeToByte(List<byte> sArr, bool lineSep)
 	{
 		// Check special case
 		int sLen = sArr != null ? sArr.length : 0;
@@ -294,7 +294,7 @@ class Base64
 		int eLen = (sLen / 3) * 3; // Length of even 24-bits.
 		int cCnt = ((sLen - 1) / 3 + 1) << 2; // Returned character count
 		int dLen = cCnt + (lineSep ? (cCnt - 1) / 76 << 1 : 0); // Length of returned array
-		byte[] dArr = new byte[dLen];
+		List<byte> dArr = new byte[dLen];
 
 		// Encode even 24-bits
 		for (int s = 0, d = 0, cc = 0; s < eLen;)
@@ -341,7 +341,7 @@ class Base64
 	 * @return The decoded array of bytes. May be of length 0. Will be <code>null</code> if the legal characters
 	 * (including '=') isn't divideable by 4. (I.e. definitely corrupted).
 	 */
-	final static byte[] decode(byte[] sArr)
+	final static List<byte> decode(List<byte> sArr)
 	{
 		// Check special case
 		int sLen = sArr.length;
@@ -365,7 +365,7 @@ class Base64
 
 		int len = ((sLen - sepCnt) * 6 >> 3) - pad;
 
-		byte[] dArr = new byte[len]; // Preallocate byte[] of exact length
+		List<byte> dArr = new byte[len]; // Preallocate List<byte> of exact length
 
 		for (int s = 0, d = 0; d < len;)
 		{
@@ -394,7 +394,7 @@ class Base64
 	}
 
 	/** Decodes a BASE64 encoded byte array that is known to be resonably well formatted. The method is about twice as
-	 * fast as {@link #decode(byte[])}. The preconditions are:<br>
+	 * fast as {@link #decode(List<byte>)}. The preconditions are:<br>
 	 * + The array must have a line length of 76 chars OR no line separators at all (one line).<br>
 	 * + Line separator must be "\r\n", as specified in RFC 2045
 	 * + The array must not contain illegal characters within the encoded string<br>
@@ -402,7 +402,7 @@ class Base64
 	 * @param sArr The source array. Length 0 will return an empty array. <code>null</code> will throw an exception.
 	 * @return The decoded array of bytes. May be of length 0.
 	 */
-	final static byte[] decodeFast(byte[] sArr)
+	final static List<byte> decodeFast(List<byte> sArr)
 	{
 		// Check special case
 		int sLen = sArr.length;
@@ -425,7 +425,7 @@ class Base64
 		int sepCnt = sLen > 76 ? (sArr[76] == '\r' ? cCnt / 78 : 0) << 1 : 0;
 
 		int len = ((cCnt - sepCnt) * 6 >> 3) - pad; // The number of decoded bytes
-		byte[] dArr = new byte[len]; // Preallocate byte[] of exact length
+		List<byte> dArr = new byte[len]; // Preallocate List<byte> of exact length
 
 		// Decode all but the last 0 - 2 bytes.
 		int d = 0;
@@ -473,7 +473,7 @@ class Base64
 	 * little faster.
 	 * @return A BASE64 encoded array. Never <code>null</code>.
 	 */
-	final static String encodeToString(byte[] sArr, bool lineSep)
+	final static String encodeToString(List<byte> sArr, bool lineSep)
 	{
 		// Reuse char[] since we can't create a String incrementally anyway and StringBuffer/Builder would be slower.
 		return new String(encodeToChar(sArr, lineSep));
@@ -487,7 +487,7 @@ class Base64
 	 * @return The decoded array of bytes. May be of length 0. Will be <code>null</code> if the legal characters
 	 * (including '=') isn't divideable by 4.  (I.e. definitely corrupted).
 	 */
-	final static byte[] decode(String str)
+	final static List<byte> decode(String str)
 	{
 		// Check special case
 		int sLen = str != null ? str.length() : 0;
@@ -514,7 +514,7 @@ class Base64
 
 		int len = ((sLen - sepCnt) * 6 >> 3) - pad;
 
-		byte[] dArr = new byte[len]; // Preallocate byte[] of exact length
+		List<byte> dArr = new byte[len]; // Preallocate List<byte> of exact length
 
 		for (int s = 0, d = 0; d < len;)
 		{
@@ -549,7 +549,7 @@ class Base64
 	 * @param s The source string. Length 0 will return an empty array. <code>null</code> will throw an exception.
 	 * @return The decoded array of bytes. May be of length 0.
 	 */
-	final static byte[] decodeFast(String s)
+	final static List<byte> decodeFast(String s)
 	{
 		// Check special case
 		int sLen = s.length();
@@ -573,7 +573,7 @@ class Base64
 				: 0;
 
 		int len = ((cCnt - sepCnt) * 6 >> 3) - pad; // The number of decoded bytes
-		byte[] dArr = new byte[len]; // Preallocate byte[] of exact length
+		List<byte> dArr = new byte[len]; // Preallocate List<byte> of exact length
 
 		// Decode all but the last 0 - 2 bytes.
 		int d = 0;

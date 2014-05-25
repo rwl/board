@@ -76,7 +76,7 @@ class ConnectorShape extends BasicShape
 	/**
 	 * 
 	 */
-	private void _translatePoint(List<Point2d> points, int index, Point2d offset)
+	void _translatePoint(List<Point2d> points, int index, Point2d offset)
 	{
 		if (offset != null)
 		{

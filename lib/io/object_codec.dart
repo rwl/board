@@ -33,7 +33,7 @@ class ObjectCodec
 	/**
 	 * Immutable empty set.
 	 */
-	private static Set<String> _EMPTY_SET = new HashSet<String>();
+	static Set<String> _EMPTY_SET = new HashSet<String>();
 
 	/**
 	 * Holds the template object associated with this codec.
@@ -91,7 +91,7 @@ class ObjectCodec
 	 * @param idrefs Optional array of fieldnames to be converted to/from references.
 	 * @param mapping Optional mapping from field- to attributenames.
 	 */
-	ObjectCodec(Object template, String[] exclude, String[] idrefs,
+	ObjectCodec(Object template, List<String> exclude, List<String> idrefs,
 			Map<String, String> mapping)
 	{
 		this._template = template;
@@ -220,12 +220,12 @@ class ObjectCodec
 				}
 			}
 		}
-		catch (InstantiationException e)
+		on InstantiationException catch (e)
 		{
 			// ignore
 			e.printStackTrace();
 		}
-		catch (IllegalAccessException e)
+		on IllegalAccessException catch (e)
 		{
 			// ignore
 			e.printStackTrace();
@@ -687,7 +687,7 @@ class ObjectCodec
 					return field;
 				}
 			}
-			catch (Exception e)
+			on Exception catch (e)
 			{
 				// ignore
 			}
@@ -735,7 +735,7 @@ class ObjectCodec
 							new Class[] { field.getType() });
 				}
 			}
-			catch (Exception e1)
+			on Exception catch (e1)
 			{
 				// ignore
 			}
@@ -773,7 +773,7 @@ class ObjectCodec
 					return method;
 				}
 			}
-			catch (Exception e)
+			on Exception catch (e)
 			{
 				// ignore
 			}
@@ -809,11 +809,11 @@ class ObjectCodec
 					}
 				}
 			}
-			catch (IllegalAccessException e1)
+			on IllegalAccessException catch (e1)
 			{
 				value = _getFieldValueWithAccessor(obj, field);
 			}
-			catch (Exception e)
+			on Exception catch (e)
 			{
 				// ignore
 			}
@@ -840,7 +840,7 @@ class ObjectCodec
 					value = method.invoke(obj, (List<Object>) null);
 				}
 			}
-			catch (Exception e2)
+			on Exception catch (e2)
 			{
 				// ignore
 			}
@@ -880,11 +880,11 @@ class ObjectCodec
 				}
 			}
 		}
-		catch (IllegalAccessException e1)
+		on IllegalAccessException catch (e1)
 		{
 			_setFieldValueWithAccessor(obj, field, value);
 		}
-		catch (Exception e)
+		on Exception catch (e)
 		{
 			// ignore
 		}
@@ -918,7 +918,7 @@ class ObjectCodec
 					method.invoke(obj, new List<Object> { value });
 				}
 			}
-			catch (Exception e2)
+			on Exception catch (e2)
 			{
 				System.err.println("setFieldValue: " + e2 + " on "
 						+ obj.getClass().getSimpleName() + "."
@@ -1238,7 +1238,7 @@ class ObjectCodec
 						dec.decode(xml, into);
 					}
 				}
-				catch (Exception e)
+				on Exception catch (e)
 				{
 					System.err.println("Cannot process include: " + name);
 				}

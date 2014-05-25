@@ -30,5 +30,5 @@ abstract class ErrorHandler
 	/**
 	 * Called when a parse error occurs.
 	 */
-	void error(ParseException e) throws ParseException;
+	void error(ParseException e) //throws ParseException;
 }

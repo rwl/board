@@ -10,7 +10,7 @@ class Gray extends PngEncodeParam
 
 	// bKGD chunk
 
-	private bool backgroundSet = false;
+	bool backgroundSet = false;
 
 	/**
 	 * Suppresses the 'bKGD' chunk from being output.
@@ -51,7 +51,7 @@ class Gray extends PngEncodeParam
 
 	// bKGD chunk
 
-	private int backgroundPaletteGray;
+	int backgroundPaletteGray;
 
 	/**
 	 * Sets the suggested gray level of the background.
@@ -85,7 +85,7 @@ class Gray extends PngEncodeParam
 
 	// tRNS chunk
 
-	private int[] transparency;
+	List<int> transparency;
 
 	/**
 	 * Sets the gray value to be used to denote transparency.
@@ -122,9 +122,9 @@ class Gray extends PngEncodeParam
 		return gray;
 	}
 
-	private int bitShift;
+	int bitShift;
 
-	private bool bitShiftSet = false;
+	bool bitShiftSet = false;
 
 	/**
 	 * Sets the desired bit shift for a grayscale image.

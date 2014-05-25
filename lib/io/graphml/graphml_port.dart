@@ -13,9 +13,9 @@ part of graph.io.graphml;
  */
 class GraphMlPort
 {
-	private String _name;
+	String _name;
 
-	private HashMap<String, GraphMlData> _portDataMap = new HashMap<String, GraphMlData>();
+	HashMap<String, GraphMlData> _portDataMap = new HashMap<String, GraphMlData>();
 
 	/**
 	 * Construct a Port with name.

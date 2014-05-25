@@ -37,8 +37,8 @@ class StylesheetCodec extends ObjectCodec
 	/**
 	 * Constructs a new model codec for the given arguments.
 	 */
-	StylesheetCodec(Object template, String[] exclude,
-			String[] idrefs, Map<String, String> mapping)
+	StylesheetCodec(Object template, List<String> exclude,
+			List<String> idrefs, Map<String, String> mapping)
 	{
 		super(template, exclude, idrefs, mapping);
 	}

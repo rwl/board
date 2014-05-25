@@ -72,7 +72,7 @@ public abstract class GraphViewReader extends DefaultHandler
 	 * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
 	 */
 	void startElement(String uri, String localName, String qName,
-			Attributes atts) throws SAXException
+			Attributes atts) //throws SAXException
 	{
 		String tagName = qName.toUpperCase();
 		Map<String, Object> attrs = new Hashtable<String, Object>();

@@ -35,7 +35,7 @@ class ModelCodec extends ObjectCodec
 	/**
 	 * Constructs a new model codec for the given arguments.
 	 */
-	ModelCodec(Object template, String[] exclude, String[] idrefs,
+	ModelCodec(Object template, List<String> exclude, List<String> idrefs,
 			Map<String, String> mapping)
 	{
 		super(template, exclude, idrefs, mapping);

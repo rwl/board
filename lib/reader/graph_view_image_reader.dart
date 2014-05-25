@@ -245,7 +245,7 @@ class GraphViewImageReader extends GraphViewReader
 	 */
 	static BufferedImage convert(String filename,
 			GraphViewImageReader viewReader)
-			throws ParserConfigurationException, SAXException, IOException
+			//throws ParserConfigurationException, SAXException, IOException
 	{
 		return convert(new InputSource(new FileInputStream(filename)),
 				viewReader);
@@ -261,7 +261,7 @@ class GraphViewImageReader extends GraphViewReader
 	 */
 	static BufferedImage convert(InputSource inputSource,
 			GraphViewImageReader viewReader)
-			throws ParserConfigurationException, SAXException, IOException
+			//throws ParserConfigurationException, SAXException, IOException
 	{
 		BufferedImage result = null;
 		SAXParser parser = SAXParserFactory.newInstance().newSAXParser();

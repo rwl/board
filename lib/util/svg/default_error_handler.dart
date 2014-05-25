@@ -32,7 +32,7 @@ class DefaultErrorHandler implements ErrorHandler
 	 * Implements {@link ErrorHandler#error(ParseException)}.
 	 * Throws the given exception.
 	 */
-	void error(ParseException e) throws ParseException
+	void error(ParseException e) //throws ParseException
 	{
 		throw e;
 	}
