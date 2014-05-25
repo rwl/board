@@ -23,18 +23,18 @@ class ConnectionConstraint
 	/**
 	 * Constructs an empty connection constraint.
 	 */
-	ConnectionConstraint()
-	{
-		this(null);
-	}
+//	ConnectionConstraint()
+//	{
+//		this(null);
+//	}
 
 	/**
 	 * Constructs a connection constraint for the given point.
 	 */
-	ConnectionConstraint(Point2d point)
-	{
-		this(point, true);
-	}
+//	ConnectionConstraint(Point2d point)
+//	{
+//		this(point, true);
+//	}
 
 	/**
 	 * Constructs a new connection constraint for the given point and boolean
@@ -45,7 +45,7 @@ class ConnectionConstraint
 	 * @param perimeter Optional bool that specifies if the fixed point should be
 	 * projected onto the perimeter of the terminal. Default is true.
 	 */
-	ConnectionConstraint(Point2d point, bool perimeter)
+	ConnectionConstraint([Point2d point=null, bool perimeter=true])
 	{
 		setPoint(point);
 		setPerimeter(perimeter);

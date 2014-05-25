@@ -15,7 +15,7 @@ class CellState extends Rect
 	/**
 	 * 
 	 */
-	static final long serialVersionUID = 7588335615324083354L;
+//	static final long serialVersionUID = 7588335615324083354L;
 
 	/**
 	 * Reference to the enclosing graph view.
@@ -528,29 +528,28 @@ class CellState extends Rect
 
 			for (int i = 0; i < _absolutePoints.size(); i++)
 			{
-				clone._absolutePoints.add((Point2d) _absolutePoints.get(i)
-						.clone());
+				clone._absolutePoints.add(_absolutePoints.get(i).clone() as Point2d);
 			}
 		}
 
 		if (_origin != null)
 		{
-			clone._origin = (Point2d) _origin.clone();
+			clone._origin = _origin.clone() as Point2d;
 		}
 
 		if (_absoluteOffset != null)
 		{
-			clone._absoluteOffset = (Point2d) _absoluteOffset.clone();
+			clone._absoluteOffset = _absoluteOffset.clone() as Point2d;
 		}
 
 		if (_labelBounds != null)
 		{
-			clone._labelBounds = (Rect) _labelBounds.clone();
+			clone._labelBounds = _labelBounds.clone() as Rect;
 		}
 
 		if (_boundingBox != null)
 		{
-			clone._boundingBox = (Rect) _boundingBox.clone();
+			clone._boundingBox = _boundingBox.clone() as Rect;
 		}
 
 		clone._terminalDistance = _terminalDistance;

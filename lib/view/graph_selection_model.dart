@@ -149,7 +149,7 @@ class GraphSelectionModel extends EventSource
 	{
 		if (cell != null)
 		{
-			setCells(new List<Object> { cell });
+			setCells([ cell ]);
 		}
 		else
 		{
@@ -166,7 +166,7 @@ class GraphSelectionModel extends EventSource
 		{
 			if (_singleSelection)
 			{
-				cells = new List<Object> { _getFirstSelectableCell(cells) };
+				cells = [ _getFirstSelectableCell(cells) ];
 			}
 
 			List<Object> tmp = new List<Object>(cells.length);
@@ -216,7 +216,7 @@ class GraphSelectionModel extends EventSource
 	{
 		if (cell != null)
 		{
-			addCells(new List<Object> { cell });
+			addCells([ cell ]);
 		}
 	}
 
@@ -232,7 +232,7 @@ class GraphSelectionModel extends EventSource
 			if (_singleSelection)
 			{
 				remove = this._cells;
-				cells = new List<Object> { _getFirstSelectableCell(cells) };
+				cells = [ _getFirstSelectableCell(cells) ];
 			}
 
 			List<Object> tmp = new List<Object>(cells.length);
@@ -256,7 +256,7 @@ class GraphSelectionModel extends EventSource
 	{
 		if (cell != null)
 		{
-			removeCells(new List<Object> { cell });
+			removeCells([ cell ]);
 		}
 	}
 
@@ -321,69 +321,69 @@ class GraphSelectionModel extends EventSource
 		}
 	}
 
-	/**
-	 *
-	 */
-	static class SelectionChange implements UndoableChange
-	{
+}
 
-		/**
-		 * 
-		 */
-		protected GraphSelectionModel model;
+/**
+ *
+ */
+static class SelectionChange implements UndoableChange
+{
 
-		/**
-		 * 
-		 */
-		protected Collection<Object> added, removed;
+  /**
+   * 
+   */
+  protected GraphSelectionModel model;
 
-		/**
-		 * 
-		 * @param model
-		 * @param added
-		 * @param removed
-		 */
-		public SelectionChange(GraphSelectionModel model,
-				Collection<Object> added, Collection<Object> removed)
-		{
-			this.model = model;
-			this.added = (added != null) ? new List<Object>(added) : null;
-			this.removed = (removed != null) ? new List<Object>(removed)
-					: null;
-		}
+  /**
+   * 
+   */
+  protected Collection<Object> added, removed;
 
-		/**
-		 * 
-		 */
-		public void execute()
-		{
-			if (removed != null)
-			{
-				Iterator<Object> it = removed.iterator();
+  /**
+   * 
+   * @param model
+   * @param added
+   * @param removed
+   */
+  public SelectionChange(GraphSelectionModel model,
+      Collection<Object> added, Collection<Object> removed)
+  {
+    this.model = model;
+    this.added = (added != null) ? new List<Object>(added) : null;
+    this.removed = (removed != null) ? new List<Object>(removed)
+        : null;
+  }
 
-				while (it.hasNext())
-				{
-					model._cellRemoved(it.next());
-				}
-			}
+  /**
+   * 
+   */
+  public void execute()
+  {
+    if (removed != null)
+    {
+      Iterator<Object> it = removed.iterator();
 
-			if (added != null)
-			{
-				Iterator<Object> it = added.iterator();
+      while (it.hasNext())
+      {
+        model._cellRemoved(it.next());
+      }
+    }
 
-				while (it.hasNext())
-				{
-					model._cellAdded(it.next());
-				}
-			}
+    if (added != null)
+    {
+      Iterator<Object> it = added.iterator();
 
-			Collection<Object> tmp = added;
-			added = removed;
-			removed = tmp;
-			model.fireEvent(new EventObj(Event.CHANGE, "added", added,
-					"removed", removed));
-		}
+      while (it.hasNext())
+      {
+        model._cellAdded(it.next());
+      }
+    }
 
-	}
+    Collection<Object> tmp = added;
+    added = removed;
+    removed = tmp;
+    model.fireEvent(new EventObj(Event.CHANGE, "added", added,
+        "removed", removed));
+  }
 
 }

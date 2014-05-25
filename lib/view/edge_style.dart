@@ -6,6 +6,26 @@ part of graph.view;
 //import java.util.List;
 
 /**
+ * Implements an edge style function. At the time the function is called, the result
+ * array contains a placeholder (null) for the first absolute point,
+ * that is, the point where the edge and source terminal are connected.
+ * The implementation of the style then adds all intermediate waypoints
+ * except for the last point, that is, the connection point between the
+ * edge and the target terminal. The first ant the last point in the
+ * result array are then replaced with mxPoints that take into account
+ * the terminal's perimeter and next point on the edge.
+ * 
+ * @param state Cell state that represents the edge to be updated.
+ * @param source Cell state that represents the source terminal.
+ * @param target Cell state that represents the target terminal.
+ * @param points List of relative control points.
+ * @param result Array of points that represent the actual points of the
+ * edge.
+ */
+typedef void EdgeStyleFunction(CellState state, CellState source, CellState target,
+    List<Point2d> points, List<Point2d> result);
+    
+/**
  * Provides various edge styles to be used as the values for
  * Constants.STYLE_EDGE in a cell style. Alternatevly, the Constants.
  * EDGESTYLE_* constants can be used to reference an edge style via the
@@ -15,44 +35,10 @@ class EdgeStyle
 {
 
 	/**
-	 * Defines the requirements for an edge style function.
-	 */
-	interface EdgeStyleFunction
-	{
-
-		/**
-		 * Implements an edge style function. At the time the function is called, the result
-		 * array contains a placeholder (null) for the first absolute point,
-		 * that is, the point where the edge and source terminal are connected.
-		 * The implementation of the style then adds all intermediate waypoints
-		 * except for the last point, that is, the connection point between the
-		 * edge and the target terminal. The first ant the last point in the
-		 * result array are then replaced with mxPoints that take into account
-		 * the terminal's perimeter and next point on the edge.
-		 * 
-		 * @param state Cell state that represents the edge to be updated.
-		 * @param source Cell state that represents the source terminal.
-		 * @param target Cell state that represents the target terminal.
-		 * @param points List of relative control points.
-		 * @param result Array of points that represent the actual points of the
-		 * edge.
-		 */
-		void apply(CellState state, CellState source, CellState target,
-				List<Point2d> points, List<Point2d> result);
-
-	}
-
-	/**
 	 * Provides an entity relation style for edges (as used in database
 	 * schema diagrams).
 	 */
-	static EdgeStyleFunction EntityRelation = new EdgeStyleFunction()
-	{
-
-		/* (non-Javadoc)
-		 * @see graph.view.EdgeStyle.EdgeStyleFunction#apply(graph.view.CellState, graph.view.CellState, graph.view.CellState, java.util.List, java.util.List)
-		 */
-		public void apply(CellState state, CellState source,
+	static EdgeStyleFunction EntityRelation = (CellState state, CellState source,
 				CellState target, List<Point2d> points, List<Point2d> result)
 		{
 			GraphView view = state.getView();
@@ -165,19 +151,12 @@ class EdgeStyle
 
 				result.add(arr);
 			}
-		}
-	};
+		};
 
 	/**
 	 * Provides a self-reference, aka. loop.
 	 */
-	static EdgeStyleFunction Loop = new EdgeStyleFunction()
-	{
-
-		/* (non-Javadoc)
-		 * @see graph.view.EdgeStyle.EdgeStyleFunction#apply(graph.view.CellState, graph.view.CellState, graph.view.CellState, java.util.List, java.util.List)
-		 */
-		public void apply(CellState state, CellState source,
+	static EdgeStyleFunction Loop = (CellState state, CellState source,
 				CellState target, List<Point2d> points, List<Point2d> result)
 		{
 			if (source != null)
@@ -262,21 +241,14 @@ class EdgeStyle
 				result.add(new Point2d(x - dx, y - dy));
 				result.add(new Point2d(x + dx, y + dy));
 			}
-		}
-	};
+		};
 
 	/**
 	 * Uses either SideToSide or TopToBottom depending on the horizontal
 	 * flag in the cell style. SideToSide is used if horizontal is true or
 	 * unspecified.
 	 */
-	static EdgeStyleFunction ElbowConnector = new EdgeStyleFunction()
-	{
-
-		/* (non-Javadoc)
-		 * @see graph.view.EdgeStyle.EdgeStyleFunction#apply(graph.view.CellState, graph.view.CellState, graph.view.CellState, java.util.List, java.util.List)
-		 */
-		public void apply(CellState state, CellState source,
+	static EdgeStyleFunction ElbowConnector = (CellState state, CellState source,
 				CellState target, List<Point2d> points, List<Point2d> result)
 		{
 			Point2d pt = (points != null && points.size() > 0) ? points.get(0)
@@ -336,19 +308,12 @@ class EdgeStyle
 				EdgeStyle.SideToSide.apply(state, source, target, points,
 						result);
 			}
-		}
-	};
+		};
 
 	/**
 	 * Provides a vertical elbow edge.
 	 */
-	static EdgeStyleFunction SideToSide = new EdgeStyleFunction()
-	{
-
-		/* (non-Javadoc)
-		 * @see graph.view.EdgeStyle.EdgeStyleFunction#apply(graph.view.CellState, graph.view.CellState, graph.view.CellState, java.util.List, java.util.List)
-		 */
-		public void apply(CellState state, CellState source,
+	static EdgeStyleFunction SideToSide = (CellState state, CellState source,
 				CellState target, List<Point2d> points, List<Point2d> result)
 		{
 			GraphView view = state.getView();
@@ -432,19 +397,12 @@ class EdgeStyle
 					}
 				}
 			}
-		}
-	};
+		};
 
 	/**
 	 * Provides a horizontal elbow edge.
 	 */
-	static EdgeStyleFunction TopToBottom = new EdgeStyleFunction()
-	{
-
-		/* (non-Javadoc)
-		 * @see graph.view.EdgeStyle.EdgeStyleFunction#apply(graph.view.CellState, graph.view.CellState, graph.view.CellState, java.util.List, java.util.List)
-		 */
-		public void apply(CellState state, CellState source,
+	static EdgeStyleFunction TopToBottom = (CellState state, CellState source,
 				CellState target, List<Point2d> points, List<Point2d> result)
 		{
 			GraphView view = state.getView();
@@ -528,20 +486,13 @@ class EdgeStyle
 					}
 				}
 			}
-		}
-	};
+		};
 
 	/**
 	 * Implements an orthogonal edge style. Use <mxEdgeSegmentHandler>
 	 * as an interactive handler for this style.
 	 */
-	static EdgeStyleFunction SegmentConnector = new EdgeStyleFunction()
-	{
-
-		/* (non-Javadoc)
-		 * @see graph.view.EdgeStyle.EdgeStyleFunction#apply(graph.view.CellState, graph.view.CellState, graph.view.CellState, java.util.List, java.util.List)
-		 */
-		public void apply(CellState state, CellState source, CellState target, List<Point2d> hints, List<Point2d> result)
+	static EdgeStyleFunction SegmentConnector = (CellState state, CellState source, CellState target, List<Point2d> hints, List<Point2d> result)
 		{
 			// Creates array of all way- and terminalpoints
 			List<Point2d> pts = state._absolutePoints;
@@ -557,7 +508,7 @@ class EdgeStyle
 			}
 			else if (pt != null)
 			{
-				pt = (Point2d) pt.clone();
+				pt = pt.clone() as Point2d;
 			}
 
 			int lastInx = pts.size() - 1;
@@ -651,7 +602,7 @@ class EdgeStyle
 						pt.setX(hint.getX());
 					}
 
-					result.add((Point2d) pt.clone());
+					result.add(pt.clone() as Point2d);
 				}
 			}
 			else
@@ -699,46 +650,45 @@ class EdgeStyle
 					result.remove(result.size() - 1);
 				}
 			}
-		}
-	};
+		};
 	
 	static double orthBuffer = 10;
 
-	static List<double>[] dirVectors = new List<double>[] { { -1, 0 },
-			{ 0, -1 }, { 1, 0 }, { 0, 1 }, { -1, 0 }, { 0, -1 }, { 1, 0 } };
+	static List<List<double>> dirVectors = [ [ -1, 0 ],
+			[ 0, -1 ], [ 1, 0 ], [ 0, 1 ], [ -1, 0 ], [ 0, -1 ], [ 1, 0 ] ];
 
-	static List<double>[] wayPoints1 = new double[128][2];
+	static List<List<double>> wayPoints1 = new List<double>(128);//[2];
 
 	/**
 	 * The default routing patterns for orthogonal connections
 	 */
-	static List<int>[][] routePatterns = new List<int>[][] {
-			{ { 513, 2308, 2081, 2562 }, { 513, 1090, 514, 2184, 2114, 2561 },
-					{ 513, 1090, 514, 2564, 2184, 2562 },
-					{ 513, 2308, 2561, 1090, 514, 2568, 2308 } },
-			{ { 514, 1057, 513, 2308, 2081, 2562 }, { 514, 2184, 2114, 2561 },
-					{ 514, 2184, 2562, 1057, 513, 2564, 2184 },
-					{ 514, 1057, 513, 2568, 2308, 2561 } },
-			{ { 1090, 514, 1057, 513, 2308, 2081, 2562 }, { 2114, 2561 },
-					{ 1090, 2562, 1057, 513, 2564, 2184 },
-					{ 1090, 514, 1057, 513, 2308, 2561, 2568 } },
-			{ { 2081, 2562 }, { 1057, 513, 1090, 514, 2184, 2114, 2561 },
-					{ 1057, 513, 1090, 514, 2184, 2562, 2564 },
-					{ 1057, 2561, 1090, 514, 2568, 2308 } } };
+	static List<List<List<int>>> routePatterns = [
+			[ [ 513, 2308, 2081, 2562 ], [ 513, 1090, 514, 2184, 2114, 2561 ],
+					[ 513, 1090, 514, 2564, 2184, 2562 ],
+					[ 513, 2308, 2561, 1090, 514, 2568, 2308 ] ],
+			[ [ 514, 1057, 513, 2308, 2081, 2562 ], [ 514, 2184, 2114, 2561 ],
+					[ 514, 2184, 2562, 1057, 513, 2564, 2184 ],
+					[ 514, 1057, 513, 2568, 2308, 2561 ] ],
+			[ [ 1090, 514, 1057, 513, 2308, 2081, 2562 ], [ 2114, 2561 ],
+					[ 1090, 2562, 1057, 513, 2564, 2184 ],
+					[ 1090, 514, 1057, 513, 2308, 2561, 2568 ] ],
+			[ [ 2081, 2562 ], [ 1057, 513, 1090, 514, 2184, 2114, 2561 ],
+					[ 1057, 513, 1090, 514, 2184, 2562, 2564 ],
+					[ 1057, 2561, 1090, 514, 2568, 2308 ] ] ];
 
 	/**
 	 * Overriden routing patterns for orthogonal connections
 	 * where the vertices have 
 	 */
-	static List<int>[][] inlineRoutePatterns = new List<int>[][] {
-			{ null, { 2114, 2568 }, null, null },
-			{ null, { 514, 2081, 2114, 2568 }, null, null },
-			{ null, { 2114, 2561 }, null, null },
-			{ { 2081, 2562 }, { 1057, 2114, 2568 }, { 2184, 2562 }, null } };
+	static List<List<List<int>>> inlineRoutePatterns = [
+			[ null, [ 2114, 2568 ], null, null ],
+			[ null, [ 514, 2081, 2114, 2568 ], null, null ],
+			[ null, [ 2114, 2561 ], null, null ],
+			[ [ 2081, 2562 ], [ 1057, 2114, 2568 ], [ 2184, 2562 ], null ] ];
 
-	static List<double> vertexSeperations = new double[5];
+	static List<double> vertexSeperations = new List<double>(5);
 
-	static List<double>[] limits = new double[2][9];
+	static List<List<double>> limits = new List<List<double>>(2);//[9];
 
 	static int LEFT_MASK = 32;
 
@@ -775,13 +725,7 @@ class EdgeStyle
 	 * An orthogonal connector that avoids connecting vertices and 
 	 * respects port constraints
 	 */
-	static EdgeStyleFunction OrthConnector = new EdgeStyleFunction()
-	{
-
-		/* (non-Javadoc)
-		 * @see graph.view.EdgeStyle.EdgeStyleFunction#apply(graph.view.CellState, graph.view.CellState, graph.view.CellState, java.util.List, java.util.List)
-		 */
-		public void apply(CellState state, CellState source,
+	static EdgeStyleFunction OrthConnector = (CellState state, CellState source,
 				CellState target, List<Point2d> points, List<Point2d> result)
 		{
 			Graph graph = state._view._graph;
@@ -801,25 +745,27 @@ class EdgeStyle
 				// Determine the side(s) of the source and target vertices
 				// that the edge may connect to
 				// portConstraint -> [source, target];
-				int portConstraList<int> = new int[2];
+				List<int> portConstraint = new List<int>(2);
 				portConstraint[0] = Utils.getPortConstraints(source, state,
 						true);
 				portConstraint[1] = Utils.getPortConstraints(target, state,
 						false);
 
 				// dir -> [source, target] initial direction leaving vertices
-				int dir[] = new int[2];
+				List<int> dir = new List<int>(2);
 
 				// Work out which faces of the vertices present against each other
 				// in a way that would allow a 3-segment connection if port constraints
 				// permitted.
 				// geo -> [source, target] [x, y, width, height]
-				List<double>[] geo = new double[2][4];
+				List<List<double>> geo = new List<double>(2);//[4];
+				geo[0] = new List<double>(4);
 				geo[0][0] = source.getX();
 				geo[0][1] = source.getY();
 				geo[0][2] = source.getWidth();
 				geo[0][3] = source.getHeight();
 
+				geo[1] = new List<double>(4);
 				geo[1][0] = target.getX();
 				geo[1][1] = target.getY();
 				geo[1][2] = target.getWidth();
@@ -877,8 +823,8 @@ class EdgeStyle
 				Point2d currentTerm = p0;
 
 				// constraint[source, target] [x, y]
-				double constraList<int>[] = new List<double>[] { { 0.5, 0.5 },
-						{ 0.5, 0.5 } };
+				List<double> constraint = [ [ 0.5, 0.5 ],
+						[ 0.5, 0.5 ] ];
 
 				for (int i = 0; i < 2; i++)
 				{
@@ -931,9 +877,9 @@ class EdgeStyle
 
 				// Work through the preferred orientations by relative positioning
 				// of the vertices and list them in preferred and available order
-				int dirPref[] = new int[2];
-				int horPref[] = new int[2];
-				int vertPref[] = new int[2];
+				List<int> dirPref = new List<int>(2);
+				List<int> horPref = new List<int>(2);
+				List<int> vertPref = new List<int>(2);
 
 				horPref[0] = sourceLeftDist >= sourceRightDist ? Constants.DIRECTION_MASK_WEST
 						: Constants.DIRECTION_MASK_EAST;
@@ -948,7 +894,7 @@ class EdgeStyle
 				double preferredVertDist = sourceTopDist >= sourceBottomDist ? sourceTopDist
 						: sourceBottomDist;
 
-				int prefOrdering[][] = new int[2][2];
+				List<List<int>> prefOrdering = new List<List<int>>(2);//[2];
 				bool preferredOrderSet = false;
 
 				// If the preferred port isn't available, switch it
@@ -970,8 +916,7 @@ class EdgeStyle
 								.reversePortConstraints(vertPref[i]);
 					}
 
-					prefOrdering[i][0] = vertPref[i];
-					prefOrdering[i][1] = horPref[i];
+					prefOrdering[i] = [ vertPref[i], horPref[i] ];
 				}
 
 				if (preferredVertDist > scaledOrthBuffer * 2
@@ -1218,7 +1163,7 @@ class EdgeStyle
 				}
 
 			}
-		}
+		};
 
 		/**
 		 * Hook method to return the routing pattern for the given state
@@ -1228,7 +1173,7 @@ class EdgeStyle
 		 * @param dy 
 		 * @return
 		 */
-		protected List<int> getRoutePattern(List<int> dir, double quad, double dx,
+		List<int> getRoutePattern(List<int> dir, double quad, double dx,
 				double dy)
 		{
 			int sourceIndex = dir[0] == Constants.DIRECTION_MASK_EAST ? 3
