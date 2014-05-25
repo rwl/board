@@ -10,13 +10,13 @@ part of graph.util;
 /**
  * Implements a 2-dimensional point with double precision coordinates.
  */
-class Point2d implements Serializable, Cloneable
+class Point2d// implements Serializable, Cloneable
 {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 6554231393215892186L;
+//	private static final long serialVersionUID = 6554231393215892186L;
 
 	/**
 	 * Holds the x- and y-coordinates of the point. Default is 0.
@@ -26,29 +26,29 @@ class Point2d implements Serializable, Cloneable
 	/**
 	 * Constructs a new point at (0, 0).
 	 */
-	Point2d()
-	{
-		this(0, 0);
-	}
+//	Point2d()
+//	{
+//		this(0, 0);
+//	}
 
 	/**
 	 * Constructs a new point at the location of the given point.
 	 * 
 	 * @param point Point that specifies the location.
 	 */
-	Point2d(Point2D point)
+	/*Point2d(Point2D point)
 	{
 		this(point.getX(), point.getY());
-	}
+	}*/
 
 	/**
 	 * Constructs a new point at the location of the given point.
 	 * 
 	 * @param point Point that specifies the location.
 	 */
-	Point2d(Point2d point)
+	factory Point2d.from(Point2d point)
 	{
-		this(point.getX(), point.getY());
+		return new Point2d(point.getX(), point.getY());
 	}
 
 	/**
@@ -57,7 +57,7 @@ class Point2d implements Serializable, Cloneable
 	 * @param x X-coordinate of the point to be created.
 	 * @param y Y-coordinate of the point to be created.
 	 */
-	Point2d(double x, double y)
+	Point2d([double x=0.0, double y=0.0])
 	{
 		setX(x);
 		setY(y);
@@ -110,7 +110,7 @@ class Point2d implements Serializable, Cloneable
 	 */
 	Point getPoint()
 	{
-		return new Point((int) Math.round(_x), (int) Math.round(_y));
+		return new Point(_x.round() as int, _y.round() as int);
 	}
 
 	/**
@@ -121,7 +121,7 @@ class Point2d implements Serializable, Cloneable
 	{
 		if (obj is Point2d)
 		{
-			Point2d pt = (Point2d) obj;
+			Point2d pt = obj;// as Point2d;
 
 			return pt.getX() == getX() && pt.getY() == getY();
 		}
@@ -138,9 +138,9 @@ class Point2d implements Serializable, Cloneable
 
 		try
 		{
-			clone = (Point2d) super.clone();
+			clone = super.clone() as Point2d;
 		}
-		catch (CloneNotSupportedException e)
+		on CloneNotSupportedException catch (e)
 		{
 			clone = new Point2d();
 		}

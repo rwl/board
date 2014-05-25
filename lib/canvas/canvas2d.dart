@@ -14,7 +14,7 @@ part of graph.canvas;
  * - Alpha gradients (for glass effect)
  * - Encode result as image (PNG, JPG)
  */
-public interface ICanvas2D
+abstract class ICanvas2D
 {
 	/**
 	 * Saves the current state of the canvas.

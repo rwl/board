@@ -522,7 +522,7 @@ class EdgeHandler extends CellHandler
 
 					if (points == null)
 					{
-						points = Arrays.asList(new Point2d[] { point });
+						points = Arrays.asList(new List<Point2d> { point });
 					}
 					else if (_index - 1 < points.size())
 					{

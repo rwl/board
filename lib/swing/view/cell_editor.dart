@@ -20,7 +20,7 @@ part of graph.swing.view;
 //import javax.swing.KeyStroke;
 //import javax.swing.text.JTextComponent;
 
-public interface ICellEditor
+abstract class ICellEditor
 {
 
   /**

@@ -15,7 +15,7 @@ part of graph.layout.hierarchical.stage;
  * <code>run</code> method with a parameter for the hierarchical layout model
  * that is shared between the layout stages.
  */
-public interface HierarchicalLayoutStage
+abstract class HierarchicalLayoutStage
 {
 
 	/**

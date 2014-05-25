@@ -15,7 +15,7 @@ class Curve
 	/**
 	 * A collection of arrays of curve points
 	 */
-	Map<String, Point2d[]> _points;
+	Map<String, List<Point2d>> _points;
 
 	// Rectangle just completely enclosing branch and label/
 	double _minXBounds = 10000000;
@@ -30,7 +30,7 @@ class Curve
 	 * An array of arrays of intervals. These intervals define the distance
 	 * along the edge (0 to 1) that each point lies
 	 */
-	Map<String, double[]> _intervals;
+	Map<String, List<double>> _intervals;
 
 	/**
 	 * The curve lengths of the curves
@@ -45,7 +45,7 @@ class Curve
 	/**
 	 * Defines the key for the label curve index
 	 */
-	static String LABEL_CURVE = "Label_curve";;
+	static String LABEL_CURVE = "Label_curve";
 
 	/**
 	 * Indicates that an invalid position on a curve was requested
@@ -100,18 +100,21 @@ class Curve
 	/**
 	 * 
 	 */
-	Curve()
-	{
-	}
+//	Curve()
+//	{
+//	}
 
 	/**
 	 * 
 	 */
-	Curve(List<Point2d> points)
+	Curve([List<Point2d> points=null])
 	{
+	  if (points == null) {
+	    return;
+	  }
 		bool nullPoints = false;
 
-		for (Point2d point : points)
+		for (Point2d point in points)
 		{
 			if (point == null)
 			{
@@ -132,7 +135,7 @@ class Curve
 	 */
 	int _getLowerIndexOfSegment(String index, double distance)
 	{
-		double[] curveIntervals = getIntervals(index);
+		List<double> curveIntervals = getIntervals(index);
 
 		if (curveIntervals == null)
 		{
@@ -235,8 +238,8 @@ class Curve
 	 */
 	Line getCurveParallel(String index, double distance)
 	{
-		Point2d[] pointsCurve = getCurvePoints(index);
-		double[] curveIntervals = getIntervals(index);
+		List<Point2d> pointsCurve = getCurvePoints(index);
+		List<double> curveIntervals = getIntervals(index);
 
 		if (pointsCurve != null && pointsCurve.length > 0
 				&& curveIntervals != null && distance >= 0.0 && distance <= 1.0)
@@ -281,10 +284,10 @@ class Curve
 	 * @return a sequence of point representing the curve section or null
 	 * 			if it cannot be calculated
 	 */
-	Point2d[] getCurveSection(String index, double start, double end)
+	List<Point2d> getCurveSection(String index, double start, double end)
 	{
-		Point2d[] pointsCurve = getCurvePoints(index);
-		double[] curveIntervals = getIntervals(index);
+		List<Point2d> pointsCurve = getCurvePoints(index);
+		List<double> curveIntervals = getIntervals(index);
 
 		if (pointsCurve != null && pointsCurve.length > 0
 				&& curveIntervals != null && start >= 0.0 && start <= 1.0
@@ -295,7 +298,7 @@ class Curve
 			if (pointsCurve.length == 1)
 			{
 				Point2d point = pointsCurve[0];
-				return new Point2d[] { new Point2d(point.getX(), point.getY()) };
+				return [ new Point2d(point.getX(), point.getY()) ];
 			}
 
 			int lowerLimit = _getLowerIndexOfSegment(index, start);
@@ -341,7 +344,7 @@ class Curve
 				result.add(endPoint);
 			}
 
-			Point2d[] resultArray = new Point2d[result.size()];
+			List<Point2d> resultArray = new List<Point2d>(result.size());
 			return result.toArray(resultArray);
 		}
 		else
@@ -365,7 +368,7 @@ class Curve
 			return false;
 		}
 
-		Point2d[] pointsCurve = getCurvePoints(Curve.CORE_CURVE);
+		List<Point2d> pointsCurve = getCurvePoints(Curve.CORE_CURVE);
 
 		if (pointsCurve != null && pointsCurve.length > 1)
 		{
@@ -414,7 +417,7 @@ class Curve
 	Point2d intersectsRectPerimeter(String index, Rect rect)
 	{
 		Point2d result = null;
-		Point2d[] pointsCurve = getCurvePoints(index);
+		List<Point2d> pointsCurve = getCurvePoints(index);
 
 		if (pointsCurve != null && pointsCurve.length > 1)
 		{
@@ -445,8 +448,8 @@ class Curve
 	double intersectsRectPerimeterDist(String index, Rect rect)
 	{
 		double result = -1;
-		Point2d[] pointsCurve = getCurvePoints(index);
-		double[] curveIntervals = getIntervals(index);
+		List<Point2d> pointsCurve = getCurvePoints(index);
+		List<double> curveIntervals = getIntervals(index);
 
 		if (pointsCurve != null && pointsCurve.length > 1)
 		{
@@ -501,7 +504,7 @@ class Curve
 		}
 		else
 		{
-			Point2d[] pointsCurve = getCurvePoints(index);
+			List<Point2d> pointsCurve = getCurvePoints(index);
 
 			double x0 = pointsCurve[hitSeg - 1].getX();
 			double y0 = pointsCurve[hitSeg - 1].getY();
@@ -564,10 +567,10 @@ class Curve
 	 * the given rectangle, if it does so. If it does not intersect, 
 	 * -1 is returned
 	 */
-	int _intersectRectPerimeterSeg(String index, Rect rect)
-	{
-		return _intersectRectPerimeterSeg(index, rect, 1);
-	}
+//	int _intersectRectPerimeterSeg(String index, Rect rect)
+//	{
+//		return _intersectRectPerimeterSeg(index, rect, 1);
+//	}
 
 	/**
 	 * Utility method to determine within which segment the specified rectangle
@@ -584,9 +587,9 @@ class Curve
 	 * -1 is returned
 	 */
 	int _intersectRectPerimeterSeg(String index, Rect rect,
-			int startSegment)
+			[int startSegment=1])
 	{
-		Point2d[] pointsCurve = getCurvePoints(index);
+		List<Point2d> pointsCurve = getCurvePoints(index);
 
 		if (pointsCurve != null && pointsCurve.length > 1)
 		{
@@ -621,7 +624,7 @@ class Curve
 			Rect rect, int indexSeg)
 	{
 		Point2d result = null;
-		Point2d[] pointsCurve = getCurvePoints(curveIndex);
+		List<Point2d> pointsCurve = getCurvePoints(curveIndex);
 
 		if (pointsCurve != null && pointsCurve.length > 1 && indexSeg >= 0
 				&& indexSeg < pointsCurve.length)
@@ -652,8 +655,8 @@ class Curve
 	Rect getRelativeFromAbsPoint(Point2d absPoint, String index)
 	{
 		// Work out which segment the absolute point is closest to
-		Point2d[] currentCurve = getCurvePoints(index);
-		double[] currentIntervals = getIntervals(index);
+		List<Point2d> currentCurve = getCurvePoints(index);
+		List<double> currentIntervals = getIntervals(index);
 		int closestSegment = 0;
 		double closestSegDistSq = 10000000;
 		Line segment = new Line(currentCurve[0], currentCurve[1]);
@@ -972,28 +975,28 @@ class Curve
 			return;
 		}
 
-		Point2d[] corePoints = new Point2d[coreCurve.size()];
+		List<Point2d> corePoints = new List<Point2d>(coreCurve.size());
 		int count = 0;
 
-		for (Point2d point : coreCurve)
+		for (Point2d point in coreCurve)
 		{
 			corePoints[count++] = point;
 		}
 
-		_points = new Hashtable<String, Point2d[]>();
-		_curveLengths = new Hashtable<String, Double>();
+		_points = new Hashtable<String, List<Point2d>>();
+		_curveLengths = new Hashtable<String, double>();
 		_points.put(CORE_CURVE, corePoints);
 		_curveLengths.put(CORE_CURVE, lengthSpline);
 
-		double[] coreIntervalsArray = new double[coreIntervals.size()];
+		List<double> coreIntervalsArray = new List<double>(coreIntervals.size());
 		count = 0;
 
-		for (Double tempInterval : coreIntervals)
+		for (double tempInterval in coreIntervals)
 		{
 			coreIntervalsArray[count++] = tempInterval.doubleValue();
 		}
 
-		_intervals = new Hashtable<String, double[]>();
+		_intervals = new Hashtable<String, List<double>>();
 		_intervals.put(CORE_CURVE, coreIntervalsArray);
 
 		_valid = true;
@@ -1007,7 +1010,7 @@ class Curve
 	{
 		if (_valid)
 		{
-			Point2d[] centralCurve = getCurvePoints(CORE_CURVE);
+			List<Point2d> centralCurve = getCurvePoints(CORE_CURVE);
 
 			if (centralCurve != null)
 			{
@@ -1028,7 +1031,7 @@ class Curve
 	{
 		// Place the label on the "high" side of the vector
 		// joining the start and end points of the curve
-		Point2d[] currentCurve = _getBaseLabelCurve();
+		List<Point2d> currentCurve = _getBaseLabelCurve();
 
 		bool labelReversed = isLabelReversed();
 
@@ -1091,7 +1094,7 @@ class Curve
 			}
 		}
 
-		Point2d[] tmpPoints = new Point2d[labelCurvePoints.size()];
+		List<Point2d> tmpPoints = new List<Point2d>(labelCurvePoints.size());
 		_points.put(LABEL_CURVE, labelCurvePoints.toArray(tmpPoints));
 		_populateIntervals(LABEL_CURVE);
 	}
@@ -1099,16 +1102,16 @@ class Curve
 	/**
 	 * Returns the curve the label curve is too be based on
 	 */
-	Point2d[] _getBaseLabelCurve()
+	List<Point2d> _getBaseLabelCurve()
 	{
 		return getCurvePoints(CORE_CURVE);
 	}
 
 	void _populateIntervals(String index)
 	{
-		Point2d[] currentCurve = _points.get(index);
+		List<Point2d> currentCurve = _points.get(index);
 
-		double[] newIntervals = new double[currentCurve.length];
+		List<double> newIntervals = new List<double>(currentCurve.length);
 
 		double totalLength = 0.0;
 		newIntervals[0] = 0;
@@ -1155,7 +1158,7 @@ class Curve
 		bool pointsChanged = false;
 
 		// If any of the new points are null, ignore the list
-		for (Point2d point : newPoints)
+		for (Point2d point in newPoints)
 		{
 			if (point == null)
 			{
@@ -1215,12 +1218,12 @@ class Curve
 				{
 					pointsChanged = false;
 					// Translate all stored points by the translation amounts
-					Collection<Point2d[]> curves = _points.values();
+					Collection<List<Point2d>> curves = _points.values();
 
 					// Update all geometry information held by the curve
 					// That is, all the curve points, the guide points
 					// and the cached bounds
-					for (Point2d[] curve : curves)
+					for (List<Point2d> curve in curves)
 					{
 						for (int i = 0; i < curve.length; i++)
 						{
@@ -1245,7 +1248,7 @@ class Curve
 		if (pointsChanged)
 		{
 			guidePoints = new List<Point2d>(newPoints);
-			_points = new Hashtable<String, Point2d[]>();
+			_points = new Hashtable<String, List<Point2d>>();
 			_valid = false;
 		}
 	}
@@ -1258,7 +1261,7 @@ class Curve
 	 * @param index the key specifying the curve
 	 * @return the points making up that curve, or null
 	 */
-	Point2d[] getCurvePoints(String index)
+	List<Point2d> getCurvePoints(String index)
 	{
 		if (_validateCurve())
 		{
@@ -1273,7 +1276,7 @@ class Curve
 		return null;
 	}
 
-	double[] getIntervals(String index)
+	List<double> getIntervals(String index)
 	{
 		if (_validateCurve())
 		{

@@ -53,7 +53,7 @@ part 'vml_canvas.dart';
  * Defines the requirements for a canvas that paints the vertices and edges of
  * a graph.
  */
-public interface ICanvas
+abstract class ICanvas
 {
 	/**
 	 * Sets the translation for the following drawing requests.

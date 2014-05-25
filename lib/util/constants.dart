@@ -85,7 +85,7 @@ class Constants
 	 * the current version of Java. See
 	 * http://docs.oracle.com/javase/6/docs/api/index.html?javax/swing/text/html/CSS.html
 	 */
-	static float LINE_HEIGHT = 1.2f;
+	static float LINE_HEIGHT = 1.2;
 
 	/**
 	 * Specifies if absolute line heights should be used (px) in CSS. Default
@@ -159,7 +159,7 @@ class Constants
 	/**
 	 * Specifies the default dash pattern, 3 pixels solid, 3 pixels clear.
 	 */
-	static float[] DEFAULT_DASHED_PATTERN = new float[] {3.0f , 3.0f};
+	static List<double> DEFAULT_DASHED_PATTERN = [3.0 , 3.0];
 
 	/**
 	 * Specifies the default distance at 1.0 scale that the label curve is 

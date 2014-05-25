@@ -351,7 +351,7 @@ class Graphics2DCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	void paintPolyline(Point2d[] points, bool rounded)
+	void paintPolyline(List<Point2d> points, bool rounded)
 	{
 		if (points != null && points.length > 1)
 		{

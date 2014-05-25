@@ -430,7 +430,7 @@ class Stencil implements IShape
 			double x = x0 + _getDouble(node, "x") * sx;
 			double y = y0 + _getDouble(node, "y") * sy;
 
-			double[] curves = Utils.arcToCurves(this._lastMoveX,
+			List<double> curves = Utils.arcToCurves(this._lastMoveX,
 					this._lastMoveY, r1, r2, angle, largeArcFlag, sweepFlag, x,
 					y);
 

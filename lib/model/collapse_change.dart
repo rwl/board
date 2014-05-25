@@ -16,18 +16,17 @@ class CollapseChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	CollapseChange()
-	{
-		this(null, null, false);
-	}
+//	CollapseChange()
+//	{
+//		this(null, null, false);
+//	}
 
 	/**
 	 * 
 	 */
-	CollapseChange(GraphModel model, Object cell,
-			bool collapsed)
+	CollapseChange([GraphModel model=null, Object cell=null,
+			bool collapsed=false]) : super(model)
 	{
-		super(model);
 		this.cell = cell;
 		this.collapsed = collapsed;
 		this.previous = this.collapsed;
@@ -87,7 +86,7 @@ class CollapseChange extends AtomicGraphModelChange
 	void execute()
 	{
 		collapsed = previous;
-		previous = ((GraphModel) model)._collapsedStateForCellChanged(
+		previous = (model as GraphModel)._collapsedStateForCellChanged(
 				cell, previous);
 	}
 

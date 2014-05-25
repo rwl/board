@@ -21,7 +21,7 @@ class LineShape extends BasicShape
 	/**
 	 * 
 	 */
-	Point2d[] createPoints(Graphics2DCanvas canvas, CellState state)
+	List<Point2d> createPoints(Graphics2DCanvas canvas, CellState state)
 	{
 		String direction = Utils.getString(state.getStyle(),
 				Constants.STYLE_DIRECTION, Constants.DIRECTION_EAST);
@@ -42,7 +42,7 @@ class LineShape extends BasicShape
 			pe = new Point2d(mid, state.getY() + state.getHeight());
 		}
 
-		Point2d[] points = new Point2d[2];
+		List<Point2d> points = new Point2d[2];
 		points[0] = p0;
 		points[1] = pe;
 

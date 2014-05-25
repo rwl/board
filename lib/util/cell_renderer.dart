@@ -10,14 +10,22 @@ part of graph.util;
 
 //import org.w3c.dom.Document;
 
+
+/**
+ * Separates the creation of the canvas from its initialization, when the
+ * size of the required graphics buffer / document / container is known.
+ */
+typedef ICanvas CanvasFactory (int width, int height);
+
 class CellRenderer
 {
 	/**
 	 * 
 	 */
-	private CellRenderer()
+	factory CellRenderer()
 	{
 		// static class
+	  return null;
 	}
 
 	/**
@@ -34,7 +42,7 @@ class CellRenderer
 
 		if (cells == null)
 		{
-			cells = new List<Object> { graph.getModel().getRoot() };
+			cells = [ graph.getModel().getRoot() ];
 		}
 
 		// Gets the current state of the view
@@ -101,13 +109,13 @@ class CellRenderer
 	/**
 	 * 
 	 */
-	static BufferedImage createBufferedImage(Graph graph,
-			List<Object> cells, double scale, Color background, bool antiAlias,
-			Rect clip)
-	{
-		return createBufferedImage(graph, cells, scale, background, antiAlias,
-				clip, new Graphics2DCanvas());
-	}
+//	static BufferedImage createBufferedImage(Graph graph,
+//			List<Object> cells, double scale, Color background, bool antiAlias,
+//			Rect clip)
+//	{
+//		return createBufferedImage(graph, cells, scale, background, antiAlias,
+//				clip, new Graphics2DCanvas());
+//	}
 
 	/**
 	 * 
@@ -115,18 +123,17 @@ class CellRenderer
 	static BufferedImage createBufferedImage(Graph graph,
 			List<Object> cells, double scale, final Color background,
 			final bool antiAlias, Rect clip,
-			final Graphics2DCanvas graphicsCanvas)
+			[/*final*/ Graphics2DCanvas graphicsCanvas=null])
 	{
-		ImageCanvas canvas = (ImageCanvas) drawCells(graph, cells, scale,
-				clip, new CanvasFactory()
-				{
-					public ICanvas createCanvas(int width, int height)
+	  if (graphicsCanvas == null) {
+	    graphicsCanvas = new Graphics2DCanvas();
+	  }
+		ImageCanvas canvas = drawCells(graph, cells, scale,
+				clip, (int width, int height)
 					{
 						return new ImageCanvas(graphicsCanvas, width, height,
 								background, antiAlias);
-					}
-
-				});
+					}) as ImageCanvas;
 
 		return (canvas != null) ? canvas.destroy() : null;
 	}
@@ -137,15 +144,11 @@ class CellRenderer
 	static Document createHtmlDocument(Graph graph, List<Object> cells,
 			double scale, Color background, Rect clip)
 	{
-		HtmlCanvas canvas = (HtmlCanvas) drawCells(graph, cells, scale,
-				clip, new CanvasFactory()
-				{
-					public ICanvas createCanvas(int width, int height)
+		HtmlCanvas canvas = drawCells(graph, cells, scale,
+				clip, (int width, int height)
 					{
 						return new HtmlCanvas(DomUtils.createHtmlDocument());
-					}
-
-				});
+					}) as HtmlCanvas;
 
 		return canvas.getDocument();
 	}
@@ -156,16 +159,12 @@ class CellRenderer
 	static Document createSvgDocument(Graph graph, List<Object> cells,
 			double scale, Color background, Rect clip)
 	{
-		SvgCanvas canvas = (SvgCanvas) drawCells(graph, cells, scale, clip,
-				new CanvasFactory()
-				{
-					public ICanvas createCanvas(int width, int height)
+		SvgCanvas canvas = drawCells(graph, cells, scale, clip,
+				(int width, int height)
 					{
 						return new SvgCanvas(DomUtils.createSvgDocument(width,
 								height));
-					}
-
-				});
+					}) as SvgCanvas;
 
 		return canvas.getDocument();
 	}
@@ -176,15 +175,11 @@ class CellRenderer
 	static Document createVmlDocument(Graph graph, List<Object> cells,
 			double scale, Color background, Rect clip)
 	{
-		VmlCanvas canvas = (VmlCanvas) drawCells(graph, cells, scale, clip,
-				new CanvasFactory()
-				{
-					public ICanvas createCanvas(int width, int height)
+		VmlCanvas canvas = drawCells(graph, cells, scale, clip,
+				(int width, int height)
 					{
 						return new VmlCanvas(DomUtils.createVmlDocument());
-					}
-
-				});
+					}) as VmlCanvas;
 
 		return canvas.getDocument();
 	}
@@ -192,15 +187,15 @@ class CellRenderer
 	/**
 	 * 
 	 */
-	static abstract class CanvasFactory
-	{
-
-		/**
-		 * Separates the creation of the canvas from its initialization, when the
-		 * size of the required graphics buffer / document / container is known.
-		 */
-		public abstract ICanvas createCanvas(int width, int height);
-
-	}
+//	static abstract class CanvasFactory
+//	{
+//
+//		/**
+//		 * Separates the creation of the canvas from its initialization, when the
+//		 * size of the required graphics buffer / document / container is known.
+//		 */
+//		public abstract ICanvas createCanvas(int width, int height);
+//
+//	}
 
 }

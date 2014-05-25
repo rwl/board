@@ -358,7 +358,7 @@ public abstract class NumberParser extends AbstractParser
 	/**
 	 * Array of powers of ten. Using double instead of float gives a tiny bit more precision.
 	 */
-	private static final double[] pow10 = new double[128];
+	private static final List<double> pow10 = new double[128];
 
 	static
 	{

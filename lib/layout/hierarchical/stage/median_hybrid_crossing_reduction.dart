@@ -571,7 +571,7 @@ class MedianHybridCrossingReduction implements
 			Collection<GraphAbstractHierarchyCell> connectedCells,
 			int rankValue)
 	{
-		double[] medianValues = new double[connectedCells.size()];
+		List<double> medianValues = new double[connectedCells.size()];
 		int arrayCount = 0;
 		Iterator<GraphAbstractHierarchyCell> iter = connectedCells.iterator();
 

@@ -9,6 +9,8 @@ library graph.util;
  * history.
  */
 
+import 'dart:html';
+
 import '../canvas/canvas.dart' show Graphics2DCanvas;
 import '../canvas/canvas.dart' show HtmlCanvas;
 import '../canvas/canvas.dart' show ICanvas;
@@ -121,33 +123,33 @@ class Utils
 	/**
 	 * Static Graphics used for Font Metrics.
 	 */
-	static transient Graphics _fontGraphics;
+	static /*transient*/ Graphics _fontGraphics;
 
 	// Creates a renderer for HTML markup (only possible in
 	// non-headless environment)
-	static
+	/*static
 	{
 		try
 		{
 			_fontGraphics = new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB)
 					.getGraphics();
 		}
-		catch (Exception e)
+		on Exception catch (e)
 		{
 			// ignore
 		}
-	}
+	}*/
 
 	/**
 	 * Returns the size for the given label. If isHtml is true then any HTML
 	 * markup in the label is computed as HTML and all newlines inside the HTML
 	 * body are converted into linebreaks.
 	 */
-	static Rect getLabelSize(String label,
-			Map<String, Object> style, bool isHtml, double scale)
-	{
-		return getLabelSize(label, style, isHtml, scale, 0);
-	}
+//	static Rect getLabelSize(String label,
+//			Map<String, Object> style, bool isHtml, double scale)
+//	{
+//		return getLabelSize(label, style, isHtml, scale, 0);
+//	}
 
 	/**
 	 * Returns the size for the given label. If isHtml is true then any HTML
@@ -156,7 +158,7 @@ class Utils
 	 */
 	static Rect getLabelSize(String label,
 			Map<String, Object> style, bool isHtml, double scale,
-			double htmlWrapWidth)
+			[double htmlWrapWidth=0.0])
 	{
 		Rect size;
 
@@ -203,20 +205,20 @@ class Utils
 	/**
 	 * Returns the paint bounds for the given label.
 	 */
-	static Rect getLabelPaintBounds(String label,
-			Map<String, Object> style, bool isHtml, Point2d offset,
-			Rect vertexBounds, double scale)
-	{
-		return getLabelPaintBounds(label, style, isHtml, offset, vertexBounds,
-				scale, false);
-	}
+//	static Rect getLabelPaintBounds(String label,
+//			Map<String, Object> style, bool isHtml, Point2d offset,
+//			Rect vertexBounds, double scale)
+//	{
+//		return getLabelPaintBounds(label, style, isHtml, offset, vertexBounds,
+//				scale, false);
+//	}
 
 	/**
 	 * Returns the paint bounds for the given label.
 	 */
 	static Rect getLabelPaintBounds(String label,
 			Map<String, Object> style, bool isHtml, Point2d offset,
-			Rect vertexBounds, double scale, bool isEdge)
+			Rect vertexBounds, double scale, [bool isEdge=false])
 	{
 		double wrapWidth = 0;
 
@@ -410,7 +412,7 @@ class Utils
 			lineHeight += font.getSize2D() * 1.27;
 		}
 
-		String[] lines = text.split("\n");
+		List<String> lines = text.split("\n");
 
 		Rectangle2D boundingBox = null;
 
@@ -452,13 +454,13 @@ class Utils
 	 * @param width the width that the text must fit within
 	 * @return the input text split in lines that fit the specified width
 	 */
-	static String[] wordWrap(String text, FontMetrics metrics,
+	static List<String> wordWrap(String text, FontMetrics metrics,
 			double width)
 	{
 		List<String> result = new List<String>();
 		// First split the processing into lines already delimited by
 		// newlines. We want the result to retain all newlines in position.
-		String[] lines = text.split("\n");
+		List<String> lines = text.split("\n");
 
 		for (int i = 0; i < lines.length; i++)
 		{
@@ -468,7 +470,7 @@ class Utils
 
 			// Split the words of the current line by spaces and tabs
 			// The words are trimmed of tabs, space and newlines, therefore
-			String[] words = lines[i].split("\\s+");
+			List<String> words = lines[i].split("\\s+");
 
 			// Need to a form a stack of the words in reverse order
 			// This is because if a word is split during the process 
@@ -607,7 +609,7 @@ class Utils
 			result.add(currentLine.toString());
 		}
 
-		return result.toArray(new String[result.size()]);
+		return result.toArray(new List<String>(result.size()));
 	}
 
 	/**
@@ -639,8 +641,8 @@ class Utils
 						style,
 						markup,
 						1,
-						(int) Math.ceil(wrapWidth - Constants.LABEL_INSET
-								* scale)));
+						Math.ceil(wrapWidth - Constants.LABEL_INSET
+								* scale) as int));
 				Dimension size2 = textRenderer.getPreferredSize();
 
 				// Uses wrapped text size if any text was actually wrapped
@@ -664,7 +666,7 @@ class Utils
 	 * 
 	 * Converts the given arc to a series of curves.
 	 */
-	static double[] arcToCurves(double x0, double y0, double r1,
+	static List<double> arcToCurves(double x0, double y0, double r1,
 			double r2, double angle, double largeArcFlag, double sweepFlag,
 			double x, double y)
 	{
@@ -673,7 +675,7 @@ class Utils
 
 		if (r1 == 0 || r2 == 0)
 		{
-			return new double[0];
+			return new List<double>();
 		}
 
 		double fS = sweepFlag;
@@ -734,7 +736,7 @@ class Utils
 		}
 
 		double sse = dr * 2 / Math.PI;
-		int seg = (int) Math.ceil(sse < 0 ? -1 * sse : sse);
+		int seg = Math.ceil(sse < 0 ? -1 * sse : sse) as int;
 		double segr = dr / seg;
 		double t = 8 / 3 * Math.sin(segr / 4) * Math.sin(segr / 4)
 				/ Math.sin(segr / 2);
@@ -749,7 +751,7 @@ class Utils
 		double x3 = 0;
 		double y3 = 0;
 
-		double[] result = new double[seg * 6];
+		List<double> result = new List<double>(seg * 6);
 
 		for (int n = 0; n < seg; ++n)
 		{
@@ -804,7 +806,7 @@ class Utils
 			p3 = getRotatedPoint(p3, cos, sin, cx);
 			p4 = getRotatedPoint(p4, cos, sin, cx);
 
-			Rectangle tmp = new Rectangle((int) p1.getX(), (int) p1.getY(), 0,
+			Rectangle tmp = new Rectangle(p1.getX() as int, p1.getY() as int, 0,
 					0);
 			tmp.add(p2.getPoint());
 			tmp.add(p3.getPoint());
@@ -814,7 +816,7 @@ class Utils
 		}
 		else if (rect != null)
 		{
-			result = (Rect) rect.clone();
+			result = rect.clone() as Rect;
 		}
 
 		return result;
@@ -873,10 +875,10 @@ class Utils
 	/**
 	 * Rotates the given point by the given cos and sin.
 	 */
-	static Point2d getRotatedPoint(Point2d pt, double cos, double sin)
-	{
-		return getRotatedPoint(pt, cos, sin, new Point2d());
-	}
+//	static Point2d getRotatedPoint(Point2d pt, double cos, double sin)
+//	{
+//		return getRotatedPoint(pt, cos, sin, new Point2d());
+//	}
 
 	/**
 	 * Finds the index of the nearest segment on the given cell state for the
@@ -894,7 +896,7 @@ class Utils
 			for (int i = 1; i < state.getAbsolutePointCount(); i++)
 			{
 				Point2d current = state.getAbsolutePoint(i);
-				double dist = new Line2D.Double(last._x, last._y, current._x,
+				double dist = new /*Line2D.*/Double(last._x, last._y, current._x,
 						current._y).ptSegDistSq(x, y);
 
 				if (dist < min)
@@ -914,8 +916,11 @@ class Utils
 	 * Rotates the given point by the given cos and sin.
 	 */
 	static Point2d getRotatedPoint(Point2d pt, double cos, double sin,
-			Point2d c)
+			[Point2d c=null])
 	{
+	  if (c == null) {
+	    c = new Point2d();
+	  }
 		double x = pt.getX() - c.getX();
 		double y = pt.getY() - c.getY();
 
@@ -934,12 +939,12 @@ class Utils
 	 * 			terminal specified at its source end
 	 * @return the mask of port constraint directions
 	 */
-	static int getPortConstraints(CellState terminal,
-			CellState edge, bool source)
-	{
-		return getPortConstraints(terminal, edge, source,
-				Constants.DIRECTION_MASK_ALL);
-	}
+//	static int getPortConstraints(CellState terminal,
+//			CellState edge, bool source)
+//	{
+//		return getPortConstraints(terminal, edge, source,
+//				Constants.DIRECTION_MASK_ALL);
+//	}
 
 	/**
 	 * Returns an integer mask of the port constraints of the given map
@@ -952,8 +957,11 @@ class Utils
 	 * @return the mask of port constraint directions
 	 */
 	static int getPortConstraints(CellState terminal,
-			CellState edge, bool source, int defaultValue)
+			CellState edge, bool source, [int defaultValue=null])
 	{
+	  if (defaultValue == null) {
+	    defaultValue = Constants.DIRECTION_MASK_ALL;
+	  }
 		Object value = terminal.getStyle().get(
 				Constants.STYLE_PORT_CONSTRAINT);
 
@@ -1046,7 +1054,7 @@ class Utils
 				bg = bg.intersection(g.getClipBounds());
 			}
 		}
-		catch (Exception e)
+		on Exception catch (e)
 		{
 			// FIXME: Getting clipbounds sometimes throws an NPE
 		}
@@ -1071,7 +1079,7 @@ class Utils
 
 			while (it.hasNext())
 			{
-				Point2d point = (Point2d) it.next().clone();
+				Point2d point = it.next().clone() as Point2d;
 
 				point.setX(point.getX() + dx);
 				point.setY(point.getY() + dy);
@@ -1130,10 +1138,10 @@ class Utils
 	/**
 	 * Sorts the given cells according to the order in the cell hierarchy.
 	 */
-	static List<Object> sortCells(List<Object> cells, final bool ascending)
-	{
-		return sortCells(Arrays.asList(cells), ascending).toArray();
-	}
+//	static List<Object> sortCells(List<Object> cells, final bool ascending)
+//	{
+//		return sortCells(Arrays.asList(cells), ascending).toArray();
+//	}
 
 	/**
 	 * Sorts the given cells according to the order in the cell hierarchy.
@@ -1141,15 +1149,12 @@ class Utils
 	static Collection<Object> sortCells(Collection<Object> cells,
 			final bool ascending)
 	{
-		SortedSet<Object> result = new TreeSet<Object>(new Comparator<Object>()
+		SortedSet<Object> result = new TreeSet<Object>((Object o1, Object o2)
 		{
-			public int compare(Object o1, Object o2)
-			{
-				int comp = CellPath.compare(CellPath.create((ICell) o1),
-						CellPath.create((ICell) o2));
+			int comp = CellPath.compare(CellPath.create(o1 as ICell),
+					CellPath.create(o2 as ICell));
 
-				return (comp == 0) ? 0 : (((comp > 0) == ascending) ? 1 : -1);
-			}
+			return (comp == 0) ? 0 : (((comp > 0) == ascending) ? 1 : -1);
 		});
 
 		result.addAll(cells);
@@ -1208,7 +1213,7 @@ class Utils
 	 * @return Returns the stylename from the given formatted string.
 	 * @deprecated Use <code>StyleUtils.getStylenames(String)</code> (Jan 2012)
 	 */
-	static String[] getStylenames(String style)
+	static List<String> getStylenames(String style)
 	{
 		return StyleUtils.getStylenames(style);
 	}
@@ -1324,25 +1329,25 @@ class Utils
 		return StyleUtils.setStyleFlag(style, key, flag, value);
 	}
 
-	static bool intersectsHotspot(CellState state, int x, int y,
-			double hotspot)
-	{
-		return intersectsHotspot(state, x, y, hotspot, 0, 0);
-	}
+//	static bool intersectsHotspot(CellState state, int x, int y,
+//			double hotspot)
+//	{
+//		return intersectsHotspot(state, x, y, hotspot, 0, 0);
+//	}
 
 	/**
 	 * Returns true if the given coordinate pair intersects the hotspot of the
 	 * given state.
 	 */
 	static bool intersectsHotspot(CellState state, int x, int y,
-			double hotspot, int min, int max)
+			double hotspot, [int min=0, int max=0])
 	{
 		if (hotspot > 0)
 		{
-			int cx = (int) Math.round(state.getCenterX());
-			int cy = (int) Math.round(state.getCenterY());
-			int width = (int) Math.round(state.getWidth());
-			int height = (int) Math.round(state.getHeight());
+			int cx = Math.round(state.getCenterX()) as int;
+			int cy = Math.round(state.getCenterY()) as int;
+			int width = Math.round(state.getWidth()) as int;
+			int height = Math.round(state.getHeight()) as int;
 
 			if (Utils
 					.getString(state.getStyle(), Constants.STYLE_SHAPE, "")
@@ -1355,18 +1360,18 @@ class Utils
 				if (Utils.isTrue(state.getStyle(),
 						Constants.STYLE_HORIZONTAL, true))
 				{
-					cy = (int) Math.round(state.getY() + start / 2);
+					cy = Math.round(state.getY() + start / 2) as int;
 					height = start;
 				}
 				else
 				{
-					cx = (int) Math.round(state.getX() + start / 2);
+					cx = Math.round(state.getX() + start / 2) as int;
 					width = start;
 				}
 			}
 
-			int w = (int) Math.max(min, width * hotspot);
-			int h = (int) Math.max(min, height * hotspot);
+			int w = Math.max(min, width * hotspot) as int;
+			int h = Math.max(min, height * hotspot) as int;
 
 			if (max > 0)
 			{
@@ -1393,10 +1398,10 @@ class Utils
 	 *            Key whose value should be returned.
 	 * @return Returns the bool value for key in dict.
 	 */
-	static bool isTrue(Map<String, Object> dict, String key)
-	{
-		return isTrue(dict, key, false);
-	}
+//	static bool isTrue(Map<String, Object> dict, String key)
+//	{
+//		return isTrue(dict, key, false);
+//	}
 
 	/**
 	 * Returns true if the dictionary contains true for the given key or the
@@ -1411,7 +1416,7 @@ class Utils
 	 * @return Returns the bool value for key in dict.
 	 */
 	static bool isTrue(Map<String, Object> dict, String key,
-			bool defaultValue)
+			[bool defaultValue=false])
 	{
 		Object value = dict.get(key);
 
@@ -1436,10 +1441,10 @@ class Utils
 	 *            Key whose value should be returned.
 	 * @return Returns the integer value for key in dict.
 	 */
-	static int getInt(Map<String, Object> dict, String key)
-	{
-		return getInt(dict, key, 0);
-	}
+//	static int getInt(Map<String, Object> dict, String key)
+//	{
+//		return getInt(dict, key, 0);
+//	}
 
 	/**
 	 * Returns the value for key in dictionary as an int or the given default
@@ -1454,7 +1459,7 @@ class Utils
 	 * @return Returns the integer value for key in dict.
 	 */
 	static int getInt(Map<String, Object> dict, String key,
-			int defaultValue)
+			[int defaultValue=0])
 	{
 		Object value = dict.get(key);
 
@@ -1465,7 +1470,7 @@ class Utils
 		else
 		{
 			// Handles commas by casting them to an int
-			return (int) Float.parseFloat(value.toString());
+			return Float.parseFloat(value.toString()) as int;
 		}
 	}
 
@@ -1479,10 +1484,10 @@ class Utils
 	 *            Key whose value should be returned.
 	 * @return Returns the float value for key in dict.
 	 */
-	static float getFloat(Map<String, Object> dict, String key)
-	{
-		return getFloat(dict, key, 0);
-	}
+//	static float getFloat(Map<String, Object> dict, String key)
+//	{
+//		return getFloat(dict, key, 0);
+//	}
 
 	/**
 	 * Returns the value for key in dictionary as a float or the given default
@@ -1497,7 +1502,7 @@ class Utils
 	 * @return Returns the float value for key in dict.
 	 */
 	static float getFloat(Map<String, Object> dict, String key,
-			float defaultValue)
+			[float defaultValue=0.0])
 	{
 		Object value = dict.get(key);
 
@@ -1523,11 +1528,11 @@ class Utils
 	 *            Default value to return if the key is undefined.
 	 * @return Returns the float array value for key in dict.
 	 */
-	static float[] getFloatArray(Map<String, Object> dict, String key,
-			float[] defaultValue)
-	{
-		return getFloatArray(dict, key, defaultValue, ",");
-	}
+//	static float[] getFloatArray(Map<String, Object> dict, String key,
+//			float[] defaultValue)
+//	{
+//		return getFloatArray(dict, key, defaultValue, ",");
+//	}
 
 	/**
 	 * Returns the value for key in dictionary as a float array or the given default
@@ -1541,8 +1546,8 @@ class Utils
 	 *            Default value to return if the key is undefined.
 	 * @return Returns the float array value for key in dict.
 	 */
-	static float[] getFloatArray(Map<String, Object> dict, String key,
-			float[] defaultValue, String separator)
+	static List<double> getFloatArray(Map<String, Object> dict, String key,
+			List<float> defaultValue, [String separator=","])
 	{
 		Object value = dict.get(key);
 
@@ -1552,8 +1557,8 @@ class Utils
 		}
 		else
 		{
-			String[] floatChars = value.toString().split(separator);
-			float[] result = new float[floatChars.length];
+			List<String> floatChars = value.toString().split(separator);
+			List<double> result = new List<double>(floatChars.length);
 
 			for (int i = 0; i < floatChars.length; i++)
 			{
@@ -1574,10 +1579,10 @@ class Utils
 	 *            Key whose value should be returned.
 	 * @return Returns the double value for key in dict.
 	 */
-	static double getDouble(Map<String, Object> dict, String key)
-	{
-		return getDouble(dict, key, 0);
-	}
+//	static double getDouble(Map<String, Object> dict, String key)
+//	{
+//		return getDouble(dict, key, 0);
+//	}
 
 	/**
 	 * Returns the value for key in dictionary as a double or the given default
@@ -1592,7 +1597,7 @@ class Utils
 	 * @return Returns the double value for key in dict.
 	 */
 	static double getDouble(Map<String, Object> dict, String key,
-			double defaultValue)
+			[double defaultValue=0.0])
 	{
 		Object value = dict.get(key);
 
@@ -1616,10 +1621,10 @@ class Utils
 	 *            Key whose value should be returned.
 	 * @return Returns the string value for key in dict.
 	 */
-	static String getString(Map<String, Object> dict, String key)
-	{
-		return getString(dict, key, null);
-	}
+//	static String getString(Map<String, Object> dict, String key)
+//	{
+//		return getString(dict, key, null);
+//	}
 
 	/**
 	 * Returns the value for key in dictionary as a string or the given default
@@ -1634,7 +1639,7 @@ class Utils
 	 * @return Returns the string value for key in dict.
 	 */
 	static String getString(Map<String, Object> dict, String key,
-			String defaultValue)
+			[String defaultValue=null])
 	{
 		Object value = dict.get(key);
 
@@ -1658,10 +1663,10 @@ class Utils
 	 *            Key whose value should be returned.
 	 * @return Returns the color value for key in dict.
 	 */
-	static Color getColor(Map<String, Object> dict, String key)
-	{
-		return getColor(dict, key, null);
-	}
+//	static Color getColor(Map<String, Object> dict, String key)
+//	{
+//		return getColor(dict, key, null);
+//	}
 
 	/**
 	 * Returns the value for key in dictionary as a color or the given default
@@ -1676,7 +1681,7 @@ class Utils
 	 * @return Returns the color value for key in dict.
 	 */
 	static Color getColor(Map<String, Object> dict, String key,
-			Color defaultValue)
+			[Color defaultValue=null])
 	{
 		Object value = dict.get(key);
 
@@ -1693,15 +1698,15 @@ class Utils
 	/**
 	 * 
 	 */
-	static Font getFont(Map<String, Object> style)
-	{
-		return getFont(style, 1);
-	}
+//	static Font getFont(Map<String, Object> style)
+//	{
+//		return getFont(style, 1);
+//	}
 
 	/**
 	 * 
 	 */
-	static Font getFont(Map<String, Object> style, double scale)
+	static Font getFont(Map<String, Object> style, [double scale=1.0])
 	{
 		String fontFamily = getString(style, Constants.STYLE_FONTFAMILY,
 				Constants.DEFAULT_FONTFAMILY);
@@ -1740,7 +1745,7 @@ class Utils
 	 *                hexidecimal integer
 	 */
 	static Color parseColor(String colorString)
-			throws NumberFormatException
+			/*throws NumberFormatException*/
 	{
 		return HtmlColor.parseColor(colorString);
 	}
@@ -1765,7 +1770,7 @@ class Utils
 	 * @return Returns a string representing the file contents.
 	 * @throws IOException
 	 */
-	static String readFile(String filename) throws IOException
+	static String readFile(String filename) /*throws IOException*/
 	{
 		return readInputStream(new FileInputStream(filename));
 	}
@@ -1778,7 +1783,7 @@ class Utils
 	 * @return Returns a string representing the file contents.
 	 * @throws IOException
 	 */
-	static String readInputStream(InputStream stream) throws IOException
+	static String readInputStream(InputStream stream) /*throws IOException*/
 	{
 		BufferedReader reader = new BufferedReader(
 				new InputStreamReader(stream));
@@ -1806,7 +1811,7 @@ class Utils
 	 * @throws IOException
 	 */
 	static void writeFile(String contents, String filename)
-			throws IOException
+			/*throws IOException*/
 	{
 		FileWriter fw = new FileWriter(filename);
 		fw.write(contents);
@@ -1830,14 +1835,14 @@ class Utils
 			md5.update(text.getBytes());
 			Formatter f = new Formatter(result);
 
-			byte[] digest = md5.digest();
+			List<byte> digest = md5.digest();
 
 			for (int i = 0; i < digest.length; i++)
 			{
-				f.format("%02x", new List<Object> { new Byte(digest[i]) });
+				f.format("%02x", new List<Object>.from([ new Byte(digest[i]) ]));
 			}
 		}
-		catch (NoSuchAlgorithmException ex)
+		on NoSuchAlgorithmException catch (ex)
 		{
 			ex.printStackTrace();
 		}
@@ -1857,11 +1862,10 @@ class Utils
 	 * @return Returns true if the node name of the user object is equal to the
 	 *         given type.
 	 */
-
-	static bool isNode(Object value, String nodeName)
-	{
-		return isNode(value, nodeName, null, null);
-	}
+//	static bool isNode(Object value, String nodeName)
+//	{
+//		return isNode(value, nodeName, null, null);
+//	}
 
 	/**
 	 * Returns true if the given value is an XML node with the node name and if
@@ -1878,11 +1882,11 @@ class Utils
 	 * @return Returns true if the value matches the given conditions.
 	 */
 	static bool isNode(Object value, String nodeName,
-			String attributeName, String attributeValue)
+			[String attributeName=null, String attributeValue=null])
 	{
 		if (value is Element)
 		{
-			Element element = (Element) value;
+			Element element = value;// as Element;
 
 			if (nodeName == null
 					|| element.getNodeName().equalsIgnoreCase(nodeName))
@@ -1932,7 +1936,7 @@ class Utils
 		else
 		{
 			g.setComposite(AlphaComposite.getInstance(AlphaComposite.CLEAR,
-					0.0f));
+					0.0));
 			g.fillRect(rect.x, rect.y, rect.width, rect.height);
 			g.setComposite(AlphaComposite.SrcOver);
 		}
@@ -1980,11 +1984,11 @@ class Utils
 				try
 				{
 					int comma = url.indexOf(',');
-					byte[] data = Base64.decode(url.substring(comma + 1));
-					ByteArrayInputStream is = new ByteArrayInputStream(data);
-					img = ImageIO.read(is);
+					List<byte> data = Base64.decode(url.substring(comma + 1));
+					ByteArrayInputStream ins = new ByteArrayInputStream(data);
+					img = ImageIO.read(ins);
 				}
-				catch (Exception e1)
+				on Exception catch (e1)
 				{
 					// ignore
 				}
@@ -1997,9 +2001,9 @@ class Utils
 				{
 					realUrl = new URL(url);
 				}
-				catch (Exception e)
+				on Exception catch (e)
 				{
-					realUrl = Utils.class.getResource(url);
+					realUrl = Utils.clasz.getResource(url);
 				}
 
 				if (realUrl != null)
@@ -2008,7 +2012,7 @@ class Utils
 					{
 						img = ImageIO.read(realUrl);
 					}
-					catch (Exception e1)
+					on Exception catch (e1)
 					{
 						e1.printStackTrace();
 					}
@@ -2088,7 +2092,7 @@ class Utils
 			}
 
 			td.setAttribute("style", s);
-			String[] lines = text.split("\n");
+			List<String> lines = text.split("\n");
 
 			for (int i = 0; i < lines.length; i++)
 			{
@@ -2136,43 +2140,59 @@ class Utils
 	 * Returns a document with a HTML node containing a HEAD and BODY node.
 	 * @deprecated Use <code>DomUtils.createHtmlDocument</code> (Jan 2012)
 	 */
-	static Document createHtmlDocument()
+	/*static Document createHtmlDocument()
 	{
 		return DomUtils.createHtmlDocument();
-	}
+	}*/
 
 	/**
 	 * Returns a new, empty DOM document.
 	 * 
 	 * @return Returns a new DOM document.
 	 */
-	static String createHtmlDocument(Map<String, Object> style,
-			String text)
-	{
-		return createHtmlDocument(style, text, 1, 0);
-	}
+//	static String createHtmlDocument(Map<String, Object> style,
+//			String text)
+//	{
+//		return createHtmlDocument(style, text, 1, 0);
+//	}
 
 	/**
 	 * Returns a new, empty DOM document.
 	 * 
 	 * @return Returns a new DOM document.
 	 */
-	static String createHtmlDocument(Map<String, Object> style,
-			String text, double scale)
-	{
-		return createHtmlDocument(style, text, scale, 0);
-	}
+//	static String createHtmlDocument(Map<String, Object> style,
+//			String text, double scale)
+//	{
+//		return createHtmlDocument(style, text, scale, 0);
+//	}
 
 	/**
 	 * Returns a new, empty DOM document.
 	 * 
 	 * @return Returns a new DOM document.
 	 */
-	static String createHtmlDocument(Map<String, Object> style,
-			String text, double scale, int width)
-	{
-		return createHtmlDocument(style, text, scale, width, null);
-	}
+//	static String createHtmlDocument(Map<String, Object> style,
+//			String text, double scale, int width)
+//	{
+//		return createHtmlDocument(style, text, scale, width, null);
+//	}
+
+	/**
+	 * Returns a new, empty DOM document. The head argument can be used to
+	 * provide an optional HEAD section without the HEAD tags as follows:
+	 * 
+	 * <pre>
+	 * Utils.createHtmlDocument(style,  text, 1, 0, "<style type=\"text/css\">.classname { color:red; }</style>")
+	 * </pre>
+	 * 
+	 * @return Returns a new DOM document.
+	 */
+//	static String createHtmlDocument(Map<String, Object> style,
+//			String text, double scale, int width, String head)
+//	{
+//		return createHtmlDocument(style, text, scale, width, null, null);
+//	};
 
 	/**
 	 * Returns a new, empty DOM document. The head argument can be used to
@@ -2185,23 +2205,7 @@ class Utils
 	 * @return Returns a new DOM document.
 	 */
 	static String createHtmlDocument(Map<String, Object> style,
-			String text, double scale, int width, String head)
-	{
-		return createHtmlDocument(style, text, scale, width, null, null);
-	};
-
-	/**
-	 * Returns a new, empty DOM document. The head argument can be used to
-	 * provide an optional HEAD section without the HEAD tags as follows:
-	 * 
-	 * <pre>
-	 * Utils.createHtmlDocument(style,  text, 1, 0, "<style type=\"text/css\">.classname { color:red; }</style>")
-	 * </pre>
-	 * 
-	 * @return Returns a new DOM document.
-	 */
-	static String createHtmlDocument(Map<String, Object> style,
-			String text, double scale, int width, String head, String bodyCss)
+			String text, [double scale=1.0, int width=0, String head=null, String bodyCss=null])
 	{
 		StringBuffer css = (bodyCss != null) ? new StringBuffer(bodyCss)
 				: new StringBuffer();
@@ -2342,7 +2346,7 @@ class Utils
 			DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
 			return docBuilder.parse(uri);
 		}
-		catch (Exception e)
+		on Exception catch (e)
 		{
 			e.printStackTrace();
 		}
@@ -2374,7 +2378,7 @@ class Utils
 
 		if (dot > 0)
 		{
-			Class<?> clazz = CodecRegistry.getClassForName(expression
+			/*Class<?> clazz = CodecRegistry.getClassForName(expression
 					.substring(0, dot));
 
 			if (clazz != null)
@@ -2384,11 +2388,11 @@ class Utils
 					return clazz.getField(expression.substring(dot + 1)).get(
 							null);
 				}
-				catch (Exception e)
+				on Exception catch (e)
 				{
 					// ignore
 				}
-			}
+			}*/
 		}
 
 		return expression;
@@ -2400,7 +2404,7 @@ class Utils
 	 */
 	static Node findNode(Node node, String attr, String value)
 	{
-		String tmp = (node is Element) ? ((Element) node)
+		String tmp = (node is Element) ? (node as Element)
 				.getAttribute(attr) : null;
 
 		if (tmp != null && tmp.equals(value))
@@ -2440,9 +2444,9 @@ class Utils
 		{
 			XPath xpath = XPathFactory.newInstance().newXPath();
 
-			return (Node) xpath.evaluate(expression, doc, XPathConstants.NODE);
+			return xpath.evaluate(expression, doc, XPathConstants.NODE) as Node;
 		}
-		catch (XPathExpressionException e)
+		on XPathExpressionException catch (e)
 		{
 			// ignore
 		}
@@ -2481,10 +2485,10 @@ class Utils
 	 *            Node to return the XML for.
 	 * @return Returns a formatted XML string.
 	 */
-	static String getPrettyXml(Node node)
-	{
-		return getPrettyXml(node, "  ", "");
-	}
+//	static String getPrettyXml(Node node)
+//	{
+//		return getPrettyXml(node, "  ", "");
+//	}
 
 	/**
 	 * Returns a pretty-printed XML string for the given node. Note that this
@@ -2499,7 +2503,7 @@ class Utils
 	 *            Current indentation for the node.
 	 * @return Returns a formatted XML string.
 	 */
-	static String getPrettyXml(Node node, String tab, String indent)
+	static String getPrettyXml(Node node, [String tab="  ", String indent=""])
 	{
 		StringBuffer result = new StringBuffer();
 

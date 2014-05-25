@@ -1476,7 +1476,7 @@ class GraphView extends EventSource
 		}
 
 		double length = 0;
-		double[] segments = new double[points.size() - 1];
+		List<double> segments = new double[points.size() - 1];
 		Point2d pt = p0;
 
 		double minX = pt.getX();
@@ -1543,7 +1543,7 @@ class GraphView extends EventSource
 			double gx = (geometry != null) ? geometry.getX() / 2 : 0;
 			int pointCount = state.getAbsolutePointCount();
 			double dist = (gx + 0.5) * state.getLength();
-			double[] segments = state.getSegments();
+			List<double> segments = state.getSegments();
 			double segment = segments[0];
 			double length = 0;
 			int index = 1;
@@ -1615,7 +1615,7 @@ class GraphView extends EventSource
 			if (geometry.isRelative() && pointCount > 1)
 			{
 				double totalLength = edgeState.getLength();
-				double[] segments = edgeState.getSegments();
+				List<double> segments = edgeState.getSegments();
 
 				// Works which line segment the point of the label is closest to
 				Point2d p0 = edgeState.getAbsolutePoint(0);

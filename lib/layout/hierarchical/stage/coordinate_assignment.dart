@@ -93,7 +93,7 @@ class CoordinateAssignment implements HierarchicalLayoutStage
 	 * Note that the y co-ord is the offset of the jetty, not the
 	 * absolute point
 	 */
-	Map<GraphHierarchyEdge, double[]> _jettyPositions = new HashMap<GraphHierarchyEdge, double[]>();
+	Map<GraphHierarchyEdge, List<double>> _jettyPositions = new HashMap<GraphHierarchyEdge, List<double>>();
 
 	/**
 	 * The position of the root ( start ) node(s) relative to the rest of the
@@ -124,12 +124,12 @@ class CoordinateAssignment implements HierarchicalLayoutStage
 	/**
 	 * Internal cache of top-most values of Y for each rank
 	 */
-	double[] _rankTopY;
+	List<double> _rankTopY;
 
 	/**
 	 * Internal cache of bottom-most value of Y for each rank
 	 */
-	double[] _rankBottomY;
+	List<double> _rankBottomY;
 
 	/**
 	 * The X-coordinate of the edge of the widest rank
@@ -139,12 +139,12 @@ class CoordinateAssignment implements HierarchicalLayoutStage
 	/**
 	 * The width of all the ranks
 	 */
-	double[] _rankWidths;
+	List<double> _rankWidths;
 
 	/**
 	 * The Y-coordinate of all the ranks
 	 */
-	double[] _rankY;
+	List<double> _rankY;
 
 	/**
 	 * Whether or not to perform local optimisations and iterate multiple times
@@ -1335,7 +1335,7 @@ class CoordinateAssignment implements HierarchicalLayoutStage
 
 		if (edgeMapping != null && _jettyPositions.size() != edgeMapping.size())
 		{
-			_jettyPositions = new HashMap<GraphHierarchyEdge, double[]>();
+			_jettyPositions = new HashMap<GraphHierarchyEdge, List<double>>();
 		}
 
 		//jettyPositions.removeAll();
@@ -1452,7 +1452,7 @@ class CoordinateAssignment implements HierarchicalLayoutStage
 							{
 								int numActualEdges = connectedEdges[j].edges
 										.size();
-								double[] pos = _jettyPositions
+								List<double> pos = _jettyPositions
 										.get(connectedEdges[j]);
 
 								if (pos == null
@@ -1522,7 +1522,7 @@ class CoordinateAssignment implements HierarchicalLayoutStage
 
 			Iterator<Object> parallelEdges = edge.edges.iterator();
 			int parallelEdgeCount = 0;
-			double[] jettys = _jettyPositions.get(edge);
+			List<double> jettys = _jettyPositions.get(edge);
 			
 			Object source = edge.isReversed() ? edge.target.cell : edge.source.cell;
 

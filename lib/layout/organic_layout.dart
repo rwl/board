@@ -306,7 +306,7 @@ class OrganicLayout extends GraphLayout
 	 * of the combined x and y normals are multipled by the current 
 	 * radius to obtain test points for each vector in the array.
 	 */
-	double[] xNormTry;
+	List<double> xNormTry;
 
 	/**
 	 * Array of the y portion of the normalised test vectors that 
@@ -314,7 +314,7 @@ class OrganicLayout extends GraphLayout
 	 * of the combined x and y normals are multipled by the current 
 	 * radius to obtain test points for each vector in the array.
 	 */
-	double[] yNormTry;
+	List<double> yNormTry;
 
 	/**
 	 * Whether or not fine tuning is on. The determines whether or not
@@ -589,7 +589,7 @@ class OrganicLayout extends GraphLayout
 		}
 
 		// Obtain the final positions
-		double[][] result = new double[v.length][2];
+		List<double>[] result = new double[v.length][2];
 		for (int i = 0; i < v.length; i++)
 		{
 			vertices[i] = v[i].cell;

@@ -12,7 +12,7 @@ class Spline
 	 *	of each point in the line ( i.e. first point is 0.0, end point is
 	 *	1.0, a point halfway on line is 0.5 ).
 	 */
-	private double[] _t;
+	private List<double> _t;
 
 	private Spline1D _splineX;
 
@@ -27,8 +27,8 @@ class Spline
 	{
 		if (points != null)
 		{
-			double[] x = new double[points.size()];
-			double[] y = new double[points.size()];
+			List<double> x = new double[points.size()];
+			List<double> y = new double[points.size()];
 			int i = 0;
 
 			for (Point2d point : points)
@@ -46,12 +46,12 @@ class Spline
 	 * @param x
 	 * @param y
 	 */
-	void Spline2D(double[] x, double[] y)
+	void Spline2D(List<double> x, List<double> y)
 	{
 		_init(x, y);
 	}
 
-	void _init(double[] x, double[] y)
+	void _init(List<double> x, List<double> y)
 	{
 		if (x.length != y.length)
 		{

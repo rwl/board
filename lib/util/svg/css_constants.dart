@@ -25,7 +25,7 @@ part of graph.util.svg;
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @version $Id: CSSConstants.java,v 1.1 2012/11/15 13:26:46 gaudenz Exp $
  */
-public interface CSSConstants {
+abstract class CSSConstants {
 
 	String CSS_STROKE_PROPERTY = "stroke";
 	

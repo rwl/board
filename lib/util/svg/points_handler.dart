@@ -26,7 +26,7 @@ part of graph.util.svg;
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @version $Id: PointsHandler.java,v 1.1 2012/11/15 13:26:45 gaudenz Exp $
  */
-public interface PointsHandler
+abstract class PointsHandler
 {
 
 	/**

@@ -51,7 +51,7 @@ part 'stencil_shape.dart';
 part 'swimlane_shape.dart';
 part 'triangle_shape.dart';
 
-public interface IShape
+abstract class IShape
 {
 	/**
 	 * 

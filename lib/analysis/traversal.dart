@@ -173,7 +173,7 @@ class Traversal
 		Object parent = aGraph.getGraph().getDefaultParent();
 		List<Object> vertexes = aGraph.getChildVertices(parent);
 		int vertexCount = vertexes.length;
-		double[] distances = new double[vertexCount];
+		List<double> distances = new double[vertexCount];
 		//		parents[][0] is the traveled vertex
 		//		parents[][1] is the traveled outgoing edge
 		List<Object>[] parents = new Object[vertexCount][2];

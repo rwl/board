@@ -5,6 +5,8 @@ library graph.model;
  * This package contains the classes that define a graph model.
  */
 
+import 'dart:html' show Element, Node;
+
 import '../model/model.dart' show AtomicGraphModelChange;
 
 import '../util/util.dart' show Event, EventObj, EventSource, Point2d, UndoableEdit, Rect;

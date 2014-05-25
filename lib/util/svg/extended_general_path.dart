@@ -393,7 +393,7 @@ class ExtendedGeneralPath implements Shape, Cloneable
 	 */
 	void append(PathIterator pi, bool connect)
 	{
-		double[] vals = new double[6];
+		List<double> vals = new double[6];
 
 		while (!pi.isDone())
 		{
@@ -660,7 +660,7 @@ class ExtendedGeneralPath implements Shape, Cloneable
 			return types[segNum];
 		}
 
-		public int currentSegment(double[] coords)
+		public int currentSegment(List<double> coords)
 		{
 			int ret = types[segNum];
 			switch (ret)

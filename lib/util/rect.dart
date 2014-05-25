@@ -15,7 +15,7 @@ class Rect extends Point2d
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -3793966043543578946L;
+//	private static final long serialVersionUID = -3793966043543578946L;
 
 	/**
 	 * Holds the width and the height. Default is 0.
@@ -25,29 +25,29 @@ class Rect extends Point2d
 	/**
 	 * Constructs a new rectangle at (0, 0) with the width and height set to 0.
 	 */
-	Rect()
-	{
-		this(0, 0, 0, 0);
-	}
+//	Rect()
+//	{
+//		this(0, 0, 0, 0);
+//	}
 
 	/**
 	 * Constructs a copy of the given rectangle.
 	 * 
 	 * @param rect Rectangle to construct a copy of.
 	 */
-	Rect(Rectangle2D rect)
+	/*Rect(Rectangle2D rect)
 	{
 		this(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
-	}
+	}*/
 
 	/**
 	 * Constructs a copy of the given rectangle.
 	 * 
 	 * @param rect Rectangle to construct a copy of.
 	 */
-	Rect(Rect rect)
+	factory Rect.from(Rect rect)
 	{
-		this(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
+		new Rect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 	}
 
 	/**
@@ -58,10 +58,8 @@ class Rect extends Point2d
 	 * @param width Width of the new rectangle.
 	 * @param height Height of the new rectangle.
 	 */
-	Rect(double x, double y, double width, double height)
+	Rect([double x=0.0, double y=0.0, double width=0.0, double height=0.0]) : super(x, y)
 	{
-		super(x, y);
-
 		setWidth(width);
 		setHeight(height);
 	}

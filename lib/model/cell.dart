@@ -13,7 +13,7 @@ part of graph.model;
 /**
  * Defines the requirements for a cell that can be used in an GraphModel.
  */
-public interface ICell
+abstract class ICell
 {
 
   /**
@@ -191,7 +191,7 @@ public interface ICell
    * be inserted into the child array.
    * @return Returns the new child.
    */
-  ICell insert(ICell child, int index);
+//  ICell insert(ICell child, int index);
 
   /**
    * Removes the child at the specified index from the child array and
@@ -211,7 +211,7 @@ public interface ICell
    * @param child Cell that represents the child to be removed.
    * @return Returns the child that was removed.
    */
-  ICell remove(ICell child);
+  ICell removeCell(ICell child);
 
   /**
    * Removes the cell from its parent.
@@ -275,7 +275,7 @@ public interface ICell
    * 
    * @return Returns a clone of this cell.
    */
-  Object clone() throws CloneNotSupportedException;
+  Object clone();// throws CloneNotSupportedException;
 
 }
 
@@ -303,13 +303,13 @@ public interface ICell
  * geometry will have the same semantiv as the above for
  * edge labels.
  */
-class Cell implements ICell, Cloneable, Serializable
+class Cell implements ICell//, Cloneable, Serializable
 {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 910211337632342672L;
+//	private static final long serialVersionUID = 910211337632342672L;
 
 	/**
 	 * Holds the Id. Default is null.
@@ -353,10 +353,10 @@ class Cell implements ICell, Cloneable, Serializable
 	/**
 	 * Constructs a new cell with an empty user object.
 	 */
-	Cell()
-	{
-		this(null);
-	}
+//	Cell()
+//	{
+//		this(null);
+//	}
 
 	/**
 	 * Constructs a new cell for the given user object.
@@ -364,10 +364,10 @@ class Cell implements ICell, Cloneable, Serializable
 	 * @param value
 	 *   Object that represents the value of the cell.
 	 */
-	Cell(Object value)
-	{
-		this(value, null, null);
-	}
+//	Cell(Object value)
+//	{
+//		this(value, null, null);
+//	}
 
 	/**
 	 * Constructs a new cell for the given parameters.
@@ -376,7 +376,7 @@ class Cell implements ICell, Cloneable, Serializable
 	 * @param geometry Specifies the geometry of the cell.
 	 * @param style Specifies the style as a formatted string.
 	 */
-	Cell(Object value, Geometry geometry, String style)
+	Cell(Object value, [Geometry geometry=null, String style=null])
 	{
 		setValue(value);
 		setGeometry(geometry);
@@ -609,7 +609,7 @@ class Cell implements ICell, Cloneable, Serializable
 	 */
 	int getChildCount()
 	{
-		return (_children != null) ? _children.size() : 0;
+		return (_children != null) ? _children.length : 0;
 	}
 
 	/* (non-Javadoc)
@@ -625,29 +625,37 @@ class Cell implements ICell, Cloneable, Serializable
 	 */
 	ICell getChildAt(int index)
 	{
-		return (_children != null) ? (ICell) _children.get(index) : null;
+		return (_children != null) ? _children[index] as ICell : null;
 	}
 
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#insert(graph.model.ICell)
 	 */
-	ICell insert(ICell child)
-	{
-		int index = getChildCount();
-		
-		if (child.getParent() == this)
-		{
-			index--;
-		}
-		
-		return insert(child, index);
-	}
+//	ICell insert(ICell child)
+//	{
+//		int index = getChildCount();
+//		
+//		if (child.getParent() == this)
+//		{
+//			index--;
+//		}
+//		
+//		return insert(child, index);
+//	}
 
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#insert(graph.model.ICell, int)
 	 */
-	ICell insert(ICell child, int index)
+	ICell insert(ICell child, [int index=null])
 	{
+	  if (index == null) {
+	    index = getChildCount();
+          
+      if (child.getParent() == this)
+      {
+        index--;
+      } 
+	  }
 		if (child != null)
 		{
 			child.removeFromParent();
@@ -660,7 +668,7 @@ class Cell implements ICell, Cloneable, Serializable
 			}
 			else
 			{
-				_children.add(index, child);
+				_children.insert(index, child);
 			}
 		}
 
@@ -677,7 +685,7 @@ class Cell implements ICell, Cloneable, Serializable
 		if (_children != null && index >= 0)
 		{
 			child = getChildAt(index);
-			remove(child);
+			removeCell(child);
 		}
 
 		return child;
@@ -686,7 +694,7 @@ class Cell implements ICell, Cloneable, Serializable
 	/* (non-Javadoc)
 	 * @see graph.model.ICell#remove(graph.model.ICell)
 	 */
-	ICell remove(ICell child)
+	ICell removeCell(ICell child)
 	{
 		if (child != null && _children != null)
 		{
@@ -704,7 +712,7 @@ class Cell implements ICell, Cloneable, Serializable
 	{
 		if (_parent != null)
 		{
-			_parent.remove(this);
+			_parent.removeCell(this);
 		}
 	}
 
@@ -713,7 +721,7 @@ class Cell implements ICell, Cloneable, Serializable
 	 */
 	int getEdgeCount()
 	{
-		return (_edges != null) ? _edges.size() : 0;
+		return (_edges != null) ? _edges.length : 0;
 	}
 
 	/* (non-Javadoc)
@@ -729,7 +737,7 @@ class Cell implements ICell, Cloneable, Serializable
 	 */
 	ICell getEdgeAt(int index)
 	{
-		return (_edges != null) ? (ICell) _edges.get(index) : null;
+		return (_edges != null) ? _edges[index] as ICell : null;
 	}
 
 	/* (non-Javadoc)
@@ -795,10 +803,10 @@ class Cell implements ICell, Cloneable, Serializable
 	 * @param name Name of the attribute whose value should be returned.
 	 * @return Returns the value of the given attribute or null.
 	 */
-	String getAttribute(String name)
-	{
-		return getAttribute(name, null);
-	}
+//	String getAttribute(String name)
+//	{
+//		return getAttribute(name, null);
+//	}
 
 	/**
 	 * Returns the specified attribute from the user object if it is an XML
@@ -808,14 +816,14 @@ class Cell implements ICell, Cloneable, Serializable
 	 * @param defaultValue Default value to use if the attribute has no value.
 	 * @return Returns the value of the given attribute or defaultValue.
 	 */
-	String getAttribute(String name, String defaultValue)
+	String getAttribute(String name, [String defaultValue=null])
 	{
 		Object userObject = getValue();
 		String val = null;
 
 		if (userObject is Element)
 		{
-			Element element = (Element) userObject;
+			Element element = userObject;// as Element;
 			val = element.getAttribute(name);
 		}
 
@@ -839,7 +847,7 @@ class Cell implements ICell, Cloneable, Serializable
 
 		if (userObject is Element)
 		{
-			Element element = (Element) userObject;
+			Element element = userObject;// as Element;
 			element.setAttribute(name, value);
 		}
 	}
@@ -847,9 +855,9 @@ class Cell implements ICell, Cloneable, Serializable
 	/**
 	 * Returns a clone of the cell.
 	 */
-	Object clone() throws CloneNotSupportedException
+	Object clone() //throws CloneNotSupportedException
 	{
-		Cell clone = (Cell) super.clone();
+		Cell clone = super.clone() as Cell;
 
 		clone.setValue(cloneValue());
 		clone.setStyle(getStyle());
@@ -868,7 +876,7 @@ class Cell implements ICell, Cloneable, Serializable
 
 		if (geometry != null)
 		{
-			clone.setGeometry((Geometry) geometry.clone());
+			clone.setGeometry(geometry.clone() as Geometry);
 		}
 
 		return clone;
@@ -884,7 +892,7 @@ class Cell implements ICell, Cloneable, Serializable
 
 		if (value is Node)
 		{
-			value = ((Node) value).cloneNode(true);
+			value = (value as Node).cloneNode(true);
 		}
 
 		return value;

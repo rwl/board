@@ -26,7 +26,7 @@ part of graph.util.svg;
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @version $Id: PathHandler.java,v 1.1 2012/11/15 13:26:45 gaudenz Exp $
  */
-public interface PathHandler
+abstract class PathHandler
 {
 	/**
 	 * Invoked when the path starts.

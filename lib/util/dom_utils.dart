@@ -31,7 +31,7 @@ class DomUtils
 
 			result = parser.newDocument();
 		}
-		catch (Exception e)
+		on Exception catch (e)
 		{
 			System.out.println(e.getMessage());
 		}

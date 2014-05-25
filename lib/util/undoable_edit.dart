@@ -7,23 +7,23 @@ part of graph.util;
 //import java.util.List;
 
 /**
+ * Defines the requirements for an undoable change.
+ */
+abstract class UndoableChange
+{
+
+  /**
+   * Undoes or redoes the change depending on its undo state.
+   */
+  void execute();
+
+}
+
+/**
  * Implements a 2-dimensional rectangle with double precision coordinates.
  */
 class UndoableEdit
 {
-
-	/**
-	 * Defines the requirements for an undoable change.
-	 */
-	interface UndoableChange
-	{
-
-		/**
-		 * Undoes or redoes the change depending on its undo state.
-		 */
-		void execute();
-
-	}
 
 	/**
 	 * Holds the source of the undoable edit.
@@ -48,15 +48,15 @@ class UndoableEdit
 	/**
 	 * Constructs a new undoable edit for the given source.
 	 */
-	UndoableEdit(Object source)
-	{
-		this(source, true);
-	}
+//	UndoableEdit(Object source)
+//	{
+//		this(source, true);
+//	}
 
 	/**
 	 * Constructs a new undoable edit for the given source.
 	 */
-	UndoableEdit(Object source, bool significant)
+	UndoableEdit(Object source, [bool significant=true])
 	{
 		this._source = source;
 		this._significant = significant;
@@ -144,11 +144,11 @@ class UndoableEdit
 	{
 		if (!_undone)
 		{
-			int count = _changes.size();
+			int count = _changes.length;
 
 			for (int i = count - 1; i >= 0; i--)
 			{
-				UndoableChange change = _changes.get(i);
+				UndoableChange change = _changes[i];
 				change.execute();
 			}
 
@@ -166,11 +166,11 @@ class UndoableEdit
 	{
 		if (!_redone)
 		{
-			int count = _changes.size();
+			int count = _changes.length;
 
 			for (int i = 0; i < count; i++)
 			{
-				UndoableChange change = _changes.get(i);
+				UndoableChange change = _changes[i];
 				change.execute();
 			}
 

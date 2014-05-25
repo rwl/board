@@ -11,7 +11,7 @@ part of graph.layout;
 /**
  * Defines the requirements for an object that implements a graph layout.
  */
-public interface IGraphLayout
+abstract class IGraphLayout
 {
 
   /**

@@ -3,7 +3,7 @@ part of graph.model;
 /**
  * 
  */
-public interface Filter
+abstract class Filter
 {
 
 	/**

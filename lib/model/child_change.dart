@@ -16,26 +16,25 @@ class ChildChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	ChildChange()
-	{
-		this(null, null, null, 0);
-	}
+//	ChildChange()
+//	{
+//		this(null, null, null, 0);
+//	}
 
 	/**
 	 * 
 	 */
-	ChildChange(GraphModel model, Object parent, Object child)
-	{
-		this(model, parent, child, 0);
-	}
+//	ChildChange(GraphModel model, Object parent, Object child)
+//	{
+//		this(model, parent, child, 0);
+//	}
 
 	/**
 	 * 
 	 */
-	ChildChange(GraphModel model, Object parent, Object child,
-			int index)
+	ChildChange([GraphModel model=null, Object parent=null, Object child=null,
+			int index=0]) : super(model)
 	{
-		super(model);
 		this.parent = parent;
 		previous = this.parent;
 		this.child = child;
@@ -140,7 +139,7 @@ class ChildChange extends AtomicGraphModelChange
 	 */
 	void setTerminal(Object edge, Object terminal, bool source)
 	{
-		((ICell) edge).setTerminal((ICell) terminal, source);
+		(edge as ICell).setTerminal(terminal as ICell, source);
 	}
 
 	/**
@@ -155,12 +154,12 @@ class ChildChange extends AtomicGraphModelChange
 		{
 			if (isConnect)
 			{
-				((GraphModel) model)._terminalForCellChanged(cell, source,
+				(model as GraphModel)._terminalForCellChanged(cell, source,
 						true);
 			}
 			else
 			{
-				((GraphModel) model)._terminalForCellChanged(cell, null,
+				(model as GraphModel)._terminalForCellChanged(cell, null,
 						true);
 			}
 		}
@@ -169,12 +168,12 @@ class ChildChange extends AtomicGraphModelChange
 		{
 			if (isConnect)
 			{
-				((GraphModel) model)._terminalForCellChanged(cell, target,
+				(model as GraphModel)._terminalForCellChanged(cell, target,
 						false);
 			}
 			else
 			{
-				((GraphModel) model)._terminalForCellChanged(cell, null,
+				(model as GraphModel)._terminalForCellChanged(cell, null,
 						false);
 			}
 		}
@@ -196,8 +195,8 @@ class ChildChange extends AtomicGraphModelChange
 	 */
 	int getChildIndex(Object parent, Object child)
 	{
-		return (parent is ICell && child is ICell) ? ((ICell) parent)
-				.getIndex((ICell) child) : 0;
+		return (parent is ICell && child is ICell) ? (parent as ICell)
+				.getIndex(child as ICell) : 0;
 	}
 
 	/**
@@ -213,7 +212,7 @@ class ChildChange extends AtomicGraphModelChange
 			connect(child, false);
 		}
 
-		tmp = ((GraphModel) model)._parentForCellChanged(child, previous,
+		tmp = (model as GraphModel)._parentForCellChanged(child, previous,
 				previousIndex);
 
 		if (previous != null)

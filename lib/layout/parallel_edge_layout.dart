@@ -181,7 +181,7 @@ class ParallelEdgeLayout extends GraphLayout
 		if (graph.isCellMovable(edge))
 		{
 			setEdgePoints(edge,
-					Arrays.asList(new Point2d[] { new Point2d(x, y) }));
+					Arrays.asList(new List<Point2d> { new Point2d(x, y) }));
 		}
 	}
 

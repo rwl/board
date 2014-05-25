@@ -37,14 +37,14 @@ class CellPath
 			while (parent != null)
 			{
 				int index = parent.getIndex(cell);
-				result = index + CellPath.PATH_SEPARATOR + result;
+				result = index.toString() + CellPath.PATH_SEPARATOR + result;
 
 				cell = parent;
 				parent = cell.getParent();
 			}
 		}
 
-		return (result.length() > 1) ? result.substring(0, result.length() - 1)
+		return (result.length > 1) ? result.substring(0, result.length - 1)
 				: "";
 	}
 
@@ -64,7 +64,7 @@ class CellPath
 			{
 				return path.substring(0, index);
 			}
-			else if (path.length() > 0)
+			else if (path.length > 0)
 			{
 				return "";
 			}
@@ -84,11 +84,11 @@ class CellPath
 	static ICell resolve(ICell root, String path)
 	{
 		ICell parent = root;
-		String[] tokens = path.split(Pattern.quote(PATH_SEPARATOR));
+		List<String> tokens = path.split(Pattern.quote(PATH_SEPARATOR));
 
 		for (int i = 0; i < tokens.length; i++)
 		{
-			parent = parent.getChildAt(Integer.parseInt(tokens[i]));
+			parent = parent.getChildAt(int.parse(tokens[i]));
 		}
 
 		return parent;

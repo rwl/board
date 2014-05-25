@@ -704,10 +704,10 @@ class EdgeStyle
 	
 	static double orthBuffer = 10;
 
-	static double[][] dirVectors = new double[][] { { -1, 0 },
+	static List<double>[] dirVectors = new List<double>[] { { -1, 0 },
 			{ 0, -1 }, { 1, 0 }, { 0, 1 }, { -1, 0 }, { 0, -1 }, { 1, 0 } };
 
-	static double[][] wayPoints1 = new double[128][2];
+	static List<double>[] wayPoints1 = new double[128][2];
 
 	/**
 	 * The default routing patterns for orthogonal connections
@@ -736,9 +736,9 @@ class EdgeStyle
 			{ null, { 2114, 2561 }, null, null },
 			{ { 2081, 2562 }, { 1057, 2114, 2568 }, { 2184, 2562 }, null } };
 
-	static double[] vertexSeperations = new double[5];
+	static List<double> vertexSeperations = new double[5];
 
-	static double[][] limits = new double[2][9];
+	static List<double>[] limits = new double[2][9];
 
 	static int LEFT_MASK = 32;
 
@@ -814,7 +814,7 @@ class EdgeStyle
 				// in a way that would allow a 3-segment connection if port constraints
 				// permitted.
 				// geo -> [source, target] [x, y, width, height]
-				double[][] geo = new double[2][4];
+				List<double>[] geo = new double[2][4];
 				geo[0][0] = source.getX();
 				geo[0][1] = source.getY();
 				geo[0][2] = source.getWidth();
@@ -877,7 +877,7 @@ class EdgeStyle
 				Point2d currentTerm = p0;
 
 				// constraint[source, target] [x, y]
-				double constraint[][] = new double[][] { { 0.5, 0.5 },
+				double constraint[][] = new List<double>[] { { 0.5, 0.5 },
 						{ 0.5, 0.5 } };
 
 				for (int i = 0; i < 2; i++)
@@ -1118,7 +1118,7 @@ class EdgeStyle
 						directionIndex -= 4;
 					}
 
-					double[] direction = dirVectors[directionIndex - 1];
+					List<double> direction = dirVectors[directionIndex - 1];
 
 					currentOrientation = (directionIndex % 2 > 0) ? 0 : 1;
 					// Only update the current index if the point moved

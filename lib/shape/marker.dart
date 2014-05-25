@@ -1,6 +1,6 @@
 part of graph.shape;
 
-public interface IMarker
+abstract class IMarker
 {
 	/**
 	 * 

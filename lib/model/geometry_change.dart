@@ -16,18 +16,17 @@ class GeometryChange extends AtomicGraphModelChange
 	/**
 	 * 
 	 */
-	GeometryChange()
-	{
-		this(null, null, null);
-	}
+//	GeometryChange()
+//	{
+//		this(null, null, null);
+//	}
 
 	/**
 	 * 
 	 */
-	GeometryChange(GraphModel model, Object cell,
-			Geometry geometry)
+	GeometryChange([GraphModel model=null, Object cell=null,
+			Geometry geometry=null]) : super(model)
 	{
-		super(model);
 		this.cell = cell;
 		this.geometry = geometry;
 		this.previous = this.geometry;
@@ -87,7 +86,7 @@ class GeometryChange extends AtomicGraphModelChange
 	void execute()
 	{
 		geometry = previous;
-		previous = ((GraphModel) model)._geometryForCellChanged(cell,
+		previous = (model as GraphModel)._geometryForCellChanged(cell,
 				previous);
 	}
 

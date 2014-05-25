@@ -25,7 +25,7 @@ part of graph.util.svg;
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @version $Id: ErrorHandler.java,v 1.1 2012/11/15 13:26:45 gaudenz Exp $
  */
-public interface ErrorHandler
+abstract class ErrorHandler
 {
 	/**
 	 * Called when a parse error occurs.

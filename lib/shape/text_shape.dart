@@ -5,7 +5,7 @@ part of graph.shape;
 
 //import java.util.Map;
 
-public interface ITextShape
+abstract class ITextShape
 {
 	/**
 	 * 

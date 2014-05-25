@@ -6,7 +6,7 @@ part of graph.swing.util;
 //import javax.swing.ImageIcon;
 //import javax.swing.JComponent;
 
-public interface ICellOverlay
+abstract class ICellOverlay
 {
 
   /**

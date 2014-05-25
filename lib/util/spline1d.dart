@@ -10,13 +10,13 @@ part of graph.util;
  */
 class Spline1D
 {
-	double[] _len;
-	double[] _pos1D;
+	List<double> _len;
+	List<double> _pos1D;
 
-	double[] _a;
-	double[] _b;
-	double[] _c;
-	double[] _d;
+	List<double> _a;
+	List<double> _b;
+	List<double> _c;
+	List<double> _d;
 
 	/** tracks the last index found since that is mostly commonly the next one used */
 	private int _storageIndex = 0;
@@ -28,7 +28,7 @@ class Spline1D
 	 * @param positions1D the co-ordinate position in the current dimension that
 	 * 			each control point lies on
 	 */
-	Spline1D(double[] controlPointProportions, double[] positions1D)
+	Spline1D(List<double> controlPointProportions, List<double> positions1D)
 	{
 		setValues(controlPointProportions, positions1D);
 	}
@@ -40,7 +40,7 @@ class Spline1D
 	 * @param positions1D the co-ordinate position in the current dimension that
 	 * 			each control point lies on
 	 */
-	void setValues(double[] controlPointProportions, double[] positions1D)
+	void setValues(List<double> controlPointProportions, List<double> positions1D)
 	{
 		this._len = controlPointProportions;
 		this._pos1D = positions1D;
@@ -170,7 +170,7 @@ class Spline1D
 			return;
 		}
 
-		double[] h = new double[N - 1];
+		List<double> h = new double[N - 1];
 		
 		for (int i = 0; i < N - 1; i++)
 		{
@@ -185,8 +185,8 @@ class Spline1D
 		}
 		_a[N - 1] = _pos1D[N - 1];
 
-		double[][] A = new double[N - 2][N - 2];
-		double[] y = new double[N - 2];
+		List<double>[] A = new double[N - 2][N - 2];
+		List<double> y = new double[N - 2];
 		for (int i = 0; i < N - 2; i++)
 		{
 			y[i] =
@@ -229,7 +229,7 @@ class Spline1D
 	/**
 	 * Solves Ax=b and stores the solution in b.
 	 */
-	void solve(double[][] A, double[] b) {
+	void solve(List<double>[] A, List<double> b) {
 		int n = b.length;
 		
 		for (int i = 1; i < n; i++)

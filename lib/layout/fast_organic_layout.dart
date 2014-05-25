@@ -87,27 +87,27 @@ class FastOrganicLayout extends GraphLayout
 	/**
 	 * An array of locally stored X co-ordinate displacements for the vertices.
 	 */
-	double[] dispX;
+	List<double> dispX;
 
 	/**
 	 * An array of locally stored Y co-ordinate displacements for the vertices.
 	 */
-	double[] dispY;
+	List<double> dispY;
 
 	/**
 	 * An array of locally stored co-ordinate positions for the vertices.
 	 */
-	double[][] cellLocation;
+	List<double>[] cellLocation;
 
 	/**
 	 * The approximate radius of each cell, nodes only.
 	 */
-	double[] radius;
+	List<double> radius;
 
 	/**
 	 * The approximate radius squared of each cell, nodes only.
 	 */
-	double[] radiusSquared;
+	List<double> radiusSquared;
 
 	/**
 	 * Array of booleans representing the movable states of the vertices.

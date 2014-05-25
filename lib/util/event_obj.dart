@@ -30,17 +30,17 @@ class EventObj
 	/**
 	 * Constructs a new event for the given name.
 	 */
-	EventObj(String name)
-	{
-		this(name, (List<Object>) null);
-	}
+//	EventObj(String name)
+//	{
+//		this(name, (List<Object>) null);
+//	}
 
 	/**
 	 * Constructs a new event for the given name and properties. The optional
 	 * properties are specified using a sequence of keys and values, eg.
 	 * <code>new EventObj("eventName", key1, val1, .., keyN, valN))</code>
 	 */
-	EventObj(String name, Object... args)
+	EventObj(String name, List<Object> args)
 	{
 		this._name = name;
 		_properties = new Hashtable<String, Object>();

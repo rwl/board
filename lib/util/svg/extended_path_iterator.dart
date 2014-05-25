@@ -34,7 +34,7 @@ part of graph.util.svg;
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
  * @version $Id: ExtendedPathIterator.java,v 1.1 2012/11/15 13:26:45 gaudenz Exp $
  */
-public interface ExtendedPathIterator
+abstract class ExtendedPathIterator
 {
 
 	/**
@@ -107,7 +107,7 @@ public interface ExtendedPathIterator
 
 	int currentSegment();
 
-	int currentSegment(double[] coords);
+	int currentSegment(List<double> coords);
 
 	int currentSegment(float[] coords);
 

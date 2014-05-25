@@ -65,7 +65,7 @@ class CellState extends Rect
 	 * Array of numbers that represent the cached length of each segment of the
 	 * edge.
 	 */
-	double[] _segments;
+	List<double> _segments;
 
 	/**
 	 * Holds the rectangle which contains the label.
@@ -337,7 +337,7 @@ class CellState extends Rect
 	 * 
 	 * @return the segments
 	 */
-	double[] getSegments()
+	List<double> getSegments()
 	{
 		return _segments;
 	}
@@ -347,7 +347,7 @@ class CellState extends Rect
 	 * 
 	 * @param segments the segments to set
 	 */
-	void setSegments(double[] segments)
+	void setSegments(List<double> segments)
 	{
 		this._segments = segments;
 	}

@@ -25,12 +25,12 @@ class Geometry extends Rect
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 2649828026610336589L;
+//	private static final long serialVersionUID = 2649828026610336589L;
 
 	/**
 	 * Global switch to translate the points in translate. Default is true.
 	 */
-	static transient bool TRANSLATE_CONTROL_POINTS = true;
+	static /*transient*/ bool TRANSLATE_CONTROL_POINTS = true;
 
 	/**
 	 * Stores alternate values for x, y, width and height in a rectangle.
@@ -72,10 +72,10 @@ class Geometry extends Rect
 	/**
 	 * Constructs a new geometry at (0, 0) with the width and height set to 0.
 	 */
-	Geometry()
-	{
-		this(0, 0, 0, 0);
-	}
+//	Geometry()
+//	{
+//		this(0, 0, 0, 0);
+//	}
 
 	/**
 	 * Constructs a geometry using the given parameters.
@@ -85,10 +85,7 @@ class Geometry extends Rect
 	 * @param width Width of the new geometry.
 	 * @param height Height of the new geometry.
 	 */
-	Geometry(double x, double y, double width, double height)
-	{
-		super(x, y, width, height);
-	}
+	Geometry([double x=0.0, double y=0.0, double width=0.0, double height=0.0]) : super(x, y, width, height);
 
 	/**
 	 * Returns the alternate bounds.
@@ -316,7 +313,7 @@ class Geometry extends Rect
 	 */
 	Object clone()
 	{
-		Geometry clone = (Geometry) super.clone();
+		Geometry clone = super.clone() as Geometry;
 
 		clone.setX(getX());
 		clone.setY(getY());
@@ -332,7 +329,7 @@ class Geometry extends Rect
 
 			for (int i = 0; i < pts.size(); i++)
 			{
-				clone._points.add((Point2d) pts.get(i).clone());
+				clone._points.add(pts[i].clone() as Point2d);
 			}
 		}
 
@@ -340,28 +337,28 @@ class Geometry extends Rect
 
 		if (tp != null)
 		{
-			clone.setTargetPoint((Point2d) tp.clone());
+			clone.setTargetPoint(tp.clone() as Point2d);
 		}
 
 		Point2d sp = getSourcePoint();
 
 		if (sp != null)
 		{
-			setSourcePoint((Point2d) sp.clone());
+			setSourcePoint(sp.clone() as Point2d);
 		}
 
 		Point2d off = getOffset();
 
 		if (off != null)
 		{
-			clone.setOffset((Point2d) off.clone());
+			clone.setOffset(off.clone() as Point2d);
 		}
 
 		Rect alt = getAlternateBounds();
 
 		if (alt != null)
 		{
-			setAlternateBounds((Rect) alt.clone());
+			setAlternateBounds(alt.clone() as Rect);
 		}
 
 		return clone;

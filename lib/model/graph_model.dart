@@ -19,57 +19,8 @@ part of graph.model;
 /**
  * Defines the requirements for a graph model to be used with Graph.
  */
-public interface IGraphModel
+abstract class IGraphModel
 {
-
-  /**
-   * Defines the interface for an atomic change of the graph model.
-   */
-  public abstract class AtomicGraphModelChange implements UndoableChange
-  {
-    /**
-     * Holds the model where the change happened.
-     */
-    protected IGraphModel model;
-
-    /**
-     * Constructs an empty atomic graph model change.
-     */
-    public AtomicGraphModelChange()
-    {
-      this(null);
-    }
-
-    /**
-     * Constructs an atomic graph model change for the given model.
-     */
-    public AtomicGraphModelChange(IGraphModel model)
-    {
-      this.model = model;
-    }
-
-    /**
-     * Returns the model where the change happened.
-     */
-    public IGraphModel getModel()
-    {
-      return model;
-    }
-
-    /**
-     * Sets the model where the change is to be carried out.
-     */
-    public void setModel(IGraphModel model)
-    {
-      this.model = model;
-    }
-
-    /**
-     * Executes the change on the model.
-     */
-    public abstract void execute();
-
-  }
 
   /**
    * Returns the root of the model or the topmost parent of the given cell.
@@ -334,7 +285,7 @@ public interface IGraphModel
    *
    * Removes the given listener from the list of listeners.
    */
-  void removeListener(IEventListener listener);
+//  void removeListener(IEventListener listener);
 
   /**
    * Function: removeListener
@@ -342,6 +293,55 @@ public interface IGraphModel
    * Removes the given listener from the list of listeners.
    */
   void removeListener(IEventListener listener, String eventName);
+
+}
+
+/**
+ * Defines the interface for an atomic change of the graph model.
+ */
+abstract class AtomicGraphModelChange implements UndoableChange
+{
+  /**
+   * Holds the model where the change happened.
+   */
+  IGraphModel model;
+
+  /**
+   * Constructs an empty atomic graph model change.
+   */
+//  AtomicGraphModelChange()
+//  {
+//    this(null);
+//  }
+
+  /**
+   * Constructs an atomic graph model change for the given model.
+   */
+  AtomicGraphModelChange([IGraphModel model=null])
+  {
+    this.model = model;
+  }
+
+  /**
+   * Returns the model where the change happened.
+   */
+  IGraphModel getModel()
+  {
+    return model;
+  }
+
+  /**
+   * Sets the model where the change is to be carried out.
+   */
+  void setModel(IGraphModel model)
+  {
+    this.model = model;
+  }
+
+  /**
+   * Executes the change on the model.
+   */
+  abstract void execute();
 
 }
 
