@@ -18,16 +18,19 @@ class CurveShape extends ConnectorShape
 	/**
 	 * 
 	 */
-	CurveShape()
-	{
-		this(new Curve());
-	}
+//	CurveShape()
+//	{
+//		this(new Curve());
+//	}
 	
 	/**
 	 * 
 	 */
-	CurveShape(Curve curve)
+	CurveShape([Curve curve=null])
 	{
+	  if (curve == null) {
+	    curve = new Curve();
+	  }
 		this._curve = curve;
 	}
 

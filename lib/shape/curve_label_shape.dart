@@ -57,7 +57,7 @@ class CurveLabelShape implements ITextShape
 	 * Cache of information describing characteristics relating to drawing 
 	 * each glyph of this label
 	 */
-	LabelGlyphCache[] _labelGlyphs;
+	List<LabelGlyphCache> _labelGlyphs;
 
 	/**
 	 * Cache of the total length of the branch label
@@ -103,7 +103,7 @@ class CurveLabelShape implements ITextShape
 	/**
 	 * Cache of BIDI glyph vectors
 	 */
-	GlyphVector[] rtlGlyphVectors;
+	List<GlyphVector> rtlGlyphVectors;
 
 	/**
 	 * Shared FRC for font size calculations
@@ -230,12 +230,12 @@ class CurveLabelShape implements ITextShape
 		// that of the label size
 		if (_labelGlyphs == null || (!label.equals(_lastValue)))
 		{
-			_labelGlyphs = new LabelGlyphCache[label.length()];
+			_labelGlyphs = new List<LabelGlyphCache>(label.length());
 		}
 
 		if (!label.equals(_lastValue) || !font.equals(_lastFont))
 		{
-			char[] labelChars = label.toCharArray();
+			List<char> labelChars = label.toCharArray();
 			ArrayList<LabelGlyphCache> glyphList = new List<LabelGlyphCache>();
 			bool bidiRequired = Bidi.requiresBidi(labelChars, 0,
 					labelChars.length);
@@ -252,7 +252,7 @@ class CurveLabelShape implements ITextShape
 				if (rtlGlyphVectors == null
 						|| rtlGlyphVectors.length != runCount)
 				{
-					rtlGlyphVectors = new GlyphVector[runCount];
+					rtlGlyphVectors = new List<GlyphVector>(runCount);
 				}
 
 				for (int i = 0; i < bidi.getRunCount(); i++)
@@ -268,9 +268,9 @@ class CurveLabelShape implements ITextShape
 
 				int charCount = 0;
 
-				for (GlyphVector gv : rtlGlyphVectors)
+				for (GlyphVector gv in rtlGlyphVectors)
 				{
-					float vectorOffset = 0.0f;
+					float vectorOffset = 0.0;
 
 					for (int j = 0; j < gv.getNumGlyphs(); j++)
 					{
@@ -342,7 +342,7 @@ class CurveLabelShape implements ITextShape
 			_lastValue = label;
 			_lastFont = font;
 			_lastPoints = _curve.getGuidePoints();
-			this._labelGlyphs = glyphList.toArray(new LabelGlyphCache[glyphList.size()]);
+			this._labelGlyphs = glyphList.toArray(new List<LabelGlyphCache>(glyphList.size()));
 		}
 
 		// Store the start/end buffers that pad out the ends of the branch so the label is
@@ -514,8 +514,8 @@ class CurveLabelShape implements ITextShape
 
 			if (overallLabelBounds == null)
 			{
-				overallLabelBounds = (Rect) _labelGlyphs[j].drawingBounds
-						.clone();
+				overallLabelBounds = _labelGlyphs[j].drawingBounds
+						.clone() as Rect;
 			}
 			else
 			{
@@ -619,72 +619,73 @@ class CurveLabelShape implements ITextShape
 	{
 		this._curve = curve;
 	}
+}
 
-	/**
-	 * Utility class to describe the characteristics of each glyph of a branch
-	 * branch label. Each instance represents one glyph
-	 *
-	 */
-	class LabelGlyphCache
-	{
-		/**
-		 * Cache of the bounds of the individual element of the label of this 
-		 * edge. Note that these are the unrotated values used to determine the 
-		 * width of each glyph.
-		 */
-		public Rect labelGlyphBounds;
 
-		/**
-		 * The un-rotated rectangle that just bounds this character
-		 */
-		public Rect drawingBounds;
+/**
+ * Utility class to describe the characteristics of each glyph of a branch
+ * branch label. Each instance represents one glyph
+ *
+ */
+class LabelGlyphCache
+{
+  /**
+   * Cache of the bounds of the individual element of the label of this 
+   * edge. Note that these are the unrotated values used to determine the 
+   * width of each glyph.
+   */
+  Rect labelGlyphBounds;
 
-		/**
-		 * The glyph being drawn
-		 */
-		public String glyph;
+  /**
+   * The un-rotated rectangle that just bounds this character
+   */
+  Rect drawingBounds;
 
-		/**
-		 * A line parallel to the curve segment at which the element is to be
-		 * drawn
-		 */
-		public Line glyphGeometry;
+  /**
+   * The glyph being drawn
+   */
+  String glyph;
 
-		/**
-		 * The cached shape of the glyph
-		 */
-		public Shape glyphShape;
+  /**
+   * A line parallel to the curve segment at which the element is to be
+   * drawn
+   */
+  Line glyphGeometry;
 
-		/**
-		 * Whether or not the glyph should be drawn
-		 */
-		public bool visible;
-	}
+  /**
+   * The cached shape of the glyph
+   */
+  Shape glyphShape;
 
-	/**
-	 * Utility class that stores details of how the label is positioned
-	 * on the curve
-	 */
-	class LabelPosition
-	{
-		public double startBuffer = LABEL_BUFFER;
+  /**
+   * Whether or not the glyph should be drawn
+   */
+  bool visible;
+}
 
-		public double endBuffer = LABEL_BUFFER;
+/**
+ * Utility class that stores details of how the label is positioned
+ * on the curve
+ */
+class LabelPosition
+{
+  double startBuffer = LABEL_BUFFER;
 
-		public double defaultInterGlyphSpace = 0;;
-	}
+  double endBuffer = LABEL_BUFFER;
 
-	Rect getLabelBounds()
-	{
-		return _labelBounds;
-	}
+  double defaultInterGlyphSpace = 0;
+}
 
-	/**
-	 * Returns the drawing bounds of the central indexed visible glyph
-	 * @return the centerVisibleIndex
-	 */
-	Rect getCenterVisiblePosition()
-	{
-		return _labelGlyphs[centerVisibleIndex].drawingBounds;
-	}
+Rect getLabelBounds()
+{
+  return _labelBounds;
+}
+
+/**
+ * Returns the drawing bounds of the central indexed visible glyph
+ * @return the centerVisibleIndex
+ */
+Rect getCenterVisiblePosition()
+{
+  return _labelGlyphs[centerVisibleIndex].drawingBounds;
 }

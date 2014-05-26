@@ -90,8 +90,8 @@ class RectangleShape extends BasicShape
 
 		if (w <= h)
 		{
-			arcSize = (int) Math.round(h
-					* Constants.RECTANGLE_ROUNDING_FACTOR);
+			arcSize = Math.round(h
+					* Constants.RECTANGLE_ROUNDING_FACTOR) as int;
 
 			if (arcSize > (w / 2))
 			{
@@ -100,8 +100,8 @@ class RectangleShape extends BasicShape
 		}
 		else
 		{
-			arcSize = (int) Math.round(w
-					* Constants.RECTANGLE_ROUNDING_FACTOR);
+			arcSize = Math.round(w
+					* Constants.RECTANGLE_ROUNDING_FACTOR) as int;
 
 			if (arcSize > (h / 2))
 			{

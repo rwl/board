@@ -61,7 +61,7 @@ class ConnectorShape extends BasicShape
 		bool rounded = isRounded(style)
 				&& canvas.getScale() > Constants.MIN_SCALE_FOR_ROUNDED_LINES;
 
-		canvas.paintPolyline(points.toArray(new Point2d[points.size()]),
+		canvas.paintPolyline(points.toArray(new List<Point2d>(points.size())),
 				rounded);
 	}
 
@@ -80,7 +80,7 @@ class ConnectorShape extends BasicShape
 	{
 		if (offset != null)
 		{
-			Point2d pt = (Point2d) points.get(index).clone();
+			Point2d pt = points.get(index).clone() as Point2d;
 			pt.setX(pt.getX() + offset.getX());
 			pt.setY(pt.getY() + offset.getY());
 			points.set(index, pt);
@@ -131,7 +131,7 @@ class ConnectorShape extends BasicShape
 		// marker
 		double strokeX = unitX * strokeWidth;
 		double strokeY = unitY * strokeWidth;
-		pe = (Point2d) pe.clone();
+		pe = pe.clone() as Point2d;
 		pe.setX(pe.getX() - strokeX / 2.0);
 		pe.setY(pe.getY() - strokeY / 2.0);
 		

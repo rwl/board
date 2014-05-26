@@ -24,21 +24,21 @@ class HexagonShape extends BasicShape
 		if (direction.equals(Constants.DIRECTION_NORTH)
 				|| direction.equals(Constants.DIRECTION_SOUTH))
 		{
-			hexagon.addPoint(x + (int) (0.5 * w), y);
-			hexagon.addPoint(x + w, y + (int) (0.25 * h));
-			hexagon.addPoint(x + w, y + (int) (0.75 * h));
-			hexagon.addPoint(x + (int) (0.5 * w), y + h);
-			hexagon.addPoint(x, y + (int) (0.75 * h));
-			hexagon.addPoint(x, y + (int) (0.25 * h));
+			hexagon.addPoint(x + (0.5 * w) as int, y);
+			hexagon.addPoint(x + w, y + (0.25 * h) as int);
+			hexagon.addPoint(x + w, y + (0.75 * h) as int);
+			hexagon.addPoint(x + (0.5 * w) as int, y + h);
+			hexagon.addPoint(x, y + (0.75 * h) as int);
+			hexagon.addPoint(x, y + (0.25 * h) as int);
 		}
 		else
 		{
-			hexagon.addPoint(x + (int) (0.25 * w), y);
-			hexagon.addPoint(x + (int) (0.75 * w), y);
-			hexagon.addPoint(x + w, y + (int) (0.5 * h));
-			hexagon.addPoint(x + (int) (0.75 * w), y + h);
-			hexagon.addPoint(x + (int) (0.25 * w), y + h);
-			hexagon.addPoint(x, y + (int) (0.5 * h));
+			hexagon.addPoint(x + (0.25 * w) as int, y);
+			hexagon.addPoint(x + (0.75 * w) as int, y);
+			hexagon.addPoint(x + w, y + (0.5 * h) as int);
+			hexagon.addPoint(x + (0.75 * w) as int, y + h);
+			hexagon.addPoint(x + (0.25 * w) as int, y + h);
+			hexagon.addPoint(x, y + (0.5 * h) as int);
 		}
 
 		return hexagon;

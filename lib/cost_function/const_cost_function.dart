@@ -11,10 +11,10 @@ class ConstCostFunction extends CostFunction
 	ConstCostFunction(double cost)
 	{
 		this._cost = cost;
-	};
+	}
 	
 	double getCost(CellState state)
 	{
 		return _cost;
-	};
+	}
 }

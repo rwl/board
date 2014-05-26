@@ -17,41 +17,41 @@ class GeneratorRandomFunction extends GeneratorFunction
 	{
 		setWeightRange(minWeight, maxWeight);
 		setRoundToDecimals(roundToDecimals);
-	};
+	}
 
 	double getCost(CellState state)
 	{
 		Double edgeWeight = null;
 
 		edgeWeight = Math.random() * (_maxWeight - _minWeight) + _minWeight;
-		edgeWeight = (double) Math.round(edgeWeight * Math.pow(10, getRoundToDecimals())) / Math.pow(10, getRoundToDecimals());
+		edgeWeight = Math.round(edgeWeight * Math.pow(10, getRoundToDecimals())) / Math.pow(10, getRoundToDecimals()) as double;
 
 		return edgeWeight;
-	};
+	}
 
 	double getMaxWeight()
 	{
 		return _maxWeight;
-	};
+	}
 
 	void setWeightRange(double minWeight, double maxWeight)
 	{
 		this._maxWeight = Math.max(minWeight, maxWeight);
 		this._minWeight = Math.min(minWeight, maxWeight);
-	};
+	}
 
 	double getMinWeight()
 	{
 		return _minWeight;
-	};
+	}
 
 	int getRoundToDecimals()
 	{
 		return _roundToDecimals;
-	};
+	}
 
 	void setRoundToDecimals(int roundToDecimals)
 	{
 		this._roundToDecimals = roundToDecimals;
-	};
-};
+	}
+}

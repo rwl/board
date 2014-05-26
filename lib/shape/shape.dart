@@ -26,7 +26,7 @@ import '../canvas/canvas.dart' show GraphicsCanvas2D;
 part 'actor_shape.dart';
 part 'arrow_shape.dart';
 part 'basic_shape.dart';
-part 'cloud_shape.dart;
+part 'cloud_shape.dart';
 part 'connector_shape.dart';
 part 'curve_label_shape.dart';
 part 'curve_shape.dart';

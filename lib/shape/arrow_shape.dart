@@ -47,15 +47,15 @@ class ArrowShape extends BasicShape
 		double p5y = p3y - 3 * floory;
 
 		Polygon poly = new Polygon();
-		poly.addPoint((int) Math.round(p0x), (int) Math.round(p0y));
-		poly.addPoint((int) Math.round(p1x), (int) Math.round(p1y));
-		poly.addPoint((int) Math.round(p2x), (int) Math.round(p2y));
-		poly.addPoint((int) Math.round(p3x), (int) Math.round(p3y));
-		poly.addPoint((int) Math.round(pe.getX() - spacing * nx), (int) Math
-				.round(pe.getY() - spacing * ny));
-		poly.addPoint((int) Math.round(p5x), (int) Math.round(p5y));
-		poly.addPoint((int) Math.round(p5x + floorx), (int) Math.round(p5y
-				+ floory));
+		poly.addPoint(Math.round(p0x) as int, Math.round(p0y) as int);
+		poly.addPoint(Math.round(p1x) as int, Math.round(p1y) as int);
+		poly.addPoint(Math.round(p2x) as int, Math.round(p2y) as int);
+		poly.addPoint(Math.round(p3x) as int, Math.round(p3y) as int);
+		poly.addPoint(Math.round(pe.getX() - spacing * nx) as int, Math
+				.round(pe.getY() - spacing * ny) as int);
+		poly.addPoint(Math.round(p5x) as int, Math.round(p5y) as int);
+		poly.addPoint(Math.round(p5x + floorx) as int, Math.round(p5y
+				+ floory) as int);
 
 		return poly;
 	}

@@ -19,24 +19,24 @@ class CloudShape extends BasicShape
 		int h = temp.height;
 		GeneralPath path = new GeneralPath();
 
-		path.moveTo((float) (x + 0.25 * w), (float) (y + 0.25 * h));
-		path.curveTo((float) (x + 0.05 * w), (float) (y + 0.25 * h), x,
-				(float) (y + 0.5 * h), (float) (x + 0.16 * w),
-				(float) (y + 0.55 * h));
-		path.curveTo(x, (float) (y + 0.66 * h), (float) (x + 0.18 * w),
-				(float) (y + 0.9 * h), (float) (x + 0.31 * w),
-				(float) (y + 0.8 * h));
-		path.curveTo((float) (x + 0.4 * w), (y + h), (float) (x + 0.7 * w),
-				(y + h), (float) (x + 0.8 * w), (float) (y + 0.8 * h));
-		path.curveTo((x + w), (float) (y + 0.8 * h), (x + w),
-				(float) (y + 0.6 * h), (float) (x + 0.875 * w),
-				(float) (y + 0.5 * h));
-		path.curveTo((x + w), (float) (y + 0.3 * h), (float) (x + 0.8 * w),
-				(float) (y + 0.1 * h), (float) (x + 0.625 * w),
-				(float) (y + 0.2 * h));
-		path.curveTo((float) (x + 0.5 * w), (float) (y + 0.05 * h),
-				(float) (x + 0.3 * w), (float) (y + 0.05 * h),
-				(float) (x + 0.25 * w), (float) (y + 0.25 * h));
+		path.moveTo((x + 0.25 * w) as float, (y + 0.25 * h) as float);
+		path.curveTo((x + 0.05 * w) as float, (y + 0.25 * h) as float, x,
+				(y + 0.5 * h) as float, (x + 0.16 * w) as float,
+				(y + 0.55 * h) as float);
+		path.curveTo(x, (y + 0.66 * h) as float, (x + 0.18 * w) as float,
+				(y + 0.9 * h) as float, (x + 0.31 * w) as float,
+				(y + 0.8 * h) as float);
+		path.curveTo((x + 0.4 * w) as float, (y + h), (x + 0.7 * w) as float,
+				(y + h), (x + 0.8 * w) as float, (y + 0.8 * h) as float);
+		path.curveTo((x + w), (y + 0.8 * h) as float, (x + w),
+				(y + 0.6 * h) as float, (x + 0.875 * w) as float,
+				(y + 0.5 * h) as float);
+		path.curveTo((x + w), (y + 0.3 * h) as float, (x + 0.8 * w) as float,
+				(y + 0.1 * h) as float, (x + 0.625 * w) as float,
+				(y + 0.2 * h) as float);
+		path.curveTo((x + 0.5 * w) as float, (y + 0.05 * h) as float,
+				(x + 0.3 * w) as float, (y + 0.05 * h) as float,
+				(x + 0.25 * w) as float, (y + 0.25 * h) as float);
 		path.closePath();
 
 		return path;

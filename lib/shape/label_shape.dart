@@ -30,24 +30,24 @@ class LabelShape extends ImageShape
 	{
 		double size = 0.4;
 		canvas.getGraphics().setPaint(
-				new GradientPaint((float) state.getX(), (float) state.getY(),
-						new Color(1, 1, 1, 0.9f), (float) (state.getX()),
-						(float) (state.getY() + state.getHeight() * size),
-						new Color(1, 1, 1, 0.3f)));
+				new GradientPaint(state.getX() as float, state.getY() as float,
+						new Color(1, 1, 1, 0.9), (state.getX()) as float,
+						(state.getY() + state.getHeight() * size) as float,
+						new Color(1, 1, 1, 0.3)));
 
-		float sw = (float) (Utils.getFloat(state.getStyle(),
-				Constants.STYLE_STROKEWIDTH, 1) * canvas.getScale() / 2);
+		float sw = (Utils.getFloat(state.getStyle(),
+				Constants.STYLE_STROKEWIDTH, 1) * canvas.getScale() / 2) as float;
 
 		GeneralPath path = new GeneralPath();
-		path.moveTo((float) state.getX() - sw, (float) state.getY() - sw);
-		path.lineTo((float) state.getX() - sw,
-				(float) (state.getY() + state.getHeight() * size));
-		path.quadTo((float) (state.getX() + state.getWidth() * 0.5),
-				(float) (state.getY() + state.getHeight() * 0.7),
-				(float) (state.getX() + state.getWidth() + sw),
-				(float) (state.getY() + state.getHeight() * size));
-		path.lineTo((float) (state.getX() + state.getWidth() + sw),
-				(float) state.getY() - sw);
+		path.moveTo(state.getX() - sw as float, state.getY() - sw as float);
+		path.lineTo(state.getX() - sw as float,
+				(state.getY() + state.getHeight() * size) as float);
+		path.quadTo((state.getX() + state.getWidth() * 0.5) as float,
+				(state.getY() + state.getHeight() * 0.7) as float,
+				(state.getX() + state.getWidth() + sw) as float,
+				(state.getY() + state.getHeight() * size) as float);
+		path.lineTo((state.getX() + state.getWidth() + sw) as float,
+				state.getY() - sw as float);
 		path.closePath();
 
 		canvas.getGraphics().fill(path);
@@ -65,12 +65,12 @@ class LabelShape extends ImageShape
 		String imgValign = Utils.getString(style,
 				Constants.STYLE_IMAGE_VERTICAL_ALIGN,
 				Constants.ALIGN_MIDDLE);
-		int imgWidth = (int) (Utils.getInt(style,
-				Constants.STYLE_IMAGE_WIDTH, Constants.DEFAULT_IMAGESIZE) * scale);
-		int imgHeight = (int) (Utils.getInt(style,
-				Constants.STYLE_IMAGE_HEIGHT, Constants.DEFAULT_IMAGESIZE) * scale);
-		int spacing = (int) (Utils
-				.getInt(style, Constants.STYLE_SPACING, 2) * scale);
+		int imgWidth = (Utils.getInt(style,
+				Constants.STYLE_IMAGE_WIDTH, Constants.DEFAULT_IMAGESIZE) * scale) as int;
+		int imgHeight = (Utils.getInt(style,
+				Constants.STYLE_IMAGE_HEIGHT, Constants.DEFAULT_IMAGESIZE) * scale) as int;
+		int spacing = (Utils
+				.getInt(style, Constants.STYLE_SPACING, 2) * scale) as int;
 
 		Rect imageBounds = new Rect(state);
 

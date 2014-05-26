@@ -28,13 +28,13 @@ class DoubleValCostFunction extends CostFunction
 		}
 		else if (graph.getModel().getValue(cell) is String)
 		{
-			edgeWeight = Double.parseDouble((String) graph.getModel().getValue(cell));
+			edgeWeight = Double.parseDouble(graph.getModel().getValue(cell) as String);
 		}
 		else
 		{
-			edgeWeight = (Double) graph.getModel().getValue(cell);
+			edgeWeight = graph.getModel().getValue(cell) as Double;
 		}
 
 		return edgeWeight;
-	};
-};
+	}
+}

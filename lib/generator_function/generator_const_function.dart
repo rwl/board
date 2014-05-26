@@ -12,10 +12,10 @@ class GeneratorConstFunction extends GeneratorFunction
 	GeneratorConstFunction(double cost)
 	{
 		this._cost = cost;
-	};
+	}
 	
 	double getCost(CellState state)
 	{
 		return _cost;
-	};
+	}
 }

@@ -12,9 +12,9 @@ class DoubleEllipseShape extends EllipseShape
 	{
 		super.paintShape(canvas, state);
 
-		int inset = (int) Math.round((Utils.getFloat(state.getStyle(),
+		int inset = Math.round((Utils.getFloat(state.getStyle(),
 				Constants.STYLE_STROKEWIDTH, 1) + 3)
-				* canvas.getScale());
+				* canvas.getScale()) as int;
 
 		Rectangle rect = state.getRectangle();
 		int x = rect.x + inset;

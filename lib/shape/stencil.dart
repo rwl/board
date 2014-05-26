@@ -278,8 +278,8 @@ class Stencil implements IShape
 					state.getStyle(), Constants.STYLE_STROKEWIDTH, 1)
 					* state.getView().getScale() : Double
 					.parseDouble(_strokewidth) * minScale;
-			_lastMoveX = 0;
-			_lastMoveY = 0;
+			_lastMoveX = 0.0;
+			_lastMoveY = 0.0;
 			canvas.setStrokeWidth(sw);
 
 			Node tmp = elt.getFirstChild();
@@ -288,7 +288,7 @@ class Stencil implements IShape
 			{
 				if (tmp.getNodeType() == Node.ELEMENT_NODE)
 				{
-					_drawElement(canvas, state, (Element) tmp, aspect);
+					_drawElement(canvas, state, tmp as Element, aspect);
 				}
 
 				tmp = tmp.getNextSibling();
@@ -381,7 +381,7 @@ class Stencil implements IShape
 			{
 				if (childNode.getNodeType() == Node.ELEMENT_NODE)
 				{
-					_drawElement(canvas, state, (Element) childNode, aspect);
+					_drawElement(canvas, state, childNode as Element, aspect);
 				}
 
 				childNode = childNode.getNextSibling();
@@ -602,7 +602,7 @@ class Stencil implements IShape
 		{
 			try
 			{
-				defaultValue = (int) Math.floor(Float.parseFloat(value));
+				defaultValue = Math.floor(Float.parseFloat(value)) as int;
 			}
 			on NumberFormatException catch (e)
 			{
@@ -616,16 +616,16 @@ class Stencil implements IShape
 	/**
 	 * Returns the given attribute or 0.
 	 */
-	double _getDouble(Element elt, String attribute)
-	{
-		return _getDouble(elt, attribute, 0);
-	}
+//	double _getDouble(Element elt, String attribute)
+//	{
+//		return _getDouble(elt, attribute, 0);
+//	}
 
 	/**
 	 * Returns the given attribute or the default value.
 	 */
 	double _getDouble(Element elt, String attribute,
-			double defaultValue)
+			[double defaultValue=0.0])
 	{
 		String value = elt.getAttribute(attribute);
 
@@ -666,8 +666,8 @@ class Stencil implements IShape
 	void _parseDescription()
 	{
 		// LATER: Preprocess nodes for faster painting
-		_fgNode = (Element) _desc.getElementsByTagName("foreground").item(0);
-		_bgNode = (Element) _desc.getElementsByTagName("background").item(0);
+		_fgNode = _desc.getElementsByTagName("foreground").item(0) as Element;
+		_bgNode = _desc.getElementsByTagName("background").item(0) as Element;
 		_w0 = _getDouble(_desc, "w", _w0);
 		_h0 = _getDouble(_desc, "h", _h0);
 

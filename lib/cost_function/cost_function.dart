@@ -6,6 +6,6 @@ import '../view/view.dart' show CellState, Graph;
 part 'const_cost_function.dart';
 part 'double_val_cost_function.dart';
 
-public abstract class CostFunction implements ICostFunction
+class CostFunction implements ICostFunction
 {
 }

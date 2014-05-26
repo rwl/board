@@ -42,9 +42,7 @@ class LineShape extends BasicShape
 			pe = new Point2d(mid, state.getY() + state.getHeight());
 		}
 
-		List<Point2d> points = new Point2d[2];
-		points[0] = p0;
-		points[1] = pe;
+		List<Point2d> points = [p0, pe];
 
 		return points;
 	}

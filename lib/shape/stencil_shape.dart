@@ -29,10 +29,7 @@ part of graph.shape;
  */
 class StencilShape extends BasicShape
 {
-	StencilShape()
-	{
-		super();
-	}
+//	StencilShape() : super();
 
 	GeneralPath _shapePath;
 
@@ -58,9 +55,9 @@ class StencilShape extends BasicShape
 	/**
 	 * Constructs a new stencil for the given Dia shape description.
 	 */
-	StencilShape(String shapeXml)
+	factory StencilShape.xml(String shapeXml)
 	{
-		this(XmlUtils.parseXml(shapeXml));
+		return new StencilShape(XmlUtils.parseXml(shapeXml));
 	}
 
 	StencilShape(Document document)
@@ -108,7 +105,7 @@ class StencilShape extends BasicShape
 	/**
 	 * 
 	 */
-	@Override
+//	@Override
 	void paintShape(Graphics2DCanvas canvas, CellState state)
 	{
 		double x = state.getX();
@@ -232,7 +229,7 @@ class StencilShape extends BasicShape
 		 * If root is a group element, then we should add it's styles to the
 		 * children.
 		 */
-		for (_svgShape subShape : shape.subShapes)
+		for (_svgShape subShape in shape.subShapes)
 		{
 			paintNode(canvas, state, subShape, widthRatio, heightRatio);
 		}
@@ -257,7 +254,7 @@ class StencilShape extends BasicShape
 	{
 		if (shape is Rectangle2D)
 		{
-			Rectangle2D rect = (Rectangle2D) shape;
+			Rectangle2D rect = shape as Rectangle2D;
 			if (transX != 0 || transY != 0)
 			{
 				rect.setFrame(rect.getX() + transX, rect.getY() + transY,
@@ -273,7 +270,7 @@ class StencilShape extends BasicShape
 		}
 		else if (shape is Line2D)
 		{
-			Line2D line = (Line2D) shape;
+			Line2D line = shape as Line2D;
 			if (transX != 0 || transY != 0)
 			{
 				line.setLine(line.getX1() + transX, line.getY1() + transY,
@@ -288,21 +285,21 @@ class StencilShape extends BasicShape
 		}
 		else if (shape is GeneralPath)
 		{
-			GeneralPath path = (GeneralPath) shape;
+			GeneralPath path = shape as GeneralPath;
 			_cachedTransform.setToScale(widthRatio, heightRatio);
 			_cachedTransform.translate(transX, transY);
 			path.transform(_cachedTransform);
 		}
 		else if (shape is ExtendedGeneralPath)
 		{
-			ExtendedGeneralPath path = (ExtendedGeneralPath) shape;
+			ExtendedGeneralPath path = shape as ExtendedGeneralPath;
 			_cachedTransform.setToScale(widthRatio, heightRatio);
 			_cachedTransform.translate(transX, transY);
 			path.transform(_cachedTransform);
 		}
 		else if (shape is Ellipse2D)
 		{
-			Ellipse2D ellipse = (Ellipse2D) shape;
+			Ellipse2D ellipse = shape as Ellipse2D;
 			if (transX != 0 || transY != 0)
 			{
 				ellipse.setFrame(ellipse.getX() + transX, ellipse.getY()
@@ -331,7 +328,7 @@ class StencilShape extends BasicShape
 		{
 			if (_isGroup(child.getNodeName()))
 			{
-				String style = ((Element) root).getAttribute("style");
+				String style = (root as Element).getAttribute("style");
 				Map<String, Object> styleMap = StencilShape
 						.getStylenames(style);
 				_svgShape subShape = new _svgShape(null, styleMap);
@@ -347,7 +344,7 @@ class StencilShape extends BasicShape
 			child = child.getNextSibling();
 		}
 
-		for (_svgShape subShape : shape.subShapes)
+		for (_svgShape subShape in shape.subShapes)
 		{
 			if (subShape != null && subShape.shape != null)
 			{
@@ -367,7 +364,7 @@ class StencilShape extends BasicShape
 		if (_boundingBox != null
 				&& (_boundingBox.getX() != 0 || _boundingBox.getY() != 0))
 		{
-			for (_svgShape subShape : shape.subShapes)
+			for (_svgShape subShape in shape.subShapes)
 			{
 				if (subShape != null && subShape.shape != null)
 				{
@@ -393,7 +390,7 @@ class StencilShape extends BasicShape
 
 		if (root is Element)
 		{
-			element = (Element) root;
+			element = root as Element;
 			String style = element.getAttribute("style");
 			Map<String, Object> styleMap = StencilShape.getStylenames(style);
 
@@ -767,49 +764,49 @@ class StencilShape extends BasicShape
 
 class _svgShape
 {
-  public Shape shape;
+  Shape shape;
 
   /**
    * Contains an array of key, value pairs that represent the style of the
    * cell.
    */
-  protected Map<String, Object> style;
+  Map<String, Object> style;
 
-  public List<_svgShape> subShapes;
+  List<_svgShape> subShapes;
 
   /**
    * Holds the current value to which the shape is scaled in X
    */
-  protected double currentXScale;
+  double currentXScale;
 
   /**
    * Holds the current value to which the shape is scaled in Y
    */
-  protected double currentYScale;
+  double currentYScale;
 
-  public _svgShape(Shape shape, Map<String, Object> style)
+  _svgShape(Shape shape, Map<String, Object> style)
   {
     this.shape = shape;
     this.style = style;
     subShapes = new List<_svgShape>();
   }
 
-  public double getCurrentXScale()
+  double getCurrentXScale()
   {
     return currentXScale;
   }
 
-  public void setCurrentXScale(double currentXScale)
+  void setCurrentXScale(double currentXScale)
   {
     this.currentXScale = currentXScale;
   }
 
-  public double getCurrentYScale()
+  double getCurrentYScale()
   {
     return currentYScale;
   }
 
-  public void setCurrentYScale(double currentYScale)
+  void setCurrentYScale(double currentYScale)
   {
     this.currentYScale = currentYScale;
   }

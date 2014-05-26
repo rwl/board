@@ -14,7 +14,7 @@ class GeneratorRandomIntFunction extends GeneratorFunction
 	GeneratorRandomIntFunction(double minWeight, double maxWeight)
 	{
 		setWeightRange(minWeight, maxWeight);
-	};
+	}
 
 	double getCost(CellState state)
 	{
@@ -29,21 +29,21 @@ class GeneratorRandomIntFunction extends GeneratorFunction
 
 		double currValue = _minWeight + Math.round((Math.random() * (_maxWeight - _minWeight)));
 		return currValue;
-	};
+	}
 
 	double getMaxWeight()
 	{
 		return _maxWeight;
-	};
+	}
 
 	void setWeightRange(double minWeight, double maxWeight)
 	{
 		this._maxWeight = Math.round(Math.max(minWeight, maxWeight));
 		this._minWeight = Math.round(Math.min(minWeight, maxWeight));
-	};
+	}
 
 	double getMinWeight()
 	{
 		return _minWeight;
-	};
-};
+	}
+}

@@ -50,8 +50,8 @@ class DefaultTextShape implements ITextShape
 					Constants.DEFAULT_FONTSIZE);
 			FontMetrics fm = g.getFontMetrics();
 			int scaledFontSize = scaledFont.getSize();
-			double fontScaleFactor = ((double) scaledFontSize)
-					/ ((double) fontSize);
+			double fontScaleFactor = (scaledFontSize as double)
+					/ (fontSize as double);
 			// This factor is the amount by which the font is smaller/
 			// larger than we expect for the given scale. 1 means it's
 			// correct, 0.8 means the font is 0.8 the size we expected

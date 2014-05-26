@@ -3,10 +3,6 @@
  */
 part of graph.shape;
 
-import '../canvas/canvas.dart' show Graphics2DCanvas;
-import '../util/util.dart' show Constants;
-import '../view/view.dart' show CellState;
-
 //import java.awt.Color;
 //import java.awt.Paint;
 //import java.awt.Shape;
