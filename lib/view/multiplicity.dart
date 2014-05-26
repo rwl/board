@@ -183,16 +183,16 @@ class Multiplicity
 	/**
 	 * Checks the type of the given value.
 	 */
-	bool checkType(Graph graph, Object value, String type)
-	{
-		return checkType(graph, value, type, null, null);
-	}
+//	bool checkType(Graph graph, Object value, String type)
+//	{
+//		return checkType(graph, value, type, null, null);
+//	}
 
 	/**
 	 * Checks the type of the given value.
 	 */
 	bool checkType(Graph graph, Object value, String type,
-			String attr, String attrValue)
+			[String attr=null, String attrValue=null])
 	{
 		if (value != null)
 		{

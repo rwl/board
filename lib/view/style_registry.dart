@@ -20,7 +20,7 @@ class StyleRegistry
 	static Map<String, Object> _values = new Hashtable<String, Object>();
 
 	// Registers the known object styles
-	static
+	static init()
 	{
 		putValue(Constants.EDGESTYLE_ELBOW, EdgeStyle.ElbowConnector);
 		putValue(Constants.EDGESTYLE_ENTITY_RELATION,

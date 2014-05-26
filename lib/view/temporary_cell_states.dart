@@ -27,23 +27,23 @@ class TemporaryCellStates
 	/**
 	 * Constructs a new temporary cell states instance.
 	 */
-	TemporaryCellStates(GraphView view)
-	{
-		this(view, 1, null);
-	}
+//	TemporaryCellStates(GraphView view)
+//	{
+//		this(view, 1, null);
+//	}
 
 	/**
 	 * Constructs a new temporary cell states instance.
 	 */
-	TemporaryCellStates(GraphView view, double scale)
-	{
-		this(view, scale, null);
-	}
+//	TemporaryCellStates(GraphView view, double scale)
+//	{
+//		this(view, scale, null);
+//	}
 
 	/**
 	 * Constructs a new temporary cell states instance.
 	 */
-	TemporaryCellStates(GraphView view, double scale, List<Object> cells)
+	TemporaryCellStates(GraphView view, [double scale=1.0, List<Object> cells=null])
 	{
 		this._view = view;
 

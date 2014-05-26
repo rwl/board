@@ -36,22 +36,20 @@ class SpaceManager extends EventSource
 	/**
 	 * 
 	 */
-	IEventListener _resizeHandler = new IEventListener()
-	{
-		public void invoke(Object source, EventObj evt)
-		{
-			if (isEnabled())
-			{
-				_cellsResized((List<Object>) evt.getProperty("cells"));
-			}
-		}
-	};
+	IEventListener _resizeHandler;
 
 	/**
 	 * 
 	 */
 	SpaceManager(Graph graph)
 	{
+	  _resizeHandler = (Object source, EventObj evt)
+        {
+          if (isEnabled())
+          {
+            _cellsResized(evt.getProperty("cells") as List<Object>);
+          }
+        };
 		setGraph(graph);
 	}
 
@@ -273,13 +271,13 @@ class SpaceManager extends EventSource
 					{
 						if (state.getX() >= right)
 						{
-							geo = (Geometry) geo.clone();
+							geo = geo.clone() as Geometry;
 							geo.translate(-dx, 0);
 						}
 						else
 						{
 							double tmpDx = Math.max(0, state.getX() - x0);
-							geo = (Geometry) geo.clone();
+							geo = geo.clone() as Geometry;
 							geo.translate(-fx * tmpDx, 0);
 						}
 					}
@@ -288,13 +286,13 @@ class SpaceManager extends EventSource
 					{
 						if (state.getY() >= bottom)
 						{
-							geo = (Geometry) geo.clone();
+							geo = geo.clone() as Geometry;
 							geo.translate(0, -dy);
 						}
 						else
 						{
 							double tmpDy = Math.max(0, state.getY() - y0);
-							geo = (Geometry) geo.clone();
+							geo = geo.clone() as Geometry;
 							geo.translate(0, -fy * tmpDy);
 						}
 

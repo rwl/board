@@ -57,37 +57,33 @@ class LayoutManager extends EventSource
 	/**
 	 * 
 	 */
-	IEventListener _undoHandler = new IEventListener()
-	{
-		public void invoke(Object source, EventObj evt)
-		{
-			if (isEnabled())
-			{
-				_beforeUndo((UndoableEdit) evt.getProperty("edit"));
-			}
-		}
-	};
+	IEventListener _undoHandler;
 
 	/**
 	 * 
 	 */
-	IEventListener _moveHandler = new IEventListener()
-	{
-		public void invoke(Object source, EventObj evt)
-		{
-			if (isEnabled())
-			{
-				_cellsMoved((List<Object>) evt.getProperty("cells"), (Point) evt
-						.getProperty("location"));
-			}
-		}
-	};
+	IEventListener _moveHandler;
 
 	/**
 	 * 
 	 */
 	LayoutManager(Graph graph)
 	{
+	  _undoHandler = (Object source, EventObj evt)
+        {
+          if (isEnabled())
+          {
+            _beforeUndo(evt.getProperty("edit") as UndoableEdit);
+          }
+        };
+    _moveHandler = (Object source, EventObj evt)
+        {
+          if (isEnabled())
+          {
+            _cellsMoved(evt.getProperty("cells") as List<Object>, evt
+                .getProperty("location") as Point);
+          }
+        };
 		setGraph(graph);
 	}
 
@@ -241,7 +237,7 @@ class LayoutManager extends EventSource
 
 		if (change is ChildChange)
 		{
-			ChildChange cc = (ChildChange) change;
+			ChildChange cc = change as ChildChange;
 			Object parent = model.getParent(cc.getChild());
 
 			if (cc.getChild() != null)
@@ -262,9 +258,9 @@ class LayoutManager extends EventSource
 		else if (change is TerminalChange
 				|| change is GeometryChange)
 		{
-			Object cell = (change is TerminalChange) ? ((TerminalChange) change)
+			Object cell = (change is TerminalChange) ? (change as TerminalChange)
 					.getCell()
-					: ((GeometryChange) change).getCell();
+					: (change as GeometryChange).getCell();
 
 			if (cell != null)
 			{

@@ -1205,5 +1205,5 @@ class EdgeStyle
 
 			return result;
 		}
-	};
+	}
 }

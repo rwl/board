@@ -937,293 +937,293 @@ class Constants
 	/**
 	 * FONT_BOLD
 	 */
-	static final int FONT_BOLD = 1;
+	static const int FONT_BOLD = 1;
 
 	/**
 	 * FONT_ITALIC
 	 */
-	static final int FONT_ITALIC = 2;
+	static const int FONT_ITALIC = 2;
 
 	/**
 	 * FONT_UNDERLINE
 	 */
-	static final int FONT_UNDERLINE = 4;
+	static const int FONT_UNDERLINE = 4;
 
 	/**
 	 * FONT_SHADOW
 	 */
-	static final int FONT_SHADOW = 8;
+	static const int FONT_SHADOW = 8;
 
 	/**
 	 * SHAPE_RECTANGLE
 	 */
-	static final String SHAPE_RECTANGLE = "rectangle";
+	static const String SHAPE_RECTANGLE = "rectangle";
 
 	/**
 	 * SHAPE_ELLIPSE
 	 */
-	static final String SHAPE_ELLIPSE = "ellipse";
+	static const String SHAPE_ELLIPSE = "ellipse";
 
 	/**
 	 * SHAPE_DOUBLE_RECTANGLE
 	 */
-	static final String SHAPE_DOUBLE_RECTANGLE = "doubleRectangle";
+	static const String SHAPE_DOUBLE_RECTANGLE = "doubleRectangle";
 
 	/**
 	 * SHAPE_DOUBLE_ELLIPSE
 	 */
-	static final String SHAPE_DOUBLE_ELLIPSE = "doubleEllipse";
+	static const String SHAPE_DOUBLE_ELLIPSE = "doubleEllipse";
 
 	/**
 	 * SHAPE_RHOMBUS
 	 */
-	static final String SHAPE_RHOMBUS = "rhombus";
+	static const String SHAPE_RHOMBUS = "rhombus";
 
 	/**
 	 * SHAPE_LINE
 	 */
-	static final String SHAPE_LINE = "line";
+	static const String SHAPE_LINE = "line";
 
 	/**
 	 * SHAPE_IMAGE
 	 */
-	static final String SHAPE_IMAGE = "image";
+	static const String SHAPE_IMAGE = "image";
 
 	/**
 	 * SHAPE_ARROW
 	 */
-	static final String SHAPE_ARROW = "arrow";
+	static const String SHAPE_ARROW = "arrow";
 
 	/**
 	 * SHAPE_ARROW
 	 */
-	static final String SHAPE_CURVE = "curve";
+	static const String SHAPE_CURVE = "curve";
 
 	/**
 	 * SHAPE_LABEL
 	 */
-	static final String SHAPE_LABEL = "label";
+	static const String SHAPE_LABEL = "label";
 
 	/**
 	 * SHAPE_CYLINDER
 	 */
-	static final String SHAPE_CYLINDER = "cylinder";
+	static const String SHAPE_CYLINDER = "cylinder";
 
 	/**
 	 * SHAPE_SWIMLANE
 	 */
-	static final String SHAPE_SWIMLANE = "swimlane";
+	static const String SHAPE_SWIMLANE = "swimlane";
 
 	/**
 	 * SHAPE_CONNECTOR
 	 */
-	static final String SHAPE_CONNECTOR = "connector";
+	static const String SHAPE_CONNECTOR = "connector";
 
 	/**
 	 * SHAPE_ACTOR
 	 */
-	static final String SHAPE_ACTOR = "actor";
+	static const String SHAPE_ACTOR = "actor";
 
 	/**
 	 * SHAPE_CLOUD
 	 */
-	static final String SHAPE_CLOUD = "cloud";
+	static const String SHAPE_CLOUD = "cloud";
 
 	/**
 	 * SHAPE_TRIANGLE
 	 */
-	static final String SHAPE_TRIANGLE = "triangle";
+	static const String SHAPE_TRIANGLE = "triangle";
 
 	/**
 	 * SHAPE_HEXAGON
 	 */
-	static final String SHAPE_HEXAGON = "hexagon";
+	static const String SHAPE_HEXAGON = "hexagon";
 
 	/**
 	 * ARROW_CLASSIC
 	 */
-	static final String ARROW_CLASSIC = "classic";
+	static const String ARROW_CLASSIC = "classic";
 
 	/**
 	 * ARROW_BLOCK
 	 */
-	static final String ARROW_BLOCK = "block";
+	static const String ARROW_BLOCK = "block";
 
 	/**
 	 * ARROW_OPEN
 	 */
-	static final String ARROW_OPEN = "open";
+	static const String ARROW_OPEN = "open";
 
 	/**
 	 * ARROW_BLOCK
 	 */
-	static final String ARROW_OVAL = "oval";
+	static const String ARROW_OVAL = "oval";
 
 	/**
 	 * ARROW_OPEN
 	 */
-	static final String ARROW_DIAMOND = "diamond";
+	static const String ARROW_DIAMOND = "diamond";
 
 	/**
 	 * ALIGN_LEFT
 	 */
-	static final String ALIGN_LEFT = "left";
+	static const String ALIGN_LEFT = "left";
 
 	/**
 	 * ALIGN_CENTER
 	 */
-	static final String ALIGN_CENTER = "center";
+	static const String ALIGN_CENTER = "center";
 
 	/**
 	 * ALIGN_RIGHT
 	 */
-	static final String ALIGN_RIGHT = "right";
+	static const String ALIGN_RIGHT = "right";
 
 	/**
 	 * ALIGN_TOP
 	 */
-	static final String ALIGN_TOP = "top";
+	static const String ALIGN_TOP = "top";
 
 	/**
 	 * ALIGN_MIDDLE
 	 */
-	static final String ALIGN_MIDDLE = "middle";
+	static const String ALIGN_MIDDLE = "middle";
 
 	/**
 	 * ALIGN_BOTTOM
 	 */
-	static final String ALIGN_BOTTOM = "bottom";
+	static const String ALIGN_BOTTOM = "bottom";
 
 	/**
 	 * DIRECTION_NORTH
 	 */
-	static final String DIRECTION_NORTH = "north";
+	static const String DIRECTION_NORTH = "north";
 
 	/**
 	 * DIRECTION_SOUTH
 	 */
-	static final String DIRECTION_SOUTH = "south";
+	static const String DIRECTION_SOUTH = "south";
 
 	/**
 	 * DIRECTION_EAST
 	 */
-	static final String DIRECTION_EAST = "east";
+	static const String DIRECTION_EAST = "east";
 
 	/**
 	 * DIRECTION_WEST
 	 */
-	static final String DIRECTION_WEST = "west";
+	static const String DIRECTION_WEST = "west";
 
 	/**
 	 * DIRECTION_MASK_NONE
 	 */
-	static final int DIRECTION_MASK_NONE = 0x00;
+	static const int DIRECTION_MASK_NONE = 0x00;
 
 	/**
 	 * DIRECTION_MASK_WEST
 	 */
-	static final int DIRECTION_MASK_WEST = 0x01;
+	static const int DIRECTION_MASK_WEST = 0x01;
 	
 	/**
 	 * DIRECTION_MASK_NORTH
 	 */
-	static final int DIRECTION_MASK_NORTH = 0x02;
+	static const int DIRECTION_MASK_NORTH = 0x02;
 
 	/**
 	 * DIRECTION_MASK_SOUTH
 	 */
-	static final int DIRECTION_MASK_SOUTH = 0x04;
+	static const int DIRECTION_MASK_SOUTH = 0x04;
 
 	/**
 	 * DIRECTION_MASK_EAST
 	 */
-	static final int DIRECTION_MASK_EAST = 0x08;
+	static const int DIRECTION_MASK_EAST = 0x08;
 	
 	/**
 	 * DIRECTION_MASK_EAST
 	 */
-	static final int DIRECTION_MASK_ALL = 0x0F;
+	static const int DIRECTION_MASK_ALL = 0x0F;
 
 	/**
 	 * ELBOW_VERTICAL
 	 */
-	static final String ELBOW_VERTICAL = "vertical";
+	static const String ELBOW_VERTICAL = "vertical";
 
 	/**
 	 * ELBOW_HORIZONTAL
 	 */
-	static final String ELBOW_HORIZONTAL = "horizontal";
+	static const String ELBOW_HORIZONTAL = "horizontal";
 
 	/**
 	 * Name of the elbow edge style. Can be used as a string value
 	 * for the STYLE_EDGE style.
 	 */
-	static final String EDGESTYLE_ELBOW = "elbowEdgeStyle";
+	static const String EDGESTYLE_ELBOW = "elbowEdgeStyle";
 
 	/**
 	 * Name of the entity relation edge style. Can be used as a string value
 	 * for the STYLE_EDGE style.
 	 */
-	static final String EDGESTYLE_ENTITY_RELATION = "entityRelationEdgeStyle";
+	static const String EDGESTYLE_ENTITY_RELATION = "entityRelationEdgeStyle";
 
 	/**
 	 * Name of the loop edge style. Can be used as a string value
 	 * for the STYLE_EDGE style.
 	 */
-	static final String EDGESTYLE_LOOP = "loopEdgeStyle";
+	static const String EDGESTYLE_LOOP = "loopEdgeStyle";
 
 	/**
 	 * Name of the side to side edge style. Can be used as a string value
 	 * for the STYLE_EDGE style.
 	 */
-	static final String EDGESTYLE_SIDETOSIDE = "sideToSideEdgeStyle";
+	static const String EDGESTYLE_SIDETOSIDE = "sideToSideEdgeStyle";
 
 	/**
 	 * Name of the top to bottom edge style. Can be used as a string value
 	 * for the STYLE_EDGE style.
 	 */
-	static final String EDGESTYLE_TOPTOBOTTOM = "topToBottomEdgeStyle";
+	static const String EDGESTYLE_TOPTOBOTTOM = "topToBottomEdgeStyle";
 	
 	/**
 	 * Name of the orthogonal edge style. Can be used as a string value for
 	 * the STYLE_EDGE style.
 	 */
-	static final String EDGESTYLE_ORTHOGONAL = "orthogonalEdgeStyle";
+	static const String EDGESTYLE_ORTHOGONAL = "orthogonalEdgeStyle";
 
 	/**
 	 * Name of the generic segment edge style. Can be used as a string value
 	 * for the STYLE_EDGE style.
 	 */
-	static final String EDGESTYLE_SEGMENT = "segmentEdgeStyle";
+	static const String EDGESTYLE_SEGMENT = "segmentEdgeStyle";
  
 	/**
 	 * Name of the ellipse perimeter. Can be used as a string value
 	 * for the STYLE_PERIMETER style.
 	 */
-	static final String PERIMETER_ELLIPSE = "ellipsePerimeter";
+	static const String PERIMETER_ELLIPSE = "ellipsePerimeter";
 
 	/**
 	 * Name of the rectangle perimeter. Can be used as a string value
 	 * for the STYLE_PERIMETER style.
 	 */
-	static final String PERIMETER_RECTANGLE = "rectanglePerimeter";
+	static const String PERIMETER_RECTANGLE = "rectanglePerimeter";
 
 	/**
 	 * Name of the rhombus perimeter. Can be used as a string value
 	 * for the STYLE_PERIMETER style.
 	 */
-	static final String PERIMETER_RHOMBUS = "rhombusPerimeter";
+	static const String PERIMETER_RHOMBUS = "rhombusPerimeter";
 
 	/**
 	 * Name of the triangle perimeter. Can be used as a string value
 	 * for the STYLE_PERIMETER style.
 	 */
-	static final String PERIMETER_TRIANGLE = "trianglePerimeter";
+	static const String PERIMETER_TRIANGLE = "trianglePerimeter";
 
 	/**
 	 * Name of the hexagon perimeter. Can be used as a string value
 	 * for the STYLE_PERIMETER style.
 	 */
-	static final String PERIMETER_HEXAGON  = "hexagonPerimeter";
+	static const String PERIMETER_HEXAGON  = "hexagonPerimeter";
 
 }

@@ -272,10 +272,10 @@ class GraphView extends EventSource
 	 * @param cells
 	 * @return Returns the bounding box for the given cells.
 	 */
-	Rect getBounds(List<Object> cells)
-	{
-		return getBounds(cells, false);
-	}
+//	Rect getBounds(List<Object> cells)
+//	{
+//		return getBounds(cells, false);
+//	}
 
 	/**
 	 * Returns the bounding box for an array of cells or null, if no cells are
@@ -284,10 +284,10 @@ class GraphView extends EventSource
 	 * @param cells
 	 * @return Returns the bounding box for the given cells.
 	 */
-	Rect getBoundingBox(List<Object> cells)
-	{
-		return getBounds(cells, true);
-	}
+//	Rect getBoundingBox(List<Object> cells)
+//	{
+//		return getBounds(cells, true);
+//	}
 
 	/**
 	 * Returns the bounding box for an array of cells or null, if no cells are
@@ -296,7 +296,7 @@ class GraphView extends EventSource
 	 * @param cells
 	 * @return Returns the bounding box for the given cells.
 	 */
-	Rect getBounds(List<Object> cells, bool boundingBox)
+	Rect getBounds(List<Object> cells, [bool boundingBox=false])
 	{
 		Rect result = null;
 
@@ -355,10 +355,10 @@ class GraphView extends EventSource
 	/**
 	 * Invalidates all cell states.
 	 */
-	void invalidate()
-	{
-		invalidate(null);
-	}
+//	void invalidate()
+//	{
+//		invalidate(null);
+//	}
 
 	/**
 	 * Removes the state of the given cell and all descendants if the given
@@ -392,7 +392,7 @@ class GraphView extends EventSource
 	 * Invalidates the state of the given cell, all its descendants and
 	 * connected edges.
 	 */
-	void invalidate(Object cell)
+	void invalidate([Object cell=null])
 	{
 		IGraphModel model = _graph.getModel();
 		cell = (cell != null) ? cell : model.getRoot();
@@ -438,10 +438,10 @@ class GraphView extends EventSource
 	/**
 	 * Shortcut to validateCell with visible set to true.
 	 */
-	Rect getBoundingBox(CellState state)
-	{
-		return getBoundingBox(state, true);
-	}
+//	Rect getBoundingBox(CellState state)
+//	{
+//		return getBoundingBox(state, true);
+//	}
 
 	/**
 	 * Returns the bounding box of the shape and the label for the given
@@ -450,7 +450,7 @@ class GraphView extends EventSource
 	 * @param state Cell state whose bounding box should be returned.
 	 * @param recurse Boolean indicating if the children should be included.
 	 */
-	Rect getBoundingBox(CellState state, bool recurse)
+	Rect getBoundingBox(CellState state, [bool recurse=true])
 	{
 		Rect bbox = null;
 
@@ -458,7 +458,7 @@ class GraphView extends EventSource
 		{
 			if (state.getBoundingBox() != null)
 			{
-				bbox = (Rect) state.getBoundingBox().clone();
+				bbox = state.getBoundingBox().clone() as Rect;
 			}
 
 			if (recurse)
@@ -492,10 +492,10 @@ class GraphView extends EventSource
 	/**
 	 * Shortcut to validateCell with visible set to true.
 	 */
-	Object validateCell(Object cell)
-	{
-		return validateCell(cell, true);
-	}
+//	Object validateCell(Object cell)
+//	{
+//		return validateCell(cell, true);
+//	}
 
 	/**
 	 * Recursively creates the cell state for the given cell if visible is true and
@@ -505,7 +505,7 @@ class GraphView extends EventSource
 	 * @param cell Cell whose cell state should be created.
 	 * @param visible Boolean indicating if the cell should be visible.
 	 */
-	Object validateCell(Object cell, bool visible)
+	Object validateCell(Object cell, [bool visible=true])
 	{
 		if (cell != null)
 		{
@@ -537,10 +537,10 @@ class GraphView extends EventSource
 	/**
 	 * Shortcut to validateCellState with recurse set to true.
 	 */
-	CellState validateCellState(Object cell)
-	{
-		return validateCellState(cell, true);
-	}
+//	CellState validateCellState(Object cell)
+//	{
+//		return validateCellState(cell, true);
+//	}
 
 	/**
 	 * Validates the cell state for the given cell.
@@ -549,7 +549,7 @@ class GraphView extends EventSource
 	 * @param recurse Boolean indicating if the children of the cell should be
 	 * validated.
 	 */
-	CellState validateCellState(Object cell, bool recurse)
+	CellState validateCellState(Object cell, [bool recurse=true])
 	{
 		CellState state = null;
 
@@ -829,7 +829,7 @@ class GraphView extends EventSource
 			{
 				StringBuffer buffer = new StringBuffer();
 
-				for (String line : lines)
+				for (String line in lines)
 				{
 					buffer.append(line + '\n');
 				}
@@ -950,7 +950,7 @@ class GraphView extends EventSource
 			if (style.containsKey(Constants.STYLE_ENDARROW)
 					|| style.containsKey(Constants.STYLE_STARTARROW))
 			{
-				ms = (int) Math.round(Constants.DEFAULT_MARKERSIZE * _scale);
+				ms = Math.round(Constants.DEFAULT_MARKERSIZE * _scale) as int;
 			}
 
 			// Adds the strokewidth
@@ -1186,7 +1186,7 @@ class GraphView extends EventSource
 
 		if (edgeStyle is EdgeStyleFunction)
 		{
-			return (EdgeStyleFunction) edgeStyle;
+			return edgeStyle as EdgeStyleFunction;
 		}
 
 		return null;
@@ -1254,7 +1254,7 @@ class GraphView extends EventSource
 
 		if (id != null && _graph.getModel() is GraphModel)
 		{
-			CellState tmp = getState(((GraphModel) _graph.getModel())
+			CellState tmp = getState((_graph.getModel() as GraphModel)
 					.getCell(id));
 
 			// Only uses ports where a cell state exists
@@ -1271,11 +1271,11 @@ class GraphView extends EventSource
 	 * Returns a point that defines the location of the intersection point between
 	 * the perimeter and the line between the center of the shape and the given point.
 	 */
-	Point2d getPerimeterPoint(CellState terminal, Point2d next,
-			bool orthogonal)
-	{
-		return getPerimeterPoint(terminal, next, orthogonal, 0);
-	}
+//	Point2d getPerimeterPoint(CellState terminal, Point2d next,
+//			bool orthogonal)
+//	{
+//		return getPerimeterPoint(terminal, next, orthogonal, 0);
+//	}
 
 	/**
 	 * Returns a point that defines the location of the intersection point between
@@ -1290,7 +1290,7 @@ class GraphView extends EventSource
 	 * @param border Optional border between the perimeter and the shape.
 	 */
 	Point2d getPerimeterPoint(CellState terminal, Point2d next,
-			bool orthogonal, double border)
+			bool orthogonal, [double border=0.0])
 	{
 		Point2d point = null;
 
@@ -1380,7 +1380,7 @@ class GraphView extends EventSource
 
 		if (perimeter is PerimeterFunction)
 		{
-			return (PerimeterFunction) perimeter;
+			return perimeter as PerimeterFunction;
 		}
 
 		return null;
@@ -1475,8 +1475,8 @@ class GraphView extends EventSource
 			state.setTerminalDistance(0);
 		}
 
-		double length = 0;
-		List<double> segments = new double[points.size() - 1];
+		double length = 0.0;
+		List<double> segments = new List<double>(points.size() - 1);
 		Point2d pt = p0;
 
 		double minX = pt.getX();
@@ -1518,10 +1518,10 @@ class GraphView extends EventSource
 	/**
 	 * Returns the absolute center point along the given edge.
 	 */
-	Point2d getPoint(CellState state)
-	{
-		return getPoint(state, null);
-	}
+//	Point2d getPoint(CellState state)
+//	{
+//		return getPoint(state, null);
+//	}
 
 	/**
 	 * Returns the absolute point on the edge for the given relative
@@ -1532,7 +1532,7 @@ class GraphView extends EventSource
 	 * @return Returns the mxpoint that represents the absolute location
 	 * of the given relative geometry.
 	 */
-	Point2d getPoint(CellState state, Geometry geometry)
+	Point2d getPoint(CellState state, [Geometry geometry=null])
 	{
 		double x = state.getCenterX();
 		double y = state.getCenterY();
@@ -1725,7 +1725,7 @@ class GraphView extends EventSource
 			}
 		}
 
-		List<CellState> resultArray = new CellState[result.size()];
+		List<CellState> resultArray = new List<CellState>(result.size());
 		return result.toArray(resultArray);
 	}
 
@@ -1736,10 +1736,10 @@ class GraphView extends EventSource
 	 * @param cell Cell whose state should be returned.
 	 * @return Returns the state for the given cell.
 	 */
-	CellState getState(Object cell)
-	{
-		return getState(cell, false);
-	}
+//	CellState getState(Object cell)
+//	{
+//		return getState(cell, false);
+//	}
 
 	/**
 	 * Returns the cell state for the given cell. If create is true, then
@@ -1750,7 +1750,7 @@ class GraphView extends EventSource
 	 * does not yet exist.
 	 * @return Returns the state for the given cell.
 	 */
-	CellState getState(Object cell, bool create)
+	CellState getState(Object cell, [bool create=false])
 	{
 		CellState state = null;
 
@@ -1776,7 +1776,7 @@ class GraphView extends EventSource
 	 */
 	CellState removeState(Object cell)
 	{
-		return (cell != null) ? (CellState) _states.remove(cell) : null;
+		return (cell != null) ? _states.remove(cell) as CellState : null;
 	}
 
 	/**
@@ -1790,114 +1790,115 @@ class GraphView extends EventSource
 		return new CellState(this, cell, _graph.getCellStyle(cell));
 	}
 
-	/**
-	 * Action to change the current root in a view.
-	 */
-	static class CurrentRootChange implements UndoableChange
-	{
+}
 
-		/**
-		 * 
-		 */
-		protected GraphView view;
 
-		/**
-		 * 
-		 */
-		protected Object root, previous;
+/**
+ * Action to change the current root in a view.
+ */
+class CurrentRootChange implements UndoableChange
+{
 
-		/**
-		 * 
-		 */
-		protected bool up;
+  /**
+   * 
+   */
+  GraphView view;
 
-		/**
-		 * Constructs a change of the current root in the given view.
-		 */
-		public CurrentRootChange(GraphView view, Object root)
-		{
-			this.view = view;
-			this.root = root;
-			this.previous = this.root;
-			this.up = (root == null);
+  /**
+   * 
+   */
+  Object root, previous;
 
-			if (!up)
-			{
-				Object tmp = view.getCurrentRoot();
-				IGraphModel model = view._graph.getModel();
+  /**
+   * 
+   */
+  bool up;
 
-				while (tmp != null)
-				{
-					if (tmp == root)
-					{
-						up = true;
-						break;
-					}
+  /**
+   * Constructs a change of the current root in the given view.
+   */
+  CurrentRootChange(GraphView view, Object root)
+  {
+    this.view = view;
+    this.root = root;
+    this.previous = this.root;
+    this.up = (root == null);
 
-					tmp = model.getParent(tmp);
-				}
-			}
-		}
+    if (!up)
+    {
+      Object tmp = view.getCurrentRoot();
+      IGraphModel model = view._graph.getModel();
 
-		/**
-		 * Returns the graph view where the change happened.
-		 */
-		public GraphView getView()
-		{
-			return view;
-		}
+      while (tmp != null)
+      {
+        if (tmp == root)
+        {
+          up = true;
+          break;
+        }
 
-		/**
-		 * Returns the root.
-		 */
-		public Object getRoot()
-		{
-			return root;
-		}
+        tmp = model.getParent(tmp);
+      }
+    }
+  }
 
-		/**
-		 * Returns the previous root.
-		 */
-		public Object getPrevious()
-		{
-			return previous;
-		}
+  /**
+   * Returns the graph view where the change happened.
+   */
+  GraphView getView()
+  {
+    return view;
+  }
 
-		/**
-		 * Returns true if the drilling went upwards.
-		 */
-		public bool isUp()
-		{
-			return up;
-		}
+  /**
+   * Returns the root.
+   */
+  Object getRoot()
+  {
+    return root;
+  }
 
-		/**
-		 * Changes the current root of the view.
-		 */
-		public void execute()
-		{
-			Object tmp = view.getCurrentRoot();
-			view._currentRoot = previous;
-			previous = tmp;
+  /**
+   * Returns the previous root.
+   */
+  Object getPrevious()
+  {
+    return previous;
+  }
 
-			Point2d translate = view._graph.getTranslateForRoot(view
-					.getCurrentRoot());
+  /**
+   * Returns true if the drilling went upwards.
+   */
+  bool isUp()
+  {
+    return up;
+  }
 
-			if (translate != null)
-			{
-				view._translate = new Point2d(-translate.getX(),
-						translate.getY());
-			}
+  /**
+   * Changes the current root of the view.
+   */
+  void execute()
+  {
+    Object tmp = view.getCurrentRoot();
+    view._currentRoot = previous;
+    previous = tmp;
 
-			// Removes all existing cell states and revalidates
-			view.reload();
-			up = !up;
+    Point2d translate = view._graph.getTranslateForRoot(view
+        .getCurrentRoot());
 
-			String eventName = (up) ? Event.UP : Event.DOWN;
-			view.fireEvent(new EventObj(eventName, "root",
-					view._currentRoot, "previous", previous));
-		}
+    if (translate != null)
+    {
+      view._translate = new Point2d(-translate.getX(),
+          translate.getY());
+    }
 
-	}
+    // Removes all existing cell states and revalidates
+    view.reload();
+    up = !up;
+
+    String eventName = (up) ? Event.UP : Event.DOWN;
+    view.fireEvent(new EventObj(eventName, "root",
+        view._currentRoot, "previous", previous));
+  }
 
 }

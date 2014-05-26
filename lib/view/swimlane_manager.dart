@@ -46,36 +46,32 @@ class SwimlaneManager extends EventSource
 	/**
 	 * 
 	 */
-	IEventListener _addHandler = new IEventListener()
-	{
-		public void invoke(Object source, EventObj evt)
-		{
-			if (isEnabled() && isAddEnabled())
-			{
-				_cellsAdded((List<Object>) evt.getProperty("cells"));
-			}
-		}
-	};
+	IEventListener _addHandler;
 
 	/**
 	 * 
 	 */
-	IEventListener _resizeHandler = new IEventListener()
-	{
-		public void invoke(Object source, EventObj evt)
-		{
-			if (isEnabled() && isResizeEnabled())
-			{
-				_cellsResized((List<Object>) evt.getProperty("cells"));
-			}
-		}
-	};
+	IEventListener _resizeHandler;
 
 	/**
 	 * 
 	 */
 	SwimlaneManager(Graph graph)
 	{
+	  _addHandler = (Object source, EventObj evt)
+        {
+          if (isEnabled() && isAddEnabled())
+          {
+            _cellsAdded(evt.getProperty("cells") as List<Object>);
+          }
+        };
+    _resizeHandler = (Object source, EventObj evt)
+        {
+          if (isEnabled() && isResizeEnabled())
+          {
+            _cellsResized(evt.getProperty("cells") as List<Object>);
+          }
+        };
 		setGraph(graph);
 	}
 
@@ -336,7 +332,7 @@ class SwimlaneManager extends EventSource
 					if ((parentHorizontal && geo.getHeight() != h)
 							|| (!parentHorizontal && geo.getWidth() != w))
 					{
-						geo = (Geometry) geo.clone();
+						geo = geo.clone() as Geometry;
 
 						if (parentHorizontal)
 						{

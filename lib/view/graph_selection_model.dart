@@ -326,18 +326,18 @@ class GraphSelectionModel extends EventSource
 /**
  *
  */
-static class SelectionChange implements UndoableChange
+class SelectionChange implements UndoableChange
 {
 
   /**
    * 
    */
-  protected GraphSelectionModel model;
+  GraphSelectionModel model;
 
   /**
    * 
    */
-  protected Collection<Object> added, removed;
+  Collection<Object> added, removed;
 
   /**
    * 
@@ -345,7 +345,7 @@ static class SelectionChange implements UndoableChange
    * @param added
    * @param removed
    */
-  public SelectionChange(GraphSelectionModel model,
+  SelectionChange(GraphSelectionModel model,
       Collection<Object> added, Collection<Object> removed)
   {
     this.model = model;
@@ -357,7 +357,7 @@ static class SelectionChange implements UndoableChange
   /**
    * 
    */
-  public void execute()
+  void execute()
   {
     if (removed != null)
     {
