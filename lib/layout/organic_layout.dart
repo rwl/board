@@ -293,12 +293,12 @@ class OrganicLayout extends GraphLayout
 	/**
 	 * Internal models collection of nodes ( vertices ) to be laid out
 	 */
-	CellWrapper[] v;
+	List<CellWrapper> v;
 
 	/**
 	 * Internal models collection of edges to be laid out
 	 */
-	CellWrapper[] e;
+	List<CellWrapper> e;
 
 	/**
 	 * Array of the x portion of the normalised test vectors that 
@@ -344,21 +344,22 @@ class OrganicLayout extends GraphLayout
 	/**
 	 * Constructor for OrganicLayout.
 	 */
-	OrganicLayout(Graph graph)
-	{
-		super(graph);
-	}
+//	OrganicLayout(Graph graph)
+//	{
+//		super(graph);
+//	}
 
 	/**
 	 * Constructor for OrganicLayout.
 	 */
-	OrganicLayout(Graph graph, Rectangle2D bounds)
+	OrganicLayout(Graph graph, [Rectangle2D bounds=null]) : super(graph)
 	{
-		super(graph);
-		boundsX = bounds.getX();
-		boundsY = bounds.getY();
-		boundsWidth = bounds.getWidth();
-		boundsHeight = bounds.getHeight();
+        if (bounds != null) {
+            boundsX = bounds.getX();
+            boundsY = bounds.getY();
+            boundsWidth = bounds.getWidth();
+            boundsHeight = bounds.getHeight();
+        }
 	}
 
 	/**
@@ -411,7 +412,7 @@ class OrganicLayout extends GraphLayout
 		
 		// Form internal model of nodes
 		Map<Object, Integer> vertexMap = new Hashtable<Object, Integer>();
-		v = new CellWrapper[vertices.length];
+		v = new List<CellWrapper>(vertices.length);
 		for (int i = 0; i < vertices.length; i++)
 		{
 			v[i] = new CellWrapper(vertices[i]);
@@ -420,7 +421,7 @@ class OrganicLayout extends GraphLayout
 			
 			if (totalBounds == null)
 			{
-				totalBounds = (Rect) bounds.clone();
+				totalBounds = bounds.clone() as Rect;
 			}
 			else
 			{
@@ -502,7 +503,7 @@ class OrganicLayout extends GraphLayout
 
 
 		// Form internal model of edges
-		e = new CellWrapper[edges.length];
+		e = new List<CellWrapper>(edges.length);
 		
 		for (int i = 0; i < e.length; i++)
 		{
@@ -550,8 +551,8 @@ class OrganicLayout extends GraphLayout
 		}
 
 		// Setup the normal vectors for the test points to move each vertex to
-		xNormTry = new double[triesPerCell];
-		yNormTry = new double[triesPerCell];
+		xNormTry = new List<double>(triesPerCell);
+		yNormTry = new List<double>(triesPerCell);
 
 		for (int i = 0; i < triesPerCell; i++)
 		{
@@ -589,14 +590,16 @@ class OrganicLayout extends GraphLayout
 		}
 
 		// Obtain the final positions
-		List<double>[] result = new double[v.length][2];
+		List<List<double>> result = new List<double>(v.length);//[2];
 		for (int i = 0; i < v.length; i++)
 		{
 			vertices[i] = v[i].cell;
 			bounds = getVertexBounds(vertices[i]);
 
-			result[i][0] = v[i].x - bounds.getWidth() / 2;
-			result[i][1] = v[i].y - bounds.getHeight() / 2;
+			result[i][0] = [
+                v[i].x - bounds.getWidth() / 2,
+                v[i].y - bounds.getHeight() / 2
+            ];
 		}
 
 		model.beginUpdate();
@@ -1199,7 +1202,7 @@ class OrganicLayout extends GraphLayout
 			}
 		}
 
-		List<int> relevantEdgeArray = new int[relevantEdgeList.size()];
+		List<int> relevantEdgeArray = new List<int>(relevantEdgeList.size());
 		Iterator<Integer> iter = relevantEdgeList.iterator();
 
 		//Reform the list into an array but replace Integer values with ints
@@ -1234,7 +1237,7 @@ class OrganicLayout extends GraphLayout
 			}
 		}
 
-		List<int> connectedEdgeArray = new int[connectedEdgeList.size()];
+		List<int> connectedEdgeArray = new List<int>(connectedEdgeList.size());
 		Iterator<Integer> iter = connectedEdgeList.iterator();
 
 		// Reform the list into an array but replace Integer values with ints
@@ -1256,209 +1259,6 @@ class OrganicLayout extends GraphLayout
 	String toString()
 	{
 		return "Organic";
-	}
-
-	/**
-	 * Internal representation of a node or edge that holds cached information
-	 * to enable the layout to perform more quickly and to simplify the code
-	 */
-	class CellWrapper
-	{
-
-		/**
-		 * The actual graph cell this wrapper represents
-		 */
-		protected Object cell;
-
-		/**
-		 * All edge that repel this cell, only used for nodes. This array
-		 * is equivalent to all edges unconnected to this node
-		 */
-		protected List<int> relevantEdges = null;
-
-		/**
-		 * the index of all connected edges in the <code>e</code> array
-		 * to this node. This is only used for nodes.
-		 */
-		protected List<int> connectedEdges = null;
-
-		/**
-		 * The x-coordinate position of this cell, nodes only
-		 */
-		protected double x;
-
-		/**
-		 * The y-coordinate position of this cell, nodes only
-		 */
-		protected double y;
-
-		/**
-		 * The approximate radius squared of this cell, nodes only. If
-		 * approxNodeDimensions is true on the layout this value holds the
-		 * width of the node squared
-		 */
-		protected double radiusSquared;
-
-		/**
-		 * The height of the node squared, only used if approxNodeDimensions
-		 * is set to true.
-		 */
-		protected double heightSquared;
-
-		/**
-		 * The index of the node attached to this edge as source, edges only
-		 */
-		protected int source;
-
-		/**
-		 * The index of the node attached to this edge as target, edges only
-		 */
-		protected int target;
-
-		/**
-		 * Constructs a new CellWrapper
-		 * @param cell the graph cell this wrapper represents
-		 */
-		public CellWrapper(Object cell)
-		{
-			this.cell = cell;
-		}
-
-		/**
-		 * @return the relevantEdges
-		 */
-		public List<int> getRelevantEdges()
-		{
-			return relevantEdges;
-		}
-
-		/**
-		 * @param relevantEdges the relevantEdges to set
-		 */
-		public void setRelevantEdges(List<int> relevantEdges)
-		{
-			this.relevantEdges = relevantEdges;
-		}
-
-		/**
-		 * @return the connectedEdges
-		 */
-		public List<int> getConnectedEdges()
-		{
-			return connectedEdges;
-		}
-
-		/**
-		 * @param connectedEdges the connectedEdges to set
-		 */
-		public void setConnectedEdges(List<int> connectedEdges)
-		{
-			this.connectedEdges = connectedEdges;
-		}
-
-		/**
-		 * @return the x
-		 */
-		public double getX()
-		{
-			return x;
-		}
-
-		/**
-		 * @param x the x to set
-		 */
-		public void setX(double x)
-		{
-			this.x = x;
-		}
-
-		/**
-		 * @return the y
-		 */
-		public double getY()
-		{
-			return y;
-		}
-
-		/**
-		 * @param y the y to set
-		 */
-		public void setY(double y)
-		{
-			this.y = y;
-		}
-
-		/**
-		 * @return the radiusSquared
-		 */
-		public double getRadiusSquared()
-		{
-			return radiusSquared;
-		}
-
-		/**
-		 * @param radiusSquared the radiusSquared to set
-		 */
-		public void setRadiusSquared(double radiusSquared)
-		{
-			this.radiusSquared = radiusSquared;
-		}
-
-		/**
-		 * @return the heightSquared
-		 */
-		public double getHeightSquared()
-		{
-			return heightSquared;
-		}
-
-		/**
-		 * @param heightSquared the heightSquared to set
-		 */
-		public void setHeightSquared(double heightSquared)
-		{
-			this.heightSquared = heightSquared;
-		}
-
-		/**
-		 * @return the source
-		 */
-		public int getSource()
-		{
-			return source;
-		}
-
-		/**
-		 * @param source the source to set
-		 */
-		public void setSource(int source)
-		{
-			this.source = source;
-		}
-
-		/**
-		 * @return the target
-		 */
-		public int getTarget()
-		{
-			return target;
-		}
-
-		/**
-		 * @param target the target to set
-		 */
-		public void setTarget(int target)
-		{
-			this.target = target;
-		}
-
-		/**
-		 * @return the cell
-		 */
-		public Object getCell()
-		{
-			return cell;
-		}
 	}
 
 	/**
@@ -1576,10 +1376,10 @@ class OrganicLayout extends GraphLayout
 	/**
 	 * @return Returns the isFineTuning.
 	 */
-	bool isFineTuning()
-	{
-		return isFineTuning;
-	}
+//	bool isFineTuning()
+//	{
+//		return isFineTuning;
+//	}
 
 	/**
 	 * @param isFineTuning The isFineTuning to set.
@@ -1592,10 +1392,10 @@ class OrganicLayout extends GraphLayout
 	/**
 	 * @return Returns the isOptimizeBorderLine.
 	 */
-	bool isOptimizeBorderLine()
-	{
-		return isOptimizeBorderLine;
-	}
+//	bool isOptimizeBorderLine()
+//	{
+//		return isOptimizeBorderLine;
+//	}
 
 	/**
 	 * @param isOptimizeBorderLine The isOptimizeBorderLine to set.
@@ -1608,10 +1408,10 @@ class OrganicLayout extends GraphLayout
 	/**
 	 * @return Returns the isOptimizeEdgeCrossing.
 	 */
-	bool isOptimizeEdgeCrossing()
-	{
-		return isOptimizeEdgeCrossing;
-	}
+//	bool isOptimizeEdgeCrossing()
+//	{
+//		return isOptimizeEdgeCrossing;
+//	}
 
 	/**
 	 * @param isOptimizeEdgeCrossing The isOptimizeEdgeCrossing to set.
@@ -1624,10 +1424,10 @@ class OrganicLayout extends GraphLayout
 	/**
 	 * @return Returns the isOptimizeEdgeDistance.
 	 */
-	bool isOptimizeEdgeDistance()
-	{
-		return isOptimizeEdgeDistance;
-	}
+//	bool isOptimizeEdgeDistance()
+//	{
+//		return isOptimizeEdgeDistance;
+//	}
 
 	/**
 	 * @param isOptimizeEdgeDistance The isOptimizeEdgeDistance to set.
@@ -1640,10 +1440,10 @@ class OrganicLayout extends GraphLayout
 	/**
 	 * @return Returns the isOptimizeEdgeLength.
 	 */
-	bool isOptimizeEdgeLength()
-	{
-		return isOptimizeEdgeLength;
-	}
+//	bool isOptimizeEdgeLength()
+//	{
+//		return isOptimizeEdgeLength;
+//	}
 
 	/**
 	 * @param isOptimizeEdgeLength The isOptimizeEdgeLength to set.
@@ -1656,10 +1456,10 @@ class OrganicLayout extends GraphLayout
 	/**
 	 * @return Returns the isOptimizeNodeDistribution.
 	 */
-	bool isOptimizeNodeDistribution()
-	{
-		return isOptimizeNodeDistribution;
-	}
+//	bool isOptimizeNodeDistribution()
+//	{
+//		return isOptimizeNodeDistribution;
+//	}
 
 	/**
 	 * @param isOptimizeNodeDistribution The isOptimizeNodeDistribution to set.
@@ -1845,4 +1645,208 @@ class OrganicLayout extends GraphLayout
 	{
 		this.resetEdges = resetEdges;
 	}
+}
+
+
+/**
+ * Internal representation of a node or edge that holds cached information
+ * to enable the layout to perform more quickly and to simplify the code
+ */
+class CellWrapper
+{
+
+    /**
+     * The actual graph cell this wrapper represents
+     */
+    Object cell;
+
+    /**
+     * All edge that repel this cell, only used for nodes. This array
+     * is equivalent to all edges unconnected to this node
+     */
+    List<int> relevantEdges = null;
+
+    /**
+     * the index of all connected edges in the <code>e</code> array
+     * to this node. This is only used for nodes.
+     */
+    List<int> connectedEdges = null;
+
+    /**
+     * The x-coordinate position of this cell, nodes only
+     */
+    double x;
+
+    /**
+     * The y-coordinate position of this cell, nodes only
+     */
+    double y;
+
+    /**
+     * The approximate radius squared of this cell, nodes only. If
+     * approxNodeDimensions is true on the layout this value holds the
+     * width of the node squared
+     */
+    double radiusSquared;
+
+    /**
+     * The height of the node squared, only used if approxNodeDimensions
+     * is set to true.
+     */
+    double heightSquared;
+
+    /**
+     * The index of the node attached to this edge as source, edges only
+     */
+    int source;
+
+    /**
+     * The index of the node attached to this edge as target, edges only
+     */
+    int target;
+
+    /**
+     * Constructs a new CellWrapper
+     * @param cell the graph cell this wrapper represents
+     */
+    CellWrapper(Object cell)
+    {
+        this.cell = cell;
+    }
+
+    /**
+     * @return the relevantEdges
+     */
+    List<int> getRelevantEdges()
+    {
+        return relevantEdges;
+    }
+
+    /**
+     * @param relevantEdges the relevantEdges to set
+     */
+    void setRelevantEdges(List<int> relevantEdges)
+    {
+        this.relevantEdges = relevantEdges;
+    }
+
+    /**
+     * @return the connectedEdges
+     */
+    List<int> getConnectedEdges()
+    {
+        return connectedEdges;
+    }
+
+    /**
+     * @param connectedEdges the connectedEdges to set
+     */
+    void setConnectedEdges(List<int> connectedEdges)
+    {
+        this.connectedEdges = connectedEdges;
+    }
+
+    /**
+     * @return the x
+     */
+    double getX()
+    {
+        return x;
+    }
+
+    /**
+     * @param x the x to set
+     */
+    void setX(double x)
+    {
+        this.x = x;
+    }
+
+    /**
+     * @return the y
+     */
+    double getY()
+    {
+        return y;
+    }
+
+    /**
+     * @param y the y to set
+     */
+    void setY(double y)
+    {
+        this.y = y;
+    }
+
+    /**
+     * @return the radiusSquared
+     */
+    double getRadiusSquared()
+    {
+        return radiusSquared;
+    }
+
+    /**
+     * @param radiusSquared the radiusSquared to set
+     */
+    void setRadiusSquared(double radiusSquared)
+    {
+        this.radiusSquared = radiusSquared;
+    }
+
+    /**
+     * @return the heightSquared
+     */
+    double getHeightSquared()
+    {
+        return heightSquared;
+    }
+
+    /**
+     * @param heightSquared the heightSquared to set
+     */
+    void setHeightSquared(double heightSquared)
+    {
+        this.heightSquared = heightSquared;
+    }
+
+    /**
+     * @return the source
+     */
+    int getSource()
+    {
+        return source;
+    }
+
+    /**
+     * @param source the source to set
+     */
+    void setSource(int source)
+    {
+        this.source = source;
+    }
+
+    /**
+     * @return the target
+     */
+    int getTarget()
+    {
+        return target;
+    }
+
+    /**
+     * @param target the target to set
+     */
+    void setTarget(int target)
+    {
+        this.target = target;
+    }
+
+    /**
+     * @return the cell
+     */
+    Object getCell()
+    {
+        return cell;
+    }
 }

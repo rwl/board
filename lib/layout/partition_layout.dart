@@ -33,37 +33,36 @@ class PartitionLayout extends GraphLayout
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	PartitionLayout(Graph graph)
-	{
-		this(graph, true);
-	}
+//	PartitionLayout(Graph graph)
+//	{
+//		this(graph, true);
+//	}
 
 	/**
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	PartitionLayout(Graph graph, bool horizontal)
-	{
-		this(graph, horizontal, 0);
-	}
+//	PartitionLayout(Graph graph, bool horizontal)
+//	{
+//		this(graph, horizontal, 0);
+//	}
 
 	/**
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	PartitionLayout(Graph graph, bool horizontal, int spacing)
-	{
-		this(graph, horizontal, spacing, 0);
-	}
+//	PartitionLayout(Graph graph, bool horizontal, int spacing)
+//	{
+//		this(graph, horizontal, spacing, 0);
+//	}
 
 	/**
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	PartitionLayout(Graph graph, bool horizontal, int spacing,
-			int border)
+	PartitionLayout(Graph graph, [bool horizontal=true, int spacing=0,
+			int border=0]) : super(graph)
 	{
-		super(graph);
 		this.horizontal = horizontal;
 		this.spacing = spacing;
 		this.border = border;
@@ -105,7 +104,7 @@ class PartitionLayout extends GraphLayout
 			}
 
 			// Changes child order in parent
-			int idx = ((ICell) parent).getIndex(cell as ICell);
+			int idx = (parent as ICell).getIndex(cell as ICell);
 			idx = Math.max(0, i - ((i > idx) ? 1 : 0));
 
 			model.add(parent, cell, idx);
@@ -188,7 +187,7 @@ class PartitionLayout extends GraphLayout
 
 							if (geo != null)
 							{
-								geo = (Geometry) geo.clone();
+								geo = geo.clone() as Geometry;
 								geo.setX(x0);
 								geo.setY(y0);
 

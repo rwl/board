@@ -16,6 +16,32 @@ part of graph.layout.hierarchical.model;
 //import java.util.Map;
 //import java.util.Set;
 
+
+
+/**
+ * Defines the interface that visitors use to perform operations upon the
+ * graph information during depth first search (dfs) or other tree-traversal
+ * strategies implemented by subclassers.
+ *
+ * The method within which the visitor will perform operations upon the
+ * graph model
+ *
+ * @param parent
+ *            the parent cell the current cell
+ * @param cell
+ *            the current cell visited
+ * @param connectingEdge
+ *            the edge that led the last cell visited to this cell
+ * @param layer
+ *            the current layer of the tree
+ * @param seen
+ *            an int indicating whether this cell has been seen
+ *            previously
+ */
+typedef void CellVisitor(GraphHierarchyNode parent,
+                         GraphHierarchyNode cell, GraphHierarchyEdge connectingEdge,
+                         int layer, int seen);
+
 /**
  * Internal model of a hierarchical graph. This model stores nodes and edges
  * equivalent to the real graph nodes and edges, but also stores the rank of the
@@ -95,7 +121,7 @@ class GraphHierarchyModel
 
 		maxRank = _SOURCESCANSTARTRANK;
 
-		GraphHierarchyNode[] internalVertices = new GraphHierarchyNode[vertices.length];
+        List<GraphHierarchyNode> internalVertices = new List<GraphHierarchyNode>(vertices.length);
 		_createInternalCells(layout, vertices, internalVertices);
 
 		// Go through edges set their sink values. Also check the
@@ -164,7 +190,7 @@ class GraphHierarchyModel
 	 *            in using the real vertices
 	 */
 	void _createInternalCells(HierarchicalLayout layout,
-			List<Object> vertices, GraphHierarchyNode[] internalVertices)
+			List<Object> vertices, List<GraphHierarchyNode> internalVertices)
 	{
 		Graph graph = layout.getGraph();
 
@@ -432,7 +458,7 @@ class GraphHierarchyModel
 	 */
 	void fixRanks()
 	{
-		final GraphHierarchyRank[] rankList = new GraphHierarchyRank[maxRank + 1];
+		final List<GraphHierarchyRank> rankList = new List<GraphHierarchyRank>(maxRank + 1);
 		ranks = new LinkedHashMap<Integer, GraphHierarchyRank>(maxRank + 1);
 
 		for (int i = 0; i < maxRank + 1; i++)
@@ -444,12 +470,12 @@ class GraphHierarchyModel
 		// Perform a DFS to obtain an initial ordering for each rank.
 		// Without doing this you would end up having to process
 		// crossings for a standard tree.
-		GraphHierarchyNode[] rootsArray = null;
+        List<GraphHierarchyNode> rootsArray = null;
 
 		if (roots != null)
 		{
 			List<Object> oldRootsArray = roots.toArray();
-			rootsArray = new GraphHierarchyNode[oldRootsArray.length];
+			rootsArray = new List<GraphHierarchyNode>(oldRootsArray.length);
 
 			for (int i = 0; i < oldRootsArray.length; i++)
 			{
@@ -459,9 +485,7 @@ class GraphHierarchyModel
 			}
 		}
 
-		visit(new GraphHierarchyModel.CellVisitor()
-		{
-			public void visit(GraphHierarchyNode parent,
+		visit((GraphHierarchyNode parent,
 					GraphHierarchyNode cell,
 					GraphHierarchyEdge connectingEdge, int layer, int seen)
 			{
@@ -488,9 +512,9 @@ class GraphHierarchyModel
 						GraphHierarchyEdge edge = connectingEdge;
 						edge.maxRank = (parent).maxRank;
 						edge.minRank = (cell).maxRank;
-						edge.temp = new int[parentToCellRankDifference - 1];
-						edge.x = new double[parentToCellRankDifference - 1];
-						edge.y = new double[parentToCellRankDifference - 1];
+						edge.temp = new List<int>(parentToCellRankDifference - 1);
+						edge.x = new List<double>(parentToCellRankDifference - 1);
+						edge.y = new List<double>(parentToCellRankDifference - 1);
 
 						for (int i = edge.minRank + 1; i < edge.maxRank; i++)
 						{
@@ -502,8 +526,7 @@ class GraphHierarchyModel
 						}
 					}
 				}
-			}
-		}, rootsArray, false, null);
+			}, rootsArray, false, null);
 	}
 
 	/**
@@ -515,7 +538,7 @@ class GraphHierarchyModel
 	 *            whether or not the search is to keep track all nodes directly
 	 *            above this one in the search path
 	 */
-	void visit(CellVisitor visitor, GraphHierarchyNode[] dfsRoots,
+	void visit(CellVisitor visitor, List<GraphHierarchyNode> dfsRoots,
 			bool trackAncestors, Set<GraphHierarchyNode> seenNodes)
 	{
 		// Run dfs through on all roots
@@ -535,7 +558,7 @@ class GraphHierarchyModel
 					if (trackAncestors)
 					{
 						// Set up hash code for root
-						internalNode.hashCode = new int[2];
+						internalNode.hashCode = new List<int>(2);
 						internalNode.hashCode[0] = _dfsCount;
 						internalNode.hashCode[1] = i;
 						dfs(null, internalNode, null, visitor, seenNodes,
@@ -587,7 +610,7 @@ class GraphHierarchyModel
 
 				for (int i = 0; i < outgoingEdges.length; i++)
 				{
-					GraphHierarchyEdge internalEdge = (GraphHierarchyEdge) outgoingEdges[i];
+					GraphHierarchyEdge internalEdge = outgoingEdges[i] as GraphHierarchyEdge;
 					GraphHierarchyNode targetNode = internalEdge.target;
 
 					// Root check is O(|roots|)
@@ -665,7 +688,7 @@ class GraphHierarchyModel
 						|| root.hashCode[0] != parent.hashCode[0])
 				{
 					int hashCodeLength = parent.hashCode.length + 1;
-					root.hashCode = new int[hashCodeLength];
+					root.hashCode = new List<int>(hashCodeLength);
 					System.arraycopy(parent.hashCode, 0, root.hashCode, 0,
 							parent.hashCode.length);
 					root.hashCode[hashCodeLength - 1] = childHash;
@@ -682,7 +705,7 @@ class GraphHierarchyModel
 
 				for (int i = 0; i < outgoingEdges.length; i++)
 				{
-					GraphHierarchyEdge internalEdge = (GraphHierarchyEdge) outgoingEdges[i];
+					GraphHierarchyEdge internalEdge = outgoingEdges[i] as GraphHierarchyEdge;
 					GraphHierarchyNode targetNode = internalEdge.target;
 
 					// Root check is O(|roots|)
@@ -696,35 +719,6 @@ class GraphHierarchyModel
 				visitor.visit(parent, root, connectingEdge, layer, 1);
 			}
 		}
-	}
-
-	/**
-	 * Defines the interface that visitors use to perform operations upon the
-	 * graph information during depth first search (dfs) or other tree-traversal
-	 * strategies implemented by subclassers.
-	 */
-	interface CellVisitor
-	{
-
-		/**
-		 * The method within which the visitor will perform operations upon the
-		 * graph model
-		 * 
-		 * @param parent
-		 *            the parent cell the current cell
-		 * @param cell
-		 *            the current cell visited
-		 * @param connectingEdge
-		 *            the edge that led the last cell visited to this cell
-		 * @param layer
-		 *            the current layer of the tree
-		 * @param seen
-		 *            an int indicating whether this cell has been seen
-		 *            previously
-		 */
-		public void visit(GraphHierarchyNode parent,
-				GraphHierarchyNode cell, GraphHierarchyEdge connectingEdge,
-				int layer, int seen);
 	}
 
 	/**

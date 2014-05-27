@@ -3,12 +3,12 @@
  */
 library graph.layout.hierarchical;
 
-import '../../layout.GraphLayout;
+import '../../layout/layout.dart' show GraphLayout;
 import '../../layout/hierarchical/model/model.dart' show GraphHierarchyModel;
-import '../../layout/hierarchical/hierarchical.dart' show stage.CoordinateAssignment;
-import '../../layout/hierarchical/hierarchical.dart' show stage.HierarchicalLayoutStage;
-import '../../layout/hierarchical/hierarchical.dart' show stage.MedianHybridCrossingReduction;
-import '../../layout/hierarchical/hierarchical.dart' show stage.MinimumCycleRemover;
+import '../../layout/hierarchical/stage/stage.dart' show CoordinateAssignment;
+import '../../layout/hierarchical/stage/stage.dart' show HierarchicalLayoutStage;
+import '../../layout/hierarchical/stage/stage.dart' show MedianHybridCrossingReduction;
+import '../../layout/hierarchical/stage/stage.dart' show MinimumCycleRemover;
 import '../../model/model.dart' show GraphModel;
 import '../../model/model.dart' show IGraphModel;
 import '../../view/view.dart' show CellState;
@@ -123,10 +123,10 @@ JGraphLayout.Stoppable*/
 	 * @param graph the graph to lay out
 	 * 
 	 */
-	HierarchicalLayout(Graph graph)
-	{
-		this(graph, SwingConstants.NORTH);
-	}
+//	HierarchicalLayout(Graph graph)
+//	{
+//		this(graph, SwingConstants.NORTH);
+//	}
 
 	/**
 	 * Constructs a hierarchical layout
@@ -134,10 +134,11 @@ JGraphLayout.Stoppable*/
 	 * @param orientation <code>SwingConstants.NORTH, SwingConstants.EAST, SwingConstants.SOUTH</code> or <code> SwingConstants.WEST</code>
 	 * 
 	 */
-	HierarchicalLayout(Graph graph, int orientation)
+	HierarchicalLayout(Graph graph, [int orientation=null]) : super(graph)
 	{
-		super(graph);
-		this._orientation = orientation;
+        if (orientation != null) {
+            this._orientation = orientation;
+        }
 	}
 
 	/**
@@ -153,10 +154,10 @@ JGraphLayout.Stoppable*/
 	 * 
 	 * @param parent Parent cell that contains the children to be laid out.
 	 */
-	void execute(Object parent)
-	{
-		execute(parent, null);
-	}
+//	void execute(Object parent)
+//	{
+//		execute(parent, null);
+//	}
 
 	/**
 	 * Executes the layout for the children of the specified parent.
@@ -164,7 +165,7 @@ JGraphLayout.Stoppable*/
 	 * @param parent Parent cell that contains the children to be laid out.
 	 * @param roots the starting roots of the layout
 	 */
-	void execute(Object parent, List<Object> roots)
+	void execute(Object parent, [List<Object> roots=null])
 	{
 		super.execute(parent);
 		IGraphModel model = graph.getModel();
@@ -184,7 +185,7 @@ JGraphLayout.Stoppable*/
 
 		if (roots != null && parent != null)
 		{
-			for (Object root : roots)
+			for (Object root in roots)
 			{
 				if (!model.isAncestor(parent, root))
 				{
@@ -202,7 +203,7 @@ JGraphLayout.Stoppable*/
 
 			if (isResizeParent() && !graph.isCellCollapsed(parent))
 			{
-				graph.updateGroupBounds(new List<Object> { parent },
+				graph.updateGroupBounds([ parent ],
 						getParentBorder(), isMoveParent());
 			}
 		}
@@ -230,7 +231,7 @@ JGraphLayout.Stoppable*/
 		int maxDiff = -100000;
 		IGraphModel model = graph.getModel();
 
-		for (Object vertex : vertices)
+		for (Object vertex in vertices)
 		{
 			if (model.isVertex(vertex) && graph.isCellVisible(vertex))
 			{
@@ -345,7 +346,7 @@ JGraphLayout.Stoppable*/
 			{
 				List<Object> candidateRoots = findRoots(parent, filledVertexSet);
 
-				for (Object root : candidateRoots)
+				for (Object root in candidateRoots)
 				{
 					Set<Object> vertexSet = new LinkedHashSet<Object>();
 					hierarchyVertices.add(vertexSet);
@@ -488,7 +489,7 @@ JGraphLayout.Stoppable*/
 					// This component and the one it's in need to be merged
 					Set<Object> matchComp = null;
 
-					for (Set<Object> comp : hierarchyVertices)
+					for (Set<Object> comp in hierarchyVertices)
 					{
 						if (comp.contains(vertex))
 						{

@@ -3,8 +3,8 @@
  */
 library graph.layout.orthogonal;
 
-import '../../layout.GraphLayout;
-import '../../layout.orthogonal.model.OrthogonalModel;
+import '../../layout/layout.dart' show GraphLayout;
+import '../../layout/orthogonal/model/model.dart' show OrthogonalModel;
 import '../../view/view.dart' show Graph;
 
 /**
@@ -19,27 +19,26 @@ class OrthogonalLayout extends GraphLayout
   /**
    * 
    */
-  protected OrthogonalModel _orthModel;
+  OrthogonalModel _orthModel;
 
   /**
    * Whether or not to route the edges along grid lines only, if the grid
    * is enabled. Default is false
    */
-  protected bool _routeToGrid = false;
+  bool _routeToGrid = false;
   
   /**
    * 
    */
-  public OrthogonalLayout(Graph graph)
+  OrthogonalLayout(Graph graph) : super(graph)
   {
-     super(graph);
      _orthModel = new OrthogonalModel(graph);
   }
 
   /**
    * 
    */
-  public void execute(Object parent)
+  void execute(Object parent)
   {
      // Create the rectangulation
      

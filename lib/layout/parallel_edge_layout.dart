@@ -19,18 +19,17 @@ class ParallelEdgeLayout extends GraphLayout
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	ParallelEdgeLayout(Graph graph)
-	{
-		this(graph, 20);
-	}
+//	ParallelEdgeLayout(Graph graph)
+//	{
+//		this(graph, 20);
+//	}
 
 	/**
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	ParallelEdgeLayout(Graph graph, int spacing)
+	ParallelEdgeLayout(Graph graph, [int spacing=20]) : super(graph)
 	{
-		super(graph);
 		this.spacing = spacing;
 	}
 
@@ -109,8 +108,8 @@ class ParallelEdgeLayout extends GraphLayout
 
 		if (src is ICell && trg is ICell)
 		{
-			String srcId = CellPath.create((ICell) src);
-			String trgId = CellPath.create((ICell) trg);
+			String srcId = CellPath.create(src as ICell);
+			String trgId = CellPath.create(trg as ICell);
 
 			return (srcId.compareTo(trgId) > 0) ? trgId + "-" + srcId : srcId
 					+ "-" + trgId;
@@ -181,7 +180,7 @@ class ParallelEdgeLayout extends GraphLayout
 		if (graph.isCellMovable(edge))
 		{
 			setEdgePoints(edge,
-					Arrays.asList(new List<Point2d> { new Point2d(x, y) }));
+					Arrays.asList([ new Point2d(x, y) ]));
 		}
 	}
 

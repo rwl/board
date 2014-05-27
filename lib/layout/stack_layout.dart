@@ -49,37 +49,36 @@ class StackLayout extends GraphLayout
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	StackLayout(Graph graph)
-	{
-		this(graph, true);
-	}
+//	StackLayout(Graph graph)
+//	{
+//		this(graph, true);
+//	}
 
 	/**
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	StackLayout(Graph graph, bool horizontal)
-	{
-		this(graph, horizontal, 0);
-	}
+//	StackLayout(Graph graph, bool horizontal)
+//	{
+//		this(graph, horizontal, 0);
+//	}
 
 	/**
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	StackLayout(Graph graph, bool horizontal, int spacing)
-	{
-		this(graph, horizontal, spacing, 0, 0, 0);
-	}
+//	StackLayout(Graph graph, bool horizontal, int spacing)
+//	{
+//		this(graph, horizontal, spacing, 0, 0, 0);
+//	}
 
 	/**
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	StackLayout(Graph graph, bool horizontal, int spacing,
-			int x0, int y0, int border)
+	StackLayout(Graph graph, [bool horizontal=true, int spacing=0,
+			int x0=0, int y0=0, int border=0]) : super(graph)
 	{
-		super(graph);
 		this.horizontal = horizontal;
 		this.spacing = spacing;
 		this.x0 = x0;
@@ -143,7 +142,7 @@ class StackLayout extends GraphLayout
 			}
 
 			// Changes child order in parent
-			int idx = ((ICell) parent).getIndex(cell as ICell);
+			int idx = (parent as ICell).getIndex(cell as ICell);
 			idx = Math.max(0, i - ((i > idx) ? 1 : 0));
 
 			model.add(parent, cell, idx);
@@ -212,7 +211,7 @@ class StackLayout extends GraphLayout
 
 						if (geo != null)
 						{
-							geo = (Geometry) geo.clone();
+							geo = geo.clone() as Geometry;
 
 							if (wrap != 0 && last != null)
 							{
@@ -297,7 +296,7 @@ class StackLayout extends GraphLayout
 				if (resizeParent && pgeo != null && last != null
 						&& !graph.isCellCollapsed(parent))
 				{
-					pgeo = (Geometry) pgeo.clone();
+					pgeo = pgeo.clone() as Geometry;
 
 					if (horizontal)
 					{

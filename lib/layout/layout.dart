@@ -4,9 +4,9 @@ library graph.layout;
  * This package contains various graph layouts.
  */
 
-import '../../model/model.dart' show IGraphModel, GraphModel, Geometry, CellPath, ICell;
-import '../../util/util.dart' show Point2d, Rect, Utils, Constants;
-import '../../view/view.dart' show CellState, Graph, GraphView, ICellVisitor;
+import '../model/model.dart' show IGraphModel, GraphModel, Geometry, CellPath, ICell;
+import '../util/util.dart' show Point2d, Rect, Utils, Constants;
+import '../view/view.dart' show CellState, Graph, GraphView, ICellVisitor;
 
 part 'compact_tree_layout.dart';
 part 'circle_layout.dart';

@@ -1,13 +1,13 @@
 
 library graph.layout.hierarchical.stage;
 
-import '../../../layout/hierarchical/hierarchical.dart' show HierarchicalLayout;
+import '../hierarchical.dart' show HierarchicalLayout;
 //import '../../../layout/hierarchical/model/model.dart' show GraphAbstractHierarchyCell;
 //import '../../../layout/hierarchical/model/model.dart' show GraphHierarchyEdge;
 //import '../../../layout/hierarchical/model/model.dart' show GraphHierarchyModel;
 //import '../../../layout/hierarchical/model/model.dart' show GraphHierarchyNode;
 //import '../../../layout/hierarchical/model/model.dart' show GraphHierarchyRank;
-import '../../../layout/hierarchical/model/model.dart'
+import '../model/model.dart';
 
 import '../../../util/util.dart' show Point2d, Rect, Utils, Graph;
 

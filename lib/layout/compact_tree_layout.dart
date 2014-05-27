@@ -88,20 +88,20 @@ class CompactTreeLayout extends GraphLayout
 	 * 
 	 * @param graph
 	 */
-	CompactTreeLayout(Graph graph)
-	{
-		this(graph, true);
-	}
+//	CompactTreeLayout(Graph graph)
+//	{
+//		this(graph, true);
+//	}
 
 	/**
 	 * 
 	 * @param graph
 	 * @param horizontal
 	 */
-	CompactTreeLayout(Graph graph, bool horizontal)
-	{
-		this(graph, horizontal, false);
-	}
+//	CompactTreeLayout(Graph graph, bool horizontal)
+//	{
+//		this(graph, horizontal, false);
+//	}
 
 	/**
 	 * 
@@ -109,9 +109,8 @@ class CompactTreeLayout extends GraphLayout
 	 * @param horizontal
 	 * @param invert
 	 */
-	CompactTreeLayout(Graph graph, bool horizontal, bool invert)
+	CompactTreeLayout(Graph graph, [bool horizontal=true, bool invert=false]) : super(graph)
 	{
-		super(graph);
 		this._horizontal = horizontal;
 		this._invert = invert;
 	}
@@ -265,11 +264,11 @@ class CompactTreeLayout extends GraphLayout
 	 * (non-Javadoc)
 	 * @see graph.layout.IGraphLayout#execute(java.lang.Object)
 	 */
-	void execute(Object parent)
-	{
-		super.execute(parent);
-		execute(parent, null);
-	}
+//	void execute(Object parent)
+//	{
+//		super.execute(parent);
+//		execute(parent, null);
+//	}
 
 	/**
 	 * Implements <GraphLayout.execute>.
@@ -278,7 +277,7 @@ class CompactTreeLayout extends GraphLayout
 	 * the tree. Else, <Graph.findTreeRoots> will be used to find a suitable
 	 * root node within the set of children of the given parent.
 	 */
-	void execute(Object parent, Object root)
+	void execute(Object parent, [Object root=null])
 	{
 		IGraphModel model = graph.getModel();
 
@@ -967,12 +966,12 @@ class CompactTreeLayout extends GraphLayout
 			}
 
 			sortedCells.add(new _WeightedCellSorter(child,
-					(int) sortingCriterion));
+					sortingCriterion as int));
 			child = child.next;
 		}
 
-		_WeightedCellSorter[] sortedCellsArray = sortedCells
-				.toArray(new _WeightedCellSorter[sortedCells.size()]);
+		List<_WeightedCellSorter> sortedCellsArray = sortedCells
+				.toArray(new List<_WeightedCellSorter>(sortedCells.size()));
 		Arrays.sort(sortedCellsArray);
 
 		double availableWidth = node.width;
@@ -1042,11 +1041,11 @@ class CompactTreeLayout extends GraphLayout
 				}
 			}
 
-			if (j < (float) childCount / 2.0f)
+			if (j < (childCount as float) / 2.0)
 			{
 				currentYOffset += _prefVertEdgeOff;
 			}
-			else if (j > (float) childCount / 2.0f)
+			else if (j > (childCount as float) / 2.0)
 			{
 				currentYOffset -= _prefVertEdgeOff;
 			}
@@ -1074,29 +1073,29 @@ class _WeightedCellSorter implements Comparable<Object>
   /**
    * The weighted value of the cell stored
    */
-  public int weightedValue = 0;
+  int weightedValue = 0;
 
   /**
    * Whether or not to flip equal weight values.
    */
-  public bool nudge = false;
+  bool nudge = false;
 
   /**
    * Whether or not this cell has been visited in the current assignment
    */
-  public bool visited = false;
+  bool visited = false;
 
   /**
    * The cell whose median value is being calculated
    */
-  public _TreeNode cell = null;
+  _TreeNode cell = null;
 
-  public _WeightedCellSorter()
+  _WeightedCellSorter()
   {
     this(null, 0);
   }
 
-  public _WeightedCellSorter(_TreeNode cell, int weightedValue)
+  _WeightedCellSorter(_TreeNode cell, int weightedValue)
   {
     this.cell = cell;
     this.weightedValue = weightedValue;
@@ -1110,15 +1109,15 @@ class _WeightedCellSorter implements Comparable<Object>
    * @return the standard return you would expect when comparing two
    *         double
    */
-  public int compareTo(Object arg0)
+  int compareTo(Object arg0)
   {
     if (arg0 is _WeightedCellSorter)
     {
-      if (weightedValue > ((_WeightedCellSorter) arg0).weightedValue)
+      if (weightedValue > (arg0 as _WeightedCellSorter).weightedValue)
       {
         return 1;
       }
-      else if (weightedValue < ((_WeightedCellSorter) arg0).weightedValue)
+      else if (weightedValue < (arg0 as _WeightedCellSorter).weightedValue)
       {
         return -1;
       }
@@ -1137,7 +1136,7 @@ class _Polygon
   /**
    * 
    */
-  protected _Polyline lowerHead, lowerTail, upperHead, upperTail;
+  _Polyline lowerHead, lowerTail, upperHead, upperTail;
 
 }
 
@@ -1150,17 +1149,17 @@ class _Polyline
   /**
    * 
    */
-  protected double dx, dy;
+  double dx, dy;
 
   /**
    * 
    */
-  protected _Polyline next;
+  _Polyline next;
 
   /**
    * 
    */
-  protected _Polyline(double dx, double dy, _Polyline next)
+  _Polyline(double dx, double dy, _Polyline next)
   {
     this.dx = dx;
     this.dy = dy;
@@ -1177,27 +1176,27 @@ class _TreeNode
   /**
    * 
    */
-  protected Object cell;
+  Object cell;
 
   /**
    * 
    */
-  protected double x, y, width, height, offsetX, offsetY;
+  double x, y, width, height, offsetX, offsetY;
 
   /**
    * 
    */
-  protected _TreeNode child, next; // parent, sibling
+  _TreeNode child, next; // parent, sibling
 
   /**
    * 
    */
-  protected _Polygon contour = new _Polygon();
+  _Polygon contour = new _Polygon();
 
   /**
    * 
    */
-  public _TreeNode(Object cell)
+  _TreeNode(Object cell)
   {
     this.cell = cell;
   }

@@ -14,7 +14,7 @@ part 'segment.dart';
  */
 class OrthogonalModel
 {
-   public OrthogonalModel(Graph graph)
+   OrthogonalModel(Graph graph)
    {
       // 
    }

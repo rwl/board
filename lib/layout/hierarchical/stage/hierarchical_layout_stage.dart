@@ -34,7 +34,7 @@ abstract class HierarchicalLayoutStage
  */
 class _AreaSpatialCache extends Rectangle2D.Double
 {
-  public Set<Object> cells = new HashSet<Object>();
+  Set<Object> cells = new HashSet<Object>();
 }
 
 /**
@@ -47,7 +47,7 @@ class _MedianCellSorter implements Comparable<Object>
   /**
    * The median value of the cell stored
    */
-  public double medianValue = 0.0;
+  double medianValue = 0.0;
 
   /**
    * The cell whose median value is being calculated
@@ -62,15 +62,15 @@ class _MedianCellSorter implements Comparable<Object>
    * @return the standard return you would expect when comparing two
    *         double
    */
-  public int compareTo(Object arg0)
+  int compareTo(Object arg0)
   {
     if (arg0 is _MedianCellSorter)
     {
-      if (medianValue < ((_MedianCellSorter) arg0).medianValue)
+      if (medianValue < (arg0 as _MedianCellSorter).medianValue)
       {
         return -1;
       }
-      else if (medianValue > ((_MedianCellSorter) arg0).medianValue)
+      else if (medianValue > (arg0 as _MedianCellSorter).medianValue)
       {
         return 1;
       }
@@ -91,35 +91,35 @@ class _WeightedCellSorter implements Comparable<Object>
   /**
    * The weighted value of the cell stored
    */
-  public int weightedValue = 0;
+  int weightedValue = 0;
 
   /**
    * Whether or not to flip equal weight values.
    */
-  public bool nudge = false;
+  bool nudge = false;
 
   /**
    * Whether or not this cell has been visited in the current assignment
    */
-  public bool visited = false;
+  bool visited = false;
 
   /**
    * The index this cell is in the model rank
    */
-  public int rankIndex;
+  int rankIndex;
 
   /**
    * The cell whose median value is being calculated
    */
-  public GraphAbstractHierarchyCell cell = null;
+  GraphAbstractHierarchyCell cell = null;
 
-  public _WeightedCellSorter()
-  {
-    this(null, 0);
-  }
+//  _WeightedCellSorter()
+//  {
+//    this(null, 0);
+//  }
 
-  public _WeightedCellSorter(GraphAbstractHierarchyCell cell,
-      int weightedValue)
+  _WeightedCellSorter([GraphAbstractHierarchyCell cell=null,
+      int weightedValue=0])
   {
     this.cell = cell;
     this.weightedValue = weightedValue;
@@ -133,15 +133,15 @@ class _WeightedCellSorter implements Comparable<Object>
    * @return the standard return you would expect when comparing two
    *         double
    */
-  public int compareTo(Object arg0)
+  int compareTo(Object arg0)
   {
     if (arg0 is _WeightedCellSorter)
     {
-      if (weightedValue > ((_WeightedCellSorter) arg0).weightedValue)
+      if (weightedValue > (arg0 as _WeightedCellSorter).weightedValue)
       {
         return -1;
       }
-      else if (weightedValue < ((_WeightedCellSorter) arg0).weightedValue)
+      else if (weightedValue < (arg0 as _WeightedCellSorter).weightedValue)
       {
         return 1;
       }

@@ -97,7 +97,7 @@ class FastOrganicLayout extends GraphLayout
 	/**
 	 * An array of locally stored co-ordinate positions for the vertices.
 	 */
-	List<double>[] cellLocation;
+	List<List<double>> cellLocation;
 
 	/**
 	 * The approximate radius of each cell, nodes only.
@@ -112,12 +112,12 @@ class FastOrganicLayout extends GraphLayout
 	/**
 	 * Array of booleans representing the movable states of the vertices.
 	 */
-	boolean[] isMoveable;
+	List<bool> isMoveable;
 
 	/**
 	 * Local copy of cell neighbours.
 	 */
-	List<int>[] neighbours;
+	List<List<int>> neighbours;
 
 	/**
 	 * Boolean flag that specifies if the layout is allowed to run. If this is
@@ -133,10 +133,7 @@ class FastOrganicLayout extends GraphLayout
 	/**
 	 * Constructs a new fast organic layout for the specified graph.
 	 */
-	FastOrganicLayout(Graph graph)
-	{
-		super(graph);
-	}
+	FastOrganicLayout(Graph graph) : super(graph);
 
 	/**
 	 * Returns a bool indicating if the given <Cell> should be ignored as a
@@ -328,13 +325,13 @@ class FastOrganicLayout extends GraphLayout
 				vertexArray, false, false, true) : null;
 		int n = vertexArray.length;
 
-		dispX = new double[n];
-		dispY = new double[n];
-		cellLocation = new double[n][];
-		isMoveable = new boolean[n];
-		neighbours = new int[n][];
-		radius = new double[n];
-		radiusSquared = new double[n];
+		dispX = new List<double>(n);
+		dispY = new List<double>(n);
+		cellLocation = new List<List<double>>(n);
+		isMoveable = new List<boolean>(n);
+		neighbours = new List<int>(n);
+		radius = new List<double>(n);
+		radiusSquared = new List<double>(n);
 
 		minDistanceLimitSquared = minDistanceLimit * minDistanceLimit;
 
@@ -352,7 +349,7 @@ class FastOrganicLayout extends GraphLayout
 		for (int i = 0; i < vertexArray.length; i++)
 		{
 			Object vertex = vertexArray[i];
-			cellLocation[i] = new double[2];
+			cellLocation[i] = new List<double>(2);
 
 			// Set up the mapping from array indices to cells
 			indices.put(vertex, new Integer(i));
@@ -404,7 +401,7 @@ class FastOrganicLayout extends GraphLayout
 				
 				List<Object> cells = graph.getOpposites(edges, vertexArray[i]);
 
-				neighbours[i] = new int[cells.length];
+				neighbours[i] = new List<int>(cells.length);
 
 				for (int j = 0; j < cells.length; j++)
 				{

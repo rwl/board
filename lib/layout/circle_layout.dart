@@ -45,16 +45,16 @@ class CircleLayout extends GraphLayout
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	CircleLayout(Graph graph)
-	{
-		this(graph, 100);
-	}
+//	CircleLayout(Graph graph)
+//	{
+//		this(graph, 100);
+//	}
 
 	/**
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	CircleLayout(Graph graph, double radius)
+	CircleLayout(Graph graph, [double radius=100.0])
 	{
 		super(graph);
 		this._radius = radius;

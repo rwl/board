@@ -40,7 +40,7 @@ class MedianHybridCrossingReduction implements
 	 * Stores each rank as a collection of cells in the best order found for
 	 * each layer so far
 	 */
-	GraphAbstractHierarchyCell[][] _nestedBestRanks = null;
+	List<List<GraphAbstractHierarchyCell>> _nestedBestRanks = null;
 
 	/**
 	 * The total number of crossings found in the best configuration so far
@@ -68,12 +68,12 @@ class MedianHybridCrossingReduction implements
 		GraphHierarchyModel model = _layout.getModel();
 
 		// Stores initial ordering as being the best one found so far
-		_nestedBestRanks = new GraphAbstractHierarchyCell[model.ranks.size()][];
+		_nestedBestRanks = new List<List<GraphAbstractHierarchyCell>>(model.ranks.size());
 
 		for (int i = 0; i < _nestedBestRanks.length; i++)
 		{
 			GraphHierarchyRank rank = model.ranks.get(new Integer(i));
-			_nestedBestRanks[i] = new GraphAbstractHierarchyCell[rank.size()];
+			_nestedBestRanks[i] = new List<GraphAbstractHierarchyCell>(rank.size());
 			rank.toArray(_nestedBestRanks[i]);
 		}
 
@@ -139,7 +139,7 @@ class MedianHybridCrossingReduction implements
 		// Store the best rankings but in the model
 		Map<Integer, GraphHierarchyRank> ranks = new LinkedHashMap<Integer, GraphHierarchyRank>(
 				model.maxRank + 1);
-		GraphHierarchyRank[] rankList = new GraphHierarchyRank[model.maxRank + 1];
+        List<GraphHierarchyRank> rankList = new List<GraphHierarchyRank>(model.maxRank + 1);
 
 		for (int i = 0; i < model.maxRank + 1; i++)
 		{
@@ -200,7 +200,10 @@ class MedianHybridCrossingReduction implements
 		// Create an array of connections between these two levels
 		int currentRankSize = rank.size();
 		int previousRankSize = previousRank.size();
-		List<int>[] connections = new int[currentRankSize][previousRankSize];
+        List<List<int>> connections = new List<int>(currentRankSize);//[previousRankSize];
+        for (int j = 0; j < currentRankSize; j++) {
+            connections[j] = new List<int>(previousRankSize);
+        }
 
 		// Iterate over the top rank and fill in the connection information
 		Iterator<GraphAbstractHierarchyCell> iter = rank.iterator();
@@ -291,8 +294,8 @@ class MedianHybridCrossingReduction implements
 			for (int i = 0; i < model.ranks.size(); i++)
 			{
 				GraphHierarchyRank rank = model.ranks.get(new Integer(i));
-				GraphAbstractHierarchyCell[] orderedCells = new GraphAbstractHierarchyCell[rank
-						.size()];
+                List<GraphAbstractHierarchyCell> orderedCells = new List<GraphAbstractHierarchyCell>(rank
+						.size());
 				Iterator<GraphAbstractHierarchyCell> iter = rank.iterator();
 
 				for (int j = 0; j < orderedCells.length; j++)
@@ -331,10 +334,10 @@ class MedianHybridCrossingReduction implements
 						leftCellBelowConnections = leftCell
 								.getPreviousLayerConnectedCells(i);
 
-						leftAbovePositions = new int[leftCellAboveConnections
-								.size()];
-						leftBelowPositions = new int[leftCellBelowConnections
-								.size()];
+						leftAbovePositions = new List<int>(leftCellAboveConnections
+								.size());
+						leftBelowPositions = new List<int>(leftCellBelowConnections
+								.size());
 
 						for (int k = 0; k < leftAbovePositions.length; k++)
 						{
@@ -363,10 +366,10 @@ class MedianHybridCrossingReduction implements
 					rightCellBelowConnections = rightCell
 							.getPreviousLayerConnectedCells(i);
 
-					rightAbovePositions = new int[rightCellAboveConnections
-							.size()];
-					rightBelowPositions = new int[rightCellBelowConnections
-							.size()];
+					rightAbovePositions = new List<int>(rightCellAboveConnections
+							.size());
+					rightBelowPositions = new List<int>(rightCellBelowConnections
+							.size());
 
 					for (int k = 0; k < rightAbovePositions.length; k++)
 					{
@@ -488,7 +491,7 @@ class MedianHybridCrossingReduction implements
 	{
 		int numCellsForRank = _nestedBestRanks[rankValue].length;
 		ArrayList<_MedianCellSorter> medianValues = new List<_MedianCellSorter>(numCellsForRank);
-		boolean[] reservedPositions = new boolean[numCellsForRank];
+        List<boolean> reservedPositions = new List<boolean>(numCellsForRank);
 
 		for (int i = 0; i < numCellsForRank; i++)
 		{
@@ -539,7 +542,7 @@ class MedianHybridCrossingReduction implements
 			}
 		}
 
-		_MedianCellSorter[] medianArray = medianValues.toArray(new _MedianCellSorter[medianValues.size()]);
+        List<_MedianCellSorter> medianArray = medianValues.toArray(new List<_MedianCellSorter>(medianValues.size()));
 		Arrays.sort(medianArray);
 
 		// Set the new position of each node within the rank using
@@ -571,7 +574,7 @@ class MedianHybridCrossingReduction implements
 			Collection<GraphAbstractHierarchyCell> connectedCells,
 			int rankValue)
 	{
-		List<double> medianValues = new double[connectedCells.size()];
+		List<double> medianValues = new List<double>(connectedCells.size());
 		int arrayCount = 0;
 		Iterator<GraphAbstractHierarchyCell> iter = connectedCells.iterator();
 

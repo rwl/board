@@ -38,7 +38,7 @@ abstract class IGraphLayout
 /**
  * Abstract bass class for layouts
  */
-public abstract class GraphLayout implements IGraphLayout
+abstract class GraphLayout implements IGraphLayout
 {
 
 	/**
@@ -95,10 +95,10 @@ public abstract class GraphLayout implements IGraphLayout
 	 * @param key Key of the constraint to be returned.
 	 * @param cell Cell whose constraint should be returned.
 	 */
-	Object getConstraint(Object key, Object cell)
-	{
-		return getConstraint(key, cell, null, false);
-	}
+//	Object getConstraint(Object key, Object cell)
+//	{
+//		return getConstraint(key, cell, null, false);
+//	}
 
 	/**
 	 * Returns the constraint for the given key and cell. The optional edge and
@@ -113,8 +113,8 @@ public abstract class GraphLayout implements IGraphLayout
 	 * @param source Optional bool that specifies if the connection is incoming
 	 * or outgoing. Default is false.
 	 */
-	Object getConstraint(Object key, Object cell, Object edge,
-			bool source)
+	Object getConstraint(Object key, Object cell, [Object edge=null,
+			bool source=false])
 	{
 		CellState state = graph.getView().getState(cell);
 		Map<String, Object> style = (state != null) ? state.getStyle() : graph
@@ -183,7 +183,7 @@ public abstract class GraphLayout implements IGraphLayout
 	void setEdgeStyleEnabled(Object edge, bool value)
 	{
 		graph.setCellStyles(Constants.STYLE_NOEDGESTYLE, (value) ? "0" : "1",
-				new List<Object> { edge });
+				[ edge ]);
 	}
 
 	/**
@@ -192,7 +192,7 @@ public abstract class GraphLayout implements IGraphLayout
 	void setOrthogonalEdge(Object edge, bool value)
 	{
 		graph.setCellStyles(Constants.STYLE_ORTHOGONAL, (value) ? "1" : "0",
-				new List<Object> { edge });
+				[ edge ]);
 	}
 
 	Point2d getParentOffset(Object parent)
@@ -238,7 +238,7 @@ public abstract class GraphLayout implements IGraphLayout
 		}
 		else
 		{
-			geometry = (Geometry) geometry.clone();
+			geometry = geometry.clone() as Geometry;
 		}
 
 		if (this.parent != null && points != null)
@@ -247,7 +247,7 @@ public abstract class GraphLayout implements IGraphLayout
 
 				Point2d parentOffset = getParentOffset(parent);
 
-				for (Point2d point : points)
+				for (Point2d point in points)
 				{
 					point.setX(point.getX() - parentOffset.getX());
 					point.setY(point.getY() - parentOffset.getY());
@@ -294,7 +294,7 @@ public abstract class GraphLayout implements IGraphLayout
 		if (this.parent != null)
 		{
 			Object parent = graph.getModel().getParent(vertex);
-			geo = (Rect) geo.clone();
+			geo = geo.clone() as Rect;
 
 			if (parent != null && parent != this.parent)
 			{
@@ -371,7 +371,7 @@ public abstract class GraphLayout implements IGraphLayout
 
 			if (geometry.getX() != x || geometry.getY() != y)
 			{
-				geometry = (Geometry) geometry.clone();
+				geometry = geometry.clone() as Geometry;
 				geometry.setX(x);
 				geometry.setY(y);
 
@@ -416,7 +416,7 @@ public abstract class GraphLayout implements IGraphLayout
 				
 				if (bounds != null && geometry != null)
 				{
-					geometry = (Geometry) geometry.clone();
+					geometry = geometry.clone() as Geometry;
 					geometry.setX(geometry.getX() + bounds.getX() - border - left);
 					geometry.setY(geometry.getY() + bounds.getY() - border - top);
 					geometry.setWidth(bounds.getWidth() + 2 * border + left);

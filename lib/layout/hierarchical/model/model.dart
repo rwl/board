@@ -1,6 +1,6 @@
 library graph.layout.hierarchical.model;
 
-import '../../../layout/hierarchical/hierarchical.dart' show HierarchicalLayout;
+import '../hierarchical.dart' show HierarchicalLayout;
 import '../../../view/view.dart' show Graph;
 
 part 'graph_abstract_hierarchy_cell.dart';

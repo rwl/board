@@ -47,12 +47,12 @@ class MinimumCycleRemover implements HierarchicalLayoutStage
 
 		// Perform a dfs through the internal model. If a cycle is found,
 		// reverse it.
-		GraphHierarchyNode[] rootsArray = null;
+        List<GraphHierarchyNode> rootsArray = null;
 
 		if (model.roots != null)
 		{
 			List<Object> modelRoots = model.roots.toArray();
-			rootsArray = new GraphHierarchyNode[modelRoots.length];
+			rootsArray = new List<GraphHierarchyNode>(modelRoots.length);
 
 			for (int i = 0; i < modelRoots.length; i++)
 			{
@@ -63,9 +63,7 @@ class MinimumCycleRemover implements HierarchicalLayoutStage
 			}
 		}
 
-		model.visit(new GraphHierarchyModel.CellVisitor()
-		{
-			public void visit(GraphHierarchyNode parent,
+		model.visit((GraphHierarchyNode parent,
 					GraphHierarchyNode cell,
 					GraphHierarchyEdge connectingEdge, int layer, int seen)
 			{
@@ -83,8 +81,7 @@ class MinimumCycleRemover implements HierarchicalLayoutStage
 				}
 				seenNodes.add(cell);
 				unseenNodes.remove(cell);
-			}
-		}, rootsArray, true, null);
+			}, rootsArray, true, null);
 
 		Set<Object> possibleNewRoots = null;
 
@@ -100,12 +97,10 @@ class MinimumCycleRemover implements HierarchicalLayoutStage
 				seenNodes);
 
 		// Pick a random cell and dfs from it
-		GraphHierarchyNode[] unseenNodesArray = new GraphHierarchyNode[1];
+        List<GraphHierarchyNode> unseenNodesArray = new List<GraphHierarchyNode>(1);
 		unseenNodes.toArray(unseenNodesArray);
 		
-		model.visit(new GraphHierarchyModel.CellVisitor()
-		{
-			public void visit(GraphHierarchyNode parent,
+		model.visit((GraphHierarchyNode parent,
 					GraphHierarchyNode cell,
 					GraphHierarchyEdge connectingEdge, int layer, int seen)
 			{
@@ -123,8 +118,7 @@ class MinimumCycleRemover implements HierarchicalLayoutStage
 				}
 				seenNodes.add(cell);
 				unseenNodes.remove(cell);
-			}
-		}, unseenNodesArray, true, seenNodesCopy);
+			}, unseenNodesArray, true, seenNodesCopy);
 
 		Graph graph = _layout.getGraph();
 
@@ -135,7 +129,7 @@ class MinimumCycleRemover implements HierarchicalLayoutStage
 
 			while (iter.hasNext())
 			{
-				GraphHierarchyNode node = (GraphHierarchyNode) iter.next();
+				GraphHierarchyNode node = iter.next() as GraphHierarchyNode;
 				Object realNode = node.cell;
 				int numIncomingEdges = graph.getIncomingEdges(realNode).length;
 

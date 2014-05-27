@@ -66,13 +66,13 @@ class EdgeLabelLayout extends GraphLayout
 		{
 			for (int i = 0; i < e.length; i++)
 			{
-				CellState edge = (CellState) e[i];
+				CellState edge = e[i] as CellState;
 
 				if (edge != null && edge.getLabelBounds() != null)
 				{
 					for (int j = 0; j < v.length; j++)
 					{
-						CellState vertex = (CellState) v[j];
+						CellState vertex = v[j] as CellState;
 
 						if (vertex != null)
 						{
@@ -122,7 +122,7 @@ class EdgeLabelLayout extends GraphLayout
 
 			if (g != null)
 			{
-				g = (Geometry) g.clone();
+				g = g.clone() as Geometry;
 
 				if (g.getOffset() != null)
 				{
