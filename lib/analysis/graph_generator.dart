@@ -34,7 +34,7 @@ class GraphGenerator
 		{
 			this._costFunction = new DoubleValCostFunction();
 		}
-	};
+	}
 
 	/**
 	 * @param aGraph 
@@ -54,7 +54,7 @@ class GraphGenerator
 		{
 			graph.insertVertex(parent, null, new Integer(i).toString(), i * 50, 0, 25, 25);
 		}
-	};
+	}
 
 	/**
 	 * @param aGraph
@@ -70,7 +70,7 @@ class GraphGenerator
 
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
-		List<Object> vertices = new Object[numVertices];
+		List<Object> vertices = new List<Object>(numVertices);
 		
 		for (int i = 0; i < numVertices; i++)
 		{
@@ -91,7 +91,7 @@ class GraphGenerator
 				}
 			}
 		}
-	};
+	}
 
 	/**
 	 * @param aGraph
@@ -109,7 +109,7 @@ class GraphGenerator
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
 		int numVertices = numColumns * numRows;
-		List<Object> vertices = new Object[numVertices];
+		List<Object> vertices = new List<Object>(numVertices);
 		
 		for (int i = 0; i < numVertices; i++)
 		{
@@ -139,7 +139,7 @@ class GraphGenerator
 				vertexCount++;
 			}
 		}
-	};
+	}
 
 	/**
 	 * Sets the physical spacing between vertices in a grid graph. This works for now only for a graph generated with mxGraphCreator.getGridGraph() only after creating the graph
@@ -172,7 +172,7 @@ class GraphGenerator
 				geometry.setY(i * ySpacing);
 			}
 		}
-	};
+	}
 
 	/**
 	 * @param aGraph
@@ -190,7 +190,7 @@ class GraphGenerator
 		int numVertices = numVerticesGroup1 + numVerticesGroup2;
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
-		List<Object> vertices = new Object[numVertices];
+		List<Object> vertices = new List<Object>(numVertices);
 		
 		for (int i = 0; i < numVertices; i++)
 		{
@@ -215,7 +215,7 @@ class GraphGenerator
 				graph.insertEdge(parent, null, getNewEdgeValue(aGraph), currVertex, destVertex);
 			}
 		}
-	};
+	}
 
 	/**
 	 * Sets the physical spacing between vertices in a bipartite graph. This works for now only for a graph generated with mxGraphCreator.getBipartiteGraph() 
@@ -270,7 +270,7 @@ class GraphGenerator
 			geometry.setX(groupSpacing);
 			geometry.setY(group2StartY + (i - numVerticesGroup1) * vertexSpacing);
 		}
-	};
+	}
 
 	/**
 	 * @param aGraph
@@ -288,7 +288,7 @@ class GraphGenerator
 		int numVertices = numVerticesGroup1 + numVerticesGroup2;
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
-		List<Object> vertices = new Object[numVertices];
+		List<Object> vertices = new List<Object>(numVertices);
 		
 		for (int i = 0; i < numVertices; i++)
 		{
@@ -304,7 +304,7 @@ class GraphGenerator
 				graph.insertEdge(parent, null, getNewEdgeValue(aGraph), currVertex, destVertex);
 			}
 		}
-	};
+	}
 
 	/**
 	 * @param aGraph
@@ -323,7 +323,7 @@ class GraphGenerator
 		int numVertices = xDim * yDim;
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
-		List<Object> vertices = new Object[numVertices];
+		List<Object> vertices = new List<Object>(numVertices);
 		
 		for (int i = 0; i < numVertices; i++)
 		{
@@ -331,7 +331,7 @@ class GraphGenerator
 		}
 
 		//now we set up the starting conditions
-		List<int> currCoords = new int[2];
+		List<int> currCoords = new List<int>(2);
 
 		//the main loop
 		for (int i = 0; i < (xDim * yDim); i++)
@@ -349,7 +349,7 @@ class GraphGenerator
 				// that vertex becomes the current vertex and we repeat until no possible moves
 			}
 		}
-	};
+	}
 
 	/**
 	 * @param aGraph
@@ -463,7 +463,7 @@ class GraphGenerator
 		}
 
 		return possibleMoves.toArray();
-	};
+	}
 
 	/**
 	 * use this only with the grid graph, and various chess-board graphs, because of vertex ordering
@@ -480,15 +480,15 @@ class GraphGenerator
 			throw new IllegalArgumentException();
 		}
 
-		int yCoord = (int) Math.floor(value / xDim);
+		int yCoord = Math.floor(value / xDim) as int;
 		int xCoord = (value - yCoord * xDim) + 1;
 		yCoord += 1;
 
-		List<int> coords = new int[2];
+		List<int> coords = new List<int>(2);
 		coords[0] = xCoord;
 		coords[1] = yCoord;
 		return coords;
-	};
+	}
 
 	/**
 	 * use this only with the grid graph and various chess-board graphs, because of vertex ordering
@@ -510,7 +510,7 @@ class GraphGenerator
 		int value = (yCoord - 1) * xDim + xCoord - 1;
 
 		return vertices[value];
-	};
+	}
 
 	/**
 	 * @param xDim
@@ -529,7 +529,7 @@ class GraphGenerator
 		int numVertices = xDim * yDim;
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
-		List<Object> vertices = new Object[numVertices];
+		List<Object> vertices = new List<Object>(numVertices);
 		
 		for (int i = 0; i < numVertices; i++)
 		{
@@ -537,7 +537,7 @@ class GraphGenerator
 		}
 
 		//now we set up the starting conditions
-		List<int> currCoords = new int[2];
+		List<int> currCoords = new List<int>(2);
 
 		//the main loop
 		for (int i = 0; i < (xDim * yDim); i++)
@@ -555,7 +555,7 @@ class GraphGenerator
 				// that vertex becomes the current vertex and we repeat until no possible moves
 			}
 		}
-	};
+	}
 
 	/**
 	 * @param aGraph
@@ -662,7 +662,7 @@ class GraphGenerator
 		}
 
 		return possibleMoves.toArray();
-	};
+	}
 
 	/**
 	 * @param aGraph
@@ -672,7 +672,7 @@ class GraphGenerator
 	{
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
-		List<Object> vertices = new Object[10];
+		List<Object> vertices = new List<Object>(10);
 		
 		for (int i = 0; i < 10; i++)
 		{
@@ -694,7 +694,7 @@ class GraphGenerator
 		graph.insertEdge(parent, null, getNewEdgeValue(aGraph), vertices[5], vertices[9]);
 		graph.insertEdge(parent, null, getNewEdgeValue(aGraph), vertices[6], vertices[8]);
 		graph.insertEdge(parent, null, getNewEdgeValue(aGraph), vertices[7], vertices[8]);
-	};
+	}
 
 	/**
 	 * @param aGraph
@@ -710,7 +710,7 @@ class GraphGenerator
 
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
-		List<Object> vertices = new Object[numVertices];
+		List<Object> vertices = new List<Object>(numVertices);
 		
 		for (int i = 0; i < numVertices; i++)
 		{
@@ -721,7 +721,7 @@ class GraphGenerator
 		{
 			graph.insertEdge(parent, null, getNewEdgeValue(aGraph), vertices[i], vertices[i + 1]);
 		}
-	};
+	}
 
 	/**
 	 * Sets the physical spacing between vertices in a path graph. This works for now only for a graph generated with mxGraphCreator.getPathGraph() 
@@ -749,7 +749,7 @@ class GraphGenerator
 			geometry.setX(0);
 			geometry.setY(i * spacing);
 		}
-	};
+	}
 
 	/**
 	 * @param aGraph
@@ -766,7 +766,7 @@ class GraphGenerator
 
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
-		List<Object> vertices = new Object[numVertices];
+		List<Object> vertices = new List<Object>(numVertices);
 		
 		for (int i = 0; i < numVertices; i++)
 		{
@@ -779,7 +779,7 @@ class GraphGenerator
 		{
 			graph.insertEdge(parent, null, getNewEdgeValue(aGraph), vertices[numVertexesInPerimeter], vertices[i]);
 		}
-	};
+	}
 
 	/**
 	 * Sets the physical size of a star graph. This works for now only for a graph generated with mxGraphCreator.getStarGraph() and getWheelGraph()
@@ -798,7 +798,7 @@ class GraphGenerator
 		List<Object> vertices = aGraph.getChildVertices(parent);
 		IGraphModel model = graph.getModel();
 		int vertexNum = vertices.length;
-		double centerX = graphSize / 2f;
+		double centerX = graphSize / 2.0;
 		double centerY = centerX;
 
 		int numVertexesInPerimeter = vertexNum - 1;
@@ -809,9 +809,9 @@ class GraphGenerator
 			//calc the position
 			double x = 0;
 			double y = 0;
-			double currRatio = ((double) i / (double) numVertexesInPerimeter);
+			double currRatio = ((i as double) / (numVertexesInPerimeter as double));
 			currRatio = currRatio * 2;
-			currRatio = currRatio * (double) Math.PI;
+			currRatio = currRatio * (Math.PI as double);
 			x = Math.round(centerX + Math.round(graphSize * Math.sin(currRatio) / 2));
 			y = Math.round(centerY - Math.round(graphSize * Math.cos(currRatio) / 2));
 			Object currVertex = vertices[i];
@@ -823,7 +823,7 @@ class GraphGenerator
 		Geometry geometry = model.getGeometry(vertices[vertexNum - 1]);
 		geometry.setX(centerX);
 		geometry.setY(centerY);
-	};
+	}
 
 	/**
 	 * @param aGraph
@@ -839,7 +839,7 @@ class GraphGenerator
 
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
-		List<Object> vertices = new Object[numVertices];
+		List<Object> vertices = new List<Object>(numVertices);
 		
 		for (int i = 0; i < numVertices; i++)
 		{
@@ -861,7 +861,7 @@ class GraphGenerator
 				graph.insertEdge(parent, null, getNewEdgeValue(aGraph), vertices[i], vertices[0]);
 			}
 		}
-	};
+	}
 
 	/**
 	 * @param aGraph
@@ -879,7 +879,7 @@ class GraphGenerator
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
 		int numVertices = numBranches * branchSize + 1;
-		List<Object> vertices = new Object[numVertices];
+		List<Object> vertices = new List<Object>(numVertices);
 		int vertexCount = 0;
 
 		for (int i = 0; i < numBranches; i++)
@@ -908,7 +908,7 @@ class GraphGenerator
 			Object currVertex = vertices[numVertices - 1];
 			graph.insertEdge(parent, null, getNewEdgeValue(aGraph), oldVertex, currVertex);
 		}
-	};
+	}
 
 	/**
 	 * @param aGraph
@@ -926,7 +926,7 @@ class GraphGenerator
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
 		int numVertices = numBranches * branchSize + 1;
-		List<Object> vertices = new Object[numVertices];
+		List<Object> vertices = new List<Object>(numVertices);
 		
 		int vertexCount = 0;
 
@@ -964,7 +964,7 @@ class GraphGenerator
 				}
 			}
 		}
-	};
+	}
 
 	//NOTE the inside code is delicate, so please change it only if you know what you're doing
 	/**
@@ -986,10 +986,10 @@ class GraphGenerator
 		List<Object> vertices = aGraph.getChildVertices(parent);
 		IGraphModel model = graph.getModel();
 		int vertexNum = vertices.length;
-		double centerX = graphSize / 2f;
+		double centerX = graphSize / 2.0;
 		double centerY = centerX;
 		bool isBranchSizeEven = ((numVerticesInBranch) % 2 == 0);
-		int middleIndex = (int) Math.ceil(numVerticesInBranch / 2f);
+		int middleIndex = Math.ceil(numVerticesInBranch / 2.0) as int;
 
 		//create the circle
 		for (int i = 0; i < numBranches; i++)
@@ -1009,32 +1009,32 @@ class GraphGenerator
 				if (isBranchSizeEven && j == middleIndex - 1)
 				{
 					//full size
-					currRatio = ((double) i - (0.0005f * graphSize / Math.pow(numVerticesInBranch, 1))) / (double) numVertexesInPerimeter;
+					currRatio = ((i as double) - (0.0005 * graphSize / Math.pow(numVerticesInBranch, 1))) / (numVertexesInPerimeter as double);
 				}
 				else if (isBranchSizeEven && j == middleIndex)
 				{
-					currRatio = ((double) i + (0.0005f * graphSize / Math.pow(numVerticesInBranch, 1))) / (double) numVertexesInPerimeter;
+					currRatio = ((i as double) + (0.0005 * graphSize / Math.pow(numVerticesInBranch, 1))) / (numVertexesInPerimeter as double);
 				}
 				else if (!isBranchSizeEven && currSize == graphSize)
 				{
-					currRatio = ((double) i / (double) numVertexesInPerimeter);
+					currRatio = ((i as double) / (numVertexesInPerimeter as double));
 				}
 				else
 				{
 					if (j + 1 < middleIndex)
 					{
 						//before middle
-						currRatio = ((double) (i - 1f / Math.pow(currSize, 0.25) + 0.00000000000015f * Math.pow(currSize, 4)) / (double) numVertexesInPerimeter);
+						currRatio = ((double) (i - 1.0 / Math.pow(currSize, 0.25) + 0.00000000000015 * Math.pow(currSize, 4)) / (numVertexesInPerimeter as double));
 					}
 					else
 					{
 						//after middle
-						currRatio = ((double) (i + 1f / Math.pow(currSize, 0.25) - 0.00000000000015f * Math.pow(currSize, 4)) / (double) numVertexesInPerimeter);
+						currRatio = ((double) (i + 1.0 / Math.pow(currSize, 0.25) - 0.00000000000015 * Math.pow(currSize, 4)) / (numVertexesInPerimeter as double));
 					}
 				}
 
 				currRatio = currRatio * 2;
-				currRatio = currRatio * (double) Math.PI;
+				currRatio = currRatio * (Math.PI as double);
 				x = Math.round(centerX + Math.round(currSize * Math.sin(currRatio) / 2));
 				y = Math.round(centerY - Math.round(currSize * Math.cos(currRatio) / 2));
 				//shoot
@@ -1051,7 +1051,7 @@ class GraphGenerator
 		Geometry geometry = model.getGeometry(currVertex);
 		geometry.setX(centerX);
 		geometry.setY(centerY);
-	};
+	}
 
 	/**
 	 * A helper function that calculates the ring size for a windmill graph, based on the index of a vertex in a brach and branch size. - for internal use
@@ -1070,7 +1070,7 @@ class GraphGenerator
 		int middleIndex = 0;
 		bool isBranchSizeEven = ((branchSize) % 2 == 0);
 
-		middleIndex = (int) Math.ceil(branchSize / 2f);
+		middleIndex = Math.ceil(branchSize / 2.0) as int;
 
 		if (currIndex == middleIndex || (isBranchSizeEven && currIndex == middleIndex + 1))
 		{
@@ -1082,8 +1082,8 @@ class GraphGenerator
 			//after middle
 			currIndex = branchSize - currIndex + 1;
 		}
-		return (((float) Math.pow(currIndex, 0.75) / (float) Math.pow(middleIndex, 0.75)) * fullSize);
-	};
+		return (((Math.pow(currIndex, 0.75) as float) / (Math.pow(middleIndex, 0.75) as float)) * fullSize);
+	}
 
 	/**
 	 * Generates a random graph
@@ -1099,7 +1099,7 @@ class GraphGenerator
 	{
 		Graph graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
-		List<Object> vertices = new Object[numNodes];
+		List<Object> vertices = new List<Object>(numNodes);
 		
 		for (int i = 0; i < numNodes; i++)
 		{
@@ -1115,8 +1115,8 @@ class GraphGenerator
 			do
 			{
 				goodPair = true;
-				startVertex = vertices[(int) Math.round(Math.random() * (vertices.length - 1))];
-				endVertex = vertices[(int) Math.round(Math.random() * (vertices.length - 1))];
+				startVertex = vertices[Math.round(Math.random() * (vertices.length - 1)) as int];
+				endVertex = vertices[Math.round(Math.random() * (vertices.length - 1)) as int];
 
 				if (!allowSelfLoops && startVertex.equals(endVertex))
 				{
@@ -1136,7 +1136,7 @@ class GraphGenerator
 		{
 			GraphStructure.makeConnected(aGraph);
 		}
-	};
+	}
 
 	/**
 	 * Generates a random tree graph
@@ -1145,7 +1145,7 @@ class GraphGenerator
 	 */
 	void getSimpleRandomTree(AnalysisGraph aGraph, int vertexCount)
 	{
-		int edgeCount = (int) Math.round(vertexCount * 2);
+		int edgeCount = Math.round(vertexCount * 2) as int;
 		this.getSimpleRandomGraph(aGraph, vertexCount, edgeCount, false, false, true);
 
 		//still need to remove surplus edges
@@ -1162,13 +1162,13 @@ class GraphGenerator
 
 		try
 		{
-			GraphStructure.makeTreeDirected(aGraph, vertices[(int) Math.round(Math.random() * (vertices.length - 1))]);
+			GraphStructure.makeTreeDirected(aGraph, vertices[Math.round(Math.random() * (vertices.length - 1)) as int]);
 		}
 		on StructuralException catch (e)
 		{
 			System.out.println(e);
 		}
-	};
+	}
 
 	/**
 	 * Creates a new edge value based on graph properties in AnalysisGraph. Used mostly when creating new edges during graph generation.
@@ -1186,7 +1186,7 @@ class GraphGenerator
 		{
 			return null;
 		}
-	};
+	}
 
 	/**
 	 * @param graph
@@ -1205,12 +1205,12 @@ class GraphGenerator
 		{
 			return null;
 		}
-	};
+	}
 
 	GeneratorFunction getGeneratorFunction()
 	{
 		return this._generatorFunction;
-	};
+	}
 
 	/**
 	 * @param minValue
@@ -1229,9 +1229,9 @@ class GraphGenerator
 		}
 
 		int currValue = 0;
-		currValue = minValue + (int) Math.round((Math.random() * (maxValue - minValue)));
+		currValue = minValue + (Math.round((Math.random() * (maxValue - minValue))) as int);
 		return currValue;
-	};
+	}
 
 	/**
 	 * @param _graph
@@ -1280,14 +1280,14 @@ class GraphGenerator
 		for (int i = 0; i < edgeCount; i++)
 		{
 			Object currEdge = edges[i];
-			graph.removeCells(new List<Object> { currEdge });
+			graph.removeCells([ currEdge ]);
 
 			if (!GraphStructure.isConnected(aGraph))
 			{
 				graph.addCell(currEdge);
 			}
 		}
-	};
+	}
 
 	//TODO make a double check to avoid unnecessary cases of throwing an exception (if the algorithm can't work out a solution, try a mirrored strategy)
 	/**
@@ -1323,7 +1323,7 @@ class GraphGenerator
 
 		//now we set up the starting conditions
 		int currValue = startVertexValue;
-		List<int> currCoords = new int[2];
+		List<int> currCoords = new List<int>(2);
 		Object oldMove = vertices[startVertexValue];
 		currCoords = getVertexGridCoords(xDim, yDim, startVertexValue);
 		resultPath.add(oldMove);
@@ -1339,7 +1339,7 @@ class GraphGenerator
 			resultPath.add(nextMove);
 			// that vertex becomes the current vertex and we repeat until no possible moves
 			
-			currValue = (int) costFunction.getCost(new CellState(view, nextMove, null));
+			currValue = costFunction.getCost(new CellState(view, nextMove, null)) as int;
 			currCoords = getVertexGridCoords(xDim, yDim, currValue);
 			oldMove = nextMove;
 			nextMove = _getNextKnightMove(aGraph, xDim, yDim, currCoords[0], currCoords[1], resultPath);
@@ -1351,7 +1351,7 @@ class GraphGenerator
 			//and the exception would be thrown only if the mirrored fails too
 			throw new StructuralException("Could not generate a correct Knight tour with size " + xDim + " x " + yDim + ".");
 		}
-	};
+	}
 
 	/**
 	 * Helper function for Knights Tour - for internal use
@@ -1375,7 +1375,7 @@ class GraphGenerator
 		
 		for (int i = 0; i < possibleMoves.length; i++)
 		{
-			int currValue = (int) costFunction.getCost(new CellState(view, possibleMoves[i], null));
+			int currValue = costFunction.getCost(new CellState(view, possibleMoves[i], null)) as int;
 			List<int> currCoords = getVertexGridCoords(xDim, yDim, currValue);
 			int currMoveNum = _getPossibleKnightMoveCount(aGraph, xDim, yDim, currCoords[0], currCoords[1]);
 			float currDistance = _getDistanceFromGridCenter(xDim, yDim, currValue);
@@ -1389,7 +1389,7 @@ class GraphGenerator
 			}
 		}
 		return currVertex;
-	};
+	}
 
 	/**
 	 * Helper function for Knights Tour - for internal use
@@ -1504,7 +1504,7 @@ class GraphGenerator
 		}
 
 		return possibleMoveCount;
-	};
+	}
 
 	/**
 	 * Helper function for Knights Tour - for internal use
@@ -1515,13 +1515,13 @@ class GraphGenerator
 	 */
 	float _getDistanceFromGridCenter(int xDim, int yDim, int currValue)
 	{
-		float centerX = (xDim + 1) / 2f;
-		float centerY = (yDim + 1) / 2f;
+		float centerX = (xDim + 1) / 2.0;
+		float centerY = (yDim + 1) / 2.0;
 		List<int> currCoords = getVertexGridCoords(xDim, yDim, currValue);
 		float x = Math.abs(centerX - currCoords[0]);
 		float y = Math.abs(centerY - currCoords[1]);
 
-		return (float) Math.sqrt(x * x + y * y);
+		return Math.sqrt(x * x + y * y) as float;
 	}
 
 	CostFunction getCostFunction()
@@ -1532,5 +1532,5 @@ class GraphGenerator
 	void setCostFunction(CostFunction costFunction)
 	{
 		this._costFunction = costFunction;
-	};
-};
+	}
+}

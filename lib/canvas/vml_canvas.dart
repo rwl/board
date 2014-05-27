@@ -164,10 +164,10 @@ class VmlCanvas extends BasicCanvas
 		}
 		else
 		{
-			int x = (int) state.getX() + _translate.x;
-			int y = (int) state.getY() + _translate.y;
-			int w = (int) state.getWidth();
-			int h = (int) state.getHeight();
+			int x = (state.getX() as int) + _translate.x;
+			int y = (state.getY() as int) + _translate.y;
+			int w = (state.getWidth() as int);
+			int h = (state.getHeight() as int);
 
 			if (!Utils.getString(style, Constants.STYLE_SHAPE, "").equals(
 					Constants.SHAPE_SWIMLANE))
@@ -183,10 +183,10 @@ class VmlCanvas extends BasicCanvas
 			}
 			else
 			{
-				int start = (int) Math.round(Utils.getInt(style,
+				int start = Math.round(Utils.getInt(style,
 						Constants.STYLE_STARTSIZE,
 						Constants.DEFAULT_STARTSIZE)
-						* _scale);
+						* _scale) as int;
 
 				// Removes some styles to draw the content area
 				Map<String, Object> cloned = new Hashtable<String, Object>(
@@ -220,10 +220,10 @@ class VmlCanvas extends BasicCanvas
 
 		if (_drawLabels && bounds != null)
 		{
-			int x = (int) bounds.getX() + _translate.x;
-			int y = (int) bounds.getY() + _translate.y;
-			int w = (int) bounds.getWidth();
-			int h = (int) bounds.getHeight();
+			int x = (bounds.getX() as int) + _translate.x;
+			int y = (bounds.getY() as int) + _translate.y;
+			int w = (bounds.getWidth() as int);
+			int h = (bounds.getHeight() as int);
 			Map<String, Object> style = state.getStyle();
 
 			return drawText(label, x, y, w, h, style);

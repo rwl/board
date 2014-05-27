@@ -38,7 +38,7 @@ class GraphMlCodec
 		if (graphs.getLength() > 0)
 		{
 
-			Element graphElement = (Element) graphs.item(0);
+			Element graphElement = graphs.item(0) as Element;
 
 			//Create the graph model.
 			GraphMlGraph gmlGraph = new GraphMlGraph(graphElement);
@@ -82,7 +82,7 @@ class GraphMlCodec
 		HashMap<String, GraphMlKey> keyMap = GraphMlKeyManager.getInstance()
 				.getKeyMap();
 
-		for (GraphMlKey key : keyMap.values())
+		for (GraphMlKey key in keyMap.values())
 		{
 			Element keyElement = key.generateElement(doc);
 			graphml.appendChild(keyElement);
@@ -150,11 +150,11 @@ class GraphMlCodec
 		gmlEdges = _encodeEdges(gmlEdges, parent, graph);
 		gmlGraph.setEdges(gmlEdges);
 
-		for (Object vertex : vertexes)
+		for (Object vertex in vertexes)
 		{
 			List<GraphMlNode> Gmlnodes = gmlGraph.getNodes();
 
-			Cell v = (Cell) vertex;
+			Cell v = vertex as Cell;
 			String id = v.getId();
 
 			GraphMlNode gmlNode = new GraphMlNode(id, null);
@@ -286,11 +286,11 @@ class GraphMlCodec
 			Object parent, Graph graph)
 	{
 		List<Object> edges = graph.getChildEdges(parent);
-		for (Object edge : edges)
+		for (Object edge in edges)
 		{
-			Cell e = (Cell) edge;
-			Cell source = (Cell) e.getSource();
-			Cell target = (Cell) e.getTarget();
+			Cell e = edge as Cell;
+			Cell source = e.getSource() as Cell;
+			Cell target = e.getTarget() as Cell;
 
 			String sourceName = "";
 			String targetName = "";
@@ -340,7 +340,7 @@ class GraphMlCodec
 
 			HashMap<String, Object> styleMap = GraphMlUtils.getStyleMap(style,
 					"=");
-			String endArrow = (String) styleMap.get(Constants.STYLE_ENDARROW);
+			String endArrow = styleMap.get(Constants.STYLE_ENDARROW) as String;
 			if ((endArrow != null && !endArrow.equals(Constants.NONE))
 					|| endArrow == null)
 			{

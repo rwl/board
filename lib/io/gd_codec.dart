@@ -8,19 +8,28 @@ part of graph.io;
 //import java.util.HashMap;
 
 /**
+ * Represents the different states in the parse of a file.
+ */
+class GDParseState {
+    final _value;
+
+    const GDParseState._internal(this._value);
+
+    toString() => '$_value';
+
+    static const START = const GDParseState._internal('START');
+    static const NUM_NODES = const GDParseState._internal('NUM_NODES');
+    static const PARSING_NODES = const GDParseState._internal('PARSING_NODES');
+    static const PARSING_EDGES = const GDParseState._internal('PARSING_EDGES');
+}
+
+/**
  * Parses a GD .txt file and imports it in the given graph.<br/>
  * This class depends from the classes contained in
  * graph.io.gd.
  */
 class GdCodec
 {
-	/**
-	 * Represents the different states in the parse of a file.
-	 */
-	enum GDParseState
-	{
-		START, NUM_NODES, PARSING_NODES, PARSING_EDGES
-	}
 
 	/**
 	 * Map with the vertex cells added in the addNode method.

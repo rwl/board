@@ -92,10 +92,10 @@ class HtmlCanvas extends BasicCanvas
 		}
 		else
 		{
-			int x = (int) state.getX() + _translate.x;
-			int y = (int) state.getY() + _translate.y;
-			int w = (int) state.getWidth();
-			int h = (int) state.getHeight();
+			int x = state.getX() + _translate.x as int;
+			int y = state.getY() + _translate.y as int;
+			int w = state.getWidth() as int;
+			int h = state.getHeight() as int;
 
 			if (!Utils.getString(style, Constants.STYLE_SHAPE, "").equals(
 					Constants.SHAPE_SWIMLANE))
@@ -104,10 +104,10 @@ class HtmlCanvas extends BasicCanvas
 			}
 			else
 			{
-				int start = (int) Math.round(Utils.getInt(style,
+				int start = Math.round(Utils.getInt(style,
 						Constants.STYLE_STARTSIZE,
 						Constants.DEFAULT_STARTSIZE)
-						* _scale);
+						* _scale) as int;
 
 				// Removes some styles to draw the content area
 				Map<String, Object> cloned = new Hashtable<String, Object>(
@@ -141,10 +141,10 @@ class HtmlCanvas extends BasicCanvas
 
 		if (_drawLabels && bounds != null)
 		{
-			int x = (int) bounds.getX() + _translate.x;
-			int y = (int) bounds.getY() + _translate.y;
-			int w = (int) bounds.getWidth();
-			int h = (int) bounds.getHeight();
+			int x = bounds.getX() + _translate.x as int;
+			int y = bounds.getY() + _translate.y as int;
+			int w = bounds.getWidth() as int;
+			int h = bounds.getHeight() as int;
 			Map<String, Object> style = state.getStyle();
 
 			return drawText(label, x, y, w, h, style);
@@ -198,7 +198,7 @@ class HtmlCanvas extends BasicCanvas
 		if (Utils.isTrue(style, Constants.STYLE_SHADOW, false)
 				&& fillColor != null)
 		{
-			Element shadow = (Element) elem.cloneNode(true);
+			Element shadow = elem.cloneNode(true) as Element;
 
 			String s = "overflow:hidden;position:absolute;" + "left:"
 					+ String.valueOf(x + Constants.SHADOW_OFFSETX) + "px;"
@@ -265,8 +265,8 @@ class HtmlCanvas extends BasicCanvas
 			{
 				Point2d pt = pts.get(i);
 
-				_drawSegment((int) last.getX(), (int) last.getY(), (int) pt
-						.getX(), (int) pt.getY(), strokeColor, strokeWidth);
+				_drawSegment(last.getX() as int, last.getY() as int, pt
+						.getX() as int, pt.getY() as int, strokeColor, strokeWidth);
 
 				last = pt;
 			}

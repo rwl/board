@@ -36,10 +36,10 @@ class Codec
 	/**
 	 * Constructs an XML encoder/decoder with a new owner document.
 	 */
-	Codec()
-	{
-		this(DomUtils.createDocument());
-	}
+//	Codec()
+//	{
+//		this(DomUtils.createDocument());
+//	}
 
 	/**
 	 * Constructs an XML encoder/decoder for the specified owner document.
@@ -47,7 +47,7 @@ class Codec
 	 * @param document Optional XML document that contains the data. If no document
 	 * is specified then a new document is created using Utils.createDocument
 	 */
-	Codec(Document document)
+	Codec([Document document=null])
 	{
 		if (document == null)
 		{
@@ -165,10 +165,10 @@ class Codec
 	 * @param id ID of the element to be returned.
 	 * @return Returns the element for the given ID.
 	 */
-	Node getElementById(String id)
-	{
-		return getElementById(id, null);
-	}
+//	Node getElementById(String id)
+//	{
+//		return getElementById(id, null);
+//	}
 
 	/**
 	 * Returns the element with the given ID from document. The optional attr
@@ -181,7 +181,7 @@ class Codec
 	 * id - String that contains the ID.
 	 * attr - Optional string for the attributename. Default is id.
 	 */
-	Node getElementById(String id, String attr)
+	Node getElementById(String id, [String attr=null])
 	{
 		if (attr == null)
 		{
@@ -213,7 +213,7 @@ class Codec
 
 			if (id == null && obj is ICell)
 			{
-				id = ((ICell) obj).getId();
+				id = (obj as ICell).getId();
 
 				if (id == null)
 				{
@@ -266,7 +266,7 @@ class Codec
 			{
 				if (obj is Node)
 				{
-					node = ((Node) obj).cloneNode(true);
+					node = (obj as Node).cloneNode(true);
 				}
 				else
 				{
@@ -318,7 +318,7 @@ class Codec
 				else
 				{
 					obj = node.cloneNode(true);
-					((Element) obj).removeAttribute("as");
+					(obj as Element).removeAttribute("as");
 				}
 			}
 			on Exception catch (e)
@@ -409,7 +409,7 @@ class Codec
 				decoder = CodecRegistry.getCodec(name);
 			}
 
-			cell = (ICell) decoder.decode(this, node);
+			cell = decoder.decode(this, node) as ICell;
 
 			if (restoreStructures)
 			{
@@ -464,7 +464,7 @@ class Codec
 		if (node.getNodeType() == Node.ELEMENT_NODE && attribute != null
 				&& value != null)
 		{
-			((Element) node).setAttribute(attribute, String.valueOf(value));
+			(node as Element).setAttribute(attribute, String.valueOf(value));
 		}
 	}
 

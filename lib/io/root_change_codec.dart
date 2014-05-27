@@ -3,8 +3,6 @@
  */
 part of graph.io;
 
-import '../model/model.dart' show ICell;
-
 //import java.util.Map;
 
 //import org.w3c.dom.Node;
@@ -17,33 +15,33 @@ import '../model/model.dart' show ICell;
 class RootChangeCodec extends ObjectCodec
 {
 
+    static const List<String> _DEFAULT_EXCLUDE = [ "model", "previous", "root" ];
+
 	/**
 	 * Constructs a new model codec.
 	 */
-	RootChangeCodec()
-	{
-		this(new RootChange(), new List<String> { "model", "previous", "root" },
-				null, null);
-	}
+//	RootChangeCodec()
+//	{
+//		this(new RootChange(), ,
+//				null, null);
+//	}
 
 	/**
 	 * Constructs a new model codec for the given arguments.
 	 */
-	RootChangeCodec(Object template, List<String> exclude,
-			List<String> idrefs, Map<String, String> mapping)
-	{
-		super(template, exclude, idrefs, mapping);
-	}
+	RootChangeCodec(Object template, [List<String> exclude=_DEFAULT_EXCLUDE,
+			List<String> idrefs=null, Map<String, String> mapping=null]) :
+        super(template, exclude, idrefs, mapping);
 
 	/* (non-Javadoc)
 	 * @see graph.io.ObjectCodec#afterEncode(graph.io.Codec, java.lang.Object, org.w3c.dom.Node)
 	 */
-	@Override
+//	@Override
 	Node afterEncode(Codec enc, Object obj, Node node)
 	{
 		if (obj is RootChange)
 		{
-			enc.encodeCell((ICell) ((RootChange) obj).getRoot(), node, true);
+			enc.encodeCell((ICell) (obj as RootChange).getRoot(), node, true);
 		}
 
 		return node;
@@ -57,7 +55,7 @@ class RootChangeCodec extends ObjectCodec
 	{
 		if (into is RootChange)
 		{
-			RootChange change = (RootChange) into;
+			RootChange change = into as RootChange;
 
 			if (node.getFirstChild() != null
 					&& node.getFirstChild().getNodeType() == Node.ELEMENT_NODE)
@@ -93,12 +91,12 @@ class RootChangeCodec extends ObjectCodec
 	/* (non-Javadoc)
 	 * @see graph.io.ObjectCodec#afterDecode(graph.io.Codec, org.w3c.dom.Node, java.lang.Object)
 	 */
-	@Override
+//	@Override
 	Object afterDecode(Codec dec, Node node, Object obj)
 	{
 		if (obj is RootChange)
 		{
-			RootChange change = (RootChange) obj;
+			RootChange change = obj as RootChange;
 			change.setPrevious(change.getRoot());
 		}
 

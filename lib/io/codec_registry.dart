@@ -33,7 +33,7 @@ class CodecRegistry
 	static List<String> _packages = new List<String>();
 
 	// Registers the known codecs and package names
-	static
+	static init()
 	{
 		addPackage("graph");
 		addPackage("graph.util");
@@ -144,7 +144,7 @@ class CodecRegistry
 	 * @param name Name of the class to be instantiated.
 	 * @return Returns a new instance of the given class.
 	 */
-	static Object getInstanceForName(String name)
+	/*static Object getInstanceForName(String name)
 	{
 		Class<?> clazz = getClassForName(name);
 
@@ -169,7 +169,7 @@ class CodecRegistry
 		}
 
 		return null;
-	}
+	}*/
 
 	/**
 	 * Returns a class that corresponds to the given name.
@@ -177,7 +177,7 @@ class CodecRegistry
 	 * @param name
 	 * @return Returns the class for the given name.
 	 */
-	static Class<?> getClassForName(String name)
+	static Class/*<?>*/ getClassForName(String name)
 	{
 		try
 		{
@@ -216,7 +216,7 @@ class CodecRegistry
 	 * @param instance Instance whose node name should be returned.
 	 * @return Returns a string that identifies the codec.
 	 */
-	static String getName(Object instance)
+	/*static String getName(Object instance)
 	{
 		Class<? extends Object> type = instance.getClass();
 
@@ -236,6 +236,6 @@ class CodecRegistry
 				return type.getName();
 			}
 		}
-	}
+	}*/
 
 }

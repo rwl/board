@@ -21,27 +21,25 @@ class StylesheetCodec extends ObjectCodec
 	/**
 	 * Constructs a new model codec.
 	 */
-	StylesheetCodec()
-	{
-		this(new Stylesheet());
-	}
+//	StylesheetCodec()
+//	{
+//		this(new Stylesheet());
+//	}
 
 	/**
 	 * Constructs a new stylesheet codec for the given template.
 	 */
-	StylesheetCodec(Object template)
-	{
-		this(template, null, null, null);
-	}
+//	StylesheetCodec(Object template)
+//	{
+//		this(template, null, null, null);
+//	}
 
 	/**
 	 * Constructs a new model codec for the given arguments.
 	 */
-	StylesheetCodec(Object template, List<String> exclude,
-			List<String> idrefs, Map<String, String> mapping)
-	{
-		super(template, exclude, idrefs, mapping);
-	}
+	StylesheetCodec(Object template, [List<String> exclude=null,
+			List<String> idrefs=null, Map<String, String> mapping=null]) :
+        super(template, exclude, idrefs, mapping);
 
 	/**
 	 * Encodes the given Stylesheet.
@@ -52,7 +50,7 @@ class StylesheetCodec extends ObjectCodec
 
 		if (obj is Stylesheet)
 		{
-			Stylesheet stylesheet = (Stylesheet) obj;
+			Stylesheet stylesheet = obj as Stylesheet;
 			Iterator<Map.Entry<String, Map<String, Object>>> it = stylesheet
 					.getStyles().entrySet().iterator();
 
@@ -95,7 +93,7 @@ class StylesheetCodec extends ObjectCodec
 	{
 		if (entry.getValue() is Boolean)
 		{
-			return ((Boolean) entry.getValue()) ? "1" : "0";
+			return (entry.getValue() as Boolean) ? "1" : "0";
 		}
 
 		return entry.getValue().toString();
@@ -110,7 +108,7 @@ class StylesheetCodec extends ObjectCodec
 
 		if (node is Element)
 		{
-			String id = ((Element) node).getAttribute("id");
+			String id = (node as Element).getAttribute("id");
 			obj = dec._objects.get(id);
 
 			if (obj == null)
@@ -136,12 +134,12 @@ class StylesheetCodec extends ObjectCodec
 						&& node.getNodeName().equals("add")
 						&& node is Element)
 				{
-					String as = ((Element) node).getAttribute("as");
+					String as = (node as Element).getAttribute("as");
 
 					if (as != null && as.length() > 0)
 					{
-						String extend = ((Element) node).getAttribute("extend");
-						Map<String, Object> style = (extend != null) ? ((Stylesheet) obj)
+						String extend = (node as Element).getAttribute("extend");
+						Map<String, Object> style = (extend != null) ? (obj as Stylesheet)
 								.getStyles().get(extend) : null;
 
 						if (style == null)
@@ -159,7 +157,7 @@ class StylesheetCodec extends ObjectCodec
 						{
 							if (entry is Element)
 							{
-								Element entryElement = (Element) entry;
+								Element entryElement = entry as Element;
 								String key = entryElement.getAttribute("as");
 
 								if (entry.getNodeName().equals("add"))

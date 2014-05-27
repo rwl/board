@@ -36,10 +36,7 @@ class ModelCodec extends ObjectCodec
 	 * Constructs a new model codec for the given arguments.
 	 */
 	ModelCodec(Object template, List<String> exclude, List<String> idrefs,
-			Map<String, String> mapping)
-	{
-		super(template, exclude, idrefs, mapping);
-	}
+			Map<String, String> mapping) : super(template, exclude, idrefs, mapping);
 
 	/**
 	 * Encodes the given GraphModel by writing a (flat) XML sequence
@@ -51,8 +48,8 @@ class ModelCodec extends ObjectCodec
 		if (obj is GraphModel)
 		{
 			Node rootNode = enc._document.createElement("root");
-			GraphModel model = (GraphModel) obj;
-			enc.encodeCell((ICell) model.getRoot(), rootNode, true);
+			GraphModel model = obj as GraphModel;
+			enc.encodeCell(model.getRoot() as ICell, rootNode, true);
 			node.appendChild(rootNode);
 		}
 	}
@@ -65,12 +62,12 @@ class ModelCodec extends ObjectCodec
 	{
 		if (node is Element)
 		{
-			Element elt = (Element) node;
+			Element elt = node as Element;
 			GraphModel model = null;
 
 			if (into is GraphModel)
 			{
-				model = (GraphModel) into;
+				model = into as GraphModel;
 			}
 			else
 			{

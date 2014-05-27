@@ -22,7 +22,7 @@ class CellCodec extends ObjectCodec
 	 */
 	CellCodec()
 	{
-		this(new Cell(), null, new List<String> { "parent", "source", "target" },
+		this(new Cell(), null, [ "parent", "source", "target" ],
 				null);
 	}
 
@@ -50,7 +50,7 @@ class CellCodec extends ObjectCodec
 			bool write)
 	{
 		return _exclude.contains(attr)
-				|| (write && attr.equals("value") && value is Node && ((Node) value)
+				|| (write && attr.equals("value") && value is Node && (value as Node)
 						.getNodeType() == Node.ELEMENT_NODE);
 	}
 
@@ -62,7 +62,7 @@ class CellCodec extends ObjectCodec
 	{
 		if (obj is Cell)
 		{
-			Cell cell = (Cell) obj;
+			Cell cell = obj as Cell;
 
 			if (cell.getValue() is Node)
 			{
@@ -71,8 +71,8 @@ class CellCodec extends ObjectCodec
 				// result of the default encoding into
 				// a clone of the user object (node type 1)
 				// and returning this cloned user object.
-				Element tmp = (Element) node;
-				node = enc.getDocument().importNode((Node) cell.getValue(),
+				Element tmp = node as Element;
+				node = enc.getDocument().importNode(cell.getValue() as Node,
 						true);
 				node.appendChild(tmp);
 
@@ -80,7 +80,7 @@ class CellCodec extends ObjectCodec
 				// XML node, namely the node which denotes
 				// the object boundaries in the file.
 				String id = tmp.getAttribute("id");
-				((Element) node).setAttribute("id", id);
+				(node as Element).setAttribute("id", id);
 				tmp.removeAttribute("id");
 			}
 		}
@@ -94,11 +94,11 @@ class CellCodec extends ObjectCodec
 	 */
 	Node beforeDecode(Codec dec, Node node, Object obj)
 	{
-		Element inner = (Element) node;
+		Element inner = node as Element;
 
 		if (obj is Cell)
 		{
-			Cell cell = (Cell) obj;
+			Cell cell = obj as Cell;
 			String classname = getName();
 			String nodeName = node.getNodeName();
 			
@@ -121,7 +121,7 @@ class CellCodec extends ObjectCodec
 
 				if (tmp != null && tmp.getParentNode() == node)
 				{
-					inner = (Element) tmp;
+					inner = tmp as Element;
 
 					// Removes annotation and whitespace from node
 					Node tmp2 = tmp.getPreviousSibling();
@@ -161,7 +161,7 @@ class CellCodec extends ObjectCodec
 				}
 
 				// Creates the user object out of the XML node
-				Element value = (Element) node.cloneNode(true);
+				Element value = node.cloneNode(true) as Element;
 				cell.setValue(value);
 				String id = value.getAttribute("id");
 
@@ -173,7 +173,7 @@ class CellCodec extends ObjectCodec
 			}
 			else
 			{
-				cell.setId(((Element) node).getAttribute("id"));
+				cell.setId((node as Element).getAttribute("id"));
 			}
 
 			// Preprocesses and removes all Id-references

@@ -39,7 +39,7 @@ class GraphStructure
 
 		//data preparation
 		int connectedVertices = 1;
-		List<int> visited = new int[vertexNum];
+		List<int> visited = new List<int>(vertexNum);
 		visited[0] = 1;
 
 		for (int i = 1; i < vertexNum; i++)
@@ -92,7 +92,7 @@ class GraphStructure
 		{
 			return false;
 		}
-	};
+	}
 
 	/**
 	 * @param aGraph
@@ -114,7 +114,7 @@ class GraphStructure
 		aGraphCopy.setGenerator(aGraph.getGenerator());
 		aGraphCopy.setProperties(aGraph.getProperties());
 
-		List<Object> leaf = new Object[1];
+		List<Object> leaf = new List<Object>(1);
 
 		do
 		{
@@ -138,7 +138,7 @@ class GraphStructure
 			return false;
 		}
 
-	};
+	}
 
 	/**
 	 * A helper function for getting a leaf vertex (degree <= 1), not taking into account edge direction - for internal use
@@ -164,7 +164,7 @@ class GraphStructure
 		}
 
 		return null;
-	};
+	}
 
 	/**
 	 * @param aGraph
@@ -207,7 +207,7 @@ class GraphStructure
 		}
 
 		return true;
-	};
+	}
 
 	/**
 	 * @param aGraph
@@ -221,14 +221,14 @@ class GraphStructure
 		}
 
 		return false;
-	};
+	}
 
 	/**
 	 * @param aGraph
 	 * @param omitVertex vertices in this array will be omitted, set this parameter to null if you don't want this feature
 	 * @return a vertex that has lowest degree, or one of those in case if there are more
 	 */
-	static public Object getLowestDegreeVertex(AnalysisGraph aGraph, List<Object> omitVertex)
+	static Object getLowestDegreeVertex(AnalysisGraph aGraph, List<Object> omitVertex)
 	{
 		List<Object> vertices = aGraph.getChildVertices(aGraph.getGraph().getDefaultParent());
 		int vertexCount = vertices.length;
@@ -264,7 +264,7 @@ class GraphStructure
 		}
 
 		return bestVertex;
-	};
+	}
 
 	/**
 	 * @param _graph
@@ -274,10 +274,10 @@ class GraphStructure
 	 */
 	static bool areConnected(AnalysisGraph aGraph, Object sourceVertex, Object targetVertex)
 	{
-		Object currEdges[] = aGraph.getEdges(sourceVertex, aGraph.getGraph().getDefaultParent(), true, true, false, true);
+        List<Object> currEdges = aGraph.getEdges(sourceVertex, aGraph.getGraph().getDefaultParent(), true, true, false, true);
 		List<Object> neighborList = Arrays.asList(aGraph.getOpposites(currEdges, sourceVertex, true, true));
 		return neighborList.contains(targetVertex);
-	};
+	}
 
 	/**
 	 * @param _graph
@@ -298,7 +298,7 @@ class GraphStructure
 
 			if (aGraph.getTerminal(currEdge, true) == aGraph.getTerminal(currEdge, false))
 			{
-				graph.removeCells(new List<Object> { currEdge });
+				graph.removeCells([ currEdge ]);
 			}
 		}
 
@@ -329,7 +329,7 @@ class GraphStructure
 		List<Object> duplEdges = duplicateEdges.toArray();
 
 		graph.removeCells(duplEdges);
-	};
+	}
 
 	/**
 	 * Makes the graph connected
@@ -357,11 +357,11 @@ class GraphStructure
 		// find a random vertex in each group and connect them.
 		for (int i = 1; i < componentNum; i++)
 		{
-			Object sourceVertex = components[i - 1][(int) Math.round(Math.random() * (components[i - 1].length - 1))];
-			Object targetVertex = components[i][(int) Math.round(Math.random() * (components[i].length - 1))];
+			Object sourceVertex = components[i - 1][Math.round(Math.random() * (components[i - 1].length - 1)) as int];
+			Object targetVertex = components[i][Math.round(Math.random() * (components[i].length - 1)) as int];
 			graph.insertEdge(parent, null, aGraph.getGenerator().getNewEdgeValue(aGraph), sourceVertex, targetVertex);
 		}
-	};
+	}
 
 	/**
 	 * @param aGraph
@@ -405,14 +405,11 @@ class GraphStructure
 			{
 				final ArrayList<Object> currVertexList = new List<Object>();
 
-				Traversal.bfs(aGraph, currVertex, new ICellVisitor()
-				{
-					public bool visit(Object vertex, Object edge)
+				Traversal.bfs(aGraph, currVertex, (Object vertex, Object edge)
 					{
 						currVertexList.add(vertex);
 						return false;
-					}
-				});
+					});
 
 				for (int i = 0; i < currVertexList.size(); i++)
 				{
@@ -424,15 +421,15 @@ class GraphStructure
 		}
 
 		GraphProperties.setDirected(aGraph.getProperties(), oldDirectedness);
-		List<List<Object>> result = new Object[componentList.size()][];
+		List<List<Object>> result = new List<List<Object>>(componentList.size());//[];
 
 		for (int i = 0; i < componentList.size(); i++)
 		{
 			result[i] = componentList.get(i).toArray();
 		}
 
-		return (List<List<Object>>) result;
-	};
+		return result as List<List<Object>>;
+	}
 
 	/**
 	 * Makes a tree graph directed from the source to the leaves
@@ -450,19 +447,16 @@ class GraphStructure
 			final IGraphModel model = graph.getModel();
 			Object parent = graph.getDefaultParent();
 
-			Traversal.bfs(aGraph, startVertex, new ICellVisitor()
-			{
-				public bool visit(Object vertex, Object edge)
+			Traversal.bfs(aGraph, startVertex, (Object vertex, Object edge)
 				{
 					bFSList.add(vertex);
 					return false;
-				}
-			});
+				});
 
 			for (int i = 0; i < bFSList.size(); i++)
 			{
 				Object parentVertex = bFSList.get(i);
-				Object currEdges[] = aGraph.getEdges(parentVertex, parent, true, true, false, true);
+                List<Object> currEdges = aGraph.getEdges(parentVertex, parent, true, true, false, true);
 				List<Object> neighbors = aGraph.getOpposites(currEdges, parentVertex, true, true);
 
 				for (int j = 0; j < neighbors.length; j++)
@@ -488,7 +482,7 @@ class GraphStructure
 		{
 			throw new StructuralException("The graph is not a tree");
 		}
-	};
+	}
 
 	/**
 	 * @param aGraph
@@ -520,7 +514,7 @@ class GraphStructure
 		}
 
 		return null;
-	};
+	}
 
 	/**
 	 * @param _graph
@@ -540,7 +534,7 @@ class GraphStructure
 		aGraphCopy.setGenerator(aGraph.getGenerator());
 		aGraphCopy.setProperties(aGraph.getProperties());
 
-		List<Object> leaf = new Object[1];
+		List<Object> leaf = new List<Object>(1);
 
 		do
 		{
@@ -563,7 +557,7 @@ class GraphStructure
 		{
 			return false;
 		}
-	};
+	}
 
 	/**
 	 * @param _graph
@@ -590,7 +584,7 @@ class GraphStructure
 		}
 
 		return null;
-	};
+	}
 
 	/**
 	 * Makes the complement of <b>aGraph</b>
@@ -607,17 +601,17 @@ class GraphStructure
 
 		for (int i = 0; i < vertexCount; i++)
 		{
-			Cell currVertex = (Cell) vertices[i];
+			Cell currVertex = vertices[i] as Cell;
 			int edgeCount = currVertex.getEdgeCount();
 			Cell currEdge = new Cell();
 			ArrayList<Cell> neighborVertexes = new List<Cell>();
 
 			for (int j = 0; j < edgeCount; j++)
 			{
-				currEdge = (Cell) currVertex.getEdgeAt(j);
+				currEdge = currVertex.getEdgeAt(j) as Cell;
 
-				Cell source = (Cell) currEdge.getSource();
-				Cell destination = (Cell) currEdge.getTarget();
+				Cell source = currEdge.getSource() as Cell;
+				Cell destination = currEdge.getTarget() as Cell;
 
 				if (!source.equals(currVertex))
 				{
@@ -641,11 +635,11 @@ class GraphStructure
 		{
 			ArrayList<Cell> oldNeighbors = new List<Cell>();
 			oldNeighbors = oldConnections.get(i);
-			Cell currVertex = (Cell) vertices[i];
+			Cell currVertex = vertices[i] as Cell;
 
 			for (int j = 0; j < vertexCount; j++)
 			{
-				Cell targetVertex = (Cell) vertices[j];
+				Cell targetVertex = vertices[j] as Cell;
 				bool shouldConnect = true; // the decision if the two current vertexes should be connected
 
 				if (oldNeighbors.contains(targetVertex))
@@ -668,7 +662,7 @@ class GraphStructure
 			}
 
 		}
-	};
+	}
 
 	/**
 	 * @param aGraph - the graph to search
@@ -690,7 +684,7 @@ class GraphStructure
 		{
 			Object currVertex = vertices[i];
 
-			vertexValue = (int) costFunction.getCost(new CellState(view, currVertex, null));
+			vertexValue = costFunction.getCost(new CellState(view, currVertex, null)) as int;
 
 			if (vertexValue == value)
 			{
@@ -698,7 +692,7 @@ class GraphStructure
 			}
 		}
 		return null;
-	};
+	}
 
 	/**
 	 * Sets the style of the graph to that as in GraphEditor
@@ -747,7 +741,7 @@ class GraphStructure
 				model.setValue(edges[i], aGraph.getGenerator().getNewEdgeValue(aGraph));
 			}
 		}
-	};
+	}
 
 	/**
 	 * @param aGraph
@@ -773,7 +767,7 @@ class GraphStructure
 		}
 
 		return regularity;
-	};
+	}
 
 	/**
 	 * @param aGraph
@@ -795,7 +789,7 @@ class GraphStructure
 		{
 			return aGraph.getEdges(vertex, aGraph.getGraph().getDefaultParent(), true, true, true, true).length;
 		}
-	};
+	}
 
 	/**
 	 * @param aGraph
@@ -812,7 +806,7 @@ class GraphStructure
 		{
 			return aGraph.getEdges(vertex, aGraph.getGraph().getDefaultParent(), true, true, true, true).length;
 		}
-	};
+	}
 
 	/**
 	 * @param aGraph
@@ -836,9 +830,9 @@ class GraphStructure
 			aGraphCopy.setProperties(aGraph.getProperties());
 
 			Object newVertex = getVertexWithValue(aGraphCopy,
-					(int) aGraph.getGenerator().getCostFunction().getCost(new CellState(graph.getView(), vertex, null)));
+					aGraph.getGenerator().getCostFunction().getCost(new CellState(graph.getView(), vertex, null)) as int);
 
-			graphCopy.removeCells(new List<Object> { newVertex }, true);
+			graphCopy.removeCells([ newVertex ], true);
 			List<List<Object>> oldComponents = getGraphComponents(aGraph);
 			List<List<Object>> newComponents = getGraphComponents(aGraphCopy);
 
@@ -849,7 +843,7 @@ class GraphStructure
 		}
 
 		return false;
-	};
+	}
 
 	/**
 	 * @param aGraph
@@ -870,7 +864,7 @@ class GraphStructure
 		}
 
 		return cutVertexList.toArray();
-	};
+	}
 
 	/**
 	 * @param aGraph
@@ -884,8 +878,8 @@ class GraphStructure
 		CostFunction costFunction = aGraph.getGenerator().getCostFunction();
 		GraphView view = graph.getView();
 
-		int srcValue = (int) costFunction.getCost(new CellState(view, aGraph.getTerminal(edge, true), null));
-		int destValue = (int) costFunction.getCost(new CellState(view, aGraph.getTerminal(edge, false), null));
+		int srcValue = costFunction.getCost(new CellState(view, aGraph.getTerminal(edge, true), null)) as int;
+		int destValue = costFunction.getCost(new CellState(view, aGraph.getTerminal(edge, false), null)) as int;
 
 		if (aGraph.getTerminal(edge, false) != null || aGraph.getTerminal(edge, true) != null)
 		{
@@ -903,19 +897,19 @@ class GraphStructure
 			CostFunction costFunctionCopy = aGraphCopy.getGenerator().getCostFunction();
 			GraphView viewCopy = graphCopy.getView();
 
-			int currSrcValue = (int) costFunctionCopy.getCost(new CellState(viewCopy, aGraphCopy.getTerminal(currEdge, true), null));
-			int currDestValue = (int) costFunctionCopy.getCost(new CellState(viewCopy, aGraphCopy.getTerminal(currEdge, false), null));
+			int currSrcValue = costFunctionCopy.getCost(new CellState(viewCopy, aGraphCopy.getTerminal(currEdge, true), null)) as int;
+			int currDestValue = costFunctionCopy.getCost(new CellState(viewCopy, aGraphCopy.getTerminal(currEdge, false), null)) as int;
 			int i = 0;
 
 			while (currSrcValue != srcValue || currDestValue != destValue)
 			{
 				i++;
 				currEdge = edges[i];
-				currSrcValue = Integer.parseInt((String) modelCopy.getValue(aGraphCopy.getTerminal(currEdge, true)));
-				currDestValue = Integer.parseInt((String) modelCopy.getValue(aGraphCopy.getTerminal(currEdge, false)));
+				currSrcValue = Integer.parseInt(modelCopy.getValue(aGraphCopy.getTerminal(currEdge, true)) as String);
+				currDestValue = Integer.parseInt(modelCopy.getValue(aGraphCopy.getTerminal(currEdge, false)) as String);
 			}
 
-			graphCopy.removeCells(new List<Object> { currEdge }, true);
+			graphCopy.removeCells([ currEdge ], true);
 			List<List<Object>> oldComponents = getGraphComponents(aGraph);
 			List<List<Object>> newComponents = getGraphComponents(aGraphCopy);
 
@@ -926,7 +920,7 @@ class GraphStructure
 		}
 
 		return false;
-	};
+	}
 
 	/**
 	 * @param aGraph
@@ -947,7 +941,7 @@ class GraphStructure
 		}
 
 		return cutEdgeList.toArray();
-	};
+	}
 
 	/**
 	 * @param aGraph
@@ -977,7 +971,7 @@ class GraphStructure
 		}
 
 		return sourceList.toArray();
-	};
+	}
 
 	/**
 	 * @param aGraph
@@ -1007,7 +1001,7 @@ class GraphStructure
 		}
 
 		return sourceList.toArray();
-	};
+	}
 
 	/**
 	 * @param aGraph
@@ -1025,5 +1019,5 @@ class GraphStructure
 		{
 			return false;
 		}
-	};
-};
+	}
+}

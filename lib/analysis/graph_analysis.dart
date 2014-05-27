@@ -393,23 +393,15 @@ class GraphAnalysis
 	{
 		List<CellState> result = Arrays.asList(states);
 
-		Collections.sort(result, new Comparator<CellState>()
-		{
-
-			/**
-			 * 
-			 */
-			public int compare(CellState o1, CellState o2)
+		Collections.sort(result, (CellState o1, CellState o2)
 			{
 				Double d1 = new Double(cf.getCost(o1));
 				Double d2 = new Double(cf.getCost(o2));
 
 				return d1.compareTo(d2);
-			}
+			});
 
-		});
-
-		return (List<CellState>) result.toArray();
+		return result.toArray() as List<CellState>;
 	}
 
 	/**

@@ -3,12 +3,6 @@
  */
 part of graph.canvas;
 
-import '../util/util.dart' show Constants;
-import '../util/util.dart' show Point2d;
-import '../util/util.dart' show Rect;
-import '../util/util.dart' show Utils;
-import '../view/view.dart' show CellState;
-
 //import java.awt.Font;
 //import java.io.BufferedInputStream;
 //import java.io.ByteArrayOutputStream;
@@ -297,7 +291,7 @@ class SvgCanvas extends BasicCanvas
 		if (inputStream != null)
 		{
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream(1024);
-			List<byte> bytes = new byte[512];
+			List<byte> bytes = new List<byte>(512);
 
 			// Read bytes from the input stream in bytes.length-sized chunks and write
 			// them into the output stream
@@ -515,10 +509,10 @@ class SvgCanvas extends BasicCanvas
 		}
 		else
 		{
-			int x = (int) state.getX() + _translate.x;
-			int y = (int) state.getY() + _translate.y;
-			int w = (int) state.getWidth();
-			int h = (int) state.getHeight();
+			int x = (state.getX() as int) + _translate.x;
+			int y = (state.getY() as int) + _translate.y;
+			int w = (state.getWidth() as int);
+			int h = (state.getHeight() as int);
 
 			if (!Utils.getString(style, Constants.STYLE_SHAPE, "").equals(
 					Constants.SHAPE_SWIMLANE))
@@ -527,10 +521,10 @@ class SvgCanvas extends BasicCanvas
 			}
 			else
 			{
-				int start = (int) Math.round(Utils.getInt(style,
+				int start = Math.round(Utils.getInt(style,
 						Constants.STYLE_STARTSIZE,
 						Constants.DEFAULT_STARTSIZE)
-						* _scale);
+						* _scale) as int;
 
 				// Removes some styles to draw the content area
 				Map<String, Object> cloned = new Hashtable<String, Object>(
@@ -564,10 +558,10 @@ class SvgCanvas extends BasicCanvas
 
 		if (_drawLabels && bounds != null)
 		{
-			int x = (int) bounds.getX() + _translate.x;
-			int y = (int) bounds.getY() + _translate.y;
-			int w = (int) bounds.getWidth();
-			int h = (int) bounds.getHeight();
+			int x = (bounds.getX() as int) + _translate.x;
+			int y = (bounds.getY() as int) + _translate.y;
+			int w = (bounds.getWidth() as int);
+			int h = (bounds.getHeight() as int);
 			Map<String, Object> style = state.getStyle();
 
 			return drawText(label, x, y, w, h, style);
@@ -982,7 +976,7 @@ class SvgCanvas extends BasicCanvas
 			if (Utils.isTrue(style, Constants.STYLE_SHADOW, false)
 					&& !fillColor.equals("none"))
 			{
-				shadowElement = (Element) bg.cloneNode(true);
+				shadowElement = bg.cloneNode(true) as Element;
 
 				shadowElement.setAttribute("transform",
 						Constants.SVG_SHADOWTRANSFORM);
@@ -1087,7 +1081,7 @@ class SvgCanvas extends BasicCanvas
 			// Applies offset to the point
 			if (offset != null)
 			{
-				p0 = (Point2d) p0.clone();
+				p0 = p0.clone() as Point2d;
 				p0.setX(p0.getX() + offset.getX());
 				p0.setY(p0.getY() + offset.getY());
 
@@ -1123,7 +1117,7 @@ class SvgCanvas extends BasicCanvas
 			// Applies offset to the point
 			if (offset != null)
 			{
-				pe = (Point2d) pe.clone();
+				pe = pe.clone() as Point2d;
 				pe.setX(pe.getX() + offset.getX());
 				pe.setY(pe.getY() + offset.getY());
 
@@ -1217,7 +1211,7 @@ class SvgCanvas extends BasicCanvas
 		double nx = dx * absSize / dist;
 		double ny = dy * absSize / dist;
 
-		pe = (Point2d) pe.clone();
+		pe = pe.clone() as Point2d;
 		pe.setX(pe.getX() - nx * strokeWidth / (2 * size));
 		pe.setY(pe.getY() - ny * strokeWidth / (2 * size));
 

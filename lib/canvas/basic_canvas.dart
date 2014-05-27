@@ -5,7 +5,7 @@ part of graph.canvas;
 //import java.util.Hashtable;
 //import java.util.Map;
 
-public abstract class BasicCanvas implements ICanvas
+abstract class BasicCanvas implements ICanvas
 {
 
 	/**

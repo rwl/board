@@ -26,7 +26,7 @@ part of graph.io;
  * Note: Since booleans are numbers in JavaScript, all bool values are
  * encoded into 1 for true and 0 for false.
  */
-@SuppressWarnings("unchecked")
+//@SuppressWarnings("unchecked")
 class ObjectCodec
 {
 
@@ -214,7 +214,7 @@ class ObjectCodec
 				}
 
 				if (node != null && node is Element
-						&& ((Element) node).hasAttribute("as"))
+						&& (node as Element).hasAttribute("as"))
 				{
 					obj = new Hashtable<Object, Object>();
 				}
@@ -350,11 +350,11 @@ class ObjectCodec
 	{
 		// LATER: Use PropertyDescriptors in Introspector.getBeanInfo(clazz)
 		// see http://forum.jgraph.com/questions/1424
-		Class<?> type = obj.getClass();
+		Class/*<?>*/ type = obj.getClass();
 
 		while (type != null)
 		{
-			Field[] fields = type.getDeclaredFields();
+			List<Field> fields = type.getDeclaredFields();
 
 			for (int i = 0; i < fields.length; i++)
 			{
@@ -383,7 +383,7 @@ class ObjectCodec
 	{
 		if (obj.getClass().isArray())
 		{
-			List<Object> tmp = (List<Object>) obj;
+			List<Object> tmp = obj as List<Object>;
 
 			for (int i = 0; i < tmp.length; i++)
 			{
@@ -392,7 +392,7 @@ class ObjectCodec
 		}
 		else if (obj is Map)
 		{
-			Iterator<Map.Entry> it = ((Map) obj).entrySet().iterator();
+			Iterator<Map.Entry> it = (obj as Map).entrySet().iterator();
 
 			while (it.hasNext())
 			{
@@ -403,7 +403,7 @@ class ObjectCodec
 		}
 		else if (obj is Collection)
 		{
-			Iterator<?> it = ((Collection<?>) obj).iterator();
+			Iterator/*<?>*/ it = (obj as Collection/*<?>*/).iterator();
 
 			while (it.hasNext())
 			{
@@ -544,7 +544,7 @@ class ObjectCodec
 	{
 		if (value is Boolean)
 		{
-			value = ((Boolean) value).booleanValue() ? "1" : "0";
+			value = (value as Boolean).booleanValue() ? "1" : "0";
 		}
 
 		return value;
@@ -553,13 +553,13 @@ class ObjectCodec
 	/**
 	 * Converts XML attribute values to object of the given type.
 	 */
-	Object _convertValueFromXml(Class<?> type, Object value)
+	Object _convertValueFromXml(Class/*<?>*/ type, Object value)
 	{
 		if (value is String)
 		{
-			String tmp = (String) value;
+			String tmp = value as String;
 
-			if (type.equals(boolean.class) || type == Boolean.class)
+			if (type.equals(boolean/*.class*/) || type == Boolean/*.class*/)
 			{
 				if (tmp.equals("1") || tmp.equals("0"))
 				{
@@ -568,31 +568,31 @@ class ObjectCodec
 
 				value = Boolean.valueOf(tmp);
 			}
-			else if (type.equals(char.class) || type == Character.class)
+			else if (type.equals(char/*.class*/) || type == Character/*.class*/)
 			{
 				value = Character.valueOf(tmp.charAt(0));
 			}
-			else if (type.equals(byte.class) || type == Byte.class)
+			else if (type.equals(byte/*.class*/) || type == Byte/*.class*/)
 			{
 				value = Byte.valueOf(tmp);
 			}
-			else if (type.equals(short.class) || type == Short.class)
+			else if (type.equals(short/*.class*/) || type == Short/*.class*/)
 			{
 				value = Short.valueOf(tmp);
 			}
-			else if (type.equals(int.class) || type == Integer.class)
+			else if (type.equals(int/*.class*/) || type == Integer/*.class*/)
 			{
 				value = Integer.valueOf(tmp);
 			}
-			else if (type.equals(long.class) || type == Long.class)
+			else if (type.equals(long/*.class*/) || type == Long/*.class*/)
 			{
 				value = Long.valueOf(tmp);
 			}
-			else if (type.equals(float.class) || type == Float.class)
+			else if (type.equals(float/*.class*/) || type == Float/*.class*/)
 			{
 				value = Float.valueOf(tmp);
 			}
-			else if (type.equals(double.class) || type == Double.class)
+			else if (type.equals(double/*.class*/) || type == Double/*.class*/)
 			{
 				value = Double.valueOf(tmp);
 			}
@@ -648,7 +648,7 @@ class ObjectCodec
 	 */
 	Field _getField(Object obj, String fieldname)
 	{
-		Class<?> type = obj.getClass();
+		Class/*<?>*/ type = obj.getClass();
 
 		// Creates the fields cache
 		if (_fields == null)
@@ -710,7 +710,7 @@ class ObjectCodec
 		{
 			name = "set" + name;
 		}
-		else if (boolean.class.isAssignableFrom(field.getType()))
+		else if (boolean/*.class*/.isAssignableFrom(field.getType()))
 		{
 			name = "is" + name;
 		}
@@ -732,7 +732,7 @@ class ObjectCodec
 				else
 				{
 					method = _getMethod(obj, name,
-							new Class[] { field.getType() });
+							[ field.getType() ]);
 				}
 			}
 			on Exception catch (e1)
@@ -758,9 +758,9 @@ class ObjectCodec
 	/**
 	 * Returns the method with the specified signature.
 	 */
-	Method _getMethod(Object obj, String methodname, Class[] params)
+	Method _getMethod(Object obj, String methodname, List<Class> params)
 	{
-		Class<?> type = obj.getClass();
+		Class/*<?>*/ type = obj.getClass();
 
 		while (type != null)
 		{
@@ -837,7 +837,7 @@ class ObjectCodec
 
 				if (method != null)
 				{
-					value = method.invoke(obj, (List<Object>) null);
+					value = method.invoke(obj, null as List<Object>);
 				}
 			}
 			on Exception catch (e2)
@@ -863,7 +863,7 @@ class ObjectCodec
 
 			if (field != null)
 			{
-				if (field.getType() == Boolean.class)
+				if (field.getType() == Boolean/*.class*/)
 				{
 					value = (value.equals("1") || String.valueOf(value)
 							.equalsIgnoreCase("true")) ? Boolean.TRUE
@@ -904,18 +904,18 @@ class ObjectCodec
 
 				if (method != null)
 				{
-					Class<?> type = method.getParameterTypes()[0];
+					Class/*<?>*/ type = method.getParameterTypes()[0];
 					value = _convertValueFromXml(type, value);
 
 					// Converts collection to a typed array before setting
 					if (type.isArray() && value is Collection)
 					{
-						Collection<?> coll = (Collection<?>) value;
-						value = coll.toArray((List<Object>) Array.newInstance(
-								type.getComponentType(), coll.size()));
+						Collection/*<?>*/ coll = value as Collection/*<?>*/;
+						value = coll.toArray(Array.newInstance(
+								type.getComponentType(), coll.size()) as List<Object>);
 					}
 
-					method.invoke(obj, new List<Object> { value });
+					method.invoke(obj, [ value ]);
 				}
 			}
 			on Exception catch (e2)
@@ -1013,7 +1013,7 @@ class ObjectCodec
 
 		if (node is Element)
 		{
-			String id = ((Element) node).getAttribute("id");
+			String id = (node as Element).getAttribute("id");
 			obj = dec._objects.get(id);
 
 			if (obj == null)
@@ -1125,7 +1125,7 @@ class ObjectCodec
 	 */
 	void _decodeChild(Codec dec, Node child, Object obj)
 	{
-		String fieldname = _getFieldName(((Element) child).getAttribute("as"));
+		String fieldname = _getFieldName((child as Element).getAttribute("as"));
 
 		if (fieldname == null || !isExcluded(obj, fieldname, child, false))
 		{
@@ -1134,7 +1134,7 @@ class ObjectCodec
 
 			if (child.getNodeName().equals("add"))
 			{
-				value = ((Element) child).getAttribute("value");
+				value = (child as Element).getAttribute("value");
 
 				if (value == null)
 				{
@@ -1172,7 +1172,7 @@ class ObjectCodec
 		// Collections are cleared
 		else if (template is Collection)
 		{
-			((Collection<?>) template).clear();
+			(template as Collection/*<?>*/).clear();
 		}
 
 		return template;
@@ -1193,7 +1193,7 @@ class ObjectCodec
 		{
 			if (fieldname != null && obj is Map)
 			{
-				((Map) obj).put(fieldname, value);
+				(obj as Map).put(fieldname, value);
 			}
 			else if (fieldname != null && fieldname.length() > 0)
 			{
@@ -1203,7 +1203,7 @@ class ObjectCodec
 			// converted in setFieldValue
 			else if (obj is Collection)
 			{
-				((Collection) obj).add(value);
+				(obj as Collection).add(value);
 			}
 		}
 	}
@@ -1223,14 +1223,14 @@ class ObjectCodec
 		if (node.getNodeType() == Node.ELEMENT_NODE
 				&& node.getNodeName().equalsIgnoreCase("include"))
 		{
-			String name = ((Element) node).getAttribute("name");
+			String name = (node as Element).getAttribute("name");
 
 			if (name != null)
 			{
 				try
 				{
 					Node xml = Utils.loadDocument(
-							ObjectCodec.class.getResource(name).toString())
+							ObjectCodec/*.class*/.getResource(name).toString())
 							.getDocumentElement();
 
 					if (xml != null)

@@ -21,28 +21,25 @@ class ChildChangeCodec extends ObjectCodec
 	 */
 	ChildChangeCodec()
 	{
-		this(new ChildChange(), new List<String> { "model", "child",
-				"previousIndex" }, new List<String> { "parent", "previous" }, null);
+		this(new ChildChange(), [ "model", "child",
+				"previousIndex" ], [ "parent", "previous" ], null);
 	}
 
 	/**
 	 * Constructs a new model codec for the given arguments.
 	 */
 	ChildChangeCodec(Object template, List<String> exclude,
-			List<String> idrefs, Map<String, String> mapping)
-	{
-		super(template, exclude, idrefs, mapping);
-	}
+			List<String> idrefs, Map<String, String> mapping) : super(template, exclude, idrefs, mapping);
 
 	/* (non-Javadoc)
 	 * @see graph.io.ObjectCodec#isReference(java.lang.Object, java.lang.String, java.lang.Object, boolean)
 	 */
-	@Override
+//	@Override
 	bool isReference(Object obj, String attr, Object value,
 			bool isWrite)
 	{
 		if (attr.equals("child") && obj is ChildChange
-				&& (((ChildChange) obj).getPrevious() != null || !isWrite))
+				&& ((obj as ChildChange).getPrevious() != null || !isWrite))
 		{
 			return true;
 		}
@@ -53,12 +50,12 @@ class ChildChangeCodec extends ObjectCodec
 	/* (non-Javadoc)
 	 * @see graph.io.ObjectCodec#afterEncode(graph.io.Codec, java.lang.Object, org.w3c.dom.Node)
 	 */
-	@Override
+//	@Override
 	Node afterEncode(Codec enc, Object obj, Node node)
 	{
 		if (obj is ChildChange)
 		{
-			ChildChange change = (ChildChange) obj;
+			ChildChange change = obj as ChildChange;
 			Object child = change.getChild();
 
 			if (isReference(obj, "child", child, true))
@@ -73,7 +70,7 @@ class ChildChangeCodec extends ObjectCodec
 				// ignore the ones that are already there at decoding time. Note:
 				// This can only be resolved by moving the notify event into the
 				// execute of the edit.
-				enc.encodeCell((ICell) child, node, true);
+				enc.encodeCell(child as ICell, node, true);
 			}
 		}
 
@@ -88,7 +85,7 @@ class ChildChangeCodec extends ObjectCodec
 	{
 		if (into is ChildChange)
 		{
-			ChildChange change = (ChildChange) into;
+			ChildChange change = into as ChildChange;
 
 			if (node.getFirstChild() != null
 					&& node.getFirstChild().getNodeType() == Node.ELEMENT_NODE)
@@ -115,7 +112,7 @@ class ChildChangeCodec extends ObjectCodec
 						// would leave to an inconsistent state on the model
 						// (ie. a parent change without a call to
 						// parentForCellChanged).
-						String id = ((Element) tmp).getAttribute("id");
+						String id = (tmp as Element).getAttribute("id");
 
 						if (dec.lookup(id) == null)
 						{
@@ -129,8 +126,8 @@ class ChildChangeCodec extends ObjectCodec
 			}
 			else
 			{
-				String childRef = ((Element) node).getAttribute("child");
-				change.setChild((ICell) dec.getObject(childRef));
+				String childRef = (node as Element).getAttribute("child");
+				change.setChild(dec.getObject(childRef) as ICell);
 			}
 		}
 
@@ -140,19 +137,19 @@ class ChildChangeCodec extends ObjectCodec
 	/* (non-Javadoc)
 	 * @see graph.io.ObjectCodec#afterDecode(graph.io.Codec, org.w3c.dom.Node, java.lang.Object)
 	 */
-	@Override
+//	@Override
 	Object afterDecode(Codec dec, Node node, Object obj)
 	{
 		if (obj is ChildChange)
 		{
-			ChildChange change = (ChildChange) obj;
+			ChildChange change = obj as ChildChange;
 
 			// Cells are encoded here after a complete transaction so the previous
 			// parent must be restored on the cell for the case where the cell was
 			// added. This is needed for the local model to identify the cell as a
 			// new cell and register the ID.
-			((ICell) change.getChild()).setParent((ICell) change
-					.getPrevious());
+			(change.getChild() as ICell).setParent(change
+					.getPrevious() as ICell);
 			change.setPrevious(change.getParent());
 			change.setPreviousIndex(change.getIndex());
 		}

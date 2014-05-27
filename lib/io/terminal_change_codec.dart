@@ -14,24 +14,24 @@ part of graph.io;
  */
 class TerminalChangeCodec extends ObjectCodec
 {
+    static const _DEFAULT_EXCLUDE = [ "model", "previous" ];
+    static const _DEFAULT_IDREFS = [ "cell", "terminal" ];
 
 	/**
 	 * Constructs a new model codec.
 	 */
-	TerminalChangeCodec()
-	{
-		this(new TerminalChange(), new List<String> { "model", "previous" },
-				new List<String> { "cell", "terminal" }, null);
-	}
+//	TerminalChangeCodec()
+//	{
+//		this(new TerminalChange(), new List<String> { "model", "previous" },
+//				new List<String> { "cell", "terminal" }, null);
+//	}
 
 	/**
 	 * Constructs a new model codec for the given arguments.
 	 */
-	TerminalChangeCodec(Object template, List<String> exclude,
-			List<String> idrefs, Map<String, String> mapping)
-	{
-		super(template, exclude, idrefs, mapping);
-	}
+	TerminalChangeCodec(Object template, [List<String> exclude=_DEFAULT_EXCLUDE,
+			List<String> idrefs=_DEFAULT_IDREFS, Map<String, String> mapping=null]) :
+        super(template, exclude, idrefs, mapping);
 
 	/* (non-Javadoc)
 	 * @see graph.io.ObjectCodec#afterDecode(graph.io.Codec, org.w3c.dom.Node, java.lang.Object)
@@ -41,7 +41,7 @@ class TerminalChangeCodec extends ObjectCodec
 	{
 		if (obj is TerminalChange)
 		{
-			TerminalChange change = (TerminalChange) obj;
+			TerminalChange change = obj as TerminalChange;
 
 			change.setPrevious(change.getTerminal());
 		}

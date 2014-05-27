@@ -55,7 +55,7 @@ class Graphics2DCanvas extends BasicCanvas
 	/**
 	 * Static initializer.
 	 */
-	static
+	static init()
 	{
 		putShape(Constants.SHAPE_ACTOR, new ActorShape());
 		putShape(Constants.SHAPE_ARROW, new ArrowShape());
@@ -252,16 +252,16 @@ class Graphics2DCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	void drawImage(Rectangle bounds, String imageUrl)
-	{
-		drawImage(bounds, imageUrl, PRESERVE_IMAGE_ASPECT, false, false);
-	}
+//	void drawImage(Rectangle bounds, String imageUrl)
+//	{
+//		drawImage(bounds, imageUrl, PRESERVE_IMAGE_ASPECT, false, false);
+//	}
 
 	/**
 	 * 
 	 */
 	void drawImage(Rectangle bounds, String imageUrl,
-			bool preserveAspect, bool flipH, bool flipV)
+			[bool preserveAspect = PRESERVE_IMAGE_ASPECT, bool flipH=false, bool flipV=false])
 	{
 		if (imageUrl != null && bounds.getWidth() > 0 && bounds.getHeight() > 0)
 		{
@@ -276,10 +276,10 @@ class Graphics2DCanvas extends BasicCanvas
 
 				if (preserveAspect)
 				{
-					double s = Math.min(bounds.width / (double) size.width,
-							bounds.height / (double) size.height);
-					w = (int) (size.width * s);
-					h = (int) (size.height * s);
+					double s = Math.min(bounds.width / (size.width as double),
+							bounds.height / (size.height as double));
+					w = (size.width * s) as int;
+					h = (size.height * s) as int;
 					x += (bounds.width - w) / 2;
 					y += (bounds.height - h) / 2;
 				}
@@ -361,7 +361,7 @@ class Graphics2DCanvas extends BasicCanvas
 			double arcSize = Constants.LINE_ARCSIZE * _scale;
 
 			GeneralPath path = new GeneralPath();
-			path.moveTo((float) pt.getX(), (float) pt.getY());
+			path.moveTo(pt.getX() as float, pt.getY() as float);
 
 			// Draws the line segments
 			for (int i = 1; i < points.length - 1; i++)
@@ -381,7 +381,7 @@ class Graphics2DCanvas extends BasicCanvas
 
 					double x1 = tmp.getX() + nx1;
 					double y1 = tmp.getY() + ny1;
-					path.lineTo((float) x1, (float) y1);
+					path.lineTo(x1 as float, y1 as float);
 
 					// Draws a curve from the last point to the current
 					// point with a spacing of size off the current point
@@ -405,19 +405,19 @@ class Graphics2DCanvas extends BasicCanvas
 					double x2 = tmp.getX() + nx2;
 					double y2 = tmp.getY() + ny2;
 
-					path.quadTo((float) tmp.getX(), (float) tmp.getY(),
-							(float) x2, (float) y2);
+					path.quadTo(tmp.getX() as float, tmp.getY() as float,
+							x2 as float, y2 as float);
 					tmp = new Point2d(x2, y2);
 				}
 				else
 				{
-					path.lineTo((float) tmp.getX(), (float) tmp.getY());
+					path.lineTo(tmp.getX() as float, tmp.getY() as float);
 				}
 
 				pt = tmp;
 			}
 
-			path.lineTo((float) pe.getX(), (float) pe.getY());
+			path.lineTo((pe.getX() as float), pe.getY() as float);
 			_g.draw(path);
 		}
 	}
@@ -443,15 +443,15 @@ class Graphics2DCanvas extends BasicCanvas
 	/**
 	 *
 	 */
-	void fillShape(Shape shape)
-	{
-		fillShape(shape, false);
-	}
+//	void fillShape(Shape shape)
+//	{
+//		fillShape(shape, false);
+//	}
 
 	/**
 	 *
 	 */
-	void fillShape(Shape shape, bool shadow)
+	void fillShape(Shape shape, [bool shadow=false])
 	{
 		int shadowOffsetX = (shadow) ? Constants.SHADOW_OFFSETX : 0;
 		int shadowOffsetY = (shadow) ? Constants.SHADOW_OFFSETY : 0;
@@ -489,19 +489,19 @@ class Graphics2DCanvas extends BasicCanvas
 			List<float> dashPattern = Utils.getFloatArray(style,
 					Constants.STYLE_DASH_PATTERN,
 					Constants.DEFAULT_DASHED_PATTERN, " ");
-			List<float> scaledDashPattern = new float[dashPattern.length];
+			List<float> scaledDashPattern = new List<float>(dashPattern.length);
 
 			for (int i = 0; i < dashPattern.length; i++)
 			{
-				scaledDashPattern[i] = (float) (dashPattern[i] * _scale * width);
+				scaledDashPattern[i] = (dashPattern[i] * _scale * width) as float;
 			}
 
-			return new BasicStroke((float) width, BasicStroke.CAP_BUTT,
-					BasicStroke.JOIN_MITER, 10.0f, scaledDashPattern, 0.0f);
+			return new BasicStroke(width as float, BasicStroke.CAP_BUTT,
+					BasicStroke.JOIN_MITER, 10.0, scaledDashPattern, 0.0);
 		}
 		else
 		{
-			return new BasicStroke((float) width);
+			return new BasicStroke(width as float);
 		}
 	}
 
@@ -523,28 +523,28 @@ class Graphics2DCanvas extends BasicCanvas
 				String gradientDirection = Utils.getString(style,
 						Constants.STYLE_GRADIENT_DIRECTION);
 
-				float x1 = (float) bounds.getX();
-				float y1 = (float) bounds.getY();
-				float x2 = (float) bounds.getX();
-				float y2 = (float) bounds.getY();
+				float x1 = bounds.getX() as float;
+				float y1 = bounds.getY() as float;
+				float x2 = bounds.getX() as float;
+				float y2 = bounds.getY() as float;
 
 				if (gradientDirection == null
 						|| gradientDirection
 								.equals(Constants.DIRECTION_SOUTH))
 				{
-					y2 = (float) (bounds.getY() + bounds.getHeight());
+					y2 = (bounds.getY() + bounds.getHeight()) as float;
 				}
 				else if (gradientDirection.equals(Constants.DIRECTION_EAST))
 				{
-					x2 = (float) (bounds.getX() + bounds.getWidth());
+					x2 = (bounds.getX() + bounds.getWidth()) as float;
 				}
 				else if (gradientDirection.equals(Constants.DIRECTION_NORTH))
 				{
-					y1 = (float) (bounds.getY() + bounds.getHeight());
+					y1 = (bounds.getY() + bounds.getHeight()) as float;
 				}
 				else if (gradientDirection.equals(Constants.DIRECTION_WEST))
 				{
-					x1 = (float) (bounds.getX() + bounds.getWidth());
+					x1 = (bounds.getX() + bounds.getWidth()) as float;
 				}
 
 				fillPaint = new GradientPaint(x1, y1, fillColor, x2, y2,
@@ -561,7 +561,7 @@ class Graphics2DCanvas extends BasicCanvas
 	Graphics2D createTemporaryGraphics(Map<String, Object> style,
 			float opacity, Rect bounds)
 	{
-		Graphics2D temporaryGraphics = (Graphics2D) _g.create();
+		Graphics2D temporaryGraphics = _g.create() as Graphics2D;
 
 		// Applies the default translate
 		temporaryGraphics.translate(_translate.x, _translate.y);
