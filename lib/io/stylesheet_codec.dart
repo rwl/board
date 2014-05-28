@@ -190,7 +190,7 @@ class StylesheetCodec extends ObjectCodec
 							entry = entry.getNextSibling();
 						}
 
-						((Stylesheet) obj).putCellStyle(as, style);
+						(obj as Stylesheet).putCellStyle(as, style);
 					}
 				}
 

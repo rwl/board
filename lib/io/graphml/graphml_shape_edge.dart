@@ -24,7 +24,7 @@ class GraphMlShapeEdge
 	 * @param text
 	 * @param style
 	 */
-	GraphMlShapeEdge(String text, String style)
+	factory GraphMlShapeEdge.text(String text, String style)
 	{
 		this._text = text;
 		this._style = style;
@@ -34,7 +34,7 @@ class GraphMlShapeEdge
 	 * Constructs a ShapeEdge from a xml shapeEdgeElement.
 	 * @param shapeEdgeElement
 	 */
-	GraphMlShapeEdge(Element shapeEdgeElement)
+	factory GraphMlShapeEdge.elem(Element shapeEdgeElement)
 	{
 		Element labelElement = GraphMlUtils.childsTag(shapeEdgeElement,
 				GraphMlConstants.JGRAPH + GraphMlConstants.LABEL);

@@ -194,18 +194,18 @@ class GraphViewImageReader extends GraphViewReader
 
 		if (tmp != null)
 		{
-			dx -= (int) tmp.getX();
-			dy -= (int) tmp.getY();
-			width = (int) tmp.getWidth();
-			height = (int) tmp.getHeight();
+			dx -= tmp.getX() as int;
+			dy -= tmp.getY() as int;
+			width = tmp.getWidth() as int;
+			height = tmp.getHeight() as int;
 		}
 		else
 		{
-			int x = (int) Math.round(Utils.getDouble(attrs, "x"));
-			int y = (int) Math.round(Utils.getDouble(attrs, "y"));
-			width = (int) (Math.round(Utils.getDouble(attrs, "width")))
+			int x = Math.round(Utils.getDouble(attrs, "x")) as int;
+			int y = Math.round(Utils.getDouble(attrs, "y")) as int;
+			width = (Math.round(Utils.getDouble(attrs, "width")) as int)
 					+ _border + 3;
-			height = (int) (Math.round(Utils.getDouble(attrs, "height")))
+			height = (Math.round(Utils.getDouble(attrs, "height")) as int)
 					+ _border + 3;
 
 			if (isCropping())
@@ -243,7 +243,7 @@ class GraphViewImageReader extends GraphViewReader
 	 *            Filename of the display XML file.
 	 * @return Returns an image representing the display XML file.
 	 */
-	static BufferedImage convert(String filename,
+	static BufferedImage convertFile(String filename,
 			GraphViewImageReader viewReader)
 			//throws ParserConfigurationException, SAXException, IOException
 	{
@@ -272,7 +272,7 @@ class GraphViewImageReader extends GraphViewReader
 
 		if (viewReader.getCanvas() is ImageCanvas)
 		{
-			result = ((ImageCanvas) viewReader.getCanvas()).destroy();
+			result = (viewReader.getCanvas() as ImageCanvas).destroy();
 		}
 
 		return result;

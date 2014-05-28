@@ -7,6 +7,8 @@ part of graph.reader;
 //import org.xml.sax.SAXException;
 //import org.xml.sax.helpers.DefaultHandler;
 
+//typedef void IElementHandler(Attributes atts);
+
 /**
 	XMLReader reader = SAXParserFactory.newInstance().newSAXParser()
 			.getXMLReader();
@@ -70,206 +72,132 @@ class SaxOutputHandler extends DefaultHandler
 	 */
 	void _initHandlers()
 	{
-		_handlers.put("save", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("save", (Attributes atts)
 			{
 				_canvas.save();
-			}
-		});
+			});
 
-		_handlers.put("restore", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("restore", (Attributes atts)
 			{
 				_canvas.restore();
-			}
-		});
+			});
 
-		_handlers.put("scale", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("scale", (Attributes atts)
 			{
 				_canvas.scale(Double.parseDouble(atts.getValue("scale")));
-			}
-		});
+			});
 
-		_handlers.put("translate", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("translate", (Attributes atts)
 			{
 				_canvas.translate(Double.parseDouble(atts.getValue("dx")),
 						Double.parseDouble(atts.getValue("dy")));
-			}
-		});
+			});
 
-		_handlers.put("rotate", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("rotate", (Attributes atts)
 			{
 				_canvas.rotate(Double.parseDouble(atts.getValue("theta")), atts
 						.getValue("flipH").equals("1"), atts.getValue("flipV")
 						.equals("1"), Double.parseDouble(atts.getValue("cx")),
 						Double.parseDouble(atts.getValue("cy")));
-			}
-		});
+			});
 
-		_handlers.put("strokewidth", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("strokewidth", (Attributes atts)
 			{
 				_canvas.setStrokeWidth(Double.parseDouble(atts.getValue("width")));
-			}
-		});
+			});
 
-		_handlers.put("strokecolor", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("strokecolor", (Attributes atts)
 			{
 				_canvas.setStrokeColor(atts.getValue("color"));
-			}
-		});
+			});
 
-		_handlers.put("dashed", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("dashed", (Attributes atts)
 			{
 				_canvas.setDashed(atts.getValue("dashed").equals("1"));
-			}
-		});
+			});
 
-		_handlers.put("dashpattern", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("dashpattern", (Attributes atts)
 			{
 				_canvas.setDashPattern(atts.getValue("pattern"));
-			}
-		});
+			});
 
-		_handlers.put("linecap", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("linecap", (Attributes atts)
 			{
 				_canvas.setLineCap(atts.getValue("cap"));
-			}
-		});
+			});
 
-		_handlers.put("linejoin", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("linejoin", (Attributes atts)
 			{
 				_canvas.setLineJoin(atts.getValue("join"));
-			}
-		});
+			});
 
-		_handlers.put("miterlimit", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("miterlimit", (Attributes atts)
 			{
 				_canvas.setMiterLimit(Double.parseDouble(atts.getValue("limit")));
-			}
-		});
+			});
 
-		_handlers.put("fontsize", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("fontsize", (Attributes atts)
 			{
 				_canvas.setFontSize(Double.parseDouble(atts.getValue("size")));
-			}
-		});
+			});
 
-		_handlers.put("fontcolor", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("fontcolor", (Attributes atts)
 			{
 				_canvas.setFontColor(atts.getValue("color"));
-			}
-		});
+			});
 
-		_handlers.put("fontbackgroundcolor", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("fontbackgroundcolor", (Attributes atts)
 			{
 				_canvas.setFontBackgroundColor(atts.getValue("color"));
-			}
-		});
+			});
 
-		_handlers.put("fontbordercolor", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("fontbordercolor", (Attributes atts)
 			{
 				_canvas.setFontBorderColor(atts.getValue("color"));
-			}
-		});
+			});
 
-		_handlers.put("fontfamily", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("fontfamily", (Attributes atts)
 			{
 				_canvas.setFontFamily(atts.getValue("family"));
-			}
-		});
+			});
 
-		_handlers.put("fontstyle", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("fontstyle", (Attributes atts)
 			{
 				_canvas.setFontStyle(Integer.parseInt(atts.getValue("style")));
-			}
-		});
+			});
 
-		_handlers.put("alpha", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("alpha", (Attributes atts)
 			{
 				_canvas.setAlpha(Double.parseDouble(atts.getValue("alpha")));
-			}
-		});
+			});
 
-		_handlers.put("fillcolor", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("fillcolor", (Attributes atts)
 			{
 				_canvas.setFillColor(atts.getValue("color"));
-			}
-		});
+			});
 		
-		_handlers.put("shadowcolor", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("shadowcolor", (Attributes atts)
 			{
 				_canvas.setShadowColor(atts.getValue("color"));
-			}
-		});
+			});
 		
-		_handlers.put("shadowalpha", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("shadowalpha", (Attributes atts)
 			{
 				_canvas.setShadowAlpha(Double.parseDouble(atts.getValue("alpha")));
-			}
-		});
+			});
 		
-		_handlers.put("shadowoffset", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("shadowoffset", (Attributes atts)
 			{
 				_canvas.setShadowOffset(Double.parseDouble(atts.getValue("dx")),
 						Double.parseDouble(atts.getValue("dy")));
-			}
-		});
+			});
 
-		_handlers.put("shadow", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("shadow", (Attributes atts)
 			{
 				_canvas.setShadow(_getValue(atts, "enabled", "1").equals("1"));
-			}
-		});
+			});
 		
-		_handlers.put("gradient", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("gradient", (Attributes atts)
 			{
 				_canvas.setGradient(atts.getValue("c1"), atts.getValue("c2"),
 						Double.parseDouble(atts.getValue("x")),
@@ -279,23 +207,17 @@ class SaxOutputHandler extends DefaultHandler
 						atts.getValue("direction"),
 						Double.parseDouble(_getValue(atts, "alpha1", "1")),
 						Double.parseDouble(_getValue(atts, "alpha2", "1")));
-			}
-		});
+			});
 
-		_handlers.put("rect", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("rect", (Attributes atts)
 			{
 				_canvas.rect(Double.parseDouble(atts.getValue("x")),
 						Double.parseDouble(atts.getValue("y")),
 						Double.parseDouble(atts.getValue("w")),
 						Double.parseDouble(atts.getValue("h")));
-			}
-		});
+			});
 
-		_handlers.put("roundrect", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("roundrect", (Attributes atts)
 			{
 				_canvas.roundrect(Double.parseDouble(atts.getValue("x")),
 						Double.parseDouble(atts.getValue("y")),
@@ -303,23 +225,17 @@ class SaxOutputHandler extends DefaultHandler
 						Double.parseDouble(atts.getValue("h")),
 						Double.parseDouble(atts.getValue("dx")),
 						Double.parseDouble(atts.getValue("dy")));
-			}
-		});
+			});
 
-		_handlers.put("ellipse", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("ellipse", (Attributes atts)
 			{
 				_canvas.ellipse(Double.parseDouble(atts.getValue("x")),
 						Double.parseDouble(atts.getValue("y")),
 						Double.parseDouble(atts.getValue("w")),
 						Double.parseDouble(atts.getValue("h")));
-			}
-		});
+			});
 
-		_handlers.put("image", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("image", (Attributes atts)
 			{
 				_canvas.image(Double.parseDouble(atts.getValue("x")),
 						Double.parseDouble(atts.getValue("y")),
@@ -329,12 +245,9 @@ class SaxOutputHandler extends DefaultHandler
 						atts.getValue("aspect").equals("1"),
 						atts.getValue("flipH").equals("1"),
 						atts.getValue("flipV").equals("1"));
-			}
-		});
+			});
 
-		_handlers.put("text", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("text", (Attributes atts)
 			{
 				_canvas.text(Double.parseDouble(atts.getValue("x")),
 						Double.parseDouble(atts.getValue("y")),
@@ -348,49 +261,34 @@ class SaxOutputHandler extends DefaultHandler
 						atts.getValue("overflow"),
 						_getValue(atts, "clip", "").equals("1"),
 						Double.parseDouble(_getValue(atts, "rotation", "0")));
-			}
-		});
+			});
 
-		_handlers.put("begin", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("begin", (Attributes atts)
 			{
 				_canvas.begin();
-			}
-		});
+			});
 
-		_handlers.put("move", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("move", (Attributes atts)
 			{
 				_canvas.moveTo(Double.parseDouble(atts.getValue("x")),
 						Double.parseDouble(atts.getValue("y")));
-			}
-		});
+			});
 
-		_handlers.put("line", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("line", (Attributes atts)
 			{
 				_canvas.lineTo(Double.parseDouble(atts.getValue("x")),
 						Double.parseDouble(atts.getValue("y")));
-			}
-		});
+			});
 
-		_handlers.put("quad", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("quad", (Attributes atts)
 			{
 				_canvas.quadTo(Double.parseDouble(atts.getValue("x1")),
 						Double.parseDouble(atts.getValue("y1")),
 						Double.parseDouble(atts.getValue("x2")),
 						Double.parseDouble(atts.getValue("y2")));
-			}
-		});
+			});
 
-		_handlers.put("curve", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("curve", (Attributes atts)
 			{
 				_canvas.curveTo(Double.parseDouble(atts.getValue("x1")),
 						Double.parseDouble(atts.getValue("y1")),
@@ -398,40 +296,27 @@ class SaxOutputHandler extends DefaultHandler
 						Double.parseDouble(atts.getValue("y2")),
 						Double.parseDouble(atts.getValue("x3")),
 						Double.parseDouble(atts.getValue("y3")));
-			}
-		});
+			});
 
-		_handlers.put("close", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("close", (Attributes atts)
 			{
 				_canvas.close();
-			}
-		});
+			});
 
-		_handlers.put("stroke", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("stroke", (Attributes atts)
 			{
 				_canvas.stroke();
-			}
-		});
+			});
 
-		_handlers.put("fill", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("fill", (Attributes atts)
 			{
 				_canvas.fill();
-			}
-		});
+			});
 
-		_handlers.put("fillstroke", new IElementHandler()
-		{
-			public void parseElement(Attributes atts)
+		_handlers.put("fillstroke", (Attributes atts)
 			{
 				_canvas.fillAndStroke();
-			}
-		});
+			});
 	}
 
 	/**
@@ -447,14 +332,6 @@ class SaxOutputHandler extends DefaultHandler
 		}
 
 		return value;
-	};
-
-	/**
-	 * 
-	 */
-	interface IElementHandler
-	{
-		void parseElement(Attributes atts);
 	}
 
 }

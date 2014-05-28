@@ -10,6 +10,19 @@ part of graph.sharing;
 //import org.w3c.dom.Node;
 
 /**
+ * Defines the requirements for an object that listens to changes on the
+ * shared diagram.
+ */
+
+/**
+ * Fires when the shared diagram was changed.
+ *
+ * @param sender Session where the change was received from.
+ * @param edits String that represents the edits.
+ */
+typedef void DiagramChangeListener(Object sender, String edits);
+
+/**
  * Implements a diagram that may be shared among multiple sessions. This
  * implementation is based only on string, it does not have a model instance.
  * The diagram is represented by its initial state and the sequence of edits
@@ -17,22 +30,6 @@ part of graph.sharing;
  */
 class SharedState extends EventSource
 {
-
-	/**
-	 * Defines the requirements for an object that listens to changes on the
-	 * shared diagram.
-	 */
-	interface DiagramChangeListener
-	{
-
-		/**
-		 * Fires when the shared diagram was changed.
-		 * 
-		 * @param sender Session where the change was received from.
-		 * @param edits String that represents the edits.
-		 */
-		void diagramChanged(Object sender, String edits);
-	}
 
 	/**
 	 * Holds a list of diagram change listeners.
@@ -70,7 +67,7 @@ class SharedState extends EventSource
 	/**
 	 * Returns the history of all changes as a string.
 	 */
-	synchronized String getDelta()
+	/*synchronized*/ String getDelta()
 	{
 		return _delta.toString();
 	}
@@ -86,7 +83,8 @@ class SharedState extends EventSource
 	{
 		StringBuffer edits = new StringBuffer();
 
-		synchronized (this)
+        throw new Exception();
+		/*synchronized (this)
 		{
 			Node edit = delta.getFirstChild();
 
@@ -99,7 +97,7 @@ class SharedState extends EventSource
 
 				edit = edit.getNextSibling();
 			}
-		}
+		}*/
 
 		String xml = edits.toString();
 		addDelta(xml);
@@ -117,7 +115,7 @@ class SharedState extends EventSource
 	/**
 	 * 
 	 */
-	synchronized void addDelta(String xml)
+	/*synchronized*/ void addDelta(String xml)
 	{
 		// TODO: Clear delta if xml contains RootChange
 		_delta.append(xml);
@@ -126,7 +124,7 @@ class SharedState extends EventSource
 	/**
 	 * Clears the history of all changes.
 	 */
-	synchronized void resetDelta()
+	/*synchronized*/ void resetDelta()
 	{
 		_delta = new StringBuffer();
 	}

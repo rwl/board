@@ -69,7 +69,7 @@ class GraphMlEdge
 		List<Element> dataList = GraphMlUtils.childsTags(edgeElement,
 				GraphMlConstants.DATA);
 
-		for (Element dataElem : dataList)
+		for (Element dataElem in dataList)
 		{
 			GraphMlData data = new GraphMlData(dataElem);
 			String key = data.getDataKey();

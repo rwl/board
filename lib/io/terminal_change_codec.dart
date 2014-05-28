@@ -36,7 +36,7 @@ class TerminalChangeCodec extends ObjectCodec
 	/* (non-Javadoc)
 	 * @see graph.io.ObjectCodec#afterDecode(graph.io.Codec, org.w3c.dom.Node, java.lang.Object)
 	 */
-	@Override
+//	@Override
 	Object afterDecode(Codec dec, Node node, Object obj)
 	{
 		if (obj is TerminalChange)

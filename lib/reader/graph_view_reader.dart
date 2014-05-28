@@ -15,7 +15,7 @@ part of graph.reader;
 /**
  * An abstract converter that renders display XML data onto a canvas.
  */
-public abstract class GraphViewReader extends DefaultHandler
+abstract class GraphViewReader extends DefaultHandler
 {
 
 	/**
@@ -56,7 +56,7 @@ public abstract class GraphViewReader extends DefaultHandler
 	 * @param attrs Specifies the attributes of the new canvas.
 	 * @return Returns a new canvas.
 	 */
-	abstract ICanvas createCanvas(Map<String, Object> attrs);
+	ICanvas createCanvas(Map<String, Object> attrs);
 
 	/**
 	 * Returns the canvas that is used for rendering the graph.

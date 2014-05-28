@@ -21,13 +21,7 @@ class SharedGraphModel extends SharedState
 	/**
 	 * 
 	 */
-	Codec _codec = new Codec()
-	{
-		public Object lookup(String id)
-		{
-			return _model.getCell(id);
-		}
-	};
+	Codec _codec;
 
 	/**
 	 * Whether remote changes should be significant in the
@@ -40,9 +34,12 @@ class SharedGraphModel extends SharedState
 	 * 
 	 * @param model Initial model of the diagram.
 	 */
-	SharedGraphModel(GraphModel model)
+	SharedGraphModel(GraphModel model) : super(null) // Overrides getState
 	{
-		super(null); // Overrides getState
+        _codec = (String id)
+        {
+            return _model.getCell(id);
+        };
 		this._model = model;
 	}
 
@@ -81,7 +78,7 @@ class SharedGraphModel extends SharedState
 	/**
 	 * 
 	 */
-	synchronized void addDelta(String edits)
+	/*synchronized*/ void addDelta(String edits)
 	{
 		// Edits are not added to the history. They are sent straight out to
 		// all sessions and the model is updated so the next session will get
@@ -93,7 +90,7 @@ class SharedGraphModel extends SharedState
 	 */
 	String _processEdit(Node node)
 	{
-		AtomicGraphModelChange[] changes = _decodeChanges(node.getFirstChild());
+		List<AtomicGraphModelChange> changes = _decodeChanges(node.getFirstChild());
 
 		if (changes.length > 0)
 		{
@@ -115,9 +112,10 @@ class SharedGraphModel extends SharedState
 	 * a change and notify event via the model.
 	 */
 	UndoableEdit _createUndoableEdit(
-			AtomicGraphModelChange[] changes)
+			List<AtomicGraphModelChange> changes)
 	{
-		UndoableEdit edit = new UndoableEdit(this, _significantRemoteChanges)
+        throw new Exception();
+		/*UndoableEdit edit = new UndoableEdit(this, _significantRemoteChanges)
 		{
 			public void dispatch()
 			{
@@ -127,7 +125,7 @@ class SharedGraphModel extends SharedState
 				((GraphModel) _source).fireEvent(new EventObj(
 						Event.NOTIFY, "edit", this, "changes", _changes));
 			}
-		};
+		};*/
 
 		for (int i = 0; i < changes.length; i++)
 		{
@@ -141,7 +139,7 @@ class SharedGraphModel extends SharedState
 	 * Adds removed cells to the codec object lookup for references to the removed
 	 * cells after this point in time.
 	 */
-	AtomicGraphModelChange[] _decodeChanges(Node node)
+    List<AtomicGraphModelChange> _decodeChanges(Node node)
 	{
 		// Updates the document in the existing codec
 		_codec.setDocument(node.getOwnerDocument());
@@ -168,7 +166,7 @@ class SharedGraphModel extends SharedState
 
 			if (change is AtomicGraphModelChange)
 			{
-				AtomicGraphModelChange ac = (AtomicGraphModelChange) change;
+				AtomicGraphModelChange ac = change as AtomicGraphModelChange;
 
 				ac.setModel(_model);
 				ac.execute();
@@ -177,9 +175,9 @@ class SharedGraphModel extends SharedState
 				// been removed from the model prior to being referenced. This
 				// adds removed cells in the codec object lookup table.
 				if (ac is ChildChange
-						&& ((ChildChange) ac).getParent() == null)
+						&& (ac as ChildChange).getParent() == null)
 				{
-					cellRemoved(((ChildChange) ac).getChild());
+					cellRemoved((ac as ChildChange).getChild());
 				}
 
 				changes.add(ac);
@@ -188,7 +186,7 @@ class SharedGraphModel extends SharedState
 			node = node.getNextSibling();
 		}
 
-		return changes.toArray(new AtomicGraphModelChange[changes.size()]);
+		return changes.toArray(new List<AtomicGraphModelChange>(changes.size()));
 	}
 
 	/**

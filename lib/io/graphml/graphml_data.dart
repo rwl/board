@@ -71,7 +71,7 @@ class GraphMlData
 			NodeList childs = dataElement.getChildNodes();
 			List<Node> childrens = GraphMlUtils.copyNodeList(childs);
 			
-			for (Node n : childrens)
+			for (Node n in childrens)
 			{
 				if (n.getNodeName().equals("#text"))
 				{

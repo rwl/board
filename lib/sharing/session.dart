@@ -69,13 +69,13 @@ class Session implements DiagramChangeListener
 	 *
 	 * @return Returns the initial state of the session.
 	 */
-	synchronized String init()
+	/*synchronized*/ String init()
 	{
-		synchronized (this)
+		/*synchronized (this)
 		{
 			_buffer = new StringBuffer();
 			notify();
-		}
+		}*/
 
 		return getInitialMessage();
 	}
@@ -133,10 +133,10 @@ class Session implements DiagramChangeListener
 	 * 
 	 * @return Returns a string representing the changes to the shared diagram.
 	 */
-	String poll() //throws InterruptedException
-	{
-		return poll(DEFAULT_TIMEOUT);
-	}
+//	String poll() //throws InterruptedException
+//	{
+//		return poll(DEFAULT_TIMEOUT);
+//	}
 
 	/**
 	 * Returns the changes received by other sessions for the shared diagram.
@@ -146,12 +146,12 @@ class Session implements DiagramChangeListener
 	 * @param timeout Time in milliseconds to wait for changes.
 	 * @return Returns a string representing the changes to the shared diagram.
 	 */
-	String poll(long timeout) //throws InterruptedException
+	String poll([long timeout=DEFAULT_TIMEOUT]) //throws InterruptedException
 	{
 		_lastTimeMillis = System.currentTimeMillis();
 		StringBuffer result = new StringBuffer("<message>");
 
-		synchronized (this)
+		/*synchronized (this)
 		{
 			if (_buffer.length() == 0)
 			{
@@ -168,7 +168,7 @@ class Session implements DiagramChangeListener
 			}
 
 			notify();
-		}
+		}*/
 
 		result.append("</message>");
 
@@ -179,15 +179,15 @@ class Session implements DiagramChangeListener
 	 * (non-Javadoc)
 	 * @see graph.sharing.mxSharedDiagram.mxDiagramChangeListener#diagramChanged(java.lang.Object, org.w3c.dom.Node)
 	 */
-	synchronized void diagramChanged(Object sender, String edits)
+	/*synchronized*/ void diagramChanged(Object sender, String edits)
 	{
 		if (sender != this)
 		{
-			synchronized (this)
+			/*synchronized (this)
 			{
 				_buffer.append(edits);
 				notify();
-			}
+			}*/
 		}
 	}
 

@@ -38,7 +38,7 @@ class GraphMlPort
 		List<Element> dataList = GraphMlUtils.childsTags(portElement,
 				GraphMlConstants.DATA);
 
-		for (Element dataElem : dataList)
+		for (Element dataElem in dataList)
 		{
 			GraphMlData data = new GraphMlData(dataElem);
 			String key = data.getDataKey();
@@ -77,7 +77,7 @@ class GraphMlPort
 
 		node.setAttribute(GraphMlConstants.PORT_NAME, _name);
 
-		for (GraphMlData data : _portDataMap.values())
+		for (GraphMlData data in _portDataMap.values())
 		{
 			Element dataElement = data.generateNodeElement(document);
 			node.appendChild(dataElement);

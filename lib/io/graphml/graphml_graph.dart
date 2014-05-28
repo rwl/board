@@ -60,7 +60,7 @@ class GraphMlGraph
 		List<Element> nodeElements = GraphMlUtils.childsTags(graphElement,
 				GraphMlConstants.NODE);
 
-		for (Element nodeElem : nodeElements)
+		for (Element nodeElem in nodeElements)
 		{
 			GraphMlNode node = new GraphMlNode(nodeElem);
 
@@ -71,7 +71,7 @@ class GraphMlGraph
 		List<Element> edgeElements = GraphMlUtils.childsTags(graphElement,
 				GraphMlConstants.EDGE);
 
-		for (Element edgeElem : edgeElements)
+		for (Element edgeElem in edgeElements)
 		{
 			GraphMlEdge edge = new GraphMlEdge(edgeElem);
 
@@ -100,13 +100,13 @@ class GraphMlGraph
 	{
 		List<GraphMlNode> nodeList = getNodes();
 
-		for (GraphMlNode node : nodeList)
+		for (GraphMlNode node in nodeList)
 		{
 			_addNode(graph, parent, node);
 		}
 		List<GraphMlEdge> edgeList = getEdges();
 
-		for (GraphMlEdge edge : edgeList)
+		for (GraphMlEdge edge in edgeList)
 		{
 			_addEdge(graph, parent, edge);
 		}
@@ -143,7 +143,7 @@ class GraphMlGraph
 		HashMap<String, GraphMlKey> keyMap = GraphMlKeyManager.getInstance()
 				.getKeyMap();
 		
-		for (GraphMlKey key : keyMap.values())
+		for (GraphMlKey key in keyMap.values())
 		{
 			if (key.getKeyName().equals(GraphMlConstants.KEY_NODE_NAME))
 			{
@@ -169,7 +169,7 @@ class GraphMlGraph
 		String keyId = "";
 		HashMap<String, GraphMlKey> keyMap = GraphMlKeyManager.getInstance()
 				.getKeyMap();
-		for (GraphMlKey key : keyMap.values())
+		for (GraphMlKey key in keyMap.values())
 		{
 			if (key.getKeyName().equals(GraphMlConstants.KEY_EDGE_NAME))
 			{
@@ -206,18 +206,18 @@ class GraphMlGraph
 			Double w = Double.valueOf(data.getDataShapeNode().getDataWidth());
 			String label = data.getDataShapeNode().getDataLabel();
 			String style = data.getDataShapeNode().getDataStyle();
-			v1 = (Cell) graph.insertVertex(parent, id, label, x, y, w, h,
-					style);
+			v1 = graph.insertVertex(parent, id, label, x, y, w, h,
+					style) as Cell;
 		}
 		else
 		{
-			v1 = (Cell) graph.insertVertex(parent, id, "", 0, 0, 100, 100);
+			v1 = graph.insertVertex(parent, id, "", 0, 0, 100, 100) as Cell;
 		}
 
 		_cellsMap.put(id, v1);
 		List<GraphMlGraph> graphs = node.getNodeGraph();
 
-		for (GraphMlGraph gmlGraph : graphs)
+		for (GraphMlGraph gmlGraph in graphs)
 		{
 			gmlGraph.addGraph(graph, v1);
 		}
@@ -330,8 +330,8 @@ class GraphMlGraph
 		}
 
 		//Insert new edge.
-		Cell e = (Cell) graph.insertEdge(parent, null, label, source,
-				target, style);
+		Cell e = graph.insertEdge(parent, null, label, source,
+				target, style) as Cell;
 		graph.setConnectionConstraint(e, source, true,
 				new ConnectionConstraint(fromConstraint, false));
 		graph.setConnectionConstraint(e, target, false,
@@ -406,13 +406,13 @@ class GraphMlGraph
 			graph.setAttribute(GraphMlConstants.EDGE_DEFAULT, _edgedefault);
 		}
 
-		for (GraphMlNode node : _nodes)
+		for (GraphMlNode node in _nodes)
 		{
 			Element nodeElement = node.generateElement(document);
 			graph.appendChild(nodeElement);
 		}
 
-		for (GraphMlEdge edge : _edges)
+		for (GraphMlEdge edge in _edges)
 		{
 			Element edgeElement = edge.generateElement(document);
 			graph.appendChild(edgeElement);

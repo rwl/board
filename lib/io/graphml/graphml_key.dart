@@ -7,26 +7,49 @@ part of graph.io.graphml;
 //import org.w3c.dom.Element;
 
 /**
+ * Possibles values for the keyFor Attribute
+ */
+class keyForValues {
+    final _value;
+
+    const keyForValues._internal(this._value);
+
+    toString() => '$_value';
+
+    static const GRAPH = const keyForValues._internal('GRAPH');
+    static const NODE = const keyForValues._internal('NODE');
+    static const EDGE = const keyForValues._internal('EDGE');
+    static const HYPEREDGE = const keyForValues._internal('HYPEREDGE');
+    static const PORT = const keyForValues._internal('PORT');
+    static const ENDPOINT = const keyForValues._internal('ENDPOINT');
+    static const ALL = const keyForValues._internal('ALL');
+}
+
+/**
+ * Possibles values for the keyType Attribute.
+ */
+class keyTypeValues
+{
+    final _value;
+
+    const keyTypeValues._internal(this._value);
+
+    toString() => '$_value';
+
+    static const BOOLEAN = const keyTypeValues._internal('BOOLEAN');
+    static const INT = const keyTypeValues._internal('INT');
+    static const LONG = const keyTypeValues._internal('LONG');
+    static const FLOAT = const keyTypeValues._internal('FLOAT');
+    static const DOUBLE = const keyTypeValues._internal('DOUBLE');
+    static const STRING = const keyTypeValues._internal('STRING');
+}
+
+
+/**
  * Represents a Key element in the GML Structure.
  */
 class GraphMlKey
 {
-	/**
-	 * Possibles values for the keyFor Attribute
-	 */
-	enum keyForValues
-	{
-		GRAPH, NODE, EDGE, HYPEREDGE, PORT, ENDPOINT, ALL
-	}
-
-	/**
-	 * Possibles values for the keyType Attribute.
-	 */
-	enum keyTypeValues
-	{
-		BOOLEAN, INT, LONG, FLOAT, DOUBLE, STRING
-	}
-
 	String _keyDefault;
 
 	String _keyId;

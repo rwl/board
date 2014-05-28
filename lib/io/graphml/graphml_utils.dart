@@ -59,7 +59,7 @@ class GraphMlUtils
 
 				if (has)
 				{
-					return (Element) nl.item(i);
+					return nl.item(i) as Element;
 				}
 			}
 		}
@@ -85,7 +85,7 @@ class GraphMlUtils
 			{
 				if (tag.equals((nl.item(i)).getNodeName()))
 				{
-					ret.add((Element) nl.item(i));
+					ret.add(nl.item(i) as Element);
 				}
 			}
 		}
@@ -137,7 +137,7 @@ class GraphMlUtils
 
 				if (has)
 				{
-					return (Element) nl.item(i);
+					return nl.item(i) as Element;
 				}
 			}
 		}
@@ -166,7 +166,7 @@ class GraphMlUtils
 			{
 				if (tag.equals((nl.item(i)).getNodeName()))
 				{
-					ret.add((Element) nl.item(i));
+					ret.add(nl.item(i) as Element);
 				}
 			}
 		}
@@ -185,7 +185,7 @@ class GraphMlUtils
 
 		for (int i = 0; i < length; i++)
 		{
-			copy.add((Node) nodeList.item(i));
+			copy.add(nodeList.item(i) as Node);
 		}
 		
 		return copy;
@@ -208,7 +208,7 @@ class GraphMlUtils
 		{
 			List<String> entries = style.split(";");
 
-			for (String entry : entries)
+			for (String entry in entries)
 			{
 				index = entry.indexOf(asig);
 				

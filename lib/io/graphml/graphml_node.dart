@@ -47,7 +47,7 @@ class GraphMlNode
 		List<Element> dataList = GraphMlUtils.childsTags(nodeElement,
 				GraphMlConstants.DATA);
 
-		for (Element dataElem : dataList)
+		for (Element dataElem in dataList)
 		{
 			GraphMlData data = new GraphMlData(dataElem);
 			String key = data.getDataKey();
@@ -58,7 +58,7 @@ class GraphMlNode
 		List<Element> graphList = GraphMlUtils.childsTags(nodeElement,
 				GraphMlConstants.GRAPH);
 
-		for (Element graphElem : graphList)
+		for (Element graphElem in graphList)
 		{
 			GraphMlGraph graph = new GraphMlGraph(graphElem);
 			_nodeGraphList.add(graph);
@@ -68,7 +68,7 @@ class GraphMlNode
 		List<Element> portList = GraphMlUtils.childsTags(nodeElement,
 				GraphMlConstants.PORT);
 
-		for (Element portElem : portList)
+		for (Element portElem in portList)
 		{
 			GraphMlPort port = new GraphMlPort(portElem);
 			String name = port.getName();
@@ -130,13 +130,13 @@ class GraphMlNode
 		Element dataElement = _nodeData.generateNodeElement(document);
 		node.appendChild(dataElement);
 
-		for (GraphMlPort port : _nodePortMap.values())
+		for (GraphMlPort port in _nodePortMap.values())
 		{
 			Element portElement = port.generateElement(document);
 			node.appendChild(portElement);
 		}
 
-		for (GraphMlGraph graph : _nodeGraphList)
+		for (GraphMlGraph graph in _nodeGraphList)
 		{
 			Element graphElement = graph.generateElement(document);
 			node.appendChild(graphElement);
