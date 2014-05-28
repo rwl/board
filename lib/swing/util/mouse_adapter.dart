@@ -16,7 +16,7 @@ class MouseAdapter implements MouseMotionListener, MouseListener
 	/**
 	 * 
 	 */
-	static final long serialVersionUID = -6413162217897819199L;
+//	static final long serialVersionUID = -6413162217897819199L;
 
 	/**
 	 * 

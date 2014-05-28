@@ -23,7 +23,7 @@ class VertexHandler extends CellHandler
 	/**
 	 * 
 	 */
-	static Cursor[] CURSORS = new Cursor[] {
+	static List<Cursor> CURSORS = [
 			new Cursor(Cursor.NW_RESIZE_CURSOR),
 			new Cursor(Cursor.N_RESIZE_CURSOR),
 			new Cursor(Cursor.NE_RESIZE_CURSOR),
@@ -31,7 +31,8 @@ class VertexHandler extends CellHandler
 			new Cursor(Cursor.E_RESIZE_CURSOR),
 			new Cursor(Cursor.SW_RESIZE_CURSOR),
 			new Cursor(Cursor.S_RESIZE_CURSOR),
-			new Cursor(Cursor.SE_RESIZE_CURSOR), new Cursor(Cursor.MOVE_CURSOR) };
+			new Cursor(Cursor.SE_RESIZE_CURSOR),
+            new Cursor(Cursor.MOVE_CURSOR) ];
 
 	/**
 	 * Workaround for alt-key-state not correct in mouseReleased.
@@ -48,17 +49,14 @@ class VertexHandler extends CellHandler
 	 * @param graphComponent
 	 * @param state
 	 */
-	VertexHandler(GraphComponent graphComponent, CellState state)
-	{
-		super(graphComponent, state);
-	}
+	VertexHandler(GraphComponent graphComponent, CellState state) : super(graphComponent, state);
 
 	/**
 	 * 
 	 */
-	Rectangle[] _createHandles()
+    List<Rectangle> _createHandles()
 	{
-		Rectangle[] h = null;
+        List<Rectangle> h = null;
 
 		if (_graphComponent.getGraph().isCellResizable(getState().getCell()))
 		{
@@ -74,7 +72,7 @@ class VertexHandler extends CellHandler
 			int right = bounds.x + bounds.width - half;
 			int bottom = bounds.y + bounds.height - half;
 
-			h = new Rectangle[9];
+			h = new List<Rectangle>(9);
 
 			int s = Constants.HANDLE_SIZE;
 			h[0] = new Rectangle(left, top, s, s);
@@ -88,7 +86,7 @@ class VertexHandler extends CellHandler
 		}
 		else
 		{
-			h = new Rectangle[1];
+			h = new List<Rectangle>(1);
 		}
 
 		int s = Constants.LABEL_HANDLE_SIZE;
@@ -135,8 +133,8 @@ class VertexHandler extends CellHandler
 					pt = _graphComponent.snapScaledPoint(pt);
 				}
 
-				int idx = (int) Math.round(pt.getX() - _first.x);
-				int idy = (int) Math.round(pt.getY() - _first.y);
+				int idx = Math.round(pt.getX() - _first.x) as int;
+				int idy = Math.round(pt.getY() - _first.y) as int;
 
 				if (_constrainedEvent)
 				{
@@ -248,7 +246,7 @@ class VertexHandler extends CellHandler
 			dx += offset.getX();
 			dy += offset.getY();
 
-			geometry = (Geometry) geometry.clone();
+			geometry = geometry.clone() as Geometry;
 			geometry.setOffset(new Point2d(Math.round(dx), Math.round(dy)));
 			graph.getModel().setGeometry(_state.getCell(), geometry);
 		}
@@ -273,7 +271,7 @@ class VertexHandler extends CellHandler
 
 			if (isLabel(_index))
 			{
-				geometry = (Geometry) geometry.clone();
+				geometry = geometry.clone() as Geometry;
 
 				if (geometry.getOffset() != null)
 				{
@@ -298,10 +296,10 @@ class VertexHandler extends CellHandler
 				// Snaps new bounds to grid (unscaled)
 				if (_gridEnabledEvent)
 				{
-					int x = (int) graph.snap(rect.x);
-					int y = (int) graph.snap(rect.y);
-					rect.width = (int) graph.snap(rect.width - x + rect.x);
-					rect.height = (int) graph.snap(rect.height - y + rect.y);
+					int x = graph.snap(rect.x) as int;
+					int y = graph.snap(rect.y) as int;
+					rect.width = graph.snap(rect.width - x + rect.x) as int;
+					rect.height = graph.snap(rect.height - y + rect.y) as int;
 					rect.x = x;
 					rect.y = y;
 				}
@@ -402,7 +400,7 @@ class VertexHandler extends CellHandler
 
 		if (g.hitClip(bounds.x, bounds.y, bounds.width, bounds.height))
 		{
-			Graphics2D g2 = (Graphics2D) g;
+			Graphics2D g2 = g as Graphics2D;
 
 			Stroke stroke = g2.getStroke();
 			g2.setStroke(getSelectionStroke());

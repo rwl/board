@@ -1165,45 +1165,44 @@ class EdgeStyle
 			}
 		};
 
-		/**
-		 * Hook method to return the routing pattern for the given state
-		 * @param dir 
-		 * @param quad 
-		 * @param dx 
-		 * @param dy 
-		 * @return
-		 */
-		List<int> getRoutePattern(List<int> dir, double quad, double dx,
-				double dy)
-		{
-			int sourceIndex = dir[0] == Constants.DIRECTION_MASK_EAST ? 3
-					: dir[0];
-			int targetIndex = dir[1] == Constants.DIRECTION_MASK_EAST ? 3
-					: dir[1];
+    /**
+     * Hook method to return the routing pattern for the given state
+     * @param dir
+     * @param quad
+     * @param dx
+     * @param dy
+     * @return
+     */
+    List<int> getRoutePattern(List<int> dir, double quad, double dx,
+            double dy)
+    {
+        int sourceIndex = dir[0] == Constants.DIRECTION_MASK_EAST ? 3
+                : dir[0];
+        int targetIndex = dir[1] == Constants.DIRECTION_MASK_EAST ? 3
+                : dir[1];
 
-			sourceIndex -= quad;
-			targetIndex -= quad;
+        sourceIndex -= quad;
+        targetIndex -= quad;
 
-			if (sourceIndex < 1)
-			{
-				sourceIndex += 4;
-			}
-			if (targetIndex < 1)
-			{
-				targetIndex += 4;
-			}
+        if (sourceIndex < 1)
+        {
+            sourceIndex += 4;
+        }
+        if (targetIndex < 1)
+        {
+            targetIndex += 4;
+        }
 
-			List<int> result = routePatterns[sourceIndex - 1][targetIndex - 1];
+        List<int> result = routePatterns[sourceIndex - 1][targetIndex - 1];
 
-			if (dx == 0 || dy == 0)
-			{
-				if (inlineRoutePatterns[sourceIndex - 1][targetIndex - 1] != null)
-				{
-					result = inlineRoutePatterns[sourceIndex - 1][targetIndex - 1];
-				}
-			}
+        if (dx == 0 || dy == 0)
+        {
+            if (inlineRoutePatterns[sourceIndex - 1][targetIndex - 1] != null)
+            {
+                result = inlineRoutePatterns[sourceIndex - 1][targetIndex - 1];
+            }
+        }
 
-			return result;
-		}
-	}
+        return result;
+    }
 }

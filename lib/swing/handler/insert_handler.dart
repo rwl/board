@@ -65,14 +65,11 @@ class InsertHandler extends MouseAdapter
 		this._style = style;
 
 		// Installs the paint handler
-		graphComponent.addListener(Event.AFTER_PAINT, new IEventListener()
-		{
-			public void invoke(Object sender, EventObj evt)
+		graphComponent.addListener(Event.AFTER_PAINT, (Object sender, EventObj evt)
 			{
-				Graphics g = (Graphics) evt.getProperty("g");
+				Graphics g = evt.getProperty("g") as Graphics;
 				paint(g);
-			}
-		});
+			});
 
 		// Listens to all mouse events on the rendering control
 		graphComponent.getGraphControl().addMouseListener(this);
@@ -155,7 +152,7 @@ class InsertHandler extends MouseAdapter
 			}
 
 			Rectangle tmp = dirty.getRectangle();
-			int b = (int) Math.ceil(_lineWidth);
+			int b = Math.ceil(_lineWidth) as int;
 			_graphComponent.getGraphControl().repaint(tmp.x - b, tmp.y - b,
 					tmp.width + 2 * b, tmp.height + 2 * b);
 
@@ -216,7 +213,7 @@ class InsertHandler extends MouseAdapter
 
 		if (dirty != null)
 		{
-			int b = (int) Math.ceil(_lineWidth);
+			int b = Math.ceil(_lineWidth) as int;
 			_graphComponent.getGraphControl().repaint(dirty.x - b, dirty.y - b,
 					dirty.width + 2 * b, dirty.height + 2 * b);
 		}
@@ -229,7 +226,7 @@ class InsertHandler extends MouseAdapter
 	{
 		if (_first != null && _current != null)
 		{
-			((Graphics2D) g).setStroke(new BasicStroke(_lineWidth));
+			(g as Graphics2D).setStroke(new BasicStroke(_lineWidth));
 			g.setColor(_lineColor);
 			Rectangle rect = _current.getRectangle();
 

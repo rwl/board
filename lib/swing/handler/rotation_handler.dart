@@ -30,12 +30,12 @@ class RotationHandler extends MouseAdapter
 	/**
 	 * Loads the collapse and expand icons.
 	 */
-	static
+	/*static
 	{
 		ROTATE_ICON = new ImageIcon(
 				RotationHandler.class
 						.getResource("/com/mxgraph/swing/images/rotate.gif"));
-	}
+	}*/
 
 	/**
 	 * 
@@ -87,14 +87,11 @@ class RotationHandler extends MouseAdapter
 		_handle = _createHandle();
 
 		// Installs the paint handler
-		graphComponent.addListener(Event.AFTER_PAINT, new IEventListener()
-		{
-			public void invoke(Object sender, EventObj evt)
+		graphComponent.addListener(Event.AFTER_PAINT, (Object sender, EventObj evt)
 			{
-				Graphics g = (Graphics) evt.getProperty("g");
+				Graphics g = evt.getProperty("g") as Graphics;
 				paint(g);
-			}
-		});
+			});
 
 		// Listens to all mouse events on the rendering control
 		graphComponent.getGraphControl().addMouseListener(this);
@@ -306,7 +303,7 @@ class RotationHandler extends MouseAdapter
 			{
 				_graphComponent.getGraph().setCellStyles(
 						Constants.STYLE_ROTATION, String.valueOf(deg),
-						new List<Object> { cell });
+						[ cell ]);
 
 				_graphComponent.getGraphControl().repaint();
 
@@ -358,11 +355,11 @@ class RotationHandler extends MouseAdapter
 
 			if (deg != 0)
 			{
-				((Graphics2D) g).rotate(Math.toRadians(deg),
+				(g as Graphics2D).rotate(Math.toRadians(deg),
 						_currentState.getCenterX(), _currentState.getCenterY());
 			}
 
-			Utils.setAntiAlias((Graphics2D) g, true, false);
+			Utils.setAntiAlias(g as Graphics2D, true, false);
 			g.drawRect(rect.x, rect.y, rect.width, rect.height);
 		}
 	}

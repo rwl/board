@@ -32,7 +32,7 @@ class CellHandler
 	/**
 	 * Holds the rectangles that define the handles.
 	 */
-	Rectangle[] _handles;
+	List<Rectangle> _handles;
 
 	/**
 	 * Specifies if the handles should be painted. Default is true.
@@ -177,7 +177,7 @@ class CellHandler
 	/**
 	 * Creates the rectangles that define the handles.
 	 */
-	Rectangle[] _createHandles()
+	List<Rectangle> _createHandles()
 	{
 		return null;
 	}

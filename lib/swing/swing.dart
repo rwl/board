@@ -43,9 +43,9 @@ import '../view/view.dart' show EdgeStyle;
 import '../view/view.dart' show Graph;
 import '../view/view.dart' show GraphView;
 import '../view/view.dart' show TemporaryCellStates;
-import '../view/view.dart' show EdgeStyle.EdgeStyleFunction;
+import '../view/view.dart' show EdgeStyleFunction;
 
-part 'graph_component.dart'
+part 'graph_component.dart';
 part 'graph_control.dart';
 part 'graph_outline.dart';
 part 'mouse_redirector.dart';

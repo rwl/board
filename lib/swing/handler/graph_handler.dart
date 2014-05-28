@@ -39,14 +39,13 @@ part of graph.swing.handler;
 //import javax.swing.SwingUtilities;
 //import javax.swing.TransferHandler;
 
-class GraphHandler extends MouseAdapter implements
-		DropTargetListener
+class GraphHandler extends MouseAdapter implements DropTargetListener
 {
 
 	/**
 	 * 
 	 */
-	static final long serialVersionUID = 3241109976696510225L;
+//	static final long serialVersionUID = 3241109976696510225L;
 
 	/**
 	 * Default is Cursor.DEFAULT_CURSOR.
@@ -219,14 +218,11 @@ class GraphHandler extends MouseAdapter implements
 		_movePreview = _createMovePreview();
 
 		// Installs the paint handler
-		graphComponent.addListener(Event.AFTER_PAINT, new IEventListener()
-		{
-			public void invoke(Object sender, EventObj evt)
+		graphComponent.addListener(Event.AFTER_PAINT, (Object sender, EventObj evt)
 			{
-				Graphics g = (Graphics) evt.getProperty("g");
+				Graphics g = evt.getProperty("g") as Graphics;
 				paint(g);
-			}
-		});
+			});
 
 		// Listens to all mouse events on the rendering control
 		graphComponent.getGraphControl().addMouseListener(this);
@@ -239,22 +235,19 @@ class GraphHandler extends MouseAdapter implements
 		_installDropTargetHandler();
 
 		// Listens to changes of the transferhandler
-		graphComponent.addPropertyChangeListener(new PropertyChangeListener()
-		{
-			public void propertyChange(PropertyChangeEvent evt)
+		graphComponent.addPropertyChangeListener((PropertyChangeEvent evt)
 			{
 				if (evt.getPropertyName().equals("transferHandler"))
 				{
 					if (_currentDropTarget != null)
 					{
 						_currentDropTarget
-								.removeDropTargetListener(GraphHandler.this);
+								.removeDropTargetListener(this);
 					}
 
 					_installDropTargetHandler();
 				}
-			}
-		});
+			});
 
 		setVisible(false);
 	}
@@ -264,9 +257,7 @@ class GraphHandler extends MouseAdapter implements
 	 */
 	void _installDragGestureHandler()
 	{
-		DragGestureListener dragGestureListener = new DragGestureListener()
-		{
-			public void dragGestureRecognized(DragGestureEvent e)
+		DragGestureListener dragGestureListener = (DragGestureEvent e)
 			{
 				if (_graphComponent.isDragEnabled() && _first != null)
 				{
@@ -275,34 +266,17 @@ class GraphHandler extends MouseAdapter implements
 
 					if (th is GraphTransferHandler)
 					{
-						final GraphTransferable t = (GraphTransferable) ((GraphTransferHandler) th)
-								.createTransferable(_graphComponent);
+						final GraphTransferable t = (th as GraphTransferHandler)
+								.createTransferable(_graphComponent) as GraphTransferable;
 
 						if (t != null)
 						{
 							e.startDrag(null, SwingConstants.EMPTY_IMAGE,
-									new Point(), t, new DragSourceAdapter()
-									{
-
-										/**
-										 * 
-										 */
-										public void dragDropEnd(
-												DragSourceDropEvent dsde)
-										{
-											((GraphTransferHandler) th)
-													.exportDone(
-															_graphComponent,
-															t,
-															TransferHandler.NONE);
-											_first = null;
-										}
-									});
+									new Point(), t, new GraphHandlerDragSourceAdapter(this, t, th));
 						}
 					}
 				}
-			}
-		};
+			};
 
 		DragSource dragSource = new DragSource();
 		dragSource.createDefaultDragGestureRecognizer(_graphComponent
@@ -413,63 +387,7 @@ class GraphHandler extends MouseAdapter implements
 	 */
 	CellMarker _createMarker()
 	{
-		CellMarker marker = new CellMarker(_graphComponent, Color.BLUE)
-		{
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = -8451338653189373347L;
-
-			/**
-			 * 
-			 */
-			public bool isEnabled()
-			{
-				return _graphComponent.getGraph().isDropEnabled();
-			}
-
-			/**
-			 * 
-			 */
-			public Object _getCell(MouseEvent e)
-			{
-				IGraphModel model = _graphComponent.getGraph().getModel();
-				TransferHandler th = _graphComponent.getTransferHandler();
-				bool isLocal = th is GraphTransferHandler
-						&& ((GraphTransferHandler) th).isLocalDrag();
-
-				Graph graph = _graphComponent.getGraph();
-				Object cell = super._getCell(e);
-				List<Object> cells = (isLocal) ? graph.getSelectionCells()
-						: _dragCells;
-				cell = graph.getDropTarget(cells, e.getPoint(), cell);
-
-				// Checks if parent is dropped into child
-				Object parent = cell;
-
-				while (parent != null)
-				{
-					if (Utils.contains(cells, parent))
-					{
-						return null;
-					}
-
-					parent = model.getParent(parent);
-				}
-
-				bool clone = _graphComponent.isCloneEvent(e)
-						&& isCloneEnabled();
-
-				if (isLocal && cell != null && cells.length > 0 && !clone
-						&& graph.getModel().getParent(cells[0]) == cell)
-				{
-					cell = null;
-				}
-
-				return cell;
-			}
-
-		};
+		CellMarker marker = new GraphHandlerCellMarker(this, graphComponent, Color.BLUE);
 
 		// Swimlane content area will not be transparent drop targets
 		marker.setSwimlaneContentEnabled(true);
@@ -727,7 +645,7 @@ class GraphHandler extends MouseAdapter implements
 		JComponent component = _getDropTarget(e);
 		TransferHandler th = component.getTransferHandler();
 		bool isLocal = th is GraphTransferHandler
-				&& ((GraphTransferHandler) th).isLocalDrag();
+				&& (th as GraphTransferHandler).isLocalDrag();
 
 		if (isLocal)
 		{
@@ -750,7 +668,7 @@ class GraphHandler extends MouseAdapter implements
 
 				if (t.isDataFlavorSupported(GraphTransferable.dataFlavor))
 				{
-					GraphTransferable gt = (GraphTransferable) t
+					GraphTransferable gt = (t as GraphTransferable)
 							.getTransferData(GraphTransferable.dataFlavor);
 					_dragCells = gt.getCells();
 
@@ -759,13 +677,13 @@ class GraphHandler extends MouseAdapter implements
 						Graph graph = _graphComponent.getGraph();
 						double scale = graph.getView().getScale();
 						_transferBounds = gt.getBounds();
-						int w = (int) Math.ceil((_transferBounds.getWidth() + 1)
-								* scale);
-						int h = (int) Math
-								.ceil((_transferBounds.getHeight() + 1) * scale);
+						int w = Math.ceil((_transferBounds.getWidth() + 1)
+								* scale) as int;
+						int h = Math
+								.ceil((_transferBounds.getHeight() + 1) * scale) as int;
 						setPreviewBounds(new Rectangle(
-								(int) _transferBounds.getX(),
-								(int) _transferBounds.getY(), w, h));
+								_transferBounds.getX() as int,
+								_transferBounds.getY() as int, w, h));
 
 						if (_imagePreview)
 						{
@@ -936,20 +854,20 @@ class GraphHandler extends MouseAdapter implements
 
 				// Sets the drop offset so that the location in the transfer
 				// handler reflects the actual mouse position
-				handler.setOffset(new Point((int) graph.snap(dx / scale),
-						(int) graph.snap(dy / scale)));
+				handler.setOffset(new Point(graph.snap(dx / scale) as int,
+						graph.snap(dy / scale) as int));
 				pt.translate(dx, dy);
 
 				// Shifts the preview so that overlapping parts do not
 				// affect the centering
 				if (_transferBounds != null && _dragImage != null)
 				{
-					dx = (int) Math
+					dx = Math
 							.round((_dragImage.getIconWidth() - 2 - _transferBounds
-									.getWidth() * scale) / 2);
-					dy = (int) Math
+									.getWidth() * scale) / 2) as int;
+					dy = Math
 							.round((_dragImage.getIconHeight() - 2 - _transferBounds
-									.getHeight() * scale) / 2);
+									.getHeight() * scale) / 2) as int;
 					pt.translate(-dx, -dy);
 				}
 
@@ -1100,12 +1018,12 @@ class GraphHandler extends MouseAdapter implements
 				dyg = graph.snap(dyg);
 			}
 
-			x = (int) Math.round((dxg + trans.getX()) * scale)
-					+ (int) Math.round(_bbox.getX())
-					- (int) Math.round(_cellBounds.getX());
-			y = (int) Math.round((dyg + trans.getY()) * scale)
-					+ (int) Math.round(_bbox.getY())
-					- (int) Math.round(_cellBounds.getY());
+			x = (Math.round((dxg + trans.getX()) * scale) as int)
+					+ (Math.round(_bbox.getX()) as int)
+					- (Math.round(_cellBounds.getX()) as int);
+			y = (Math.round((dyg + trans.getY()) * scale) as int)
+					+ (Math.round(_bbox.getY()) as int)
+					- (Math.round(_cellBounds.getY()) as int);
 		}
 
 		return new Point(x, y);
@@ -1330,8 +1248,7 @@ class GraphHandler extends MouseAdapter implements
 	void _fold(Object cell)
 	{
 		bool collapse = !_graphComponent.getGraph().isCellCollapsed(cell);
-		_graphComponent.getGraph().foldCells(collapse, false,
-				new List<Object> { cell });
+		_graphComponent.getGraph().foldCells(collapse, false, [ cell ]);
 	}
 
 	/**
@@ -1422,7 +1339,7 @@ class GraphHandler extends MouseAdapter implements
 			{
 				// LATER: Clipping with Utils doesnt fix the problem
 				// of the drawImage being painted over the scrollbars
-				Graphics2D tmp = (Graphics2D) g.create();
+				Graphics2D tmp = g.create() as Graphics2D;
 
 				if (_graphComponent.getPreviewAlpha() < 1)
 				{
@@ -1456,13 +1373,13 @@ class GraphHandler extends MouseAdapter implements
 
 		if (e is DropTargetDropEvent)
 		{
-			location = ((DropTargetDropEvent) e).getLocation();
-			action = ((DropTargetDropEvent) e).getDropAction();
+			location = (e as DropTargetDropEvent).getLocation();
+			action = (e as DropTargetDropEvent).getDropAction();
 		}
 		else if (e is DropTargetDragEvent)
 		{
-			location = ((DropTargetDragEvent) e).getLocation();
-			action = ((DropTargetDragEvent) e).getDropAction();
+			location = (e as DropTargetDragEvent).getLocation();
+			action = (e as DropTargetDragEvent).getDropAction();
 		}
 
 		if (location != null)
@@ -1486,7 +1403,7 @@ class GraphHandler extends MouseAdapter implements
 	/**
 	 * Helper method to return the component for a drop target event.
 	 */
-	static final GraphTransferHandler _getGraphTransferHandler(
+	static /*final*/ GraphTransferHandler _getGraphTransferHandler(
 			DropTargetEvent e)
 	{
 		JComponent component = _getDropTarget(e);
@@ -1494,7 +1411,7 @@ class GraphHandler extends MouseAdapter implements
 
 		if (transferHandler is GraphTransferHandler)
 		{
-			return (GraphTransferHandler) transferHandler;
+			return transferHandler as GraphTransferHandler;
 		}
 
 		return null;
@@ -1503,9 +1420,90 @@ class GraphHandler extends MouseAdapter implements
 	/**
 	 * Helper method to return the component for a drop target event.
 	 */
-	static final JComponent _getDropTarget(DropTargetEvent e)
+	static /*final*/ JComponent _getDropTarget(DropTargetEvent e)
 	{
-		return (JComponent) e.getDropTargetContext().getComponent();
+		return e.getDropTargetContext().getComponent() as JComponent;
 	}
 
+}
+
+class GraphHandlerDragSourceAdapter extends DragSourceAdapter {
+    /**
+     *
+     */
+    final mxGraphHandler graphHandler;
+    final mxGraphTransferable t;
+    final TransferHandler th;
+
+    GraphHandlerDragSourceAdapter(this.graphHandler, this.t, this.th);
+
+    /**
+     *
+     */
+    public void dragDropEnd(
+        DragSourceDropEvent dsde)
+    {
+        (th as GraphTransferHandler)
+        .exportDone(
+            graphHandler.graphComponent,
+            t,
+            TransferHandler.NONE);
+        graphHandler.first = null;
+    }
+}
+
+class GraphHandlerCellMarker extends CellMarker {
+
+    final mxGraphHandler graphHandler;
+
+    GraphHandlerCellMarker(this.graphHandler, GraphComponent graphComponent,
+                           Color validColor) : super(graphComponent, validColor);
+
+    /**
+     *
+     */
+    boolean isEnabled()
+    {
+        return graphComponent.getGraph().isDropEnabled();
+    }
+
+    /**
+     *
+     */
+    Object getCell(MouseEvent e)
+    {
+        mxIGraphModel model = graphComponent.getGraph().getModel();
+        TransferHandler th = graphComponent.getTransferHandler();
+        boolean isLocal = th is mxGraphTransferHandler && (th as mxGraphTransferHandler).isLocalDrag();
+
+        mxGraph graph = graphComponent.getGraph();
+        Object cell = super.getCell(e);
+        List<Object> cells = (isLocal) ? graph.getSelectionCells()
+        : graphHandler.dragCells;
+        cell = graph.getDropTarget(cells, e.getPoint(), cell);
+
+        // Checks if parent is dropped into child
+        Object parent = cell;
+
+        while (parent != null)
+        {
+        if (mxUtils.contains(cells, parent))
+        {
+        return null;
+        }
+
+        parent = model.getParent(parent);
+        }
+
+        boolean clone = graphComponent.isCloneEvent(e)
+        && graphHandler.isCloneEnabled();
+
+        if (isLocal && cell != null && cells.length > 0 && !clone
+        && graph.getModel().getParent(cells[0]) == cell)
+        {
+        cell = null;
+        }
+
+        return cell;
+    }
 }

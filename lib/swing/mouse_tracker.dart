@@ -1,7 +1,5 @@
 part of graph.swing;
 
-import '../view/view.dart' show GraphView;
-
 //import java.awt.Cursor;
 //import java.awt.Point;
 //import java.awt.Rectangle;
@@ -64,10 +62,10 @@ class MouseTracker implements MouseListener, MouseMotionListener
 				double viewRatio = bounds.getWidth() / bounds.getHeight();
 
 				bounds = new Rectangle(this.graphOutline._finderBounds);
-				bounds.width = (int) Math
-						.max(0, (e.getX() - bounds.getX()));
-				bounds.height = (int) Math.max(0,
-						(bounds.getWidth() / viewRatio));
+				bounds.width = Math
+						.max(0, (e.getX() - bounds.getX())) as int;
+				bounds.height = Math.max(0,
+						(bounds.getWidth() / viewRatio)) as int;
 
 				this.graphOutline.updateFinderBounds(bounds, true);
 			}
@@ -114,7 +112,7 @@ class MouseTracker implements MouseListener, MouseMotionListener
 
 				if (hs != null)
 				{
-					sx = (double) hs.getValue() / hs.getMaximum();
+					sx = (hs.getValue() as double) / hs.getMaximum();
 				}
 				else
 				{
@@ -126,7 +124,7 @@ class MouseTracker implements MouseListener, MouseMotionListener
 
 				if (vs != null)
 				{
-					sy = (double) vs.getValue() / vs.getMaximum();
+					sy = (vs.getValue() as double) / vs.getMaximum();
 				}
 				else
 				{

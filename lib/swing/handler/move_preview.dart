@@ -96,14 +96,11 @@ class MovePreview extends EventSource
 		this._graphComponent = graphComponent;
 
 		// Installs the paint handler
-		graphComponent.addListener(Event.AFTER_PAINT, new IEventListener()
-		{
-			public void invoke(Object sender, EventObj evt)
+		graphComponent.addListener(Event.AFTER_PAINT, (Object sender, EventObj evt)
 			{
-				Graphics g = (Graphics) evt.getProperty("g");
+				Graphics g = evt.getProperty("g") as Graphics;
 				paint(g);
-			}
-		});
+			});
 	}
 
 	/**
@@ -220,7 +217,7 @@ class MovePreview extends EventSource
 		Graph graph = _graphComponent.getGraph();
 		Collection<CellState> result = new LinkedList<CellState>();
 
-		for (Object cell : _movingCells)
+		for (Object cell in _movingCells)
 		{
 			CellState cellState = graph.getView().getState(cell);
 
@@ -236,9 +233,9 @@ class MovePreview extends EventSource
 
 				if (isContextPreview())
 				{
-					List<Object> edges = graph.getAllEdges(new List<Object> { cell });
+					List<Object> edges = graph.getAllEdges([ cell ]);
 
-					for (Object edge : edges)
+					for (Object edge in edges)
 					{
 						if (!graph.isCellSelected(edge))
 						{
@@ -261,7 +258,7 @@ class MovePreview extends EventSource
 			}
 		}
 
-		return result.toArray(new CellState[result.size()]);
+		return result.toArray(new List<CellState>(result.size()));
 	}
 
 	/**
@@ -307,18 +304,7 @@ class MovePreview extends EventSource
 	 */
 	CellStatePreview createCellStatePreview()
 	{
-		return new CellStatePreview(_graphComponent, isClonePreview())
-		{
-			protected float _getOpacityForCell(Object cell)
-			{
-				if (_isCellOpaque(cell))
-				{
-					return 1;
-				}
-
-				return super._getOpacityForCell(cell);
-			}
-		};
+        return new MovePreviewCellStatePreview(this, graphComponent, isClonePreview());
 	}
 
 	/**
@@ -331,8 +317,8 @@ class MovePreview extends EventSource
 		if (_placeholder != null)
 		{
 			Rectangle tmp = new Rectangle(_placeholder);
-			_placeholder.x = _initialPlaceholder.x + (int) dx;
-			_placeholder.y = _initialPlaceholder.x + (int) dy;
+			_placeholder.x = _initialPlaceholder.x + dx as int;
+			_placeholder.y = _initialPlaceholder.x + dy as int;
 			tmp.add(_placeholder);
 			_graphComponent.getGraphControl().repaint(tmp);
 		}
@@ -342,7 +328,7 @@ class MovePreview extends EventSource
 			_preview.setOpacity(_graphComponent.getPreviewAlpha());
 
 			// Combines the layout result with the move preview
-			for (CellState previewState : _previewStates)
+			for (CellState previewState in _previewStates)
 			{
 				_preview.moveState(previewState, dx, dy, false, false);
 
@@ -492,4 +478,22 @@ class MovePreview extends EventSource
 		}
 	}
 
+}
+
+class MovePreviewCellStatePreview extends CellStatePreview {
+
+    final MovePreview movePreview;
+
+    MovePreviewCellStatePreview(this.ovePreview, GraphComponent graphComponent,
+                                boolean cloned) : super(graphComponent, cloned);
+
+    float getOpacityForCell(Object cell)
+    {
+        if (movePreview.isCellOpaque(cell))
+        {
+            return 1;
+        }
+
+        return super.getOpacityForCell(cell);
+    }
 }

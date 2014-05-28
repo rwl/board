@@ -45,14 +45,11 @@ class ConnectPreview extends EventSource
 		this._graphComponent = graphComponent;
 
 		// Installs the paint handler
-		graphComponent.addListener(Event.AFTER_PAINT, new IEventListener()
-		{
-			public void invoke(Object sender, EventObj evt)
+		graphComponent.addListener(Event.AFTER_PAINT, (Object sender, EventObj evt)
 			{
-				Graphics g = (Graphics) evt.getProperty("g");
+				Graphics g = evt.getProperty("g") as Graphics;
 				paint(g);
-			}
-		});
+			});
 	}
 
 	/**
@@ -61,11 +58,11 @@ class ConnectPreview extends EventSource
 	Object _createCell(CellState startState, String style)
 	{
 		Graph graph = _graphComponent.getGraph();
-		ICell cell = ((ICell) graph
+		ICell cell = (graph
 				.createEdge(null, null, "",
 						(startState != null) ? startState.getCell() : null,
-						null, style));
-		((ICell) startState.getCell()).insertEdge(cell, true);
+						null, style)) as ICell;
+		(startState.getCell() as ICell).insertEdge(cell, true);
 
 		return cell;
 	}
@@ -125,10 +122,10 @@ class ConnectPreview extends EventSource
 	void update(MouseEvent e, CellState targetState, double x, double y)
 	{
 		Graph graph = _graphComponent.getGraph();
-		ICell cell = (ICell) _previewState.getCell();
+		ICell cell = _previewState.getCell() as ICell;
 
 		Rect dirty = _graphComponent.getGraph().getPaintBounds(
-				new List<Object> { _previewState.getCell() });
+				[ _previewState.getCell() ]);
 
 		if (cell.getTerminal(false) != null)
 		{
@@ -137,7 +134,7 @@ class ConnectPreview extends EventSource
 
 		if (targetState != null)
 		{
-			((ICell) targetState.getCell()).insertEdge(cell, false);
+			(targetState.getCell() as ICell).insertEdge(cell, false);
 		}
 
 		Geometry geo = graph.getCellGeometry(_previewState.getCell());
@@ -166,20 +163,20 @@ class ConnectPreview extends EventSource
 	/**
 	 * 
 	 */
-	Rectangle _getDirtyRect()
-	{
-		return _getDirtyRect(null);
-	}
+//	Rectangle _getDirtyRect()
+//	{
+//		return _getDirtyRect(null);
+//	}
 
 	/**
 	 * 
 	 */
-	Rectangle _getDirtyRect(Rect dirty)
+	Rectangle _getDirtyRect([Rect dirty=null])
 	{
 		if (_previewState != null)
 		{
 			Rect tmp = _graphComponent.getGraph().getPaintBounds(
-					new List<Object> { _previewState.getCell() });
+					[ _previewState.getCell() ]);
 
 			if (dirty != null)
 			{
@@ -235,14 +232,14 @@ class ConnectPreview extends EventSource
 
 			if (_graphComponent.isAntiAlias())
 			{
-				Utils.setAntiAlias((Graphics2D) g, true, false);
+				Utils.setAntiAlias(g as Graphics2D, true, false);
 			}
 
 			float alpha = _graphComponent.getPreviewAlpha();
 
 			if (alpha < 1)
 			{
-				((Graphics2D) g).setComposite(AlphaComposite.getInstance(
+				(g as Graphics2D).setComposite(AlphaComposite.getInstance(
 						AlphaComposite.SRC_OVER, alpha));
 			}
 
@@ -254,7 +251,7 @@ class ConnectPreview extends EventSource
 			{
 				canvas.setScale(_graphComponent.getGraph().getView().getScale());
 				canvas.setTranslate(0, 0);
-				canvas.setGraphics((Graphics2D) g);
+				canvas.setGraphics(g as Graphics2D);
 
 				_paintPreview(canvas);
 			}
@@ -279,15 +276,15 @@ class ConnectPreview extends EventSource
 	/**
 	 *
 	 */
-	Object stop(bool commit)
-	{
-		return stop(commit, null);
-	}
+//	Object stop(bool commit)
+//	{
+//		return stop(commit, null);
+//	}
 
 	/**
 	 *
 	 */
-	Object stop(bool commit, MouseEvent e)
+	Object stop(bool commit, [MouseEvent e=null])
 	{
 		Object result = (_sourceState != null) ? _sourceState.getCell() : null;
 
@@ -298,18 +295,18 @@ class ConnectPreview extends EventSource
 			graph.getModel().beginUpdate();
 			try
 			{
-				ICell cell = (ICell) _previewState.getCell();
+				ICell cell = _previewState.getCell() as ICell;
 				Object src = cell.getTerminal(true);
 				Object trg = cell.getTerminal(false);
 
 				if (src != null)
 				{
-					((ICell) src).removeEdge(cell, true);
+					(src as ICell).removeEdge(cell, true);
 				}
 
 				if (trg != null)
 				{
-					((ICell) trg).removeEdge(cell, false);
+					(trg as ICell).removeEdge(cell, false);
 				}
 
 				if (commit)

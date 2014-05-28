@@ -21,7 +21,7 @@ class SwingConstants
 	 */
 	static BufferedImage EMPTY_IMAGE;
 
-	static
+	static init()
 	{
 		try
 		{
@@ -96,7 +96,7 @@ class SwingConstants
 	 */
 	static Color VERTEX_SELECTION_COLOR;
 	
-	static
+	static init2()
 	{
 		try
 		{
@@ -137,30 +137,30 @@ class SwingConstants
 	 * line.
 	 */
 	static Stroke EDGE_SELECTION_STROKE = new BasicStroke(1,
-			BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, new List<float> {
-					3, 3 }, 0.0f);
+			BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0, [
+					3.0, 3.0 ], 0.0);
 
 	/**
 	 * Defines the stroke used for painting the border of selected vertices.
 	 * Default is a dashed line.
 	 */
 	static Stroke VERTEX_SELECTION_STROKE = new BasicStroke(1,
-			BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, new List<float> {
-					3, 3 }, 0.0f);
+			BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0, [
+					3.0, 3.0 ], 0.0);
 
 	/**
 	 * Defines the stroke used for painting the preview for new and existing edges
 	 * that are being changed. Default is a dashed line.
 	 */
 	static Stroke PREVIEW_STROKE = new BasicStroke(1,
-			BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, new List<float> {
-					3, 3 }, 0.0f);
+			BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0, [
+					3.0, 3.0 ], 0.0);
 
 	/**
 	 * Defines the border used for painting the preview when vertices are being
 	 * resized, or cells and labels are being moved.
 	 */
-	static Border PREVIEW_BORDER = new LineBorder(
+	/*static Border PREVIEW_BORDER = new LineBorder(
 			SwingConstants.HANDLE_BORDERCOLOR)
 	{
 		/**
@@ -174,5 +174,5 @@ class SwingConstants
 			((Graphics2D) g).setStroke(VERTEX_SELECTION_STROKE);
 			super.paintBorder(c, g, x, y, width, height);
 		}
-	};
+	};*/
 }

@@ -118,16 +118,16 @@ class CellStatePreview
 	/**
 	 * 
 	 */
-	Point2d moveState(CellState state, double dx, double dy)
-	{
-		return moveState(state, dx, dy, true, true);
-	}
+//	Point2d moveState(CellState state, double dx, double dy)
+//	{
+//		return moveState(state, dx, dy, true, true);
+//	}
 
 	/**
 	 * 
 	 */
 	Point2d moveState(CellState state, double dx, double dy,
-			bool add, bool includeEdges)
+			[bool add=true, bool includeEdges=true])
 	{
 		Point2d delta = _deltas.get(state);
 
@@ -291,7 +291,7 @@ class CellStatePreview
 
 		if (state != null)
 		{
-			result.add((CellState) state.clone());
+			result.add(state.clone() as CellState);
 
 			Graph graph = _graphComponent.getGraph();
 			IGraphModel model = graph.getModel();
@@ -446,7 +446,7 @@ class CellStatePreview
 			// Sets antialiasing
 			if (_graphComponent.isAntiAlias())
 			{
-				Utils.setAntiAlias((Graphics2D) g, true, true);
+				Utils.setAntiAlias(g as Graphics2D, true, true);
 			}
 
 			Graphics2D previousGraphics = canvas.getGraphics();
@@ -457,7 +457,7 @@ class CellStatePreview
 			{
 				canvas.setScale(_graphComponent.getGraph().getView().getScale());
 				canvas.setTranslate(0, 0);
-				canvas.setGraphics((Graphics2D) g);
+				canvas.setGraphics(g as Graphics2D);
 
 				_paintPreview(canvas);
 			}

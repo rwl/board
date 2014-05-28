@@ -22,7 +22,7 @@ class GraphTransferHandler extends TransferHandler
 	/**
 	 * 
 	 */
-	static final long serialVersionUID = -6443287704811197675L;
+//	static final long serialVersionUID = -6443287704811197675L;
 
 	/**
 	 * Boolean that specifies if an image of the cells should be created for
@@ -155,7 +155,7 @@ class GraphTransferHandler extends TransferHandler
 	/**
 	 * 
 	 */
-	bool canImport(JComponent comp, DataFlavor[] flavors)
+	bool canImport(JComponent comp, List<DataFlavor> flavors)
 	{
 		for (int i = 0; i < flavors.length; i++)
 		{
@@ -178,7 +178,7 @@ class GraphTransferHandler extends TransferHandler
 	{
 		if (c is GraphComponent)
 		{
-			GraphComponent graphComponent = (GraphComponent) c;
+			GraphComponent graphComponent = c as GraphComponent;
 			Graph graph = graphComponent.getGraph();
 
 			if (!graph.isSelectionEmpty())
@@ -224,7 +224,7 @@ class GraphTransferHandler extends TransferHandler
 	/**
 	 * 
 	 */
-	GraphTransferable createGraphTransferable(
+	GraphTransferable createGraphTransferableWithBounds(
 			GraphComponent graphComponent, List<Object> cells,
 			Rect bounds, ImageIcon icon)
 	{
@@ -269,7 +269,7 @@ class GraphTransferHandler extends TransferHandler
 
 			if (action == TransferHandler.MOVE && !isLocalDrop)
 			{
-				_removeCells((GraphComponent) c, _originalCells);
+				_removeCells(c as GraphComponent, _originalCells);
 				_initialImportCount = 0;
 			}
 		}
@@ -316,12 +316,12 @@ class GraphTransferHandler extends TransferHandler
 
 				if (c is GraphComponent)
 				{
-					GraphComponent graphComponent = (GraphComponent) c;
+					GraphComponent graphComponent = c as GraphComponent;
 
 					if (graphComponent.isEnabled()
 							&& t.isDataFlavorSupported(GraphTransferable.dataFlavor))
 					{
-						GraphTransferable gt = (GraphTransferable) t
+						GraphTransferable gt = (t as GraphTransferable)
 								.getTransferData(GraphTransferable.dataFlavor);
 
 						if (gt.getCells() != null)

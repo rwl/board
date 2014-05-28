@@ -97,7 +97,7 @@ class InteractiveCanvas extends Graphics2DCanvas
 			// Checks if the segments of the edge intersect
 			if (pointCount > 0)
 			{
-				rect = (Rectangle) rect.clone();
+				rect = rect.clone() as Rectangle;
 				int tolerance = graphComponent.getTolerance();
 				rect.grow(tolerance, tolerance);
 
@@ -112,7 +112,7 @@ class InteractiveCanvas extends Graphics2DCanvas
 
 					if (shape is BasicShape)
 					{
-						realShape = ((BasicShape) shape).createShape(this,
+						realShape = (shape as BasicShape).createShape(this,
 								state);
 					}
 				}
@@ -160,10 +160,10 @@ class InteractiveCanvas extends Graphics2DCanvas
 	{
 		if (swimlane != null)
 		{
-			int start = (int) Math.max(2, Math.round(Utils.getInt(
+			int start = Math.max(2, Math.round(Utils.getInt(
 					swimlane.getStyle(), Constants.STYLE_STARTSIZE,
 					Constants.DEFAULT_STARTSIZE)
-					* graphComponent.getGraph().getView().getScale()));
+					* graphComponent.getGraph().getView().getScale())) as int;
 			Rectangle rect = swimlane.getRectangle();
 
 			if (Utils.isTrue(swimlane.getStyle(),

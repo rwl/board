@@ -22,7 +22,7 @@ class CellOverlay extends JComponent implements ICellOverlay
 	/**
 	 * 
 	 */
-	static final long serialVersionUID = 921991820491141221L;
+//	static final long serialVersionUID = 921991820491141221L;
 
 	/**
 	 * 

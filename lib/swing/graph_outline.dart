@@ -30,7 +30,7 @@ class GraphOutline extends JComponent
 	/**
 	 * 
 	 */
-	static final long serialVersionUID = -2521103946905154267L;
+//	static final long serialVersionUID = -2521103946905154267L;
 
 	/**
 	 * 
@@ -139,12 +139,10 @@ class GraphOutline extends JComponent
 	/**
 	 * 
 	 */
-	IEventListener _repaintHandler = new IEventListener()
-	{
-		public void invoke(Object source, EventObj evt)
+	IEventListener _repaintHandler = (Object source, EventObj evt)
 		{
 			updateScaleAndTranslate();
-			Rect dirty = (Rect) evt.getProperty("region");
+			Rect dirty = evt.getProperty("region") as Rect;
 
 			if (dirty != null)
 			{
@@ -173,53 +171,17 @@ class GraphOutline extends JComponent
 				updateFinder(false);
 				repaint();
 			}
-		}
-	};
+		};
 
 	/**
 	 * 
 	 */
-	ComponentListener _componentHandler = new ComponentAdapter()
-	{
-		public void componentResized(ComponentEvent e)
-		{
-			if (updateScaleAndTranslate())
-			{
-				_repaintBuffer = true;
-				updateFinder(false);
-				repaint();
-			}
-			else
-			{
-				updateFinder(true);
-			}
-		}
-	};
+	ComponentListener _componentHandler = ResizedComponentAdapter(this);
 
 	/**
 	 * 
 	 */
-	AdjustmentListener _adjustmentHandler = new AdjustmentListener()
-	{
-
-		/**
-		 * 
-		 */
-		public void adjustmentValueChanged(AdjustmentEvent e)
-		{
-			if (updateScaleAndTranslate())
-			{
-				_repaintBuffer = true;
-				updateFinder(false);
-				repaint();
-			}
-			else
-			{
-				updateFinder(true);
-			}
-		}
-
-	};
+	AdjustmentListener _adjustmentHandler = new AdjustmentValueListener(this);
 
 	/**
 	 * 
@@ -507,10 +469,10 @@ class GraphOutline extends JComponent
 	{
 		Rectangle rect = _graphComponent.getViewport().getViewRect();
 
-		int x = (int) Math.round(rect.x * _scale);
-		int y = (int) Math.round(rect.y * _scale);
-		int w = (int) Math.round((rect.x + rect.width) * _scale) - x;
-		int h = (int) Math.round((rect.y + rect.height) * _scale) - y;
+		int x = Math.round(rect.x * _scale) as int;
+		int y = Math.round(rect.y * _scale) as int;
+		int w = (Math.round((rect.x + rect.width) * _scale) as int) - x;
+		int h = (Math.round((rect.y + rect.height) * _scale) as int) - y;
 
 		updateFinderBounds(new Rectangle(x + _translate.x, y + _translate.y,
 				w + 1, h + 1), repaint);
@@ -595,7 +557,7 @@ class GraphOutline extends JComponent
 	{
 		if (_graphComponent != null)
 		{
-			Graphics2D g2 = (Graphics2D) g;
+			Graphics2D g2 = g as Graphics2D;
 			AffineTransform tx = g2.getTransform();
 
 			try
@@ -651,7 +613,7 @@ class GraphOutline extends JComponent
 	{
 		if (_graphComponent != null)
 		{
-			Graphics2D g2 = (Graphics2D) g;
+			Graphics2D g2 = g as Graphics2D;
 			AffineTransform tx = g2.getTransform();
 
 			try
@@ -679,7 +641,7 @@ class GraphOutline extends JComponent
 	{
 		if (_graphComponent != null)
 		{
-			Graphics2D g2 = (Graphics2D) g;
+			Graphics2D g2 = g as Graphics2D;
 
 			Stroke stroke = g2.getStroke();
 			g.setColor(Color.BLUE);
@@ -714,8 +676,8 @@ class GraphOutline extends JComponent
 			Dimension graphSize = _graphComponent.getGraphControl().getSize();
 			Dimension outlineSize = getSize();
 
-			int gw = (int) graphSize.getWidth();
-			int gh = (int) graphSize.getHeight();
+			int gw = graphSize.getWidth() as int;
+			int gh = graphSize.getHeight() as int;
 
 			if (gw > 0 && gh > 0)
 			{
@@ -728,8 +690,8 @@ class GraphOutline extends JComponent
 				Point2d trans = _graphComponent.getGraph().getView()
 						.getTranslate();
 
-				int w = (int) outlineSize.getWidth() - 2 * _outlineBorder;
-				int h = (int) outlineSize.getHeight() - 2 * _outlineBorder;
+				int w = (outlineSize.getWidth() as int) - 2 * _outlineBorder;
+				int h = (outlineSize.getHeight() as int) - 2 * _outlineBorder;
 
 				if (magnifyPage)
 				{
@@ -737,12 +699,12 @@ class GraphOutline extends JComponent
 					gh -= 2 * Math.round(trans.getY() * graphScale);
 				}
 
-				newScale = Math.min((double) w / gw, (double) h / gh);
+				newScale = Math.min((w as double) / gw, (h as double) / gh);
 
-				dx += (int) Math
-						.round((outlineSize.getWidth() - gw * newScale) / 2);
-				dy += (int) Math
-						.round((outlineSize.getHeight() - gh * newScale) / 2);
+				dx += Math
+						.round((outlineSize.getWidth() - gw * newScale) / 2) as int;
+				dy += Math
+						.round((outlineSize.getHeight() - gh * newScale) / 2) as int;
 
 				if (magnifyPage)
 				{
@@ -765,4 +727,59 @@ class GraphOutline extends JComponent
 		}
 	}
 
+}
+
+class ResizedComponentAdapter extends ComponentAdapter {
+    /**
+     *
+     */
+    final GraphOutline graphOutline;
+
+    /**
+     * @param mxGraphOutline
+     */
+    ResizedComponentAdapter(this.graphOutline);
+
+    void componentResized(ComponentEvent e)
+    {
+        if (graphOutline.updateScaleAndTranslate())
+        {
+            graphOutline.repaintBuffer = true;
+            graphOutline.updateFinder(false);
+            graphOutline.repaint();
+        }
+        else
+        {
+            graphOutline.updateFinder(true);
+        }
+    }
+}
+
+class AdjustmentValueListener implements AdjustmentListener {
+    /**
+     *
+     */
+    final GraphOutline graphOutline;
+
+    /**
+     * @param mxGraphOutline
+     */
+    AdjustmentValueListener(this.graphOutline);
+
+    /**
+     *
+     */
+    void adjustmentValueChanged(AdjustmentEvent e)
+    {
+        if (graphOutline.updateScaleAndTranslate())
+        {
+            graphOutline.repaintBuffer = true;
+            graphOutline.updateFinder(false);
+            graphOutline.repaint();
+        }
+        else
+        {
+            graphOutline.updateFinder(true);
+        }
+    }
 }

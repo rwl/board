@@ -51,7 +51,7 @@ class KeyboardHandler
 
 		if (condition == JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT)
 		{
-			map = (InputMap) UIManager.get("ScrollPane.ancestorInputMap");
+			map = UIManager.get("ScrollPane.ancestorInputMap") as InputMap;
 		}
 		else if (condition == JComponent.WHEN_FOCUSED)
 		{
@@ -90,7 +90,7 @@ class KeyboardHandler
 	 */
 	ActionMap _createActionMap()
 	{
-		ActionMap map = (ActionMap) UIManager.get("ScrollPane.actionMap");
+		ActionMap map = UIManager.get("ScrollPane.actionMap") as ActionMap;
 
 		map.put("edit", GraphActions.getEditAction());
 		map.put("delete", GraphActions.getDeleteAction());

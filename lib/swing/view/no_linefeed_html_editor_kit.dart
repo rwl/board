@@ -21,7 +21,7 @@ class NoLinefeedHtmlEditorKit extends HTMLEditorKit
 		if (doc is HTMLDocument)
 		{
 			NoLinefeedHtmlWriter w = new NoLinefeedHtmlWriter(out,
-					(HTMLDocument) doc, pos, len);
+					doc as HTMLDocument, pos, len);
 
 			// the default behavior of write() was to setLineLength(80) which resulted in
 			// the inserting or a CR/LF around the 80ith character in any given
@@ -34,7 +34,7 @@ class NoLinefeedHtmlEditorKit extends HTMLEditorKit
 		else if (doc is StyledDocument)
 		{
 			MinimalHTMLWriter w = new MinimalHTMLWriter(out,
-					(StyledDocument) doc, pos, len);
+					doc as StyledDocument, pos, len);
 			w.write();
 		}
 		else

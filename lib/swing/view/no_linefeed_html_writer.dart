@@ -11,10 +11,7 @@ part of graph.swing.view;
 class NoLinefeedHtmlWriter extends HTMLWriter
 {
 	NoLinefeedHtmlWriter(Writer buf, HTMLDocument doc, int pos,
-			int len)
-	{
-		super(buf, doc, pos, len);
-	}
+			int len) : super(buf, doc, pos, len);
 
 	void setLineLength(int l)
 	{

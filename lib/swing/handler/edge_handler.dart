@@ -53,62 +53,16 @@ class EdgeHandler extends CellHandler
 	/**
 	 * 
 	 */
-	CellMarker _marker = new CellMarker(_graphComponent)
-	{
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 8826073441093831764L;
-
-		// Only returns edges if they are connectable and never returns
-		// the edge that is currently being modified
-		protected Object _getCell(MouseEvent e)
-		{
-			Graph graph = _graphComponent.getGraph();
-			IGraphModel model = graph.getModel();
-			Object cell = super._getCell(e);
-
-			if (cell == EdgeHandler.this._state.getCell()
-					|| (!graph.isConnectableEdges() && model.isEdge(cell)))
-			{
-				cell = null;
-			}
-
-			return cell;
-		}
-
-		// Sets the highlight color according to isValidConnection
-		protected bool _isValidState(CellState state)
-		{
-			GraphView view = _graphComponent.getGraph().getView();
-			IGraphModel model = _graphComponent.getGraph().getModel();
-			Object edge = EdgeHandler.this._state.getCell();
-			bool isSource = isSource(_index);
-
-			CellState other = view
-					.getTerminalPort(state,
-							view.getState(model.getTerminal(edge, !isSource)),
-							!isSource);
-			Object otherCell = (other != null) ? other.getCell() : null;
-			Object source = (isSource) ? state.getCell() : otherCell;
-			Object target = (isSource) ? otherCell : state.getCell();
-
-			_error = validateConnection(source, target);
-
-			return _error == null;
-		}
-
-	};
+	CellMarker _marker;
 
 	/**
 	 * 
 	 * @param graphComponent
 	 * @param state
 	 */
-	EdgeHandler(GraphComponent graphComponent, CellState state)
+	EdgeHandler(GraphComponent graphComponent, CellState state) : super(graphComponent, state)
 	{
-		super(graphComponent, state);
+        _marker = new EdgeHandlerCellMarker(this, graphComponent);
 	}
 
 	/**
@@ -189,10 +143,10 @@ class EdgeHandler extends CellHandler
 	/**
 	 * 
 	 */
-	Rectangle[] _createHandles()
+	List<Rectangle> _createHandles()
 	{
 		_p = _createPoints(_state);
-		Rectangle[] h = new Rectangle[_p.length + 1];
+        List<Rectangle> h = new List<Rectangle>(_p.length + 1);
 
 		for (int i = 0; i < h.length - 1; i++)
 		{
@@ -258,15 +212,15 @@ class EdgeHandler extends CellHandler
 	/**
 	 * 
 	 */
-	Rectangle _createHandle(Point center)
-	{
-		return _createHandle(center, Constants.HANDLE_SIZE);
-	}
+//	Rectangle _createHandle(Point center)
+//	{
+//		return _createHandle(center, Constants.HANDLE_SIZE);
+//	}
 
 	/**
 	 * 
 	 */
-	Rectangle _createHandle(Point center, int size)
+	Rectangle _createHandle(Point center, [int size=Constants.HANDLE_SIZE])
 	{
 		return new Rectangle(center.x - size / 2, center.y - size / 2, size,
 				size);
@@ -277,7 +231,7 @@ class EdgeHandler extends CellHandler
 	 */
 	PoList<int> _createPoints(CellState s)
 	{
-		PoList<int> pts = new Point[s.getAbsolutePointCount()];
+        List<Point> pts = new List<Point>(s.getAbsolutePointCount());
 
 		for (int i = 0; i < pts.length; i++)
 		{
@@ -292,13 +246,9 @@ class EdgeHandler extends CellHandler
 	 */
 	JComponent _createPreview()
 	{
-		JPanel preview = new JPanel()
+        throw new Exception();
+		/*JPanel preview = new JPanel()
 		{
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = -894546588972313020L;
-
 			public void paint(Graphics g)
 			{
 				super.paint(g);
@@ -336,7 +286,7 @@ class EdgeHandler extends CellHandler
 					}
 				}
 			}
-		};
+		};*/
 
 		if (isLabel(_index))
 		{
@@ -438,8 +388,8 @@ class EdgeHandler extends CellHandler
 			_gridEnabledEvent = _graphComponent.isGridEnabledEvent(e);
 			_constrainedEvent = _graphComponent.isConstrainedEvent(e);
 
-			bool isSource = isSource(_index);
-			bool isTarget = isTarget(_index);
+			bool _isSource = isSource(_index);
+			bool _isTarget = isTarget(_index);
 
 			Object source = null;
 			Object target = null;
@@ -471,8 +421,8 @@ class EdgeHandler extends CellHandler
 				}
 
 				Rectangle rect = _getPreviewBounds();
-				rect.translate((int) Math.round(pt.getX() - _first.x),
-						(int) Math.round(pt.getY() - _first.y));
+				rect.translate(Math.round(pt.getX() - _first.x) as int,
+						Math.round(pt.getY() - _first.y) as int);
 				_preview.setBounds(rect);
 			}
 			else
@@ -482,11 +432,11 @@ class EdgeHandler extends CellHandler
 				// computing the correct perimeter points and edge style.
 				Geometry geometry = _graphComponent.getGraph()
 						.getCellGeometry(_state.getCell());
-				CellState clone = (CellState) _state.clone();
+				CellState clone = _state.clone() as CellState;
 				List<Point2d> points = geometry.getPoints();
 				GraphView view = clone.getView();
 
-				if (isSource || isTarget)
+				if (_isSource || _isTarget)
 				{
 					_marker.process(e);
 					CellState currentState = _marker.getValidState();
@@ -522,7 +472,7 @@ class EdgeHandler extends CellHandler
 
 					if (points == null)
 					{
-						points = Arrays.asList(new List<Point2d> { point });
+						points = Arrays.asList([ point ]);
 					}
 					else if (_index - 1 < points.size())
 					{
@@ -563,13 +513,13 @@ class EdgeHandler extends CellHandler
 				}
 				*/
 
-				if (!isSource || sourceState != null)
+				if (!_isSource || sourceState != null)
 				{
 					view.updateFixedTerminalPoint(clone, sourceState, true,
 							sourceConstraint);
 				}
 
-				if (!isTarget || targetState != null)
+				if (!_isTarget || targetState != null)
 				{
 					view.updateFixedTerminalPoint(clone, targetState, false,
 							targetConstraint);
@@ -702,7 +652,7 @@ class EdgeHandler extends CellHandler
 			model.beginUpdate();
 			try
 			{
-				geometry = (Geometry) geometry.clone();
+				geometry = geometry.clone() as Geometry;
 
 				if (isSource(_index) || isTarget(_index))
 				{
@@ -759,10 +709,10 @@ class EdgeHandler extends CellHandler
 		{
 			if (isClone)
 			{
-				Object clone = graph.cloneCells(new List<Object> { edge })[0];
+				Object clone = graph.cloneCells([ edge ])[0];
 
 				Object parent = model.getParent(edge);
-				graph.addCells(new List<Object> { clone }, parent);
+				graph.addCells([ clone ], parent);
 
 				Object other = model.getTerminal(edge, !isSource);
 				graph.connectCell(clone, other, !isSource);
@@ -792,7 +742,7 @@ class EdgeHandler extends CellHandler
 
 		if (geometry != null)
 		{
-			geometry = (Geometry) geometry.clone();
+			geometry = geometry.clone() as Geometry;
 
 			// Resets the relative location stored inside the geometry
 			Point2d pt = graph.getView().getRelativePoint(edgeState, x, y);
@@ -851,7 +801,7 @@ class EdgeHandler extends CellHandler
 	 */
 	void paint(Graphics g)
 	{
-		Graphics2D g2 = (Graphics2D) g;
+		Graphics2D g2 = g as Graphics2D;
 
 		Stroke stroke = g2.getStroke();
 		g2.setStroke(getSelectionStroke());
@@ -879,4 +829,53 @@ class EdgeHandler extends CellHandler
 		super.paint(g);
 	}
 
+}
+
+class EdgeHandlerCellMarker extends CellMarker {
+
+    final mxEdgeHandler edgeHandler;
+
+//    private static final long serialVersionUID = 8826073441093831764L;
+
+    EdgeHandlerCellMarker(EdgeHandler mxEdgeHandler, GraphComponent graphComponent) : super(graphComponent) {
+        edgeHandler = mxEdgeHandler;
+    }
+
+    // Only returns edges if they are connectable and never returns
+    // the edge that is currently being modified
+    Object getCell(MouseEvent e)
+    {
+        mxGraph graph = graphComponent.getGraph();
+        mxIGraphModel model = graph.getModel();
+        Object cell = super.getCell(e);
+
+        if (cell == edgeHandler.state.getCell()
+        || (!graph.isConnectableEdges() && model.isEdge(cell)))
+        {
+            cell = null;
+        }
+
+        return cell;
+    }
+
+    // Sets the highlight color according to isValidConnection
+    boolean isValidState(mxCellState state)
+    {
+        mxGraphView view = graphComponent.getGraph().getView();
+        mxIGraphModel model = graphComponent.getGraph().getModel();
+        Object edge = edgeHandler.state.getCell();
+        boolean isSource = edgeHandler.isSource(edgeHandler.index);
+
+        mxCellState other = view
+        .getTerminalPort(state,
+        view.getState(model.getTerminal(edge, !isSource)),
+        !isSource);
+        Object otherCell = (other != null) ? other.getCell() : null;
+        Object source = (isSource) ? state.getCell() : otherCell;
+        Object target = (isSource) ? otherCell : state.getCell();
+
+        edgeHandler.error = edgeHandler.validateConnection(source, target);
+
+        return edgeHandler.error == null;
+    }
 }

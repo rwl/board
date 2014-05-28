@@ -63,23 +63,19 @@ class Morphing extends Animation
 		this(graphComponent, 6, 1.5, DEFAULT_DELAY);
 
 		// Installs the paint handler
-		graphComponent.addListener(Event.AFTER_PAINT, new IEventListener()
-		{
-			public void invoke(Object sender, EventObj evt)
+		graphComponent.addListener(Event.AFTER_PAINT, (Object sender, EventObj evt)
 			{
-				Graphics g = (Graphics) evt.getProperty("g");
+				Graphics g = evt.getProperty("g") as Graphics;
 				paint(g);
-			}
-		});
+			});
 	}
 
 	/**
 	 * Constructs a new morphing instance for the given graph.
 	 */
 	Morphing(GraphComponent graphComponent, int steps, double ease,
-			int delay)
+			int delay) : super(delay)
 	{
-		super(delay);
 		this._graphComponent = graphComponent;
 		this._steps = steps;
 		this._ease = ease;
@@ -137,7 +133,7 @@ class Morphing extends Animation
 		if (_cells != null)
 		{
 			// Animates the given cells individually without recursion
-			for (Object cell : _cells)
+			for (Object cell in _cells)
 			{
 				_animateCell(cell, _preview, false);
 			}
@@ -156,7 +152,7 @@ class Morphing extends Animation
 		{
 			stopAnimation();
 		}
-	};
+	}
 
 	/**
 	 * 

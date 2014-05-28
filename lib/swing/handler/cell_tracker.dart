@@ -11,22 +11,19 @@ part of graph.swing.handler;
 /**
  * Event handler that highlights cells. Inherits from CellMarker.
  */
-class CellTracker extends CellMarker implements MouseListener,
-		MouseMotionListener
+class CellTracker extends CellMarker implements MouseListener, MouseMotionListener
 {
 
 	/**
 	 * 
 	 */
-	static final long serialVersionUID = 7372144804885125688L;
+//	static final long serialVersionUID = 7372144804885125688L;
 
 	/**
 	 * Constructs an event handler that highlights cells.
 	 */
-	CellTracker(GraphComponent graphComponent, Color color)
+	CellTracker(GraphComponent graphComponent, Color color) : super(graphComponent, color)
 	{
-		super(graphComponent, color);
-
 		graphComponent.getGraphControl().addMouseListener(this);
 		graphComponent.getGraphControl().addMouseMotionListener(this);
 	}

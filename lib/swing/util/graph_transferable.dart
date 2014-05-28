@@ -29,7 +29,7 @@ class GraphTransferable implements Transferable, UIResource,
 	/**
 	 * 
 	 */
-	static final long serialVersionUID = 5123819419918087664L;
+//	static final long serialVersionUID = 5123819419918087664L;
 
 	/**
 	 * Global switch to disable image support in transferables. Set this to false as a workaround
@@ -64,22 +64,22 @@ class GraphTransferable implements Transferable, UIResource,
 	/**
 	 * 
 	 */
-	static DataFlavor[] _htmlFlavors;
+	static List<DataFlavor> _htmlFlavors;
 
 	/**
 	 * 
 	 */
-	static DataFlavor[] _stringFlavors;
+	static List<DataFlavor> _stringFlavors;
 
 	/**
 	 * 
 	 */
-	static DataFlavor[] _plainFlavors;
+	static List<DataFlavor> _plainFlavors;
 
 	/**
 	 * 
 	 */
-	static DataFlavor[] _imageFlavors;
+	static List<DataFlavor> _imageFlavors;
 
 	/**
 	 * 
@@ -142,9 +142,9 @@ class GraphTransferable implements Transferable, UIResource,
 	/**
 	 * 
 	 */
-	DataFlavor[] getTransferDataFlavors()
+    List<DataFlavor> getTransferDataFlavors()
 	{
-		DataFlavor[] richerFlavors = _getRicherFlavors();
+        List<DataFlavor> richerFlavors = _getRicherFlavors();
 
 		int nRicher = (richerFlavors != null) ? richerFlavors.length : 0;
 		int nHtml = (_isHtmlSupported()) ? _htmlFlavors.length : 0;
@@ -153,7 +153,7 @@ class GraphTransferable implements Transferable, UIResource,
 		int nImage = (isImageSupported()) ? _imageFlavors.length : 0;
 		int nFlavors = nRicher + nHtml + nPlain + nString + nImage;
 
-		DataFlavor[] flavors = new DataFlavor[nFlavors];
+        List<DataFlavor> flavors = new List<DataFlavor>(nFlavors);
 
 		// fill in the array
 		int nDone = 0;
@@ -196,9 +196,9 @@ class GraphTransferable implements Transferable, UIResource,
 	 * plain text. If this method returns a non-null value, it will be placed at
 	 * the start of the array of supported flavors.
 	 */
-	DataFlavor[] _getRicherFlavors()
+    List<DataFlavor> _getRicherFlavors()
 	{
-		return new DataFlavor[] { dataFlavor };
+		return [ dataFlavor ];
 	}
 
 	/**
@@ -211,7 +211,7 @@ class GraphTransferable implements Transferable, UIResource,
 	 */
 	bool isDataFlavorSupported(DataFlavor flavor)
 	{
-		DataFlavor[] flavors = getTransferDataFlavors();
+        List<DataFlavor> flavors = getTransferDataFlavors();
 
 		for (int i = 0; i < flavors.length; i++)
 		{
@@ -256,7 +256,7 @@ class GraphTransferable implements Transferable, UIResource,
 				else
 				{
 					ByteArrayOutputStream stream = new ByteArrayOutputStream();
-					ImageIO.write((RenderedImage) _image.getImage(), "bmp",
+					ImageIO.write(_image.getImage() as RenderedImage, "bmp",
 							stream);
 
 					return new ByteArrayInputStream(stream.toByteArray());
@@ -268,15 +268,15 @@ class GraphTransferable implements Transferable, UIResource,
 			String data = _getHtmlData();
 			data = (data == null) ? "" : data;
 
-			if (String.class.equals(flavor.getRepresentationClass()))
+			if (flavor.getRepresentationClass() is String)
 			{
 				return data;
 			}
-			else if (Reader.class.equals(flavor.getRepresentationClass()))
+			else if (flavor.getRepresentationClass() is Reader)
 			{
 				return new StringReader(data);
 			}
-			else if (InputStream.class.equals(flavor.getRepresentationClass()))
+			else if (flavor.getRepresentationClass() is InputStream)
 			{
 				return new ByteArrayInputStream(data.getBytes());
 			}
@@ -287,15 +287,15 @@ class GraphTransferable implements Transferable, UIResource,
 			String data = _getPlainData();
 			data = (data == null) ? "" : data;
 
-			if (String.class.equals(flavor.getRepresentationClass()))
+			if (flavor.getRepresentationClass() is String)
 			{
 				return data;
 			}
-			else if (Reader.class.equals(flavor.getRepresentationClass()))
+			else if (flavor.getRepresentationClass() is Reader)
 			{
 				return new StringReader(data);
 			}
-			else if (InputStream.class.equals(flavor.getRepresentationClass()))
+			else if (flavor.getRepresentationClass() is InputStream)
 			{
 				return new ByteArrayInputStream(data.getBytes());
 			}
@@ -321,7 +321,7 @@ class GraphTransferable implements Transferable, UIResource,
 	 */
 	bool _isRicherFlavor(DataFlavor flavor)
 	{
-		DataFlavor[] richerFlavors = _getRicherFlavors();
+		List<DataFlavor> richerFlavors = _getRicherFlavors();
 		int nFlavors = (richerFlavors != null) ? richerFlavors.length : 0;
 
 		for (int i = 0; i < nFlavors; i++)
@@ -364,7 +364,7 @@ class GraphTransferable implements Transferable, UIResource,
 	 */
 	bool _isHtmlFlavor(DataFlavor flavor)
 	{
-		DataFlavor[] flavors = _htmlFlavors;
+		List<DataFlavor> flavors = _htmlFlavors;
 
 		for (int i = 0; i < flavors.length; i++)
 		{
@@ -433,7 +433,7 @@ class GraphTransferable implements Transferable, UIResource,
 	 */
 	bool _isPlainFlavor(DataFlavor flavor)
 	{
-		DataFlavor[] flavors = _plainFlavors;
+		List<DataFlavor> flavors = _plainFlavors;
 
 		for (int i = 0; i < flavors.length; i++)
 		{
@@ -473,7 +473,7 @@ class GraphTransferable implements Transferable, UIResource,
 	 */
 	bool _isStringFlavor(DataFlavor flavor)
 	{
-		DataFlavor[] flavors = _stringFlavors;
+		List<DataFlavor> flavors = _stringFlavors;
 
 		for (int i = 0; i < flavors.length; i++)
 		{
@@ -489,30 +489,30 @@ class GraphTransferable implements Transferable, UIResource,
 	/**
 	 * Local Machine Reference Data Flavor.
 	 */
-	static
+	static init()
 	{
 		try
 		{
-			_htmlFlavors = new DataFlavor[3];
+			_htmlFlavors = new List<DataFlavor>(3);
 			_htmlFlavors[0] = new DataFlavor("text/html;class=java.lang.String");
 			_htmlFlavors[1] = new DataFlavor("text/html;class=java.io.Reader");
 			_htmlFlavors[2] = new DataFlavor(
 					"text/html;charset=unicode;class=java.io.InputStream");
 
-			_plainFlavors = new DataFlavor[3];
+			_plainFlavors = new List<DataFlavor>(3);
 			_plainFlavors[0] = new DataFlavor(
 					"text/plain;class=java.lang.String");
 			_plainFlavors[1] = new DataFlavor("text/plain;class=java.io.Reader");
 			_plainFlavors[2] = new DataFlavor(
 					"text/plain;charset=unicode;class=java.io.InputStream");
 
-			_stringFlavors = new DataFlavor[2];
+			_stringFlavors = new List<DataFlavor>(2);
 			_stringFlavors[0] = new DataFlavor(
 					DataFlavor.javaJVMLocalObjectMimeType
 							+ ";class=java.lang.String");
 			_stringFlavors[1] = DataFlavor.stringFlavor;
 
-			_imageFlavors = new DataFlavor[2];
+			_imageFlavors = new List<DataFlavor>(2);
 			_imageFlavors[0] = DataFlavor.imageFlavor;
 			_imageFlavors[1] = new DataFlavor("image/png");
 		}

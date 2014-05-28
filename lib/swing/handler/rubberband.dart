@@ -64,33 +64,13 @@ class Rubberband implements MouseListener, MouseMotionListener
 		graphComponent.getGraphControl().addMouseListener(this);
 		graphComponent.getGraphControl().addMouseMotionListener(this);
 
-		graphComponent.addListener(Event.AFTER_PAINT, new IEventListener()
-		{
-
-			public void invoke(Object source, EventObj evt)
+		graphComponent.addListener(Event.AFTER_PAINT, (Object source, EventObj evt)
 			{
-				paintRubberband((Graphics) evt.getProperty("g"));
-			}
-
-		});
+				paintRubberband((evt as Graphics).getProperty("g"));
+			});
 
 		// Handles escape keystrokes
-		graphComponent.addKeyListener(new KeyAdapter()
-		{
-			/**
-			 * 
-			 * @param e
-			 * @return
-			 */
-			public void keyPressed(KeyEvent e)
-			{
-				if (e.getKeyCode() == KeyEvent.VK_ESCAPE
-						&& graphComponent.isEscapeEnabled())
-				{
-					reset();
-				}
-			}
-		});
+		graphComponent.addKeyListener(new RubberbandKeyAdapter(this, graphComponent));
 
 		// LATER: Add destroy method for removing above listeners
 	}
@@ -332,4 +312,28 @@ class Rubberband implements MouseListener, MouseMotionListener
 		// empty
 	}
 
+}
+
+class RubberbandKeyAdapter extends KeyAdapter {
+
+    final Rubberband rubberband;
+    final GraphComponent graphComponent;
+
+    RubberbandKeyAdapter(this.rubberband, GraphComponent graphComponent) {
+        this.graphComponent = graphComponent;
+    }
+
+    /**
+     *
+     * @param e
+     * @return
+     */
+    void keyPressed(KeyEvent e)
+    {
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE
+        && graphComponent.isEscapeEnabled())
+        {
+            rubberband.reset();
+        }
+    }
 }

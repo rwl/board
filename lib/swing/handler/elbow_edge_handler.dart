@@ -20,10 +20,7 @@ class ElbowEdgeHandler extends EdgeHandler
 	 * @param graphComponent
 	 * @param state
 	 */
-	ElbowEdgeHandler(GraphComponent graphComponent, CellState state)
-	{
-		super(graphComponent, state);
-	}
+	ElbowEdgeHandler(GraphComponent graphComponent, CellState state) : super(graphComponent, state);
 
 	/**
 	 * Hook for subclassers to return tooltip texts for certain points on the
@@ -60,10 +57,10 @@ class ElbowEdgeHandler extends EdgeHandler
 	/**
 	 * 
 	 */
-	Rectangle[] _createHandles()
+	List<Rectangle> _createHandles()
 	{
 		_p = _createPoints(_state);
-		Rectangle[] h = new Rectangle[4];
+        List<Rectangle> h = new List<Rectangle>(4);
 
 		Point2d p0 = _state.getAbsolutePoint(0);
 		Point2d pe = _state.getAbsolutePoint(_state.getAbsolutePointCount() - 1);

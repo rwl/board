@@ -358,481 +358,449 @@ class GraphActions
 	 * @param e
 	 * @return Returns the graph for the given action event.
 	 */
-	static final Graph getGraph(ActionEvent e)
+	static /*final*/ Graph getGraph(ActionEvent e)
 	{
 		Object source = e.getSource();
 
 		if (source is GraphComponent)
 		{
-			return ((GraphComponent) source).getGraph();
+			return (source as GraphComponent).getGraph();
 		}
 
 		return null;
 	}
 
-	/**
-	 * 
-	 */
-	static class EditAction extends AbstractAction
-	{
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 4610112721356742702L;
-
-		/**
-		 * 
-		 * @param name
-		 */
-		public EditAction(String name)
-		{
-			super(name);
-		}
-
-		/**
-		 * 
-		 */
-		public void actionPerformed(ActionEvent e)
-		{
-			if (e.getSource() is GraphComponent)
-			{
-				((GraphComponent) e.getSource()).startEditing();
-			}
-		}
-
-	}
-
-	/**
-	 * 
-	 */
-	static class DeleteAction extends AbstractAction
-	{
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -8212339796803275529L;
-
-		/**
-		 * 
-		 * @param name
-		 */
-		public DeleteAction(String name)
-		{
-			super(name);
-		}
-
-		/**
-		 * 
-		 */
-		public void actionPerformed(ActionEvent e)
-		{
-			Graph graph = getGraph(e);
-
-			if (graph != null)
-			{
-				graph.removeCells();
-			}
-		}
-
-	}
-
-	/**
-	 * 
-	 */
-	static class GroupAction extends AbstractAction
-	{
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -4718086600089409092L;
-
-		/**
-		 * 
-		 * @param name
-		 */
-		public GroupAction(String name)
-		{
-			super(name);
-		}
-
-		/**
-		 * 
-		 */
-		protected int getGroupBorder(Graph graph)
-		{
-			return 2 * graph.getGridSize();
-
-		}
-
-		/**
-		 * 
-		 */
-		public void actionPerformed(ActionEvent e)
-		{
-			Graph graph = getGraph(e);
-
-			if (graph != null)
-			{
-				graph.setSelectionCell(graph.groupCells(null,
-						getGroupBorder(graph)));
-			}
-		}
-
-	}
-
-	/**
-	 * 
-	 */
-	static class UngroupAction extends AbstractAction
-	{
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 2247770767961318251L;
-
-		/**
-		 * 
-		 * @param name
-		 */
-		public UngroupAction(String name)
-		{
-			super(name);
-		}
-
-		/**
-		 * 
-		 */
-		public void actionPerformed(ActionEvent e)
-		{
-			Graph graph = getGraph(e);
-
-			if (graph != null)
-			{
-				graph.setSelectionCells(graph.ungroupCells());
-			}
-		}
-
-	}
-
-	/**
-	 * 
-	 */
-	static class RemoveFromParentAction extends AbstractAction
-	{
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 7169443038859140811L;
-
-		/**
-		 * 
-		 * @param name
-		 */
-		public RemoveFromParentAction(String name)
-		{
-			super(name);
-		}
-
-		/**
-		 * 
-		 */
-		public void actionPerformed(ActionEvent e)
-		{
-			Graph graph = getGraph(e);
-
-			if (graph != null)
-			{
-				graph.removeCellsFromParent();
-			}
-		}
-
-	}
-
-	/**
-	 * 
-	 */
-	static class UpdateGroupBoundsAction extends AbstractAction
-	{
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -4718086600089409092L;
-
-		/**
-		 * 
-		 * @param name
-		 */
-		public UpdateGroupBoundsAction(String name)
-		{
-			super(name);
-		}
-
-		/**
-		 * 
-		 */
-		protected int getGroupBorder(Graph graph)
-		{
-			return 2 * graph.getGridSize();
-		}
-
-		/**
-		 * 
-		 */
-		public void actionPerformed(ActionEvent e)
-		{
-			Graph graph = getGraph(e);
-
-			if (graph != null)
-			{
-				graph.updateGroupBounds(null, getGroupBorder(graph));
-			}
-		}
-
-	}
-
-	/**
-	 * 
-	 */
-	static class LayerAction extends AbstractAction
-	{
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 562519299806253741L;
-
-		/**
-		 * 
-		 * @param name
-		 */
-		public LayerAction(String name)
-		{
-			super(name);
-		}
-
-		/**
-		 * 
-		 */
-		public void actionPerformed(ActionEvent e)
-		{
-			Graph graph = getGraph(e);
-
-			if (graph != null)
-			{
-				bool toBack = getValue(Action.NAME).toString()
-						.equalsIgnoreCase("toBack");
-				graph.orderCells(toBack);
-			}
-		}
-
-	}
-
-	/**
-	 * 
-	 */
-	static class FoldAction extends AbstractAction
-	{
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 4078517503905239901L;
-
-		/**
-		 * 
-		 * @param name
-		 */
-		public FoldAction(String name)
-		{
-			super(name);
-		}
-
-		/**
-		 * 
-		 */
-		public void actionPerformed(ActionEvent e)
-		{
-			Graph graph = getGraph(e);
-
-			if (graph != null)
-			{
-				bool collapse = getValue(Action.NAME).toString()
-						.equalsIgnoreCase("collapse");
-				graph.foldCells(collapse);
-			}
-		}
-
-	}
-
-	/**
-	 * 
-	 */
-	static class DrillAction extends AbstractAction
-	{
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 5464382323663870291L;
-
-		/**
-		 * 
-		 * @param name
-		 */
-		public DrillAction(String name)
-		{
-			super(name);
-		}
-
-		/**
-		 * 
-		 */
-		public void actionPerformed(ActionEvent e)
-		{
-			Graph graph = getGraph(e);
-
-			if (graph != null)
-			{
-				String name = getValue(Action.NAME).toString();
-
-				if (name.equalsIgnoreCase("enterGroup"))
-				{
-					graph.enterGroup();
-				}
-				else if (name.equalsIgnoreCase("exitGroup"))
-				{
-					graph.exitGroup();
-				}
-				else
-				{
-					graph.home();
-				}
-			}
-		}
-
-	}
-
-	/**
-	 * 
-	 */
-	static class ZoomAction extends AbstractAction
-	{
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -7500195051313272384L;
-
-		/**
-		 * 
-		 * @param name
-		 */
-		public ZoomAction(String name)
-		{
-			super(name);
-		}
-
-		/**
-		 * 
-		 */
-		public void actionPerformed(ActionEvent e)
-		{
-			Object source = e.getSource();
-
-			if (source is GraphComponent)
-			{
-				String name = getValue(Action.NAME).toString();
-				GraphComponent graphComponent = (GraphComponent) source;
-
-				if (name.equalsIgnoreCase("zoomIn"))
-				{
-					graphComponent.zoomIn();
-				}
-				else if (name.equalsIgnoreCase("zoomOut"))
-				{
-					graphComponent.zoomOut();
-				}
-				else
-				{
-					graphComponent.zoomActual();
-				}
-			}
-		}
-
-	}
-
-	/**
-	 * 
-	 */
-	static class SelectAction extends AbstractAction
-	{
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 6501585024845668187L;
-
-		/**
-		 * 
-		 * @param name
-		 */
-		public SelectAction(String name)
-		{
-			super(name);
-		}
-
-		/**
-		 * 
-		 */
-		public void actionPerformed(ActionEvent e)
-		{
-			Graph graph = getGraph(e);
-
-			if (graph != null)
-			{
-				String name = getValue(Action.NAME).toString();
-
-				if (name.equalsIgnoreCase("selectAll"))
-				{
-					graph.selectAll();
-				}
-				else if (name.equalsIgnoreCase("selectNone"))
-				{
-					graph.clearSelection();
-				}
-				else if (name.equalsIgnoreCase("selectNext"))
-				{
-					graph.selectNextCell();
-				}
-				else if (name.equalsIgnoreCase("selectPrevious"))
-				{
-					graph.selectPreviousCell();
-				}
-				else if (name.equalsIgnoreCase("selectParent"))
-				{
-					graph.selectParentCell();
-				}
-				else if (name.equalsIgnoreCase("vertices"))
-				{
-					graph.selectVertices();
-				}
-				else if (name.equalsIgnoreCase("edges"))
-				{
-					graph.selectEdges();
-				}
-				else
-				{
-					graph.selectChildCell();
-				}
-			}
-		}
-
-	}
+}
+
+
+/**
+ *
+ */
+class EditAction extends AbstractAction
+{
+
+    /**
+     *
+     */
+//    private static final long serialVersionUID = 4610112721356742702L;
+
+    /**
+     *
+     * @param name
+     */
+    EditAction(String name) : super(name);
+
+    /**
+     *
+     */
+    void actionPerformed(ActionEvent e)
+    {
+        if (e.getSource() is GraphComponent)
+        {
+            (e.getSource() as GraphComponent).startEditing();
+        }
+    }
+
+}
+
+/**
+ *
+ */
+class DeleteAction extends AbstractAction
+{
+
+    /**
+     *
+     */
+//    private static final long serialVersionUID = -8212339796803275529L;
+
+    /**
+     *
+     * @param name
+     */
+    DeleteAction(String name) : super(name);
+
+    /**
+     *
+     */
+    void actionPerformed(ActionEvent e)
+    {
+        Graph graph = getGraph(e);
+
+        if (graph != null)
+        {
+            graph.removeCells();
+        }
+    }
+
+}
+
+/**
+ *
+ */
+class GroupAction extends AbstractAction
+{
+
+    /**
+     *
+     */
+//    private static final long serialVersionUID = -4718086600089409092L;
+
+    /**
+     *
+     * @param name
+     */
+    public GroupAction(String name) : super(name);
+
+    /**
+     *
+     */
+    int getGroupBorder(Graph graph)
+    {
+        return 2 * graph.getGridSize();
+
+    }
+
+    /**
+     *
+     */
+    void actionPerformed(ActionEvent e)
+    {
+        Graph graph = getGraph(e);
+
+        if (graph != null)
+        {
+            graph.setSelectionCell(graph.groupCells(null,
+                getGroupBorder(graph)));
+        }
+    }
+
+}
+
+/**
+ *
+ */
+class UngroupAction extends AbstractAction
+{
+
+    /**
+     *
+     */
+//    private static final long serialVersionUID = 2247770767961318251L;
+
+    /**
+     *
+     * @param name
+     */
+    UngroupAction(String name) : super(name);
+
+    /**
+     *
+     */
+    void actionPerformed(ActionEvent e)
+    {
+        Graph graph = getGraph(e);
+
+        if (graph != null)
+        {
+            graph.setSelectionCells(graph.ungroupCells());
+        }
+    }
+
+}
+
+/**
+ *
+ */
+class RemoveFromParentAction extends AbstractAction
+{
+
+    /**
+     *
+     */
+//    private static final long serialVersionUID = 7169443038859140811L;
+
+    /**
+     *
+     * @param name
+     */
+    RemoveFromParentAction(String name) : super(name);
+
+    /**
+     *
+     */
+    void actionPerformed(ActionEvent e)
+    {
+        Graph graph = getGraph(e);
+
+        if (graph != null)
+        {
+            graph.removeCellsFromParent();
+        }
+    }
+
+}
+
+/**
+ *
+ */
+class UpdateGroupBoundsAction extends AbstractAction
+{
+
+    /**
+     *
+     */
+//    private static final long serialVersionUID = -4718086600089409092L;
+
+    /**
+     *
+     * @param name
+     */
+    UpdateGroupBoundsAction(String name) : super(name);
+
+    /**
+     *
+     */
+    int getGroupBorder(Graph graph)
+    {
+        return 2 * graph.getGridSize();
+    }
+
+    /**
+     *
+     */
+    void actionPerformed(ActionEvent e)
+    {
+        Graph graph = getGraph(e);
+
+        if (graph != null)
+        {
+            graph.updateGroupBounds(null, getGroupBorder(graph));
+        }
+    }
+
+}
+
+/**
+ *
+ */
+class LayerAction extends AbstractAction
+{
+
+    /**
+     *
+     */
+//    private static final long serialVersionUID = 562519299806253741L;
+
+    /**
+     *
+     * @param name
+     */
+    LayerAction(String name) : super(name);
+
+    /**
+     *
+     */
+    void actionPerformed(ActionEvent e)
+    {
+        Graph graph = getGraph(e);
+
+        if (graph != null)
+        {
+            bool toBack = getValue(Action.NAME).toString()
+                .equalsIgnoreCase("toBack");
+            graph.orderCells(toBack);
+        }
+    }
+
+}
+
+/**
+ *
+ */
+class FoldAction extends AbstractAction
+{
+
+    /**
+     *
+     */
+//    private static final long serialVersionUID = 4078517503905239901L;
+
+    /**
+     *
+     * @param name
+     */
+    FoldAction(String name) : super(name);
+
+    /**
+     *
+     */
+    void actionPerformed(ActionEvent e)
+    {
+        Graph graph = getGraph(e);
+
+        if (graph != null)
+        {
+            bool collapse = getValue(Action.NAME).toString()
+            .equalsIgnoreCase("collapse");
+            graph.foldCells(collapse);
+        }
+    }
+
+}
+
+/**
+ *
+ */
+class DrillAction extends AbstractAction
+{
+
+    /**
+     *
+     */
+//    private static final long serialVersionUID = 5464382323663870291L;
+
+    /**
+     *
+     * @param name
+     */
+    DrillAction(String name) : super(name);
+
+    /**
+     *
+     */
+    void actionPerformed(ActionEvent e)
+    {
+        Graph graph = getGraph(e);
+
+        if (graph != null)
+        {
+            String name = getValue(Action.NAME).toString();
+
+            if (name.equalsIgnoreCase("enterGroup"))
+            {
+                graph.enterGroup();
+            }
+            else if (name.equalsIgnoreCase("exitGroup"))
+            {
+                graph.exitGroup();
+            }
+            else
+            {
+                graph.home();
+            }
+        }
+    }
+
+}
+
+/**
+ *
+ */
+class ZoomAction extends AbstractAction
+{
+
+    /**
+     *
+     */
+//    private static final long serialVersionUID = -7500195051313272384L;
+
+    /**
+     *
+     * @param name
+     */
+    ZoomAction(String name) : super(name);
+
+    /**
+     *
+     */
+    void actionPerformed(ActionEvent e)
+    {
+        Object source = e.getSource();
+
+        if (source is GraphComponent)
+        {
+            String name = getValue(Action.NAME).toString();
+            GraphComponent graphComponent = source as GraphComponent;
+
+            if (name.equalsIgnoreCase("zoomIn"))
+            {
+                graphComponent.zoomIn();
+            }
+            else if (name.equalsIgnoreCase("zoomOut"))
+            {
+                graphComponent.zoomOut();
+            }
+            else
+            {
+                graphComponent.zoomActual();
+            }
+        }
+    }
+
+}
+
+/**
+ *
+ */
+class SelectAction extends AbstractAction
+{
+
+    /**
+     *
+     */
+//    private static final long serialVersionUID = 6501585024845668187L;
+
+    /**
+     *
+     * @param name
+     */
+    SelectAction(String name) : super(name);
+
+    /**
+     *
+     */
+    void actionPerformed(ActionEvent e)
+    {
+        Graph graph = getGraph(e);
+
+        if (graph != null)
+        {
+            String name = getValue(Action.NAME).toString();
+
+            if (name.equalsIgnoreCase("selectAll"))
+            {
+                graph.selectAll();
+            }
+            else if (name.equalsIgnoreCase("selectNone"))
+            {
+                graph.clearSelection();
+            }
+            else if (name.equalsIgnoreCase("selectNext"))
+                {
+                    graph.selectNextCell();
+                }
+                else if (name.equalsIgnoreCase("selectPrevious"))
+                    {
+                        graph.selectPreviousCell();
+                    }
+                    else if (name.equalsIgnoreCase("selectParent"))
+                        {
+                            graph.selectParentCell();
+                        }
+                        else if (name.equalsIgnoreCase("vertices"))
+                            {
+                                graph.selectVertices();
+                            }
+                            else if (name.equalsIgnoreCase("edges"))
+                                {
+                                    graph.selectEdges();
+                                }
+                                else
+                                {
+                                    graph.selectChildCell();
+                                }
+        }
+    }
 
 }

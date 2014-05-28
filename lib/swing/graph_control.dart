@@ -12,6 +12,22 @@ part of graph.swing;
 //import javax.swing.ImageIcon;
 //import javax.swing.JComponent;
 
+class GraphControlMouseAdapter extends MouseAdapter {
+
+    final GraphControl graphControl;
+
+    GraphControlMouseAdapter(this.graphControl);
+
+    void mouseReleased(MouseEvent e)
+    {
+        if (this.graphControl.translate.x != 0 || this.graphControl.translate.y != 0)
+        {
+            this.graphControl.translate = new Point(0, 0);
+            this.graphControl.repaint();
+        }
+    }
+}
+
 /**
  * 
  * @author gaudenz
@@ -28,7 +44,7 @@ class GraphControl extends JComponent
 	/**
 	 * 
 	 */
-	static final long serialVersionUID = -8916603170766739124L;
+//	static final long serialVersionUID = -8916603170766739124L;
 
 	/**
 	 * Specifies a translation for painting. This should only be used during
@@ -41,20 +57,9 @@ class GraphControl extends JComponent
 	 * @param graphComponent TODO
 	 * 
 	 */
-	GraphControl(GraphComponent graphComponent)
+	GraphControl(this.graphComponent)
 	{
-		this.graphComponent = graphComponent;
-		addMouseListener(new MouseAdapter()
-		{
-			public void mouseReleased(MouseEvent e)
-			{
-				if (translate.x != 0 || translate.y != 0)
-				{
-					translate = new Point(0, 0);
-					repaint();
-				}
-			}
-		});
+        addMouseListener(new GraphControlMouseAdapter(this));
 	}
 
 	/**
@@ -118,8 +123,8 @@ class GraphControl extends JComponent
 
 			if (min != null)
 			{
-				d.width = (int) Math.max(d.width,
-						Math.round(min.getWidth() * scale));
+				d.width = Math.max(d.width,
+						Math.round(min.getWidth() * scale)) as int;
 			}
 
 			d.width += translate.x;
@@ -138,8 +143,8 @@ class GraphControl extends JComponent
 
 			if (min != null)
 			{
-				d.height = (int) Math.max(d.height,
-						Math.round(min.getHeight() * scale));
+				d.height = Math.max(d.height,
+						Math.round(min.getHeight() * scale)) as int;
 			}
 
 			d.height += translate.y;
@@ -222,10 +227,10 @@ class GraphControl extends JComponent
 
 		if (min != null)
 		{
-			d.width = (int) Math.max(d.width,
-					Math.round(min.getWidth() * scale));
-			d.height = (int) Math.max(d.height,
-					Math.round(min.getHeight() * scale));
+			d.width = Math.max(d.width,
+					Math.round(min.getWidth() * scale)) as int;
+			d.height = Math.max(d.height,
+					Math.round(min.getHeight() * scale)) as int;
 		}
 
 		if (!getPreferredSize().equals(d))
@@ -279,7 +284,7 @@ class GraphControl extends JComponent
 		// Paints the graph directly onto the graphics
 		else
 		{
-			Graphics2D g2 = (Graphics2D) g;
+			Graphics2D g2 = g as Graphics2D;
 			RenderingHints tmp = g2.getRenderingHints();
 
 			// Sets the graphics in the canvas
@@ -361,10 +366,10 @@ class GraphControl extends JComponent
 				rotation);
 
 		// Adds scaled stroke width
-		int border = (int) Math
+		int border = (Math
 				.ceil(Utils.getDouble(state.getStyle(),
 						Constants.STYLE_STROKEWIDTH)
-						* this.graphComponent._graph.getView().getScale()) + 1;
+						* this.graphComponent._graph.getView().getScale()) as int) + 1;
 		tmp.grow(border);
 
 		if (Utils.isTrue(state.getStyle(), Constants.STYLE_SHADOW))
@@ -401,7 +406,7 @@ class GraphControl extends JComponent
 		if (state != null
 				&& isCellDisplayable(state.getCell())
 				&& (!(canvas is Graphics2DCanvas) || hitClip(
-						(Graphics2DCanvas) canvas, state)))
+						canvas as Graphics2DCanvas, state)))
 		{
 			this.graphComponent._graph.drawState(canvas, state,
 					cell != this.graphComponent._cellEditor.getEditingCell());
@@ -459,7 +464,7 @@ class GraphControl extends JComponent
 		if (this.graphComponent.isFoldingEnabled() && canvas is Graphics2DCanvas)
 		{
 			IGraphModel model = this.graphComponent._graph.getModel();
-			Graphics2DCanvas g2c = (Graphics2DCanvas) canvas;
+			Graphics2DCanvas g2c = canvas as Graphics2DCanvas;
 			Graphics2D g2 = g2c.getGraphics();
 
 			// Draws the collapse/expand icons

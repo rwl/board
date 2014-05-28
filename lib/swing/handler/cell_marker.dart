@@ -110,7 +110,7 @@ class CellMarker extends JComponent
 	/**
 	 * 
 	 */
-	static final long serialVersionUID = 614473367053597572L;
+//	static final long serialVersionUID = 614473367053597572L;
 
 	/**
 	 * Specifies if the highlights should appear on top of everything
@@ -182,34 +182,34 @@ class CellMarker extends JComponent
 	 * 
 	 * @param graphComponent
 	 */
-	CellMarker(GraphComponent graphComponent)
-	{
-		this(graphComponent, SwingConstants.DEFAULT_VALID_COLOR);
-	}
+//	CellMarker(GraphComponent graphComponent)
+//	{
+//		this(graphComponent, );
+//	}
 
 	/**
 	 * Constructs a new marker for the given graph component.
 	 */
-	CellMarker(GraphComponent graphComponent, Color validColor)
-	{
-		this(graphComponent, validColor, SwingConstants.DEFAULT_INVALID_COLOR);
-	}
+//	CellMarker(GraphComponent graphComponent, Color validColor)
+//	{
+//		this(graphComponent, validColor, SwingConstants.DEFAULT_INVALID_COLOR);
+//	}
 
 	/**
 	 * Constructs a new marker for the given graph component.
 	 */
-	CellMarker(GraphComponent graphComponent, Color validColor,
-			Color invalidColor)
-	{
-		this(graphComponent, validColor, invalidColor,
-				Constants.DEFAULT_HOTSPOT);
-	}
+//	CellMarker(GraphComponent graphComponent, Color validColor,
+//			Color invalidColor)
+//	{
+//		this(graphComponent, validColor, invalidColor,
+//				Constants.DEFAULT_HOTSPOT);
+//	}
 
 	/**
 	 * Constructs a new marker for the given graph component.
 	 */
-	CellMarker(GraphComponent graphComponent, Color validColor,
-			Color invalidColor, double hotspot)
+	CellMarker(GraphComponent graphComponent, [Color validColor=SwingConstants.DEFAULT_VALID_COLOR,
+			Color invalidColor=SwingConstants.DEFAULT_INVALID_COLOR, double hotspot=Constants.DEFAULT_HOTSPOT])
 	{
 		this._graphComponent = graphComponent;
 		this._validColor = validColor;
@@ -405,15 +405,15 @@ class CellMarker extends JComponent
 	/**
 	 * 
 	 */
-	void highlight(CellState state, Color color)
-	{
-		highlight(state, color, true);
-	}
+//	void highlight(CellState state, Color color)
+//	{
+//		highlight(state, color, true);
+//	}
 	
 	/**
 	 * 
 	 */
-	void highlight(CellState state, Color color, bool valid)
+	void highlight(CellState state, Color color, [bool valid=true])
 	{
 		if (valid)
 		{
@@ -566,15 +566,15 @@ class CellMarker extends JComponent
 	/**
 	 * Removes the given event listener.
 	 */
-	void removeListener(IEventListener listener)
-	{
-		_eventSource.removeListener(listener);
-	}
+//	void removeListener(IEventListener listener)
+//	{
+//		_eventSource.removeListener(listener);
+//	}
 
 	/**
 	 * Removes the given event listener for the specified event name.
 	 */
-	void removeListener(IEventListener listener, String eventName)
+	void removeListener(IEventListener listener, [String eventName=null])
 	{
 		_eventSource.removeListener(listener, eventName);
 	}
@@ -586,7 +586,7 @@ class CellMarker extends JComponent
 	{
 		if (_markedState != null && _currentColor != null)
 		{
-			((Graphics2D) g).setStroke(DEFAULT_STROKE);
+			(g as Graphics2D).setStroke(DEFAULT_STROKE);
 			g.setColor(_currentColor);
 
 			if (_markedState.getAbsolutePointCount() > 0)

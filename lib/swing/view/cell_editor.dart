@@ -26,17 +26,17 @@ abstract class ICellEditor
   /**
    * Returns the cell that is currently being edited.
    */
-  public Object getEditingCell();
+  Object getEditingCell();
 
   /**
    * Starts editing the given cell.
    */
-  public void startEditing(Object cell, EventObject trigger);
+  void startEditing(Object cell, EventObject trigger);
 
   /**
    * Stops the current editing.
    */
-  public void stopEditing(bool cancel);
+  void stopEditing(bool cancel);
 
 }
 
@@ -171,24 +171,12 @@ class CellEditor implements ICellEditor
 	/**
 	 * 
 	 */
-	AbstractAction _cancelEditingAction = new AbstractAction()
-	{
-		public void actionPerformed(ActionEvent e)
-		{
-			stopEditing(true);
-		}
-	};
+	AbstractAction _cancelEditingAction = new CancelEditingAction(this);
 
 	/**
 	 * 
 	 */
-	AbstractAction _textSubmitAction = new AbstractAction()
-	{
-		public void actionPerformed(ActionEvent e)
-		{
-			stopEditing(false);
-		}
-	};
+	AbstractAction _textSubmitAction = new TextSubmitAction(this);
 
 	/**
 	 * 
@@ -397,10 +385,10 @@ class CellEditor implements ICellEditor
 		}
 
 		bounds.setSize(
-				(int) Math.max(bounds.getWidth(),
-						Math.round(_minimumWidth * scale)),
-				(int) Math.max(bounds.getHeight(),
-						Math.round(_minimumHeight * scale)));
+				Math.max(bounds.getWidth(),
+						Math.round(_minimumWidth * scale)) as int,
+				Math.max(bounds.getHeight(),
+						Math.round(_minimumHeight * scale)) as int);
 
 		return bounds;
 	}
@@ -613,4 +601,28 @@ class CellEditor implements ICellEditor
 		this._minimumHeight = minimumHeight;
 	}
 
+}
+
+class CancelEditingAction extends AbstractAction {
+
+    final CellEditor cellEditor;
+
+    CancelEditingAction(this.cellEditor);
+
+    void actionPerformed(ActionEvent e)
+    {
+        cellEditor.stopEditing(true);
+    }
+}
+
+class TextSubmitAction extends AbstractAction {
+
+    final CellEditor cellEditor;
+
+    TextSubmitAction(this.cellEditor);
+
+    void actionPerformed(ActionEvent e)
+    {
+        cellEditor.stopEditing(false);
+    }
 }

@@ -29,7 +29,7 @@ class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	static final long serialVersionUID = -2543899557644889853L;
+//	static final long serialVersionUID = -2543899557644889853L;
 
 	/**
 	 * 
@@ -125,13 +125,10 @@ class ConnectionHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	/*transient*/ IEventListener _resetHandler = new IEventListener()
-	{
-		public void invoke(Object source, EventObj evt)
+	/*transient*/ IEventListener _resetHandler = (Object source, EventObj evt)
 		{
 			reset();
-		}
-	};
+		};
 
 	/**
 	 * 
@@ -142,14 +139,11 @@ class ConnectionHandler extends MouseAdapter
 		this._graphComponent = graphComponent;
 
 		// Installs the paint handler
-		graphComponent.addListener(Event.AFTER_PAINT, new IEventListener()
-		{
-			public void invoke(Object sender, EventObj evt)
+		graphComponent.addListener(Event.AFTER_PAINT, (Object sender, EventObj evt)
 			{
-				Graphics g = (Graphics) evt.getProperty("g");
+				Graphics g = evt.getProperty("g") as Graphics;
 				paint(g);
-			}
-		});
+			});
 
 		_connectPreview = _createConnectPreview();
 
@@ -160,23 +154,18 @@ class ConnectionHandler extends MouseAdapter
 		// Installs the graph listeners and keeps them in sync
 		_addGraphListeners(graphComponent.getGraph());
 
-		graphComponent.addPropertyChangeListener(new PropertyChangeListener()
-		{
-			public void propertyChange(PropertyChangeEvent evt)
+		graphComponent.addPropertyChangeListener((PropertyChangeEvent evt)
 			{
 				if (evt.getPropertyName().equals("graph"))
 				{
-					_removeGraphListeners((Graph) evt.getOldValue());
-					_addGraphListeners((Graph) evt.getNewValue());
+					_removeGraphListeners(evt.getOldValue() as Graph);
+					_addGraphListeners(evt.getNewValue() as Graph);
 				}
-			}
-		});
+			});
 
-		_marker = new CellMarker(graphComponent)
+        throw new Exception();
+		/*_marker = new CellMarker(graphComponent)
 		{
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 103433247310526381L;
 
 			// Overrides to return cell at location only if valid (so that
@@ -245,7 +234,7 @@ class ConnectionHandler extends MouseAdapter
 
 				return super._intersects(state, e);
 			}
-		};
+		};*/
 
 		_marker.setHotspotEnabled(true);
 	}
@@ -480,7 +469,7 @@ class ConnectionHandler extends MouseAdapter
 	Object createTargetVertex(MouseEvent e, Object source)
 	{
 		Graph graph = _graphComponent.getGraph();
-		Object clone = graph.cloneCells(new List<Object> { source })[0];
+		Object clone = graph.cloneCells([ source ])[0];
 		IGraphModel model = graph.getModel();
 		Geometry geo = model.getGeometry(clone);
 
@@ -583,8 +572,8 @@ class ConnectionHandler extends MouseAdapter
 				imgHeight = _connectIcon.getIconHeight();
 			}
 
-			int x = (int) _source.getCenterX() - imgWidth / 2;
-			int y = (int) _source.getCenterY() - imgHeight / 2;
+			int x = (_source.getCenterX() as int) - imgWidth / 2;
+			int y = (_source.getCenterY() as int) - imgHeight / 2;
 
 			if (_graphComponent.getGraph().isSwimlane(_source.getCell()))
 			{
@@ -688,7 +677,7 @@ class ConnectionHandler extends MouseAdapter
 						{
 							Object vertex = createTargetVertex(e, _source.getCell());
 							dropTarget = graph.getDropTarget(
-									new List<Object> { vertex }, e.getPoint(),
+									[ vertex ], e.getPoint(),
 									_graphComponent.getCellAt(e.getX(), e.getY()));
 	
 							if (vertex != null)
@@ -715,7 +704,7 @@ class ConnectionHandler extends MouseAdapter
 									dropTarget = graph.getDefaultParent();
 								}
 	
-								graph.addCells(new List<Object> { vertex }, dropTarget);
+								graph.addCells([ vertex ], dropTarget);
 							}
 	
 							// FIXME: Here we pre-create the state for the vertex to be
@@ -795,15 +784,15 @@ class ConnectionHandler extends MouseAdapter
 	/**
 	 * Removes the given event listener.
 	 */
-	void removeListener(IEventListener listener)
-	{
-		_eventSource.removeListener(listener);
-	}
+//	void removeListener(IEventListener listener)
+//	{
+//		_eventSource.removeListener(listener);
+//	}
 
 	/**
 	 * Removes the given event listener for the specified event name.
 	 */
-	void removeListener(IEventListener listener, String eventName)
+	void removeListener(IEventListener listener, [String eventName=null])
 	{
 		_eventSource.removeListener(listener, eventName);
 	}

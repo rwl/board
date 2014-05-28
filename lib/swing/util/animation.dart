@@ -77,15 +77,10 @@ class Animation extends EventSource
 	{
 		if (_timer == null)
 		{
-			_timer = new Timer(_delay, new ActionListener()
-			{
-
-				public void actionPerformed(ActionEvent e)
+			_timer = new Timer(_delay, (ActionEvent e)
 				{
 					updateAnimation();
-				}
-
-			});
+				});
 
 			_timer.start();
 		}

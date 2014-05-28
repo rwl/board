@@ -22,14 +22,13 @@ part of graph.swing.handler;
 
 //import javax.swing.SwingUtilities;
 
-class SelectionCellsHandler implements MouseListener,
-		MouseMotionListener
+class SelectionCellsHandler implements MouseListener, MouseMotionListener
 {
 
 	/**
 	 * 
 	 */
-	static final long serialVersionUID = -882368002120921842L;
+//	static final long serialVersionUID = -882368002120921842L;
 
 	/**
 	 * Defines the default value for maxHandlers. Default is 100.
@@ -70,37 +69,25 @@ class SelectionCellsHandler implements MouseListener,
 	/**
 	 * 
 	 */
-	/*transient*/ IEventListener _refreshHandler = new IEventListener()
-	{
-		public void invoke(Object source, EventObj evt)
+	/*transient*/ IEventListener _refreshHandler = (Object source, EventObj evt)
 		{
 			if (isEnabled())
 			{
 				refresh();
 			}
-		}
-	};
+		};
 
 	/**
 	 * 
 	 */
-	/*transient*/ PropertyChangeListener _labelMoveHandler = new PropertyChangeListener()
-	{
-
-		/*
-		 * (non-Javadoc)
-		 * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
-		 */
-		public void propertyChange(PropertyChangeEvent evt)
+	/*transient*/ PropertyChangeListener _labelMoveHandler = (PropertyChangeEvent evt)
 		{
 			if (evt.getPropertyName().equals("vertexLabelsMovable")
 					|| evt.getPropertyName().equals("edgeLabelsMovable"))
 			{
 				refresh();
 			}
-		}
-
-	};
+		};
 
 	/**
 	 * 
@@ -117,27 +104,21 @@ class SelectionCellsHandler implements MouseListener,
 		// Installs the graph listeners and keeps them in sync
 		_addGraphListeners(graphComponent.getGraph());
 
-		graphComponent.addPropertyChangeListener(new PropertyChangeListener()
-		{
-			public void propertyChange(PropertyChangeEvent evt)
+		graphComponent.addPropertyChangeListener((PropertyChangeEvent evt)
 			{
 				if (evt.getPropertyName().equals("graph"))
 				{
-					_removeGraphListeners((Graph) evt.getOldValue());
-					_addGraphListeners((Graph) evt.getNewValue());
+					_removeGraphListeners(evt.getOldValue() as Graph);
+					_addGraphListeners(evt.getNewValue() as Graph);
 				}
-			}
-		});
+			});
 
 		// Installs the paint handler
-		graphComponent.addListener(Event.PAINT, new IEventListener()
-		{
-			public void invoke(Object sender, EventObj evt)
+		graphComponent.addListener(Event.PAINT, (Object sender, EventObj evt)
 			{
-				Graphics g = (Graphics) evt.getProperty("g");
+				Graphics g = evt.getProperty("g") as Graphics;
 				paintHandles(g);
-			}
-		});
+			});
 	}
 
 	/**
@@ -409,7 +390,7 @@ class SelectionCellsHandler implements MouseListener,
 			}
 		}
 		
-		for (CellHandler handler: oldHandlers.values())
+		for (CellHandler handler in oldHandlers.values())
 		{
 			handler._destroy();
 		}

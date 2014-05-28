@@ -16,7 +16,7 @@ class PanningHandler extends MouseAdapter
 	/**
 	 * 
 	 */
-	static final long serialVersionUID = 7969814728058376339L;
+//	static final long serialVersionUID = 7969814728058376339L;
 
 	/**
 	 * 
