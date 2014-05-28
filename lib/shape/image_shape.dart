@@ -10,66 +10,53 @@ part of graph.shape;
  * A rectangular shape that contains a single image. See ImageBundle for
  * creating a lookup table with images which can then be referenced by key.
  */
-class ImageShape extends RectangleShape
-{
+class ImageShape extends RectangleShape {
 
-	/**
+  /**
 	 * 
 	 */
-	void paintShape(Graphics2DCanvas canvas, CellState state)
-	{
-		super.paintShape(canvas, state);
+  void paintShape(Graphics2DCanvas canvas, CellState state) {
+    super.paintShape(canvas, state);
 
-		bool flipH = Utils.isTrue(state.getStyle(),
-				Constants.STYLE_IMAGE_FLIPH, false);
-		bool flipV = Utils.isTrue(state.getStyle(),
-				Constants.STYLE_IMAGE_FLIPV, false);
+    bool flipH = Utils.isTrue(state.getStyle(), Constants.STYLE_IMAGE_FLIPH, false);
+    bool flipV = Utils.isTrue(state.getStyle(), Constants.STYLE_IMAGE_FLIPV, false);
 
-		canvas.drawImage(getImageBounds(canvas, state),
-				getImageForStyle(canvas, state),
-				Graphics2DCanvas.PRESERVE_IMAGE_ASPECT, flipH, flipV);
-	}
+    canvas.drawImage(getImageBounds(canvas, state), getImageForStyle(canvas, state), Graphics2DCanvas.PRESERVE_IMAGE_ASPECT, flipH, flipV);
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	Rectangle getImageBounds(Graphics2DCanvas canvas, CellState state)
-	{
-		return state.getRectangle();
-	}
+  Rectangle getImageBounds(Graphics2DCanvas canvas, CellState state) {
+    return state.getRectangle();
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	bool hasGradient(Graphics2DCanvas canvas, CellState state)
-	{
-		return false;
-	}
+  bool hasGradient(Graphics2DCanvas canvas, CellState state) {
+    return false;
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	String getImageForStyle(Graphics2DCanvas canvas, CellState state)
-	{
-		return canvas.getImageForStyle(state.getStyle());
-	}
+  String getImageForStyle(Graphics2DCanvas canvas, CellState state) {
+    return canvas.getImageForStyle(state.getStyle());
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	Color getFillColor(Graphics2DCanvas canvas, CellState state)
-	{
-		return Utils.getColor(state.getStyle(),
-				Constants.STYLE_IMAGE_BACKGROUND);
-	}
+  Color getFillColor(Graphics2DCanvas canvas, CellState state) {
+    return Utils.getColor(state.getStyle(), Constants.STYLE_IMAGE_BACKGROUND);
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	Color getStrokeColor(Graphics2DCanvas canvas, CellState state)
-	{
-		return Utils.getColor(state.getStyle(),
-				Constants.STYLE_IMAGE_BORDER);
-	}
+  Color getStrokeColor(Graphics2DCanvas canvas, CellState state) {
+    return Utils.getColor(state.getStyle(), Constants.STYLE_IMAGE_BORDER);
+  }
 
 }

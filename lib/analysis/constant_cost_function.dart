@@ -7,29 +7,26 @@ part of graph.analysis;
 /**
  * Implements a cost function for a constant cost per traversed cell.
  */
-class ConstantCostFunction implements ICostFunction
-{
+class ConstantCostFunction implements ICostFunction {
 
-	/**
+  /**
 	 * 
 	 */
-	double _cost = 0;
+  double _cost = 0;
 
-	/**
+  /**
 	 * 
 	 * @param cost
 	 */
-	ConstantCostFunction(double cost)
-	{
-		this._cost = cost;
-	}
+  ConstantCostFunction(double cost) {
+    this._cost = cost;
+  }
 
-	/**
+  /**
 	 *
 	 */
-	double getCost(CellState state)
-	{
-		return _cost;
-	}
+  double getCost(CellState state) {
+    return _cost;
+  }
 
 }

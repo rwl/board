@@ -26,103 +26,79 @@ part of graph.shape;
  * );
  * </pre> 
  */
-class HtmlTextShape implements ITextShape
-{
+class HtmlTextShape implements ITextShape {
 
-	/**
+  /**
 	 * Specifies if linefeeds should be replaced with breaks in HTML markup.
 	 * Default is true.
 	 */
-	bool _replaceHtmlLinefeeds = true;
+  bool _replaceHtmlLinefeeds = true;
 
-	/**
+  /**
 	 * Returns replaceHtmlLinefeeds
 	 */
-	bool isReplaceHtmlLinefeeds()
-	{
-		return _replaceHtmlLinefeeds;
-	}
+  bool isReplaceHtmlLinefeeds() {
+    return _replaceHtmlLinefeeds;
+  }
 
-	/**
+  /**
 	 * Returns replaceHtmlLinefeeds
 	 */
-	void setReplaceHtmlLinefeeds(bool value)
-	{
-		_replaceHtmlLinefeeds = value;
-	}
+  void setReplaceHtmlLinefeeds(bool value) {
+    _replaceHtmlLinefeeds = value;
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	String _createHtmlDocument(Map<String, Object> style, String text,
-			int w, int h)
-	{
-		String overflow = Utils.getString(style, Constants.STYLE_OVERFLOW, "");
-		
-		if (overflow.equals("fill"))
-		{
-			return Utils.createHtmlDocument(style, text, 1, w, null, "height:" + h + "pt;");
-		}
-		else if (overflow.equals("width"))
-		{
-			return Utils.createHtmlDocument(style, text, 1, w);
-		}
-		else
-		{
-			return Utils.createHtmlDocument(style, text);
-		}
-	}
+  String _createHtmlDocument(Map<String, Object> style, String text, int w, int h) {
+    String overflow = Utils.getString(style, Constants.STYLE_OVERFLOW, "");
 
-	/**
+    if (overflow.equals("fill")) {
+      return Utils.createHtmlDocument(style, text, 1, w, null, "height:" + h + "pt;");
+    } else if (overflow.equals("width")) {
+      return Utils.createHtmlDocument(style, text, 1, w);
+    } else {
+      return Utils.createHtmlDocument(style, text);
+    }
+  }
+
+  /**
 	 * 
 	 */
-	void paintShape(Graphics2DCanvas canvas, String text,
-			CellState state, Map<String, Object> style)
-	{
-		LightweightLabel textRenderer = LightweightLabel
-				.getSharedInstance();
-		CellRendererPane rendererPane = canvas.getRendererPane();
-		Rectangle rect = state.getLabelBounds().getRectangle();
-		Graphics2D g = canvas.getGraphics();
+  void paintShape(Graphics2DCanvas canvas, String text, CellState state, Map<String, Object> style) {
+    LightweightLabel textRenderer = LightweightLabel.getSharedInstance();
+    CellRendererPane rendererPane = canvas.getRendererPane();
+    Rectangle rect = state.getLabelBounds().getRectangle();
+    Graphics2D g = canvas.getGraphics();
 
-		if (textRenderer != null
-				&& rendererPane != null
-				&& (g.getClipBounds() == null || g.getClipBounds().intersects(
-						rect)))
-		{
-			double scale = canvas.getScale();
-			int x = rect.x;
-			int y = rect.y;
-			int w = rect.width;
-			int h = rect.height;
+    if (textRenderer != null && rendererPane != null && (g.getClipBounds() == null || g.getClipBounds().intersects(rect))) {
+      double scale = canvas.getScale();
+      int x = rect.x;
+      int y = rect.y;
+      int w = rect.width;
+      int h = rect.height;
 
-			if (!Utils.isTrue(style, Constants.STYLE_HORIZONTAL, true))
-			{
-				g.rotate(-Math.PI / 2, x + w / 2, y + h / 2);
-				g.translate(w / 2 - h / 2, h / 2 - w / 2);
+      if (!Utils.isTrue(style, Constants.STYLE_HORIZONTAL, true)) {
+        g.rotate(-Math.PI / 2, x + w / 2, y + h / 2);
+        g.translate(w / 2 - h / 2, h / 2 - w / 2);
 
-				int tmp = w;
-				w = h;
-				h = tmp;
-			}
+        int tmp = w;
+        w = h;
+        h = tmp;
+      }
 
-			// Replaces the linefeeds with BR tags
-			if (isReplaceHtmlLinefeeds())
-			{
-				text = text.replaceAll("\n", "<br>");
-			}
+      // Replaces the linefeeds with BR tags
+      if (isReplaceHtmlLinefeeds()) {
+        text = text.replaceAll("\n", "<br>");
+      }
 
-			// Renders the scaled text
-			textRenderer.setText(_createHtmlDocument(style, text,
-					Math.round(w / state.getView().getScale()) as int,
-					Math.round(h / state.getView().getScale()) as int));
-			textRenderer.setFont(Utils.getFont(style, canvas.getScale()));
-			g.scale(scale, scale);
-			rendererPane.paintComponent(g, textRenderer, rendererPane,
-					(x / scale) + Constants.LABEL_INSET as int,
-					(y / scale) + Constants.LABEL_INSET as int,
-					(w / scale) as int, (h / scale) as int, true);
-		}
-	}
+      // Renders the scaled text
+      textRenderer.setText(_createHtmlDocument(style, text, Math.round(w / state.getView().getScale()) as int, Math.round(h / state.getView().getScale()) as int));
+      textRenderer.setFont(Utils.getFont(style, canvas.getScale()));
+      g.scale(scale, scale);
+      rendererPane.paintComponent(g, textRenderer, rendererPane, (x / scale) + Constants.LABEL_INSET as int, (y / scale) + Constants.LABEL_INSET as int, (w / scale) as int, (h / scale) as int, true);
+    }
+  }
 
 }

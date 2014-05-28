@@ -9,127 +9,103 @@ part of graph.io.graphml;
 /**
  * This class represents the properties of a JGraph edge.
  */
-class GraphMlShapeEdge
-{
-	String _text = "";
+class GraphMlShapeEdge {
+  String _text = "";
 
-	String _style = "";
+  String _style = "";
 
-	String _edgeSource;
+  String _edgeSource;
 
-	String _edgeTarget;
+  String _edgeTarget;
 
-	/**
+  /**
 	 * Construct a Shape Edge with text and style.
 	 * @param text
 	 * @param style
 	 */
-	factory GraphMlShapeEdge.text(String text, String style)
-	{
-		this._text = text;
-		this._style = style;
-	}
+  factory GraphMlShapeEdge.text(String text, String style) {
+    this._text = text;
+    this._style = style;
+  }
 
-	/**
+  /**
 	 * Constructs a ShapeEdge from a xml shapeEdgeElement.
 	 * @param shapeEdgeElement
 	 */
-	factory GraphMlShapeEdge.elem(Element shapeEdgeElement)
-	{
-		Element labelElement = GraphMlUtils.childsTag(shapeEdgeElement,
-				GraphMlConstants.JGRAPH + GraphMlConstants.LABEL);
-		
-		if (labelElement != null)
-		{
-			this._text = labelElement.getAttribute(GraphMlConstants.TEXT);
-		}
+  factory GraphMlShapeEdge.elem(Element shapeEdgeElement) {
+    Element labelElement = GraphMlUtils.childsTag(shapeEdgeElement, GraphMlConstants.JGRAPH + GraphMlConstants.LABEL);
 
-		Element styleElement = GraphMlUtils.childsTag(shapeEdgeElement,
-				GraphMlConstants.JGRAPH + GraphMlConstants.STYLE);
-		
-		if (styleElement != null)
-		{
-			this._style = styleElement.getAttribute(GraphMlConstants.PROPERTIES);
+    if (labelElement != null) {
+      this._text = labelElement.getAttribute(GraphMlConstants.TEXT);
+    }
 
-		}
-	}
+    Element styleElement = GraphMlUtils.childsTag(shapeEdgeElement, GraphMlConstants.JGRAPH + GraphMlConstants.STYLE);
 
-	/**
+    if (styleElement != null) {
+      this._style = styleElement.getAttribute(GraphMlConstants.PROPERTIES);
+
+    }
+  }
+
+  /**
 	 * Construct an empty Shape Edge Element.
 	 */
-	GraphMlShapeEdge()
-	{
-	}
+  GraphMlShapeEdge() {
+  }
 
-	/**
+  /**
 	 * Generates a ShapeEdge Element from this class.
 	 * @param document Document where the key Element will be inserted.
 	 * @return Returns the generated Elements.
 	 */
-	Element generateElement(Document document)
-	{
-		Element dataEdge = document.createElementNS(GraphMlConstants.JGRAPH_URL,
-				GraphMlConstants.JGRAPH + GraphMlConstants.SHAPEEDGE);
+  Element generateElement(Document document) {
+    Element dataEdge = document.createElementNS(GraphMlConstants.JGRAPH_URL, GraphMlConstants.JGRAPH + GraphMlConstants.SHAPEEDGE);
 
-		if (!this._text.equals(""))
-		{
-			Element dataEdgeLabel = document.createElementNS(
-					GraphMlConstants.JGRAPH_URL, GraphMlConstants.JGRAPH
-							+ GraphMlConstants.LABEL);
-			dataEdgeLabel.setAttribute(GraphMlConstants.TEXT, this._text);
-			dataEdge.appendChild(dataEdgeLabel);
-		}
-		
-		if (!this._style.equals(""))
-		{
-			Element dataEdgeStyle = document.createElementNS(
-					GraphMlConstants.JGRAPH_URL, GraphMlConstants.JGRAPH
-							+ GraphMlConstants.STYLE);
+    if (!this._text.equals("")) {
+      Element dataEdgeLabel = document.createElementNS(GraphMlConstants.JGRAPH_URL, GraphMlConstants.JGRAPH + GraphMlConstants.LABEL);
+      dataEdgeLabel.setAttribute(GraphMlConstants.TEXT, this._text);
+      dataEdge.appendChild(dataEdgeLabel);
+    }
 
-			dataEdgeStyle.setAttribute(GraphMlConstants.PROPERTIES, this._style);
-			dataEdge.appendChild(dataEdgeStyle);
-		}
+    if (!this._style.equals("")) {
+      Element dataEdgeStyle = document.createElementNS(GraphMlConstants.JGRAPH_URL, GraphMlConstants.JGRAPH + GraphMlConstants.STYLE);
 
-		return dataEdge;
-	}
+      dataEdgeStyle.setAttribute(GraphMlConstants.PROPERTIES, this._style);
+      dataEdge.appendChild(dataEdgeStyle);
+    }
 
-	String getText()
-	{
-		return _text;
-	}
+    return dataEdge;
+  }
 
-	void setText(String text)
-	{
-		this._text = text;
-	}
+  String getText() {
+    return _text;
+  }
 
-	String getStyle()
-	{
-		return _style;
-	}
+  void setText(String text) {
+    this._text = text;
+  }
 
-	void setStyle(String style)
-	{
-		this._style = style;
-	}
+  String getStyle() {
+    return _style;
+  }
 
-	String getEdgeSource()
-	{
-		return _edgeSource;
-	}
+  void setStyle(String style) {
+    this._style = style;
+  }
 
-	void setEdgeSource(String edgeSource)
-	{
-		this._edgeSource = edgeSource;
-	}
+  String getEdgeSource() {
+    return _edgeSource;
+  }
 
-	String getEdgeTarget()
-	{
-		return _edgeTarget;
-	}
+  void setEdgeSource(String edgeSource) {
+    this._edgeSource = edgeSource;
+  }
 
-	void setEdgeTarget(String edgeTarget)
-	{
-		this._edgeTarget = edgeTarget;
-	}
+  String getEdgeTarget() {
+    return _edgeTarget;
+  }
+
+  void setEdgeTarget(String edgeTarget) {
+    this._edgeTarget = edgeTarget;
+  }
 }

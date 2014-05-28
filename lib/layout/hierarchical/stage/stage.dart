@@ -1,4 +1,3 @@
-
 library graph.layout.hierarchical.stage;
 
 import '../hierarchical.dart' show HierarchicalLayout;

@@ -10,68 +10,60 @@ part of graph.swing.util;
 /**
  *
  */
-class MouseAdapter implements MouseMotionListener, MouseListener
-{
+class MouseAdapter implements MouseMotionListener, MouseListener {
 
-	/**
+  /**
 	 * 
 	 */
-//	static final long serialVersionUID = -6413162217897819199L;
+  //	static final long serialVersionUID = -6413162217897819199L;
 
-	/**
+  /**
 	 * 
 	 */
-	void mouseDragged(MouseEvent e)
-	{
-		// empty
-	}
+  void mouseDragged(MouseEvent e) {
+    // empty
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void mousePressed(MouseEvent e)
-	{
-		// empty
-	}
+  void mousePressed(MouseEvent e) {
+    // empty
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void mouseReleased(MouseEvent e)
-	{
-		// empty
-	}
+  void mouseReleased(MouseEvent e) {
+    // empty
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void mouseMoved(MouseEvent e)
-	{
-		// empty
-	}
+  void mouseMoved(MouseEvent e) {
+    // empty
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void mouseClicked(MouseEvent e)
-	{
-		// empty
-	}
+  void mouseClicked(MouseEvent e) {
+    // empty
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void mouseEntered(MouseEvent e)
-	{
-		// empty
-	}
+  void mouseEntered(MouseEvent e) {
+    // empty
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void mouseExited(MouseEvent e)
-	{
-		// empty
-	}
+  void mouseExited(MouseEvent e) {
+    // empty
+  }
 
 }

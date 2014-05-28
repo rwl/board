@@ -46,288 +46,240 @@ part of graph.view;
  *   });
  * </code>
  */
-class GraphSelectionModel extends EventSource
-{
+class GraphSelectionModel extends EventSource {
 
-	/**
+  /**
 	 * Reference to the enclosing graph.
 	 */
-	Graph _graph;
+  Graph _graph;
 
-	/**
+  /**
 	 * Specifies if only one selected item at a time is allowed.
 	 * Default is false.
 	 */
-	bool _singleSelection = false;
+  bool _singleSelection = false;
 
-	/**
+  /**
 	 * Holds the selection cells.
 	 */
-	Set<Object> _cells = new LinkedHashSet<Object>();
+  Set<Object> _cells = new LinkedHashSet<Object>();
 
-	/**
+  /**
 	 * Constructs a new selection model for the specified graph.
 	 * 
 	 * @param graph
 	 */
-	GraphSelectionModel(Graph graph)
-	{
-		this._graph = graph;
-	}
+  GraphSelectionModel(Graph graph) {
+    this._graph = graph;
+  }
 
-	/**
+  /**
 	 * @return the singleSelection
 	 */
-	bool isSingleSelection()
-	{
-		return _singleSelection;
-	}
+  bool isSingleSelection() {
+    return _singleSelection;
+  }
 
-	/**
+  /**
 	 * @param singleSelection the singleSelection to set
 	 */
-	void setSingleSelection(bool singleSelection)
-	{
-		this._singleSelection = singleSelection;
-	}
+  void setSingleSelection(bool singleSelection) {
+    this._singleSelection = singleSelection;
+  }
 
-	/**
+  /**
 	 * Returns true if the given cell is selected.
 	 * 
 	 * @param cell
 	 * @return Returns true if the given cell is selected.
 	 */
-	bool isSelected(Object cell)
-	{
-		return (cell == null) ? false : _cells.contains(cell);
-	}
+  bool isSelected(Object cell) {
+    return (cell == null) ? false : _cells.contains(cell);
+  }
 
-	/**
+  /**
 	 * Returns true if no cells are selected.
 	 */
-	bool isEmpty()
-	{
-		return _cells.isEmpty();
-	}
+  bool isEmpty() {
+    return _cells.isEmpty();
+  }
 
-	/**
+  /**
 	 * Returns the number of selected cells.
 	 */
-	int size()
-	{
-		return _cells.size();
-	}
+  int size() {
+    return _cells.size();
+  }
 
-	/**
+  /**
 	 * Clears the selection.
 	 */
-	void clear()
-	{
-		_changeSelection(null, _cells);
-	}
+  void clear() {
+    _changeSelection(null, _cells);
+  }
 
-	/**
+  /**
 	 * Returns the first selected cell.
 	 */
-	Object getCell()
-	{
-		return (_cells.isEmpty()) ? null : _cells.iterator().next();
-	}
+  Object getCell() {
+    return (_cells.isEmpty()) ? null : _cells.iterator().next();
+  }
 
-	/**
+  /**
 	 * Returns the selection cells.
 	 */
-	List<Object> getCells()
-	{
-		return _cells.toArray();
-	}
+  List<Object> getCells() {
+    return _cells.toArray();
+  }
 
-	/**
+  /**
 	 * Clears the selection and adds the given cell to the selection.
 	 */
-	void setCell(Object cell)
-	{
-		if (cell != null)
-		{
-			setCells([ cell ]);
-		}
-		else
-		{
-			clear();
-		}
-	}
+  void setCell(Object cell) {
+    if (cell != null) {
+      setCells([cell]);
+    } else {
+      clear();
+    }
+  }
 
-	/**
+  /**
 	 * Clears the selection and adds the given cells.
 	 */
-	void setCells(List<Object> cells)
-	{
-		if (cells != null)
-		{
-			if (_singleSelection)
-			{
-				cells = [ _getFirstSelectableCell(cells) ];
-			}
+  void setCells(List<Object> cells) {
+    if (cells != null) {
+      if (_singleSelection) {
+        cells = [_getFirstSelectableCell(cells)];
+      }
 
-			List<Object> tmp = new List<Object>(cells.length);
+      List<Object> tmp = new List<Object>(cells.length);
 
-			for (int i = 0; i < cells.length; i++)
-			{
-				if (_graph.isCellSelectable(cells[i]))
-				{
-					tmp.add(cells[i]);
-				}
-			}
+      for (int i = 0; i < cells.length; i++) {
+        if (_graph.isCellSelectable(cells[i])) {
+          tmp.add(cells[i]);
+        }
+      }
 
-			_changeSelection(tmp, this._cells);
-		}
-		else
-		{
-			clear();
-		}
-	}
+      _changeSelection(tmp, this._cells);
+    } else {
+      clear();
+    }
+  }
 
-	/**
+  /**
 	 * Returns the first selectable cell in the given array of cells.
 	 * 
 	 * @param cells Array of cells to return the first selectable cell for.
 	 * @return Returns the first cell that may be selected.
 	 */
-	Object _getFirstSelectableCell(List<Object> cells)
-	{
-		if (cells != null)
-		{
-			for (int i = 0; i < cells.length; i++)
-			{
-				if (_graph.isCellSelectable(cells[i]))
-				{
-					return cells[i];
-				}
-			}
-		}
+  Object _getFirstSelectableCell(List<Object> cells) {
+    if (cells != null) {
+      for (int i = 0; i < cells.length; i++) {
+        if (_graph.isCellSelectable(cells[i])) {
+          return cells[i];
+        }
+      }
+    }
 
-		return null;
-	}
+    return null;
+  }
 
-	/**
+  /**
 	 * Adds the given cell to the selection.
 	 */
-	void addCell(Object cell)
-	{
-		if (cell != null)
-		{
-			addCells([ cell ]);
-		}
-	}
+  void addCell(Object cell) {
+    if (cell != null) {
+      addCells([cell]);
+    }
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void addCells(List<Object> cells)
-	{
-		if (cells != null)
-		{
-			Collection<Object> remove = null;
+  void addCells(List<Object> cells) {
+    if (cells != null) {
+      Collection<Object> remove = null;
 
-			if (_singleSelection)
-			{
-				remove = this._cells;
-				cells = [ _getFirstSelectableCell(cells) ];
-			}
+      if (_singleSelection) {
+        remove = this._cells;
+        cells = [_getFirstSelectableCell(cells)];
+      }
 
-			List<Object> tmp = new List<Object>(cells.length);
+      List<Object> tmp = new List<Object>(cells.length);
 
-			for (int i = 0; i < cells.length; i++)
-			{
-				if (!isSelected(cells[i]) && _graph.isCellSelectable(cells[i]))
-				{
-					tmp.add(cells[i]);
-				}
-			}
+      for (int i = 0; i < cells.length; i++) {
+        if (!isSelected(cells[i]) && _graph.isCellSelectable(cells[i])) {
+          tmp.add(cells[i]);
+        }
+      }
 
-			_changeSelection(tmp, remove);
-		}
-	}
+      _changeSelection(tmp, remove);
+    }
+  }
 
-	/**
+  /**
 	 * Removes the given cell from the selection.
 	 */
-	void removeCell(Object cell)
-	{
-		if (cell != null)
-		{
-			removeCells([ cell ]);
-		}
-	}
+  void removeCell(Object cell) {
+    if (cell != null) {
+      removeCells([cell]);
+    }
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void removeCells(List<Object> cells)
-	{
-		if (cells != null)
-		{
-			List<Object> tmp = new List<Object>(cells.length);
+  void removeCells(List<Object> cells) {
+    if (cells != null) {
+      List<Object> tmp = new List<Object>(cells.length);
 
-			for (int i = 0; i < cells.length; i++)
-			{
-				if (isSelected(cells[i]))
-				{
-					tmp.add(cells[i]);
-				}
-			}
+      for (int i = 0; i < cells.length; i++) {
+        if (isSelected(cells[i])) {
+          tmp.add(cells[i]);
+        }
+      }
 
-			_changeSelection(null, tmp);
-		}
-	}
+      _changeSelection(null, tmp);
+    }
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void _changeSelection(Collection<Object> added,
-			Collection<Object> removed)
-	{
-		if ((added != null && !added.isEmpty())
-				|| (removed != null && !removed.isEmpty()))
-		{
-			SelectionChange change = new SelectionChange(this, added,
-					removed);
-			change.execute();
-			UndoableEdit edit = new UndoableEdit(this, false);
-			edit.add(change);
-			fireEvent(new EventObj(Event.UNDO, "edit", edit));
-		}
-	}
+  void _changeSelection(Collection<Object> added, Collection<Object> removed) {
+    if ((added != null && !added.isEmpty()) || (removed != null && !removed.isEmpty())) {
+      SelectionChange change = new SelectionChange(this, added, removed);
+      change.execute();
+      UndoableEdit edit = new UndoableEdit(this, false);
+      edit.add(change);
+      fireEvent(new EventObj(Event.UNDO, "edit", edit));
+    }
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void _cellAdded(Object cell)
-	{
-		if (cell != null)
-		{
-			_cells.add(cell);
-		}
-	}
+  void _cellAdded(Object cell) {
+    if (cell != null) {
+      _cells.add(cell);
+    }
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void _cellRemoved(Object cell)
-	{
-		if (cell != null)
-		{
-			_cells.remove(cell);
-		}
-	}
+  void _cellRemoved(Object cell) {
+    if (cell != null) {
+      _cells.remove(cell);
+    }
+  }
 
 }
 
 /**
  *
  */
-class SelectionChange implements UndoableChange
-{
+class SelectionChange implements UndoableChange {
 
   /**
    * 
@@ -345,36 +297,28 @@ class SelectionChange implements UndoableChange
    * @param added
    * @param removed
    */
-  SelectionChange(GraphSelectionModel model,
-      Collection<Object> added, Collection<Object> removed)
-  {
+  SelectionChange(GraphSelectionModel model, Collection<Object> added, Collection<Object> removed) {
     this.model = model;
     this.added = (added != null) ? new List<Object>(added) : null;
-    this.removed = (removed != null) ? new List<Object>(removed)
-        : null;
+    this.removed = (removed != null) ? new List<Object>(removed) : null;
   }
 
   /**
    * 
    */
-  void execute()
-  {
-    if (removed != null)
-    {
+  void execute() {
+    if (removed != null) {
       Iterator<Object> it = removed.iterator();
 
-      while (it.hasNext())
-      {
+      while (it.hasNext()) {
         model._cellRemoved(it.next());
       }
     }
 
-    if (added != null)
-    {
+    if (added != null) {
       Iterator<Object> it = added.iterator();
 
-      while (it.hasNext())
-      {
+      while (it.hasNext()) {
         model._cellAdded(it.next());
       }
     }
@@ -382,8 +326,7 @@ class SelectionChange implements UndoableChange
     Collection<Object> tmp = added;
     added = removed;
     removed = tmp;
-    model.fireEvent(new EventObj(Event.CHANGE, "added", added,
-        "removed", removed));
+    model.fireEvent(new EventObj(Event.CHANGE, "added", added, "removed", removed));
   }
 
 }

@@ -7,181 +7,154 @@ part of graph.layout;
 //import java.util.List;
 //import java.util.Map;
 
-class ParallelEdgeLayout extends GraphLayout
-{
+class ParallelEdgeLayout extends GraphLayout {
 
-	/**
+  /**
 	 * Specifies the spacing between the edges. Default is 20.
 	 */
-	int spacing;
+  int spacing;
 
-	/**
+  /**
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-//	ParallelEdgeLayout(Graph graph)
-//	{
-//		this(graph, 20);
-//	}
+  //	ParallelEdgeLayout(Graph graph)
+  //	{
+  //		this(graph, 20);
+  //	}
 
-	/**
+  /**
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	ParallelEdgeLayout(Graph graph, [int spacing=20]) : super(graph)
-	{
-		this.spacing = spacing;
-	}
+  ParallelEdgeLayout(Graph graph, [int spacing = 20]) : super(graph) {
+    this.spacing = spacing;
+  }
 
-	/*
+  /*
 	 * (non-Javadoc)
 	 * @see graph.layout.IGraphLayout#execute(java.lang.Object)
 	 */
-	void execute(Object parent)
-	{
-		Map<String, List<Object>> lookup = findParallels(parent);
+  void execute(Object parent) {
+    Map<String, List<Object>> lookup = findParallels(parent);
 
-		graph.getModel().beginUpdate();
-		try
-		{
-			Iterator<List<Object>> it = lookup.values().iterator();
+    graph.getModel().beginUpdate();
+    try {
+      Iterator<List<Object>> it = lookup.values().iterator();
 
-			while (it.hasNext())
-			{
-				List<Object> parallels = it.next();
+      while (it.hasNext()) {
+        List<Object> parallels = it.next();
 
-				if (parallels.size() > 1)
-				{
-					layout(parallels);
-				}
-			}
-		}
-		finally
-		{
-			graph.getModel().endUpdate();
-		}
-	}
+        if (parallels.size() > 1) {
+          layout(parallels);
+        }
+      }
+    } finally {
+      graph.getModel().endUpdate();
+    }
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	Map<String, List<Object>> findParallels(Object parent)
-	{
-		Map<String, List<Object>> lookup = new Hashtable<String, List<Object>>();
-		IGraphModel model = graph.getModel();
-		int childCount = model.getChildCount(parent);
+  Map<String, List<Object>> findParallels(Object parent) {
+    Map<String, List<Object>> lookup = new Hashtable<String, List<Object>>();
+    IGraphModel model = graph.getModel();
+    int childCount = model.getChildCount(parent);
 
-		for (int i = 0; i < childCount; i++)
-		{
-			Object child = model.getChildAt(parent, i);
+    for (int i = 0; i < childCount; i++) {
+      Object child = model.getChildAt(parent, i);
 
-			if (!isEdgeIgnored(child))
-			{
-				String id = getEdgeId(child);
+      if (!isEdgeIgnored(child)) {
+        String id = getEdgeId(child);
 
-				if (id != null)
-				{
-					if (!lookup.containsKey(id))
-					{
-						lookup.put(id, new List<Object>());
-					}
+        if (id != null) {
+          if (!lookup.containsKey(id)) {
+            lookup.put(id, new List<Object>());
+          }
 
-					lookup.get(id).add(child);
-				}
-			}
-		}
+          lookup.get(id).add(child);
+        }
+      }
+    }
 
-		return lookup;
-	}
+    return lookup;
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	String getEdgeId(Object edge)
-	{
-		GraphView view = graph.getView();
-		CellState state = view.getState(edge);
-		Object src = (state != null) ? state.getVisibleTerminal(true) : view
-				.getVisibleTerminal(edge, true);
-		Object trg = (state != null) ? state.getVisibleTerminal(false) : view
-				.getVisibleTerminal(edge, false);
+  String getEdgeId(Object edge) {
+    GraphView view = graph.getView();
+    CellState state = view.getState(edge);
+    Object src = (state != null) ? state.getVisibleTerminal(true) : view.getVisibleTerminal(edge, true);
+    Object trg = (state != null) ? state.getVisibleTerminal(false) : view.getVisibleTerminal(edge, false);
 
-		if (src is ICell && trg is ICell)
-		{
-			String srcId = CellPath.create(src as ICell);
-			String trgId = CellPath.create(trg as ICell);
+    if (src is ICell && trg is ICell) {
+      String srcId = CellPath.create(src as ICell);
+      String trgId = CellPath.create(trg as ICell);
 
-			return (srcId.compareTo(trgId) > 0) ? trgId + "-" + srcId : srcId
-					+ "-" + trgId;
-		}
+      return (srcId.compareTo(trgId) > 0) ? trgId + "-" + srcId : srcId + "-" + trgId;
+    }
 
-		return null;
-	}
+    return null;
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void layout(List<Object> parallels)
-	{
-		Object edge = parallels.get(0);
-		IGraphModel model = graph.getModel();
-		Geometry src = model.getGeometry(model.getTerminal(edge, true));
-		Geometry trg = model.getGeometry(model.getTerminal(edge, false));
+  void layout(List<Object> parallels) {
+    Object edge = parallels.get(0);
+    IGraphModel model = graph.getModel();
+    Geometry src = model.getGeometry(model.getTerminal(edge, true));
+    Geometry trg = model.getGeometry(model.getTerminal(edge, false));
 
-		// Routes multiple loops
-		if (src == trg)
-		{
-			double x0 = src.getX() + src.getWidth() + this.spacing;
-			double y0 = src.getY() + src.getHeight() / 2;
+    // Routes multiple loops
+    if (src == trg) {
+      double x0 = src.getX() + src.getWidth() + this.spacing;
+      double y0 = src.getY() + src.getHeight() / 2;
 
-			for (int i = 0; i < parallels.size(); i++)
-			{
-				route(parallels.get(i), x0, y0);
-				x0 += spacing;
-			}
-		}
-		else if (src != null && trg != null)
-		{
-			// Routes parallel edges
-			double scx = src.getX() + src.getWidth() / 2;
-			double scy = src.getY() + src.getHeight() / 2;
+      for (int i = 0; i < parallels.size(); i++) {
+        route(parallels.get(i), x0, y0);
+        x0 += spacing;
+      }
+    } else if (src != null && trg != null) {
+      // Routes parallel edges
+      double scx = src.getX() + src.getWidth() / 2;
+      double scy = src.getY() + src.getHeight() / 2;
 
-			double tcx = trg.getX() + trg.getWidth() / 2;
-			double tcy = trg.getY() + trg.getHeight() / 2;
+      double tcx = trg.getX() + trg.getWidth() / 2;
+      double tcy = trg.getY() + trg.getHeight() / 2;
 
-			double dx = tcx - scx;
-			double dy = tcy - scy;
+      double dx = tcx - scx;
+      double dy = tcy - scy;
 
-			double len = Math.sqrt(dx * dx + dy * dy);
+      double len = Math.sqrt(dx * dx + dy * dy);
 
-			double x0 = scx + dx / 2;
-			double y0 = scy + dy / 2;
+      double x0 = scx + dx / 2;
+      double y0 = scy + dy / 2;
 
-			double nx = dy * spacing / len;
-			double ny = dx * spacing / len;
+      double nx = dy * spacing / len;
+      double ny = dx * spacing / len;
 
-			x0 += nx * (parallels.size() - 1) / 2;
-			y0 -= ny * (parallels.size() - 1) / 2;
+      x0 += nx * (parallels.size() - 1) / 2;
+      y0 -= ny * (parallels.size() - 1) / 2;
 
-			for (int i = 0; i < parallels.size(); i++)
-			{
-				route(parallels.get(i), x0, y0);
-				x0 -= nx;
-				y0 += ny;
-			}
-		}
-	}
+      for (int i = 0; i < parallels.size(); i++) {
+        route(parallels.get(i), x0, y0);
+        x0 -= nx;
+        y0 += ny;
+      }
+    }
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void route(Object edge, double x, double y)
-	{
-		if (graph.isCellMovable(edge))
-		{
-			setEdgePoints(edge,
-					Arrays.asList([ new Point2d(x, y) ]));
-		}
-	}
+  void route(Object edge, double x, double y) {
+    if (graph.isCellMovable(edge)) {
+      setEdgePoints(edge, Arrays.asList([new Point2d(x, y)]));
+    }
+  }
 
 }

@@ -105,29 +105,26 @@ part 'xml_utils.dart';
 /**
  * Contains various helper methods for use with Graph.
  */
-class Utils
-{
+class Utils {
 
-	/**
+  /**
 	 * True if the machine is a Mac.
 	 */
-	static bool IS_MAC = System.getProperty("os.name").toLowerCase()
-			.indexOf("mac") >= 0;
+  static bool IS_MAC = System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0;
 
-	/**
+  /**
 	 * True if the machine is running a linux kernel.
 	 */
-	static bool IS_LINUX = System.getProperty("os.name")
-			.toLowerCase().indexOf("linux") >= 0;
+  static bool IS_LINUX = System.getProperty("os.name").toLowerCase().indexOf("linux") >= 0;
 
-	/**
+  /**
 	 * Static Graphics used for Font Metrics.
 	 */
-	static /*transient*/ Graphics _fontGraphics;
+  static /*transient*/ Graphics _fontGraphics;
 
-	// Creates a renderer for HTML markup (only possible in
-	// non-headless environment)
-	/*static
+  // Creates a renderer for HTML markup (only possible in
+  // non-headless environment)
+  /*static
 	{
 		try
 		{
@@ -140,247 +137,193 @@ class Utils
 		}
 	}*/
 
-	/**
+  /**
 	 * Returns the size for the given label. If isHtml is true then any HTML
 	 * markup in the label is computed as HTML and all newlines inside the HTML
 	 * body are converted into linebreaks.
 	 */
-//	static Rect getLabelSize(String label,
-//			Map<String, Object> style, bool isHtml, double scale)
-//	{
-//		return getLabelSize(label, style, isHtml, scale, 0);
-//	}
+  //	static Rect getLabelSize(String label,
+  //			Map<String, Object> style, bool isHtml, double scale)
+  //	{
+  //		return getLabelSize(label, style, isHtml, scale, 0);
+  //	}
 
-	/**
+  /**
 	 * Returns the size for the given label. If isHtml is true then any HTML
 	 * markup in the label is computed as HTML and all newlines inside the HTML
 	 * body are converted into linebreaks.
 	 */
-	static Rect getLabelSize(String label,
-			Map<String, Object> style, bool isHtml, double scale,
-			[double htmlWrapWidth=0.0])
-	{
-		Rect size;
+  static Rect getLabelSize(String label, Map<String, Object> style, bool isHtml, double scale, [double htmlWrapWidth = 0.0]) {
+    Rect size;
 
-		if (isHtml)
-		{
-			size = getSizeForHtml(getBodyMarkup(label, true), style, scale,
-					htmlWrapWidth);
-		}
-		else
-		{
-			size = getSizeForString(label, getFont(style), scale);
-		}
+    if (isHtml) {
+      size = getSizeForHtml(getBodyMarkup(label, true), style, scale, htmlWrapWidth);
+    } else {
+      size = getSizeForString(label, getFont(style), scale);
+    }
 
-		return size;
-	}
+    return size;
+  }
 
-	/**
+  /**
 	 * Returns the body part of the given HTML markup.
 	 */
-	static String getBodyMarkup(String markup, bool replaceLinefeeds)
-	{
-		String lowerCase = markup.toLowerCase();
-		int bodyStart = lowerCase.indexOf("<body>");
+  static String getBodyMarkup(String markup, bool replaceLinefeeds) {
+    String lowerCase = markup.toLowerCase();
+    int bodyStart = lowerCase.indexOf("<body>");
 
-		if (bodyStart >= 0)
-		{
-			bodyStart += 7;
-			int bodyEnd = lowerCase.lastIndexOf("</body>");
+    if (bodyStart >= 0) {
+      bodyStart += 7;
+      int bodyEnd = lowerCase.lastIndexOf("</body>");
 
-			if (bodyEnd > bodyStart)
-			{
-				markup = markup.substring(bodyStart, bodyEnd).trim();
-			}
-		}
+      if (bodyEnd > bodyStart) {
+        markup = markup.substring(bodyStart, bodyEnd).trim();
+      }
+    }
 
-		if (replaceLinefeeds)
-		{
-			markup = markup.replaceAll("\n", "<br>");
-		}
+    if (replaceLinefeeds) {
+      markup = markup.replaceAll("\n", "<br>");
+    }
 
-		return markup;
-	}
+    return markup;
+  }
 
-	/**
+  /**
 	 * Returns the paint bounds for the given label.
 	 */
-//	static Rect getLabelPaintBounds(String label,
-//			Map<String, Object> style, bool isHtml, Point2d offset,
-//			Rect vertexBounds, double scale)
-//	{
-//		return getLabelPaintBounds(label, style, isHtml, offset, vertexBounds,
-//				scale, false);
-//	}
+  //	static Rect getLabelPaintBounds(String label,
+  //			Map<String, Object> style, bool isHtml, Point2d offset,
+  //			Rect vertexBounds, double scale)
+  //	{
+  //		return getLabelPaintBounds(label, style, isHtml, offset, vertexBounds,
+  //				scale, false);
+  //	}
 
-	/**
+  /**
 	 * Returns the paint bounds for the given label.
 	 */
-	static Rect getLabelPaintBounds(String label,
-			Map<String, Object> style, bool isHtml, Point2d offset,
-			Rect vertexBounds, double scale, [bool isEdge=false])
-	{
-		double wrapWidth = 0;
+  static Rect getLabelPaintBounds(String label, Map<String, Object> style, bool isHtml, Point2d offset, Rect vertexBounds, double scale, [bool isEdge = false]) {
+    double wrapWidth = 0;
 
-		if (isHtml
-				&& vertexBounds != null
-				&& Utils.getString(style, Constants.STYLE_WHITE_SPACE,
-						"nowrap").equals("wrap"))
-		{
-			wrapWidth = vertexBounds.getWidth();
-		}
+    if (isHtml && vertexBounds != null && Utils.getString(style, Constants.STYLE_WHITE_SPACE, "nowrap").equals("wrap")) {
+      wrapWidth = vertexBounds.getWidth();
+    }
 
-		Rect size = Utils.getLabelSize(label, style, isHtml, scale,
-				wrapWidth);
+    Rect size = Utils.getLabelSize(label, style, isHtml, scale, wrapWidth);
 
-		// Measures font with full scale and scales back
-		size.setWidth(size.getWidth() / scale);
-		size.setHeight(size.getHeight() / scale);
+    // Measures font with full scale and scales back
+    size.setWidth(size.getWidth() / scale);
+    size.setHeight(size.getHeight() / scale);
 
-		double x = offset.getX();
-		double y = offset.getY();
-		double width = 0;
-		double height = 0;
+    double x = offset.getX();
+    double y = offset.getY();
+    double width = 0;
+    double height = 0;
 
-		if (vertexBounds != null)
-		{
-			x += vertexBounds.getX();
-			y += vertexBounds.getY();
+    if (vertexBounds != null) {
+      x += vertexBounds.getX();
+      y += vertexBounds.getY();
 
-			if (Utils.getString(style, Constants.STYLE_SHAPE, "").equals(
-					Constants.SHAPE_SWIMLANE))
-			{
-				// Limits the label to the swimlane title
-				bool horizontal = Utils.isTrue(style,
-						Constants.STYLE_HORIZONTAL, true);
-				double start = Utils.getDouble(style,
-						Constants.STYLE_STARTSIZE,
-						Constants.DEFAULT_STARTSIZE)
-						* scale;
+      if (Utils.getString(style, Constants.STYLE_SHAPE, "").equals(Constants.SHAPE_SWIMLANE)) {
+        // Limits the label to the swimlane title
+        bool horizontal = Utils.isTrue(style, Constants.STYLE_HORIZONTAL, true);
+        double start = Utils.getDouble(style, Constants.STYLE_STARTSIZE, Constants.DEFAULT_STARTSIZE) * scale;
 
-				if (horizontal)
-				{
-					width += vertexBounds.getWidth();
-					height += start;
-				}
-				else
-				{
-					width += start;
-					height += vertexBounds.getHeight();
-				}
-			}
-			else
-			{
-				width += (isEdge) ? 0 : vertexBounds.getWidth();
-				height += vertexBounds.getHeight();
-			}
-		}
+        if (horizontal) {
+          width += vertexBounds.getWidth();
+          height += start;
+        } else {
+          width += start;
+          height += vertexBounds.getHeight();
+        }
+      } else {
+        width += (isEdge) ? 0 : vertexBounds.getWidth();
+        height += vertexBounds.getHeight();
+      }
+    }
 
-		return Utils.getScaledLabelBounds(x, y, size, width, height, style,
-				scale);
-	}
+    return Utils.getScaledLabelBounds(x, y, size, width, height, style, scale);
+  }
 
-	/**
+  /**
 	 * Returns the bounds for a label for the given location and size, taking
 	 * into account the alignment and spacing in the specified style, as well as
 	 * the width and height of the rectangle that contains the label. (For edge
 	 * labels this width and height is 0.) The scale is used to scale the given
 	 * size and the spacings in the specified style.
 	 */
-	static Rect getScaledLabelBounds(double x, double y,
-			Rect size, double outerWidth, double outerHeight,
-			Map<String, Object> style, double scale)
-	{
-		double inset = Constants.LABEL_INSET * scale;
+  static Rect getScaledLabelBounds(double x, double y, Rect size, double outerWidth, double outerHeight, Map<String, Object> style, double scale) {
+    double inset = Constants.LABEL_INSET * scale;
 
-		// Scales the size of the label
-		// FIXME: Correct rounded font size and not-rounded scale
-		double width = size.getWidth() * scale + 2 * inset;
-		double height = size.getHeight() * scale + 2 * inset;
+    // Scales the size of the label
+    // FIXME: Correct rounded font size and not-rounded scale
+    double width = size.getWidth() * scale + 2 * inset;
+    double height = size.getHeight() * scale + 2 * inset;
 
-		// Gets the global spacing and orientation
-		bool horizontal = isTrue(style, Constants.STYLE_HORIZONTAL, true);
-		int spacing = (int) (getInt(style, Constants.STYLE_SPACING) * scale);
+    // Gets the global spacing and orientation
+    bool horizontal = isTrue(style, Constants.STYLE_HORIZONTAL, true);
+    int spacing = (int)(getInt(style, Constants.STYLE_SPACING) * scale);
 
-		// Gets the alignment settings
-		Object align = getString(style, Constants.STYLE_ALIGN,
-				Constants.ALIGN_CENTER);
-		Object valign = getString(style, Constants.STYLE_VERTICAL_ALIGN,
-				Constants.ALIGN_MIDDLE);
+    // Gets the alignment settings
+    Object align = getString(style, Constants.STYLE_ALIGN, Constants.ALIGN_CENTER);
+    Object valign = getString(style, Constants.STYLE_VERTICAL_ALIGN, Constants.ALIGN_MIDDLE);
 
-		// Gets the vertical spacing
-		int top = (int) (getInt(style, Constants.STYLE_SPACING_TOP) * scale);
-		int bottom = (int) (getInt(style, Constants.STYLE_SPACING_BOTTOM) * scale);
+    // Gets the vertical spacing
+    int top = (int)(getInt(style, Constants.STYLE_SPACING_TOP) * scale);
+    int bottom = (int)(getInt(style, Constants.STYLE_SPACING_BOTTOM) * scale);
 
-		// Gets the horizontal spacing
-		int left = (int) (getInt(style, Constants.STYLE_SPACING_LEFT) * scale);
-		int right = (int) (getInt(style, Constants.STYLE_SPACING_RIGHT) * scale);
+    // Gets the horizontal spacing
+    int left = (int)(getInt(style, Constants.STYLE_SPACING_LEFT) * scale);
+    int right = (int)(getInt(style, Constants.STYLE_SPACING_RIGHT) * scale);
 
-		// Applies the orientation to the spacings and dimension
-		if (!horizontal)
-		{
-			int tmp = top;
-			top = right;
-			right = bottom;
-			bottom = left;
-			left = tmp;
+    // Applies the orientation to the spacings and dimension
+    if (!horizontal) {
+      int tmp = top;
+      top = right;
+      right = bottom;
+      bottom = left;
+      left = tmp;
 
-			double tmp2 = width;
-			width = height;
-			height = tmp2;
-		}
+      double tmp2 = width;
+      width = height;
+      height = tmp2;
+    }
 
-		// Computes the position of the label for the horizontal alignment
-		if ((horizontal && align.equals(Constants.ALIGN_CENTER))
-				|| (!horizontal && valign.equals(Constants.ALIGN_MIDDLE)))
-		{
-			x += (outerWidth - width) / 2 + left - right;
-		}
-		else if ((horizontal && align.equals(Constants.ALIGN_RIGHT))
-				|| (!horizontal && valign.equals(Constants.ALIGN_BOTTOM)))
-		{
-			x += outerWidth - width - spacing - right;
-		}
-		else
-		{
-			x += spacing + left;
-		}
+    // Computes the position of the label for the horizontal alignment
+    if ((horizontal && align.equals(Constants.ALIGN_CENTER)) || (!horizontal && valign.equals(Constants.ALIGN_MIDDLE))) {
+      x += (outerWidth - width) / 2 + left - right;
+    } else if ((horizontal && align.equals(Constants.ALIGN_RIGHT)) || (!horizontal && valign.equals(Constants.ALIGN_BOTTOM))) {
+      x += outerWidth - width - spacing - right;
+    } else {
+      x += spacing + left;
+    }
 
-		// Computes the position of the label for the vertical alignment
-		if ((!horizontal && align.equals(Constants.ALIGN_CENTER))
-				|| (horizontal && valign.equals(Constants.ALIGN_MIDDLE)))
-		{
-			y += (outerHeight - height) / 2 + top - bottom;
-		}
-		else if ((!horizontal && align.equals(Constants.ALIGN_LEFT))
-				|| (horizontal && valign.equals(Constants.ALIGN_BOTTOM)))
-		{
-			y += outerHeight - height - spacing - bottom;
-		}
-		else
-		{
-			y += spacing + top;
-		}
+    // Computes the position of the label for the vertical alignment
+    if ((!horizontal && align.equals(Constants.ALIGN_CENTER)) || (horizontal && valign.equals(Constants.ALIGN_MIDDLE))) {
+      y += (outerHeight - height) / 2 + top - bottom;
+    } else if ((!horizontal && align.equals(Constants.ALIGN_LEFT)) || (horizontal && valign.equals(Constants.ALIGN_BOTTOM))) {
+      y += outerHeight - height - spacing - bottom;
+    } else {
+      y += spacing + top;
+    }
 
-		return new Rect(x, y, width, height);
-	}
+    return new Rect(x, y, width, height);
+  }
 
-	/**
+  /**
 	 * Returns the font metrics of the static font graphics instance
 	 * @param font The font whose metrics are to be returned
 	 * @return the font metrics of the specified font
 	 */
-	static FontMetrics getFontMetrics(Font font)
-	{
-		if (_fontGraphics != null)
-		{
-			return _fontGraphics.getFontMetrics(font);
-		}
+  static FontMetrics getFontMetrics(Font font) {
+    if (_fontGraphics != null) {
+      return _fontGraphics.getFontMetrics(font);
+    }
 
-		return null;
-	}
+    return null;
+  }
 
-	/**
+  /**
 	 * Returns an <Rect> with the size (width and height in pixels) of
 	 * the given string.
 	 * 
@@ -389,64 +332,45 @@ class Utils
 	 * @param font
 	 *            Font to be used for the computation.
 	 */
-	static Rect getSizeForString(String text, Font font,
-			double scale)
-	{
-		FontRenderContext frc = new FontRenderContext(null, false, false);
-		font = font.deriveFont((float) (font.getSize2D() * scale));
-		FontMetrics metrics = null;
+  static Rect getSizeForString(String text, Font font, double scale) {
+    FontRenderContext frc = new FontRenderContext(null, false, false);
+    font = font.deriveFont((float)(font.getSize2D() * scale));
+    FontMetrics metrics = null;
 
-		if (_fontGraphics != null)
-		{
-			metrics = _fontGraphics.getFontMetrics(font);
-		}
+    if (_fontGraphics != null) {
+      metrics = _fontGraphics.getFontMetrics(font);
+    }
 
-		double lineHeight = Constants.LINESPACING;
+    double lineHeight = Constants.LINESPACING;
 
-		if (metrics != null)
-		{
-			lineHeight += metrics.getHeight();
-		}
-		else
-		{
-			lineHeight += font.getSize2D() * 1.27;
-		}
+    if (metrics != null) {
+      lineHeight += metrics.getHeight();
+    } else {
+      lineHeight += font.getSize2D() * 1.27;
+    }
 
-		List<String> lines = text.split("\n");
+    List<String> lines = text.split("\n");
 
-		Rectangle2D boundingBox = null;
+    Rectangle2D boundingBox = null;
 
-		if (lines.length == 0)
-		{
-			boundingBox = font.getStringBounds("", frc);
-		}
-		else
-		{
-			for (int i = 0; i < lines.length; i++)
-			{
-				Rectangle2D bounds = font.getStringBounds(lines[i], frc);
+    if (lines.length == 0) {
+      boundingBox = font.getStringBounds("", frc);
+    } else {
+      for (int i = 0; i < lines.length; i++) {
+        Rectangle2D bounds = font.getStringBounds(lines[i], frc);
 
-				if (boundingBox == null)
-				{
-					boundingBox = bounds;
-				}
-				else
-				{
-					boundingBox
-							.setFrame(
-									0,
-									0,
-									Math.max(boundingBox.getWidth(),
-											bounds.getWidth()),
-									boundingBox.getHeight() + lineHeight);
-				}
-			}
-		}
+        if (boundingBox == null) {
+          boundingBox = bounds;
+        } else {
+          boundingBox.setFrame(0, 0, Math.max(boundingBox.getWidth(), bounds.getWidth()), boundingBox.getHeight() + lineHeight);
+        }
+      }
+    }
 
-		return new Rect(boundingBox);
-	}
+    return new Rect(boundingBox);
+  }
 
-	/**
+  /**
 	 * Returns the specified text in lines that fit within the specified
 	 * width when the specified font metrics are applied to the text
 	 * @param text the text to wrap
@@ -454,375 +378,311 @@ class Utils
 	 * @param width the width that the text must fit within
 	 * @return the input text split in lines that fit the specified width
 	 */
-	static List<String> wordWrap(String text, FontMetrics metrics,
-			double width)
-	{
-		List<String> result = new List<String>();
-		// First split the processing into lines already delimited by
-		// newlines. We want the result to retain all newlines in position.
-		List<String> lines = text.split("\n");
+  static List<String> wordWrap(String text, FontMetrics metrics, double width) {
+    List<String> result = new List<String>();
+    // First split the processing into lines already delimited by
+    // newlines. We want the result to retain all newlines in position.
+    List<String> lines = text.split("\n");
 
-		for (int i = 0; i < lines.length; i++)
-		{
-			int lineWidth = 0; // the display width of the current line
-			int charCount = 0; // keeps count of current position in the line
-			StringBuilder currentLine = new StringBuilder();
+    for (int i = 0; i < lines.length; i++) {
+      int lineWidth = 0; // the display width of the current line
+      int charCount = 0; // keeps count of current position in the line
+      StringBuilder currentLine = new StringBuilder();
 
-			// Split the words of the current line by spaces and tabs
-			// The words are trimmed of tabs, space and newlines, therefore
-			List<String> words = lines[i].split("\\s+");
+      // Split the words of the current line by spaces and tabs
+      // The words are trimmed of tabs, space and newlines, therefore
+      List<String> words = lines[i].split("\\s+");
 
-			// Need to a form a stack of the words in reverse order
-			// This is because if a word is split during the process 
-			// the remainder of the word is added to the front of the 
-			// stack and processed next
-			Stack<String> wordStack = new Stack<String>();
+      // Need to a form a stack of the words in reverse order
+      // This is because if a word is split during the process
+      // the remainder of the word is added to the front of the
+      // stack and processed next
+      Stack<String> wordStack = new Stack<String>();
 
-			for (int j = words.length - 1; j >= 0; j--)
-			{
-				wordStack.push(words[j]);
-			}
+      for (int j = words.length - 1; j >= 0; j--) {
+        wordStack.push(words[j]);
+      }
 
-			while (!wordStack.isEmpty())
-			{
-				String word = wordStack.pop();
+      while (!wordStack.isEmpty()) {
+        String word = wordStack.pop();
 
-				// Work out what whitespace exists before this word.
-				// and add the width of the whitespace to the calculation
-				int whitespaceCount = 0;
+        // Work out what whitespace exists before this word.
+        // and add the width of the whitespace to the calculation
+        int whitespaceCount = 0;
 
-				if (word.length() > 0)
-				{
-					// Concatenate any preceding whitespace to the
-					// word and calculate the number of characters of that
-					// whitespace
-					char firstWordLetter = word.charAt(0);
-					int letterIndex = lines[i].indexOf(firstWordLetter,
-							charCount);
-					String whitespace = lines[i].substring(charCount,
-							letterIndex);
-					whitespaceCount = whitespace.length();
-					word = whitespace.concat(word);
-				}
+        if (word.length() > 0) {
+          // Concatenate any preceding whitespace to the
+          // word and calculate the number of characters of that
+          // whitespace
+          char firstWordLetter = word.charAt(0);
+          int letterIndex = lines[i].indexOf(firstWordLetter, charCount);
+          String whitespace = lines[i].substring(charCount, letterIndex);
+          whitespaceCount = whitespace.length();
+          word = whitespace.concat(word);
+        }
 
-				double wordLength;
+        double wordLength;
 
-				// If the line width is zero, we are at the start of a newline
-				// We don't proceed preceeding whitespace in the width
-				// calculation
-				if (lineWidth > 0)
-				{
-					wordLength = metrics.stringWidth(word);
-				}
-				else
-				{
-					wordLength = metrics.stringWidth(word.trim());
-				}
+        // If the line width is zero, we are at the start of a newline
+        // We don't proceed preceeding whitespace in the width
+        // calculation
+        if (lineWidth > 0) {
+          wordLength = metrics.stringWidth(word);
+        } else {
+          wordLength = metrics.stringWidth(word.trim());
+        }
 
-				// Does the width of line so far plus the width of the 
-				// current word exceed the allowed width?
-				if (lineWidth + wordLength > width)
-				{
-					if (lineWidth > 0)
-					{
-						// There is already at least one word on this line
-						// and the current word takes the overall width over
-						// the allowed width. Because there is something on
-						// the line, complete the current line, reset the width
-						// counter, create a new line and put the current word
-						// back on the stack for processing in the next round
-						result.add(currentLine.toString());
-						currentLine = new StringBuilder();
-						wordStack.push(word.trim());
-						lineWidth = 0;
-					}
-					else if (Constants.SPLIT_WORDS)
-					{
-						// There are no words on the current line and the 
-						// current word does not fit on it. Find the maximum
-						// number of characters of this word that just fit
-						// in the available width
-						word = word.trim();
+        // Does the width of line so far plus the width of the
+        // current word exceed the allowed width?
+        if (lineWidth + wordLength > width) {
+          if (lineWidth > 0) {
+            // There is already at least one word on this line
+            // and the current word takes the overall width over
+            // the allowed width. Because there is something on
+            // the line, complete the current line, reset the width
+            // counter, create a new line and put the current word
+            // back on the stack for processing in the next round
+            result.add(currentLine.toString());
+            currentLine = new StringBuilder();
+            wordStack.push(word.trim());
+            lineWidth = 0;
+          } else if (Constants.SPLIT_WORDS) {
+            // There are no words on the current line and the
+            // current word does not fit on it. Find the maximum
+            // number of characters of this word that just fit
+            // in the available width
+            word = word.trim();
 
-						for (int j = 1; j <= word.length(); j++)
-						{
-							wordLength = metrics.stringWidth(word.substring(0,
-									j));
+            for (int j = 1; j <= word.length(); j++) {
+              wordLength = metrics.stringWidth(word.substring(0, j));
 
-							if (lineWidth + wordLength > width)
-							{
-								// The last character took us over the allowed
-								// width, deducted it unless there is only one
-								// character, in which case we have to use it
-								// since we can't split it...
-								j = j > 1 ? j - 1 : j;
-								String chars = word.substring(0, j);
-								currentLine = currentLine.append(chars);
-								// Return the unprocessed part of the word 
-								// to the stack
-								wordStack
-										.push(word.substring(j, word.length()));
-								result.add(currentLine.toString());
-								currentLine = new StringBuilder();
-								lineWidth = 0;
-								// Increment char counter allowing for white 
-								// space in the original word
-								charCount = charCount + chars.length()
-										+ whitespaceCount;
-								break;
-							}
-						}
-					}
-					else
-					{
-						// There are no words on the current line, but
-						// we are not splitting.
-						word = word.trim();
-						result.add(word);
-						currentLine = new StringBuilder();
-						lineWidth = 0;
-						// Increment char counter allowing for white 
-						// space in the original word
-						charCount = word.length() + whitespaceCount;
-					}
-				}
-				else
-				{
-					// The current word does not take the total line width
-					// over the allowed width. Append the word, removing
-					// preceeding whitespace if it is the first word in the
-					// line.
-					if (lineWidth > 0)
-					{
-						currentLine = currentLine.append(word);
-					}
-					else
-					{
-						currentLine = currentLine.append(word.trim());
-					}
+              if (lineWidth + wordLength > width) {
+                // The last character took us over the allowed
+                // width, deducted it unless there is only one
+                // character, in which case we have to use it
+                // since we can't split it...
+                j = j > 1 ? j - 1 : j;
+                String chars = word.substring(0, j);
+                currentLine = currentLine.append(chars);
+                // Return the unprocessed part of the word
+                // to the stack
+                wordStack.push(word.substring(j, word.length()));
+                result.add(currentLine.toString());
+                currentLine = new StringBuilder();
+                lineWidth = 0;
+                // Increment char counter allowing for white
+                // space in the original word
+                charCount = charCount + chars.length() + whitespaceCount;
+                break;
+              }
+            }
+          } else {
+            // There are no words on the current line, but
+            // we are not splitting.
+            word = word.trim();
+            result.add(word);
+            currentLine = new StringBuilder();
+            lineWidth = 0;
+            // Increment char counter allowing for white
+            // space in the original word
+            charCount = word.length() + whitespaceCount;
+          }
+        } else {
+          // The current word does not take the total line width
+          // over the allowed width. Append the word, removing
+          // preceeding whitespace if it is the first word in the
+          // line.
+          if (lineWidth > 0) {
+            currentLine = currentLine.append(word);
+          } else {
+            currentLine = currentLine.append(word.trim());
+          }
 
-					lineWidth += wordLength;
-					charCount += word.length();
-				}
-			}
+          lineWidth += wordLength;
+          charCount += word.length();
+        }
+      }
 
-			result.add(currentLine.toString());
-		}
+      result.add(currentLine.toString());
+    }
 
-		return result.toArray(new List<String>(result.size()));
-	}
+    return result.toArray(new List<String>(result.size()));
+  }
 
-	/**
+  /**
 	 * Returns an Rect with the size (width and height in pixels) of the
 	 * given HTML markup.
 	 * 
 	 * @param markup
 	 *            HTML markup whose size should be returned.
 	 */
-	static Rect getSizeForHtml(String markup,
-			Map<String, Object> style, double scale, double wrapWidth)
-	{
-		LightweightLabel textRenderer = LightweightLabel
-				.getSharedInstance();
+  static Rect getSizeForHtml(String markup, Map<String, Object> style, double scale, double wrapWidth) {
+    LightweightLabel textRenderer = LightweightLabel.getSharedInstance();
 
-		if (textRenderer != null)
-		{
-			// First run measures size with no wrapping
-			textRenderer.setText(createHtmlDocument(style, markup));
-			Dimension size = textRenderer.getPreferredSize();
+    if (textRenderer != null) {
+      // First run measures size with no wrapping
+      textRenderer.setText(createHtmlDocument(style, markup));
+      Dimension size = textRenderer.getPreferredSize();
 
-			// Second run measures size with wrapping if required.
-			// Note that this is only required because max-width
-			// is not supported and we can't get the width of an
-			// inner HTML element (or is this possible?).
-			if (wrapWidth > 0)
-			{
-				textRenderer.setText(createHtmlDocument(
-						style,
-						markup,
-						1,
-						Math.ceil(wrapWidth - Constants.LABEL_INSET
-								* scale) as int));
-				Dimension size2 = textRenderer.getPreferredSize();
+      // Second run measures size with wrapping if required.
+      // Note that this is only required because max-width
+      // is not supported and we can't get the width of an
+      // inner HTML element (or is this possible?).
+      if (wrapWidth > 0) {
+        textRenderer.setText(createHtmlDocument(style, markup, 1, Math.ceil(wrapWidth - Constants.LABEL_INSET * scale) as int));
+        Dimension size2 = textRenderer.getPreferredSize();
 
-				// Uses wrapped text size if any text was actually wrapped
-				if (size2.width < size.width)
-				{
-					size = size2;
-				}
-			}
+        // Uses wrapped text size if any text was actually wrapped
+        if (size2.width < size.width) {
+          size = size2;
+        }
+      }
 
-			return new Rect(0, 0, size.width * scale, size.height
-					* scale);
-		}
-		else
-		{
-			return getSizeForString(markup, getFont(style), scale);
-		}
-	}
+      return new Rect(0, 0, size.width * scale, size.height * scale);
+    } else {
+      return getSizeForString(markup, getFont(style), scale);
+    }
+  }
 
-	/**
+  /**
 	 * Function: arcToCurves
 	 * 
 	 * Converts the given arc to a series of curves.
 	 */
-	static List<double> arcToCurves(double x0, double y0, double r1,
-			double r2, double angle, double largeArcFlag, double sweepFlag,
-			double x, double y)
-	{
-		x -= x0;
-		y -= y0;
+  static List<double> arcToCurves(double x0, double y0, double r1, double r2, double angle, double largeArcFlag, double sweepFlag, double x, double y) {
+    x -= x0;
+    y -= y0;
 
-		if (r1 == 0 || r2 == 0)
-		{
-			return new List<double>();
-		}
+    if (r1 == 0 || r2 == 0) {
+      return new List<double>();
+    }
 
-		double fS = sweepFlag;
-		double psai = angle;
-		r1 = Math.abs(r1);
-		r2 = Math.abs(r2);
-		double ctx = -x / 2;
-		double cty = -y / 2;
-		double cpsi = Math.cos(psai * Math.PI / 180);
-		double spsi = Math.sin(psai * Math.PI / 180);
-		double rxd = cpsi * ctx + spsi * cty;
-		double ryd = -1 * spsi * ctx + cpsi * cty;
-		double rxdd = rxd * rxd;
-		double rydd = ryd * ryd;
-		double r1x = r1 * r1;
-		double r2y = r2 * r2;
-		double lamda = rxdd / r1x + rydd / r2y;
-		double sds;
+    double fS = sweepFlag;
+    double psai = angle;
+    r1 = Math.abs(r1);
+    r2 = Math.abs(r2);
+    double ctx = -x / 2;
+    double cty = -y / 2;
+    double cpsi = Math.cos(psai * Math.PI / 180);
+    double spsi = Math.sin(psai * Math.PI / 180);
+    double rxd = cpsi * ctx + spsi * cty;
+    double ryd = -1 * spsi * ctx + cpsi * cty;
+    double rxdd = rxd * rxd;
+    double rydd = ryd * ryd;
+    double r1x = r1 * r1;
+    double r2y = r2 * r2;
+    double lamda = rxdd / r1x + rydd / r2y;
+    double sds;
 
-		if (lamda > 1)
-		{
-			r1 = Math.sqrt(lamda) * r1;
-			r2 = Math.sqrt(lamda) * r2;
-			sds = 0;
-		}
-		else
-		{
-			double seif = 1;
+    if (lamda > 1) {
+      r1 = Math.sqrt(lamda) * r1;
+      r2 = Math.sqrt(lamda) * r2;
+      sds = 0;
+    } else {
+      double seif = 1;
 
-			if (largeArcFlag == fS)
-			{
-				seif = -1;
-			}
+      if (largeArcFlag == fS) {
+        seif = -1;
+      }
 
-			sds = seif
-					* Math.sqrt((r1x * r2y - r1x * rydd - r2y * rxdd)
-							/ (r1x * rydd + r2y * rxdd));
-		}
+      sds = seif * Math.sqrt((r1x * r2y - r1x * rydd - r2y * rxdd) / (r1x * rydd + r2y * rxdd));
+    }
 
-		double txd = sds * r1 * ryd / r2;
-		double tyd = -1 * sds * r2 * rxd / r1;
-		double tx = cpsi * txd - spsi * tyd + x / 2;
-		double ty = spsi * txd + cpsi * tyd + y / 2;
-		double rad = Math.atan2((ryd - tyd) / r2, (rxd - txd) / r1)
-				- Math.atan2(0, 1);
-		double s1 = (rad >= 0) ? rad : 2 * Math.PI + rad;
-		rad = Math.atan2((-ryd - tyd) / r2, (-rxd - txd) / r1)
-				- Math.atan2((ryd - tyd) / r2, (rxd - txd) / r1);
-		double dr = (rad >= 0) ? rad : 2 * Math.PI + rad;
+    double txd = sds * r1 * ryd / r2;
+    double tyd = -1 * sds * r2 * rxd / r1;
+    double tx = cpsi * txd - spsi * tyd + x / 2;
+    double ty = spsi * txd + cpsi * tyd + y / 2;
+    double rad = Math.atan2((ryd - tyd) / r2, (rxd - txd) / r1) - Math.atan2(0, 1);
+    double s1 = (rad >= 0) ? rad : 2 * Math.PI + rad;
+    rad = Math.atan2((-ryd - tyd) / r2, (-rxd - txd) / r1) - Math.atan2((ryd - tyd) / r2, (rxd - txd) / r1);
+    double dr = (rad >= 0) ? rad : 2 * Math.PI + rad;
 
-		if (fS == 0 && dr > 0)
-		{
-			dr -= 2 * Math.PI;
-		}
-		else if (fS != 0 && dr < 0)
-		{
-			dr += 2 * Math.PI;
-		}
+    if (fS == 0 && dr > 0) {
+      dr -= 2 * Math.PI;
+    } else if (fS != 0 && dr < 0) {
+      dr += 2 * Math.PI;
+    }
 
-		double sse = dr * 2 / Math.PI;
-		int seg = Math.ceil(sse < 0 ? -1 * sse : sse) as int;
-		double segr = dr / seg;
-		double t = 8 / 3 * Math.sin(segr / 4) * Math.sin(segr / 4)
-				/ Math.sin(segr / 2);
-		double cpsir1 = cpsi * r1;
-		double cpsir2 = cpsi * r2;
-		double spsir1 = spsi * r1;
-		double spsir2 = spsi * r2;
-		double mc = Math.cos(s1);
-		double ms = Math.sin(s1);
-		double x2 = -t * (cpsir1 * ms + spsir2 * mc);
-		double y2 = -t * (spsir1 * ms - cpsir2 * mc);
-		double x3 = 0;
-		double y3 = 0;
+    double sse = dr * 2 / Math.PI;
+    int seg = Math.ceil(sse < 0 ? -1 * sse : sse) as int;
+    double segr = dr / seg;
+    double t = 8 / 3 * Math.sin(segr / 4) * Math.sin(segr / 4) / Math.sin(segr / 2);
+    double cpsir1 = cpsi * r1;
+    double cpsir2 = cpsi * r2;
+    double spsir1 = spsi * r1;
+    double spsir2 = spsi * r2;
+    double mc = Math.cos(s1);
+    double ms = Math.sin(s1);
+    double x2 = -t * (cpsir1 * ms + spsir2 * mc);
+    double y2 = -t * (spsir1 * ms - cpsir2 * mc);
+    double x3 = 0;
+    double y3 = 0;
 
-		List<double> result = new List<double>(seg * 6);
+    List<double> result = new List<double>(seg * 6);
 
-		for (int n = 0; n < seg; ++n)
-		{
-			s1 += segr;
-			mc = Math.cos(s1);
-			ms = Math.sin(s1);
+    for (int n = 0; n < seg; ++n) {
+      s1 += segr;
+      mc = Math.cos(s1);
+      ms = Math.sin(s1);
 
-			x3 = cpsir1 * mc - spsir2 * ms + tx;
-			y3 = spsir1 * mc + cpsir2 * ms + ty;
-			double dx = -t * (cpsir1 * ms + spsir2 * mc);
-			double dy = -t * (spsir1 * ms - cpsir2 * mc);
+      x3 = cpsir1 * mc - spsir2 * ms + tx;
+      y3 = spsir1 * mc + cpsir2 * ms + ty;
+      double dx = -t * (cpsir1 * ms + spsir2 * mc);
+      double dy = -t * (spsir1 * ms - cpsir2 * mc);
 
-			// CurveTo updates x0, y0 so need to restore it
-			int index = n * 6;
-			result[index] = x2 + x0;
-			result[index + 1] = y2 + y0;
-			result[index + 2] = x3 - dx + x0;
-			result[index + 3] = y3 - dy + y0;
-			result[index + 4] = x3 + x0;
-			result[index + 5] = y3 + y0;
+      // CurveTo updates x0, y0 so need to restore it
+      int index = n * 6;
+      result[index] = x2 + x0;
+      result[index + 1] = y2 + y0;
+      result[index + 2] = x3 - dx + x0;
+      result[index + 3] = y3 - dy + y0;
+      result[index + 4] = x3 + x0;
+      result[index + 5] = y3 + y0;
 
-			x2 = x3 + dx;
-			y2 = y3 + dy;
-		}
+      x2 = x3 + dx;
+      y2 = y3 + dy;
+    }
 
-		return result;
-	}
+    return result;
+  }
 
-	/**
+  /**
 	 * Returns the bounding box for the rotated rectangle.
 	 */
-	static Rect getBoundingBox(Rect rect, double rotation)
-	{
-		Rect result = null;
+  static Rect getBoundingBox(Rect rect, double rotation) {
+    Rect result = null;
 
-		if (rect != null && rotation != 0)
-		{
-			double rad = Math.toRadians(rotation);
-			double cos = Math.cos(rad);
-			double sin = Math.sin(rad);
+    if (rect != null && rotation != 0) {
+      double rad = Math.toRadians(rotation);
+      double cos = Math.cos(rad);
+      double sin = Math.sin(rad);
 
-			Point2d cx = new Point2d(rect.getX() + rect.getWidth() / 2,
-					rect.getY() + rect.getHeight() / 2);
+      Point2d cx = new Point2d(rect.getX() + rect.getWidth() / 2, rect.getY() + rect.getHeight() / 2);
 
-			Point2d p1 = new Point2d(rect.getX(), rect.getY());
-			Point2d p2 = new Point2d(rect.getX() + rect.getWidth(), rect.getY());
-			Point2d p3 = new Point2d(p2.getX(), rect.getY() + rect.getHeight());
-			Point2d p4 = new Point2d(rect.getX(), p3.getY());
+      Point2d p1 = new Point2d(rect.getX(), rect.getY());
+      Point2d p2 = new Point2d(rect.getX() + rect.getWidth(), rect.getY());
+      Point2d p3 = new Point2d(p2.getX(), rect.getY() + rect.getHeight());
+      Point2d p4 = new Point2d(rect.getX(), p3.getY());
 
-			p1 = getRotatedPoint(p1, cos, sin, cx);
-			p2 = getRotatedPoint(p2, cos, sin, cx);
-			p3 = getRotatedPoint(p3, cos, sin, cx);
-			p4 = getRotatedPoint(p4, cos, sin, cx);
+      p1 = getRotatedPoint(p1, cos, sin, cx);
+      p2 = getRotatedPoint(p2, cos, sin, cx);
+      p3 = getRotatedPoint(p3, cos, sin, cx);
+      p4 = getRotatedPoint(p4, cos, sin, cx);
 
-			Rectangle tmp = new Rectangle(p1.getX() as int, p1.getY() as int, 0,
-					0);
-			tmp.add(p2.getPoint());
-			tmp.add(p3.getPoint());
-			tmp.add(p4.getPoint());
+      Rectangle tmp = new Rectangle(p1.getX() as int, p1.getY() as int, 0, 0);
+      tmp.add(p2.getPoint());
+      tmp.add(p3.getPoint());
+      tmp.add(p4.getPoint());
 
-			result = new Rect(tmp);
-		}
-		else if (rect != null)
-		{
-			result = rect.clone() as Rect;
-		}
+      result = new Rect(tmp);
+    } else if (rect != null) {
+      result = rect.clone() as Rect;
+    }
 
-		return result;
-	}
+    return result;
+  }
 
-	/**
+  /**
 	 * Find the first character matching the input character in the given
 	 * string where the character has no letter preceding it.
 	 * 
@@ -832,105 +692,87 @@ class Utils
 	 * @return the position of the first character matching the input character
 	 * 			in the given string where the character has no letter preceding it.
 	 */
-	static int firstCharAt(String text, int inputChar, int fromIndex)
-	{
-		int result = 0;
+  static int firstCharAt(String text, int inputChar, int fromIndex) {
+    int result = 0;
 
-		while (result >= 0)
-		{
-			result = text.indexOf(inputChar, fromIndex);
+    while (result >= 0) {
+      result = text.indexOf(inputChar, fromIndex);
 
-			if (result == 0)
-			{
-				return result;
-			}
-			else if (result > 0)
-			{
-				// Check there is a whitespace or symbol before the hit character
-				if (Character.isLetter(text.codePointAt(result - 1)))
-				{
-					// The pre-increment is used in if and else branches.
-					if (++fromIndex >= text.length())
-					{
-						return -1;
-					}
-					else
-					{
-						// Test again from next candidate character
-						// This isn't the first letter of this word
-						result = text.indexOf(inputChar, fromIndex);
-					}
-				}
-				else
-				{
-					return result;
-				}
-			}
+      if (result == 0) {
+        return result;
+      } else if (result > 0) {
+        // Check there is a whitespace or symbol before the hit character
+        if (Character.isLetter(text.codePointAt(result - 1))) {
+          // The pre-increment is used in if and else branches.
+          if (++fromIndex >= text.length()) {
+            return -1;
+          } else {
+            // Test again from next candidate character
+            // This isn't the first letter of this word
+            result = text.indexOf(inputChar, fromIndex);
+          }
+        } else {
+          return result;
+        }
+      }
 
-		}
+    }
 
-		return result;
-	}
+    return result;
+  }
 
-	/**
+  /**
 	 * Rotates the given point by the given cos and sin.
 	 */
-//	static Point2d getRotatedPoint(Point2d pt, double cos, double sin)
-//	{
-//		return getRotatedPoint(pt, cos, sin, new Point2d());
-//	}
+  //	static Point2d getRotatedPoint(Point2d pt, double cos, double sin)
+  //	{
+  //		return getRotatedPoint(pt, cos, sin, new Point2d());
+  //	}
 
-	/**
+  /**
 	 * Finds the index of the nearest segment on the given cell state for the
 	 * specified coordinate pair.
 	 */
-	static int findNearestSegment(CellState state, double x, double y)
-	{
-		int index = -1;
+  static int findNearestSegment(CellState state, double x, double y) {
+    int index = -1;
 
-		if (state.getAbsolutePointCount() > 0)
-		{
-			Point2d last = state.getAbsolutePoint(0);
-			double min = Double.MAX_VALUE;
+    if (state.getAbsolutePointCount() > 0) {
+      Point2d last = state.getAbsolutePoint(0);
+      double min = Double.MAX_VALUE;
 
-			for (int i = 1; i < state.getAbsolutePointCount(); i++)
-			{
-				Point2d current = state.getAbsolutePoint(i);
-				double dist = new /*Line2D.*/Double(last._x, last._y, current._x,
-						current._y).ptSegDistSq(x, y);
+      for (int i = 1; i < state.getAbsolutePointCount(); i++) {
+        Point2d current = state.getAbsolutePoint(i);
+        double dist = new /*Line2D.*/Double(last._x, last._y, current._x, current._y).ptSegDistSq(x, y);
 
-				if (dist < min)
-				{
-					min = dist;
-					index = i - 1;
-				}
+        if (dist < min) {
+          min = dist;
+          index = i - 1;
+        }
 
-				last = current;
-			}
-		}
+        last = current;
+      }
+    }
 
-		return index;
-	}
+    return index;
+  }
 
-	/**
+  /**
 	 * Rotates the given point by the given cos and sin.
 	 */
-	static Point2d getRotatedPoint(Point2d pt, double cos, double sin,
-			[Point2d c=null])
-	{
-	  if (c == null) {
-	    c = new Point2d();
-	  }
-		double x = pt.getX() - c.getX();
-		double y = pt.getY() - c.getY();
+  static Point2d getRotatedPoint(Point2d pt, double cos, double sin, [Point2d c = null]) {
+    if (c == null) {
+      c = new Point2d();
+    }
+    double x = pt.getX() - c.getX();
+    double y = pt.getY() - c.getY();
 
-		double x1 = x * cos - y * sin;
-		double y1 = y * cos + x * sin;
+    double x1 = x * cos - y * sin;
+    double y1 = y * cos + x * sin;
 
-		return new Point2d(x1 + c.getX(), y1 + c.getY());
-	}
+    return new Point2d(x1 + c.getX(), y1 + c.getY());
+  }
 
-	/**
+  /**
 	 * Returns an integer mask of the port constraints of the given map
 	 * @param terminal the cached cell state of the cell to determine the
 	 * 			port constraints for
@@ -939,14 +781,14 @@ class Utils
 	 * 			terminal specified at its source end
 	 * @return the mask of port constraint directions
 	 */
-//	static int getPortConstraints(CellState terminal,
-//			CellState edge, bool source)
-//	{
-//		return getPortConstraints(terminal, edge, source,
-//				Constants.DIRECTION_MASK_ALL);
-//	}
+  //	static int getPortConstraints(CellState terminal,
+  //			CellState edge, bool source)
+  //	{
+  //		return getPortConstraints(terminal, edge, source,
+  //				Constants.DIRECTION_MASK_ALL);
+  //	}
 
-	/**
+  /**
 	 * Returns an integer mask of the port constraints of the given map
 	 * @param terminal the cached cell state of the cell to determine the
 	 * 			port constraints for
@@ -956,142 +798,114 @@ class Utils
 	 * @param defaultValue Default value to return if the key is undefined.
 	 * @return the mask of port constraint directions
 	 */
-	static int getPortConstraints(CellState terminal,
-			CellState edge, bool source, [int defaultValue=null])
-	{
-	  if (defaultValue == null) {
-	    defaultValue = Constants.DIRECTION_MASK_ALL;
-	  }
-		Object value = terminal.getStyle().get(
-				Constants.STYLE_PORT_CONSTRAINT);
+  static int getPortConstraints(CellState terminal, CellState edge, bool source, [int defaultValue = null]) {
+    if (defaultValue == null) {
+      defaultValue = Constants.DIRECTION_MASK_ALL;
+    }
+    Object value = terminal.getStyle().get(Constants.STYLE_PORT_CONSTRAINT);
 
-		if (value == null)
-		{
-			return defaultValue;
-		}
-		else
-		{
-			String directions = value.toString();
-			int returnValue = Constants.DIRECTION_MASK_NONE;
+    if (value == null) {
+      return defaultValue;
+    } else {
+      String directions = value.toString();
+      int returnValue = Constants.DIRECTION_MASK_NONE;
 
-			if (directions.indexOf(Constants.DIRECTION_NORTH) >= 0)
-			{
-				returnValue |= Constants.DIRECTION_MASK_NORTH;
-			}
-			if (directions.indexOf(Constants.DIRECTION_WEST) >= 0)
-			{
-				returnValue |= Constants.DIRECTION_MASK_WEST;
-			}
-			if (directions.indexOf(Constants.DIRECTION_SOUTH) >= 0)
-			{
-				returnValue |= Constants.DIRECTION_MASK_SOUTH;
-			}
-			if (directions.indexOf(Constants.DIRECTION_EAST) >= 0)
-			{
-				returnValue |= Constants.DIRECTION_MASK_EAST;
-			}
+      if (directions.indexOf(Constants.DIRECTION_NORTH) >= 0) {
+        returnValue |= Constants.DIRECTION_MASK_NORTH;
+      }
+      if (directions.indexOf(Constants.DIRECTION_WEST) >= 0) {
+        returnValue |= Constants.DIRECTION_MASK_WEST;
+      }
+      if (directions.indexOf(Constants.DIRECTION_SOUTH) >= 0) {
+        returnValue |= Constants.DIRECTION_MASK_SOUTH;
+      }
+      if (directions.indexOf(Constants.DIRECTION_EAST) >= 0) {
+        returnValue |= Constants.DIRECTION_MASK_EAST;
+      }
 
-			return returnValue;
-		}
-	}
+      return returnValue;
+    }
+  }
 
-	static int reversePortConstraints(int constraint)
-	{
-		int result = 0;
+  static int reversePortConstraints(int constraint) {
+    int result = 0;
 
-		result = (constraint & Constants.DIRECTION_MASK_WEST) << 3;
-		result |= (constraint & Constants.DIRECTION_MASK_NORTH) << 1;
-		result |= (constraint & Constants.DIRECTION_MASK_SOUTH) >> 1;
-		result |= (constraint & Constants.DIRECTION_MASK_EAST) >> 3;
+    result = (constraint & Constants.DIRECTION_MASK_WEST) << 3;
+    result |= (constraint & Constants.DIRECTION_MASK_NORTH) << 1;
+    result |= (constraint & Constants.DIRECTION_MASK_SOUTH) >> 1;
+    result |= (constraint & Constants.DIRECTION_MASK_EAST) >> 3;
 
-		return result;
-	}
+    return result;
+  }
 
-	/**
+  /**
 	 * Draws the image inside the clip bounds to the given graphics object.
 	 */
-	static void drawImageClip(Graphics g, BufferedImage image,
-			ImageObserver observer)
-	{
-		Rectangle clip = g.getClipBounds();
+  static void drawImageClip(Graphics g, BufferedImage image, ImageObserver observer) {
+    Rectangle clip = g.getClipBounds();
 
-		if (clip != null)
-		{
-			int w = image.getWidth();
-			int h = image.getHeight();
+    if (clip != null) {
+      int w = image.getWidth();
+      int h = image.getHeight();
 
-			int x = Math.max(0, Math.min(clip.x, w));
-			int y = Math.max(0, Math.min(clip.y, h));
+      int x = Math.max(0, Math.min(clip.x, w));
+      int y = Math.max(0, Math.min(clip.y, h));
 
-			w = Math.min(clip.width, w - x);
-			h = Math.min(clip.height, h - y);
+      w = Math.min(clip.width, w - x);
+      h = Math.min(clip.height, h - y);
 
-			if (w > 0 && h > 0)
-			{
-				// TODO: Support for normal images using fast subimage copies
-				g.drawImage(image.getSubimage(x, y, w, h), clip.x, clip.y,
-						observer);
-			}
-		}
-		else
-		{
-			g.drawImage(image, 0, 0, observer);
-		}
-	}
+      if (w > 0 && h > 0) {
+        // TODO: Support for normal images using fast subimage copies
+        g.drawImage(image.getSubimage(x, y, w, h), clip.x, clip.y, observer);
+      }
+    } else {
+      g.drawImage(image, 0, 0, observer);
+    }
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	static void fillClippedRect(Graphics g, int x, int y, int width,
-			int height)
-	{
-		Rectangle bg = new Rectangle(x, y, width, height);
+  static void fillClippedRect(Graphics g, int x, int y, int width, int height) {
+    Rectangle bg = new Rectangle(x, y, width, height);
 
-		try
-		{
-			if (g.getClipBounds() != null)
-			{
-				bg = bg.intersection(g.getClipBounds());
-			}
-		}
-		on Exception catch (e)
-		{
-			// FIXME: Getting clipbounds sometimes throws an NPE
-		}
+    try {
+      if (g.getClipBounds() != null) {
+        bg = bg.intersection(g.getClipBounds());
+      }
+    } on Exception catch (e) {
+      // FIXME: Getting clipbounds sometimes throws an NPE
+    }
 
-		g.fillRect(bg.x, bg.y, bg.width, bg.height);
-	}
+    g.fillRect(bg.x, bg.y, bg.width, bg.height);
+  }
 
-	/**
+  /**
 	 * Creates a new list of new points obtained by translating the points in
 	 * the given list by the given vector. Elements that are not mxPoints are
 	 * added to the result as-is.
 	 */
-	static List<Point2d> translatePoints(List<Point2d> pts, double dx,
-			double dy)
-	{
-		List<Point2d> result = null;
+  static List<Point2d> translatePoints(List<Point2d> pts, double dx, double dy) {
+    List<Point2d> result = null;
 
-		if (pts != null)
-		{
-			result = new List<Point2d>(pts.size());
-			Iterator<Point2d> it = pts.iterator();
+    if (pts != null) {
+      result = new List<Point2d>(pts.size());
+      Iterator<Point2d> it = pts.iterator();
 
-			while (it.hasNext())
-			{
-				Point2d point = it.next().clone() as Point2d;
+      while (it.hasNext()) {
+        Point2d point = it.next().clone() as Point2d;
 
-				point.setX(point.getX() + dx);
-				point.setY(point.getY() + dy);
+        point.setX(point.getX() + dx);
+        point.setY(point.getY() + dy);
 
-				result.add(point);
-			}
-		}
+        result.add(point);
+      }
+    }
 
-		return result;
-	}
+    return result;
+  }
 
-	/**
+  /**
 	 * Returns the intersection of two lines as an Point2d.
 	 * 
 	 * @param x0
@@ -1112,85 +926,73 @@ class Utils
 	 *            Y-coordinate of the second line's endpoint.
 	 * @return Returns the intersection between the two lines.
 	 */
-	static Point2d intersection(double x0, double y0, double x1,
-			double y1, double x2, double y2, double x3, double y3)
-	{
-		double denom = ((y3 - y2) * (x1 - x0)) - ((x3 - x2) * (y1 - y0));
-		double nume_a = ((x3 - x2) * (y0 - y2)) - ((y3 - y2) * (x0 - x2));
-		double nume_b = ((x1 - x0) * (y0 - y2)) - ((y1 - y0) * (x0 - x2));
+  static Point2d intersection(double x0, double y0, double x1, double y1, double x2, double y2, double x3, double y3) {
+    double denom = ((y3 - y2) * (x1 - x0)) - ((x3 - x2) * (y1 - y0));
+    double nume_a = ((x3 - x2) * (y0 - y2)) - ((y3 - y2) * (x0 - x2));
+    double nume_b = ((x1 - x0) * (y0 - y2)) - ((y1 - y0) * (x0 - x2));
 
-		double ua = nume_a / denom;
-		double ub = nume_b / denom;
+    double ua = nume_a / denom;
+    double ub = nume_b / denom;
 
-		if (ua >= 0.0 && ua <= 1.0 && ub >= 0.0 && ub <= 1.0)
-		{
-			// Get the intersection point
-			double intersectionX = x0 + ua * (x1 - x0);
-			double intersectionY = y0 + ua * (y1 - y0);
+    if (ua >= 0.0 && ua <= 1.0 && ub >= 0.0 && ub <= 1.0) {
+      // Get the intersection point
+      double intersectionX = x0 + ua * (x1 - x0);
+      double intersectionY = y0 + ua * (y1 - y0);
 
-			return new Point2d(intersectionX, intersectionY);
-		}
+      return new Point2d(intersectionX, intersectionY);
+    }
 
-		// No intersection
-		return null;
-	}
+    // No intersection
+    return null;
+  }
 
-	/**
+  /**
 	 * Sorts the given cells according to the order in the cell hierarchy.
 	 */
-//	static List<Object> sortCells(List<Object> cells, final bool ascending)
-//	{
-//		return sortCells(Arrays.asList(cells), ascending).toArray();
-//	}
+  //	static List<Object> sortCells(List<Object> cells, final bool ascending)
+  //	{
+  //		return sortCells(Arrays.asList(cells), ascending).toArray();
+  //	}
 
-	/**
+  /**
 	 * Sorts the given cells according to the order in the cell hierarchy.
 	 */
-	static Collection<Object> sortCells(Collection<Object> cells,
-			final bool ascending)
-	{
-		SortedSet<Object> result = new TreeSet<Object>((Object o1, Object o2)
-		{
-			int comp = CellPath.compare(CellPath.create(o1 as ICell),
-					CellPath.create(o2 as ICell));
+  static Collection<Object> sortCells(Collection<Object> cells, final bool ascending) {
+    SortedSet<Object> result = new TreeSet<Object>((Object o1, Object o2) {
+      int comp = CellPath.compare(CellPath.create(o1 as ICell), CellPath.create(o2 as ICell));
 
-			return (comp == 0) ? 0 : (((comp > 0) == ascending) ? 1 : -1);
-		});
+      return (comp == 0) ? 0 : (((comp > 0) == ascending) ? 1 : -1);
+    });
 
-		result.addAll(cells);
+    result.addAll(cells);
 
-		return result;
-	}
+    return result;
+  }
 
-	/**
+  /**
 	 * Returns true if the given array contains the given object.
 	 */
-	static bool contains(List<Object> array, Object obj)
-	{
-		return indexOf(array, obj) >= 0;
-	}
+  static bool contains(List<Object> array, Object obj) {
+    return indexOf(array, obj) >= 0;
+  }
 
-	/**
+  /**
 	 * Returns the index of the given object in the given array of -1 if the
 	 * object is not contained in the array.
 	 */
-	static int indexOf(List<Object> array, Object obj)
-	{
-		if (obj != null && array != null)
-		{
-			for (int i = 0; i < array.length; i++)
-			{
-				if (array[i] == obj)
-				{
-					return i;
-				}
-			}
-		}
+  static int indexOf(List<Object> array, Object obj) {
+    if (obj != null && array != null) {
+      for (int i = 0; i < array.length; i++) {
+        if (array[i] == obj) {
+          return i;
+        }
+      }
+    }
 
-		return -1;
-	}
+    return -1;
+  }
 
-	/**
+  /**
 	 * Returns the stylename in a style of the form stylename[;key=value] or an
 	 * empty string if the given style does not contain a stylename.
 	 * 
@@ -1199,12 +1001,11 @@ class Utils
 	 * @return Returns the stylename from the given formatted string.
 	 * @deprecated Use <code>StyleUtils.getStylename(String)</code> (Jan 2012)
 	 */
-	static String getStylename(String style)
-	{
-		return StyleUtils.getStylename(style);
-	}
+  static String getStylename(String style) {
+    return StyleUtils.getStylename(style);
+  }
 
-	/**
+  /**
 	 * Returns the stylenames in a style of the form stylename[;key=value] or an
 	 * empty array if the given style does not contain any stylenames.
 	 * 
@@ -1213,33 +1014,30 @@ class Utils
 	 * @return Returns the stylename from the given formatted string.
 	 * @deprecated Use <code>StyleUtils.getStylenames(String)</code> (Jan 2012)
 	 */
-	static List<String> getStylenames(String style)
-	{
-		return StyleUtils.getStylenames(style);
-	}
+  static List<String> getStylenames(String style) {
+    return StyleUtils.getStylenames(style);
+  }
 
-	/**
+  /**
 	 * Returns the index of the given stylename in the given style. This returns
 	 * -1 if the given stylename does not occur (as a stylename) in the given
 	 * style, otherwise it returns the index of the first character.
 	 * @deprecated Use <code>StyleUtils.indexOfStylename(String, String)</code> (Jan 2012)
 	 */
-	static int indexOfStylename(String style, String stylename)
-	{
-		return StyleUtils.indexOfStylename(style, stylename);
-	}
+  static int indexOfStylename(String style, String stylename) {
+    return StyleUtils.indexOfStylename(style, stylename);
+  }
 
-	/**
+  /**
 	 * Removes all stylenames from the given style and returns the updated
 	 * style.
 	 * @deprecated Use <code>StyleUtils.removeAllStylenames(String)</code> (Jan 2012)
 	 */
-	static String removeAllStylenames(String style)
-	{
-		return StyleUtils.removeAllStylenames(style);
-	}
+  static String removeAllStylenames(String style) {
+    return StyleUtils.removeAllStylenames(style);
+  }
 
-	/**
+  /**
 	 * Assigns the value for the given key in the styles of the given cells, or
 	 * removes the key from the styles if the value is null.
 	 * 
@@ -1253,13 +1051,11 @@ class Utils
 	 *            New value for the given key.
 	 * @deprecated Use <code>StyleUtils.setCellStyles(IGraphModel, List<Object>, String, String)</code> (Jan 2012)
 	 */
-	static void setCellStyles(IGraphModel model, List<Object> cells,
-			String key, String value)
-	{
-		StyleUtils.setCellStyles(model, cells, key, value);
-	}
+  static void setCellStyles(IGraphModel model, List<Object> cells, String key, String value) {
+    StyleUtils.setCellStyles(model, cells, key, value);
+  }
 
-	/**
+  /**
 	 * Adds or removes the given key, value pair to the style and returns the
 	 * new style. If value is null or zero length then the key is removed from
 	 * the style.
@@ -1273,12 +1069,11 @@ class Utils
 	 * @return Returns the new style.
 	 * @deprecated Use <code>StyleUtils.setStyle(String, String, String)</code> (Jan 2012)
 	 */
-	static String setStyle(String style, String key, String value)
-	{
-		return StyleUtils.setStyle(style, key, value);
-	}
+  static String setStyle(String style, String key, String value) {
+    return StyleUtils.setStyle(style, key, value);
+  }
 
-	/**
+  /**
 	 * Sets or toggles the flag bit for the given key in the cell's styles. If
 	 * value is null then the flag is toggled.
 	 * 
@@ -1303,13 +1098,11 @@ class Utils
 	 *            Optional bool value for the flag.
 	 * @deprecated Use <code>StyleUtils.setCellStyleFlags(IGraphModel, List<Object>,String, int, Boolean)</code> (Jan 2012)
 	 */
-	static void setCellStyleFlags(IGraphModel model, List<Object> cells,
-			String key, int flag, Boolean value)
-	{
-		StyleUtils.setCellStyleFlags(model, cells, key, flag, value);
-	}
+  static void setCellStyleFlags(IGraphModel model, List<Object> cells, String key, int flag, Boolean value) {
+    StyleUtils.setCellStyleFlags(model, cells, key, flag, value);
+  }
 
-	/**
+  /**
 	 * Sets or removes the given key from the specified style and returns the
 	 * new style. If value is null then the flag is toggled.
 	 * 
@@ -1323,72 +1116,56 @@ class Utils
 	 *            Optional bool value for the given flag.
 	 * @deprecated Use <code>StyleUtils.setStyleFlag(String, String, int, Boolean)</code> (Jan 2012)
 	 */
-	static String setStyleFlag(String style, String key, int flag,
-			Boolean value)
-	{
-		return StyleUtils.setStyleFlag(style, key, flag, value);
-	}
+  static String setStyleFlag(String style, String key, int flag, Boolean value) {
+    return StyleUtils.setStyleFlag(style, key, flag, value);
+  }
 
-//	static bool intersectsHotspot(CellState state, int x, int y,
-//			double hotspot)
-//	{
-//		return intersectsHotspot(state, x, y, hotspot, 0, 0);
-//	}
+  //	static bool intersectsHotspot(CellState state, int x, int y,
+  //			double hotspot)
+  //	{
+  //		return intersectsHotspot(state, x, y, hotspot, 0, 0);
+  //	}
 
-	/**
+  /**
 	 * Returns true if the given coordinate pair intersects the hotspot of the
 	 * given state.
 	 */
-	static bool intersectsHotspot(CellState state, int x, int y,
-			double hotspot, [int min=0, int max=0])
-	{
-		if (hotspot > 0)
-		{
-			int cx = Math.round(state.getCenterX()) as int;
-			int cy = Math.round(state.getCenterY()) as int;
-			int width = Math.round(state.getWidth()) as int;
-			int height = Math.round(state.getHeight()) as int;
+  static bool intersectsHotspot(CellState state, int x, int y, double hotspot, [int min = 0, int max = 0]) {
+    if (hotspot > 0) {
+      int cx = Math.round(state.getCenterX()) as int;
+      int cy = Math.round(state.getCenterY()) as int;
+      int width = Math.round(state.getWidth()) as int;
+      int height = Math.round(state.getHeight()) as int;
 
-			if (Utils
-					.getString(state.getStyle(), Constants.STYLE_SHAPE, "")
-					.equals(Constants.SHAPE_SWIMLANE))
-			{
-				int start = Utils.getInt(state.getStyle(),
-						Constants.STYLE_STARTSIZE,
-						Constants.DEFAULT_STARTSIZE);
+      if (Utils.getString(state.getStyle(), Constants.STYLE_SHAPE, "").equals(Constants.SHAPE_SWIMLANE)) {
+        int start = Utils.getInt(state.getStyle(), Constants.STYLE_STARTSIZE, Constants.DEFAULT_STARTSIZE);
 
-				if (Utils.isTrue(state.getStyle(),
-						Constants.STYLE_HORIZONTAL, true))
-				{
-					cy = Math.round(state.getY() + start / 2) as int;
-					height = start;
-				}
-				else
-				{
-					cx = Math.round(state.getX() + start / 2) as int;
-					width = start;
-				}
-			}
+        if (Utils.isTrue(state.getStyle(), Constants.STYLE_HORIZONTAL, true)) {
+          cy = Math.round(state.getY() + start / 2) as int;
+          height = start;
+        } else {
+          cx = Math.round(state.getX() + start / 2) as int;
+          width = start;
+        }
+      }
 
-			int w = Math.max(min, width * hotspot) as int;
-			int h = Math.max(min, height * hotspot) as int;
+      int w = Math.max(min, width * hotspot) as int;
+      int h = Math.max(min, height * hotspot) as int;
 
-			if (max > 0)
-			{
-				w = Math.min(w, max);
-				h = Math.min(h, max);
-			}
+      if (max > 0) {
+        w = Math.min(w, max);
+        h = Math.min(h, max);
+      }
 
-			Rectangle rect = new Rectangle(Math.round(cx - w / 2),
-					Math.round(cy - h / 2), w, h);
+      Rectangle rect = new Rectangle(Math.round(cx - w / 2), Math.round(cy - h / 2), w, h);
 
-			return rect.contains(x, y);
-		}
+      return rect.contains(x, y);
+    }
 
-		return true;
-	}
+    return true;
+  }
 
-	/**
+  /**
 	 * Returns true if the dictionary contains true for the given key or false
 	 * if no value is defined for the key.
 	 * 
@@ -1398,12 +1175,12 @@ class Utils
 	 *            Key whose value should be returned.
 	 * @return Returns the bool value for key in dict.
 	 */
-//	static bool isTrue(Map<String, Object> dict, String key)
-//	{
-//		return isTrue(dict, key, false);
-//	}
+  //	static bool isTrue(Map<String, Object> dict, String key)
+  //	{
+  //		return isTrue(dict, key, false);
+  //	}
 
-	/**
+  /**
 	 * Returns true if the dictionary contains true for the given key or the
 	 * given default value if no value is defined for the key.
 	 * 
@@ -1415,23 +1192,17 @@ class Utils
 	 *            Default value to return if the key is undefined.
 	 * @return Returns the bool value for key in dict.
 	 */
-	static bool isTrue(Map<String, Object> dict, String key,
-			[bool defaultValue=false])
-	{
-		Object value = dict.get(key);
+  static bool isTrue(Map<String, Object> dict, String key, [bool defaultValue = false]) {
+    Object value = dict.get(key);
 
-		if (value == null)
-		{
-			return defaultValue;
-		}
-		else
-		{
-			return value.equals("1")
-					|| value.toString().toLowerCase().equals("true");
-		}
-	}
+    if (value == null) {
+      return defaultValue;
+    } else {
+      return value.equals("1") || value.toString().toLowerCase().equals("true");
+    }
+  }
 
-	/**
+  /**
 	 * Returns the value for key in dictionary as an int or 0 if no value is
 	 * defined for the key.
 	 * 
@@ -1441,12 +1212,12 @@ class Utils
 	 *            Key whose value should be returned.
 	 * @return Returns the integer value for key in dict.
 	 */
-//	static int getInt(Map<String, Object> dict, String key)
-//	{
-//		return getInt(dict, key, 0);
-//	}
+  //	static int getInt(Map<String, Object> dict, String key)
+  //	{
+  //		return getInt(dict, key, 0);
+  //	}
 
-	/**
+  /**
 	 * Returns the value for key in dictionary as an int or the given default
 	 * value if no value is defined for the key.
 	 * 
@@ -1458,23 +1229,18 @@ class Utils
 	 *            Default value to return if the key is undefined.
 	 * @return Returns the integer value for key in dict.
 	 */
-	static int getInt(Map<String, Object> dict, String key,
-			[int defaultValue=0])
-	{
-		Object value = dict.get(key);
+  static int getInt(Map<String, Object> dict, String key, [int defaultValue = 0]) {
+    Object value = dict.get(key);
 
-		if (value == null)
-		{
-			return defaultValue;
-		}
-		else
-		{
-			// Handles commas by casting them to an int
-			return Float.parseFloat(value.toString()) as int;
-		}
-	}
+    if (value == null) {
+      return defaultValue;
+    } else {
+      // Handles commas by casting them to an int
+      return Float.parseFloat(value.toString()) as int;
+    }
+  }
 
-	/**
+  /**
 	 * Returns the value for key in dictionary as a float or 0 if no value is
 	 * defined for the key.
 	 * 
@@ -1484,12 +1250,12 @@ class Utils
 	 *            Key whose value should be returned.
 	 * @return Returns the float value for key in dict.
 	 */
-//	static float getFloat(Map<String, Object> dict, String key)
-//	{
-//		return getFloat(dict, key, 0);
-//	}
+  //	static float getFloat(Map<String, Object> dict, String key)
+  //	{
+  //		return getFloat(dict, key, 0);
+  //	}
 
-	/**
+  /**
 	 * Returns the value for key in dictionary as a float or the given default
 	 * value if no value is defined for the key.
 	 * 
@@ -1501,22 +1267,17 @@ class Utils
 	 *            Default value to return if the key is undefined.
 	 * @return Returns the float value for key in dict.
 	 */
-	static float getFloat(Map<String, Object> dict, String key,
-			[float defaultValue=0.0])
-	{
-		Object value = dict.get(key);
+  static float getFloat(Map<String, Object> dict, String key, [float defaultValue = 0.0]) {
+    Object value = dict.get(key);
 
-		if (value == null)
-		{
-			return defaultValue;
-		}
-		else
-		{
-			return Float.parseFloat(value.toString());
-		}
-	}
+    if (value == null) {
+      return defaultValue;
+    } else {
+      return Float.parseFloat(value.toString());
+    }
+  }
 
-	/**
+  /**
 	 * Returns the value for key in dictionary as a float array or the given default
 	 * value if no value is defined for the key.
 	 * 
@@ -1528,13 +1289,13 @@ class Utils
 	 *            Default value to return if the key is undefined.
 	 * @return Returns the float array value for key in dict.
 	 */
-//	static List<float> getFloatArray(Map<String, Object> dict, String key,
-//			List<float> defaultValue)
-//	{
-//		return getFloatArray(dict, key, defaultValue, ",");
-//	}
+  //	static List<float> getFloatArray(Map<String, Object> dict, String key,
+  //			List<float> defaultValue)
+  //	{
+  //		return getFloatArray(dict, key, defaultValue, ",");
+  //	}
 
-	/**
+  /**
 	 * Returns the value for key in dictionary as a float array or the given default
 	 * value if no value is defined for the key.
 	 * 
@@ -1546,30 +1307,24 @@ class Utils
 	 *            Default value to return if the key is undefined.
 	 * @return Returns the float array value for key in dict.
 	 */
-	static List<double> getFloatArray(Map<String, Object> dict, String key,
-			List<float> defaultValue, [String separator=","])
-	{
-		Object value = dict.get(key);
+  static List<double> getFloatArray(Map<String, Object> dict, String key, List<float> defaultValue, [String separator = ","]) {
+    Object value = dict.get(key);
 
-		if (value == null)
-		{
-			return defaultValue;
-		}
-		else
-		{
-			List<String> floatChars = value.toString().split(separator);
-			List<double> result = new List<double>(floatChars.length);
+    if (value == null) {
+      return defaultValue;
+    } else {
+      List<String> floatChars = value.toString().split(separator);
+      List<double> result = new List<double>(floatChars.length);
 
-			for (int i = 0; i < floatChars.length; i++)
-			{
-				result[i] = Float.parseFloat(floatChars[i]);
-			}
+      for (int i = 0; i < floatChars.length; i++) {
+        result[i] = Float.parseFloat(floatChars[i]);
+      }
 
-			return result;
-		}
-	}
+      return result;
+    }
+  }
 
-	/**
+  /**
 	 * Returns the value for key in dictionary as a double or 0 if no value is
 	 * defined for the key.
 	 * 
@@ -1579,12 +1334,12 @@ class Utils
 	 *            Key whose value should be returned.
 	 * @return Returns the double value for key in dict.
 	 */
-//	static double getDouble(Map<String, Object> dict, String key)
-//	{
-//		return getDouble(dict, key, 0);
-//	}
+  //	static double getDouble(Map<String, Object> dict, String key)
+  //	{
+  //		return getDouble(dict, key, 0);
+  //	}
 
-	/**
+  /**
 	 * Returns the value for key in dictionary as a double or the given default
 	 * value if no value is defined for the key.
 	 * 
@@ -1596,22 +1351,17 @@ class Utils
 	 *            Default value to return if the key is undefined.
 	 * @return Returns the double value for key in dict.
 	 */
-	static double getDouble(Map<String, Object> dict, String key,
-			[double defaultValue=0.0])
-	{
-		Object value = dict.get(key);
+  static double getDouble(Map<String, Object> dict, String key, [double defaultValue = 0.0]) {
+    Object value = dict.get(key);
 
-		if (value == null)
-		{
-			return defaultValue;
-		}
-		else
-		{
-			return Double.parseDouble(value.toString());
-		}
-	}
+    if (value == null) {
+      return defaultValue;
+    } else {
+      return Double.parseDouble(value.toString());
+    }
+  }
 
-	/**
+  /**
 	 * Returns the value for key in dictionary as a string or null if no value
 	 * is defined for the key.
 	 * 
@@ -1621,12 +1371,12 @@ class Utils
 	 *            Key whose value should be returned.
 	 * @return Returns the string value for key in dict.
 	 */
-//	static String getString(Map<String, Object> dict, String key)
-//	{
-//		return getString(dict, key, null);
-//	}
+  //	static String getString(Map<String, Object> dict, String key)
+  //	{
+  //		return getString(dict, key, null);
+  //	}
 
-	/**
+  /**
 	 * Returns the value for key in dictionary as a string or the given default
 	 * value if no value is defined for the key.
 	 * 
@@ -1638,22 +1388,17 @@ class Utils
 	 *            Default value to return if the key is undefined.
 	 * @return Returns the string value for key in dict.
 	 */
-	static String getString(Map<String, Object> dict, String key,
-			[String defaultValue=null])
-	{
-		Object value = dict.get(key);
+  static String getString(Map<String, Object> dict, String key, [String defaultValue = null]) {
+    Object value = dict.get(key);
 
-		if (value == null)
-		{
-			return defaultValue;
-		}
-		else
-		{
-			return value.toString();
-		}
-	}
+    if (value == null) {
+      return defaultValue;
+    } else {
+      return value.toString();
+    }
+  }
 
-	/**
+  /**
 	 * Returns the value for key in dictionary as a color or null if no value is
 	 * defined for the key.
 	 * 
@@ -1663,12 +1408,12 @@ class Utils
 	 *            Key whose value should be returned.
 	 * @return Returns the color value for key in dict.
 	 */
-//	static Color getColor(Map<String, Object> dict, String key)
-//	{
-//		return getColor(dict, key, null);
-//	}
+  //	static Color getColor(Map<String, Object> dict, String key)
+  //	{
+  //		return getColor(dict, key, null);
+  //	}
 
-	/**
+  /**
 	 * Returns the value for key in dictionary as a color or the given default
 	 * value if no value is defined for the key.
 	 * 
@@ -1680,57 +1425,46 @@ class Utils
 	 *            Default value to return if the key is undefined.
 	 * @return Returns the color value for key in dict.
 	 */
-	static Color getColor(Map<String, Object> dict, String key,
-			[Color defaultValue=null])
-	{
-		Object value = dict.get(key);
+  static Color getColor(Map<String, Object> dict, String key, [Color defaultValue = null]) {
+    Object value = dict.get(key);
 
-		if (value == null)
-		{
-			return defaultValue;
-		}
-		else
-		{
-			return parseColor(value.toString());
-		}
-	}
+    if (value == null) {
+      return defaultValue;
+    } else {
+      return parseColor(value.toString());
+    }
+  }
 
-	/**
+  /**
 	 * 
 	 */
-//	static Font getFont(Map<String, Object> style)
-//	{
-//		return getFont(style, 1);
-//	}
+  //	static Font getFont(Map<String, Object> style)
+  //	{
+  //		return getFont(style, 1);
+  //	}
 
-	/**
+  /**
 	 * 
 	 */
-	static Font getFont(Map<String, Object> style, [double scale=1.0])
-	{
-		String fontFamily = getString(style, Constants.STYLE_FONTFAMILY,
-				Constants.DEFAULT_FONTFAMILY);
-		int fontSize = getInt(style, Constants.STYLE_FONTSIZE,
-				Constants.DEFAULT_FONTSIZE);
-		int fontStyle = getInt(style, Constants.STYLE_FONTSTYLE);
+  static Font getFont(Map<String, Object> style, [double scale = 1.0]) {
+    String fontFamily = getString(style, Constants.STYLE_FONTFAMILY, Constants.DEFAULT_FONTFAMILY);
+    int fontSize = getInt(style, Constants.STYLE_FONTSIZE, Constants.DEFAULT_FONTSIZE);
+    int fontStyle = getInt(style, Constants.STYLE_FONTSTYLE);
 
-		int swingFontStyle = ((fontStyle & Constants.FONT_BOLD) == Constants.FONT_BOLD) ? Font.BOLD
-				: Font.PLAIN;
-		swingFontStyle += ((fontStyle & Constants.FONT_ITALIC) == Constants.FONT_ITALIC) ? Font.ITALIC
-				: Font.PLAIN;
+    int swingFontStyle = ((fontStyle & Constants.FONT_BOLD) == Constants.FONT_BOLD) ? Font.BOLD : Font.PLAIN;
+    swingFontStyle += ((fontStyle & Constants.FONT_ITALIC) == Constants.FONT_ITALIC) ? Font.ITALIC : Font.PLAIN;
 
-		return new Font(fontFamily, swingFontStyle, (int) (fontSize * scale));
-	}
+    return new Font(fontFamily, swingFontStyle, (int)(fontSize * scale));
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	static String hexString(Color color)
-	{
-		return HtmlColor.hexString(color);
-	}
+  static String hexString(Color color) {
+    return HtmlColor.hexString(color);
+  }
 
-	/**
+  /**
 	 * Convert a string representing a 24/32bit hex color value into a Color
 	 * object. The following color names are also supported: white, black, red,
 	 * green, blue, orange, yellow, pink, turquoise, gray and none (null).
@@ -1744,25 +1478,23 @@ class Utils
 	 *                if the specified string cannot be interpreted as a
 	 *                hexidecimal integer
 	 */
-	static Color parseColor(String colorString)
-			/*throws NumberFormatException*/
-	{
-		return HtmlColor.parseColor(colorString);
-	}
+  static Color parseColor(String colorString) /*throws NumberFormatException*/
+  {
+    return HtmlColor.parseColor(colorString);
+  }
 
-	/**
+  /**
 	 * Returns a hex representation for the given color.
 	 * 
 	 * @param color
 	 *            Color to return the hex string for.
 	 * @return Returns a hex string for the given color.
 	 */
-	static String getHexColorString(Color color)
-	{
-		return HtmlColor.getHexColorString(color);
-	}
+  static String getHexColorString(Color color) {
+    return HtmlColor.getHexColorString(color);
+  }
 
-	/**
+  /**
 	 * Reads the given filename into a string.
 	 * 
 	 * @param filename
@@ -1770,12 +1502,12 @@ class Utils
 	 * @return Returns a string representing the file contents.
 	 * @throws IOException
 	 */
-	static String readFile(String filename) /*throws IOException*/
-	{
-		return readInputStream(new FileInputStream(filename));
-	}
+  static String readFile(String filename) /*throws IOException*/
+  {
+    return readInputStream(new FileInputStream(filename));
+  }
 
-	/**
+  /**
 	 * Reads the given filename into a string.
 	 * 
 	 * @param filename
@@ -1783,25 +1515,23 @@ class Utils
 	 * @return Returns a string representing the file contents.
 	 * @throws IOException
 	 */
-	static String readInputStream(InputStream stream) /*throws IOException*/
-	{
-		BufferedReader reader = new BufferedReader(
-				new InputStreamReader(stream));
-		StringBuffer result = new StringBuffer();
-		String tmp = reader.readLine();
+  static String readInputStream(InputStream stream) /*throws IOException*/
+  {
+    BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+    StringBuffer result = new StringBuffer();
+    String tmp = reader.readLine();
 
-		while (tmp != null)
-		{
-			result.append(tmp + "\n");
-			tmp = reader.readLine();
-		}
+    while (tmp != null) {
+      result.append(tmp + "\n");
+      tmp = reader.readLine();
+    }
 
-		reader.close();
+    reader.close();
 
-		return result.toString();
-	}
+    return result.toString();
+  }
 
-	/**
+  /**
 	 * Writes the given string into the given file.
 	 * 
 	 * @param contents
@@ -1810,47 +1540,41 @@ class Utils
 	 *            Name of the file to be written.
 	 * @throws IOException
 	 */
-	static void writeFile(String contents, String filename)
-			/*throws IOException*/
-	{
-		FileWriter fw = new FileWriter(filename);
-		fw.write(contents);
-		fw.flush();
-		fw.close();
-	}
+  static void writeFile(String contents, String filename) /*throws IOException*/
+  {
+    FileWriter fw = new FileWriter(filename);
+    fw.write(contents);
+    fw.flush();
+    fw.close();
+  }
 
-	/**
+  /**
 	 * Returns the Md5 hash for the given text.
 	 * 
 	 * @param text
 	 *            String whose Md5 hash should be returned.
 	 * @return Returns the Md5 hash for the given text.
 	 */
-	static String getMd5Hash(String text)
-	{
-		StringBuffer result = new StringBuffer(32);
-		try
-		{
-			MessageDigest md5 = MessageDigest.getInstance("MD5");
-			md5.update(text.getBytes());
-			Formatter f = new Formatter(result);
+  static String getMd5Hash(String text) {
+    StringBuffer result = new StringBuffer(32);
+    try {
+      MessageDigest md5 = MessageDigest.getInstance("MD5");
+      md5.update(text.getBytes());
+      Formatter f = new Formatter(result);
 
-			List<byte> digest = md5.digest();
+      List<byte> digest = md5.digest();
 
-			for (int i = 0; i < digest.length; i++)
-			{
-				f.format("%02x", new List<Object>.from([ new Byte(digest[i]) ]));
-			}
-		}
-		on NoSuchAlgorithmException catch (ex)
-		{
-			ex.printStackTrace();
-		}
+      for (int i = 0; i < digest.length; i++) {
+        f.format("%02x", new List<Object>.from([new Byte(digest[i])]));
+      }
+    } on NoSuchAlgorithmException catch (ex) {
+      ex.printStackTrace();
+    }
 
-		return result.toString();
-	}
+    return result.toString();
+  }
 
-	/**
+  /**
 	 * Returns true if the user object is an XML node with the specified type
 	 * and and the optional attribute has the specified value or is not
 	 * specified.
@@ -1862,12 +1586,12 @@ class Utils
 	 * @return Returns true if the node name of the user object is equal to the
 	 *         given type.
 	 */
-//	static bool isNode(Object value, String nodeName)
-//	{
-//		return isNode(value, nodeName, null, null);
-//	}
+  //	static bool isNode(Object value, String nodeName)
+  //	{
+  //		return isNode(value, nodeName, null, null);
+  //	}
 
-	/**
+  /**
 	 * Returns true if the given value is an XML node with the node name and if
 	 * the optional attribute has the specified value.
 	 * 
@@ -1881,304 +1605,241 @@ class Utils
 	 *            Optional attribute value to check.
 	 * @return Returns true if the value matches the given conditions.
 	 */
-	static bool isNode(Object value, String nodeName,
-			[String attributeName=null, String attributeValue=null])
-	{
-		if (value is Element)
-		{
-			Element element = value;// as Element;
+  static bool isNode(Object value, String nodeName, [String attributeName = null, String attributeValue = null]) {
+    if (value is Element) {
+      Element element = value;// as Element;
 
-			if (nodeName == null
-					|| element.getNodeName().equalsIgnoreCase(nodeName))
-			{
-				String tmp = (attributeName != null) ? element
-						.getAttribute(attributeName) : null;
+      if (nodeName == null || element.getNodeName().equalsIgnoreCase(nodeName)) {
+        String tmp = (attributeName != null) ? element.getAttribute(attributeName) : null;
 
-				return attributeName == null
-						|| (tmp != null && tmp.equals(attributeValue));
-			}
-		}
+        return attributeName == null || (tmp != null && tmp.equals(attributeValue));
+      }
+    }
 
-		return false;
-	}
+    return false;
+  }
 
-	/**
+  /**
 	 * 
 	 * @param g
 	 * @param antiAlias
 	 * @param textAntiAlias
 	 */
-	static void setAntiAlias(Graphics2D g, bool antiAlias,
-			bool textAntiAlias)
-	{
-		g.setRenderingHint(RenderingHints.KEY_RENDERING,
-				(antiAlias) ? RenderingHints.VALUE_RENDER_QUALITY
-						: RenderingHints.VALUE_RENDER_SPEED);
-		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				(antiAlias) ? RenderingHints.VALUE_ANTIALIAS_ON
-						: RenderingHints.VALUE_ANTIALIAS_OFF);
-		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-				(textAntiAlias) ? RenderingHints.VALUE_TEXT_ANTIALIAS_ON
-						: RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
-	}
+  static void setAntiAlias(Graphics2D g, bool antiAlias, bool textAntiAlias) {
+    g.setRenderingHint(RenderingHints.KEY_RENDERING, (antiAlias) ? RenderingHints.VALUE_RENDER_QUALITY : RenderingHints.VALUE_RENDER_SPEED);
+    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, (antiAlias) ? RenderingHints.VALUE_ANTIALIAS_ON : RenderingHints.VALUE_ANTIALIAS_OFF);
+    g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, (textAntiAlias) ? RenderingHints.VALUE_TEXT_ANTIALIAS_ON : RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
+  }
 
-	/**
+  /**
 	 * Clears the given area of the specified graphics object with the given
 	 * color or makes the region transparent.
 	 */
-	static void clearRect(Graphics2D g, Rectangle rect, Color background)
-	{
-		if (background != null)
-		{
-			g.setColor(background);
-			g.fillRect(rect.x, rect.y, rect.width, rect.height);
-		}
-		else
-		{
-			g.setComposite(AlphaComposite.getInstance(AlphaComposite.CLEAR,
-					0.0));
-			g.fillRect(rect.x, rect.y, rect.width, rect.height);
-			g.setComposite(AlphaComposite.SrcOver);
-		}
-	}
+  static void clearRect(Graphics2D g, Rectangle rect, Color background) {
+    if (background != null) {
+      g.setColor(background);
+      g.fillRect(rect.x, rect.y, rect.width, rect.height);
+    } else {
+      g.setComposite(AlphaComposite.getInstance(AlphaComposite.CLEAR, 0.0));
+      g.fillRect(rect.x, rect.y, rect.width, rect.height);
+      g.setComposite(AlphaComposite.SrcOver);
+    }
+  }
 
-	/**
+  /**
 	 * Creates a buffered image for the given parameters. If there is not enough
 	 * memory to create the image then a OutOfMemoryError is thrown.
 	 */
-	static BufferedImage createBufferedImage(int w, int h,
-			Color background)
-	{
-		BufferedImage result = null;
+  static BufferedImage createBufferedImage(int w, int h, Color background) {
+    BufferedImage result = null;
 
-		if (w > 0 && h > 0)
-		{
-			int type = (background != null) ? BufferedImage.TYPE_INT_RGB
-					: BufferedImage.TYPE_INT_ARGB;
-			result = new BufferedImage(w, h, type);
+    if (w > 0 && h > 0) {
+      int type = (background != null) ? BufferedImage.TYPE_INT_RGB : BufferedImage.TYPE_INT_ARGB;
+      result = new BufferedImage(w, h, type);
 
-			// Clears background
-			if (background != null)
-			{
-				Graphics2D g2 = result.createGraphics();
-				clearRect(g2, new Rectangle(w, h), background);
-				g2.dispose();
-			}
-		}
+      // Clears background
+      if (background != null) {
+        Graphics2D g2 = result.createGraphics();
+        clearRect(g2, new Rectangle(w, h), background);
+        g2.dispose();
+      }
+    }
 
-		return result;
-	}
+    return result;
+  }
 
-	/**
+  /**
 	 * Loads an image from the local filesystem, a data URI or any other URL.
 	 */
-	static BufferedImage loadImage(String url)
-	{
-		BufferedImage img = null;
+  static BufferedImage loadImage(String url) {
+    BufferedImage img = null;
 
-		if (url != null)
-		{
-			// Parses data URIs of the form data:image/format;base64,xxx
-			if (url.startsWith("data:image/"))
-			{
-				try
-				{
-					int comma = url.indexOf(',');
-					List<byte> data = Base64.decode(url.substring(comma + 1));
-					ByteArrayInputStream ins = new ByteArrayInputStream(data);
-					img = ImageIO.read(ins);
-				}
-				on Exception catch (e1)
-				{
-					// ignore
-				}
-			}
-			else
-			{
-				URL realUrl = null;
+    if (url != null) {
+      // Parses data URIs of the form data:image/format;base64,xxx
+      if (url.startsWith("data:image/")) {
+        try {
+          int comma = url.indexOf(',');
+          List<byte> data = Base64.decode(url.substring(comma + 1));
+          ByteArrayInputStream ins = new ByteArrayInputStream(data);
+          img = ImageIO.read(ins);
+        } on Exception catch (e1) {
+          // ignore
+        }
+      } else {
+        URL realUrl = null;
 
-				try
-				{
-					realUrl = new URL(url);
-				}
-				on Exception catch (e)
-				{
-					realUrl = Utils.clasz.getResource(url);
-				}
+        try {
+          realUrl = new URL(url);
+        } on Exception catch (e) {
+          realUrl = Utils.clasz.getResource(url);
+        }
 
-				if (realUrl != null)
-				{
-					try
-					{
-						img = ImageIO.read(realUrl);
-					}
-					on Exception catch (e1)
-					{
-						e1.printStackTrace();
-					}
-				}
-			}
-		}
+        if (realUrl != null) {
+          try {
+            img = ImageIO.read(realUrl);
+          } on Exception catch (e1) {
+            e1.printStackTrace();
+          }
+        }
+      }
+    }
 
-		return img;
-	}
+    return img;
+  }
 
-	/**
+  /**
 	 * Creates a table for the given text using the given document to create the
 	 * DOM nodes. Returns the outermost table node.
 	 */
-	static Element createTable(Document document, String text, int x,
-			int y, int w, int h, double scale, Map<String, Object> style)
-	{
-		// Does not use a textbox as this must go inside another VML shape
-		Element table = document.createElement("table");
+  static Element createTable(Document document, String text, int x, int y, int w, int h, double scale, Map<String, Object> style) {
+    // Does not use a textbox as this must go inside another VML shape
+    Element table = document.createElement("table");
 
-		if (text != null && text.length() > 0)
-		{
-			Element tr = document.createElement("tr");
-			Element td = document.createElement("td");
+    if (text != null && text.length() > 0) {
+      Element tr = document.createElement("tr");
+      Element td = document.createElement("td");
 
-			table.setAttribute("cellspacing", "0");
-			table.setAttribute("border", "0");
-			td.setAttribute("align", Utils.getString(style,
-					Constants.STYLE_ALIGN, Constants.ALIGN_CENTER));
+      table.setAttribute("cellspacing", "0");
+      table.setAttribute("border", "0");
+      td.setAttribute("align", Utils.getString(style, Constants.STYLE_ALIGN, Constants.ALIGN_CENTER));
 
-			String fontColor = getString(style, Constants.STYLE_FONTCOLOR,
-					"black");
-			String fontFamily = getString(style, Constants.STYLE_FONTFAMILY,
-					Constants.DEFAULT_FONTFAMILIES);
-			int fontSize = (int) (getInt(style, Constants.STYLE_FONTSIZE,
-					Constants.DEFAULT_FONTSIZE) * scale);
+      String fontColor = getString(style, Constants.STYLE_FONTCOLOR, "black");
+      String fontFamily = getString(style, Constants.STYLE_FONTFAMILY, Constants.DEFAULT_FONTFAMILIES);
+      int fontSize = (int)(getInt(style, Constants.STYLE_FONTSIZE, Constants.DEFAULT_FONTSIZE) * scale);
 
-			String s = "position:absolute;" + "left:" + String.valueOf(x)
-					+ "px;" + "top:" + String.valueOf(y) + "px;" + "width:"
-					+ String.valueOf(w) + "px;" + "height:" + String.valueOf(h)
-					+ "px;" + "font-size:" + String.valueOf(fontSize) + "px;"
-					+ "font-family:" + fontFamily + ";" + "color:" + fontColor
-					+ ";";
+      String s = "position:absolute;" + "left:" + String.valueOf(x) + "px;" + "top:" + String.valueOf(y) + "px;" + "width:" + String.valueOf(w) + "px;" + "height:" + String.valueOf(h) + "px;" + "font-size:" + String.valueOf(fontSize) + "px;" + "font-family:" + fontFamily + ";" + "color:" + fontColor + ";";
 
-			if (Utils.getString(style, Constants.STYLE_WHITE_SPACE,
-					"nowrap").equals("wrap"))
-			{
-				s += "whiteSpace:wrap;";
-			}
+      if (Utils.getString(style, Constants.STYLE_WHITE_SPACE, "nowrap").equals("wrap")) {
+        s += "whiteSpace:wrap;";
+      }
 
-			// Applies the background color
-			String background = getString(style,
-					Constants.STYLE_LABEL_BACKGROUNDCOLOR);
+      // Applies the background color
+      String background = getString(style, Constants.STYLE_LABEL_BACKGROUNDCOLOR);
 
-			if (background != null)
-			{
-				s += "background:" + background + ";";
-			}
+      if (background != null) {
+        s += "background:" + background + ";";
+      }
 
-			// Applies the border color
-			String border = getString(style,
-					Constants.STYLE_LABEL_BORDERCOLOR);
+      // Applies the border color
+      String border = getString(style, Constants.STYLE_LABEL_BORDERCOLOR);
 
-			if (border != null)
-			{
-				s += "border:" + border + " solid 1pt;";
-			}
+      if (border != null) {
+        s += "border:" + border + " solid 1pt;";
+      }
 
-			// Applies the opacity
-			float opacity = getFloat(style, Constants.STYLE_TEXT_OPACITY, 100);
+      // Applies the opacity
+      float opacity = getFloat(style, Constants.STYLE_TEXT_OPACITY, 100);
 
-			if (opacity < 100)
-			{
-				// Adds all rules (first for IE)
-				s += "filter:alpha(opacity=" + opacity + ");";
-				s += "opacity:" + (opacity / 100) + ";";
-			}
+      if (opacity < 100) {
+        // Adds all rules (first for IE)
+        s += "filter:alpha(opacity=" + opacity + ");";
+        s += "opacity:" + (opacity / 100) + ";";
+      }
 
-			td.setAttribute("style", s);
-			List<String> lines = text.split("\n");
+      td.setAttribute("style", s);
+      List<String> lines = text.split("\n");
 
-			for (int i = 0; i < lines.length; i++)
-			{
-				td.appendChild(document.createTextNode(lines[i]));
-				td.appendChild(document.createElement("br"));
-			}
+      for (int i = 0; i < lines.length; i++) {
+        td.appendChild(document.createTextNode(lines[i]));
+        td.appendChild(document.createElement("br"));
+      }
 
-			tr.appendChild(td);
-			table.appendChild(tr);
-		}
+      tr.appendChild(td);
+      table.appendChild(tr);
+    }
 
-		return table;
-	}
+    return table;
+  }
 
-	/**
+  /**
 	 * Returns a new, empty DOM document.
 	 * 
 	 * @return Returns a new DOM document.
 	 * @deprecated Use <code>DomUtils.createDocument</code> (Jan 2012)
 	 */
-	static Document createDocument()
-	{
-		return DomUtils.createDocument();
-	}
+  static Document createDocument() {
+    return DomUtils.createDocument();
+  }
 
-	/**
+  /**
 	 * Creates a new SVG document for the given width and height.
 	 * @deprecated Use <code>DomUtils.createSvgDocument(int, int)</code> (Jan 2012)
 	 */
-	static Document createSvgDocument(int width, int height)
-	{
-		return DomUtils.createSvgDocument(width, height);
-	}
+  static Document createSvgDocument(int width, int height) {
+    return DomUtils.createSvgDocument(width, height);
+  }
 
-	/**
+  /**
 	 * 
 	 * @deprecated Use <code>DomUtils.createVmlDocument</code> (Jan 2012)
 	 */
-	static Document createVmlDocument()
-	{
-		return DomUtils.createVmlDocument();
-	}
+  static Document createVmlDocument() {
+    return DomUtils.createVmlDocument();
+  }
 
-	/**
+  /**
 	 * Returns a document with a HTML node containing a HEAD and BODY node.
 	 * @deprecated Use <code>DomUtils.createHtmlDocument</code> (Jan 2012)
 	 */
-	/*static Document createHtmlDocument()
+  /*static Document createHtmlDocument()
 	{
 		return DomUtils.createHtmlDocument();
 	}*/
 
-	/**
+  /**
 	 * Returns a new, empty DOM document.
 	 * 
 	 * @return Returns a new DOM document.
 	 */
-//	static String createHtmlDocument(Map<String, Object> style,
-//			String text)
-//	{
-//		return createHtmlDocument(style, text, 1, 0);
-//	}
+  //	static String createHtmlDocument(Map<String, Object> style,
+  //			String text)
+  //	{
+  //		return createHtmlDocument(style, text, 1, 0);
+  //	}
 
-	/**
+  /**
 	 * Returns a new, empty DOM document.
 	 * 
 	 * @return Returns a new DOM document.
 	 */
-//	static String createHtmlDocument(Map<String, Object> style,
-//			String text, double scale)
-//	{
-//		return createHtmlDocument(style, text, scale, 0);
-//	}
+  //	static String createHtmlDocument(Map<String, Object> style,
+  //			String text, double scale)
+  //	{
+  //		return createHtmlDocument(style, text, scale, 0);
+  //	}
 
-	/**
+  /**
 	 * Returns a new, empty DOM document.
 	 * 
 	 * @return Returns a new DOM document.
 	 */
-//	static String createHtmlDocument(Map<String, Object> style,
-//			String text, double scale, int width)
-//	{
-//		return createHtmlDocument(style, text, scale, width, null);
-//	}
+  //	static String createHtmlDocument(Map<String, Object> style,
+  //			String text, double scale, int width)
+  //	{
+  //		return createHtmlDocument(style, text, scale, width, null);
+  //	}
 
-	/**
+  /**
 	 * Returns a new, empty DOM document. The head argument can be used to
 	 * provide an optional HEAD section without the HEAD tags as follows:
 	 * 
@@ -2188,13 +1849,13 @@ class Utils
 	 * 
 	 * @return Returns a new DOM document.
 	 */
-//	static String createHtmlDocument(Map<String, Object> style,
-//			String text, double scale, int width, String head)
-//	{
-//		return createHtmlDocument(style, text, scale, width, null, null);
-//	};
+  //	static String createHtmlDocument(Map<String, Object> style,
+  //			String text, double scale, int width, String head)
+  //	{
+  //		return createHtmlDocument(style, text, scale, width, null, null);
+  //	};
 
-	/**
+  /**
 	 * Returns a new, empty DOM document. The head argument can be used to
 	 * provide an optional HEAD section without the HEAD tags as follows:
 	 * 
@@ -2204,157 +1865,120 @@ class Utils
 	 * 
 	 * @return Returns a new DOM document.
 	 */
-	static String createHtmlDocument(Map<String, Object> style,
-			String text, [double scale=1.0, int width=0, String head=null, String bodyCss=null])
-	{
-		StringBuffer css = (bodyCss != null) ? new StringBuffer(bodyCss)
-				: new StringBuffer();
-		css.append("font-family:"
-				+ getString(style, Constants.STYLE_FONTFAMILY,
-						Constants.DEFAULT_FONTFAMILIES) + ";");
-		css.append("font-size:"
-				+ (int) (getInt(style, Constants.STYLE_FONTSIZE,
-						Constants.DEFAULT_FONTSIZE) * scale) + "pt;");
+  static String createHtmlDocument(Map<String, Object> style, String text, [double scale = 1.0, int width = 0, String head = null, String bodyCss = null]) {
+    StringBuffer css = (bodyCss != null) ? new StringBuffer(bodyCss) : new StringBuffer();
+    css.append("font-family:" + getString(style, Constants.STYLE_FONTFAMILY, Constants.DEFAULT_FONTFAMILIES) + ";");
+    css.append("font-size:" + (int)(getInt(style, Constants.STYLE_FONTSIZE, Constants.DEFAULT_FONTSIZE) * scale) + "pt;");
 
-		String color = Utils.getString(style, Constants.STYLE_FONTCOLOR);
+    String color = Utils.getString(style, Constants.STYLE_FONTCOLOR);
 
-		if (color != null)
-		{
-			css.append("color:" + color + ";");
-		}
+    if (color != null) {
+      css.append("color:" + color + ";");
+    }
 
-		int fontStyle = Utils.getInt(style, Constants.STYLE_FONTSTYLE);
+    int fontStyle = Utils.getInt(style, Constants.STYLE_FONTSTYLE);
 
-		if ((fontStyle & Constants.FONT_BOLD) == Constants.FONT_BOLD)
-		{
-			css.append("font-weight:bold;");
-		}
+    if ((fontStyle & Constants.FONT_BOLD) == Constants.FONT_BOLD) {
+      css.append("font-weight:bold;");
+    }
 
-		if ((fontStyle & Constants.FONT_ITALIC) == Constants.FONT_ITALIC)
-		{
-			css.append("font-style:italic;");
-		}
+    if ((fontStyle & Constants.FONT_ITALIC) == Constants.FONT_ITALIC) {
+      css.append("font-style:italic;");
+    }
 
-		if ((fontStyle & Constants.FONT_UNDERLINE) == Constants.FONT_UNDERLINE)
-		{
-			css.append("text-decoration:underline;");
-		}
+    if ((fontStyle & Constants.FONT_UNDERLINE) == Constants.FONT_UNDERLINE) {
+      css.append("text-decoration:underline;");
+    }
 
-		String align = getString(style, Constants.STYLE_ALIGN,
-				Constants.ALIGN_LEFT);
+    String align = getString(style, Constants.STYLE_ALIGN, Constants.ALIGN_LEFT);
 
-		if (align.equals(Constants.ALIGN_CENTER))
-		{
-			css.append("text-align:center;");
-		}
-		else if (align.equals(Constants.ALIGN_RIGHT))
-		{
-			css.append("text-align:right;");
-		}
+    if (align.equals(Constants.ALIGN_CENTER)) {
+      css.append("text-align:center;");
+    } else if (align.equals(Constants.ALIGN_RIGHT)) {
+      css.append("text-align:right;");
+    }
 
-		if (width > 0)
-		{
-			// LATER: With max-width support, wrapped text can be measured in 1 step
-			css.append("width:" + width + "pt;");
-		}
+    if (width > 0) {
+      // LATER: With max-width support, wrapped text can be measured in 1 step
+      css.append("width:" + width + "pt;");
+    }
 
-		String result = "<html>";
+    String result = "<html>";
 
-		if (head != null)
-		{
-			result += "<head>" + head + "</head>";
-		}
+    if (head != null) {
+      result += "<head>" + head + "</head>";
+    }
 
-		return result + "<body style=\"" + css.toString() + "\">" + text
-				+ "</body></html>";
-	}
+    return result + "<body style=\"" + css.toString() + "\">" + text + "</body></html>";
+  }
 
-	/**
+  /**
 	 * Returns a new, empty DOM document.
 	 * 
 	 * @return Returns a new DOM document.
 	 */
-	static HTMLDocument createHtmlDocumentObject(
-			Map<String, Object> style, double scale)
-	{
-		// Applies the font settings
-		HTMLDocument document = new HTMLDocument();
+  static HTMLDocument createHtmlDocumentObject(Map<String, Object> style, double scale) {
+    // Applies the font settings
+    HTMLDocument document = new HTMLDocument();
 
-		StringBuffer rule = new StringBuffer("body {");
-		rule.append("font-family:"
-				+ getString(style, Constants.STYLE_FONTFAMILY,
-						Constants.DEFAULT_FONTFAMILIES) + ";");
-		rule.append("font-size:"
-				+ (int) (getInt(style, Constants.STYLE_FONTSIZE,
-						Constants.DEFAULT_FONTSIZE) * scale) + "pt;");
+    StringBuffer rule = new StringBuffer("body {");
+    rule.append("font-family:" + getString(style, Constants.STYLE_FONTFAMILY, Constants.DEFAULT_FONTFAMILIES) + ";");
+    rule.append("font-size:" + (int)(getInt(style, Constants.STYLE_FONTSIZE, Constants.DEFAULT_FONTSIZE) * scale) + "pt;");
 
-		String color = Utils.getString(style, Constants.STYLE_FONTCOLOR);
+    String color = Utils.getString(style, Constants.STYLE_FONTCOLOR);
 
-		if (color != null)
-		{
-			rule.append("color:" + color + ";");
-		}
+    if (color != null) {
+      rule.append("color:" + color + ";");
+    }
 
-		int fontStyle = Utils.getInt(style, Constants.STYLE_FONTSTYLE);
+    int fontStyle = Utils.getInt(style, Constants.STYLE_FONTSTYLE);
 
-		if ((fontStyle & Constants.FONT_BOLD) == Constants.FONT_BOLD)
-		{
-			rule.append("font-weight:bold;");
-		}
+    if ((fontStyle & Constants.FONT_BOLD) == Constants.FONT_BOLD) {
+      rule.append("font-weight:bold;");
+    }
 
-		if ((fontStyle & Constants.FONT_ITALIC) == Constants.FONT_ITALIC)
-		{
-			rule.append("font-style:italic;");
-		}
+    if ((fontStyle & Constants.FONT_ITALIC) == Constants.FONT_ITALIC) {
+      rule.append("font-style:italic;");
+    }
 
-		if ((fontStyle & Constants.FONT_UNDERLINE) == Constants.FONT_UNDERLINE)
-		{
-			rule.append("text-decoration:underline;");
-		}
+    if ((fontStyle & Constants.FONT_UNDERLINE) == Constants.FONT_UNDERLINE) {
+      rule.append("text-decoration:underline;");
+    }
 
-		String align = getString(style, Constants.STYLE_ALIGN,
-				Constants.ALIGN_LEFT);
+    String align = getString(style, Constants.STYLE_ALIGN, Constants.ALIGN_LEFT);
 
-		if (align.equals(Constants.ALIGN_CENTER))
-		{
-			rule.append("text-align:center;");
-		}
-		else if (align.equals(Constants.ALIGN_RIGHT))
-		{
-			rule.append("text-align:right;");
-		}
+    if (align.equals(Constants.ALIGN_CENTER)) {
+      rule.append("text-align:center;");
+    } else if (align.equals(Constants.ALIGN_RIGHT)) {
+      rule.append("text-align:right;");
+    }
 
-		rule.append("}");
-		document.getStyleSheet().addRule(rule.toString());
+    rule.append("}");
+    document.getStyleSheet().addRule(rule.toString());
 
-		return document;
-	}
+    return document;
+  }
 
-	/**
+  /**
 	 * Returns a new DOM document for the given URI.
 	 * 
 	 * @param uri
 	 *            URI to parse into the document.
 	 * @return Returns a new DOM document for the given URI.
 	 */
-	static Document loadDocument(String uri)
-	{
-		try
-		{
-			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory
-					.newInstance();
-			DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-			return docBuilder.parse(uri);
-		}
-		on Exception catch (e)
-		{
-			e.printStackTrace();
-		}
+  static Document loadDocument(String uri) {
+    try {
+      DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+      DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
+      return docBuilder.parse(uri);
+    } on Exception catch (e) {
+      e.printStackTrace();
+    }
 
-		return null;
-	}
+    return null;
+  }
 
-	/**
+  /**
 	 * Returns a new document for the given XML string.
 	 * 
 	 * @param xml
@@ -2362,23 +1986,20 @@ class Utils
 	 * @return Returns a new XML document.
 	 * @deprecated Use <code>XmlUtils.parseXml</code> (Jan 2012)
 	 */
-	static Document parseXml(String xml)
-	{
-		return XmlUtils.parseXml(xml);
-	}
+  static Document parseXml(String xml) {
+    return XmlUtils.parseXml(xml);
+  }
 
-	/**
+  /**
 	 * Evaluates a Java expression as a class member using CodecRegistry. The
 	 * range of supported expressions is limited to static class members such as
 	 * EdgeStyle.ElbowConnector.
 	 */
-	static Object eval(String expression)
-	{
-		int dot = expression.lastIndexOf(".");
+  static Object eval(String expression) {
+    int dot = expression.lastIndexOf(".");
 
-		if (dot > 0)
-		{
-			/*Class<?> clazz = CodecRegistry.getClassForName(expression
+    if (dot > 0) {
+      /*Class<?> clazz = CodecRegistry.getClassForName(expression
 					.substring(0, dot));
 
 			if (clazz != null)
@@ -2393,43 +2014,38 @@ class Utils
 					// ignore
 				}
 			}*/
-		}
+    }
 
-		return expression;
-	}
+    return expression;
+  }
 
-	/**
+  /**
 	 * Returns the first node where attr equals value. This implementation does
 	 * not use XPath.
 	 */
-	static Node findNode(Node node, String attr, String value)
-	{
-		String tmp = (node is Element) ? (node as Element)
-				.getAttribute(attr) : null;
+  static Node findNode(Node node, String attr, String value) {
+    String tmp = (node is Element) ? (node as Element).getAttribute(attr) : null;
 
-		if (tmp != null && tmp.equals(value))
-		{
-			return node;
-		}
+    if (tmp != null && tmp.equals(value)) {
+      return node;
+    }
 
-		node = node.getFirstChild();
+    node = node.getFirstChild();
 
-		while (node != null)
-		{
-			Node result = findNode(node, attr, value);
+    while (node != null) {
+      Node result = findNode(node, attr, value);
 
-			if (result != null)
-			{
-				return result;
-			}
+      if (result != null) {
+        return result;
+      }
 
-			node = node.getNextSibling();
-		}
+      node = node.getNextSibling();
+    }
 
-		return null;
-	}
+    return null;
+  }
 
-	/**
+  /**
 	 * Returns a single node that matches the given XPath expression.
 	 * 
 	 * @param doc
@@ -2438,34 +2054,27 @@ class Utils
 	 *            XPath expression to be matched.
 	 * @return Returns a single node matching the given expression.
 	 */
-	static Node selectSingleNode(Document doc, String expression)
-	{
-		try
-		{
-			XPath xpath = XPathFactory.newInstance().newXPath();
+  static Node selectSingleNode(Document doc, String expression) {
+    try {
+      XPath xpath = XPathFactory.newInstance().newXPath();
 
-			return xpath.evaluate(expression, doc, XPathConstants.NODE) as Node;
-		}
-		on XPathExpressionException catch (e)
-		{
-			// ignore
-		}
+      return xpath.evaluate(expression, doc, XPathConstants.NODE) as Node;
+    } on XPathExpressionException catch (e) {
+      // ignore
+    }
 
-		return null;
-	}
+    return null;
+  }
 
-	/**
+  /**
 	 * Converts the ampersand, quote, prime, less-than and greater-than
 	 * characters to their corresponding HTML entities in the given string.
 	 */
-	static String htmlEntities(String text)
-	{
-		return text.replaceAll("&", "&amp;").replaceAll("\"", "&quot;")
-				.replaceAll("'", "&prime;").replaceAll("<", "&lt;")
-				.replaceAll(">", "&gt;");
-	}
+  static String htmlEntities(String text) {
+    return text.replaceAll("&", "&amp;").replaceAll("\"", "&quot;").replaceAll("'", "&prime;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+  }
 
-	/**
+  /**
 	 * Returns a string that represents the given node.
 	 * 
 	 * @param node
@@ -2473,24 +2082,23 @@ class Utils
 	 * @return Returns an XML string.
 	 * @deprecated Use <code>XmlUtils.getXml(Node)</code> (Jan 2012)
 	 */
-	static String getXml(Node node)
-	{
-		return XmlUtils.getXml(node);
-	}
+  static String getXml(Node node) {
+    return XmlUtils.getXml(node);
+  }
 
-	/**
+  /**
 	 * Returns a pretty-printed XML string for the given node.
 	 * 
 	 * @param node
 	 *            Node to return the XML for.
 	 * @return Returns a formatted XML string.
 	 */
-//	static String getPrettyXml(Node node)
-//	{
-//		return getPrettyXml(node, "  ", "");
-//	}
+  //	static String getPrettyXml(Node node)
+  //	{
+  //		return getPrettyXml(node, "  ", "");
+  //	}
 
-	/**
+  /**
 	 * Returns a pretty-printed XML string for the given node. Note that this
 	 * string should only be used for humans to read (eg. debug output) but not
 	 * for further processing as it does not use built-in mechanisms.
@@ -2503,53 +2111,41 @@ class Utils
 	 *            Current indentation for the node.
 	 * @return Returns a formatted XML string.
 	 */
-	static String getPrettyXml(Node node, [String tab="  ", String indent=""])
-	{
-		StringBuffer result = new StringBuffer();
+  static String getPrettyXml(Node node, [String tab = "  ", String indent = ""]) {
+    StringBuffer result = new StringBuffer();
 
-		if (node != null)
-		{
-			if (node.getNodeType() == Node.TEXT_NODE)
-			{
-				result.append(node.getNodeValue());
-			}
-			else
-			{
-				result.append(indent + "<" + node.getNodeName());
-				NamedNodeMap attrs = node.getAttributes();
+    if (node != null) {
+      if (node.getNodeType() == Node.TEXT_NODE) {
+        result.append(node.getNodeValue());
+      } else {
+        result.append(indent + "<" + node.getNodeName());
+        NamedNodeMap attrs = node.getAttributes();
 
-				if (attrs != null)
-				{
-					for (int i = 0; i < attrs.getLength(); i++)
-					{
-						String value = attrs.item(i).getNodeValue();
-						value = Utils.htmlEntities(value);
-						result.append(" " + attrs.item(i).getNodeName() + "=\""
-								+ value + "\"");
-					}
-				}
-				Node tmp = node.getFirstChild();
+        if (attrs != null) {
+          for (int i = 0; i < attrs.getLength(); i++) {
+            String value = attrs.item(i).getNodeValue();
+            value = Utils.htmlEntities(value);
+            result.append(" " + attrs.item(i).getNodeName() + "=\"" + value + "\"");
+          }
+        }
+        Node tmp = node.getFirstChild();
 
-				if (tmp != null)
-				{
-					result.append(">\n");
+        if (tmp != null) {
+          result.append(">\n");
 
-					while (tmp != null)
-					{
-						result.append(getPrettyXml(tmp, tab, indent + tab));
-						tmp = tmp.getNextSibling();
-					}
+          while (tmp != null) {
+            result.append(getPrettyXml(tmp, tab, indent + tab));
+            tmp = tmp.getNextSibling();
+          }
 
-					result.append(indent + "</" + node.getNodeName() + ">\n");
-				}
-				else
-				{
-					result.append("/>\n");
-				}
-			}
-		}
+          result.append(indent + "</" + node.getNodeName() + ">\n");
+        } else {
+          result.append("/>\n");
+        }
+      }
+    }
 
-		return result.toString();
-	}
+    return result.toString();
+  }
 
 }

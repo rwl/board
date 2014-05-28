@@ -19,65 +19,64 @@ part of graph.model;
  * pixels from that point. In addition, the offset is used as an absolute
  * offset vector from the resulting point. 
  */
-class Geometry extends Rect
-{
+class Geometry extends Rect {
 
-	/**
+  /**
 	 * 
 	 */
-//	private static final long serialVersionUID = 2649828026610336589L;
+  //	private static final long serialVersionUID = 2649828026610336589L;
 
-	/**
+  /**
 	 * Global switch to translate the points in translate. Default is true.
 	 */
-	static /*transient*/ bool TRANSLATE_CONTROL_POINTS = true;
+  static /*transient*/ bool TRANSLATE_CONTROL_POINTS = true;
 
-	/**
+  /**
 	 * Stores alternate values for x, y, width and height in a rectangle.
 	 * Default is null.
 	 */
-	Rect _alternateBounds;
+  Rect _alternateBounds;
 
-	/**
+  /**
 	 * Defines the source- and target-point of the edge. This is used if the
 	 * corresponding edge does not have a source vertex. Otherwise it is
 	 * ignored. Default is null.
 	 */
-	Point2d _sourcePoint, _targetPoint;
+  Point2d _sourcePoint, _targetPoint;
 
-	/**
+  /**
 	 * List of mxPoints which specifies the control points along the edge.
 	 * These points are the intermediate points on the edge, for the endpoints
 	 * use targetPoint and sourcePoint or set the terminals of the edge to
 	 * a non-null value. Default is null.
 	 */
-	List<Point2d> _points;
+  List<Point2d> _points;
 
-	/**
+  /**
 	 * Holds the offset of the label for edges. This is the absolute vector
 	 * between the center of the edge and the top, left point of the label.
 	 * Default is null.
 	 */
-	Point2d _offset;
+  Point2d _offset;
 
-	/**
+  /**
 	 * Specifies if the coordinates in the geometry are to be interpreted as
 	 * relative coordinates. Default is false. This is used to mark a geometry
 	 * with an x- and y-coordinate that is used to describe an edge label
 	 * position, or a relative location with respect to a parent cell's
 	 * width and height.
 	 */
-	bool _relative = false;
+  bool _relative = false;
 
-	/**
+  /**
 	 * Constructs a new geometry at (0, 0) with the width and height set to 0.
 	 */
-//	Geometry()
-//	{
-//		this(0, 0, 0, 0);
-//	}
+  //	Geometry()
+  //	{
+  //		this(0, 0, 0, 0);
+  //	}
 
-	/**
+  /**
 	 * Constructs a geometry using the given parameters.
 	 * 
 	 * @param x X-coordinate of the new geometry.
@@ -85,121 +84,109 @@ class Geometry extends Rect
 	 * @param width Width of the new geometry.
 	 * @param height Height of the new geometry.
 	 */
-	Geometry([double x=0.0, double y=0.0, double width=0.0, double height=0.0]) : super(x, y, width, height);
+  Geometry([double x = 0.0, double y = 0.0, double width = 0.0, double height = 0.0]) : super(x, y, width, height);
 
-	/**
+  /**
 	 * Returns the alternate bounds.
 	 */
-	Rect getAlternateBounds()
-	{
-		return _alternateBounds;
-	}
+  Rect getAlternateBounds() {
+    return _alternateBounds;
+  }
 
-	/**
+  /**
 	 * Sets the alternate bounds to the given rectangle.
 	 * 
 	 * @param rect Rectangle to be used for the alternate bounds.
 	 */
-	void setAlternateBounds(Rect rect)
-	{
-		_alternateBounds = rect;
-	}
+  void setAlternateBounds(Rect rect) {
+    _alternateBounds = rect;
+  }
 
-	/**
+  /**
 	 * Returns the source point.
 	 * 
 	 * @return Returns the source point.
 	 */
-	Point2d getSourcePoint()
-	{
-		return _sourcePoint;
-	}
+  Point2d getSourcePoint() {
+    return _sourcePoint;
+  }
 
-	/**
+  /**
 	 * Sets the source point.
 	 * 
 	 * @param sourcePoint Source point to be used.
 	 */
-	void setSourcePoint(Point2d sourcePoint)
-	{
-		this._sourcePoint = sourcePoint;
-	}
+  void setSourcePoint(Point2d sourcePoint) {
+    this._sourcePoint = sourcePoint;
+  }
 
-	/**
+  /**
 	 * Returns the target point.
 	 * 
 	 * @return Returns the target point.
 	 */
-	Point2d getTargetPoint()
-	{
-		return _targetPoint;
-	}
+  Point2d getTargetPoint() {
+    return _targetPoint;
+  }
 
-	/**
+  /**
 	 * Sets the target point.
 	 * 
 	 * @param targetPoint Target point to be used.
 	 */
-	void setTargetPoint(Point2d targetPoint)
-	{
-		this._targetPoint = targetPoint;
-	}
+  void setTargetPoint(Point2d targetPoint) {
+    this._targetPoint = targetPoint;
+  }
 
-	/**
+  /**
 	 * Returns the list of control points.
 	 */
-	List<Point2d> getPoints()
-	{
-		return _points;
-	}
+  List<Point2d> getPoints() {
+    return _points;
+  }
 
-	/**
+  /**
 	 * Sets the list of control points to the given list.
 	 * 
 	 * @param value List that contains the new control points.
 	 */
-	void setPoints(List<Point2d> value)
-	{
-		_points = value;
-	}
+  void setPoints(List<Point2d> value) {
+    _points = value;
+  }
 
-	/**
+  /**
 	 * Returns the offset.
 	 */
-	Point2d getOffset()
-	{
-		return _offset;
-	}
+  Point2d getOffset() {
+    return _offset;
+  }
 
-	/**
+  /**
 	 * Sets the offset to the given point.
 	 * 
 	 * @param offset Point to be used for the offset.
 	 */
-	void setOffset(Point2d offset)
-	{
-		this._offset = offset;
-	}
+  void setOffset(Point2d offset) {
+    this._offset = offset;
+  }
 
-	/**
+  /**
 	 * Returns true of the geometry is relative.
 	 */
-	bool isRelative()
-	{
-		return _relative;
-	}
+  bool isRelative() {
+    return _relative;
+  }
 
-	/**
+  /**
 	 * Sets the relative state of the geometry.
 	 * 
 	 * @param value Boolean value to be used as the new relative state.
 	 */
-	void setRelative(bool value)
-	{
-		_relative = value;
-	}
+  void setRelative(bool value) {
+    _relative = value;
+  }
 
-	/**
+  /**
 	 * Swaps the x, y, width and height with the values stored in
 	 * alternateBounds and puts the previous values into alternateBounds as
 	 * a rectangle. This operation is carried-out in-place, that is, using the
@@ -208,23 +195,20 @@ class Geometry extends Rect
 	 * calling this method and setting the geometry of the cell using
 	 * GraphModel.setGeometry.
 	 */
-	void swap()
-	{
-		if (_alternateBounds != null)
-		{
-			Rect old = new Rect(getX(), getY(), getWidth(),
-					getHeight());
+  void swap() {
+    if (_alternateBounds != null) {
+      Rect old = new Rect(getX(), getY(), getWidth(), getHeight());
 
-			_x = _alternateBounds.getX();
-			_y = _alternateBounds.getY();
-			_width = _alternateBounds.getWidth();
-			_height = _alternateBounds.getHeight();
+      _x = _alternateBounds.getX();
+      _y = _alternateBounds.getY();
+      _width = _alternateBounds.getWidth();
+      _height = _alternateBounds.getHeight();
 
-			_alternateBounds = old;
-		}
-	}
+      _alternateBounds = old;
+    }
+  }
 
-	/**
+  /**
 	 * Returns the point representing the source or target point of this edge.
 	 * This is only used if the edge has no source or target vertex.
 	 * 
@@ -232,12 +216,11 @@ class Geometry extends Rect
 	 * should be returned.
 	 * @return Returns the source or target point.
 	 */
-	Point2d getTerminalPoint(bool isSource)
-	{
-		return (isSource) ? _sourcePoint : _targetPoint;
-	}
+  Point2d getTerminalPoint(bool isSource) {
+    return (isSource) ? _sourcePoint : _targetPoint;
+  }
 
-	/**
+  /**
 	 * Sets the sourcePoint or targetPoint to the given point and returns the
 	 * new point.
 	 * 
@@ -246,21 +229,17 @@ class Geometry extends Rect
 	 * should be set.
 	 * @return Returns the new point.
 	 */
-	Point2d setTerminalPoint(Point2d point, bool isSource)
-	{
-		if (isSource)
-		{
-			_sourcePoint = point;
-		}
-		else
-		{
-			_targetPoint = point;
-		}
+  Point2d setTerminalPoint(Point2d point, bool isSource) {
+    if (isSource) {
+      _sourcePoint = point;
+    } else {
+      _targetPoint = point;
+    }
 
-		return point;
-	}
+    return point;
+  }
 
-	/**
+  /**
 	 * Translates the geometry by the specified amount. That is, x and y of the
 	 * geometry, the sourcePoint, targetPoint and all elements of points are
 	 * translated by the given amount. X and y are only translated if the
@@ -270,98 +249,85 @@ class Geometry extends Rect
 	 * @param dx Integer that specifies the x-coordinate of the translation.
 	 * @param dy Integer that specifies the y-coordinate of the translation.
 	 */
-	void translate(double dx, double dy)
-	{
-		// Translates the geometry
-		if (!isRelative())
-		{
-			_x += dx;
-			_y += dy;
-		}
+  void translate(double dx, double dy) {
+    // Translates the geometry
+    if (!isRelative()) {
+      _x += dx;
+      _y += dy;
+    }
 
-		// Translates the source point
-		if (_sourcePoint != null)
-		{
-			_sourcePoint.setX(_sourcePoint.getX() + dx);
-			_sourcePoint.setY(_sourcePoint.getY() + dy);
-		}
+    // Translates the source point
+    if (_sourcePoint != null) {
+      _sourcePoint.setX(_sourcePoint.getX() + dx);
+      _sourcePoint.setY(_sourcePoint.getY() + dy);
+    }
 
-		// Translates the target point
-		if (_targetPoint != null)
-		{
-			_targetPoint.setX(_targetPoint.getX() + dx);
-			_targetPoint.setY(_targetPoint.getY() + dy);
-		}
+    // Translates the target point
+    if (_targetPoint != null) {
+      _targetPoint.setX(_targetPoint.getX() + dx);
+      _targetPoint.setY(_targetPoint.getY() + dy);
+    }
 
-		// Translate the control points
-		if (TRANSLATE_CONTROL_POINTS && _points != null)
-		{
-			int count = _points.size();
+    // Translate the control points
+    if (TRANSLATE_CONTROL_POINTS && _points != null) {
+      int count = _points.size();
 
-			for (int i = 0; i < count; i++)
-			{
-				Point2d pt = _points.get(i);
+      for (int i = 0; i < count; i++) {
+        Point2d pt = _points.get(i);
 
-				pt.setX(pt.getX() + dx);
-				pt.setY(pt.getY() + dy);
-			}
-		}
-	}
+        pt.setX(pt.getX() + dx);
+        pt.setY(pt.getY() + dy);
+      }
+    }
+  }
 
-	/**
+  /**
 	 * Returns a clone of the cell.
 	 */
-	Object clone()
-	{
-		Geometry clone = super.clone() as Geometry;
+  Object clone() {
+    Geometry clone = super.clone() as Geometry;
 
-		clone.setX(getX());
-		clone.setY(getY());
-		clone.setWidth(getWidth());
-		clone.setHeight(getHeight());
-		clone.setRelative(isRelative());
+    clone.setX(getX());
+    clone.setY(getY());
+    clone.setWidth(getWidth());
+    clone.setHeight(getHeight());
+    clone.setRelative(isRelative());
 
-		List<Point2d> pts = getPoints();
+    List<Point2d> pts = getPoints();
 
-		if (pts != null)
-		{
-			clone._points = new List<Point2d>(pts.size());
+    if (pts != null) {
+      clone._points = new List<Point2d>(pts.size());
 
-			for (int i = 0; i < pts.size(); i++)
-			{
-				clone._points.add(pts[i].clone() as Point2d);
-			}
-		}
+      for (int i = 0; i < pts.size(); i++) {
+        clone._points.add(pts[i].clone() as Point2d);
+      }
+    }
 
-		Point2d tp = getTargetPoint();
+    Point2d tp = getTargetPoint();
 
-		if (tp != null)
-		{
-			clone.setTargetPoint(tp.clone() as Point2d);
-		}
+    if (tp != null) {
+      clone.setTargetPoint(tp.clone() as Point2d);
+    }
 
-		Point2d sp = getSourcePoint();
+    Point2d sp = getSourcePoint();
 
-		if (sp != null)
-		{
-			setSourcePoint(sp.clone() as Point2d);
-		}
+    if (sp != null) {
+      setSourcePoint(sp.clone() as Point2d);
+    }
 
-		Point2d off = getOffset();
+    Point2d off = getOffset();
 
-		if (off != null)
-		{
-			clone.setOffset(off.clone() as Point2d);
-		}
+    if (off != null) {
+      clone.setOffset(off.clone() as Point2d);
+    }
 
-		Rect alt = getAlternateBounds();
+    Rect alt = getAlternateBounds();
 
-		if (alt != null)
-		{
-			setAlternateBounds(alt.clone() as Rect);
-		}
+    if (alt != null) {
+      setAlternateBounds(alt.clone() as Rect);
+    }
 
-		return clone;
-	}
+    return clone;
+  }
 
 }

@@ -1,93 +1,82 @@
 part of graph.model;
 
-class CollapseChange extends AtomicGraphModelChange
-{
+class CollapseChange extends AtomicGraphModelChange {
 
-	/**
+  /**
 	 *
 	 */
-	Object cell;
+  Object cell;
 
-	/**
+  /**
 	 * 
 	 */
-	bool collapsed, previous;
+  bool collapsed, previous;
 
-	/**
+  /**
 	 * 
 	 */
-//	CollapseChange()
-//	{
-//		this(null, null, false);
-//	}
+  //	CollapseChange()
+  //	{
+  //		this(null, null, false);
+  //	}
 
-	/**
+  /**
 	 * 
 	 */
-	CollapseChange([GraphModel model=null, Object cell=null,
-			bool collapsed=false]) : super(model)
-	{
-		this.cell = cell;
-		this.collapsed = collapsed;
-		this.previous = this.collapsed;
-	}
+  CollapseChange([GraphModel model = null, Object cell = null, bool collapsed = false]) : super(model) {
+    this.cell = cell;
+    this.collapsed = collapsed;
+    this.previous = this.collapsed;
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void setCell(Object value)
-	{
-		cell = value;
-	}
+  void setCell(Object value) {
+    cell = value;
+  }
 
-	/**
+  /**
 	 * @return the cell
 	 */
-	Object getCell()
-	{
-		return cell;
-	}
+  Object getCell() {
+    return cell;
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void setCollapsed(bool value)
-	{
-		collapsed = value;
-	}
+  void setCollapsed(bool value) {
+    collapsed = value;
+  }
 
-	/**
+  /**
 	 * @return the collapsed
 	 */
-	bool isCollapsed()
-	{
-		return collapsed;
-	}
+  bool isCollapsed() {
+    return collapsed;
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void setPrevious(bool value)
-	{
-		previous = value;
-	}
+  void setPrevious(bool value) {
+    previous = value;
+  }
 
-	/**
+  /**
 	 * @return the previous
 	 */
-	bool getPrevious()
-	{
-		return previous;
-	}
+  bool getPrevious() {
+    return previous;
+  }
 
-	/**
+  /**
 	 * Changes the root of the model.
 	 */
-	void execute()
-	{
-		collapsed = previous;
-		previous = (model as GraphModel)._collapsedStateForCellChanged(
-				cell, previous);
-	}
+  void execute() {
+    collapsed = previous;
+    previous = (model as GraphModel)._collapsedStateForCellChanged(cell, previous);
+  }
 
 }

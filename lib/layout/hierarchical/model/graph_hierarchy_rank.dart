@@ -16,11 +16,10 @@ part of graph.layout.hierarchical.model;
  * An abstraction of a rank in the hierarchy layout. Should be ordered, perform
  * remove in constant time and contains in constant time
  */
-class GraphHierarchyRank extends LinkedHashSet<GraphAbstractHierarchyCell>
-{
+class GraphHierarchyRank extends LinkedHashSet<GraphAbstractHierarchyCell> {
 
-	/**
+  /**
 	 * 
 	 */
-//	static final long serialVersionUID = -2781491210687143878L;
+  //	static final long serialVersionUID = -2781491210687143878L;
 }

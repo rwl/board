@@ -1,4 +1,3 @@
-
 library graph.model;
 
 /**
@@ -30,8 +29,7 @@ part 'visible_change.dart';
 /**
  * Defines the requirements for a graph model to be used with Graph.
  */
-abstract class IGraphModel
-{
+abstract class IGraphModel {
 
   /**
    * Returns the root of the model or the topmost parent of the given cell.
@@ -296,7 +294,7 @@ abstract class IGraphModel
    *
    * Removes the given listener from the list of listeners.
    */
-//  void removeListener(IEventListener listener);
+  //  void removeListener(IEventListener listener);
 
   /**
    * Function: removeListener
@@ -310,8 +308,7 @@ abstract class IGraphModel
 /**
  * Defines the interface for an atomic change of the graph model.
  */
-abstract class AtomicGraphModelChange implements UndoableChange
-{
+abstract class AtomicGraphModelChange implements UndoableChange {
   /**
    * Holds the model where the change happened.
    */
@@ -320,32 +317,29 @@ abstract class AtomicGraphModelChange implements UndoableChange
   /**
    * Constructs an empty atomic graph model change.
    */
-//  AtomicGraphModelChange()
-//  {
-//    this(null);
-//  }
+  //  AtomicGraphModelChange()
+  //  {
+  //    this(null);
+  //  }
 
   /**
    * Constructs an atomic graph model change for the given model.
    */
-  AtomicGraphModelChange([IGraphModel model=null])
-  {
+  AtomicGraphModelChange([IGraphModel model = null]) {
     this.model = model;
   }
 
   /**
    * Returns the model where the change happened.
    */
-  IGraphModel getModel()
-  {
+  IGraphModel getModel() {
     return model;
   }
 
   /**
    * Sets the model where the change is to be carried out.
    */
-  void setModel(IGraphModel model)
-  {
+  void setModel(IGraphModel model) {
     this.model = model;
   }
 

@@ -16,78 +16,67 @@ part of graph.analysis;
  * <code>alpha(m,n) = min{i &gt;= 1 | A(i, floor(m/n)) &gt; log n} for m &gt;= n &gt;= 1</code>
  * Which yields almost constant time for each individual operation.
  */
-class UnionFind
-{
+class UnionFind {
 
-	/**
+  /**
 	 * Maps from elements to nodes
 	 */
-	Map<Object, _UnionFindNode> _nodes = new Hashtable<Object, _UnionFindNode>();
+  Map<Object, _UnionFindNode> _nodes = new Hashtable<Object, _UnionFindNode>();
 
-	/**
+  /**
 	 * Constructs a union find structure and initializes it with the specified
 	 * elements.
 	 * 
 	 * @param elements
 	 */
-	UnionFind(List<Object> elements)
-	{
-		for (int i = 0; i < elements.length; i++)
-		{
-			_nodes.put(elements[i], new _UnionFindNode());
-		}
-	}
+  UnionFind(List<Object> elements) {
+    for (int i = 0; i < elements.length; i++) {
+      _nodes.put(elements[i], new _UnionFindNode());
+    }
+  }
 
-	/**
+  /**
 	 * Returns the node that represents element.
 	 */
-	_UnionFindNode getNode(Object element)
-	{
-		return _nodes.get(element);
-	}
+  _UnionFindNode getNode(Object element) {
+    return _nodes.get(element);
+  }
 
-	/**
+  /**
 	 * Returns the set that contains <code>node</code>. This implementation
 	 * provides path compression by halving.
 	 */
-	_UnionFindNode find(_UnionFindNode unionFindNode)
-	{
-		while (unionFindNode.getParent().getParent() != unionFindNode.getParent())
-		{
-			_UnionFindNode t = unionFindNode.getParent().getParent();
-			unionFindNode.setParent(t);
-			unionFindNode = t;
-		}
+  _UnionFindNode find(_UnionFindNode unionFindNode) {
+    while (unionFindNode.getParent().getParent() != unionFindNode.getParent()) {
+      _UnionFindNode t = unionFindNode.getParent().getParent();
+      unionFindNode.setParent(t);
+      unionFindNode = t;
+    }
 
-		return unionFindNode.getParent();
-	}
+    return unionFindNode.getParent();
+  }
 
-	/**
+  /**
 	 * Unifies the sets <code>a</code> and <code>b</code> in constant time
 	 * using a union by rank on the tree size.
 	 */
-	void union(_UnionFindNode a, _UnionFindNode b)
-	{
-		_UnionFindNode set1 = find(a);
-		_UnionFindNode set2 = find(b);
+  void union(_UnionFindNode a, _UnionFindNode b) {
+    _UnionFindNode set1 = find(a);
+    _UnionFindNode set2 = find(b);
 
-		if (set1 != set2)
-		{
-			// Limits the worst case runtime of a find to O(log N)
-			if (set1.getSize() < set2.getSize())
-			{
-				set2.setParent(set1);
-				set1.setSize(set1.getSize() + set2.getSize());
-			}
-			else
-			{
-				set1.setParent(set2);
-				set2.setSize(set1.getSize() + set2.getSize());
-			}
-		}
-	}
+    if (set1 != set2) {
+      // Limits the worst case runtime of a find to O(log N)
+      if (set1.getSize() < set2.getSize()) {
+        set2.setParent(set1);
+        set1.setSize(set1.getSize() + set2.getSize());
+      } else {
+        set1.setParent(set2);
+        set2.setSize(set1.getSize() + set2.getSize());
+      }
+    }
+  }
 
-	/**
+  /**
 	 * Returns true if element a and element b are not in the same set. This
 	 * uses getNode and then find to determine the elements set.
 	 * 
@@ -97,20 +86,18 @@ class UnionFind
 	 * 
 	 * @see #getNode(Object)
 	 */
-	bool differ(Object a, Object b)
-	{
-		_UnionFindNode set1 = find(getNode(a));
-		_UnionFindNode set2 = find(getNode(b));
+  bool differ(Object a, Object b) {
+    _UnionFindNode set1 = find(getNode(a));
+    _UnionFindNode set2 = find(getNode(b));
 
-		return set1 != set2;
-	}
+    return set1 != set2;
+  }
 }
 
 /**
  * A class that defines the identity of a set.
  */
-class _UnionFindNode
-{
+class _UnionFindNode {
 
   /**
    * Reference to the parent node. Root nodes point to themselves.
@@ -125,32 +112,28 @@ class _UnionFindNode
   /**
    * @return Returns the parent node
    */
-  _UnionFindNode getParent()
-  {
+  _UnionFindNode getParent() {
     return parent;
   }
 
   /**
    * @param parent The parent node to set.
    */
-  void setParent(_UnionFindNode parent)
-  {
+  void setParent(_UnionFindNode parent) {
     this.parent = parent;
   }
 
   /**
    * @return Returns the size.
    */
-  int getSize()
-  {
+  int getSize() {
     return size;
   }
 
   /**
    * @param size The size to set.
    */
-  void setSize(int size)
-  {
+  void setSize(int size) {
     this.size = size;
   }
 }

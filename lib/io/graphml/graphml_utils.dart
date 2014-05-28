@@ -15,238 +15,204 @@ part of graph.io.graphml;
 /**
  * This class implements several GML utility methods.
  */
-class GraphMlUtils
-{
-	/**
+class GraphMlUtils {
+  /**
 	 * Checks if the NodeList has a Node with name = tag.
 	 * @param nl NodeList
 	 * @param tag Name of the node.
 	 * @return Returns <code>true</code> if the Node List has a Node with name = tag.
 	 */
-	static bool nodeListHasTag(NodeList nl, String tag)
-	{
-		bool has = false;
+  static bool nodeListHasTag(NodeList nl, String tag) {
+    bool has = false;
 
-		if (nl != null)
-		{
-			int length = nl.getLength();
+    if (nl != null) {
+      int length = nl.getLength();
 
-			for (int i = 0; (i < length) && !has; i++)
-			{
-				has = (nl.item(i)).getNodeName().equals(tag);
-			}
-		}
-		
-		return has;
-	}
+      for (int i = 0; (i < length) && !has; i++) {
+        has = (nl.item(i)).getNodeName().equals(tag);
+      }
+    }
 
-	/**
+    return has;
+  }
+
+  /**
 	 * Returns the first Element that has name = tag in Node List.
 	 * @param nl NodeList
 	 * @param tag Name of the Element
 	 * @return Element with name = 'tag'.
 	 */
-	static Element nodeListTag(NodeList nl, String tag)
-	{
-		if (nl != null)
-		{
-			int length = nl.getLength();
-			bool has = false;
+  static Element nodeListTag(NodeList nl, String tag) {
+    if (nl != null) {
+      int length = nl.getLength();
+      bool has = false;
 
-			for (int i = 0; (i < length) && !has; i++)
-			{
-				has = (nl.item(i)).getNodeName().equals(tag);
+      for (int i = 0; (i < length) && !has; i++) {
+        has = (nl.item(i)).getNodeName().equals(tag);
 
-				if (has)
-				{
-					return nl.item(i) as Element;
-				}
-			}
-		}
-		
-		return null;
-	}
+        if (has) {
+          return nl.item(i) as Element;
+        }
+      }
+    }
 
-	/**
+    return null;
+  }
+
+  /**
 	 * Returns a list with the elements included in the Node List that have name = tag.
 	 * @param nl NodeList
 	 * @param tag name of the Element.
 	 * @return List with the indicated elements.
 	 */
-	static List<Element> nodeListTags(NodeList nl, String tag)
-	{
-		ArrayList<Element> ret = new List<Element>();
+  static List<Element> nodeListTags(NodeList nl, String tag) {
+    ArrayList<Element> ret = new List<Element>();
 
-		if (nl != null)
-		{
-			int length = nl.getLength();
+    if (nl != null) {
+      int length = nl.getLength();
 
-			for (int i = 0; i < length; i++)
-			{
-				if (tag.equals((nl.item(i)).getNodeName()))
-				{
-					ret.add(nl.item(i) as Element);
-				}
-			}
-		}
-		return ret;
-	}
+      for (int i = 0; i < length; i++) {
+        if (tag.equals((nl.item(i)).getNodeName())) {
+          ret.add(nl.item(i) as Element);
+        }
+      }
+    }
+    return ret;
+  }
 
-	/**
+  /**
 	 * Checks if the childrens of element has a Node with name = tag.
 	 * @param element Element
 	 * @param tag Name of the node.
 	 * @return Returns <code>true</code> if the childrens of element has a Node with name = tag.
 	 */
-	static bool childsHasTag(Element element, String tag)
-	{
-		NodeList nl = element.getChildNodes();
+  static bool childsHasTag(Element element, String tag) {
+    NodeList nl = element.getChildNodes();
 
-		bool has = false;
+    bool has = false;
 
-		if (nl != null)
-		{
-			int length = nl.getLength();
+    if (nl != null) {
+      int length = nl.getLength();
 
-			for (int i = 0; (i < length) && !has; i++)
-			{
-				has = (nl.item(i)).getNodeName().equals(tag);
-			}
-		}
-		return has;
-	}
+      for (int i = 0; (i < length) && !has; i++) {
+        has = (nl.item(i)).getNodeName().equals(tag);
+      }
+    }
+    return has;
+  }
 
-	/**
+  /**
 	 * Returns the first Element that has name = tag in the childrens of element.
 	 * @param element Element
 	 * @param tag Name of the Element
 	 * @return Element with name = 'tag'.
 	 */
-	static Element childsTag(Element element, String tag)
-	{
-		NodeList nl = element.getChildNodes();
+  static Element childsTag(Element element, String tag) {
+    NodeList nl = element.getChildNodes();
 
-		if (nl != null)
-		{
-			int length = nl.getLength();
-			bool has = false;
+    if (nl != null) {
+      int length = nl.getLength();
+      bool has = false;
 
-			for (int i = 0; (i < length) && !has; i++)
-			{
-				has = (nl.item(i)).getNodeName().equals(tag);
+      for (int i = 0; (i < length) && !has; i++) {
+        has = (nl.item(i)).getNodeName().equals(tag);
 
-				if (has)
-				{
-					return nl.item(i) as Element;
-				}
-			}
-		}
-		
-		return null;
-	}
+        if (has) {
+          return nl.item(i) as Element;
+        }
+      }
+    }
 
-	/**
+    return null;
+  }
+
+  /**
 	 * Returns a list with the elements included in the childrens of element
 	 * that have name = tag.
 	 * @param element Element
 	 * @param tag name of the Element.
 	 * @return List with the indicated elements.
 	 */
-	static List<Element> childsTags(Element element, String tag)
-	{
-		NodeList nl = element.getChildNodes();
+  static List<Element> childsTags(Element element, String tag) {
+    NodeList nl = element.getChildNodes();
 
-		ArrayList<Element> ret = new List<Element>();
-		
-		if (nl != null)
-		{
-			int length = nl.getLength();
+    ArrayList<Element> ret = new List<Element>();
 
-			for (int i = 0; i < length; i++)
-			{
-				if (tag.equals((nl.item(i)).getNodeName()))
-				{
-					ret.add(nl.item(i) as Element);
-				}
-			}
-		}
-		return ret;
-	}
+    if (nl != null) {
+      int length = nl.getLength();
 
-	/**
+      for (int i = 0; i < length; i++) {
+        if (tag.equals((nl.item(i)).getNodeName())) {
+          ret.add(nl.item(i) as Element);
+        }
+      }
+    }
+    return ret;
+  }
+
+  /**
 	 * Copy a given NodeList into a List<Element>
 	 * @param nodeList Node List.
 	 * @return List with the elements of nodeList.
 	 */
-	static List<Node> copyNodeList(NodeList nodeList)
-	{
-		ArrayList<Node> copy = new List<Node>();
-		int length = nodeList.getLength();
+  static List<Node> copyNodeList(NodeList nodeList) {
+    ArrayList<Node> copy = new List<Node>();
+    int length = nodeList.getLength();
 
-		for (int i = 0; i < length; i++)
-		{
-			copy.add(nodeList.item(i) as Node);
-		}
-		
-		return copy;
-	}
+    for (int i = 0; i < length; i++) {
+      copy.add(nodeList.item(i) as Node);
+    }
 
-	/**
+    return copy;
+  }
+
+  /**
 	 * Create a style map from a String with style definitions.
 	 * @param style Definition of the style.
 	 * @param asig Asignation simbol used in 'style'.
 	 * @return Map with the style properties.
 	 */
-	static HashMap<String, Object> getStyleMap(String style, String asig)
-	{
-		HashMap<String, Object> styleMap = new HashMap<String, Object>();
-		String key = "";
-		String value = "";
-		int index = 0;
-		
-		if (!style.equals(""))
-		{
-			List<String> entries = style.split(";");
+  static HashMap<String, Object> getStyleMap(String style, String asig) {
+    HashMap<String, Object> styleMap = new HashMap<String, Object>();
+    String key = "";
+    String value = "";
+    int index = 0;
 
-			for (String entry in entries)
-			{
-				index = entry.indexOf(asig);
-				
-				if (index == -1)
-				{
-					key = "";
-					value = entry;
-					styleMap.put(key, value);
-				}
-				else
-				{
-					key = entry.substring(0, index);
-					value = entry.substring(index + 1);
-					styleMap.put(key, value);
-				}
-			}
-		}
-		return styleMap;
-	}
+    if (!style.equals("")) {
+      List<String> entries = style.split(";");
 
-	/**
+      for (String entry in entries) {
+        index = entry.indexOf(asig);
+
+        if (index == -1) {
+          key = "";
+          value = entry;
+          styleMap.put(key, value);
+        } else {
+          key = entry.substring(0, index);
+          value = entry.substring(index + 1);
+          styleMap.put(key, value);
+        }
+      }
+    }
+    return styleMap;
+  }
+
+  /**
 	 * Returns the string that represents the content of a given style map.
 	 * @param styleMap Map with the styles values
 	 * @return string that represents the style.
 	 */
-	static String getStyleString(Map<String, Object> styleMap,
-			String asig)
-	{
-		String style = "";
-		Iterator<Object> it = styleMap.values().iterator();
-		Iterator<String> kit = styleMap.keySet().iterator();
+  static String getStyleString(Map<String, Object> styleMap, String asig) {
+    String style = "";
+    Iterator<Object> it = styleMap.values().iterator();
+    Iterator<String> kit = styleMap.keySet().iterator();
 
-		while (kit.hasNext())
-		{
-			String key = kit.next();
-			Object value = it.next();
-			style = style + key + asig + value + ";";
-		}
-		return style;
-	}
+    while (kit.hasNext()) {
+      String key = kit.next();
+      Object value = it.next();
+      style = style + key + asig + value + ";";
+    }
+    return style;
+  }
 }

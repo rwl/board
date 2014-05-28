@@ -15,15 +15,14 @@ part of graph.layout.hierarchical.stage;
  * <code>run</code> method with a parameter for the hierarchical layout model
  * that is shared between the layout stages.
  */
-abstract class HierarchicalLayoutStage
-{
+abstract class HierarchicalLayoutStage {
 
-	/**
+  /**
 	 * Takes the graph detail and configuration information within the facade
 	 * and creates the resulting laid out graph within that facade for further
 	 * use.
 	 */
-	void execute(Object parent);
+  void execute(Object parent);
 
 }
 
@@ -32,8 +31,7 @@ abstract class HierarchicalLayoutStage
  * Utility class that stores a collection of vertices and edge points within
  * a certain area. This area includes the buffer lengths of cells.
  */
-class _AreaSpatialCache extends Rectangle2D.Double
-{
+class _AreaSpatialCache extends Rectangle2D.Double {
   Set<Object> cells = new HashSet<Object>();
 }
 
@@ -41,8 +39,7 @@ class _AreaSpatialCache extends Rectangle2D.Double
  * A utility class used to track cells whilst sorting occurs on the median
  * values. Does not violate (x.compareTo(y)==0) == (x.equals(y))
  */
-class _MedianCellSorter implements Comparable<Object>
-{
+class _MedianCellSorter implements Comparable<Object> {
 
   /**
    * The median value of the cell stored
@@ -62,20 +59,15 @@ class _MedianCellSorter implements Comparable<Object>
    * @return the standard return you would expect when comparing two
    *         double
    */
-  int compareTo(Object arg0)
-  {
-    if (arg0 is _MedianCellSorter)
-    {
-      if (medianValue < (arg0 as _MedianCellSorter).medianValue)
-      {
+  int compareTo(Object arg0) {
+    if (arg0 is _MedianCellSorter) {
+      if (medianValue < (arg0 as _MedianCellSorter).medianValue) {
         return -1;
-      }
-      else if (medianValue > (arg0 as _MedianCellSorter).medianValue)
-      {
+      } else if (medianValue > (arg0 as _MedianCellSorter).medianValue) {
         return 1;
       }
     }
-    
+
     return 0;
   }
 }
@@ -85,8 +77,7 @@ class _MedianCellSorter implements Comparable<Object>
  * sum of their connected edges. Does not violate (x.compareTo(y)==0) ==
  * (x.equals(y))
  */
-class _WeightedCellSorter implements Comparable<Object>
-{
+class _WeightedCellSorter implements Comparable<Object> {
 
   /**
    * The weighted value of the cell stored
@@ -113,14 +104,12 @@ class _WeightedCellSorter implements Comparable<Object>
    */
   GraphAbstractHierarchyCell cell = null;
 
-//  _WeightedCellSorter()
-//  {
-//    this(null, 0);
-//  }
+  //  _WeightedCellSorter()
+  //  {
+  //    this(null, 0);
+  //  }
 
-  _WeightedCellSorter([GraphAbstractHierarchyCell cell=null,
-      int weightedValue=0])
-  {
+  _WeightedCellSorter([GraphAbstractHierarchyCell cell = null, int weightedValue = 0]) {
     this.cell = cell;
     this.weightedValue = weightedValue;
   }
@@ -133,16 +122,11 @@ class _WeightedCellSorter implements Comparable<Object>
    * @return the standard return you would expect when comparing two
    *         double
    */
-  int compareTo(Object arg0)
-  {
-    if (arg0 is _WeightedCellSorter)
-    {
-      if (weightedValue > (arg0 as _WeightedCellSorter).weightedValue)
-      {
+  int compareTo(Object arg0) {
+    if (arg0 is _WeightedCellSorter) {
+      if (weightedValue > (arg0 as _WeightedCellSorter).weightedValue) {
         return -1;
-      }
-      else if (weightedValue < (arg0 as _WeightedCellSorter).weightedValue)
-      {
+      } else if (weightedValue < (arg0 as _WeightedCellSorter).weightedValue) {
         return 1;
       }
     }

@@ -6,7 +6,6 @@ part of graph.layout.orthogonal.model;
 /**
  *
  */
-class PointPair
-{
+class PointPair {
 
 }

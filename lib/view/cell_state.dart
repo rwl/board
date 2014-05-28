@@ -10,92 +10,90 @@ part of graph.view;
 /**
  * Represents the current state of a cell in a given graph view.
  */
-class CellState extends Rect
-{
-	/**
+class CellState extends Rect {
+  /**
 	 * 
 	 */
-//	static final long serialVersionUID = 7588335615324083354L;
+  //	static final long serialVersionUID = 7588335615324083354L;
 
-	/**
+  /**
 	 * Reference to the enclosing graph view.
 	 */
-	GraphView _view;
+  GraphView _view;
 
-	/**
+  /**
 	 * Reference to the cell that is represented by this state.
 	 */
-	Object _cell;
+  Object _cell;
 
-	/**
+  /**
 	 * Holds the current label value, including newlines which result from
 	 * word wrapping.
 	 */
-	String _label;
+  String _label;
 
-	/**
+  /**
 	 * Contains an array of key, value pairs that represent the style of the
 	 * cell.
 	 */
-	Map<String, Object> _style;
+  Map<String, Object> _style;
 
-	/**
+  /**
 	 * Holds the origin for all child cells.
 	 */
-	Point2d _origin = new Point2d();
+  Point2d _origin = new Point2d();
 
-	/**
+  /**
 	 * List of mxPoints that represent the absolute points of an edge.
 	 */
-	List<Point2d> _absolutePoints;
+  List<Point2d> _absolutePoints;
 
-	/**
+  /**
 	 * Holds the absolute offset. For edges, this is the absolute coordinates
 	 * of the label position. For vertices, this is the offset of the label
 	 * relative to the top, left corner of the vertex.
 	 */
-	Point2d _absoluteOffset = new Point2d();
+  Point2d _absoluteOffset = new Point2d();
 
-	/**
+  /**
 	 * Caches the distance between the end points and the length of an edge.
 	 */
-	double _terminalDistance, _length;
+  double _terminalDistance, _length;
 
-	/**
+  /**
 	 * Array of numbers that represent the cached length of each segment of the
 	 * edge.
 	 */
-	List<double> _segments;
+  List<double> _segments;
 
-	/**
+  /**
 	 * Holds the rectangle which contains the label.
 	 */
-	Rect _labelBounds;
+  Rect _labelBounds;
 
-	/**
+  /**
 	 * Holds the largest rectangle which contains all rendering for this cell.
 	 */
-	Rect _boundingBox;
+  Rect _boundingBox;
 
-	/**
+  /**
 	 * Specifies if the state is invalid. Default is true.
 	 */
-	bool _invalid = true;
+  bool _invalid = true;
 
-	/**
+  /**
 	 * Caches the visible source and target terminal states.
 	 */
-	CellState _visibleSourceState, _visibleTargetState;
+  CellState _visibleSourceState, _visibleTargetState;
 
-	/**
+  /**
 	 * Constructs an empty cell state.
 	 */
-	CellState()
-	{
-		this(null, null, null);
-	}
+  CellState() {
+    this(null, null, null);
+  }
 
-	/**
+  /**
 	 * Constructs a new object that represents the current state of the given
 	 * cell in the specified view.
 	 * 
@@ -103,464 +101,403 @@ class CellState extends Rect
 	 * @param cell Cell that this state represents.
 	 * @param style Array of key, value pairs that constitute the style.
 	 */
-	CellState(GraphView view, Object cell, Map<String, Object> style)
-	{
-		setView(view);
-		setCell(cell);
-		setStyle(style);
-	}
+  CellState(GraphView view, Object cell, Map<String, Object> style) {
+    setView(view);
+    setCell(cell);
+    setStyle(style);
+  }
 
-	/**
+  /**
 	 * Returns true if the state is invalid.
 	 */
-	bool isInvalid()
-	{
-		return _invalid;
-	}
+  bool isInvalid() {
+    return _invalid;
+  }
 
-	/**
+  /**
 	 * Sets the invalid state.
 	 */
-	void setInvalid(bool invalid)
-	{
-		this._invalid = invalid;
-	}
+  void setInvalid(bool invalid) {
+    this._invalid = invalid;
+  }
 
-	/**
+  /**
 	 * Returns the enclosing graph view.
 	 * 
 	 * @return the view
 	 */
-	GraphView getView()
-	{
-		return _view;
-	}
+  GraphView getView() {
+    return _view;
+  }
 
-	/**
+  /**
 	 * Sets the enclosing graph view. 
 	 *
 	 * @param view the view to set
 	 */
-	void setView(GraphView view)
-	{
-		this._view = view;
-	}
+  void setView(GraphView view) {
+    this._view = view;
+  }
 
-	/**
+  /**
 	 * Returns the current label.
 	 */
-	String getLabel()
-	{
-		return _label;
-	}
+  String getLabel() {
+    return _label;
+  }
 
-	/**
+  /**
 	 * Returns the current label.
 	 */
-	void setLabel(String value)
-	{
-		_label = value;
-	}
+  void setLabel(String value) {
+    _label = value;
+  }
 
-	/**
+  /**
 	 * Returns the cell that is represented by this state.
 	 * 
 	 * @return the cell
 	 */
-	Object getCell()
-	{
-		return _cell;
-	}
+  Object getCell() {
+    return _cell;
+  }
 
-	/**
+  /**
 	 * Sets the cell that this state represents.
 	 * 
 	 * @param cell the cell to set
 	 */
-	void setCell(Object cell)
-	{
-		this._cell = cell;
-	}
+  void setCell(Object cell) {
+    this._cell = cell;
+  }
 
-	/**
+  /**
 	 * Returns the cell style as a map of key, value pairs.
 	 * 
 	 * @return the style
 	 */
-	Map<String, Object> getStyle()
-	{
-		return _style;
-	}
+  Map<String, Object> getStyle() {
+    return _style;
+  }
 
-	/**
+  /**
 	 * Sets the cell style as a map of key, value pairs.
 	 * 
 	 * @param style the style to set
 	 */
-	void setStyle(Map<String, Object> style)
-	{
-		this._style = style;
-	}
+  void setStyle(Map<String, Object> style) {
+    this._style = style;
+  }
 
-	/**
+  /**
 	 * Returns the origin for the children.
 	 * 
 	 * @return the origin
 	 */
-	Point2d getOrigin()
-	{
-		return _origin;
-	}
+  Point2d getOrigin() {
+    return _origin;
+  }
 
-	/**
+  /**
 	 * Sets the origin for the children.
 	 * 
 	 * @param origin the origin to set
 	 */
-	void setOrigin(Point2d origin)
-	{
-		this._origin = origin;
-	}
+  void setOrigin(Point2d origin) {
+    this._origin = origin;
+  }
 
-	/**
+  /**
 	 * Returns the absolute point at the given index.
 	 * 
 	 * @return the Point2d at the given index
 	 */
-	Point2d getAbsolutePoint(int index)
-	{
-		return _absolutePoints.get(index);
-	}
+  Point2d getAbsolutePoint(int index) {
+    return _absolutePoints.get(index);
+  }
 
-	/**
+  /**
 	 * Returns the absolute point at the given index.
 	 * 
 	 * @return the Point2d at the given index
 	 */
-	Point2d setAbsolutePoint(int index, Point2d point)
-	{
-		return _absolutePoints.set(index, point);
-	}
+  Point2d setAbsolutePoint(int index, Point2d point) {
+    return _absolutePoints.set(index, point);
+  }
 
-	/**
+  /**
 	 * Returns the number of absolute points.
 	 * 
 	 * @return the absolutePoints
 	 */
-	int getAbsolutePointCount()
-	{
-		return (_absolutePoints != null) ? _absolutePoints.size() : 0;
-	}
+  int getAbsolutePointCount() {
+    return (_absolutePoints != null) ? _absolutePoints.size() : 0;
+  }
 
-	/**
+  /**
 	 * Returns the absolute points.
 	 * 
 	 * @return the absolutePoints
 	 */
-	List<Point2d> getAbsolutePoints()
-	{
-		return _absolutePoints;
-	}
+  List<Point2d> getAbsolutePoints() {
+    return _absolutePoints;
+  }
 
-	/**
+  /**
 	 * Returns the absolute points.
 	 * 
 	 * @param absolutePoints the absolutePoints to set
 	 */
-	void setAbsolutePoints(List<Point2d> absolutePoints)
-	{
-		this._absolutePoints = absolutePoints;
-	}
+  void setAbsolutePoints(List<Point2d> absolutePoints) {
+    this._absolutePoints = absolutePoints;
+  }
 
-	/**
+  /**
 	 * Returns the absolute offset.
 	 * 
 	 * @return the absoluteOffset
 	 */
-	Point2d getAbsoluteOffset()
-	{
-		return _absoluteOffset;
-	}
+  Point2d getAbsoluteOffset() {
+    return _absoluteOffset;
+  }
 
-	/**
+  /**
 	 * Returns the absolute offset.
 	 * 
 	 * @param absoluteOffset the absoluteOffset to set
 	 */
-	void setAbsoluteOffset(Point2d absoluteOffset)
-	{
-		this._absoluteOffset = absoluteOffset;
-	}
+  void setAbsoluteOffset(Point2d absoluteOffset) {
+    this._absoluteOffset = absoluteOffset;
+  }
 
-	/**
+  /**
 	 * Returns the terminal distance.
 	 * 
 	 * @return the terminalDistance
 	 */
-	double getTerminalDistance()
-	{
-		return _terminalDistance;
-	}
+  double getTerminalDistance() {
+    return _terminalDistance;
+  }
 
-	/**
+  /**
 	 * Sets the terminal distance.
 	 * 
 	 * @param terminalDistance the terminalDistance to set
 	 */
-	void setTerminalDistance(double terminalDistance)
-	{
-		this._terminalDistance = terminalDistance;
-	}
+  void setTerminalDistance(double terminalDistance) {
+    this._terminalDistance = terminalDistance;
+  }
 
-	/**
+  /**
 	 * Returns the length.
 	 * 
 	 * @return the length
 	 */
-	double getLength()
-	{
-		return _length;
-	}
+  double getLength() {
+    return _length;
+  }
 
-	/**
+  /**
 	 * Sets the length.
 	 * 
 	 * @param length the length to set
 	 */
-	void setLength(double length)
-	{
-		this._length = length;
-	}
+  void setLength(double length) {
+    this._length = length;
+  }
 
-	/**
+  /**
 	 * Returns the length of the segments.
 	 * 
 	 * @return the segments
 	 */
-	List<double> getSegments()
-	{
-		return _segments;
-	}
+  List<double> getSegments() {
+    return _segments;
+  }
 
-	/**
+  /**
 	 * Sets the length of the segments.
 	 * 
 	 * @param segments the segments to set
 	 */
-	void setSegments(List<double> segments)
-	{
-		this._segments = segments;
-	}
+  void setSegments(List<double> segments) {
+    this._segments = segments;
+  }
 
-	/**
+  /**
 	 * Returns the label bounds.
 	 * 
 	 * @return Returns the label bounds for this state.
 	 */
-	Rect getLabelBounds()
-	{
-		return _labelBounds;
-	}
+  Rect getLabelBounds() {
+    return _labelBounds;
+  }
 
-	/**
+  /**
 	 * Sets the label bounds.
 	 * 
 	 * @param labelBounds
 	 */
-	void setLabelBounds(Rect labelBounds)
-	{
-		this._labelBounds = labelBounds;
-	}
+  void setLabelBounds(Rect labelBounds) {
+    this._labelBounds = labelBounds;
+  }
 
-	/**
+  /**
 	 * Returns the bounding box.
 	 * 
 	 * @return Returns the bounding box for this state.
 	 */
-	Rect getBoundingBox()
-	{
-		return _boundingBox;
-	}
+  Rect getBoundingBox() {
+    return _boundingBox;
+  }
 
-	/**
+  /**
 	 * Sets the bounding box.
 	 * 
 	 * @param boundingBox
 	 */
-	void setBoundingBox(Rect boundingBox)
-	{
-		this._boundingBox = boundingBox;
-	}
+  void setBoundingBox(Rect boundingBox) {
+    this._boundingBox = boundingBox;
+  }
 
-	/**
+  /**
 	 * Returns the rectangle that should be used as the perimeter of the cell.
 	 * This implementation adds the perimeter spacing to the rectangle
 	 * defined by this cell state.
 	 * 
 	 * @return Returns the rectangle that defines the perimeter.
 	 */
-	Rect getPerimeterBounds()
-	{
-		return getPerimeterBounds(0);
-	}
+  Rect getPerimeterBounds() {
+    return getPerimeterBounds(0);
+  }
 
-	/**
+  /**
 	 * Returns the rectangle that should be used as the perimeter of the cell.
 	 * 
 	 * @return Returns the rectangle that defines the perimeter.
 	 */
-	Rect getPerimeterBounds(double border)
-	{
-		Rect bounds = new Rect(getRectangle());
+  Rect getPerimeterBounds(double border) {
+    Rect bounds = new Rect(getRectangle());
 
-		if (border != 0)
-		{
-			bounds.grow(border);
-		}
+    if (border != 0) {
+      bounds.grow(border);
+    }
 
-		return bounds;
-	}
+    return bounds;
+  }
 
-	/**
+  /**
 	 * Sets the first or last point in the list of points depending on isSource.
 	 * 
 	 * @param point Point that represents the terminal point.
 	 * @param isSource Boolean that specifies if the first or last point should
 	 * be assigned.
 	 */
-	void setAbsoluteTerminalPoint(Point2d point, bool isSource)
-	{
-		if (isSource)
-		{
-			if (_absolutePoints == null)
-			{
-				_absolutePoints = new List<Point2d>();
-			}
+  void setAbsoluteTerminalPoint(Point2d point, bool isSource) {
+    if (isSource) {
+      if (_absolutePoints == null) {
+        _absolutePoints = new List<Point2d>();
+      }
 
-			if (_absolutePoints.size() == 0)
-			{
-				_absolutePoints.add(point);
-			}
-			else
-			{
-				_absolutePoints.set(0, point);
-			}
-		}
-		else
-		{
-			if (_absolutePoints == null)
-			{
-				_absolutePoints = new List<Point2d>();
-				_absolutePoints.add(null);
-				_absolutePoints.add(point);
-			}
-			else if (_absolutePoints.size() == 1)
-			{
-				_absolutePoints.add(point);
-			}
-			else
-			{
-				_absolutePoints.set(_absolutePoints.size() - 1, point);
-			}
-		}
-	}
+      if (_absolutePoints.size() == 0) {
+        _absolutePoints.add(point);
+      } else {
+        _absolutePoints.set(0, point);
+      }
+    } else {
+      if (_absolutePoints == null) {
+        _absolutePoints = new List<Point2d>();
+        _absolutePoints.add(null);
+        _absolutePoints.add(point);
+      } else if (_absolutePoints.size() == 1) {
+        _absolutePoints.add(point);
+      } else {
+        _absolutePoints.set(_absolutePoints.size() - 1, point);
+      }
+    }
+  }
 
-	/**
+  /**
 	 * Returns the visible source or target terminal cell.
 	 * 
 	 * @param source Boolean that specifies if the source or target cell should be
 	 * returned.
 	 */
-	Object getVisibleTerminal(bool source)
-	{
-		CellState tmp = getVisibleTerminalState(source);
+  Object getVisibleTerminal(bool source) {
+    CellState tmp = getVisibleTerminalState(source);
 
-		return (tmp != null) ? tmp.getCell() : null;
-	}
+    return (tmp != null) ? tmp.getCell() : null;
+  }
 
-	/**
+  /**
 	 * Returns the visible source or target terminal state.
 	 * 
 	 * @param Boolean that specifies if the source or target state should be
 	 * returned.
 	 */
-	CellState getVisibleTerminalState(bool source)
-	{
-		return (source) ? _visibleSourceState : _visibleTargetState;
-	}
+  CellState getVisibleTerminalState(bool source) {
+    return (source) ? _visibleSourceState : _visibleTargetState;
+  }
 
-	/**
+  /**
 	 * Sets the visible source or target terminal state.
 	 * 
 	 * @param terminalState Cell state that represents the terminal.
 	 * @param source Boolean that specifies if the source or target state should be set.
 	 */
-	void setVisibleTerminalState(CellState terminalState,
-			bool source)
-	{
-		if (source)
-		{
-			_visibleSourceState = terminalState;
-		}
-		else
-		{
-			_visibleTargetState = terminalState;
-		}
-	}
+  void setVisibleTerminalState(CellState terminalState, bool source) {
+    if (source) {
+      _visibleSourceState = terminalState;
+    } else {
+      _visibleTargetState = terminalState;
+    }
+  }
 
-	/**
+  /**
 	 * Returns a clone of this state where all members are deeply cloned
 	 * except the view and cell references, which are copied with no
 	 * cloning to the new instance.
 	 */
-	Object clone()
-	{
-		CellState clone = new CellState(_view, _cell, _style);
-		
-		if (_label != null)
-		{
-			clone._label = _label;
-		}
+  Object clone() {
+    CellState clone = new CellState(_view, _cell, _style);
 
-		if (_absolutePoints != null)
-		{
-			clone._absolutePoints = new List<Point2d>();
+    if (_label != null) {
+      clone._label = _label;
+    }
 
-			for (int i = 0; i < _absolutePoints.size(); i++)
-			{
-				clone._absolutePoints.add(_absolutePoints.get(i).clone() as Point2d);
-			}
-		}
+    if (_absolutePoints != null) {
+      clone._absolutePoints = new List<Point2d>();
 
-		if (_origin != null)
-		{
-			clone._origin = _origin.clone() as Point2d;
-		}
+      for (int i = 0; i < _absolutePoints.size(); i++) {
+        clone._absolutePoints.add(_absolutePoints.get(i).clone() as Point2d);
+      }
+    }
 
-		if (_absoluteOffset != null)
-		{
-			clone._absoluteOffset = _absoluteOffset.clone() as Point2d;
-		}
+    if (_origin != null) {
+      clone._origin = _origin.clone() as Point2d;
+    }
 
-		if (_labelBounds != null)
-		{
-			clone._labelBounds = _labelBounds.clone() as Rect;
-		}
+    if (_absoluteOffset != null) {
+      clone._absoluteOffset = _absoluteOffset.clone() as Point2d;
+    }
 
-		if (_boundingBox != null)
-		{
-			clone._boundingBox = _boundingBox.clone() as Rect;
-		}
+    if (_labelBounds != null) {
+      clone._labelBounds = _labelBounds.clone() as Rect;
+    }
 
-		clone._terminalDistance = _terminalDistance;
-		clone._segments = _segments;
-		clone._length = _length;
-		clone._x = _x;
-		clone._y = _y;
-		clone._width = _width;
-		clone._height = _height;
+    if (_boundingBox != null) {
+      clone._boundingBox = _boundingBox.clone() as Rect;
+    }
 
-		return clone;
-	}
+    clone._terminalDistance = _terminalDistance;
+    clone._segments = _segments;
+    clone._length = _length;
+    clone._x = _x;
+    clone._y = _y;
+    clone._width = _width;
+    clone._height = _height;
+
+    return clone;
+  }
 
 }

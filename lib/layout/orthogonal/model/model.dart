@@ -12,10 +12,8 @@ part 'segment.dart';
 /**
  * A custom graph model 
  */
-class OrthogonalModel
-{
-   OrthogonalModel(Graph graph)
-   {
-      // 
-   }
+class OrthogonalModel {
+  OrthogonalModel(Graph graph) {
+    //
+  }
 }

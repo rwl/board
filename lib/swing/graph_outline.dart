@@ -24,762 +24,649 @@ part of graph.swing;
 /**
  * An outline view for a specific graph component.
  */
-class GraphOutline extends JComponent
-{
+class GraphOutline extends JComponent {
 
-	/**
+  /**
 	 * 
 	 */
-//	static final long serialVersionUID = -2521103946905154267L;
+  //	static final long serialVersionUID = -2521103946905154267L;
 
-	/**
+  /**
 	 * 
 	 */
-	static Color DEFAULT_ZOOMHANDLE_FILL = new Color(0, 255, 255);
+  static Color DEFAULT_ZOOMHANDLE_FILL = new Color(0, 255, 255);
 
-	/**
+  /**
 	 * 
 	 */
-	GraphComponent _graphComponent;
+  GraphComponent _graphComponent;
 
-	/**
+  /**
 	 * TODO: Not yet implemented.
 	 */
-	BufferedImage _tripleBuffer;
+  BufferedImage _tripleBuffer;
 
-	/**
+  /**
 	 * Holds the graphics of the triple buffer.
 	 */
-	Graphics2D _tripleBufferGraphics;
+  Graphics2D _tripleBufferGraphics;
 
-	/**
+  /**
 	 * True if the triple buffer needs a full repaint.
 	 */
-	bool _repaintBuffer = false;
+  bool _repaintBuffer = false;
 
-	/**
+  /**
 	 * Clip of the triple buffer to be repainted.
 	 */
-	Rect _repaintClip = null;
+  Rect _repaintClip = null;
 
-	/**
+  /**
 	 * 
 	 */
-	bool _tripleBuffered = true;
+  bool _tripleBuffered = true;
 
-	/**
+  /**
 	 * 
 	 */
-	Rectangle _finderBounds = new Rectangle();
+  Rectangle _finderBounds = new Rectangle();
 
-	/**
+  /**
 	 * 
 	 */
-	Point _zoomHandleLocation = null;
+  Point _zoomHandleLocation = null;
 
-	/**
+  /**
 	 * 
 	 */
-	bool _finderVisible = true;
+  bool _finderVisible = true;
 
-	/**
+  /**
 	 * 
 	 */
-	bool _zoomHandleVisible = true;
+  bool _zoomHandleVisible = true;
 
-	/**
+  /**
 	 * 
 	 */
-	bool _useScaledInstance = false;
+  bool _useScaledInstance = false;
 
-	/**
+  /**
 	 * 
 	 */
-	bool _antiAlias = false;
+  bool _antiAlias = false;
 
-	/**
+  /**
 	 * 
 	 */
-	bool _drawLabels = false;
+  bool _drawLabels = false;
 
-	/**
+  /**
 	 * Specifies if the outline should be zoomed to the page if the graph
 	 * component is in page layout mode. Default is true.
 	 */
-	bool _fitPage = true;
+  bool _fitPage = true;
 
-	/**
+  /**
 	 * Not yet implemented.
 	 * 
 	 * Border to add around the page bounds if wholePage is true.
 	 * Default is 4.
 	 */
-	int _outlineBorder = 10;
+  int _outlineBorder = 10;
 
-	/**
+  /**
 	 * 
 	 */
-	MouseTracker _tracker = new MouseTracker(this);
+  MouseTracker _tracker = new MouseTracker(this);
 
-	/**
+  /**
 	 * 
 	 */
-	double _scale = 1;
+  double _scale = 1;
 
-	/**
+  /**
 	 * 
 	 */
-	Point _translate = new Point();
+  Point _translate = new Point();
 
-	/**
+  /**
 	 * 
 	 */
-	/*transient*/ bool _zoomGesture = false;
+  /*transient*/ bool _zoomGesture = false;
 
-	/**
+  /**
 	 * 
 	 */
-	IEventListener _repaintHandler = (Object source, EventObj evt)
-		{
-			updateScaleAndTranslate();
-			Rect dirty = evt.getProperty("region") as Rect;
+  IEventListener _repaintHandler = (Object source, EventObj evt) {
+    updateScaleAndTranslate();
+    Rect dirty = evt.getProperty("region") as Rect;
 
-			if (dirty != null)
-			{
-				_repaintClip = new Rect(dirty);
-			}
-			else
-			{
-				_repaintBuffer = true;
-			}
+    if (dirty != null) {
+      _repaintClip = new Rect(dirty);
+    } else {
+      _repaintBuffer = true;
+    }
 
-			if (dirty != null)
-			{
-				updateFinder(true);
+    if (dirty != null) {
+      updateFinder(true);
 
-				dirty.grow(1 / _scale);
+      dirty.grow(1 / _scale);
 
-				dirty.setX(dirty.getX() * _scale + _translate.x);
-				dirty.setY(dirty.getY() * _scale + _translate.y);
-				dirty.setWidth(dirty.getWidth() * _scale);
-				dirty.setHeight(dirty.getHeight() * _scale);
+      dirty.setX(dirty.getX() * _scale + _translate.x);
+      dirty.setY(dirty.getY() * _scale + _translate.y);
+      dirty.setWidth(dirty.getWidth() * _scale);
+      dirty.setHeight(dirty.getHeight() * _scale);
 
-				repaint(dirty.getRectangle());
-			}
-			else
-			{
-				updateFinder(false);
-				repaint();
-			}
-		};
+      repaint(dirty.getRectangle());
+    } else {
+      updateFinder(false);
+      repaint();
+    }
+  };
 
-	/**
+  /**
 	 * 
 	 */
-	ComponentListener _componentHandler = ResizedComponentAdapter(this);
+  ComponentListener _componentHandler = ResizedComponentAdapter(this);
 
-	/**
+  /**
 	 * 
 	 */
-	AdjustmentListener _adjustmentHandler = new AdjustmentValueListener(this);
+  AdjustmentListener _adjustmentHandler = new AdjustmentValueListener(this);
 
-	/**
+  /**
 	 * 
 	 */
-	GraphOutline(GraphComponent graphComponent)
-	{
-		addComponentListener(_componentHandler);
-		addMouseMotionListener(_tracker);
-		addMouseListener(_tracker);
-		setGraphComponent(graphComponent);
-		setEnabled(true);
-		setOpaque(true);
-	}
+  GraphOutline(GraphComponent graphComponent) {
+    addComponentListener(_componentHandler);
+    addMouseMotionListener(_tracker);
+    addMouseListener(_tracker);
+    setGraphComponent(graphComponent);
+    setEnabled(true);
+    setOpaque(true);
+  }
 
-	/**
+  /**
 	 * Fires a property change event for <code>tripleBuffered</code>.
 	 * 
 	 * @param tripleBuffered the tripleBuffered to set
 	 */
-	void setTripleBuffered(bool tripleBuffered)
-	{
-		bool oldValue = this._tripleBuffered;
-		this._tripleBuffered = tripleBuffered;
+  void setTripleBuffered(bool tripleBuffered) {
+    bool oldValue = this._tripleBuffered;
+    this._tripleBuffered = tripleBuffered;
 
-		if (!tripleBuffered)
-		{
-			destroyTripleBuffer();
-		}
+    if (!tripleBuffered) {
+      destroyTripleBuffer();
+    }
 
-		firePropertyChange("tripleBuffered", oldValue, tripleBuffered);
-	}
+    firePropertyChange("tripleBuffered", oldValue, tripleBuffered);
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	bool isTripleBuffered()
-	{
-		return _tripleBuffered;
-	}
+  bool isTripleBuffered() {
+    return _tripleBuffered;
+  }
 
-	/**
+  /**
 	 * Fires a property change event for <code>drawLabels</code>.
 	 * 
 	 * @param drawLabels the drawLabels to set
 	 */
-	void setDrawLabels(bool drawLabels)
-	{
-		bool oldValue = this._drawLabels;
-		this._drawLabels = drawLabels;
-		repaintTripleBuffer(null);
+  void setDrawLabels(bool drawLabels) {
+    bool oldValue = this._drawLabels;
+    this._drawLabels = drawLabels;
+    repaintTripleBuffer(null);
 
-		firePropertyChange("drawLabels", oldValue, drawLabels);
-	}
+    firePropertyChange("drawLabels", oldValue, drawLabels);
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	bool isDrawLabels()
-	{
-		return _drawLabels;
-	}
+  bool isDrawLabels() {
+    return _drawLabels;
+  }
 
-	/**
+  /**
 	 * Fires a property change event for <code>antiAlias</code>.
 	 * 
 	 * @param antiAlias the antiAlias to set
 	 */
-	void setAntiAlias(bool antiAlias)
-	{
-		bool oldValue = this._antiAlias;
-		this._antiAlias = antiAlias;
-		repaintTripleBuffer(null);
+  void setAntiAlias(bool antiAlias) {
+    bool oldValue = this._antiAlias;
+    this._antiAlias = antiAlias;
+    repaintTripleBuffer(null);
 
-		firePropertyChange("antiAlias", oldValue, antiAlias);
-	}
+    firePropertyChange("antiAlias", oldValue, antiAlias);
+  }
 
-	/**
+  /**
 	 * @return the antiAlias
 	 */
-	bool isAntiAlias()
-	{
-		return _antiAlias;
-	}
+  bool isAntiAlias() {
+    return _antiAlias;
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void setVisible(bool visible)
-	{
-		super.setVisible(visible);
+  void setVisible(bool visible) {
+    super.setVisible(visible);
 
-		// Frees memory if the outline is hidden
-		if (!visible)
-		{
-			destroyTripleBuffer();
-		}
-	}
+    // Frees memory if the outline is hidden
+    if (!visible) {
+      destroyTripleBuffer();
+    }
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void setFinderVisible(bool visible)
-	{
-		_finderVisible = visible;
-	}
+  void setFinderVisible(bool visible) {
+    _finderVisible = visible;
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void setZoomHandleVisible(bool visible)
-	{
-		_zoomHandleVisible = visible;
-	}
+  void setZoomHandleVisible(bool visible) {
+    _zoomHandleVisible = visible;
+  }
 
-	/**
+  /**
 	 * Fires a property change event for <code>fitPage</code>.
 	 * 
 	 * @param fitPage the fitPage to set
 	 */
-	void setFitPage(bool fitPage)
-	{
-		bool oldValue = this._fitPage;
-		this._fitPage = fitPage;
+  void setFitPage(bool fitPage) {
+    bool oldValue = this._fitPage;
+    this._fitPage = fitPage;
 
-		if (updateScaleAndTranslate())
-		{
-			_repaintBuffer = true;
-			updateFinder(false);
-		}
+    if (updateScaleAndTranslate()) {
+      _repaintBuffer = true;
+      updateFinder(false);
+    }
 
-		firePropertyChange("fitPage", oldValue, fitPage);
-	}
+    firePropertyChange("fitPage", oldValue, fitPage);
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	bool isFitPage()
-	{
-		return _fitPage;
-	}
+  bool isFitPage() {
+    return _fitPage;
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	GraphComponent getGraphComponent()
-	{
-		return _graphComponent;
-	}
+  GraphComponent getGraphComponent() {
+    return _graphComponent;
+  }
 
-	/**
+  /**
 	 * Fires a property change event for <code>graphComponent</code>.
 	 * 
 	 * @param graphComponent the graphComponent to set
 	 */
-	void setGraphComponent(GraphComponent graphComponent)
-	{
-		GraphComponent oldValue = this._graphComponent;
+  void setGraphComponent(GraphComponent graphComponent) {
+    GraphComponent oldValue = this._graphComponent;
 
-		if (this._graphComponent != null)
-		{
-			this._graphComponent.getGraph().removeListener(_repaintHandler);
-			this._graphComponent.getGraphControl().removeComponentListener(
-					_componentHandler);
-			this._graphComponent.getHorizontalScrollBar()
-					.removeAdjustmentListener(_adjustmentHandler);
-			this._graphComponent.getVerticalScrollBar()
-					.removeAdjustmentListener(_adjustmentHandler);
-		}
+    if (this._graphComponent != null) {
+      this._graphComponent.getGraph().removeListener(_repaintHandler);
+      this._graphComponent.getGraphControl().removeComponentListener(_componentHandler);
+      this._graphComponent.getHorizontalScrollBar().removeAdjustmentListener(_adjustmentHandler);
+      this._graphComponent.getVerticalScrollBar().removeAdjustmentListener(_adjustmentHandler);
+    }
 
-		this._graphComponent = graphComponent;
+    this._graphComponent = graphComponent;
 
-		if (this._graphComponent != null)
-		{
-			this._graphComponent.getGraph().addListener(Event.REPAINT,
-					_repaintHandler);
-			this._graphComponent.getGraphControl().addComponentListener(
-					_componentHandler);
-			this._graphComponent.getHorizontalScrollBar().addAdjustmentListener(
-					_adjustmentHandler);
-			this._graphComponent.getVerticalScrollBar().addAdjustmentListener(
-					_adjustmentHandler);
-		}
+    if (this._graphComponent != null) {
+      this._graphComponent.getGraph().addListener(Event.REPAINT, _repaintHandler);
+      this._graphComponent.getGraphControl().addComponentListener(_componentHandler);
+      this._graphComponent.getHorizontalScrollBar().addAdjustmentListener(_adjustmentHandler);
+      this._graphComponent.getVerticalScrollBar().addAdjustmentListener(_adjustmentHandler);
+    }
 
-		if (updateScaleAndTranslate())
-		{
-			_repaintBuffer = true;
-			repaint();
-		}
+    if (updateScaleAndTranslate()) {
+      _repaintBuffer = true;
+      repaint();
+    }
 
-		firePropertyChange("graphComponent", oldValue, graphComponent);
-	}
+    firePropertyChange("graphComponent", oldValue, graphComponent);
+  }
 
-	/**
+  /**
 	 * Checks if the triple buffer exists and creates a new one if
 	 * it does not. Also compares the size of the buffer with the
 	 * size of the graph and drops the buffer if it has a
 	 * different size.
 	 */
-	void checkTripleBuffer()
-	{
-		if (_tripleBuffer != null)
-		{
-			if (_tripleBuffer.getWidth() != getWidth()
-					|| _tripleBuffer.getHeight() != getHeight())
-			{
-				// Resizes the buffer (destroys existing and creates new)
-				destroyTripleBuffer();
-			}
-		}
+  void checkTripleBuffer() {
+    if (_tripleBuffer != null) {
+      if (_tripleBuffer.getWidth() != getWidth() || _tripleBuffer.getHeight() != getHeight()) {
+        // Resizes the buffer (destroys existing and creates new)
+        destroyTripleBuffer();
+      }
+    }
 
-		if (_tripleBuffer == null)
-		{
-			_createTripleBuffer(getWidth(), getHeight());
-		}
-	}
+    if (_tripleBuffer == null) {
+      _createTripleBuffer(getWidth(), getHeight());
+    }
+  }
 
-	/**
+  /**
 	 * Creates the tripleBufferGraphics and tripleBuffer for the given
 	 * dimension and draws the complete graph onto the triplebuffer.
 	 * 
 	 * @param width
 	 * @param height
 	 */
-	void _createTripleBuffer(int width, int height)
-	{
-		try
-		{
-			_tripleBuffer = Utils.createBufferedImage(width, height, null);
-			_tripleBufferGraphics = _tripleBuffer.createGraphics();
+  void _createTripleBuffer(int width, int height) {
+    try {
+      _tripleBuffer = Utils.createBufferedImage(width, height, null);
+      _tripleBufferGraphics = _tripleBuffer.createGraphics();
 
-			// Repaints the complete buffer
-			repaintTripleBuffer(null);
-		}
-		on OutOfMemoryError catch (error)
-		{
-			// ignore
-		}
-	}
+      // Repaints the complete buffer
+      repaintTripleBuffer(null);
+    } on OutOfMemoryError catch (error) {
+      // ignore
+    }
+  }
 
-	/**
+  /**
 	 * Destroys the tripleBuffer and tripleBufferGraphics objects.
 	 */
-	void destroyTripleBuffer()
-	{
-		if (_tripleBuffer != null)
-		{
-			_tripleBuffer = null;
-			_tripleBufferGraphics.dispose();
-			_tripleBufferGraphics = null;
-		}
-	}
+  void destroyTripleBuffer() {
+    if (_tripleBuffer != null) {
+      _tripleBuffer = null;
+      _tripleBufferGraphics.dispose();
+      _tripleBufferGraphics = null;
+    }
+  }
 
-	/**
+  /**
 	 * Clears and repaints the triple buffer at the given rectangle or repaints
 	 * the complete buffer if no rectangle is specified.
 	 * 
 	 * @param clip
 	 */
-	void repaintTripleBuffer(Rectangle clip)
-	{
-		if (_tripleBuffered && _tripleBufferGraphics != null)
-		{
-			if (clip == null)
-			{
-				clip = new Rectangle(_tripleBuffer.getWidth(),
-						_tripleBuffer.getHeight());
-			}
+  void repaintTripleBuffer(Rectangle clip) {
+    if (_tripleBuffered && _tripleBufferGraphics != null) {
+      if (clip == null) {
+        clip = new Rectangle(_tripleBuffer.getWidth(), _tripleBuffer.getHeight());
+      }
 
-			// Clears and repaints the dirty rectangle using the
-			// graphics canvas of the graph component as a renderer
-			Utils.clearRect(_tripleBufferGraphics, clip, null);
-			_tripleBufferGraphics.setClip(clip);
-			paintGraph(_tripleBufferGraphics);
-			_tripleBufferGraphics.setClip(null);
+      // Clears and repaints the dirty rectangle using the
+      // graphics canvas of the graph component as a renderer
+      Utils.clearRect(_tripleBufferGraphics, clip, null);
+      _tripleBufferGraphics.setClip(clip);
+      paintGraph(_tripleBufferGraphics);
+      _tripleBufferGraphics.setClip(null);
 
-			_repaintBuffer = false;
-			_repaintClip = null;
-		}
-	}
+      _repaintBuffer = false;
+      _repaintClip = null;
+    }
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void updateFinder(bool repaint)
-	{
-		Rectangle rect = _graphComponent.getViewport().getViewRect();
+  void updateFinder(bool repaint) {
+    Rectangle rect = _graphComponent.getViewport().getViewRect();
 
-		int x = Math.round(rect.x * _scale) as int;
-		int y = Math.round(rect.y * _scale) as int;
-		int w = (Math.round((rect.x + rect.width) * _scale) as int) - x;
-		int h = (Math.round((rect.y + rect.height) * _scale) as int) - y;
+    int x = Math.round(rect.x * _scale) as int;
+    int y = Math.round(rect.y * _scale) as int;
+    int w = (Math.round((rect.x + rect.width) * _scale) as int) - x;
+    int h = (Math.round((rect.y + rect.height) * _scale) as int) - y;
 
-		updateFinderBounds(new Rectangle(x + _translate.x, y + _translate.y,
-				w + 1, h + 1), repaint);
-	}
+    updateFinderBounds(new Rectangle(x + _translate.x, y + _translate.y, w + 1, h + 1), repaint);
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void updateFinderBounds(Rectangle bounds, bool repaint)
-	{
-		if (bounds != null && !bounds.equals(_finderBounds))
-		{
-			Rectangle old = new Rectangle(_finderBounds);
-			_finderBounds = bounds;
+  void updateFinderBounds(Rectangle bounds, bool repaint) {
+    if (bounds != null && !bounds.equals(_finderBounds)) {
+      Rectangle old = new Rectangle(_finderBounds);
+      _finderBounds = bounds;
 
-			// LATER: Fix repaint region to be smaller
-			if (repaint)
-			{
-				old = old.union(_finderBounds);
-				old.grow(3, 3);
-				repaint(old);
-			}
-		}
-	}
+      // LATER: Fix repaint region to be smaller
+      if (repaint) {
+        old = old.union(_finderBounds);
+        old.grow(3, 3);
+        repaint(old);
+      }
+    }
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void paintComponent(Graphics g)
-	{
-		super.paintComponent(g);
-		_paintBackground(g);
+  void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    _paintBackground(g);
 
-		if (_graphComponent != null)
-		{
-			// Creates or destroys the triple buffer as needed
-			if (_tripleBuffered)
-			{
-				checkTripleBuffer();
-			}
-			else if (_tripleBuffer != null)
-			{
-				destroyTripleBuffer();
-			}
+    if (_graphComponent != null) {
+      // Creates or destroys the triple buffer as needed
+      if (_tripleBuffered) {
+        checkTripleBuffer();
+      } else if (_tripleBuffer != null) {
+        destroyTripleBuffer();
+      }
 
-			// Updates the dirty region from the buffered graph image
-			if (_tripleBuffer != null)
-			{
-				if (_repaintBuffer)
-				{
-					repaintTripleBuffer(null);
-				}
-				else if (_repaintClip != null)
-				{
-					_repaintClip.grow(1 / _scale);
+      // Updates the dirty region from the buffered graph image
+      if (_tripleBuffer != null) {
+        if (_repaintBuffer) {
+          repaintTripleBuffer(null);
+        } else if (_repaintClip != null) {
+          _repaintClip.grow(1 / _scale);
 
-					_repaintClip.setX(_repaintClip.getX() * _scale + _translate.x);
-					_repaintClip.setY(_repaintClip.getY() * _scale + _translate.y);
-					_repaintClip.setWidth(_repaintClip.getWidth() * _scale);
-					_repaintClip.setHeight(_repaintClip.getHeight() * _scale);
+          _repaintClip.setX(_repaintClip.getX() * _scale + _translate.x);
+          _repaintClip.setY(_repaintClip.getY() * _scale + _translate.y);
+          _repaintClip.setWidth(_repaintClip.getWidth() * _scale);
+          _repaintClip.setHeight(_repaintClip.getHeight() * _scale);
 
-					repaintTripleBuffer(_repaintClip.getRectangle());
-				}
+          repaintTripleBuffer(_repaintClip.getRectangle());
+        }
 
-				Utils.drawImageClip(g, _tripleBuffer, this);
-			}
+        Utils.drawImageClip(g, _tripleBuffer, this);
+      } // Paints the graph directly onto the graphics
+      else {
+        paintGraph(g);
+      }
 
-			// Paints the graph directly onto the graphics
-			else
-			{
-				paintGraph(g);
-			}
+      _paintForeground(g);
+    }
+  }
 
-			_paintForeground(g);
-		}
-	}
-
-	/**
+  /**
 	 * Paints the background.
 	 */
-	void _paintBackground(Graphics g)
-	{
-		if (_graphComponent != null)
-		{
-			Graphics2D g2 = g as Graphics2D;
-			AffineTransform tx = g2.getTransform();
+  void _paintBackground(Graphics g) {
+    if (_graphComponent != null) {
+      Graphics2D g2 = g as Graphics2D;
+      AffineTransform tx = g2.getTransform();
 
-			try
-			{
-				// Draws the background of the outline if a graph exists 
-				g.setColor(_graphComponent.getPageBackgroundColor());
-				Utils.fillClippedRect(g, 0, 0, getWidth(), getHeight());
+      try {
+        // Draws the background of the outline if a graph exists
+        g.setColor(_graphComponent.getPageBackgroundColor());
+        Utils.fillClippedRect(g, 0, 0, getWidth(), getHeight());
 
-				g2.translate(_translate.x, _translate.y);
-				g2.scale(_scale, _scale);
+        g2.translate(_translate.x, _translate.y);
+        g2.scale(_scale, _scale);
 
-				// Draws the scaled page background
-				if (!_graphComponent.isPageVisible())
-				{
-					Color bg = _graphComponent.getBackground();
+        // Draws the scaled page background
+        if (!_graphComponent.isPageVisible()) {
+          Color bg = _graphComponent.getBackground();
 
-					if (_graphComponent.getViewport().isOpaque())
-					{
-						bg = _graphComponent.getViewport().getBackground();
-					}
+          if (_graphComponent.getViewport().isOpaque()) {
+            bg = _graphComponent.getViewport().getBackground();
+          }
 
-					g.setColor(bg);
-					Dimension size = _graphComponent.getGraphControl().getSize();
+          g.setColor(bg);
+          Dimension size = _graphComponent.getGraphControl().getSize();
 
-					// Paints the background of the drawing surface
-					Utils.fillClippedRect(g, 0, 0, size.width, size.height);
-					g.setColor(g.getColor().darker().darker());
-					g.drawRect(0, 0, size.width, size.height);
-				}
-				else
-				{
-					// Paints the page background using the graphics scaling
-					_graphComponent._paintBackgroundPage(g);
-				}
-			}
-			finally
-			{
-				g2.setTransform(tx);
-			}
-		}
-		else
-		{
-			// Draws the background of the outline if no graph exists 
-			g.setColor(getBackground());
-			Utils.fillClippedRect(g, 0, 0, getWidth(), getHeight());
-		}
-	}
+          // Paints the background of the drawing surface
+          Utils.fillClippedRect(g, 0, 0, size.width, size.height);
+          g.setColor(g.getColor().darker().darker());
+          g.drawRect(0, 0, size.width, size.height);
+        } else {
+          // Paints the page background using the graphics scaling
+          _graphComponent._paintBackgroundPage(g);
+        }
+      } finally {
+        g2.setTransform(tx);
+      }
+    } else {
+      // Draws the background of the outline if no graph exists
+      g.setColor(getBackground());
+      Utils.fillClippedRect(g, 0, 0, getWidth(), getHeight());
+    }
+  }
 
-	/**
+  /**
 	 * Paints the graph outline.
 	 */
-	void paintGraph(Graphics g)
-	{
-		if (_graphComponent != null)
-		{
-			Graphics2D g2 = g as Graphics2D;
-			AffineTransform tx = g2.getTransform();
+  void paintGraph(Graphics g) {
+    if (_graphComponent != null) {
+      Graphics2D g2 = g as Graphics2D;
+      AffineTransform tx = g2.getTransform();
 
-			try
-			{
-				Point tr = _graphComponent.getGraphControl().getTranslate();
-				g2.translate(_translate.x + tr.getX() * _scale,
-						_translate.y + tr.getY() * _scale);
-				g2.scale(_scale, _scale);
+      try {
+        Point tr = _graphComponent.getGraphControl().getTranslate();
+        g2.translate(_translate.x + tr.getX() * _scale, _translate.y + tr.getY() * _scale);
+        g2.scale(_scale, _scale);
 
-				// Draws the scaled graph
-				_graphComponent.getGraphControl().drawGraph(g2, _drawLabels);
-			}
-			finally
-			{
-				g2.setTransform(tx);
-			}
-		}
-	}
+        // Draws the scaled graph
+        _graphComponent.getGraphControl().drawGraph(g2, _drawLabels);
+      } finally {
+        g2.setTransform(tx);
+      }
+    }
+  }
 
-	/**
+  /**
 	 * Paints the foreground. Foreground is dynamic and should never be made
 	 * part of the triple buffer. It is painted on top of the buffer.
 	 */
-	void _paintForeground(Graphics g)
-	{
-		if (_graphComponent != null)
-		{
-			Graphics2D g2 = g as Graphics2D;
+  void _paintForeground(Graphics g) {
+    if (_graphComponent != null) {
+      Graphics2D g2 = g as Graphics2D;
 
-			Stroke stroke = g2.getStroke();
-			g.setColor(Color.BLUE);
-			g2.setStroke(new BasicStroke(3));
-			g.drawRect(_finderBounds.x, _finderBounds.y, _finderBounds.width,
-					_finderBounds.height);
+      Stroke stroke = g2.getStroke();
+      g.setColor(Color.BLUE);
+      g2.setStroke(new BasicStroke(3));
+      g.drawRect(_finderBounds.x, _finderBounds.y, _finderBounds.width, _finderBounds.height);
 
-			if (_zoomHandleVisible)
-			{
-				g2.setStroke(stroke);
-				g.setColor(DEFAULT_ZOOMHANDLE_FILL);
-				g.fillRect(_finderBounds.x + _finderBounds.width - 6, _finderBounds.y
-						+ _finderBounds.height - 6, 8, 8);
-				g.setColor(Color.BLACK);
-				g.drawRect(_finderBounds.x + _finderBounds.width - 6, _finderBounds.y
-						+ _finderBounds.height - 6, 8, 8);
-			}
-		}
-	}
+      if (_zoomHandleVisible) {
+        g2.setStroke(stroke);
+        g.setColor(DEFAULT_ZOOMHANDLE_FILL);
+        g.fillRect(_finderBounds.x + _finderBounds.width - 6, _finderBounds.y + _finderBounds.height - 6, 8, 8);
+        g.setColor(Color.BLACK);
+        g.drawRect(_finderBounds.x + _finderBounds.width - 6, _finderBounds.y + _finderBounds.height - 6, 8, 8);
+      }
+    }
+  }
 
-	/**
+  /**
 	 * Returns true if the scale or translate has changed.
 	 */
-	bool updateScaleAndTranslate()
-	{
-		double newScale = 1;
-		int dx = 0;
-		int dy = 0;
+  bool updateScaleAndTranslate() {
+    double newScale = 1;
+    int dx = 0;
+    int dy = 0;
 
-		if (this._graphComponent != null)
-		{
-			Dimension graphSize = _graphComponent.getGraphControl().getSize();
-			Dimension outlineSize = getSize();
+    if (this._graphComponent != null) {
+      Dimension graphSize = _graphComponent.getGraphControl().getSize();
+      Dimension outlineSize = getSize();
 
-			int gw = graphSize.getWidth() as int;
-			int gh = graphSize.getHeight() as int;
+      int gw = graphSize.getWidth() as int;
+      int gh = graphSize.getHeight() as int;
 
-			if (gw > 0 && gh > 0)
-			{
-				bool magnifyPage = _graphComponent.isPageVisible()
-						&& isFitPage()
-						&& _graphComponent.getHorizontalScrollBar().isVisible()
-						&& _graphComponent.getVerticalScrollBar().isVisible();
-				double graphScale = _graphComponent.getGraph().getView()
-						.getScale();
-				Point2d trans = _graphComponent.getGraph().getView()
-						.getTranslate();
+      if (gw > 0 && gh > 0) {
+        bool magnifyPage = _graphComponent.isPageVisible() && isFitPage() && _graphComponent.getHorizontalScrollBar().isVisible() && _graphComponent.getVerticalScrollBar().isVisible();
+        double graphScale = _graphComponent.getGraph().getView().getScale();
+        Point2d trans = _graphComponent.getGraph().getView().getTranslate();
 
-				int w = (outlineSize.getWidth() as int) - 2 * _outlineBorder;
-				int h = (outlineSize.getHeight() as int) - 2 * _outlineBorder;
+        int w = (outlineSize.getWidth() as int) - 2 * _outlineBorder;
+        int h = (outlineSize.getHeight() as int) - 2 * _outlineBorder;
 
-				if (magnifyPage)
-				{
-					gw -= 2 * Math.round(trans.getX() * graphScale);
-					gh -= 2 * Math.round(trans.getY() * graphScale);
-				}
+        if (magnifyPage) {
+          gw -= 2 * Math.round(trans.getX() * graphScale);
+          gh -= 2 * Math.round(trans.getY() * graphScale);
+        }
 
-				newScale = Math.min((w as double) / gw, (h as double) / gh);
+        newScale = Math.min((w as double) / gw, (h as double) / gh);
 
-				dx += Math
-						.round((outlineSize.getWidth() - gw * newScale) / 2) as int;
-				dy += Math
-						.round((outlineSize.getHeight() - gh * newScale) / 2) as int;
+        dx += Math.round((outlineSize.getWidth() - gw * newScale) / 2) as int;
+        dy += Math.round((outlineSize.getHeight() - gh * newScale) / 2) as int;
 
-				if (magnifyPage)
-				{
-					dx -= Math.round(trans.getX() * newScale * graphScale);
-					dy -= Math.round(trans.getY() * newScale * graphScale);
-				}
-			}
-		}
+        if (magnifyPage) {
+          dx -= Math.round(trans.getX() * newScale * graphScale);
+          dy -= Math.round(trans.getY() * newScale * graphScale);
+        }
+      }
+    }
 
-		if (newScale != _scale || _translate.x != dx || _translate.y != dy)
-		{
-			_scale = newScale;
-			_translate.setLocation(dx, dy);
+    if (newScale != _scale || _translate.x != dx || _translate.y != dy) {
+      _scale = newScale;
+      _translate.setLocation(dx, dy);
 
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
+      return true;
+    } else {
+      return false;
+    }
+  }
 
 }
 
 class ResizedComponentAdapter extends ComponentAdapter {
-    /**
+  /**
      *
      */
-    final GraphOutline graphOutline;
+  final GraphOutline graphOutline;
 
-    /**
+  /**
      * @param mxGraphOutline
      */
-    ResizedComponentAdapter(this.graphOutline);
+  ResizedComponentAdapter(this.graphOutline);
 
-    void componentResized(ComponentEvent e)
-    {
-        if (graphOutline.updateScaleAndTranslate())
-        {
-            graphOutline.repaintBuffer = true;
-            graphOutline.updateFinder(false);
-            graphOutline.repaint();
-        }
-        else
-        {
-            graphOutline.updateFinder(true);
-        }
+  void componentResized(ComponentEvent e) {
+    if (graphOutline.updateScaleAndTranslate()) {
+      graphOutline.repaintBuffer = true;
+      graphOutline.updateFinder(false);
+      graphOutline.repaint();
+    } else {
+      graphOutline.updateFinder(true);
     }
+  }
 }
 
 class AdjustmentValueListener implements AdjustmentListener {
-    /**
+  /**
      *
      */
-    final GraphOutline graphOutline;
+  final GraphOutline graphOutline;
 
-    /**
+  /**
      * @param mxGraphOutline
      */
-    AdjustmentValueListener(this.graphOutline);
+  AdjustmentValueListener(this.graphOutline);
 
-    /**
+  /**
      *
      */
-    void adjustmentValueChanged(AdjustmentEvent e)
-    {
-        if (graphOutline.updateScaleAndTranslate())
-        {
-            graphOutline.repaintBuffer = true;
-            graphOutline.updateFinder(false);
-            graphOutline.repaint();
-        }
-        else
-        {
-            graphOutline.updateFinder(true);
-        }
+  void adjustmentValueChanged(AdjustmentEvent e) {
+    if (graphOutline.updateScaleAndTranslate()) {
+      graphOutline.repaintBuffer = true;
+      graphOutline.updateFinder(false);
+      graphOutline.repaint();
+    } else {
+      graphOutline.updateFinder(true);
     }
+  }
 }

@@ -28,63 +28,58 @@ typedef void DiagramChangeListener(Object sender, String edits);
  * The diagram is represented by its initial state and the sequence of edits
  * as applied to the diagram.
  */
-class SharedState extends EventSource
-{
+class SharedState extends EventSource {
 
-	/**
+  /**
 	 * Holds a list of diagram change listeners.
 	 */
-	List<DiagramChangeListener> _diagramChangeListeners;
+  List<DiagramChangeListener> _diagramChangeListeners;
 
-	/**
+  /**
 	 * Holds the initial state of the diagram.
 	 */
-	String _state;
+  String _state;
 
-	/**
+  /**
 	 * Holds the history of all changes of initial state.
 	 */
-	StringBuffer _delta = new StringBuffer();
+  StringBuffer _delta = new StringBuffer();
 
-	/**
+  /**
 	 * Constructs a new diagram with the given state.
 	 * 
 	 * @param state Initial state of the diagram.
 	 */
-	SharedState(String state)
-	{
-		this._state = state;
-	}
+  SharedState(String state) {
+    this._state = state;
+  }
 
-	/**
+  /**
 	 * Returns the initial state of the diagram.
 	 */
-	String getState()
-	{
-		return _state;
-	}
+  String getState() {
+    return _state;
+  }
 
-	/**
+  /**
 	 * Returns the history of all changes as a string.
 	 */
-	/*synchronized*/ String getDelta()
-	{
-		return _delta.toString();
-	}
+  /*synchronized*/ String getDelta() {
+    return _delta.toString();
+  }
 
-	/**
+  /**
 	 * Appends the given string to the history and dispatches the change to all
 	 * sessions that are listening to this shared diagram.
 	 * 
 	 * @param sender Session where the change originated from.
 	 * @param delta XML that represents the change.
 	 */
-	void processDelta(Object sender, Node delta)
-	{
-		StringBuffer edits = new StringBuffer();
+  void processDelta(Object sender, Node delta) {
+    StringBuffer edits = new StringBuffer();
 
-        throw new Exception();
-		/*synchronized (this)
+    throw new Exception();
+    /*synchronized (this)
 		{
 			Node edit = delta.getFirstChild();
 
@@ -99,83 +94,72 @@ class SharedState extends EventSource
 			}
 		}*/
 
-		String xml = edits.toString();
-		addDelta(xml);
-		dispatchDiagramChangeEvent(sender, xml);
-	}
+    String xml = edits.toString();
+    addDelta(xml);
+    dispatchDiagramChangeEvent(sender, xml);
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	String _processEdit(Node node)
-	{
-		return XmlUtils.getXml(node);
-	}
+  String _processEdit(Node node) {
+    return XmlUtils.getXml(node);
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	/*synchronized*/ void addDelta(String xml)
-	{
-		// TODO: Clear delta if xml contains RootChange
-		_delta.append(xml);
-	}
+  /*synchronized*/ void addDelta(String xml) {
+    // TODO: Clear delta if xml contains RootChange
+    _delta.append(xml);
+  }
 
-	/**
+  /**
 	 * Clears the history of all changes.
 	 */
-	/*synchronized*/ void resetDelta()
-	{
-		_delta = new StringBuffer();
-	}
+  /*synchronized*/ void resetDelta() {
+    _delta = new StringBuffer();
+  }
 
-	/**
+  /**
 	 * Adds the given listener to the list of diagram change listeners.
 	 * 
 	 * @param listener Diagram change listener to be added.
 	 */
-	void addDiagramChangeListener(DiagramChangeListener listener)
-	{
-		if (_diagramChangeListeners == null)
-		{
-			_diagramChangeListeners = new List<DiagramChangeListener>();
-		}
+  void addDiagramChangeListener(DiagramChangeListener listener) {
+    if (_diagramChangeListeners == null) {
+      _diagramChangeListeners = new List<DiagramChangeListener>();
+    }
 
-		_diagramChangeListeners.add(listener);
-	}
+    _diagramChangeListeners.add(listener);
+  }
 
-	/**
+  /**
 	 * Removes the given listener from the list of diagram change listeners.
 	 * 
 	 * @param listener Diagram change listener to be removed.
 	 */
-	void removeDiagramChangeListener(DiagramChangeListener listener)
-	{
-		if (_diagramChangeListeners != null)
-		{
-			_diagramChangeListeners.remove(listener);
-		}
-	}
+  void removeDiagramChangeListener(DiagramChangeListener listener) {
+    if (_diagramChangeListeners != null) {
+      _diagramChangeListeners.remove(listener);
+    }
+  }
 
-	/**
+  /**
 	 * Dispatches the given event information to all diagram change listeners.
 	 * 
 	 * @param sender Session where the change was received from.
 	 * @param xml XML string that represents the change.
 	 */
-	void dispatchDiagramChangeEvent(Object sender, String edits)
-	{
-		if (_diagramChangeListeners != null)
-		{
-			Iterator<DiagramChangeListener> it = _diagramChangeListeners
-					.iterator();
+  void dispatchDiagramChangeEvent(Object sender, String edits) {
+    if (_diagramChangeListeners != null) {
+      Iterator<DiagramChangeListener> it = _diagramChangeListeners.iterator();
 
-			while (it.hasNext())
-			{
-				DiagramChangeListener listener = it.next();
-				listener.diagramChanged(sender, edits);
-			}
-		}
-	}
+      while (it.hasNext()) {
+        DiagramChangeListener listener = it.next();
+        listener.diagramChanged(sender, edits);
+      }
+    }
+  }
 
 }

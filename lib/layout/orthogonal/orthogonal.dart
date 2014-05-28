@@ -13,8 +13,7 @@ import '../../view/view.dart' show Graph;
 /**
 *
 */
-class OrthogonalLayout extends GraphLayout
-{
+class OrthogonalLayout extends GraphLayout {
 
   /**
    * 
@@ -26,22 +25,20 @@ class OrthogonalLayout extends GraphLayout
    * is enabled. Default is false
    */
   bool _routeToGrid = false;
-  
+
   /**
    * 
    */
-  OrthogonalLayout(Graph graph) : super(graph)
-  {
-     _orthModel = new OrthogonalModel(graph);
+  OrthogonalLayout(Graph graph) : super(graph) {
+    _orthModel = new OrthogonalModel(graph);
   }
 
   /**
    * 
    */
-  void execute(Object parent)
-  {
-     // Create the rectangulation
-     
+  void execute(Object parent) {
+    // Create the rectangulation
+
   }
 
 }

@@ -15,125 +15,111 @@ part of graph.canvas;
  * 
  * <code>BufferedImage image = CellRenderer.createBufferedImage(graph, cells, 1, Color.white, true, null, canvas);</code> 
  */
-class ImageCanvas implements ICanvas
-{
+class ImageCanvas implements ICanvas {
 
-	/**
+  /**
 	 * 
 	 */
-	Graphics2DCanvas _canvas;
+  Graphics2DCanvas _canvas;
 
-	/**
+  /**
 	 * 
 	 */
-	Graphics2D _previousGraphics;
+  Graphics2D _previousGraphics;
 
-	/**
+  /**
 	 * 
 	 */
-	BufferedImage _image;
+  BufferedImage _image;
 
-	/**
+  /**
 	 * 
 	 */
-	ImageCanvas(Graphics2DCanvas canvas, int width, int height,
-			Color background, bool antiAlias)
-	{
-		this._canvas = canvas;
-		_previousGraphics = canvas.getGraphics();
-		_image = Utils.createBufferedImage(width, height, background);
+  ImageCanvas(Graphics2DCanvas canvas, int width, int height, Color background, bool antiAlias) {
+    this._canvas = canvas;
+    _previousGraphics = canvas.getGraphics();
+    _image = Utils.createBufferedImage(width, height, background);
 
-		if (_image != null)
-		{
-			Graphics2D g = _image.createGraphics();
-			Utils.setAntiAlias(g, antiAlias, true);
-			canvas.setGraphics(g);
-		}
-	}
+    if (_image != null) {
+      Graphics2D g = _image.createGraphics();
+      Utils.setAntiAlias(g, antiAlias, true);
+      canvas.setGraphics(g);
+    }
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	Graphics2DCanvas getGraphicsCanvas()
-	{
-		return _canvas;
-	}
+  Graphics2DCanvas getGraphicsCanvas() {
+    return _canvas;
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	BufferedImage getImage()
-	{
-		return _image;
-	}
+  BufferedImage getImage() {
+    return _image;
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	Object drawCell(CellState state)
-	{
-		return _canvas.drawCell(state);
-	}
+  Object drawCell(CellState state) {
+    return _canvas.drawCell(state);
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	Object drawLabel(String label, CellState state, bool html)
-	{
-		return _canvas.drawLabel(label, state, html);
-	}
+  Object drawLabel(String label, CellState state, bool html) {
+    return _canvas.drawLabel(label, state, html);
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	double getScale()
-	{
-		return _canvas.getScale();
-	}
+  double getScale() {
+    return _canvas.getScale();
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	Point getTranslate()
-	{
-		return _canvas.getTranslate();
-	}
+  Point getTranslate() {
+    return _canvas.getTranslate();
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void setScale(double scale)
-	{
-		_canvas.setScale(scale);
-	}
+  void setScale(double scale) {
+    _canvas.setScale(scale);
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void setTranslate(int dx, int dy)
-	{
-		_canvas.setTranslate(dx, dy);
-	}
+  void setTranslate(int dx, int dy) {
+    _canvas.setTranslate(dx, dy);
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	BufferedImage destroy()
-	{
-		BufferedImage tmp = _image;
+  BufferedImage destroy() {
+    BufferedImage tmp = _image;
 
-		if (_canvas.getGraphics() != null)
-		{
-			_canvas.getGraphics().dispose();
-		}
-		
-		_canvas.setGraphics(_previousGraphics);
+    if (_canvas.getGraphics() != null) {
+      _canvas.getGraphics().dispose();
+    }
 
-		_previousGraphics = null;
-		_canvas = null;
-		_image = null;
+    _canvas.setGraphics(_previousGraphics);
 
-		return tmp;
-	}
+    _previousGraphics = null;
+    _canvas = null;
+    _image = null;
+
+    return tmp;
+  }
 
 }

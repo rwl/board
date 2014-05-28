@@ -13,8 +13,7 @@ part of graph.model;
 /**
  * Defines the requirements for a cell that can be used in an GraphModel.
  */
-abstract class ICell
-{
+abstract class ICell {
 
   /**
    * Returns the Id of the cell as a string.
@@ -191,7 +190,7 @@ abstract class ICell
    * be inserted into the child array.
    * @return Returns the new child.
    */
-//  ICell insert(ICell child, int index);
+  //  ICell insert(ICell child, int index);
 
   /**
    * Removes the child at the specified index from the child array and
@@ -303,512 +302,457 @@ abstract class ICell
  * geometry will have the same semantiv as the above for
  * edge labels.
  */
-class Cell implements ICell//, Cloneable, Serializable
+class Cell implements ICell //, Cloneable, Serializable
 {
 
-	/**
+  /**
 	 * 
 	 */
-//	private static final long serialVersionUID = 910211337632342672L;
+  //	private static final long serialVersionUID = 910211337632342672L;
 
-	/**
+  /**
 	 * Holds the Id. Default is null.
 	 */
-	String _id;
+  String _id;
 
-	/**
+  /**
 	 * Holds the user object. Default is null.
 	 */
-	Object _value;
+  Object _value;
 
-	/**
+  /**
 	 * Holds the geometry. Default is null.
 	 */
-	Geometry _geometry;
+  Geometry _geometry;
 
-	/**
+  /**
 	 * Holds the style as a string of the form
 	 * stylename[;key=value]. Default is null.
 	 */
-	String _style;
+  String _style;
 
-	/**
+  /**
 	 * Specifies whether the cell is a vertex or edge and whether it is
 	 * connectable, visible and collapsed. Default values are false, false,
 	 * true, true and false respectively.
 	 */
-	bool _vertex = false, _edge = false, _connectable = true,
-			_visible = true, _collapsed = false;
+  bool _vertex = false,
+      _edge = false,
+      _connectable = true,
+      _visible = true,
+      _collapsed = false;
 
-	/**
+  /**
 	 * Reference to the parent cell and source and target terminals for edges.
 	 */
-	ICell _parent, _source, _target;
+  ICell _parent, _source, _target;
 
-	/**
+  /**
 	 * Holds the child cells and connected edges.
 	 */
-	List<Object> _children, _edges;
+  List<Object> _children, _edges;
 
-	/**
+  /**
 	 * Constructs a new cell with an empty user object.
 	 */
-//	Cell()
-//	{
-//		this(null);
-//	}
+  //	Cell()
+  //	{
+  //		this(null);
+  //	}
 
-	/**
+  /**
 	 * Constructs a new cell for the given user object.
 	 * 
 	 * @param value
 	 *   Object that represents the value of the cell.
 	 */
-//	Cell(Object value)
-//	{
-//		this(value, null, null);
-//	}
+  //	Cell(Object value)
+  //	{
+  //		this(value, null, null);
+  //	}
 
-	/**
+  /**
 	 * Constructs a new cell for the given parameters.
 	 * 
 	 * @param value Object that represents the value of the cell.
 	 * @param geometry Specifies the geometry of the cell.
 	 * @param style Specifies the style as a formatted string.
 	 */
-	Cell(Object value, [Geometry geometry=null, String style=null])
-	{
-		setValue(value);
-		setGeometry(geometry);
-		setStyle(style);
-	}
+  Cell(Object value, [Geometry geometry = null, String style = null]) {
+    setValue(value);
+    setGeometry(geometry);
+    setStyle(style);
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#getId()
 	 */
-	String getId()
-	{
-		return _id;
-	}
+  String getId() {
+    return _id;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#setId(String)
 	 */
-	void setId(String id)
-	{
-		this._id = id;
-	}
+  void setId(String id) {
+    this._id = id;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#getValue()
 	 */
-	Object getValue()
-	{
-		return _value;
-	}
+  Object getValue() {
+    return _value;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#setValue(Object)
 	 */
-	void setValue(Object value)
-	{
-		this._value = value;
-	}
+  void setValue(Object value) {
+    this._value = value;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#getGeometry()
 	 */
-	Geometry getGeometry()
-	{
-		return _geometry;
-	}
+  Geometry getGeometry() {
+    return _geometry;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#setGeometry(graph.model.Geometry)
 	 */
-	void setGeometry(Geometry geometry)
-	{
-		this._geometry = geometry;
-	}
+  void setGeometry(Geometry geometry) {
+    this._geometry = geometry;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#getStyle()
 	 */
-	String getStyle()
-	{
-		return _style;
-	}
+  String getStyle() {
+    return _style;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#setStyle(String)
 	 */
-	void setStyle(String style)
-	{
-		this._style = style;
-	}
+  void setStyle(String style) {
+    this._style = style;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#isVertex()
 	 */
-	bool isVertex()
-	{
-		return _vertex;
-	}
+  bool isVertex() {
+    return _vertex;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#setVertex(boolean)
 	 */
-	void setVertex(bool vertex)
-	{
-		this._vertex = vertex;
-	}
+  void setVertex(bool vertex) {
+    this._vertex = vertex;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#isEdge()
 	 */
-	bool isEdge()
-	{
-		return _edge;
-	}
+  bool isEdge() {
+    return _edge;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#setEdge(boolean)
 	 */
-	void setEdge(bool edge)
-	{
-		this._edge = edge;
-	}
+  void setEdge(bool edge) {
+    this._edge = edge;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#isConnectable()
 	 */
-	bool isConnectable()
-	{
-		return _connectable;
-	}
+  bool isConnectable() {
+    return _connectable;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#setConnectable(boolean)
 	 */
-	void setConnectable(bool connectable)
-	{
-		this._connectable = connectable;
-	}
+  void setConnectable(bool connectable) {
+    this._connectable = connectable;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#isVisible()
 	 */
-	bool isVisible()
-	{
-		return _visible;
-	}
+  bool isVisible() {
+    return _visible;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#setVisible(boolean)
 	 */
-	void setVisible(bool visible)
-	{
-		this._visible = visible;
-	}
+  void setVisible(bool visible) {
+    this._visible = visible;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#isCollapsed()
 	 */
-	bool isCollapsed()
-	{
-		return _collapsed;
-	}
+  bool isCollapsed() {
+    return _collapsed;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#setCollapsed(boolean)
 	 */
-	void setCollapsed(bool collapsed)
-	{
-		this._collapsed = collapsed;
-	}
+  void setCollapsed(bool collapsed) {
+    this._collapsed = collapsed;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#getParent()
 	 */
-	ICell getParent()
-	{
-		return _parent;
-	}
+  ICell getParent() {
+    return _parent;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#setParent(graph.model.ICell)
 	 */
-	void setParent(ICell parent)
-	{
-		this._parent = parent;
-	}
+  void setParent(ICell parent) {
+    this._parent = parent;
+  }
 
-	/**
+  /**
 	 * Returns the source terminal.
 	 */
-	ICell getSource()
-	{
-		return _source;
-	}
+  ICell getSource() {
+    return _source;
+  }
 
-	/**
+  /**
 	 * Sets the source terminal.
 	 * 
 	 * @param source Cell that represents the new source terminal.
 	 */
-	void setSource(ICell source)
-	{
-		this._source = source;
-	}
+  void setSource(ICell source) {
+    this._source = source;
+  }
 
-	/**
+  /**
 	 * Returns the target terminal.
 	 */
-	ICell getTarget()
-	{
-		return _target;
-	}
+  ICell getTarget() {
+    return _target;
+  }
 
-	/**
+  /**
 	 * Sets the target terminal.
 	 * 
 	 * @param target Cell that represents the new target terminal.
 	 */
-	void setTarget(ICell target)
-	{
-		this._target = target;
-	}
+  void setTarget(ICell target) {
+    this._target = target;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#getTerminal(boolean)
 	 */
-	ICell getTerminal(bool source)
-	{
-		return (source) ? getSource() : getTarget();
-	}
+  ICell getTerminal(bool source) {
+    return (source) ? getSource() : getTarget();
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#setTerminal(graph.model.ICell, boolean)
 	 */
-	ICell setTerminal(ICell terminal, bool isSource)
-	{
-		if (isSource)
-		{
-			setSource(terminal);
-		}
-		else
-		{
-			setTarget(terminal);
-		}
+  ICell setTerminal(ICell terminal, bool isSource) {
+    if (isSource) {
+      setSource(terminal);
+    } else {
+      setTarget(terminal);
+    }
 
-		return terminal;
-	}
+    return terminal;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#getChildCount()
 	 */
-	int getChildCount()
-	{
-		return (_children != null) ? _children.length : 0;
-	}
+  int getChildCount() {
+    return (_children != null) ? _children.length : 0;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#getIndex(graph.model.ICell)
 	 */
-	int getIndex(ICell child)
-	{
-		return (_children != null) ? _children.indexOf(child) : -1;
-	}
+  int getIndex(ICell child) {
+    return (_children != null) ? _children.indexOf(child) : -1;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#getChildAt(int)
 	 */
-	ICell getChildAt(int index)
-	{
-		return (_children != null) ? _children[index] as ICell : null;
-	}
+  ICell getChildAt(int index) {
+    return (_children != null) ? _children[index] as ICell : null;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#insert(graph.model.ICell)
 	 */
-//	ICell insert(ICell child)
-//	{
-//		int index = getChildCount();
-//		
-//		if (child.getParent() == this)
-//		{
-//			index--;
-//		}
-//		
-//		return insert(child, index);
-//	}
+  //	ICell insert(ICell child)
+  //	{
+  //		int index = getChildCount();
+  //
+  //		if (child.getParent() == this)
+  //		{
+  //			index--;
+  //		}
+  //
+  //		return insert(child, index);
+  //	}
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#insert(graph.model.ICell, int)
 	 */
-	ICell insert(ICell child, [int index=null])
-	{
-	  if (index == null) {
-	    index = getChildCount();
-          
-      if (child.getParent() == this)
-      {
+  ICell insert(ICell child, [int index = null]) {
+    if (index == null) {
+      index = getChildCount();
+
+      if (child.getParent() == this) {
         index--;
-      } 
-	  }
-		if (child != null)
-		{
-			child.removeFromParent();
-			child.setParent(this);
+      }
+    }
+    if (child != null) {
+      child.removeFromParent();
+      child.setParent(this);
 
-			if (_children == null)
-			{
-				_children = new List<Object>();
-				_children.add(child);
-			}
-			else
-			{
-				_children.insert(index, child);
-			}
-		}
+      if (_children == null) {
+        _children = new List<Object>();
+        _children.add(child);
+      } else {
+        _children.insert(index, child);
+      }
+    }
 
-		return child;
-	}
+    return child;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#remove(int)
 	 */
-	ICell remove(int index)
-	{
-		ICell child = null;
+  ICell remove(int index) {
+    ICell child = null;
 
-		if (_children != null && index >= 0)
-		{
-			child = getChildAt(index);
-			removeCell(child);
-		}
+    if (_children != null && index >= 0) {
+      child = getChildAt(index);
+      removeCell(child);
+    }
 
-		return child;
-	}
+    return child;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#remove(graph.model.ICell)
 	 */
-	ICell removeCell(ICell child)
-	{
-		if (child != null && _children != null)
-		{
-			_children.remove(child);
-			child.setParent(null);
-		}
+  ICell removeCell(ICell child) {
+    if (child != null && _children != null) {
+      _children.remove(child);
+      child.setParent(null);
+    }
 
-		return child;
-	}
+    return child;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#removeFromParent()
 	 */
-	void removeFromParent()
-	{
-		if (_parent != null)
-		{
-			_parent.removeCell(this);
-		}
-	}
+  void removeFromParent() {
+    if (_parent != null) {
+      _parent.removeCell(this);
+    }
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#getEdgeCount()
 	 */
-	int getEdgeCount()
-	{
-		return (_edges != null) ? _edges.length : 0;
-	}
+  int getEdgeCount() {
+    return (_edges != null) ? _edges.length : 0;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#getEdgeIndex(graph.model.ICell)
 	 */
-	int getEdgeIndex(ICell edge)
-	{
-		return (_edges != null) ? _edges.indexOf(edge) : -1;
-	}
+  int getEdgeIndex(ICell edge) {
+    return (_edges != null) ? _edges.indexOf(edge) : -1;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#getEdgeAt(int)
 	 */
-	ICell getEdgeAt(int index)
-	{
-		return (_edges != null) ? _edges[index] as ICell : null;
-	}
+  ICell getEdgeAt(int index) {
+    return (_edges != null) ? _edges[index] as ICell : null;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#insertEdge(graph.model.ICell, boolean)
 	 */
-	ICell insertEdge(ICell edge, bool isOutgoing)
-	{
-		if (edge != null)
-		{
-			edge.removeFromTerminal(isOutgoing);
-			edge.setTerminal(this, isOutgoing);
+  ICell insertEdge(ICell edge, bool isOutgoing) {
+    if (edge != null) {
+      edge.removeFromTerminal(isOutgoing);
+      edge.setTerminal(this, isOutgoing);
 
-			if (_edges == null || edge.getTerminal(!isOutgoing) != this
-					|| !_edges.contains(edge))
-			{
-				if (_edges == null)
-				{
-					_edges = new List<Object>();
-				}
+      if (_edges == null || edge.getTerminal(!isOutgoing) != this || !_edges.contains(edge)) {
+        if (_edges == null) {
+          _edges = new List<Object>();
+        }
 
-				_edges.add(edge);
-			}
-		}
+        _edges.add(edge);
+      }
+    }
 
-		return edge;
-	}
+    return edge;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#removeEdge(graph.model.ICell, boolean)
 	 */
-	ICell removeEdge(ICell edge, bool isOutgoing)
-	{
-		if (edge != null)
-		{
-			if (edge.getTerminal(!isOutgoing) != this && _edges != null)
-			{
-				_edges.remove(edge);
-			}
-			
-			edge.setTerminal(null, isOutgoing);
-		}
+  ICell removeEdge(ICell edge, bool isOutgoing) {
+    if (edge != null) {
+      if (edge.getTerminal(!isOutgoing) != this && _edges != null) {
+        _edges.remove(edge);
+      }
 
-		return edge;
-	}
+      edge.setTerminal(null, isOutgoing);
+    }
 
-	/* (non-Javadoc)
+    return edge;
+  }
+
+  /* (non-Javadoc)
 	 * @see graph.model.ICell#removeFromTerminal(boolean)
 	 */
-	void removeFromTerminal(bool isSource)
-	{
-		ICell terminal = getTerminal(isSource);
+  void removeFromTerminal(bool isSource) {
+    ICell terminal = getTerminal(isSource);
 
-		if (terminal != null)
-		{
-			terminal.removeEdge(this, isSource);
-		}
-	}
+    if (terminal != null) {
+      terminal.removeEdge(this, isSource);
+    }
+  }
 
-	/**
+  /**
 	 * Returns the specified attribute from the user object if it is an XML
 	 * node.
 	 * 
 	 * @param name Name of the attribute whose value should be returned.
 	 * @return Returns the value of the given attribute or null.
 	 */
-//	String getAttribute(String name)
-//	{
-//		return getAttribute(name, null);
-//	}
+  //	String getAttribute(String name)
+  //	{
+  //		return getAttribute(name, null);
+  //	}
 
-	/**
+  /**
 	 * Returns the specified attribute from the user object if it is an XML
 	 * node.
 	 * 
@@ -816,86 +760,78 @@ class Cell implements ICell//, Cloneable, Serializable
 	 * @param defaultValue Default value to use if the attribute has no value.
 	 * @return Returns the value of the given attribute or defaultValue.
 	 */
-	String getAttribute(String name, [String defaultValue=null])
-	{
-		Object userObject = getValue();
-		String val = null;
+  String getAttribute(String name, [String defaultValue = null]) {
+    Object userObject = getValue();
+    String val = null;
 
-		if (userObject is Element)
-		{
-			Element element = userObject;// as Element;
-			val = element.getAttribute(name);
-		}
+    if (userObject is Element) {
+      Element element = userObject;// as Element;
+      val = element.getAttribute(name);
+    }
 
-		if (val == null)
-		{
-			val = defaultValue;
-		}
+    if (val == null) {
+      val = defaultValue;
+    }
 
-		return val;
-	}
+    return val;
+  }
 
-	/**
+  /**
 	 * Sets the specified attribute on the user object if it is an XML node.
 	 * 
 	 * @param name Name of the attribute whose value should be set.
 	 * @param value New value of the attribute.
 	 */
-	void setAttribute(String name, String value)
-	{
-		Object userObject = getValue();
+  void setAttribute(String name, String value) {
+    Object userObject = getValue();
 
-		if (userObject is Element)
-		{
-			Element element = userObject;// as Element;
-			element.setAttribute(name, value);
-		}
-	}
+    if (userObject is Element) {
+      Element element = userObject;// as Element;
+      element.setAttribute(name, value);
+    }
+  }
 
-	/**
+  /**
 	 * Returns a clone of the cell.
 	 */
-	Object clone() //throws CloneNotSupportedException
-	{
-		Cell clone = super.clone() as Cell;
+  Object clone() //throws CloneNotSupportedException
+  {
+    Cell clone = super.clone() as Cell;
 
-		clone.setValue(cloneValue());
-		clone.setStyle(getStyle());
-		clone.setCollapsed(isCollapsed());
-		clone.setConnectable(isConnectable());
-		clone.setEdge(isEdge());
-		clone.setVertex(isVertex());
-		clone.setVisible(isVisible());
-		clone.setParent(null);
-		clone.setSource(null);
-		clone.setTarget(null);
-		clone._children = null;
-		clone._edges = null;
+    clone.setValue(cloneValue());
+    clone.setStyle(getStyle());
+    clone.setCollapsed(isCollapsed());
+    clone.setConnectable(isConnectable());
+    clone.setEdge(isEdge());
+    clone.setVertex(isVertex());
+    clone.setVisible(isVisible());
+    clone.setParent(null);
+    clone.setSource(null);
+    clone.setTarget(null);
+    clone._children = null;
+    clone._edges = null;
 
-		Geometry geometry = getGeometry();
+    Geometry geometry = getGeometry();
 
-		if (geometry != null)
-		{
-			clone.setGeometry(geometry.clone() as Geometry);
-		}
+    if (geometry != null) {
+      clone.setGeometry(geometry.clone() as Geometry);
+    }
 
-		return clone;
-	}
+    return clone;
+  }
 
-	/**
+  /**
 	 * Returns a clone of the user object. This implementation clones any XML
 	 * nodes or otherwise returns the same user object instance.
 	 */
-	Object cloneValue()
-	{
-		Object value = getValue();
+  Object cloneValue() {
+    Object value = getValue();
 
-		if (value is Node)
-		{
-			value = (value as Node).cloneNode(true);
-		}
+    if (value is Node) {
+      value = (value as Node).cloneNode(true);
+    }
 
-		return value;
-	}
+    return value;
+  }
 
 }

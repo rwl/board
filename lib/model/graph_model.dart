@@ -61,1055 +61,902 @@ part of graph.model;
  * Event.UNDO fires after the change was dispatched in endUpdate. The
  * <code>edit</code> property contains the current UndoableEdit.
  */
-class GraphModel extends EventSource implements IGraphModel//, Serializable
+class GraphModel extends EventSource implements IGraphModel //, Serializable
 {
 
-	/**
+  /**
 	 * Holds the root cell, which in turn contains the cells that represent the
 	 * layers of the diagram as child cells. That is, the actual element of the
 	 * diagram are supposed to live in the third generation of cells and below.
 	 */
-	ICell _root;
+  ICell _root;
 
-	/**
+  /**
 	 * Maps from Ids to cells.
 	 */
-	Map<String, Object> _cells;
+  Map<String, Object> _cells;
 
-	/**
+  /**
 	 * Specifies if edges should automatically be moved into the nearest common
 	 * ancestor of their terminals. Default is true.
 	 */
-	bool _maintainEdgeParent = true;
+  bool _maintainEdgeParent = true;
 
-	/**
+  /**
 	 * Specifies if the model should automatically create Ids for new cells.
 	 * Default is true.
 	 */
-	bool _createIds = true;
+  bool _createIds = true;
 
-	/**
+  /**
 	 * Specifies the next Id to be created. Initial value is 0.
 	 */
-	int _nextId = 0;
+  int _nextId = 0;
 
-	/**
+  /**
 	 * Holds the changes for the current transaction. If the transaction is
 	 * closed then a new object is created for this variable using
 	 * createUndoableEdit.
 	 */
-	/*transient*/ UndoableEdit _currentEdit;
+  /*transient*/ UndoableEdit _currentEdit;
 
-	/**
+  /**
 	 * Counter for the depth of nested transactions. Each call to beginUpdate
 	 * increments this counter and each call to endUpdate decrements it. When
 	 * the counter reaches 0, the transaction is closed and the respective
 	 * events are fired. Initial value is 0.
 	 */
-	/*transient*/ int _updateLevel = 0;
+  /*transient*/ int _updateLevel = 0;
 
-	/**
+  /**
 	 * 
 	 */
-	/*transient*/ bool _endingUpdate = false;
+  /*transient*/ bool _endingUpdate = false;
 
-	/**
+  /**
 	 * Constructs a new empty graph model.
 	 */
-//	GraphModel()
-//	{
-//		this(null);
-//	}
+  //	GraphModel()
+  //	{
+  //		this(null);
+  //	}
 
-	/**
+  /**
 	 * Constructs a new graph model. If no root is specified
 	 * then a new root Cell with a default layer is created.
 	 * 
 	 * @param root Cell that represents the root cell.
 	 */
-	GraphModel([Object root=null])
-	{
-		_currentEdit = _createUndoableEdit();
+  GraphModel([Object root = null]) {
+    _currentEdit = _createUndoableEdit();
 
-		if (root != null)
-		{
-			setRoot(root);
-		}
-		else
-		{
-			clear();
-		}
-	}
+    if (root != null) {
+      setRoot(root);
+    } else {
+      clear();
+    }
+  }
 
-	/**
+  /**
 	 * Sets a new root using createRoot.
 	 */
-	void clear()
-	{
-		setRoot(createRoot());
-	}
+  void clear() {
+    setRoot(createRoot());
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	int getUpdateLevel()
-	{
-		return _updateLevel;
-	}
+  int getUpdateLevel() {
+    return _updateLevel;
+  }
 
-	/**
+  /**
 	 * Creates a new root cell with a default layer (child 0).
 	 */
-	Object createRoot()
-	{
-		Cell root = new Cell();
-		root.insert(new Cell());
+  Object createRoot() {
+    Cell root = new Cell();
+    root.insert(new Cell());
 
-		return root;
-	}
+    return root;
+  }
 
-	/**
+  /**
 	 * Returns the internal lookup table that is used to map from Ids to cells.
 	 */
-	Map<String, Object> getCells()
-	{
-		return _cells;
-	}
+  Map<String, Object> getCells() {
+    return _cells;
+  }
 
-	/**
+  /**
 	 * Returns the cell for the specified Id or null if no cell can be
 	 * found for the given Id.
 	 * 
 	 * @param id A string representing the Id of the cell.
 	 * @return Returns the cell for the given Id.
 	 */
-	Object getCell(String id)
-	{
-		Object result = null;
+  Object getCell(String id) {
+    Object result = null;
 
-		if (_cells != null)
-		{
-			result = _cells.get(id);
-		}
-		return result;
-	}
+    if (_cells != null) {
+      result = _cells.get(id);
+    }
+    return result;
+  }
 
-	/**
+  /**
 	 * Returns true if the model automatically update parents of edges so that
 	 * the edge is contained in the nearest-common-ancestor of its terminals.
 	 * 
 	 * @return Returns true if the model maintains edge parents.
 	 */
-	bool isMaintainEdgeParent()
-	{
-		return _maintainEdgeParent;
-	}
+  bool isMaintainEdgeParent() {
+    return _maintainEdgeParent;
+  }
 
-	/**
+  /**
 	 * Specifies if the model automatically updates parents of edges so that
 	 * the edge is contained in the nearest-common-ancestor of its terminals.
 	 * 
 	 * @param maintainEdgeParent Boolean indicating if the model should
 	 * maintain edge parents.
 	 */
-	void setMaintainEdgeParent(bool maintainEdgeParent)
-	{
-		this._maintainEdgeParent = maintainEdgeParent;
-	}
+  void setMaintainEdgeParent(bool maintainEdgeParent) {
+    this._maintainEdgeParent = maintainEdgeParent;
+  }
 
-	/**
+  /**
 	 * Returns true if the model automatically creates Ids and resolves Id
 	 * collisions.
 	 * 
 	 * @return Returns true if the model creates Ids.
 	 */
-	bool isCreateIds()
-	{
-		return _createIds;
-	}
+  bool isCreateIds() {
+    return _createIds;
+  }
 
-	/**
+  /**
 	 * Specifies if the model automatically creates Ids for new cells and
 	 * resolves Id collisions.
 	 * 
 	 * @param value Boolean indicating if the model should created Ids.
 	 */
-	void setCreateIds(bool value)
-	{
-		_createIds = value;
-	}
+  void setCreateIds(bool value) {
+    _createIds = value;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.IGraphModel#getRoot()
 	 */
-	Object getRoot()
-	{
-		return _root;
-	}
+  Object getRoot() {
+    return _root;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.IGraphModel#setRoot(Object)
 	 */
-	Object setRoot(Object root)
-	{
-		execute(new RootChange(this, root));
+  Object setRoot(Object root) {
+    execute(new RootChange(this, root));
 
-		return root;
-	}
+    return root;
+  }
 
-	/**
+  /**
 	 * Inner callback to change the root of the model and update the internal
 	 * datastructures, such as cells and nextId. Returns the previous root.
 	 */
-	Object _rootChanged(Object root)
-	{
-		Object oldRoot = this._root;
-		this._root = root as ICell;
+  Object _rootChanged(Object root) {
+    Object oldRoot = this._root;
+    this._root = root as ICell;
 
-		// Resets counters and datastructures
-		_nextId = 0;
-		_cells = null;
-		_cellAdded(root);
+    // Resets counters and datastructures
+    _nextId = 0;
+    _cells = null;
+    _cellAdded(root);
 
-		return oldRoot;
-	}
+    return oldRoot;
+  }
 
-	/**
+  /**
 	 * Creates a new undoable edit.
 	 */
-	UndoableEdit _createUndoableEdit()
-	{
-		return new UndoableEdit(this, () {
-				// LATER: Remove changes property (deprecated)
-				(_source as GraphModel).fireEvent(new EventObj(
-						Event.CHANGE, "edit", this, "changes", _changes));
-			});
-	}
+  UndoableEdit _createUndoableEdit() {
+    return new UndoableEdit(this, () {
+      // LATER: Remove changes property (deprecated)
+      (_source as GraphModel).fireEvent(new EventObj(Event.CHANGE, "edit", this, "changes", _changes));
+    });
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.IGraphModel#cloneCells(List<Object>, boolean)
 	 */
-	List<Object> cloneCells(List<Object> cells, bool includeChildren)
-	{
-		Map<Object, Object> mapping = new Hashtable<Object, Object>();
-		List<Object> clones = new List<Object>(cells.length);
+  List<Object> cloneCells(List<Object> cells, bool includeChildren) {
+    Map<Object, Object> mapping = new Hashtable<Object, Object>();
+    List<Object> clones = new List<Object>(cells.length);
 
-		for (int i = 0; i < cells.length; i++)
-		{
-			try
-			{
-				clones[i] = _cloneCell(cells[i], mapping, includeChildren);
-			}
-			on CloneNotSupportedException catch (e)
-			{
-				// ignore
-			}
-		}
+    for (int i = 0; i < cells.length; i++) {
+      try {
+        clones[i] = _cloneCell(cells[i], mapping, includeChildren);
+      } on CloneNotSupportedException catch (e) {
+        // ignore
+      }
+    }
 
-		for (int i = 0; i < cells.length; i++)
-		{
-			_restoreClone(clones[i], cells[i], mapping);
-		}
+    for (int i = 0; i < cells.length; i++) {
+      _restoreClone(clones[i], cells[i], mapping);
+    }
 
-		return clones;
-	}
+    return clones;
+  }
 
-	/**
+  /**
 	 * Inner helper method for cloning cells recursively.
 	 */
-	Object _cloneCell(Object cell, Map<Object, Object> mapping,
-			bool includeChildren) //throws CloneNotSupportedException
-	{
-		if (cell is ICell)
-		{
-			ICell mxc = (cell as ICell).clone() as ICell;
-			mapping.put(cell, mxc);
+  Object _cloneCell(Object cell, Map<Object, Object> mapping, bool includeChildren) //throws CloneNotSupportedException
+  {
+    if (cell is ICell) {
+      ICell mxc = (cell as ICell).clone() as ICell;
+      mapping.put(cell, mxc);
 
-			if (includeChildren)
-			{
-				int childCount = getChildCount(cell);
+      if (includeChildren) {
+        int childCount = getChildCount(cell);
 
-				for (int i = 0; i < childCount; i++)
-				{
-					Object clone = _cloneCell(getChildAt(cell, i), mapping, true);
-					mxc.insert(clone as ICell);
-				}
-			}
+        for (int i = 0; i < childCount; i++) {
+          Object clone = _cloneCell(getChildAt(cell, i), mapping, true);
+          mxc.insert(clone as ICell);
+        }
+      }
 
-			return mxc;
-		}
+      return mxc;
+    }
 
-		return null;
-	}
+    return null;
+  }
 
-	/**
+  /**
 	 * Inner helper method for restoring the connections in
 	 * a network of cloned cells.
 	 */
-	void _restoreClone(Object clone, Object cell,
-			Map<Object, Object> mapping)
-	{
-		if (clone is ICell)
-		{
-			ICell mxc = clone as ICell;
-			Object source = getTerminal(cell, true);
+  void _restoreClone(Object clone, Object cell, Map<Object, Object> mapping) {
+    if (clone is ICell) {
+      ICell mxc = clone as ICell;
+      Object source = getTerminal(cell, true);
 
-			if (source is ICell)
-			{
-				ICell tmp = mapping.get(source) as ICell;
+      if (source is ICell) {
+        ICell tmp = mapping.get(source) as ICell;
 
-				if (tmp != null)
-				{
-					tmp.insertEdge(mxc, true);
-				}
-			}
+        if (tmp != null) {
+          tmp.insertEdge(mxc, true);
+        }
+      }
 
-			Object target = getTerminal(cell, false);
+      Object target = getTerminal(cell, false);
 
-			if (target is ICell)
-			{
-				ICell tmp = mapping.get(target) as ICell;
+      if (target is ICell) {
+        ICell tmp = mapping.get(target) as ICell;
 
-				if (tmp != null)
-				{
-					tmp.insertEdge(mxc, false);
-				}
-			}
-		}
+        if (tmp != null) {
+          tmp.insertEdge(mxc, false);
+        }
+      }
+    }
 
-		int childCount = getChildCount(clone);
+    int childCount = getChildCount(clone);
 
-		for (int i = 0; i < childCount; i++)
-		{
-			_restoreClone(getChildAt(clone, i), getChildAt(cell, i), mapping);
-		}
-	}
+    for (int i = 0; i < childCount; i++) {
+      _restoreClone(getChildAt(clone, i), getChildAt(cell, i), mapping);
+    }
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.IGraphModel#isAncestor(Object, Object)
 	 */
-	bool isAncestor(Object parent, Object child)
-	{
-		while (child != null && child != parent)
-		{
-			child = getParent(child);
-		}
+  bool isAncestor(Object parent, Object child) {
+    while (child != null && child != parent) {
+      child = getParent(child);
+    }
 
-		return child == parent;
-	}
+    return child == parent;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.IGraphModel#contains(Object)
 	 */
-	bool contains(Object cell)
-	{
-		return isAncestor(getRoot(), cell);
-	}
+  bool contains(Object cell) {
+    return isAncestor(getRoot(), cell);
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.IGraphModel#getParent(Object)
 	 */
-	Object getParent(Object child)
-	{
-		return (child is ICell) ? (child as ICell).getParent()
-				: null;
-	}
+  Object getParent(Object child) {
+    return (child is ICell) ? (child as ICell).getParent() : null;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.IGraphModel#add(Object, Object, int)
 	 */
-	Object add(Object parent, Object child, int index)
-	{
-		if (child != parent && parent != null && child != null)
-		{
-			bool parentChanged = parent != getParent(child);
-			execute(new ChildChange(this, parent, child, index));
+  Object add(Object parent, Object child, int index) {
+    if (child != parent && parent != null && child != null) {
+      bool parentChanged = parent != getParent(child);
+      execute(new ChildChange(this, parent, child, index));
 
-			// Maintains the edges parents by moving the edges
-			// into the nearest common ancestor of its
-			// terminals
-			if (_maintainEdgeParent && parentChanged)
-			{
-				updateEdgeParents(child);
-			}
-		}
+      // Maintains the edges parents by moving the edges
+      // into the nearest common ancestor of its
+      // terminals
+      if (_maintainEdgeParent && parentChanged) {
+        updateEdgeParents(child);
+      }
+    }
 
-		return child;
-	}
+    return child;
+  }
 
-	/**
+  /**
 	 * Invoked after a cell has been added to a parent. This recursively
 	 * creates an Id for the new cell and/or resolves Id collisions.
 	 * 
 	 * @param cell Cell that has been added.
 	 */
-	void _cellAdded(Object cell)
-	{
-		if (cell is ICell)
-		{
-			ICell mxc = cell as ICell;
+  void _cellAdded(Object cell) {
+    if (cell is ICell) {
+      ICell mxc = cell as ICell;
 
-			if (mxc.getId() == null && isCreateIds())
-			{
-				mxc.setId(createId(cell));
-			}
+      if (mxc.getId() == null && isCreateIds()) {
+        mxc.setId(createId(cell));
+      }
 
-			if (mxc.getId() != null)
-			{
-				Object collision = getCell(mxc.getId());
+      if (mxc.getId() != null) {
+        Object collision = getCell(mxc.getId());
 
-				if (collision != cell)
-				{
-					while (collision != null)
-					{
-						mxc.setId(createId(cell));
-						collision = getCell(mxc.getId());
-					}
+        if (collision != cell) {
+          while (collision != null) {
+            mxc.setId(createId(cell));
+            collision = getCell(mxc.getId());
+          }
 
-					if (_cells == null)
-					{
-						_cells = new Hashtable<String, Object>();
-					}
+          if (_cells == null) {
+            _cells = new Hashtable<String, Object>();
+          }
 
-					_cells.put(mxc.getId(), cell);
-				}
-			}
+          _cells.put(mxc.getId(), cell);
+        }
+      }
 
-			// Makes sure IDs of deleted cells are not reused
-			try
-			{
-				int id = Integer.parseInt(mxc.getId());
-				_nextId = Math.max(_nextId, id + 1);
-			}
-			on NumberFormatException catch (e)
-			{
-				// ignore
-			}
+      // Makes sure IDs of deleted cells are not reused
+      try {
+        int id = Integer.parseInt(mxc.getId());
+        _nextId = Math.max(_nextId, id + 1);
+      } on NumberFormatException catch (e) {
+        // ignore
+      }
 
-			int childCount = mxc.getChildCount();
+      int childCount = mxc.getChildCount();
 
-			for (int i = 0; i < childCount; i++)
-			{
-				_cellAdded(mxc.getChildAt(i));
-			}
-		}
-	}
+      for (int i = 0; i < childCount; i++) {
+        _cellAdded(mxc.getChildAt(i));
+      }
+    }
+  }
 
-	/**
+  /**
 	 * Creates a new Id for the given cell and increments the global counter
 	 * for creating new Ids.
 	 * 
 	 * @param cell Cell for which a new Id should be created.
 	 * @return Returns a new Id for the given cell.
 	 */
-	String createId(Object cell)
-	{
-		String id = String.valueOf(_nextId);
-		_nextId++;
+  String createId(Object cell) {
+    String id = String.valueOf(_nextId);
+    _nextId++;
 
-		return id;
-	}
+    return id;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.IGraphModel#remove(Object)
 	 */
-	Object remove(Object cell)
-	{
-		if (cell == _root)
-		{
-			setRoot(null);
-		}
-		else if (getParent(cell) != null)
-		{
-			execute(new ChildChange(this, null, cell));
-		}
+  Object remove(Object cell) {
+    if (cell == _root) {
+      setRoot(null);
+    } else if (getParent(cell) != null) {
+      execute(new ChildChange(this, null, cell));
+    }
 
-		return cell;
-	}
+    return cell;
+  }
 
-	/**
+  /**
 	 * Invoked after a cell has been removed from the model. This recursively
 	 * removes the cell from its terminals and removes the mapping from the Id
 	 * to the cell.
 	 * 
 	 * @param cell Cell that has been removed.
 	 */
-	void _cellRemoved(Object cell)
-	{
-		if (cell is ICell)
-		{
-			ICell mxc = cell as ICell;
-			int childCount = mxc.getChildCount();
+  void _cellRemoved(Object cell) {
+    if (cell is ICell) {
+      ICell mxc = cell as ICell;
+      int childCount = mxc.getChildCount();
 
-			for (int i = 0; i < childCount; i++)
-			{
-				_cellRemoved(mxc.getChildAt(i));
-			}
+      for (int i = 0; i < childCount; i++) {
+        _cellRemoved(mxc.getChildAt(i));
+      }
 
-			if (_cells != null && mxc.getId() != null)
-			{
-				_cells.remove(mxc.getId());
-			}
-		}
-	}
+      if (_cells != null && mxc.getId() != null) {
+        _cells.remove(mxc.getId());
+      }
+    }
+  }
 
-	/**
+  /**
 	 * Inner callback to update the parent of a cell using Cell.insert
 	 * on the parent and return the previous parent.
 	 */
-	Object _parentForCellChanged(Object cell, Object parent, int index)
-	{
-		ICell child = cell as ICell;
-		ICell previous = getParent(cell) as ICell;
+  Object _parentForCellChanged(Object cell, Object parent, int index) {
+    ICell child = cell as ICell;
+    ICell previous = getParent(cell) as ICell;
 
-		if (parent != null)
-		{
-			if (parent != previous || previous.getIndex(child) != index)
-			{
-				(parent as ICell).insert(child, index);
-			}
-		}
-		else if (previous != null)
-		{
-			int oldIndex = previous.getIndex(child);
-			previous.remove(oldIndex);
-		}
+    if (parent != null) {
+      if (parent != previous || previous.getIndex(child) != index) {
+        (parent as ICell).insert(child, index);
+      }
+    } else if (previous != null) {
+      int oldIndex = previous.getIndex(child);
+      previous.remove(oldIndex);
+    }
 
-		// Checks if the previous parent was already in the
-		// model and avoids calling cellAdded if it was.
-		if (!contains(previous) && parent != null)
-		{
-			_cellAdded(cell);
-		}
-		else if (parent == null)
-		{
-			_cellRemoved(cell);
-		}
+    // Checks if the previous parent was already in the
+    // model and avoids calling cellAdded if it was.
+    if (!contains(previous) && parent != null) {
+      _cellAdded(cell);
+    } else if (parent == null) {
+      _cellRemoved(cell);
+    }
 
-		return previous;
-	}
+    return previous;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.IGraphModel#getChildCount(Object)
 	 */
-	int getChildCount(Object cell)
-	{
-		return (cell is ICell) ? (cell as ICell).getChildCount() : 0;
-	}
+  int getChildCount(Object cell) {
+    return (cell is ICell) ? (cell as ICell).getChildCount() : 0;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.IGraphModel#getChildAt(Object, int)
 	 */
-	Object getChildAt(Object parent, int index)
-	{
-		return (parent is ICell) ? (parent as ICell)
-				.getChildAt(index) : null;
-	}
+  Object getChildAt(Object parent, int index) {
+    return (parent is ICell) ? (parent as ICell).getChildAt(index) : null;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.IGraphModel#getTerminal(Object, boolean)
 	 */
-	Object getTerminal(Object edge, bool isSource)
-	{
-		return (edge is ICell) ? (edge as ICell)
-				.getTerminal(isSource) : null;
-	}
+  Object getTerminal(Object edge, bool isSource) {
+    return (edge is ICell) ? (edge as ICell).getTerminal(isSource) : null;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.IGraphModel#setTerminal(Object, Object, boolean)
 	 */
-	Object setTerminal(Object edge, Object terminal, bool isSource)
-	{
-		bool terminalChanged = terminal != getTerminal(edge, isSource);
-		execute(new TerminalChange(this, edge, terminal, isSource));
+  Object setTerminal(Object edge, Object terminal, bool isSource) {
+    bool terminalChanged = terminal != getTerminal(edge, isSource);
+    execute(new TerminalChange(this, edge, terminal, isSource));
 
-		if (_maintainEdgeParent && terminalChanged)
-		{
-			updateEdgeParent(edge, getRoot());
-		}
+    if (_maintainEdgeParent && terminalChanged) {
+      updateEdgeParent(edge, getRoot());
+    }
 
-		return terminal;
-	}
+    return terminal;
+  }
 
-	/**
+  /**
 	 * Inner helper function to update the terminal of the edge using
 	 * Cell.insertEdge and return the previous terminal.
 	 */
-	Object _terminalForCellChanged(Object edge, Object terminal,
-			bool isSource)
-	{
-		ICell previous = getTerminal(edge, isSource) as ICell;
+  Object _terminalForCellChanged(Object edge, Object terminal, bool isSource) {
+    ICell previous = getTerminal(edge, isSource) as ICell;
 
-		if (terminal != null)
-		{
-			(terminal as ICell).insertEdge(edge as ICell, isSource);
-		}
-		else if (previous != null)
-		{
-			previous.removeEdge(edge as ICell, isSource);
-		}
+    if (terminal != null) {
+      (terminal as ICell).insertEdge(edge as ICell, isSource);
+    } else if (previous != null) {
+      previous.removeEdge(edge as ICell, isSource);
+    }
 
-		return previous;
-	}
+    return previous;
+  }
 
-	/**
+  /**
 	 * Updates the parents of the edges connected to the given cell and all its
 	 * descendants so that each edge is contained in the nearest common
 	 * ancestor.
 	 * 
 	 * @param cell Cell whose edges should be checked and updated.
 	 */
-//	void updateEdgeParents(Object cell)
-//	{
-//		updateEdgeParents(cell, getRoot());
-//	}
+  //	void updateEdgeParents(Object cell)
+  //	{
+  //		updateEdgeParents(cell, getRoot());
+  //	}
 
-	/**
+  /**
 	 * Updates the parents of the edges connected to the given cell and all its
 	 * descendants so that the edge is contained in the nearest-common-ancestor.
 	 * 
 	 * @param cell Cell whose edges should be checked and updated.
 	 * @param root Root of the cell hierarchy that contains all cells.
 	 */
-	void updateEdgeParents(Object cell, [Object root=null])
-	{
-	  if (root == null) {
-	    root = getRoot();
-	  }
-		// Updates edges on children first
-		int childCount = getChildCount(cell);
+  void updateEdgeParents(Object cell, [Object root = null]) {
+    if (root == null) {
+      root = getRoot();
+    }
+    // Updates edges on children first
+    int childCount = getChildCount(cell);
 
-		for (int i = 0; i < childCount; i++)
-		{
-			Object child = getChildAt(cell, i);
-			updateEdgeParents(child, root);
-		}
+    for (int i = 0; i < childCount; i++) {
+      Object child = getChildAt(cell, i);
+      updateEdgeParents(child, root);
+    }
 
-		// Updates the parents of all connected edges
-		int edgeCount = getEdgeCount(cell);
-		List<Object> edges = new List<Object>(edgeCount);
+    // Updates the parents of all connected edges
+    int edgeCount = getEdgeCount(cell);
+    List<Object> edges = new List<Object>(edgeCount);
 
-		for (int i = 0; i < edgeCount; i++)
-		{
-			edges.add(getEdgeAt(cell, i));
-		}
+    for (int i = 0; i < edgeCount; i++) {
+      edges.add(getEdgeAt(cell, i));
+    }
 
-		Iterator<Object> it = edges.iterator();
+    Iterator<Object> it = edges.iterator();
 
-		while (it.hasNext())
-		{
-			Object edge = it.next();
+    while (it.hasNext()) {
+      Object edge = it.next();
 
-			// Updates edge parent if edge and child have
-			// a common root node (does not need to be the
-			// model root node)
-			if (isAncestor(root, edge))
-			{
-				updateEdgeParent(edge, root);
-			}
-		}
-	}
+      // Updates edge parent if edge and child have
+      // a common root node (does not need to be the
+      // model root node)
+      if (isAncestor(root, edge)) {
+        updateEdgeParent(edge, root);
+      }
+    }
+  }
 
-	/**
+  /**
 	 * Inner helper method to update the parent of the specified edge to the
 	 * nearest-common-ancestor of its two terminals.
 	 *
 	 * @param edge Specifies the edge to be updated.
 	 * @param root Current root of the model.
 	 */
-	void updateEdgeParent(Object edge, Object root)
-	{
-		Object source = getTerminal(edge, true);
-		Object target = getTerminal(edge, false);
-		Object cell = null;
-		
-		// Uses the first non-relative descendants of the source terminal
-		while (source != null && !isEdge(source) &&
-			getGeometry(source) != null && getGeometry(source).isRelative())
-		{
-			source = getParent(source);
-		}
-		
-		// Uses the first non-relative descendants of the target terminal
-		while (target != null && !isEdge(target) &&
-			getGeometry(target) != null && getGeometry(target).isRelative())
-		{
-			target = getParent(target);
-		}
-		
-		if (isAncestor(root, source) && isAncestor(root, target))
-		{
-			if (source == target)
-			{
-				cell = getParent(source);
-			}
-			else
-			{
-				cell = getNearestCommonAncestor(source, target);
-			}
+  void updateEdgeParent(Object edge, Object root) {
+    Object source = getTerminal(edge, true);
+    Object target = getTerminal(edge, false);
+    Object cell = null;
 
-			// Keeps the edge in the same layer
-			if (cell != null
-					&& (getParent(cell) != root || isAncestor(cell, edge))
-					&& getParent(edge) != cell)
-			{
-				Geometry geo = getGeometry(edge);
+    // Uses the first non-relative descendants of the source terminal
+    while (source != null && !isEdge(source) && getGeometry(source) != null && getGeometry(source).isRelative()) {
+      source = getParent(source);
+    }
 
-				if (geo != null)
-				{
-					Point2d origin1 = getOrigin(getParent(edge));
-					Point2d origin2 = getOrigin(cell);
+    // Uses the first non-relative descendants of the target terminal
+    while (target != null && !isEdge(target) && getGeometry(target) != null && getGeometry(target).isRelative()) {
+      target = getParent(target);
+    }
 
-					double dx = origin2.getX() - origin1.getX();
-					double dy = origin2.getY() - origin1.getY();
+    if (isAncestor(root, source) && isAncestor(root, target)) {
+      if (source == target) {
+        cell = getParent(source);
+      } else {
+        cell = getNearestCommonAncestor(source, target);
+      }
 
-					geo = geo.clone() as Geometry;
-					geo.translate(-dx, -dy);
-					setGeometry(edge, geo);
-				}
+      // Keeps the edge in the same layer
+      if (cell != null && (getParent(cell) != root || isAncestor(cell, edge)) && getParent(edge) != cell) {
+        Geometry geo = getGeometry(edge);
 
-				add(cell, edge, getChildCount(cell));
-			}
-		}
-	}
+        if (geo != null) {
+          Point2d origin1 = getOrigin(getParent(edge));
+          Point2d origin2 = getOrigin(cell);
 
-	/**
+          double dx = origin2.getX() - origin1.getX();
+          double dy = origin2.getY() - origin1.getY();
+
+          geo = geo.clone() as Geometry;
+          geo.translate(-dx, -dy);
+          setGeometry(edge, geo);
+        }
+
+        add(cell, edge, getChildCount(cell));
+      }
+    }
+  }
+
+  /**
 	 * Returns the absolute, accumulated origin for the children inside the
 	 * given parent. 
 	 */
-	Point2d getOrigin(Object cell)
-	{
-		Point2d result = null;
+  Point2d getOrigin(Object cell) {
+    Point2d result = null;
 
-		if (cell != null)
-		{
-			result = getOrigin(getParent(cell));
+    if (cell != null) {
+      result = getOrigin(getParent(cell));
 
-			if (!isEdge(cell))
-			{
-				Geometry geo = getGeometry(cell);
+      if (!isEdge(cell)) {
+        Geometry geo = getGeometry(cell);
 
-				if (geo != null)
-				{
-					result.setX(result.getX() + geo.getX());
-					result.setY(result.getY() + geo.getY());
-				}
-			}
-		}
-		else
-		{
-			result = new Point2d();
-		}
+        if (geo != null) {
+          result.setX(result.getX() + geo.getX());
+          result.setY(result.getY() + geo.getY());
+        }
+      }
+    } else {
+      result = new Point2d();
+    }
 
-		return result;
-	}
+    return result;
+  }
 
-	/**
+  /**
 	 * Returns the nearest common ancestor for the specified cells.
 	 *
 	 * @param cell1 Cell that specifies the first cell in the tree.
 	 * @param cell2 Cell that specifies the second cell in the tree.
 	 * @return Returns the nearest common ancestor of the given cells.
 	 */
-	Object getNearestCommonAncestor(Object cell1, Object cell2)
-	{
-		if (cell1 != null && cell2 != null)
-		{
-			// Creates the cell path for the second cell
-			String path = CellPath.create(cell2 as ICell);
+  Object getNearestCommonAncestor(Object cell1, Object cell2) {
+    if (cell1 != null && cell2 != null) {
+      // Creates the cell path for the second cell
+      String path = CellPath.create(cell2 as ICell);
 
-			if (path != null && path.length() > 0)
-			{
-				// Bubbles through the ancestors of the first
-				// cell to find the nearest common ancestor.
-				Object cell = cell1;
-				String current = CellPath.create(cell as ICell);
+      if (path != null && path.length() > 0) {
+        // Bubbles through the ancestors of the first
+        // cell to find the nearest common ancestor.
+        Object cell = cell1;
+        String current = CellPath.create(cell as ICell);
 
-				while (cell != null)
-				{
-					Object parent = getParent(cell);
+        while (cell != null) {
+          Object parent = getParent(cell);
 
-					// Checks if the cell path is equal to the beginning
-					// of the given cell path
-					if (path.indexOf(current + CellPath.PATH_SEPARATOR) == 0
-							&& parent != null)
-					{
-						return cell;
-					}
+          // Checks if the cell path is equal to the beginning
+          // of the given cell path
+          if (path.indexOf(current + CellPath.PATH_SEPARATOR) == 0 && parent != null) {
+            return cell;
+          }
 
-					current = CellPath.getParentPath(current);
-					cell = parent;
-				}
-			}
-		}
+          current = CellPath.getParentPath(current);
+          cell = parent;
+        }
+      }
+    }
 
-		return null;
-	}
+    return null;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.IGraphModel#getEdgeCount(Object)
 	 */
-	int getEdgeCount(Object cell)
-	{
-		return (cell is ICell) ? (cell as ICell).getEdgeCount() : 0;
-	}
+  int getEdgeCount(Object cell) {
+    return (cell is ICell) ? (cell as ICell).getEdgeCount() : 0;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.IGraphModel#getEdgeAt(Object, int)
 	 */
-	Object getEdgeAt(Object parent, int index)
-	{
-		return (parent is ICell) ? (parent as ICell)
-				.getEdgeAt(index) : null;
-	}
+  Object getEdgeAt(Object parent, int index) {
+    return (parent is ICell) ? (parent as ICell).getEdgeAt(index) : null;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.IGraphModel#isVertex(Object)
 	 */
-	bool isVertex(Object cell)
-	{
-		return (cell is ICell) ? (cell as ICell).isVertex() : false;
-	}
+  bool isVertex(Object cell) {
+    return (cell is ICell) ? (cell as ICell).isVertex() : false;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.IGraphModel#isEdge(Object)
 	 */
-	bool isEdge(Object cell)
-	{
-		return (cell is ICell) ? (cell as ICell).isEdge() : false;
-	}
+  bool isEdge(Object cell) {
+    return (cell is ICell) ? (cell as ICell).isEdge() : false;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.IGraphModel#isConnectable(Object)
 	 */
-	bool isConnectable(Object cell)
-	{
-		return (cell is ICell) ? (cell as ICell).isConnectable()
-				: true;
-	}
+  bool isConnectable(Object cell) {
+    return (cell is ICell) ? (cell as ICell).isConnectable() : true;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.IGraphModel#getValue(Object)
 	 */
-	Object getValue(Object cell)
-	{
-		return (cell is ICell) ? (cell as ICell).getValue() : null;
-	}
+  Object getValue(Object cell) {
+    return (cell is ICell) ? (cell as ICell).getValue() : null;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.IGraphModel#setValue(Object, Object)
 	 */
-	Object setValue(Object cell, Object value)
-	{
-		execute(new ValueChange(this, cell, value));
+  Object setValue(Object cell, Object value) {
+    execute(new ValueChange(this, cell, value));
 
-		return value;
-	}
+    return value;
+  }
 
-	/**
+  /**
 	 * Inner callback to update the user object of the given Cell
 	 * using Cell.setValue and return the previous value,
 	 * that is, the return value of Cell.getValue.
 	 */
-	Object _valueForCellChanged(Object cell, Object value)
-	{
-		Object oldValue = (cell as ICell).getValue();
-		(cell as ICell).setValue(value);
+  Object _valueForCellChanged(Object cell, Object value) {
+    Object oldValue = (cell as ICell).getValue();
+    (cell as ICell).setValue(value);
 
-		return oldValue;
-	}
+    return oldValue;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.IGraphModel#getGeometry(Object)
 	 */
-	Geometry getGeometry(Object cell)
-	{
-		return (cell is ICell) ? (cell as ICell).getGeometry()
-				: null;
-	}
+  Geometry getGeometry(Object cell) {
+    return (cell is ICell) ? (cell as ICell).getGeometry() : null;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.IGraphModel#setGeometry(Object, Geometry)
 	 */
-	Geometry setGeometry(Object cell, Geometry geometry)
-	{
-		if (geometry != getGeometry(cell))
-		{
-			execute(new GeometryChange(this, cell, geometry));
-		}
+  Geometry setGeometry(Object cell, Geometry geometry) {
+    if (geometry != getGeometry(cell)) {
+      execute(new GeometryChange(this, cell, geometry));
+    }
 
-		return geometry;
-	}
+    return geometry;
+  }
 
-	/**
+  /**
 	 * Inner callback to update the Geometry of the given Cell using
 	 * Cell.setGeometry and return the previous Geometry.
 	 */
-	Geometry _geometryForCellChanged(Object cell, Geometry geometry)
-	{
-		Geometry previous = getGeometry(cell);
-		(cell as ICell).setGeometry(geometry);
+  Geometry _geometryForCellChanged(Object cell, Geometry geometry) {
+    Geometry previous = getGeometry(cell);
+    (cell as ICell).setGeometry(geometry);
 
-		return previous;
-	}
+    return previous;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.IGraphModel#getStyle(Object)
 	 */
-	String getStyle(Object cell)
-	{
-		return (cell is ICell) ? (cell as ICell).getStyle() : null;
-	}
+  String getStyle(Object cell) {
+    return (cell is ICell) ? (cell as ICell).getStyle() : null;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.IGraphModel#setStyle(Object, String)
 	 */
-	String setStyle(Object cell, String style)
-	{
-		if (style == null || !style.equals(getStyle(cell)))
-		{
-			execute(new StyleChange(this, cell, style));
-		}
+  String setStyle(Object cell, String style) {
+    if (style == null || !style.equals(getStyle(cell))) {
+      execute(new StyleChange(this, cell, style));
+    }
 
-		return style;
-	}
+    return style;
+  }
 
-	/**
+  /**
 	 * Inner callback to update the style of the given Cell
 	 * using Cell.setStyle and return the previous style.
 	 */
-	String _styleForCellChanged(Object cell, String style)
-	{
-		String previous = getStyle(cell);
-		(cell as ICell).setStyle(style);
+  String _styleForCellChanged(Object cell, String style) {
+    String previous = getStyle(cell);
+    (cell as ICell).setStyle(style);
 
-		return previous;
-	}
+    return previous;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.IGraphModel#isCollapsed(Object)
 	 */
-	bool isCollapsed(Object cell)
-	{
-		return (cell is ICell) ? (cell as ICell).isCollapsed()
-				: false;
-	}
+  bool isCollapsed(Object cell) {
+    return (cell is ICell) ? (cell as ICell).isCollapsed() : false;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.IGraphModel#setCollapsed(Object, boolean)
 	 */
-	bool setCollapsed(Object cell, bool collapsed)
-	{
-		if (collapsed != isCollapsed(cell))
-		{
-			execute(new CollapseChange(this, cell, collapsed));
-		}
+  bool setCollapsed(Object cell, bool collapsed) {
+    if (collapsed != isCollapsed(cell)) {
+      execute(new CollapseChange(this, cell, collapsed));
+    }
 
-		return collapsed;
-	}
+    return collapsed;
+  }
 
-	/**
+  /**
 	 * Inner callback to update the collapsed state of the
 	 * given Cell using Cell.setCollapsed and return
 	 * the previous collapsed state.
 	 */
-	bool _collapsedStateForCellChanged(Object cell,
-			bool collapsed)
-	{
-		bool previous = isCollapsed(cell);
-		(cell as ICell).setCollapsed(collapsed);
+  bool _collapsedStateForCellChanged(Object cell, bool collapsed) {
+    bool previous = isCollapsed(cell);
+    (cell as ICell).setCollapsed(collapsed);
 
-		return previous;
-	}
+    return previous;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.IGraphModel#isVisible(Object)
 	 */
-	bool isVisible(Object cell)
-	{
-		return (cell is ICell) ? (cell as ICell).isVisible() : false;
-	}
+  bool isVisible(Object cell) {
+    return (cell is ICell) ? (cell as ICell).isVisible() : false;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.IGraphModel#setVisible(Object, boolean)
 	 */
-	bool setVisible(Object cell, bool visible)
-	{
-		if (visible != isVisible(cell))
-		{
-			execute(new VisibleChange(this, cell, visible));
-		}
+  bool setVisible(Object cell, bool visible) {
+    if (visible != isVisible(cell)) {
+      execute(new VisibleChange(this, cell, visible));
+    }
 
-		return visible;
-	}
+    return visible;
+  }
 
-	/**
+  /**
 	 * Sets the visible state of the given Cell using VisibleChange and
 	 * adds the change to the current transaction.
 	 */
-	bool _visibleStateForCellChanged(Object cell, bool visible)
-	{
-		bool previous = isVisible(cell);
-		(cell as ICell).setVisible(visible);
+  bool _visibleStateForCellChanged(Object cell, bool visible) {
+    bool previous = isVisible(cell);
+    (cell as ICell).setVisible(visible);
 
-		return previous;
-	}
+    return previous;
+  }
 
-	/**
+  /**
 	 * Executes the given atomic change and adds it to the current edit.
 	 * 
 	 * @param change Atomic change to be executed.
 	 */
-	void execute(AtomicGraphModelChange change)
-	{
-		change.execute();
-		beginUpdate();
-		_currentEdit.add(change);
-		fireEvent(new EventObj(Event.EXECUTE, "change", change));
-		endUpdate();
-	}
+  void execute(AtomicGraphModelChange change) {
+    change.execute();
+    beginUpdate();
+    _currentEdit.add(change);
+    fireEvent(new EventObj(Event.EXECUTE, "change", change));
+    endUpdate();
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.IGraphModel#beginUpdate()
 	 */
-	void beginUpdate()
-	{
-		_updateLevel++;
-		fireEvent(new EventObj(Event.BEGIN_UPDATE));
-	}
+  void beginUpdate() {
+    _updateLevel++;
+    fireEvent(new EventObj(Event.BEGIN_UPDATE));
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.model.IGraphModel#endUpdate()
 	 */
-	void endUpdate()
-	{
-		_updateLevel--;
+  void endUpdate() {
+    _updateLevel--;
 
-		if (!_endingUpdate)
-		{
-			_endingUpdate = _updateLevel == 0;
-			fireEvent(new EventObj(Event.END_UPDATE, "edit", _currentEdit));
+    if (!_endingUpdate) {
+      _endingUpdate = _updateLevel == 0;
+      fireEvent(new EventObj(Event.END_UPDATE, "edit", _currentEdit));
 
-			try
-			{
-				if (_endingUpdate && !_currentEdit.isEmpty())
-				{
-					fireEvent(new EventObj(Event.BEFORE_UNDO, "edit",
-							_currentEdit));
-					UndoableEdit tmp = _currentEdit;
-					_currentEdit = _createUndoableEdit();
-					tmp.dispatch();
-					fireEvent(new EventObj(Event.UNDO, "edit", tmp));
-				}
-			}
-			finally
-			{
-				_endingUpdate = false;
-			}
-		}
-	}
+      try {
+        if (_endingUpdate && !_currentEdit.isEmpty()) {
+          fireEvent(new EventObj(Event.BEFORE_UNDO, "edit", _currentEdit));
+          UndoableEdit tmp = _currentEdit;
+          _currentEdit = _createUndoableEdit();
+          tmp.dispatch();
+          fireEvent(new EventObj(Event.UNDO, "edit", tmp));
+        }
+      } finally {
+        _endingUpdate = false;
+      }
+    }
+  }
 
-	/**
+  /**
 	 * Merges the children of the given cell into the given target cell inside
 	 * this model. All cells are cloned unless there is a corresponding cell in
 	 * the model with the same id, in which case the source cell is ignored and
@@ -1123,105 +970,90 @@ class GraphModel extends EventSource implements IGraphModel//, Serializable
 	 * @param to
 	 * @param cloneAllEdges
 	 */
-	void mergeChildren(ICell from, ICell to, bool cloneAllEdges)
-			//throws CloneNotSupportedException
-	{
-		beginUpdate();
-		try
-		{
-			Hashtable<Object, Object> mapping = new Hashtable<Object, Object>();
-			_mergeChildrenImpl(from, to, cloneAllEdges, mapping);
+  void mergeChildren(ICell from, ICell to, bool cloneAllEdges) //throws CloneNotSupportedException
+  {
+    beginUpdate();
+    try {
+      Hashtable<Object, Object> mapping = new Hashtable<Object, Object>();
+      _mergeChildrenImpl(from, to, cloneAllEdges, mapping);
 
-			// Post-processes all edges in the mapping and
-			// reconnects the terminals to the corresponding
-			// cells in the target model
-			Iterator<Object> it = mapping.keySet().iterator();
+      // Post-processes all edges in the mapping and
+      // reconnects the terminals to the corresponding
+      // cells in the target model
+      Iterator<Object> it = mapping.keySet().iterator();
 
-			while (it.hasNext())
-			{
-				Object edge = it.next();
-				Object cell = mapping.get(edge);
-				Object terminal = getTerminal(edge, true);
+      while (it.hasNext()) {
+        Object edge = it.next();
+        Object cell = mapping.get(edge);
+        Object terminal = getTerminal(edge, true);
 
-				if (terminal != null)
-				{
-					terminal = mapping.get(terminal);
-					setTerminal(cell, terminal, true);
-				}
+        if (terminal != null) {
+          terminal = mapping.get(terminal);
+          setTerminal(cell, terminal, true);
+        }
 
-				terminal = getTerminal(edge, false);
+        terminal = getTerminal(edge, false);
 
-				if (terminal != null)
-				{
-					terminal = mapping.get(terminal);
-					setTerminal(cell, terminal, false);
-				}
-			}
-		}
-		finally
-		{
-			endUpdate();
-		}
-	}
+        if (terminal != null) {
+          terminal = mapping.get(terminal);
+          setTerminal(cell, terminal, false);
+        }
+      }
+    } finally {
+      endUpdate();
+    }
+  }
 
-	/**
+  /**
 	 * Clones the children of the source cell into the given target cell in
 	 * this model and adds an entry to the mapping that maps from the source
 	 * cell to the target cell with the same id or the clone of the source cell
 	 * that was inserted into this model.
 	 */
-	void _mergeChildrenImpl(ICell from, ICell to,
-			bool cloneAllEdges, Hashtable<Object, Object> mapping)
-			//throws CloneNotSupportedException
-	{
-		beginUpdate();
-		try
-		{
-			int childCount = from.getChildCount();
+  void _mergeChildrenImpl(ICell from, ICell to, bool cloneAllEdges, Hashtable<Object, Object> mapping) //throws CloneNotSupportedException
+  {
+    beginUpdate();
+    try {
+      int childCount = from.getChildCount();
 
-			for (int i = 0; i < childCount; i++)
-			{
-				ICell cell = from.getChildAt(i);
-				String id = cell.getId();
-				ICell target = ((id != null && (!isEdge(cell) || !cloneAllEdges)) ? getCell(id)
-						: null) as ICell;
+      for (int i = 0; i < childCount; i++) {
+        ICell cell = from.getChildAt(i);
+        String id = cell.getId();
+        ICell target = ((id != null && (!isEdge(cell) || !cloneAllEdges)) ? getCell(id) : null) as ICell;
 
-				// Clones and adds the child if no cell exists for the id
-				if (target == null)
-				{
-					Cell clone = cell.clone() as Cell;
-					clone.setId(id);
+        // Clones and adds the child if no cell exists for the id
+        if (target == null) {
+          Cell clone = cell.clone() as Cell;
+          clone.setId(id);
 
-					// Do *NOT* use model.add as this will move the edge away
-					// from the parent in updateEdgeParent if maintainEdgeParent
-					// is enabled in the target model
-					target = to.insert(clone);
-					_cellAdded(target);
-				}
+          // Do *NOT* use model.add as this will move the edge away
+          // from the parent in updateEdgeParent if maintainEdgeParent
+          // is enabled in the target model
+          target = to.insert(clone);
+          _cellAdded(target);
+        }
 
-				// Stores the mapping for later reconnecting edges
-				mapping.put(cell, target);
+        // Stores the mapping for later reconnecting edges
+        mapping.put(cell, target);
 
-				// Recurses
-				_mergeChildrenImpl(cell, target, cloneAllEdges, mapping);
-			}
-		}
-		finally
-		{
-			endUpdate();
-		}
-	}
+        // Recurses
+        _mergeChildrenImpl(cell, target, cloneAllEdges, mapping);
+      }
+    } finally {
+      endUpdate();
+    }
+  }
 
-	/**
+  /**
 	 * Initializes the currentEdit field if the model is deserialized.
 	 */
-	void _readObject(ObjectInputStream ois) //throws IOException, ClassNotFoundException
-	{
-		ois.defaultReadObject();
-		_currentEdit = _createUndoableEdit();
-	}
+  void _readObject(ObjectInputStream ois) //throws IOException, ClassNotFoundException
+  {
+    ois.defaultReadObject();
+    _currentEdit = _createUndoableEdit();
+  }
 
-	/**
+  /**
 	 * Returns the number of incoming or outgoing edges.
 	 * 
 	 * @param model Graph model that contains the connection data.
@@ -1230,13 +1062,13 @@ class GraphModel extends EventSource implements IGraphModel//, Serializable
 	 * incoming edges should be returned.
 	 * @return Returns the number of incoming or outgoing edges.
 	 */
-//	static int getDirectedEdgeCount(IGraphModel model, Object cell,
-//			bool outgoing)
-//	{
-//		return getDirectedEdgeCount(model, cell, outgoing, null);
-//	}
+  //	static int getDirectedEdgeCount(IGraphModel model, Object cell,
+  //			bool outgoing)
+  //	{
+  //		return getDirectedEdgeCount(model, cell, outgoing, null);
+  //	}
 
-	/**
+  /**
 	 * Returns the number of incoming or outgoing edges, ignoring the given
 	 * edge.
 	 *
@@ -1247,75 +1079,67 @@ class GraphModel extends EventSource implements IGraphModel//, Serializable
 	 * @param ignoredEdge Object that represents an edge to be ignored.
 	 * @return Returns the number of incoming or outgoing edges.
 	 */
-	static int getDirectedEdgeCount(IGraphModel model, Object cell,
-			bool outgoing, [Object ignoredEdge=null])
-	{
-		int count = 0;
-		int edgeCount = model.getEdgeCount(cell);
+  static int getDirectedEdgeCount(IGraphModel model, Object cell, bool outgoing, [Object ignoredEdge = null]) {
+    int count = 0;
+    int edgeCount = model.getEdgeCount(cell);
 
-		for (int i = 0; i < edgeCount; i++)
-		{
-			Object edge = model.getEdgeAt(cell, i);
+    for (int i = 0; i < edgeCount; i++) {
+      Object edge = model.getEdgeAt(cell, i);
 
-			if (edge != ignoredEdge
-					&& model.getTerminal(edge, outgoing) == cell)
-			{
-				count++;
-			}
-		}
+      if (edge != ignoredEdge && model.getTerminal(edge, outgoing) == cell) {
+        count++;
+      }
+    }
 
-		return count;
-	}
+    return count;
+  }
 
-	/**
+  /**
 	 * Returns all edges connected to this cell including loops.
 	 *
 	 * @param model Model that contains the connection information.
 	 * @param cell Cell whose connections should be returned.
 	 * @return Returns the array of connected edges for the given cell.
 	 */
-//	static List<Object> getEdges(IGraphModel model, Object cell)
-//	{
-//		return getEdges(model, cell, true, true, true);
-//	}
+  //	static List<Object> getEdges(IGraphModel model, Object cell)
+  //	{
+  //		return getEdges(model, cell, true, true, true);
+  //	}
 
-	/**
+  /**
 	 * Returns all edges connected to this cell without loops.
 	 *
 	 * @param model Model that contains the connection information.
 	 * @param cell Cell whose connections should be returned.
 	 * @return Returns the connected edges for the given cell.
 	 */
-	static List<Object> getConnections(IGraphModel model, Object cell)
-	{
-		return getEdges(model, cell, true, true, false);
-	}
+  static List<Object> getConnections(IGraphModel model, Object cell) {
+    return getEdges(model, cell, true, true, false);
+  }
 
-	/**
+  /**
 	 * Returns the incoming edges of the given cell without loops.
 	 * 
 	 * @param model Graphmodel that contains the edges.
 	 * @param cell Cell whose incoming edges should be returned.
 	 * @return Returns the incoming edges for the given cell.
 	 */
-	static List<Object> getIncomingEdges(IGraphModel model, Object cell)
-	{
-		return getEdges(model, cell, true, false, false);
-	}
+  static List<Object> getIncomingEdges(IGraphModel model, Object cell) {
+    return getEdges(model, cell, true, false, false);
+  }
 
-	/**
+  /**
 	 * Returns the outgoing edges of the given cell without loops.
 	 * 
 	 * @param model Graphmodel that contains the edges.
 	 * @param cell Cell whose outgoing edges should be returned.
 	 * @return Returns the outgoing edges for the given cell.
 	 */
-	static List<Object> getOutgoingEdges(IGraphModel model, Object cell)
-	{
-		return getEdges(model, cell, false, true, false);
-	}
+  static List<Object> getOutgoingEdges(IGraphModel model, Object cell) {
+    return getEdges(model, cell, false, true, false);
+  }
 
-	/**
+  /**
 	 * Returns all distinct edges connected to this cell.
 	 *
 	 * @param model Model that contains the connection information.
@@ -1325,29 +1149,24 @@ class GraphModel extends EventSource implements IGraphModel//, Serializable
 	 * @param includeLoops Specifies if loops should be returned.
 	 * @return Returns the array of connected edges for the given cell.
 	 */
-	static List<Object> getEdges(IGraphModel model, Object cell,
-			[bool incoming=true, bool outgoing=true, bool includeLoops=true])
-	{
-		int edgeCount = model.getEdgeCount(cell);
-		List<Object> result = new List<Object>(edgeCount);
+  static List<Object> getEdges(IGraphModel model, Object cell, [bool incoming = true, bool outgoing = true, bool includeLoops = true]) {
+    int edgeCount = model.getEdgeCount(cell);
+    List<Object> result = new List<Object>(edgeCount);
 
-		for (int i = 0; i < edgeCount; i++)
-		{
-			Object edge = model.getEdgeAt(cell, i);
-			Object source = model.getTerminal(edge, true);
-			Object target = model.getTerminal(edge, false);
+    for (int i = 0; i < edgeCount; i++) {
+      Object edge = model.getEdgeAt(cell, i);
+      Object source = model.getTerminal(edge, true);
+      Object target = model.getTerminal(edge, false);
 
-			if ((includeLoops && source == target)
-					|| ((source != target) && ((incoming && target == cell) || (outgoing && source == cell))))
-			{
-				result.add(edge);
-			}
-		}
+      if ((includeLoops && source == target) || ((source != target) && ((incoming && target == cell) || (outgoing && source == cell)))) {
+        result.add(edge);
+      }
+    }
 
-		return result.toArray();
-	}
+    return result.toArray();
+  }
 
-	/**
+  /**
 	 * Returns all edges from the given source to the given target.
 	 * 
 	 * @param model The graph model that contains the graph.
@@ -1355,13 +1174,13 @@ class GraphModel extends EventSource implements IGraphModel//, Serializable
 	 * @param target Object that defines the target cell.
 	 * @return Returns all edges from source to target.
 	 */
-//	static List<Object> getEdgesBetween(IGraphModel model, Object source,
-//			Object target)
-//	{
-//		return getEdgesBetween(model, source, target, false);
-//	}
+  //	static List<Object> getEdgesBetween(IGraphModel model, Object source,
+  //			Object target)
+  //	{
+  //		return getEdgesBetween(model, source, target, false);
+  //	}
 
-	/**
+  /**
 	 * Returns all edges between the given source and target pair. If directed
 	 * is true, then only edges from the source to the target are returned,
 	 * otherwise, all edges between the two cells are returned.
@@ -1373,46 +1192,41 @@ class GraphModel extends EventSource implements IGraphModel//, Serializable
 	 * should be taken into account.
 	 * @return Returns all edges between the given source and target.
 	 */
-	static List<Object> getEdgesBetween(IGraphModel model, Object source,
-			Object target, [bool directed=false])
-	{
-		int tmp1 = model.getEdgeCount(source);
-		int tmp2 = model.getEdgeCount(target);
+  static List<Object> getEdgesBetween(IGraphModel model, Object source, Object target, [bool directed = false]) {
+    int tmp1 = model.getEdgeCount(source);
+    int tmp2 = model.getEdgeCount(target);
 
-		// Assumes the source has less connected edges
-		Object terminal = source;
-		int edgeCount = tmp1;
+    // Assumes the source has less connected edges
+    Object terminal = source;
+    int edgeCount = tmp1;
 
-		// Uses the smaller array of connected edges
-		// for searching the edge
-		if (tmp2 < tmp1)
-		{
-			edgeCount = tmp2;
-			terminal = target;
-		}
+    // Uses the smaller array of connected edges
+    // for searching the edge
+    if (tmp2 < tmp1) {
+      edgeCount = tmp2;
+      terminal = target;
+    }
 
-		List<Object> result = new List<Object>(edgeCount);
+    List<Object> result = new List<Object>(edgeCount);
 
-		// Checks if the edge is connected to the correct
-		// cell and returns the first match
-		for (int i = 0; i < edgeCount; i++)
-		{
-			Object edge = model.getEdgeAt(terminal, i);
-			Object src = model.getTerminal(edge, true);
-			Object trg = model.getTerminal(edge, false);
-			bool directedMatch = (src == source) && (trg == target);
-			bool oppositeMatch = (trg == source) && (src == target);
+    // Checks if the edge is connected to the correct
+    // cell and returns the first match
+    for (int i = 0; i < edgeCount; i++) {
+      Object edge = model.getEdgeAt(terminal, i);
+      Object src = model.getTerminal(edge, true);
+      Object trg = model.getTerminal(edge, false);
+      bool directedMatch = (src == source) && (trg == target);
+      bool oppositeMatch = (trg == source) && (src == target);
 
-			if (directedMatch || (!directed && oppositeMatch))
-			{
-				result.add(edge);
-			}
-		}
+      if (directedMatch || (!directed && oppositeMatch)) {
+        result.add(edge);
+      }
+    }
 
-		return result.toArray();
-	}
+    return result.toArray();
+  }
 
-	/**
+  /**
 	 * Returns all opposite cells of terminal for the given edges.
 	 * 
 	 * @param model Model that contains the connection information.
@@ -1420,13 +1234,13 @@ class GraphModel extends EventSource implements IGraphModel//, Serializable
 	 * @param terminal Cell that specifies the known end of the edges.
 	 * @return Returns the opposite cells of the given terminal.
 	 */
-//	static List<Object> getOpposites(IGraphModel model, List<Object> edges,
-//			Object terminal)
-//	{
-//		return getOpposites(model, edges, terminal, true, true);
-//	}
+  //	static List<Object> getOpposites(IGraphModel model, List<Object> edges,
+  //			Object terminal)
+  //	{
+  //		return getOpposites(model, edges, terminal, true, true);
+  //	}
 
-	/**
+  /**
 	 * Returns all opposite vertices wrt terminal for the given edges, only
 	 * returning sources and/or targets as specified. The result is returned as
 	 * an array of mxCells.
@@ -1440,100 +1254,82 @@ class GraphModel extends EventSource implements IGraphModel//, Serializable
 	 * be contained in the result. Default is true.
 	 * @return Returns the array of opposite terminals for the given edges.
 	 */
-	static List<Object> getOpposites(IGraphModel model, List<Object> edges,
-			Object terminal, [bool sources=true, bool targets=true])
-	{
-		List<Object> terminals = new List<Object>();
+  static List<Object> getOpposites(IGraphModel model, List<Object> edges, Object terminal, [bool sources = true, bool targets = true]) {
+    List<Object> terminals = new List<Object>();
 
-		if (edges != null)
-		{
-			for (int i = 0; i < edges.length; i++)
-			{
-				Object source = model.getTerminal(edges[i], true);
-				Object target = model.getTerminal(edges[i], false);
+    if (edges != null) {
+      for (int i = 0; i < edges.length; i++) {
+        Object source = model.getTerminal(edges[i], true);
+        Object target = model.getTerminal(edges[i], false);
 
-				// Checks if the terminal is the source of
-				// the edge and if the target should be
-				// stored in the result
-				if (targets && source == terminal && target != null
-						&& target != terminal)
-				{
-					terminals.add(target);
-				}
+        // Checks if the terminal is the source of
+        // the edge and if the target should be
+        // stored in the result
+        if (targets && source == terminal && target != null && target != terminal) {
+          terminals.add(target);
+        } // Checks if the terminal is the taget of
+        // the edge and if the source should be
+        // stored in the result
+        else if (sources && target == terminal && source != null && source != terminal) {
+          terminals.add(source);
+        }
+      }
+    }
 
-				// Checks if the terminal is the taget of
-				// the edge and if the source should be
-				// stored in the result
-				else if (sources && target == terminal && source != null
-						&& source != terminal)
-				{
-					terminals.add(source);
-				}
-			}
-		}
+    return terminals.toArray();
+  }
 
-		return terminals.toArray();
-	}
-
-	/**
+  /**
 	 * Sets the source and target of the given edge in a single atomic change.
 	 * 
 	 * @param edge Cell that specifies the edge.
 	 * @param source Cell that specifies the new source terminal.
 	 * @param target Cell that specifies the new target terminal.
 	 */
-	static void setTerminals(IGraphModel model, Object edge,
-			Object source, Object target)
-	{
-		model.beginUpdate();
-		try
-		{
-			model.setTerminal(edge, source, true);
-			model.setTerminal(edge, target, false);
-		}
-		finally
-		{
-			model.endUpdate();
-		}
-	}
+  static void setTerminals(IGraphModel model, Object edge, Object source, Object target) {
+    model.beginUpdate();
+    try {
+      model.setTerminal(edge, source, true);
+      model.setTerminal(edge, target, false);
+    } finally {
+      model.endUpdate();
+    }
+  }
 
-	/**
+  /**
 	 * Returns all children of the given cell regardless of their type.
 	 *
 	 * @param model Model that contains the hierarchical information.
 	 * @param parent Cell whose child vertices or edges should be returned.
 	 * @return Returns the child vertices and/or edges of the given parent.
 	 */
-	static List<Object> getChildren(IGraphModel model, Object parent)
-	{
-		return getChildCells(model, parent, false, false);
-	}
+  static List<Object> getChildren(IGraphModel model, Object parent) {
+    return getChildCells(model, parent, false, false);
+  }
 
-	/**
+  /**
 	 * Returns the child vertices of the given parent.
 	 *
 	 * @param model Model that contains the hierarchical information.
 	 * @param parent Cell whose child vertices should be returned.
 	 * @return Returns the child vertices of the given parent.
 	 */
-	static List<Object> getChildVertices(IGraphModel model, Object parent)
-	{
-		return getChildCells(model, parent, true, false);
-	}
+  static List<Object> getChildVertices(IGraphModel model, Object parent) {
+    return getChildCells(model, parent, true, false);
+  }
 
-	/**
+  /**
 	 * Returns the child edges of the given parent.
 	 *
 	 * @param model Model that contains the hierarchical information.
 	 * @param parent Cell whose child edges should be returned.
 	 * @return Returns the child edges of the given parent.
 	 */
-	static List<Object> getChildEdges(IGraphModel model, Object parent)
-	{
-		return getChildCells(model, parent, false, true);
-	}
+  static List<Object> getChildEdges(IGraphModel model, Object parent) {
+    return getChildCells(model, parent, false, true);
+  }
 
-	/**
+  /**
 	 * Returns the children of the given cell that are vertices and/or edges
 	 * depending on the arguments. If both arguments are false then all
 	 * children are returned regardless of their type.
@@ -1544,119 +1340,100 @@ class GraphModel extends EventSource implements IGraphModel//, Serializable
 	 * @param edges Boolean indicating if child edges should be returned.
 	 * @return Returns the child vertices and/or edges of the given parent.
 	 */
-	static List<Object> getChildCells(IGraphModel model, Object parent,
-			bool vertices, bool edges)
-	{
-		int childCount = model.getChildCount(parent);
-		List<Object> result = new List<Object>(childCount);
+  static List<Object> getChildCells(IGraphModel model, Object parent, bool vertices, bool edges) {
+    int childCount = model.getChildCount(parent);
+    List<Object> result = new List<Object>(childCount);
 
-		for (int i = 0; i < childCount; i++)
-		{
-			Object child = model.getChildAt(parent, i);
+    for (int i = 0; i < childCount; i++) {
+      Object child = model.getChildAt(parent, i);
 
-			if ((!edges && !vertices) || (edges && model.isEdge(child))
-					|| (vertices && model.isVertex(child)))
-			{
-				result.add(child);
-			}
-		}
+      if ((!edges && !vertices) || (edges && model.isEdge(child)) || (vertices && model.isVertex(child))) {
+        result.add(child);
+      }
+    }
 
-		return result.toArray();
-	}
+    return result.toArray();
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	static List<Object> getParents(IGraphModel model, List<Object> cells)
-	{
-		HashSet<Object> parents = new HashSet<Object>();
+  static List<Object> getParents(IGraphModel model, List<Object> cells) {
+    HashSet<Object> parents = new HashSet<Object>();
 
-		if (cells != null)
-		{
-			for (int i = 0; i < cells.length; i++)
-			{
-				Object parent = model.getParent(cells[i]);
+    if (cells != null) {
+      for (int i = 0; i < cells.length; i++) {
+        Object parent = model.getParent(cells[i]);
 
-				if (parent != null)
-				{
-					parents.add(parent);
-				}
-			}
-		}
+        if (parent != null) {
+          parents.add(parent);
+        }
+      }
+    }
 
-		return parents.toArray();
-	}
+    return parents.toArray();
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	static List<Object> filterCells(List<Object> cells, Filter filter)
-	{
-		ArrayList<Object> result = null;
+  static List<Object> filterCells(List<Object> cells, Filter filter) {
+    ArrayList<Object> result = null;
 
-		if (cells != null)
-		{
-			result = new List<Object>(cells.length);
+    if (cells != null) {
+      result = new List<Object>(cells.length);
 
-			for (int i = 0; i < cells.length; i++)
-			{
-				if (filter.filter(cells[i]))
-				{
-					result.add(cells[i]);
-				}
-			}
-		}
+      for (int i = 0; i < cells.length; i++) {
+        if (filter.filter(cells[i])) {
+          result.add(cells[i]);
+        }
+      }
+    }
 
-		return (result != null) ? result.toArray() : null;
-	}
+    return (result != null) ? result.toArray() : null;
+  }
 
-	/**
+  /**
 	 * Returns a all descendants of the given cell and the cell itself
 	 * as a collection.
 	 */
-	static Collection<Object> getDescendants(IGraphModel model,
-			Object parent)
-	{
-		return filterDescendants(model, null, parent);
-	}
+  static Collection<Object> getDescendants(IGraphModel model, Object parent) {
+    return filterDescendants(model, null, parent);
+  }
 
-	/**
+  /**
 	 * Creates a collection of cells using the visitor pattern.
 	 */
-//	static Collection<Object> filterDescendants(IGraphModel model,
-//			Filter filter)
-//	{
-//		return filterDescendants(model, filter, model.getRoot());
-//	}
+  //	static Collection<Object> filterDescendants(IGraphModel model,
+  //			Filter filter)
+  //	{
+  //		return filterDescendants(model, filter, model.getRoot());
+  //	}
 
-	/**
+  /**
 	 * Creates a collection of cells using the visitor pattern.
 	 */
-	static Collection<Object> filterDescendants(IGraphModel model,
-			Filter filter, [Object parent=null])
-	{
-	  if (parent == null) {
-	    parent = model.getRoot();
-	  }
-		List<Object> result = new List<Object>();
+  static Collection<Object> filterDescendants(IGraphModel model, Filter filter, [Object parent = null]) {
+    if (parent == null) {
+      parent = model.getRoot();
+    }
+    List<Object> result = new List<Object>();
 
-		if (filter == null || filter.filter(parent))
-		{
-			result.add(parent);
-		}
+    if (filter == null || filter.filter(parent)) {
+      result.add(parent);
+    }
 
-		int childCount = model.getChildCount(parent);
+    int childCount = model.getChildCount(parent);
 
-		for (int i = 0; i < childCount; i++)
-		{
-			Object child = model.getChildAt(parent, i);
-			result.addAll(filterDescendants(model, filter, child));
-		}
+    for (int i = 0; i < childCount; i++) {
+      Object child = model.getChildAt(parent, i);
+      result.addAll(filterDescendants(model, filter, child));
+    }
 
-		return result;
-	}
+    return result;
+  }
 
-	/**
+  /**
 	 * Function: getTopmostCells
 	 * 
 	 * Returns the topmost cells of the hierarchy in an array that contains no
@@ -1667,47 +1444,42 @@ class GraphModel extends EventSource implements IGraphModel//, Serializable
 	 * 
 	 * cells - Array of <mxCells> whose topmost ancestors should be returned.
 	 */
-	static List<Object> getTopmostCells(IGraphModel model, List<Object> cells)
-	{
-		Set<Object> hash = new HashSet<Object>();
-		hash.addAll(Arrays.asList(cells));
-		List<Object> result = new List<Object>(cells.length);
+  static List<Object> getTopmostCells(IGraphModel model, List<Object> cells) {
+    Set<Object> hash = new HashSet<Object>();
+    hash.addAll(Arrays.asList(cells));
+    List<Object> result = new List<Object>(cells.length);
 
-		for (int i = 0; i < cells.length; i++)
-		{
-			Object cell = cells[i];
-			bool topmost = true;
-			Object parent = model.getParent(cell);
+    for (int i = 0; i < cells.length; i++) {
+      Object cell = cells[i];
+      bool topmost = true;
+      Object parent = model.getParent(cell);
 
-			while (parent != null)
-			{
-				if (hash.contains(parent))
-				{
-					topmost = false;
-					break;
-				}
+      while (parent != null) {
+        if (hash.contains(parent)) {
+          topmost = false;
+          break;
+        }
 
-				parent = model.getParent(parent);
-			}
+        parent = model.getParent(parent);
+      }
 
-			if (topmost)
-			{
-				result.add(cell);
-			}
-		}
+      if (topmost) {
+        result.add(cell);
+      }
+    }
 
-		return result.toArray();
-	}
+    return result.toArray();
+  }
 
-	//
-	// Visitor patterns
-	//
+  //
+  // Visitor patterns
+  //
 
-	
 
-	//
-	// Atomic changes
-	//
+
+  //
+  // Atomic changes
+  //
 
 
 }

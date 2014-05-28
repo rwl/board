@@ -4,17 +4,15 @@ part of graph.shape;
 //import java.awt.Shape;
 //import java.awt.geom.Ellipse2D;
 
-class EllipseShape extends BasicShape
-{
+class EllipseShape extends BasicShape {
 
-	/**
+  /**
 	 * 
 	 */
-	Shape createShape(Graphics2DCanvas canvas, CellState state)
-	{
-		Rectangle temp = state.getRectangle();
+  Shape createShape(Graphics2DCanvas canvas, CellState state) {
+    Rectangle temp = state.getRectangle();
 
-		return new Ellipse2D.Float(temp.x, temp.y, temp.width, temp.height);
-	}
+    return new Ellipse2D.Float(temp.x, temp.y, temp.width, temp.height);
+  }
 
 }

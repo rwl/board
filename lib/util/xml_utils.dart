@@ -22,59 +22,49 @@ part of graph.util;
 /**
  * Contains various XML helper methods for use with Graph.
  */
-class XmlUtils
-{
-	/**
+class XmlUtils {
+  /**
 	 * Returns a new document for the given XML string.
 	 * 
 	 * @param xml
 	 *            String that represents the XML data.
 	 * @return Returns a new XML document.
 	 */
-	static Document parseXml(String xml)
-	{
-		try
-		{
-			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory
-					.newInstance();
-			DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
+  static Document parseXml(String xml) {
+    try {
+      DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+      DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
 
-			return docBuilder.parse(new InputSource(new StringReader(xml)));
-		}
-		on Exception catch (e)
-		{
-			e.printStackTrace();
-		}
+      return docBuilder.parse(new InputSource(new StringReader(xml)));
+    } on Exception catch (e) {
+      e.printStackTrace();
+    }
 
-		return null;
-	}
-	
-	/**
+    return null;
+  }
+
+  /**
 	 * Returns a string that represents the given node.
 	 * 
 	 * @param node
 	 *            Node to return the XML for.
 	 * @return Returns an XML string.
 	 */
-	static String getXml(Node node)
-	{
-		try
-		{
-			Transformer tf = TransformerFactory.newInstance().newTransformer();
+  static String getXml(Node node) {
+    try {
+      Transformer tf = TransformerFactory.newInstance().newTransformer();
 
-			tf.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-			tf.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+      tf.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+      tf.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
 
-			StreamResult dest = new StreamResult(new StringWriter());
-			tf.transform(new DOMSource(node), dest);
+      StreamResult dest = new StreamResult(new StringWriter());
+      tf.transform(new DOMSource(node), dest);
 
-			return dest.getWriter().toString();
-		}
-		on Exception catch (e)
-		{
-			// ignore
-		}
+      return dest.getWriter().toString();
+    } on Exception catch (e) {
+      // ignore
+    }
 
-		return "";
-	}
+    return "";
+  }
 }

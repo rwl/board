@@ -41,41 +41,36 @@ part of graph.util;
  * and the short format above is converted to a data URI in
  * Graph.postProcessCellStyle.
  */
-class ImageBundle
-{
+class ImageBundle {
 
-	/**
+  /**
 	 * Maps from keys to images.
 	 */
-	Map<String, String> _images = new Hashtable<String, String>();
+  Map<String, String> _images = new Hashtable<String, String>();
 
-	/**
+  /**
 	 * Returns the images.
 	 */
-	Map<String, String> getImages()
-	{
-		return _images;
-	}
+  Map<String, String> getImages() {
+    return _images;
+  }
 
-	/**
+  /**
 	 * Adds the specified entry to the map.
 	 */
-	void putImage(String key, String value)
-	{
-		_images[key] = value;
-	}
+  void putImage(String key, String value) {
+    _images[key] = value;
+  }
 
-	/**
+  /**
 	 * Returns the value for the given key.
 	 */
-	String getImage(String key)
-	{
-		if (key != null)
-		{
-			return _images[key];
-		}
-		
-		return null;
-	}
+  String getImage(String key) {
+    if (key != null) {
+      return _images[key];
+    }
+
+    return null;
+  }
 
 }

@@ -33,298 +33,246 @@ part of graph.view;
  * been layouted in layoutCells. The <code>cells</code> property contains all
  * cells that have been passed to layoutCells.
  */
-class LayoutManager extends EventSource
-{
+class LayoutManager extends EventSource {
 
-	/**
+  /**
 	 * Defines the type of the source or target terminal. The type is a string
 	 * passed to Cell.is to check if the rule applies to a cell.
 	 */
-	Graph _graph;
+  Graph _graph;
 
-	/**
+  /**
 	 * Optional string that specifies the value of the attribute to be passed
 	 * to Cell.is to check if the rule applies to a cell. Default is true.
 	 */
-	bool _enabled = true;
+  bool _enabled = true;
 
-	/**
+  /**
 	 * Optional string that specifies the attributename to be passed to
 	 * Cell.is to check if the rule applies to a cell. Default is true.
 	 */
-	bool _bubbling = true;
+  bool _bubbling = true;
 
-	/**
+  /**
 	 * 
 	 */
-	IEventListener _undoHandler;
+  IEventListener _undoHandler;
 
-	/**
+  /**
 	 * 
 	 */
-	IEventListener _moveHandler;
+  IEventListener _moveHandler;
 
-	/**
+  /**
 	 * 
 	 */
-	LayoutManager(Graph graph)
-	{
-	  _undoHandler = (Object source, EventObj evt)
-        {
-          if (isEnabled())
-          {
-            _beforeUndo(evt.getProperty("edit") as UndoableEdit);
-          }
-        };
-    _moveHandler = (Object source, EventObj evt)
-        {
-          if (isEnabled())
-          {
-            _cellsMoved(evt.getProperty("cells") as List<Object>, evt
-                .getProperty("location") as Point);
-          }
-        };
-		setGraph(graph);
-	}
+  LayoutManager(Graph graph) {
+    _undoHandler = (Object source, EventObj evt) {
+      if (isEnabled()) {
+        _beforeUndo(evt.getProperty("edit") as UndoableEdit);
+      }
+    };
+    _moveHandler = (Object source, EventObj evt) {
+      if (isEnabled()) {
+        _cellsMoved(evt.getProperty("cells") as List<Object>, evt.getProperty("location") as Point);
+      }
+    };
+    setGraph(graph);
+  }
 
-	/**
+  /**
 	 * @return the enabled
 	 */
-	bool isEnabled()
-	{
-		return _enabled;
-	}
+  bool isEnabled() {
+    return _enabled;
+  }
 
-	/**
+  /**
 	 * @param value the enabled to set
 	 */
-	void setEnabled(bool value)
-	{
-		_enabled = value;
-	}
+  void setEnabled(bool value) {
+    _enabled = value;
+  }
 
-	/**
+  /**
 	 * @return the bubbling
 	 */
-	bool isBubbling()
-	{
-		return _bubbling;
-	}
+  bool isBubbling() {
+    return _bubbling;
+  }
 
-	/**
+  /**
 	 * @param value the bubbling to set
 	 */
-	void setBubbling(bool value)
-	{
-		_bubbling = value;
-	}
+  void setBubbling(bool value) {
+    _bubbling = value;
+  }
 
-	/**
+  /**
 	 * @return the graph
 	 */
-	Graph getGraph()
-	{
-		return _graph;
-	}
+  Graph getGraph() {
+    return _graph;
+  }
 
-	/**
+  /**
 	 * @param value the graph to set
 	 */
-	void setGraph(Graph value)
-	{
-		if (_graph != null)
-		{
-			IGraphModel model = _graph.getModel();
-			model.removeListener(_undoHandler);
-			_graph.removeListener(_moveHandler);
-		}
+  void setGraph(Graph value) {
+    if (_graph != null) {
+      IGraphModel model = _graph.getModel();
+      model.removeListener(_undoHandler);
+      _graph.removeListener(_moveHandler);
+    }
 
-		_graph = value;
+    _graph = value;
 
-		if (_graph != null)
-		{
-			IGraphModel model = _graph.getModel();
-			model.addListener(Event.BEFORE_UNDO, _undoHandler);
-			_graph.addListener(Event.MOVE_CELLS, _moveHandler);
-		}
-	}
+    if (_graph != null) {
+      IGraphModel model = _graph.getModel();
+      model.addListener(Event.BEFORE_UNDO, _undoHandler);
+      _graph.addListener(Event.MOVE_CELLS, _moveHandler);
+    }
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	IGraphLayout _getLayout(Object parent)
-	{
-		return null;
-	}
+  IGraphLayout _getLayout(Object parent) {
+    return null;
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void _cellsMoved(List<Object> cells, Point location)
-	{
-		if (cells != null && location != null)
-		{
-			IGraphModel model = getGraph().getModel();
+  void _cellsMoved(List<Object> cells, Point location) {
+    if (cells != null && location != null) {
+      IGraphModel model = getGraph().getModel();
 
-			// Checks if a layout exists to take care of the moving
-			for (int i = 0; i < cells.length; i++)
-			{
-				IGraphLayout layout = _getLayout(model.getParent(cells[i]));
+      // Checks if a layout exists to take care of the moving
+      for (int i = 0; i < cells.length; i++) {
+        IGraphLayout layout = _getLayout(model.getParent(cells[i]));
 
-				if (layout != null)
-				{
-					layout.moveCell(cells[i], location.x, location.y);
-				}
-			}
-		}
-	}
+        if (layout != null) {
+          layout.moveCell(cells[i], location.x, location.y);
+        }
+      }
+    }
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void _beforeUndo(UndoableEdit edit)
-	{
-		Collection<Object> cells = _getCellsForChanges(edit.getChanges());
-		IGraphModel model = getGraph().getModel();
+  void _beforeUndo(UndoableEdit edit) {
+    Collection<Object> cells = _getCellsForChanges(edit.getChanges());
+    IGraphModel model = getGraph().getModel();
 
-		if (isBubbling())
-		{
-			List<Object> tmp = GraphModel.getParents(model, cells.toArray());
+    if (isBubbling()) {
+      List<Object> tmp = GraphModel.getParents(model, cells.toArray());
 
-			while (tmp.length > 0)
-			{
-				cells.addAll(Arrays.asList(tmp));
-				tmp = GraphModel.getParents(model, tmp);
-			}
-		}
+      while (tmp.length > 0) {
+        cells.addAll(Arrays.asList(tmp));
+        tmp = GraphModel.getParents(model, tmp);
+      }
+    }
 
-		_layoutCells(Utils.sortCells(cells, false).toArray());
-	}
+    _layoutCells(Utils.sortCells(cells, false).toArray());
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	Collection<Object> _getCellsForChanges(
-			List<UndoableChange> changes)
-	{
-		Set<Object> result = new HashSet<Object>();
-		Iterator<UndoableChange> it = changes.iterator();
+  Collection<Object> _getCellsForChanges(List<UndoableChange> changes) {
+    Set<Object> result = new HashSet<Object>();
+    Iterator<UndoableChange> it = changes.iterator();
 
-		while (it.hasNext())
-		{
-			UndoableChange change = it.next();
+    while (it.hasNext()) {
+      UndoableChange change = it.next();
 
-			if (change is RootChange)
-			{
-				return new HashSet<Object>();
-			}
-			else
-			{
-				result.addAll(_getCellsForChange(change));
-			}
-		}
+      if (change is RootChange) {
+        return new HashSet<Object>();
+      } else {
+        result.addAll(_getCellsForChange(change));
+      }
+    }
 
-		return result;
-	}
+    return result;
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	Collection<Object> _getCellsForChange(UndoableChange change)
-	{
-		IGraphModel model = getGraph().getModel();
-		Set<Object> result = new HashSet<Object>();
+  Collection<Object> _getCellsForChange(UndoableChange change) {
+    IGraphModel model = getGraph().getModel();
+    Set<Object> result = new HashSet<Object>();
 
-		if (change is ChildChange)
-		{
-			ChildChange cc = change as ChildChange;
-			Object parent = model.getParent(cc.getChild());
+    if (change is ChildChange) {
+      ChildChange cc = change as ChildChange;
+      Object parent = model.getParent(cc.getChild());
 
-			if (cc.getChild() != null)
-			{
-				result.add(cc.getChild());
-			}
+      if (cc.getChild() != null) {
+        result.add(cc.getChild());
+      }
 
-			if (parent != null)
-			{
-				result.add(parent);
-			}
+      if (parent != null) {
+        result.add(parent);
+      }
 
-			if (cc.getPrevious() != null)
-			{
-				result.add(cc.getPrevious());
-			}
-		}
-		else if (change is TerminalChange
-				|| change is GeometryChange)
-		{
-			Object cell = (change is TerminalChange) ? (change as TerminalChange)
-					.getCell()
-					: (change as GeometryChange).getCell();
+      if (cc.getPrevious() != null) {
+        result.add(cc.getPrevious());
+      }
+    } else if (change is TerminalChange || change is GeometryChange) {
+      Object cell = (change is TerminalChange) ? (change as TerminalChange).getCell() : (change as GeometryChange).getCell();
 
-			if (cell != null)
-			{
-				result.add(cell);
-				Object parent = model.getParent(cell);
+      if (cell != null) {
+        result.add(cell);
+        Object parent = model.getParent(cell);
 
-				if (parent != null)
-				{
-					result.add(parent);
-				}
-			}
-		}
+        if (parent != null) {
+          result.add(parent);
+        }
+      }
+    }
 
-		return result;
-	}
+    return result;
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void _layoutCells(List<Object> cells)
-	{
-		if (cells.length > 0)
-		{
-			// Invokes the layouts while removing duplicates
-			IGraphModel model = getGraph().getModel();
+  void _layoutCells(List<Object> cells) {
+    if (cells.length > 0) {
+      // Invokes the layouts while removing duplicates
+      IGraphModel model = getGraph().getModel();
 
-			model.beginUpdate();
-			try
-			{
-				for (int i = 0; i < cells.length; i++)
-				{
-					if (cells[i] != model.getRoot())
-					{
-						_executeLayout(_getLayout(cells[i]), cells[i]);
-					}
-				}
+      model.beginUpdate();
+      try {
+        for (int i = 0; i < cells.length; i++) {
+          if (cells[i] != model.getRoot()) {
+            _executeLayout(_getLayout(cells[i]), cells[i]);
+          }
+        }
 
-				fireEvent(new EventObj(Event.LAYOUT_CELLS, "cells",
-						cells));
-			}
-			finally
-			{
-				model.endUpdate();
-			}
-		}
-	}
+        fireEvent(new EventObj(Event.LAYOUT_CELLS, "cells", cells));
+      } finally {
+        model.endUpdate();
+      }
+    }
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void _executeLayout(IGraphLayout layout, Object parent)
-	{
-		if (layout != null && parent != null)
-		{
-			layout.execute(parent);
-		}
-	}
+  void _executeLayout(IGraphLayout layout, Object parent) {
+    if (layout != null && parent != null) {
+      layout.execute(parent);
+    }
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void destroy()
-	{
-		setGraph(null);
-	}
+  void destroy() {
+    setGraph(null);
+  }
 
 }

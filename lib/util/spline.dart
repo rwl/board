@@ -5,148 +5,126 @@ part of graph.util;
 
 //import java.util.List;
 
-class Spline
-{
-	/** 
+class Spline {
+  /** 
 	 *	Array representing the relative proportion of the total distance
 	 *	of each point in the line ( i.e. first point is 0.0, end point is
 	 *	1.0, a point halfway on line is 0.5 ).
 	 */
-	List<double> _t;
+  List<double> _t;
 
-	Spline1D _splineX;
+  Spline1D _splineX;
 
-	Spline1D _splineY;
+  Spline1D _splineY;
 
-	/**
+  /**
 	 * Total length tracing the points on the spline
 	 */
-	double _length;
+  double _length;
 
-	Spline(List<Point2d> points)
-	{
-		if (points != null)
-		{
-			List<double> x = new List<double>(points.size());
-			List<double> y = new List<double>(points.size());
-			int i = 0;
+  Spline(List<Point2d> points) {
+    if (points != null) {
+      List<double> x = new List<double>(points.size());
+      List<double> y = new List<double>(points.size());
+      int i = 0;
 
-			for (Point2d point in points)
-			{
-				x[i] = point.getX();
-				y[i++] = point.getY();
-			}
+      for (Point2d point in points) {
+        x[i] = point.getX();
+        y[i++] = point.getY();
+      }
 
-			_init(x, y);
-		}
-	}
+      _init(x, y);
+    }
+  }
 
-	/**
+  /**
 	 * Creates a new Spline.
 	 * @param x
 	 * @param y
 	 */
-	void Spline2D(List<double> x, List<double> y)
-	{
-		_init(x, y);
-	}
+  void Spline2D(List<double> x, List<double> y) {
+    _init(x, y);
+  }
 
-	void _init(List<double> x, List<double> y)
-	{
-		if (x.length != y.length)
-		{
-			// Arrays must have the same length
-			// TODO log something
-			return;
-		}
+  void _init(List<double> x, List<double> y) {
+    if (x.length != y.length) {
+      // Arrays must have the same length
+      // TODO log something
+      return;
+    }
 
-		if (x.length < 2)
-		{
-			// Spline edges must have at least two points
-			// TODO log something
-			return;
-		}
+    if (x.length < 2) {
+      // Spline edges must have at least two points
+      // TODO log something
+      return;
+    }
 
-		_t = new List<double>(x.length);
-		_t[0] = 0.0; // start point is always 0.0
-		_length = 0.0;
+    _t = new List<double>(x.length);
+    _t[0] = 0.0; // start point is always 0.0
+    _length = 0.0;
 
-		// Calculate the partial proportions of each section between each set
-		// of points and the total length of sum of all sections
-		for (int i = 1; i < _t.length; i++)
-		{
-			double lx = x[i] - x[i - 1];
-			double ly = y[i] - y[i - 1];
+    // Calculate the partial proportions of each section between each set
+    // of points and the total length of sum of all sections
+    for (int i = 1; i < _t.length; i++) {
+      double lx = x[i] - x[i - 1];
+      double ly = y[i] - y[i - 1];
 
-			// If either diff is zero there is no point performing the square root
-			if (0.0 == lx)
-			{
-				_t[i] = Math.abs(ly);
-			}
-			else if (0.0 == ly)
-			{
-				_t[i] = Math.abs(lx);
-			}
-			else
-			{
-				_t[i] = Math.sqrt(lx * lx + ly * ly);
-			}
+      // If either diff is zero there is no point performing the square root
+      if (0.0 == lx) {
+        _t[i] = Math.abs(ly);
+      } else if (0.0 == ly) {
+        _t[i] = Math.abs(lx);
+      } else {
+        _t[i] = Math.sqrt(lx * lx + ly * ly);
+      }
 
-			_length += _t[i];
-			_t[i] += _t[i - 1];
-		}
+      _length += _t[i];
+      _t[i] += _t[i - 1];
+    }
 
-		for (int j = 1; j < (_t.length) - 1; j++)
-		{
-			_t[j] = _t[j] / _length;
-		}
+    for (int j = 1; j < (_t.length) - 1; j++) {
+      _t[j] = _t[j] / _length;
+    }
 
-		_t[(_t.length) - 1] = 1.0; // end point is always 1.0
+    _t[(_t.length) - 1] = 1.0; // end point is always 1.0
 
-		_splineX = new Spline1D(_t, x);
-		_splineY = new Spline1D(_t, y);
-	}
+    _splineX = new Spline1D(_t, x);
+    _splineY = new Spline1D(_t, y);
+  }
 
-	/**
+  /**
 	 * @param t 0 <= t <= 1
 	 */
-	Point2d getPoint(double t)
-	{
-		Point2d result = new Point2d(_splineX.getValue(t), _splineY.getValue(t));
+  Point2d getPoint(double t) {
+    Point2d result = new Point2d(_splineX.getValue(t), _splineY.getValue(t));
 
-		return result;
-	}
+    return result;
+  }
 
-	/**
+  /**
 	 * Used to check the correctness of this spline
 	 */
-	bool checkValues()
-	{
-		return (_splineX._len.length > 1 && _splineY._len.length > 1);
-	}
+  bool checkValues() {
+    return (_splineX._len.length > 1 && _splineY._len.length > 1);
+  }
 
-	double getDx(double t)
-	{
-		return _splineX.getDx(t);
-	}
+  double getDx(double t) {
+    return _splineX.getDx(t);
+  }
 
-	double getDy(double t)
-	{
-		return _splineY.getDx(t);
-	}
+  double getDy(double t) {
+    return _splineY.getDx(t);
+  }
 
-	Spline1D getSplineX()
-	{
-		return _splineX;
-	}
+  Spline1D getSplineX() {
+    return _splineX;
+  }
 
-	Spline1D getSplineY()
-	{
-		return _splineY;
-	}
+  Spline1D getSplineY() {
+    return _splineY;
+  }
 
-	double getLength()
-	{
-		return _length;
-	}
+  double getLength() {
+    return _length;
+  }
 }

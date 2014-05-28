@@ -25,7 +25,7 @@ class AnalysisGraph {
 	 * Returns the incoming and/or outgoing edges for the given cell.
 	 * If the optional parent argument is specified, then only edges are returned
 	 * where the opposite is in the given parent cell.
-	 * 
+	 *
 	 * @param cell Cell whose edges should be returned.
 	 * @param parent Optional parent. If specified the opposite end of any edge
 	 * must be a child of that parent in order for the edge to be returned. The
@@ -69,7 +69,7 @@ class AnalysisGraph {
 	 * Returns the incoming and/or outgoing edges for the given cell.
 	 * If the optional parent argument is specified, then only edges are returned
 	 * where the opposite is in the given parent cell.
-	 * 
+	 *
 	 * @param cell Cell whose edges should be returned.
 	 * @param parent Optional parent. If specified the opposite end of any edge
 	 * must be a child of that parent in order for the edge to be returned. The
@@ -93,7 +93,7 @@ class AnalysisGraph {
 	}*/
 
   /**
-	 * 
+	 *
 	 * @param parent
 	 * @return all vertices of the given <b>parent</b>
 	 */
@@ -102,7 +102,7 @@ class AnalysisGraph {
   }
 
   /**
-	 * 
+	 *
 	 * @param parent
 	 * @return all edges of the given <b>parent</b>
 	 */
@@ -111,7 +111,7 @@ class AnalysisGraph {
   }
 
   /**
-	 * 
+	 *
 	 * @param edge
 	 * @param isSource
 	 * @return
@@ -127,7 +127,7 @@ class AnalysisGraph {
   /**
 	 * Returns all distinct opposite cells for the specified terminal
 	 * on the given edges.
-	 * 
+	 *
 	 * @param edges Edges whose opposite terminals should be returned.
 	 * @param terminal Terminal that specifies the end whose opposite should be
 	 * returned.
@@ -149,7 +149,7 @@ class AnalysisGraph {
   /**
 	 * Returns all distinct opposite cells for the specified terminal
 	 * on the given edges.
-	 * 
+	 *
 	 * @param edges Edges whose opposite terminals should be returned.
 	 * @param terminal Terminal that specifies the end whose opposite should be
 	 * returned.

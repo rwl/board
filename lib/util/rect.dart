@@ -9,48 +9,46 @@ part of graph.util;
 /**
  * Implements a 2-dimensional rectangle with double precision coordinates.
  */
-class Rect extends Point2d
-{
+class Rect extends Point2d {
 
-	/**
+  /**
 	 * 
 	 */
-//	private static final long serialVersionUID = -3793966043543578946L;
+  //	private static final long serialVersionUID = -3793966043543578946L;
 
-	/**
+  /**
 	 * Holds the width and the height. Default is 0.
 	 */
-	double _width, _height;
+  double _width, _height;
 
-	/**
+  /**
 	 * Constructs a new rectangle at (0, 0) with the width and height set to 0.
 	 */
-//	Rect()
-//	{
-//		this(0, 0, 0, 0);
-//	}
+  //	Rect()
+  //	{
+  //		this(0, 0, 0, 0);
+  //	}
 
-	/**
+  /**
 	 * Constructs a copy of the given rectangle.
 	 * 
 	 * @param rect Rectangle to construct a copy of.
 	 */
-	/*Rect(Rectangle2D rect)
+  /*Rect(Rectangle2D rect)
 	{
 		this(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 	}*/
 
-	/**
+  /**
 	 * Constructs a copy of the given rectangle.
 	 * 
 	 * @param rect Rectangle to construct a copy of.
 	 */
-	factory Rect.from(Rect rect)
-	{
-		new Rect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
-	}
+  factory Rect.from(Rect rect) {
+    new Rect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
+  }
 
-	/**
+  /**
 	 * Constructs a rectangle using the given parameters.
 	 * 
 	 * @param x X-coordinate of the new rectangle.
@@ -58,53 +56,48 @@ class Rect extends Point2d
 	 * @param width Width of the new rectangle.
 	 * @param height Height of the new rectangle.
 	 */
-	Rect([double x=0.0, double y=0.0, double width=0.0, double height=0.0]) : super(x, y)
-	{
-		setWidth(width);
-		setHeight(height);
-	}
+  Rect([double x = 0.0, double y = 0.0, double width = 0.0, double height = 0.0]) : super(x, y) {
+    setWidth(width);
+    setHeight(height);
+  }
 
-	/**
+  /**
 	 * Returns the width of the rectangle.
 	 * 
 	 * @return Returns the width.
 	 */
-	double getWidth()
-	{
-		return _width;
-	}
+  double getWidth() {
+    return _width;
+  }
 
-	/**
+  /**
 	 * Sets the width of the rectangle.
 	 * 
 	 * @param value Double that specifies the new width.
 	 */
-	void setWidth(double value)
-	{
-		_width = value;
-	}
+  void setWidth(double value) {
+    _width = value;
+  }
 
-	/**
+  /**
 	 * Returns the height of the rectangle.
 	 * 
 	 * @return Returns the height.
 	 */
-	double getHeight()
-	{
-		return _height;
-	}
+  double getHeight() {
+    return _height;
+  }
 
-	/**
+  /**
 	 * Sets the height of the rectangle.
 	 * 
 	 * @param value Double that specifies the new height.
 	 */
-	void setHeight(double value)
-	{
-		_height = value;
-	}
+  void setHeight(double value) {
+    _height = value;
+  }
 
-	/**
+  /**
 	 * Sets this rectangle to the specified values
 	 * 
 	 * @param x the new x-axis position
@@ -112,82 +105,74 @@ class Rect extends Point2d
 	 * @param w the new width of the rectangle
 	 * @param h the new height of the rectangle
 	 */
-	void setRect(double x, double y, double w, double h)
-	{
-	    this._x = x;
-	    this._y = y;
-	    this._width = w;
-	    this._height = h;
-	}
+  void setRect(double x, double y, double w, double h) {
+    this._x = x;
+    this._y = y;
+    this._width = w;
+    this._height = h;
+  }
 
-	/**
+  /**
 	 * Adds the given rectangle to this rectangle.
 	 */
-	void add(Rect rect)
-	{
-		if (rect != null)
-		{
-			double minX = Math.min(_x, rect._x);
-			double minY = Math.min(_y, rect._y);
-			double maxX = Math.max(_x + _width, rect._x + rect._width);
-			double maxY = Math.max(_y + _height, rect._y + rect._height);
+  void add(Rect rect) {
+    if (rect != null) {
+      double minX = Math.min(_x, rect._x);
+      double minY = Math.min(_y, rect._y);
+      double maxX = Math.max(_x + _width, rect._x + rect._width);
+      double maxY = Math.max(_y + _height, rect._y + rect._height);
 
-			_x = minX;
-			_y = minY;
-			_width = maxX - minX;
-			_height = maxY - minY;
-		}
-	}
+      _x = minX;
+      _y = minY;
+      _width = maxX - minX;
+      _height = maxY - minY;
+    }
+  }
 
-	/**
+  /**
 	 * Returns the x-coordinate of the center.
 	 * 
 	 * @return Returns the x-coordinate of the center.
 	 */
-	double getCenterX()
-	{
-		return getX() + getWidth() / 2;
-	}
+  double getCenterX() {
+    return getX() + getWidth() / 2;
+  }
 
-	/**
+  /**
 	 * Returns the y-coordinate of the center.
 	 * 
 	 * @return Returns the y-coordinate of the center.
 	 */
-	double getCenterY()
-	{
-		return getY() + getHeight() / 2;
-	}
+  double getCenterY() {
+    return getY() + getHeight() / 2;
+  }
 
-	/**
+  /**
 	 * Grows the rectangle by the given amount, that is, this method subtracts
 	 * the given amount from the x- and y-coordinates and adds twice the amount
 	 * to the width and height.
 	 *
 	 * @param amount Amount by which the rectangle should be grown.
 	 */
-	void grow(double amount)
-	{
-		_x -= amount;
-		_y -= amount;
-		_width += 2 * amount;
-		_height += 2 * amount;
-	}
+  void grow(double amount) {
+    _x -= amount;
+    _y -= amount;
+    _width += 2 * amount;
+    _height += 2 * amount;
+  }
 
-	/**
+  /**
 	 * Returns true if the given point is contained in the rectangle.
 	 * 
 	 * @param x X-coordinate of the point.
 	 * @param y Y-coordinate of the point.
 	 * @return Returns true if the point is contained in the rectangle.
 	 */
-	bool contains(double x, double y)
-	{
-		return (this._x <= x && this._x + _width >= x && this._y <= y && this._y
-				+ _height >= y);
-	}
+  bool contains(double x, double y) {
+    return (this._x <= x && this._x + _width >= x && this._y <= y && this._y + _height >= y);
+  }
 
-	/**
+  /**
 	 * Returns the point at which the specified point intersects the perimeter 
 	 * of this rectangle or null if there is no intersection.
 	 * 
@@ -198,86 +183,73 @@ class Rect extends Point2d
 	 * @return the point at which the line intersects this rectangle, or null
 	 * 			if there is no intersection
 	 */
-	Point2d intersectLine(double x0, double y0, double x1, double y1)
-	{
-		Point2d result = null;
+  Point2d intersectLine(double x0, double y0, double x1, double y1) {
+    Point2d result = null;
 
-		result = Utils.intersection(_x, _y, _x + _width, _y, x0, y0, x1, y1);
+    result = Utils.intersection(_x, _y, _x + _width, _y, x0, y0, x1, y1);
 
-		if (result == null)
-		{
-			result = Utils.intersection(_x + _width, _y, _x + _width, _y + _height,
-					x0, y0, x1, y1);
-		}
+    if (result == null) {
+      result = Utils.intersection(_x + _width, _y, _x + _width, _y + _height, x0, y0, x1, y1);
+    }
 
-		if (result == null)
-		{
-			result = Utils.intersection(_x + _width, _y + _height, _x, _y + _height,
-					x0, y0, x1, y1);
-		}
+    if (result == null) {
+      result = Utils.intersection(_x + _width, _y + _height, _x, _y + _height, x0, y0, x1, y1);
+    }
 
-		if (result == null)
-		{
-			result = Utils.intersection(_x, _y, _x, _y + _height, x0, y0, x1, y1);
-		}
+    if (result == null) {
+      result = Utils.intersection(_x, _y, _x, _y + _height, x0, y0, x1, y1);
+    }
 
-		return result;
-	}
+    return result;
+  }
 
-	/**
+  /**
 	 * Returns the bounds as a new rectangle.
 	 * 
 	 * @return Returns a new rectangle for the bounds.
 	 */
-	Rectangle getRectangle()
-	{
-		int ix = Math.round(_x) as int;
-		int iy = Math.round(_y) as int;
-		int iw = Math.round(_width - ix + _x) as int;
-		int ih = Math.round(_height - iy + _y) as int;
+  Rectangle getRectangle() {
+    int ix = Math.round(_x) as int;
+    int iy = Math.round(_y) as int;
+    int iw = Math.round(_width - ix + _x) as int;
+    int ih = Math.round(_height - iy + _y) as int;
 
-		return new Rectangle(ix, iy, iw, ih);
-	}
+    return new Rectangle(ix, iy, iw, ih);
+  }
 
-	/**
+  /**
 	 * 
 	 * Returns true if the given object equals this rectangle.
 	 */
-	bool equals(Object obj)
-	{
-		if (obj is Rect)
-		{
-			Rect rect = obj;
+  bool equals(Object obj) {
+    if (obj is Rect) {
+      Rect rect = obj;
 
-			return rect.getX() == getX() && rect.getY() == getY()
-					&& rect.getWidth() == getWidth()
-					&& rect.getHeight() == getHeight();
-		}
+      return rect.getX() == getX() && rect.getY() == getY() && rect.getWidth() == getWidth() && rect.getHeight() == getHeight();
+    }
 
-		return false;
-	}
+    return false;
+  }
 
-	/**
+  /**
 	 * Returns a new instance of the same rectangle.
 	 */
-	Object clone()
-	{
-		Rect clone = super.clone() as Rect;
+  Object clone() {
+    Rect clone = super.clone() as Rect;
 
-		clone.setWidth(getWidth());
-		clone.setHeight(getHeight());
+    clone.setWidth(getWidth());
+    clone.setHeight(getHeight());
 
-		return clone;
-	}
+    return clone;
+  }
 
-	/**
+  /**
 	 * Returns the <code>String</code> representation of this
 	 * <code>Rect</code>.
 	 * @return a <code>String</code> representing this
 	 * <code>Rect</code>.
 	 */
-	String toString()
-	{
-		return getClass().getName() + "[x=$_x,y=$_y,w=$_width,h=$_height]";
-	}
+  String toString() {
+    return getClass().getName() + "[x=$_x,y=$_y,w=$_width,h=$_height]";
+  }
 }

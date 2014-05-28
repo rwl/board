@@ -13,138 +13,124 @@ part of graph.io;
  * Singleton class that acts as a global registry for codecs. See
  * {@link Codec} for an example.
  */
-class CodecRegistry
-{
+class CodecRegistry {
 
-	/**
+  /**
 	 * Maps from constructor names to codecs.
 	 */
-	static Hashtable<String, ObjectCodec> _codecs = new Hashtable<String, ObjectCodec>();
+  static Hashtable<String, ObjectCodec> _codecs = new Hashtable<String, ObjectCodec>();
 
-	/**
+  /**
 	 * Maps from classnames to codecnames.
 	 */
-	static Hashtable<String, String> _aliases = new Hashtable<String, String>();
+  static Hashtable<String, String> _aliases = new Hashtable<String, String>();
 
-	/**
+  /**
 	 * Holds the list of known packages. Packages are used to prefix short
 	 * class names (eg. Cell) in XML markup.
 	 */
-	static List<String> _packages = new List<String>();
+  static List<String> _packages = new List<String>();
 
-	// Registers the known codecs and package names
-	static init()
-	{
-		addPackage("graph");
-		addPackage("graph.util");
-		addPackage("graph.model");
-		addPackage("graph.view");
-		addPackage("java.lang");
-		addPackage("java.util");
+  // Registers the known codecs and package names
+  static init() {
+    addPackage("graph");
+    addPackage("graph.util");
+    addPackage("graph.model");
+    addPackage("graph.view");
+    addPackage("java.lang");
+    addPackage("java.util");
 
-		register(new ObjectCodec(new List<Object>()));
-		register(new ModelCodec());
-		register(new CellCodec());
-		register(new StylesheetCodec());
+    register(new ObjectCodec(new List<Object>()));
+    register(new ModelCodec());
+    register(new CellCodec());
+    register(new StylesheetCodec());
 
-		register(new RootChangeCodec());
-		register(new ChildChangeCodec());
-		register(new TerminalChangeCodec());
-		register(new GenericChangeCodec(new ValueChange(), "value"));
-		register(new GenericChangeCodec(new StyleChange(), "style"));
-		register(new GenericChangeCodec(new GeometryChange(), "geometry"));
-		register(new GenericChangeCodec(new CollapseChange(), "collapsed"));
-		register(new GenericChangeCodec(new VisibleChange(), "visible"));
-	}
+    register(new RootChangeCodec());
+    register(new ChildChangeCodec());
+    register(new TerminalChangeCodec());
+    register(new GenericChangeCodec(new ValueChange(), "value"));
+    register(new GenericChangeCodec(new StyleChange(), "style"));
+    register(new GenericChangeCodec(new GeometryChange(), "geometry"));
+    register(new GenericChangeCodec(new CollapseChange(), "collapsed"));
+    register(new GenericChangeCodec(new VisibleChange(), "visible"));
+  }
 
-	/**
+  /**
 	 * Registers a new codec and associates the name of the template constructor
 	 * in the codec with the codec object. Automatically creates an alias if the
 	 * codename and the classname are not equal.
 	 */
-	static ObjectCodec register(ObjectCodec codec)
-	{
-		if (codec != null)
-		{
-			String name = codec.getName();
-			_codecs.put(name, codec);
+  static ObjectCodec register(ObjectCodec codec) {
+    if (codec != null) {
+      String name = codec.getName();
+      _codecs.put(name, codec);
 
-			String classname = getName(codec.getTemplate());
+      String classname = getName(codec.getTemplate());
 
-			if (!classname.equals(name))
-			{
-				addAlias(classname, name);
-			}
-		}
+      if (!classname.equals(name)) {
+        addAlias(classname, name);
+      }
+    }
 
-		return codec;
-	}
+    return codec;
+  }
 
-	/**
+  /**
 	 * Adds an alias for mapping a classname to a codecname.
 	 */
-	static void addAlias(String classname, String codecname)
-	{
-		_aliases.put(classname, codecname);
-	}
+  static void addAlias(String classname, String codecname) {
+    _aliases.put(classname, codecname);
+  }
 
-	/**
+  /**
 	 * Returns a codec that handles the given object, which can be an object
 	 * instance or an XML node.
 	 * 
 	 * @param name Java class name.
 	 */
-	static ObjectCodec getCodec(String name)
-	{
-		String tmp = _aliases.get(name);
+  static ObjectCodec getCodec(String name) {
+    String tmp = _aliases.get(name);
 
-		if (tmp != null)
-		{
-			name = tmp;
-		}
+    if (tmp != null) {
+      name = tmp;
+    }
 
-		ObjectCodec codec = _codecs.get(name);
+    ObjectCodec codec = _codecs.get(name);
 
-		// Registers a new default codec for the given name
-		// if no codec has been previously defined.
-		if (codec == null)
-		{
-			Object instance = getInstanceForName(name);
+    // Registers a new default codec for the given name
+    // if no codec has been previously defined.
+    if (codec == null) {
+      Object instance = getInstanceForName(name);
 
-			if (instance != null)
-			{
-				try
-				{
-					codec = new ObjectCodec(instance);
-					register(codec);
-				}
-				on Exception catch (e)
-				{
-					// ignore
-				}
-			}
-		}
+      if (instance != null) {
+        try {
+          codec = new ObjectCodec(instance);
+          register(codec);
+        } on Exception catch (e) {
+          // ignore
+        }
+      }
+    }
 
-		return codec;
-	}
+    return codec;
+  }
 
-	/**
+  /**
 	 * Adds the given package name to the list of known package names.
 	 * 
 	 * @param packagename Name of the package to be added.
 	 */
-	static void addPackage(String packagename)
-	{
-		_packages.add(packagename);
-	}
+  static void addPackage(String packagename) {
+    _packages.add(packagename);
+  }
 
-	/**
+  /**
 	 * Creates and returns a new instance for the given class name.
 	 * 
 	 * @param name Name of the class to be instantiated.
 	 * @return Returns a new instance of the given class.
 	 */
-	/*static Object getInstanceForName(String name)
+  /*static Object getInstanceForName(String name)
 	{
 		Class<?> clazz = getClassForName(name);
 
@@ -171,41 +157,33 @@ class CodecRegistry
 		return null;
 	}*/
 
-	/**
+  /**
 	 * Returns a class that corresponds to the given name.
 	 * 
 	 * @param name
 	 * @return Returns the class for the given name.
 	 */
-	static Class/*<?>*/ getClassForName(String name)
-	{
-		try
-		{
-			return Class.forName(name);
-		}
-		on Exception catch (e)
-		{
-			// ignore
-		}
+  static Class /*<?>*/ getClassForName(String name) {
+    try {
+      return Class.forName(name);
+    } on Exception catch (e) {
+      // ignore
+    }
 
-		for (int i = 0; i < _packages.size(); i++)
-		{
-			try
-			{
-				String s = _packages.get(i);
+    for (int i = 0; i < _packages.size(); i++) {
+      try {
+        String s = _packages.get(i);
 
-				return Class.forName(s + "." + name);
-			}
-			on Exception catch (e)
-			{
-				// ignore
-			}
-		}
+        return Class.forName(s + "." + name);
+      } on Exception catch (e) {
+        // ignore
+      }
+    }
 
-		return null;
-	}
+    return null;
+  }
 
-	/**
+  /**
 	 * Returns the name that identifies the codec associated
 	 * with the given instance..
 	 *
@@ -216,7 +194,7 @@ class CodecRegistry
 	 * @param instance Instance whose node name should be returned.
 	 * @return Returns a string that identifies the codec.
 	 */
-	/*static String getName(Object instance)
+  /*static String getName(Object instance)
 	{
 		Class<? extends Object> type = instance.getClass();
 

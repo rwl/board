@@ -13,66 +13,58 @@ part of graph.io.graphml;
  * document. The key elements are wrapped in instances of mxGmlKey and
  * may to be access by ID.
  */
-class GraphMlKeyManager
-{
-	/**
+class GraphMlKeyManager {
+  /**
 	 * Map with the key elements of the document.<br/>
 	 * The key is the key's ID.
 	 */
-	HashMap<String, GraphMlKey> _keyMap = new HashMap<String, GraphMlKey>();
+  HashMap<String, GraphMlKey> _keyMap = new HashMap<String, GraphMlKey>();
 
-	static GraphMlKeyManager _keyManager = null;
+  static GraphMlKeyManager _keyManager = null;
 
-	/**
+  /**
 	 * Singleton pattern requires private constructor.
 	 */
-	GraphMlKeyManager()
-	{
-	}
+  GraphMlKeyManager() {
+  }
 
-	/**
+  /**
 	 * Returns the instance of mxGmlKeyManager.
 	 * If no instance has been created until the moment, a new instance is
 	 * returned.
 	 * This method don't load the map.
 	 * @return An instance of mxGmlKeyManager.
 	 */
-	static GraphMlKeyManager getInstance()
-	{
-		if (_keyManager == null)
-		{
-			_keyManager = new GraphMlKeyManager();
-		}
-		return _keyManager;
-	}
+  static GraphMlKeyManager getInstance() {
+    if (_keyManager == null) {
+      _keyManager = new GraphMlKeyManager();
+    }
+    return _keyManager;
+  }
 
-	/**
+  /**
 	 * Load the map with the key elements in the document.<br/>
 	 * The keys are wrapped for instances of mxGmlKey.
 	 * @param doc Document with the keys.
 	 */
-	void initialise(Document doc)
-	{
-		NodeList gmlKeys = doc.getElementsByTagName(GraphMlConstants.KEY);
+  void initialise(Document doc) {
+    NodeList gmlKeys = doc.getElementsByTagName(GraphMlConstants.KEY);
 
-		int keyLength = gmlKeys.getLength();
+    int keyLength = gmlKeys.getLength();
 
-		for (int i = 0; i < keyLength; i++)
-		{
-			Element key = gmlKeys.item(i) as Element;
-			String keyId = key.getAttribute(GraphMlConstants.ID);
-			GraphMlKey keyElement = new GraphMlKey(key);
-			_keyMap.put(keyId, keyElement);
-		}
-	}
+    for (int i = 0; i < keyLength; i++) {
+      Element key = gmlKeys.item(i) as Element;
+      String keyId = key.getAttribute(GraphMlConstants.ID);
+      GraphMlKey keyElement = new GraphMlKey(key);
+      _keyMap.put(keyId, keyElement);
+    }
+  }
 
-	HashMap<String, GraphMlKey> getKeyMap()
-	{
-		return _keyMap;
-	}
+  HashMap<String, GraphMlKey> getKeyMap() {
+    return _keyMap;
+  }
 
-	void setKeyMap(HashMap<String, GraphMlKey> keyMap)
-	{
-		this._keyMap = keyMap;
-	}
+  void setKeyMap(HashMap<String, GraphMlKey> keyMap) {
+    this._keyMap = keyMap;
+  }
 }

@@ -10,112 +10,100 @@ part of graph.sharing;
 /**
  * Implements a diagram that may be shared among multiple sessions.
  */
-class SharedGraphModel extends SharedState
-{
+class SharedGraphModel extends SharedState {
 
-	/**
+  /**
 	 * 
 	 */
-	GraphModel _model;
+  GraphModel _model;
 
-	/**
+  /**
 	 * 
 	 */
-	Codec _codec;
+  Codec _codec;
 
-	/**
+  /**
 	 * Whether remote changes should be significant in the
 	 * local command history. Default is true.
 	 */
-	bool _significantRemoteChanges = true;
+  bool _significantRemoteChanges = true;
 
-	/**
+  /**
 	 * Constructs a new diagram with the given model.
 	 * 
 	 * @param model Initial model of the diagram.
 	 */
-	SharedGraphModel(GraphModel model) : super(null) // Overrides getState
-	{
-        _codec = (String id)
-        {
-            return _model.getCell(id);
-        };
-		this._model = model;
-	}
+  SharedGraphModel(GraphModel model) : super(null) // Overrides getState
+  {
+    _codec = (String id) {
+      return _model.getCell(id);
+    };
+    this._model = model;
+  }
 
-	/**
+  /**
 	 * @return the model
 	 */
-	GraphModel getModel()
-	{
-		return _model;
-	}
+  GraphModel getModel() {
+    return _model;
+  }
 
-	/**
+  /**
 	 * @return the significantRemoteChanges
 	 */
-	bool isSignificantRemoteChanges()
-	{
-		return _significantRemoteChanges;
-	}
+  bool isSignificantRemoteChanges() {
+    return _significantRemoteChanges;
+  }
 
-	/**
+  /**
 	 * @param significantRemoteChanges the significantRemoteChanges to set
 	 */
-	void setSignificantRemoteChanges(bool significantRemoteChanges)
-	{
-		this._significantRemoteChanges = significantRemoteChanges;
-	}
+  void setSignificantRemoteChanges(bool significantRemoteChanges) {
+    this._significantRemoteChanges = significantRemoteChanges;
+  }
 
-	/**
+  /**
 	 * Returns the initial state of the diagram.
 	 */
-	String getState()
-	{
-		return XmlUtils.getXml(_codec.encode(_model));
-	}
+  String getState() {
+    return XmlUtils.getXml(_codec.encode(_model));
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	/*synchronized*/ void addDelta(String edits)
-	{
-		// Edits are not added to the history. They are sent straight out to
-		// all sessions and the model is updated so the next session will get
-		// these edits via the new state of the model in getState.
-	}
+  /*synchronized*/ void addDelta(String edits) {
+    // Edits are not added to the history. They are sent straight out to
+    // all sessions and the model is updated so the next session will get
+    // these edits via the new state of the model in getState.
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	String _processEdit(Node node)
-	{
-		List<AtomicGraphModelChange> changes = _decodeChanges(node.getFirstChild());
+  String _processEdit(Node node) {
+    List<AtomicGraphModelChange> changes = _decodeChanges(node.getFirstChild());
 
-		if (changes.length > 0)
-		{
-			UndoableEdit edit = _createUndoableEdit(changes);
+    if (changes.length > 0) {
+      UndoableEdit edit = _createUndoableEdit(changes);
 
-			// No notify event here to avoid the edit from being encoded and transmitted
-			// LATER: Remove changes property (deprecated)
-			_model.fireEvent(new EventObj(Event.CHANGE, "edit", edit,
-					"changes", changes));
-			_model.fireEvent(new EventObj(Event.UNDO, "edit", edit));
-			fireEvent(new EventObj(Event.FIRED, "edit", edit));
-		}
+      // No notify event here to avoid the edit from being encoded and transmitted
+      // LATER: Remove changes property (deprecated)
+      _model.fireEvent(new EventObj(Event.CHANGE, "edit", edit, "changes", changes));
+      _model.fireEvent(new EventObj(Event.UNDO, "edit", edit));
+      fireEvent(new EventObj(Event.FIRED, "edit", edit));
+    }
 
-		return super._processEdit(node);
-	}
+    return super._processEdit(node);
+  }
 
-	/**
+  /**
 	 * Creates a new UndoableEdit that implements the notify function to fire
 	 * a change and notify event via the model.
 	 */
-	UndoableEdit _createUndoableEdit(
-			List<AtomicGraphModelChange> changes)
-	{
-        throw new Exception();
-		/*UndoableEdit edit = new UndoableEdit(this, _significantRemoteChanges)
+  UndoableEdit _createUndoableEdit(List<AtomicGraphModelChange> changes) {
+    throw new Exception();
+    /*UndoableEdit edit = new UndoableEdit(this, _significantRemoteChanges)
 		{
 			public void dispatch()
 			{
@@ -127,82 +115,71 @@ class SharedGraphModel extends SharedState
 			}
 		};*/
 
-		for (int i = 0; i < changes.length; i++)
-		{
-			edit.add(changes[i]);
-		}
+    for (int i = 0; i < changes.length; i++) {
+      edit.add(changes[i]);
+    }
 
-		return edit;
-	}
+    return edit;
+  }
 
-	/**
+  /**
 	 * Adds removed cells to the codec object lookup for references to the removed
 	 * cells after this point in time.
 	 */
-    List<AtomicGraphModelChange> _decodeChanges(Node node)
-	{
-		// Updates the document in the existing codec
-		_codec.setDocument(node.getOwnerDocument());
+  List<AtomicGraphModelChange> _decodeChanges(Node node) {
+    // Updates the document in the existing codec
+    _codec.setDocument(node.getOwnerDocument());
 
-		LinkedList<AtomicGraphModelChange> changes = new LinkedList<AtomicGraphModelChange>();
+    LinkedList<AtomicGraphModelChange> changes = new LinkedList<AtomicGraphModelChange>();
 
-		while (node != null)
-		{
-			Object change;
+    while (node != null) {
+      Object change;
 
-			if (node.getNodeName().equals("RootChange"))
-			{
-				// Handles the special case were no ids should be
-				// resolved in the existing model. This change will
-				// replace all registered ids and cells from the
-				// model and insert a new cell hierarchy instead.
-				Codec tmp = new Codec(node.getOwnerDocument());
-				change = tmp.decode(node);
-			}
-			else
-			{
-				change = _codec.decode(node);
-			}
+      if (node.getNodeName().equals("RootChange")) {
+        // Handles the special case were no ids should be
+        // resolved in the existing model. This change will
+        // replace all registered ids and cells from the
+        // model and insert a new cell hierarchy instead.
+        Codec tmp = new Codec(node.getOwnerDocument());
+        change = tmp.decode(node);
+      } else {
+        change = _codec.decode(node);
+      }
 
-			if (change is AtomicGraphModelChange)
-			{
-				AtomicGraphModelChange ac = change as AtomicGraphModelChange;
+      if (change is AtomicGraphModelChange) {
+        AtomicGraphModelChange ac = change as AtomicGraphModelChange;
 
-				ac.setModel(_model);
-				ac.execute();
+        ac.setModel(_model);
+        ac.execute();
 
-				// Workaround for references not being resolved if cells have
-				// been removed from the model prior to being referenced. This
-				// adds removed cells in the codec object lookup table.
-				if (ac is ChildChange
-						&& (ac as ChildChange).getParent() == null)
-				{
-					cellRemoved((ac as ChildChange).getChild());
-				}
+        // Workaround for references not being resolved if cells have
+        // been removed from the model prior to being referenced. This
+        // adds removed cells in the codec object lookup table.
+        if (ac is ChildChange && (ac as ChildChange).getParent() == null) {
+          cellRemoved((ac as ChildChange).getChild());
+        }
 
-				changes.add(ac);
-			}
+        changes.add(ac);
+      }
 
-			node = node.getNextSibling();
-		}
+      node = node.getNextSibling();
+    }
 
-		return changes.toArray(new List<AtomicGraphModelChange>(changes.size()));
-	}
+    return changes.toArray(new List<AtomicGraphModelChange>(changes.size()));
+  }
 
-	/**
+  /**
 	 * Adds removed cells to the codec object lookup for references to the removed
 	 * cells after this point in time.
 	 */
-	void cellRemoved(Object cell)
-	{
-		_codec.putObject((cell as ICell).getId(), cell);
+  void cellRemoved(Object cell) {
+    _codec.putObject((cell as ICell).getId(), cell);
 
-		int childCount = _model.getChildCount(cell);
+    int childCount = _model.getChildCount(cell);
 
-		for (int i = 0; i < childCount; i++)
-		{
-			cellRemoved(_model.getChildAt(cell, i));
-		}
-	}
+    for (int i = 0; i < childCount; i++) {
+      cellRemoved(_model.getChildAt(cell, i));
+    }
+  }
 
 }

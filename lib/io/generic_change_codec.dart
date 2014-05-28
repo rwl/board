@@ -12,51 +12,45 @@ part of graph.io;
  * dynamically at load time and used implicitely via Codec
  * and the CodecRegistry.
  */
-class GenericChangeCodec extends ObjectCodec
-{
-	/**
+class GenericChangeCodec extends ObjectCodec {
+  /**
 	 * 
 	 */
-	String _fieldname;
+  String _fieldname;
 
-    static const _DEFAULT_EXCLUDE = [ "model", "previous" ];
-    static const _DEFAULT_IDREFS = [ "cell" ];
+  static const _DEFAULT_EXCLUDE = ["model", "previous"];
+  static const _DEFAULT_IDREFS = ["cell"];
 
-	/**
+  /**
 	 * Constructs a new model codec.
 	 */
-//	GenericChangeCodec(Object template, String fieldname)
-//	{
-//		this(template, [ "model", "previous" ],
-//				[ "cell" ], null, fieldname);
-//	}
+  //	GenericChangeCodec(Object template, String fieldname)
+  //	{
+  //		this(template, [ "model", "previous" ],
+  //				[ "cell" ], null, fieldname);
+  //	}
 
-	/**
+  /**
 	 * Constructs a new model codec for the given arguments.
 	 */
-	GenericChangeCodec(Object template, String fieldname, [List<String> exclude=_DEFAULT_EXCLUDE,
-			List<String> idrefs=_DEFAULT_IDREFS, Map<String, String> mapping=null]) :
-            super(template, exclude, idrefs, mapping)
-	{
-		this._fieldname = fieldname;
-	}
+  GenericChangeCodec(Object template, String fieldname, [List<String> exclude = _DEFAULT_EXCLUDE, List<String> idrefs = _DEFAULT_IDREFS, Map<String, String> mapping = null]) : super(template, exclude, idrefs, mapping) {
+    this._fieldname = fieldname;
+  }
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see graph.io.ObjectCodec#afterDecode(graph.io.Codec, org.w3c.dom.Node, java.lang.Object)
 	 */
-//	@Override
-	Object afterDecode(Codec dec, Node node, Object obj)
-	{
-		Object cell = _getFieldValue(obj, "cell");
+  //	@Override
+  Object afterDecode(Codec dec, Node node, Object obj) {
+    Object cell = _getFieldValue(obj, "cell");
 
-		if (cell is Node)
-		{
-			_setFieldValue(obj, "cell", dec.decodeCell(cell as Node, false));
-		}
+    if (cell is Node) {
+      _setFieldValue(obj, "cell", dec.decodeCell(cell as Node, false));
+    }
 
-		_setFieldValue(obj, "previous", _getFieldValue(obj, _fieldname));
+    _setFieldValue(obj, "previous", _getFieldValue(obj, _fieldname));
 
-		return obj;
-	}
+    return obj;
+  }
 
 }

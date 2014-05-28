@@ -14,34 +14,33 @@ part of graph.canvas;
  * - Alpha gradients (for glass effect)
  * - Encode result as image (PNG, JPG)
  */
-abstract class ICanvas2D
-{
-	/**
+abstract class ICanvas2D {
+  /**
 	 * Saves the current state of the canvas.
 	 */
-	void save();
+  void save();
 
-	/**
+  /**
 	 * Restores the previous state of the canvas.
 	 */
-	void restore();
+  void restore();
 
-	/**
+  /**
 	 * Uniformaly scales the canvas by the given amount.
 	 * 
 	 * @param value The new scale value.
 	 */
-	void scale(double value);
+  void scale(double value);
 
-	/**
+  /**
 	 * Translates the canvas by the given amount.
 	 * 
 	 * @param dx X-coordinate of the translation.
 	 * @param dy Y-coordinate of the translation.
 	 */
-	void translate(double dx, double dy);
+  void translate(double dx, double dy);
 
-	/**
+  /**
 	 * Rotates the canvas by the given angle around the given center. This
 	 * method may add rendering overhead and should be used with care.
 	 * 
@@ -51,118 +50,118 @@ abstract class ICanvas2D
 	 * @param cx X-coordinate of the center point.
 	 * @param cy Y-coordinate of the center point.
 	 */
-	void rotate(double theta, bool flipH, bool flipV, double cx, double cy);
+  void rotate(double theta, bool flipH, bool flipV, double cx, double cy);
 
-	/**
+  /**
 	 * Sets the stroke width. This should default to 1 if unset.
 	 * 
 	 * @param value Width of the stroke. The value should be multiplied by the
 	 * current scale.
 	 */
-	void setStrokeWidth(double value);
+  void setStrokeWidth(double value);
 
-	/**
+  /**
 	 * Sets the stroke color. This should default to {@link Constants#NONE}
 	 * if unset.
 	 * 
 	 * @param value Hex representation of the color or {@link Constants#NONE}.
 	 */
-	void setStrokeColor(String value);
+  void setStrokeColor(String value);
 
-	/**
+  /**
 	 * Sets the dashed state. This should default to false if unset.
 	 * 
 	 * @param value Boolean representing the dashed state.
 	 */
-	void setDashed(bool value);
+  void setDashed(bool value);
 
-	/**
+  /**
 	 * Sets the dash pattern. This should default to "3 3" if unset.
 	 * 
 	 * @param value Space separated list of floats representing the dash
 	 * pattern. The value should be multiplied by the current scale.
 	 */
-	void setDashPattern(String value);
+  void setDashPattern(String value);
 
-	/**
+  /**
 	 * Sets the linecap. This should default to "flat" if unset.
 	 * 
 	 * @param value "flat", "square" or "round".
 	 */
-	void setLineCap(String value);
+  void setLineCap(String value);
 
-	/**
+  /**
 	 * Sets the linejoin. This should default to "miter" if unset.
 	 * 
 	 * @param value "miter", "round" or "bevel".
 	 */
-	void setLineJoin(String value);
+  void setLineJoin(String value);
 
-	/**
+  /**
 	 * Sets the miterlimit. This should default to 10 if unset.
 	 * 
 	 * @param value
 	 */
-	void setMiterLimit(double value);
+  void setMiterLimit(double value);
 
-	/**
+  /**
 	 * Default value {@link Constants#DEFAULT_FONTSIZE}.
 	 * 
 	 * @param value
 	 */
-	void setFontSize(double value);
+  void setFontSize(double value);
 
-	/**
+  /**
 	 * Default value "#000000".
 	 * 
 	 * @param value Hex representation of the color or {@link Constants#NONE}.
 	 */
-	void setFontColor(String value);
+  void setFontColor(String value);
 
-	/**
+  /**
 	 * Default value {@link Constants#DEFAULT_FONTFAMILY}.
 	 * 
 	 * @param value
 	 */
-	void setFontFamily(String value);
+  void setFontFamily(String value);
 
-	/**
+  /**
 	 * Default value 0. See {@link Constants#STYLE_FONTSTYLE}.
 	 * 
 	 * @param value
 	 */
-	void setFontStyle(int value);
+  void setFontStyle(int value);
 
-	/**
+  /**
 	 * Default value "#000000".
 	 * 
 	 * @param value Hex representation of the color or {@link Constants#NONE}.
 	 */
-	void setFontBackgroundColor(String value);
+  void setFontBackgroundColor(String value);
 
-	/**
+  /**
 	 * Default value "#000000".
 	 * 
 	 * @param value Hex representation of the color or {@link Constants#NONE}.
 	 */
-	void setFontBorderColor(String value);
+  void setFontBorderColor(String value);
 
-	/**
+  /**
 	 * Default value 1. This method may add rendering overhead and should be
 	 * used with care.
 	 * 
 	 * @param value
 	 */
-	void setAlpha(double value);
+  void setAlpha(double value);
 
-	/**
+  /**
 	 * Default value {@link Constants#NONE}.
 	 * 
 	 * @param value Hex representation of the color or {@link Constants#NONE}.
 	 */
-	void setFillColor(String value);
+  void setFillColor(String value);
 
-	/**
+  /**
 	 * Prepares the canvas to draw a gradient.
 	 * 
 	 * @param color1
@@ -174,38 +173,37 @@ abstract class ICanvas2D
 	 * @param direction Direction may be null. Use default value
 	 * 		{@link Constants#DIRECTION_SOUTH}.
 	 */
-	void setGradient(String color1, String color2, double x, double y,
-			double w, double h, String direction, double alpha1, double alpha2);
+  void setGradient(String color1, String color2, double x, double y, double w, double h, String direction, double alpha1, double alpha2);
 
-	/**
+  /**
 	 * Enables or disables the painting of shadows.
 	 * 
 	 * @param enabled Whether the shadow should be enabled.
 	 */
-	void setShadow(bool enabled);
+  void setShadow(bool enabled);
 
-	/**
+  /**
 	 * Default value {@link Constants#NONE}.
 	 * 
 	 * @param value Hex representation of the color or {@link Constants#NONE}.
 	 */
-	void setShadowColor(String value);
+  void setShadowColor(String value);
 
-	/**
+  /**
 	 * Default value {@link Constants#NONE}.
 	 * 
 	 * @param value Hex representation of the color or {@link Constants#NONE}.
 	 */
-	void setShadowAlpha(double value);
+  void setShadowAlpha(double value);
 
-	/**
+  /**
 	 * Default value {@link Constants#NONE}.
 	 * 
 	 * @param value Hex representation of the color or {@link Constants#NONE}.
 	 */
-	void setShadowOffset(double dx, double dy);
+  void setShadowOffset(double dx, double dy);
 
-	/**
+  /**
 	 * Next fill or stroke should draw a rectangle.
 	 * 
 	 * @param x
@@ -213,9 +211,9 @@ abstract class ICanvas2D
 	 * @param w
 	 * @param h
 	 */
-	void rect(double x, double y, double w, double h);
+  void rect(double x, double y, double w, double h);
 
-	/**
+  /**
 	 * 
 	 * Next fill or stroke should draw a round rectangle.
 	 * 
@@ -226,9 +224,9 @@ abstract class ICanvas2D
 	 * @param dx
 	 * @param dy
 	 */
-	void roundrect(double x, double y, double w, double h, double dx, double dy);
+  void roundrect(double x, double y, double w, double h, double dx, double dy);
 
-	/**
+  /**
 	 * 
 	 * Next fill or stroke should draw an ellipse.
 	 * 
@@ -237,9 +235,9 @@ abstract class ICanvas2D
 	 * @param w
 	 * @param h
 	 */
-	void ellipse(double x, double y, double w, double h);
+  void ellipse(double x, double y, double w, double h);
 
-	/**
+  /**
 	 * Draws the given image.
 	 * 
 	 * @param x
@@ -251,10 +249,9 @@ abstract class ICanvas2D
 	 * @param flipH
 	 * @param flipV
 	 */
-	void image(double x, double y, double w, double h, String src,
-			bool aspect, bool flipH, bool flipV);
+  void image(double x, double y, double w, double h, String src, bool aspect, bool flipH, bool flipV);
 
-	/**
+  /**
 	 * Draws the given string. Possible values for format are empty string for
 	 * plain text and html for HTML markup.
 	 * 
@@ -267,31 +264,30 @@ abstract class ICanvas2D
 	 * @param valign
 	 * @param vertical
 	 */
-	void text(double x, double y, double w, double h, String str, String align, String valign,
-			bool wrap, String format, String overflow, bool clip, double rotation);
+  void text(double x, double y, double w, double h, String str, String align, String valign, bool wrap, String format, String overflow, bool clip, double rotation);
 
-	/**
+  /**
 	 * Begins a new path.
 	 */
-	void begin();
+  void begin();
 
-	/**
+  /**
 	 * Moves to the given path.
 	 * 
 	 * @param x
 	 * @param y
 	 */
-	void moveTo(double x, double y);
+  void moveTo(double x, double y);
 
-	/**
+  /**
 	 * Draws a line to the given path.
 	 * 
 	 * @param x
 	 * @param y
 	 */
-	void lineTo(double x, double y);
+  void lineTo(double x, double y);
 
-	/**
+  /**
 	 * Draws a quadratic curve to the given point.
 	 * 
 	 * @param x1
@@ -299,9 +295,9 @@ abstract class ICanvas2D
 	 * @param x2
 	 * @param y2
 	 */
-	void quadTo(double x1, double y1, double x2, double y2);
+  void quadTo(double x1, double y1, double x2, double y2);
 
-	/**
+  /**
 	 * Draws a bezier curve to the given point.
 	 * 
 	 * @param x1
@@ -311,27 +307,26 @@ abstract class ICanvas2D
 	 * @param x3
 	 * @param y3
 	 */
-	void curveTo(double x1, double y1, double x2, double y2, double x3,
-			double y3);
+  void curveTo(double x1, double y1, double x2, double y2, double x3, double y3);
 
-	/**
+  /**
 	 * Closes the current path.
 	 */
-	void close();
+  void close();
 
-	/**
+  /**
 	 * Paints the outline of the current path.
 	 */
-	void stroke();
+  void stroke();
 
-	/**
+  /**
 	 * Fills the current path.
 	 */
-	void fill();
+  void fill();
 
-	/**
+  /**
 	 * Fills and paints the outline of the current path.
 	 */
-	void fillAndStroke();
+  void fillAndStroke();
 
 }

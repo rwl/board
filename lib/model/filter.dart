@@ -3,11 +3,10 @@ part of graph.model;
 /**
  * 
  */
-abstract class Filter
-{
+abstract class Filter {
 
-	/**
+  /**
 	 * 
 	 */
-	bool filter(Object cell);
+  bool filter(Object cell);
 }

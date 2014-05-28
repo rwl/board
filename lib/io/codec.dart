@@ -15,103 +15,94 @@ part of graph.io;
  * when reading files the XML document that contains the data must be passed
  * to the constructor.
  */
-class Codec
-{
+class Codec {
 
-	/**
+  /**
 	 * Holds the owner document of the codec.
 	 */
-	Document _document;
+  Document _document;
 
-	/**
+  /**
 	 * Maps from IDs to objects.
 	 */
-	Map<String, Object> _objects = new Hashtable<String, Object>();
+  Map<String, Object> _objects = new Hashtable<String, Object>();
 
-	/**
+  /**
 	 * Specifies if default values should be encoded. Default is false.
 	 */
-	bool _encodeDefaults = false;
+  bool _encodeDefaults = false;
 
-	/**
+  /**
 	 * Constructs an XML encoder/decoder with a new owner document.
 	 */
-//	Codec()
-//	{
-//		this(DomUtils.createDocument());
-//	}
+  //	Codec()
+  //	{
+  //		this(DomUtils.createDocument());
+  //	}
 
-	/**
+  /**
 	 * Constructs an XML encoder/decoder for the specified owner document.
 	 * 
 	 * @param document Optional XML document that contains the data. If no document
 	 * is specified then a new document is created using Utils.createDocument
 	 */
-	Codec([Document document=null])
-	{
-		if (document == null)
-		{
-			document = DomUtils.createDocument();
-		}
+  Codec([Document document = null]) {
+    if (document == null) {
+      document = DomUtils.createDocument();
+    }
 
-		this._document = document;
-	}
+    this._document = document;
+  }
 
-	/**
+  /**
 	 * Returns the owner document of the codec.
 	 * 
 	 * @return Returns the owner document.
 	 */
-	Document getDocument()
-	{
-		return _document;
-	}
+  Document getDocument() {
+    return _document;
+  }
 
-	/**
+  /**
 	 * Sets the owner document of the codec.
 	 */
-	void setDocument(Document value)
-	{
-		_document = value;
-	}
+  void setDocument(Document value) {
+    _document = value;
+  }
 
-	/**
+  /**
 	 * Returns if default values of member variables should be encoded.
 	 */
-	bool isEncodeDefaults()
-	{
-		return _encodeDefaults;
-	}
+  bool isEncodeDefaults() {
+    return _encodeDefaults;
+  }
 
-	/**
+  /**
 	 * Sets if default values of member variables should be encoded.
 	 */
-	void setEncodeDefaults(bool encodeDefaults)
-	{
-		this._encodeDefaults = encodeDefaults;
-	}
+  void setEncodeDefaults(bool encodeDefaults) {
+    this._encodeDefaults = encodeDefaults;
+  }
 
-	/**
+  /**
 	 * Returns the object lookup table.
 	 */
-	Map<String, Object> getObjects()
-	{
-		return _objects;
-	}
+  Map<String, Object> getObjects() {
+    return _objects;
+  }
 
-	/**
+  /**
 	 * Assoiates the given object with the given ID.
 	 * 
 	 * @param id ID for the object to be associated with.
 	 * @param object Object to be associated with the ID.
 	 * @return Returns the given object.
 	 */
-	Object putObject(String id, Object object)
-	{
-		return _objects.put(id, object);
-	}
+  Object putObject(String id, Object object) {
+    return _objects.put(id, object);
+  }
 
-	/**
+  /**
 	 * Returns the decoded object for the element with the specified ID in
 	 * {@link #_document}. If the object is not known then {@link #lookup(String)}
 	 * is used to find an object. If no object is found, then the element with
@@ -120,60 +111,54 @@ class Codec
 	 * @param id ID of the object to be returned.
 	 * @return Returns the object for the given ID.
 	 */
-	Object getObject(String id)
-	{
-		Object obj = null;
+  Object getObject(String id) {
+    Object obj = null;
 
-		if (id != null)
-		{
-			obj = _objects.get(id);
+    if (id != null) {
+      obj = _objects.get(id);
 
-			if (obj == null)
-			{
-				obj = lookup(id);
+      if (obj == null) {
+        obj = lookup(id);
 
-				if (obj == null)
-				{
-					Node node = getElementById(id);
+        if (obj == null) {
+          Node node = getElementById(id);
 
-					if (node != null)
-					{
-						obj = decode(node);
-					}
-				}
-			}
-		}
+          if (node != null) {
+            obj = decode(node);
+          }
+        }
+      }
+    }
 
-		return obj;
-	}
+    return obj;
+  }
 
-	/**
+  /**
 	 * Hook for subclassers to implement a custom lookup mechanism for cell IDs.
 	 * This implementation always returns null.
 	 * 
 	 * @param id ID of the object to be returned.
 	 * @return Returns the object for the given ID.
 	 */
-	Object lookup(String id)
-	{
-		return null;
-	}
+  Object lookup(String id) {
+    return null;
+  }
 
-	/**
+  /**
 	 * Returns the element with the given ID from the document.
 	 * 
 	 * @param id ID of the element to be returned.
 	 * @return Returns the element for the given ID.
 	 */
-//	Node getElementById(String id)
-//	{
-//		return getElementById(id, null);
-//	}
+  //	Node getElementById(String id)
+  //	{
+  //		return getElementById(id, null);
+  //	}
 
-	/**
+  /**
 	 * Returns the element with the given ID from document. The optional attr
 	 * argument specifies the name of the ID attribute. Default is "id". The
-	 * XPath expression used to find the element is //*[@attr='arg'] where attr
+	 * XPath expression used to find the element is [@attr='arg'] where attr
 	 * is the name of the ID attribute and arg is the given id.
 	 * 
 	 * Parameters:
@@ -181,19 +166,17 @@ class Codec
 	 * id - String that contains the ID.
 	 * attr - Optional string for the attributename. Default is id.
 	 */
-	Node getElementById(String id, [String attr=null])
-	{
-		if (attr == null)
-		{
-			attr = "id";
-		}
+  Node getElementById(String id, [String attr = null]) {
+    if (attr == null) {
+      attr = "id";
+    }
 
-		String expr = "//*[@" + attr + "='" + id + "']";
+    String expr = "//*[@" + attr + "='" + id + "']";
 
-		return Utils.selectSingleNode(_document, expr);
-	}
+    return Utils.selectSingleNode(_document, expr);
+  }
 
-	/**
+  /**
 	 * Returns the ID of the specified object. This implementation calls
 	 * reference first and if that returns null handles the object as an
 	 * Cell by returning their IDs using Cell.getId. If no ID exists for
@@ -203,93 +186,79 @@ class Codec
 	 * @param obj Object to return the ID for.
 	 * @return Returns the ID for the given object.
 	 */
-	String getId(Object obj)
-	{
-		String id = null;
+  String getId(Object obj) {
+    String id = null;
 
-		if (obj != null)
-		{
-			id = reference(obj);
+    if (obj != null) {
+      id = reference(obj);
 
-			if (id == null && obj is ICell)
-			{
-				id = (obj as ICell).getId();
+      if (id == null && obj is ICell) {
+        id = (obj as ICell).getId();
 
-				if (id == null)
-				{
-					// Uses an on-the-fly Id
-					id = CellPath.create((ICell) obj);
+        if (id == null) {
+          // Uses an on-the-fly Id
+          id = CellPath.create(obj as ICell);
 
-					if (id.length() == 0)
-					{
-						id = "root";
-					}
-				}
-			}
-		}
+          if (id.length() == 0) {
+            id = "root";
+          }
+        }
+      }
+    }
 
-		return id;
-	}
+    return id;
+  }
 
-	/**
+  /**
 	 * Hook for subclassers to implement a custom method for retrieving IDs from
 	 * objects. This implementation always returns null.
 	 * 
 	 * @param obj Object whose ID should be returned.
 	 * @return Returns the ID for the given object.
 	 */
-	String reference(Object obj)
-	{
-		return null;
-	}
+  String reference(Object obj) {
+    return null;
+  }
 
-	/**
+  /**
 	 * Encodes the specified object and returns the resulting XML node.
 	 * 
 	 * @param obj Object to be encoded.
 	 * @return Returns an XML node that represents the given object.
 	 */
-	Node encode(Object obj)
-	{
-		Node node = null;
+  Node encode(Object obj) {
+    Node node = null;
 
-		if (obj != null)
-		{
-			String name = CodecRegistry.getName(obj);
-			ObjectCodec enc = CodecRegistry.getCodec(name);
+    if (obj != null) {
+      String name = CodecRegistry.getName(obj);
+      ObjectCodec enc = CodecRegistry.getCodec(name);
 
-			if (enc != null)
-			{
-				node = enc.encode(this, obj);
-			}
-			else
-			{
-				if (obj is Node)
-				{
-					node = (obj as Node).cloneNode(true);
-				}
-				else
-				{
-					System.err.println("No codec for " + name);
-				}
-			}
-		}
+      if (enc != null) {
+        node = enc.encode(this, obj);
+      } else {
+        if (obj is Node) {
+          node = (obj as Node).cloneNode(true);
+        } else {
+          System.err.println("No codec for " + name);
+        }
+      }
+    }
 
-		return node;
-	}
+    return node;
+  }
 
-	/**
+  /**
 	 * Decodes the given XML node using {@link #decode(Node, Object)}.
 	 * 
 	 * @param node XML node to be decoded.
 	 * @return Returns an object that represents the given node.
 	 */
-	Object decode(Node node)
-	{
-		return decode(node, null);
-	}
+  //	Object decode(Node node)
+  //	{
+  //		return decode(node, null);
+  //	}
 
-	/**
+  /**
 	 * Decodes the given XML node. The optional "into" argument specifies an
 	 * existing object to be used. If no object is given, then a new
 	 * instance is created using the constructor from the codec.
@@ -301,38 +270,29 @@ class Codec
 	 * @param into Optional object to be decodec into.
 	 * @return Returns an object that represents the given node.
 	 */
-	Object decode(Node node, Object into)
-	{
-		Object obj = null;
+  Object decode(Node node, [Object into = null]) {
+    Object obj = null;
 
-		if (node != null && node.getNodeType() == Node.ELEMENT_NODE)
-		{
-			ObjectCodec codec = CodecRegistry.getCodec(node.getNodeName());
+    if (node != null && node.getNodeType() == Node.ELEMENT_NODE) {
+      ObjectCodec codec = CodecRegistry.getCodec(node.getNodeName());
 
-			try
-			{
-				if (codec != null)
-				{
-					obj = codec.decode(this, node, into);
-				}
-				else
-				{
-					obj = node.cloneNode(true);
-					(obj as Element).removeAttribute("as");
-				}
-			}
-			on Exception catch (e)
-			{
-				System.err.println("Cannot decode " + node.getNodeName() + ": "
-						+ e.getMessage());
-				e.printStackTrace();
-			}
-		}
+      try {
+        if (codec != null) {
+          obj = codec.decode(this, node, into);
+        } else {
+          obj = node.cloneNode(true);
+          (obj as Element).removeAttribute("as");
+        }
+      } on Exception catch (e) {
+        System.err.println("Cannot decode " + node.getNodeName() + ": " + e.getMessage());
+        e.printStackTrace();
+      }
+    }
 
-		return obj;
-	}
+    return obj;
+  }
 
-	/**
+  /**
 	 * Encoding of cell hierarchies is built-into the core, but is a
 	 * higher-level function that needs to be explicitely used by the
 	 * respective object encoders (eg. ModelCodec, ChildChangeCodec
@@ -347,22 +307,19 @@ class Codec
 	 * @param includeChildren Boolean indicating if the method
 	 * should include all descendents.
 	 */
-	void encodeCell(ICell cell, Node node, bool includeChildren)
-	{
-		node.appendChild(encode(cell));
+  void encodeCell(ICell cell, Node node, bool includeChildren) {
+    node.appendChild(encode(cell));
 
-		if (includeChildren)
-		{
-			int childCount = cell.getChildCount();
+    if (includeChildren) {
+      int childCount = cell.getChildCount();
 
-			for (int i = 0; i < childCount; i++)
-			{
-				encodeCell(cell.getChildAt(i), node, includeChildren);
-			}
-		}
-	}
+      for (int i = 0; i < childCount; i++) {
+        encodeCell(cell.getChildAt(i), node, includeChildren);
+      }
+    }
+  }
 
-	/**
+  /**
 	 * Decodes cells that have been encoded using inversion, ie. where the
 	 * user object is the enclosing node in the XML, and restores the group
 	 * and graph structure in the cells. Returns a new <Cell> instance
@@ -374,83 +331,74 @@ class Codec
 	 * parent and terminals, respectively.
 	 * @return Graph cell that represents the given node.
 	 */
-	ICell decodeCell(Node node, bool restoreStructures)
-	{
-		ICell cell = null;
+  ICell decodeCell(Node node, bool restoreStructures) {
+    ICell cell = null;
 
-		if (node != null && node.getNodeType() == Node.ELEMENT_NODE)
-		{
-			// Tries to find a codec for the given node name. If that does
-			// not return a codec then the node is the user object (an XML node
-			// that contains the Cell, aka inversion).
-			ObjectCodec decoder = CodecRegistry
-					.getCodec(node.getNodeName());
+    if (node != null && node.getNodeType() == Node.ELEMENT_NODE) {
+      // Tries to find a codec for the given node name. If that does
+      // not return a codec then the node is the user object (an XML node
+      // that contains the Cell, aka inversion).
+      ObjectCodec decoder = CodecRegistry.getCodec(node.getNodeName());
 
-			// Tries to find the codec for the cell inside the user object.
-			// This assumes all node names inside the user object are either
-			// not registered or they correspond to a class for cells.
-			if (!(decoder is CellCodec))
-			{
-				Node child = node.getFirstChild();
+      // Tries to find the codec for the cell inside the user object.
+      // This assumes all node names inside the user object are either
+      // not registered or they correspond to a class for cells.
+      if (!(decoder is CellCodec)) {
+        Node child = node.getFirstChild();
 
-				while (child != null && !(decoder is CellCodec))
-				{
-					decoder = CodecRegistry.getCodec(child.getNodeName());
-					child = child.getNextSibling();
-				}
+        while (child != null && !(decoder is CellCodec)) {
+          decoder = CodecRegistry.getCodec(child.getNodeName());
+          child = child.getNextSibling();
+        }
 
-				String name = Cell.class.getSimpleName();
-				decoder = CodecRegistry.getCodec(name);
-			}
+        throw new Exception();
+        String name;// = Cell.class.getSimpleName();
+        decoder = CodecRegistry.getCodec(name);
+      }
 
-			if (!(decoder is CellCodec))
-			{
-				String name = Cell.class.getSimpleName();
-				decoder = CodecRegistry.getCodec(name);
-			}
+      if (!(decoder is CellCodec)) {
+        throw new Exception();
+        String name;// = Cell.class.getSimpleName();
+        decoder = CodecRegistry.getCodec(name);
+      }
 
-			cell = decoder.decode(this, node) as ICell;
+      cell = decoder.decode(this, node) as ICell;
 
-			if (restoreStructures)
-			{
-				insertIntoGraph(cell);
-			}
-		}
+      if (restoreStructures) {
+        insertIntoGraph(cell);
+      }
+    }
 
-		return cell;
-	}
-	
-	/**
+    return cell;
+  }
+
+  /**
 	 * Inserts the given cell into its parent and terminal cells.
 	 */
-	void insertIntoGraph(ICell cell)
-	{
-		ICell parent = cell.getParent();
-		ICell source = cell.getTerminal(true);
-		ICell target = cell.getTerminal(false);
+  void insertIntoGraph(ICell cell) {
+    ICell parent = cell.getParent();
+    ICell source = cell.getTerminal(true);
+    ICell target = cell.getTerminal(false);
 
-		// Fixes possible inconsistencies during insert into graph
-		cell.setTerminal(null, false);
-		cell.setTerminal(null, true);
-		cell.setParent(null);
-		
-		if (parent != null)
-		{
-			parent.insert(cell);
-		}
+    // Fixes possible inconsistencies during insert into graph
+    cell.setTerminal(null, false);
+    cell.setTerminal(null, true);
+    cell.setParent(null);
 
-		if (source != null)
-		{
-			source.insertEdge(cell, true);
-		}
+    if (parent != null) {
+      parent.insert(cell);
+    }
 
-		if (target != null)
-		{
-			target.insertEdge(cell, false);
-		}
-	}
+    if (source != null) {
+      source.insertEdge(cell, true);
+    }
 
-	/**
+    if (target != null) {
+      target.insertEdge(cell, false);
+    }
+  }
+
+  /**
 	 * Sets the attribute on the specified node to value. This is a
 	 * helper method that makes sure the attribute and value arguments
 	 * are not null.
@@ -459,13 +407,10 @@ class Codec
 	 * @param attribute Name of the attribute whose value should be set.
 	 * @param value New value of the attribute.
 	 */
-	static void setAttribute(Node node, String attribute, Object value)
-	{
-		if (node.getNodeType() == Node.ELEMENT_NODE && attribute != null
-				&& value != null)
-		{
-			(node as Element).setAttribute(attribute, String.valueOf(value));
-		}
-	}
+  static void setAttribute(Node node, String attribute, Object value) {
+    if (node.getNodeType() == Node.ELEMENT_NODE && attribute != null && value != null) {
+      (node as Element).setAttribute(attribute, String.valueOf(value));
+    }
+  }
 
 }

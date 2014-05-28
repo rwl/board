@@ -16,20 +16,20 @@ part of graph.util;
 class LightweightLabel //extends JLabel
 {
 
-	/**
+  /**
 	 * 
 	 */
-//	private static final long serialVersionUID = -6771477489533614010L;
+  //	private static final long serialVersionUID = -6771477489533614010L;
 
-	/**
+  /**
 	 * 
 	 */
-	static LightweightLabel _sharedInstance;
+  static LightweightLabel _sharedInstance;
 
-	/**
+  /**
 	 * Initializes the shared instance.
 	 */
-	/*static
+  /*static
 	{
 		try
 		{
@@ -41,141 +41,134 @@ class LightweightLabel //extends JLabel
 		}
 	}*/
 
-	/**
+  /**
 	 * 
 	 */
-	/*static LightweightLabel getSharedInstance()
+  /*static LightweightLabel getSharedInstance()
 	{
 		return _sharedInstance;
 	}*/
 
-	/**
+  /**
 	 * 
 	 * 
 	 */
-	LightweightLabel()
-	{
-		setFont(new Font(Constants.DEFAULT_FONTFAMILY, 0,
-				Constants.DEFAULT_FONTSIZE));
-		setVerticalAlignment(SwingConstants.TOP);
-	}
+  LightweightLabel() {
+    setFont(new Font(Constants.DEFAULT_FONTFAMILY, 0, Constants.DEFAULT_FONTSIZE));
+    setVerticalAlignment(SwingConstants.TOP);
+  }
 
-	/**
+  /**
 	 * Overridden for performance reasons.
 	 * 
 	 */
-	void validate()
-	{
-	}
+  void validate() {
+  }
 
-	/**
+  /**
 	 * Overridden for performance reasons.
 	 * 
 	 */
-	void revalidate()
-	{
-	}
+  void revalidate() {
+  }
 
-	/**
+  /**
 	 * Overridden for performance reasons.
 	 * 
 	 */
-//	void repaint(long tm, int x, int y, int width, int height)
-//	{
-//	}
+  //	void repaint(long tm, int x, int y, int width, int height)
+  //	{
+  //	}
 
-	/**
+  /**
 	 * Overridden for performance reasons.
 	 * 
 	 */
-//	void repaint(Rectangle r)
-//	{
-//	}
+  //	void repaint(Rectangle r)
+  //	{
+  //	}
 
-	/**
+  /**
 	 * Overridden for performance reasons.
 	 * 
 	 */
-	void firePropertyChange(String propertyName, Object oldValue,
-			Object newValue)
-	{
-		// Strings get interned...
-		if (propertyName == "text" || propertyName == "font")
-		{
-			super.firePropertyChange(propertyName, oldValue, newValue);
-		}
-	}
+  void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
+    // Strings get interned...
+    if (propertyName == "text" || propertyName == "font") {
+      super.firePropertyChange(propertyName, oldValue, newValue);
+    }
+  }
 
-	/**
+  /**
 	 * Overridden for performance reasons.
 	 * 
 	 */
-//	void firePropertyChange(String propertyName, byte oldValue,
-//			byte newValue)
-//	{
-//	}
-//
-//	/**
-//	 * Overridden for performance reasons.
-//	 * 
-//	 */
-//	void firePropertyChange(String propertyName, char oldValue,
-//			char newValue)
-//	{
-//	}
-//
-//	/**
-//	 * Overridden for performance reasons.
-//	 * 
-//	 */
-//	void firePropertyChange(String propertyName, short oldValue,
-//			short newValue)
-//	{
-//	}
-//
-//	/**
-//	 * Overridden for performance reasons.
-//	 * 
-//	 */
-//	void firePropertyChange(String propertyName, int oldValue,
-//			int newValue)
-//	{
-//	}
-//
-//	/**
-//	 * Overridden for performance reasons.
-//	 * 
-//	 */
-//	void firePropertyChange(String propertyName, long oldValue,
-//			long newValue)
-//	{
-//	}
-//
-//	/**
-//	 * Overridden for performance reasons.
-//	 * 
-//	 */
-//	void firePropertyChange(String propertyName, float oldValue,
-//			float newValue)
-//	{
-//	}
-//
-//	/**
-//	 * Overridden for performance reasons.
-//	 * 
-//	 */
-//	void firePropertyChange(String propertyName, double oldValue,
-//			double newValue)
-//	{
-//	}
-//
-//	/**
-//	 * Overridden for performance reasons.
-//	 * 
-//	 */
-//	void firePropertyChange(String propertyName, bool oldValue,
-//			bool newValue)
-//	{
-//	}
+  //	void firePropertyChange(String propertyName, byte oldValue,
+  //			byte newValue)
+  //	{
+  //	}
+  //
+  //	/**
+  //	 * Overridden for performance reasons.
+  //	 *
+  //	 */
+  //	void firePropertyChange(String propertyName, char oldValue,
+  //			char newValue)
+  //	{
+  //	}
+  //
+  //	/**
+  //	 * Overridden for performance reasons.
+  //	 *
+  //	 */
+  //	void firePropertyChange(String propertyName, short oldValue,
+  //			short newValue)
+  //	{
+  //	}
+  //
+  //	/**
+  //	 * Overridden for performance reasons.
+  //	 *
+  //	 */
+  //	void firePropertyChange(String propertyName, int oldValue,
+  //			int newValue)
+  //	{
+  //	}
+  //
+  //	/**
+  //	 * Overridden for performance reasons.
+  //	 *
+  //	 */
+  //	void firePropertyChange(String propertyName, long oldValue,
+  //			long newValue)
+  //	{
+  //	}
+  //
+  //	/**
+  //	 * Overridden for performance reasons.
+  //	 *
+  //	 */
+  //	void firePropertyChange(String propertyName, float oldValue,
+  //			float newValue)
+  //	{
+  //	}
+  //
+  //	/**
+  //	 * Overridden for performance reasons.
+  //	 *
+  //	 */
+  //	void firePropertyChange(String propertyName, double oldValue,
+  //			double newValue)
+  //	{
+  //	}
+  //
+  //	/**
+  //	 * Overridden for performance reasons.
+  //	 *
+  //	 */
+  //	void firePropertyChange(String propertyName, bool oldValue,
+  //			bool newValue)
+  //	{
+  //	}
 
 }

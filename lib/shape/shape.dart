@@ -51,11 +51,10 @@ part 'stencil_shape.dart';
 part 'swimlane_shape.dart';
 part 'triangle_shape.dart';
 
-abstract class IShape
-{
-	/**
+abstract class IShape {
+  /**
 	 * 
 	 */
-	void paintShape(Graphics2DCanvas canvas, CellState state);
+  void paintShape(Graphics2DCanvas canvas, CellState state);
 
 }

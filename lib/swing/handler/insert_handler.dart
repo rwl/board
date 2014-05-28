@@ -8,261 +8,224 @@ part of graph.swing.handler;
 //import java.awt.Rectangle;
 //import java.awt.event.MouseEvent;
 
-class InsertHandler extends MouseAdapter
-{
+class InsertHandler extends MouseAdapter {
 
-	/**
+  /**
 	 * Reference to the enclosing graph component.
 	 */
-	GraphComponent _graphComponent;
+  GraphComponent _graphComponent;
 
-	/**
+  /**
 	 * Specifies if this handler is enabled. Default is true.
 	 */
-	bool _enabled = true;
+  bool _enabled = true;
 
-	/**
+  /**
 	 * 
 	 */
-	String _style;
+  String _style;
 
-	/**
+  /**
 	 * 
 	 */
-	Point _first;
+  Point _first;
 
-	/**
+  /**
 	 * 
 	 */
-	float _lineWidth = 1;
+  float _lineWidth = 1;
 
-	/**
+  /**
 	 * 
 	 */
-	Color _lineColor = Color.black;
+  Color _lineColor = Color.black;
 
-	/**
+  /**
 	 * 
 	 */
-	bool _rounded = false;
+  bool _rounded = false;
 
-	/**
+  /**
 	 * 
 	 */
-	Rect _current;
+  Rect _current;
 
-	/**
+  /**
 	 * 
 	 */
-	EventSource _eventSource = new EventSource(this);
+  EventSource _eventSource = new EventSource(this);
 
-	/**
+  /**
 	 * 
 	 */
-	InsertHandler(GraphComponent graphComponent, String style)
-	{
-		this._graphComponent = graphComponent;
-		this._style = style;
+  InsertHandler(GraphComponent graphComponent, String style) {
+    this._graphComponent = graphComponent;
+    this._style = style;
 
-		// Installs the paint handler
-		graphComponent.addListener(Event.AFTER_PAINT, (Object sender, EventObj evt)
-			{
-				Graphics g = evt.getProperty("g") as Graphics;
-				paint(g);
-			});
+    // Installs the paint handler
+    graphComponent.addListener(Event.AFTER_PAINT, (Object sender, EventObj evt) {
+      Graphics g = evt.getProperty("g") as Graphics;
+      paint(g);
+    });
 
-		// Listens to all mouse events on the rendering control
-		graphComponent.getGraphControl().addMouseListener(this);
-		graphComponent.getGraphControl().addMouseMotionListener(this);
-	}
+    // Listens to all mouse events on the rendering control
+    graphComponent.getGraphControl().addMouseListener(this);
+    graphComponent.getGraphControl().addMouseMotionListener(this);
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	GraphComponent getGraphComponent()
-	{
-		return _graphComponent;
-	}
+  GraphComponent getGraphComponent() {
+    return _graphComponent;
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	bool isEnabled()
-	{
-		return _enabled;
-	}
+  bool isEnabled() {
+    return _enabled;
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void setEnabled(bool value)
-	{
-		_enabled = value;
-	}
+  void setEnabled(bool value) {
+    _enabled = value;
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	bool isStartEvent(MouseEvent e)
-	{
-		return true;
-	}
+  bool isStartEvent(MouseEvent e) {
+    return true;
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void start(MouseEvent e)
-	{
-		_first = e.getPoint();
-	}
+  void start(MouseEvent e) {
+    _first = e.getPoint();
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void mousePressed(MouseEvent e)
-	{
-		if (_graphComponent.isEnabled() && isEnabled() && !e.isConsumed()
-				&& isStartEvent(e))
-		{
-			start(e);
-			e.consume();
-		}
-	}
+  void mousePressed(MouseEvent e) {
+    if (_graphComponent.isEnabled() && isEnabled() && !e.isConsumed() && isStartEvent(e)) {
+      start(e);
+      e.consume();
+    }
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void mouseDragged(MouseEvent e)
-	{
-		if (_graphComponent.isEnabled() && isEnabled() && !e.isConsumed()
-				&& _first != null)
-		{
-			Rect dirty = _current;
+  void mouseDragged(MouseEvent e) {
+    if (_graphComponent.isEnabled() && isEnabled() && !e.isConsumed() && _first != null) {
+      Rect dirty = _current;
 
-			_current = new Rect(_first.x, _first.y, 0, 0);
-			_current.add(new Rect(e.getX(), e.getY(), 0, 0));
+      _current = new Rect(_first.x, _first.y, 0, 0);
+      _current.add(new Rect(e.getX(), e.getY(), 0, 0));
 
-			if (dirty != null)
-			{
-				dirty.add(_current);
-			}
-			else
-			{
-				dirty = _current;
-			}
+      if (dirty != null) {
+        dirty.add(_current);
+      } else {
+        dirty = _current;
+      }
 
-			Rectangle tmp = dirty.getRectangle();
-			int b = Math.ceil(_lineWidth) as int;
-			_graphComponent.getGraphControl().repaint(tmp.x - b, tmp.y - b,
-					tmp.width + 2 * b, tmp.height + 2 * b);
+      Rectangle tmp = dirty.getRectangle();
+      int b = Math.ceil(_lineWidth) as int;
+      _graphComponent.getGraphControl().repaint(tmp.x - b, tmp.y - b, tmp.width + 2 * b, tmp.height + 2 * b);
 
-			e.consume();
-		}
-	}
+      e.consume();
+    }
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void mouseReleased(MouseEvent e)
-	{
-		if (_graphComponent.isEnabled() && isEnabled() && !e.isConsumed()
-				&& _current != null)
-		{
-			Graph graph = _graphComponent.getGraph();
-			double scale = graph.getView().getScale();
-			Point2d tr = graph.getView().getTranslate();
-			_current.setX(_current.getX() / scale - tr.getX());
-			_current.setY(_current.getY() / scale - tr.getY());
-			_current.setWidth(_current.getWidth() / scale);
-			_current.setHeight(_current.getHeight() / scale);
+  void mouseReleased(MouseEvent e) {
+    if (_graphComponent.isEnabled() && isEnabled() && !e.isConsumed() && _current != null) {
+      Graph graph = _graphComponent.getGraph();
+      double scale = graph.getView().getScale();
+      Point2d tr = graph.getView().getTranslate();
+      _current.setX(_current.getX() / scale - tr.getX());
+      _current.setY(_current.getY() / scale - tr.getY());
+      _current.setWidth(_current.getWidth() / scale);
+      _current.setHeight(_current.getHeight() / scale);
 
-			Object cell = insertCell(_current);
-			_eventSource.fireEvent(new EventObj(Event.INSERT, "cell",
-					cell));
-			e.consume();
-		}
+      Object cell = insertCell(_current);
+      _eventSource.fireEvent(new EventObj(Event.INSERT, "cell", cell));
+      e.consume();
+    }
 
-		reset();
-	}
+    reset();
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	Object insertCell(Rect bounds)
-	{
-		// FIXME: Clone prototype cell for insert
-		return _graphComponent.getGraph().insertVertex(null, null, "",
-				bounds.getX(), bounds.getY(), bounds.getWidth(),
-				bounds.getHeight(), _style);
-	}
+  Object insertCell(Rect bounds) {
+    // FIXME: Clone prototype cell for insert
+    return _graphComponent.getGraph().insertVertex(null, null, "", bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight(), _style);
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void reset()
-	{
-		Rectangle dirty = null;
+  void reset() {
+    Rectangle dirty = null;
 
-		if (_current != null)
-		{
-			dirty = _current.getRectangle();
-		}
+    if (_current != null) {
+      dirty = _current.getRectangle();
+    }
 
-		_current = null;
-		_first = null;
+    _current = null;
+    _first = null;
 
-		if (dirty != null)
-		{
-			int b = Math.ceil(_lineWidth) as int;
-			_graphComponent.getGraphControl().repaint(dirty.x - b, dirty.y - b,
-					dirty.width + 2 * b, dirty.height + 2 * b);
-		}
-	}
+    if (dirty != null) {
+      int b = Math.ceil(_lineWidth) as int;
+      _graphComponent.getGraphControl().repaint(dirty.x - b, dirty.y - b, dirty.width + 2 * b, dirty.height + 2 * b);
+    }
+  }
 
-	/**
+  /**
 	 * 
 	 */
-	void paint(Graphics g)
-	{
-		if (_first != null && _current != null)
-		{
-			(g as Graphics2D).setStroke(new BasicStroke(_lineWidth));
-			g.setColor(_lineColor);
-			Rectangle rect = _current.getRectangle();
+  void paint(Graphics g) {
+    if (_first != null && _current != null) {
+      (g as Graphics2D).setStroke(new BasicStroke(_lineWidth));
+      g.setColor(_lineColor);
+      Rectangle rect = _current.getRectangle();
 
-			if (_rounded)
-			{
-				g.drawRoundRect(rect.x, rect.y, rect.width, rect.height, 8, 8);
-			}
-			else
-			{
-				g.drawRect(rect.x, rect.y, rect.width, rect.height);
-			}
-		}
-	}
+      if (_rounded) {
+        g.drawRoundRect(rect.x, rect.y, rect.width, rect.height, 8, 8);
+      } else {
+        g.drawRect(rect.x, rect.y, rect.width, rect.height);
+      }
+    }
+  }
 
-	/**
+  /**
 	 *
 	 */
-	void addListener(String eventName, IEventListener listener)
-	{
-		_eventSource.addListener(eventName, listener);
-	}
+  void addListener(String eventName, IEventListener listener) {
+    _eventSource.addListener(eventName, listener);
+  }
 
-	/**
+  /**
 	 *
 	 */
-	void removeListener(IEventListener listener)
-	{
-		removeListener(listener, null);
-	}
+  void removeListener(IEventListener listener) {
+    removeListener(listener, null);
+  }
 
-	/**
+  /**
 	 *
 	 */
-	void removeListener(IEventListener listener, String eventName)
-	{
-		_eventSource.removeListener(listener, eventName);
-	}
+  void removeListener(IEventListener listener, String eventName) {
+    _eventSource.removeListener(listener, eventName);
+  }
 
 }
