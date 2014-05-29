@@ -23,7 +23,8 @@ class VisibleChange extends AtomicGraphModelChange {
   /**
 	 * 
 	 */
-  VisibleChange([GraphModel model = null, Object cell = null, bool visible = false]) : super(model) {
+  VisibleChange([GraphModel model = null, Object cell = null,
+                bool visible = false]) : super(model) {
     this.cell = cell;
     this.visible = visible;
     this.previous = this.visible;

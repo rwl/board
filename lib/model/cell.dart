@@ -190,7 +190,7 @@ abstract class ICell {
    * be inserted into the child array.
    * @return Returns the new child.
    */
-  //  ICell insert(ICell child, int index);
+  ICell insertAt(ICell child, int index);
 
   /**
    * Removes the child at the specified index from the child array and
@@ -378,7 +378,7 @@ class Cell implements ICell //, Cloneable, Serializable
 	 * @param geometry Specifies the geometry of the cell.
 	 * @param style Specifies the style as a formatted string.
 	 */
-  Cell(Object value, [Geometry geometry = null, String style = null]) {
+  Cell([Object value=null, Geometry geometry = null, String style = null]) {
     setValue(value);
     setGeometry(geometry);
     setStyle(style);
@@ -828,7 +828,7 @@ class Cell implements ICell //, Cloneable, Serializable
     Object value = getValue();
 
     if (value is Node) {
-      value = (value as Node).cloneNode(true);
+      value = (value as Node).clone(true);
     }
 
     return value;

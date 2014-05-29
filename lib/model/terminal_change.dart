@@ -23,7 +23,8 @@ class TerminalChange extends AtomicGraphModelChange {
   /**
 	 * 
 	 */
-  TerminalChange([GraphModel model = null, Object cell = null, Object terminal = null, bool source = false]) : super(model) {
+  TerminalChange([GraphModel model = null, Object cell = null,
+                 Object terminal = null, bool source = false]) : super(model) {
     this.cell = cell;
     this.terminal = terminal;
     this.previous = this.terminal;

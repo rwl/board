@@ -67,11 +67,17 @@ class EventSource {
     return _eventSource;
   }
 
+  Object get eventSource => _eventSource;
+
   /**
 	 * 
 	 */
   void setEventSource(Object value) {
     this._eventSource = value;
+  }
+
+  void set eventSource (Object s) {
+    _eventSource = s;
   }
 
   /**

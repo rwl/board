@@ -39,7 +39,7 @@ class EventObj {
 	 * properties are specified using a sequence of keys and values, eg.
 	 * <code>new EventObj("eventName", key1, val1, .., keyN, valN))</code>
 	 */
-  EventObj(String name, List<Object> args) {
+  EventObj(String name, [List<Object> args=null]) {
     this._name = name;
     _properties = new Hashtable<String, Object>();
 

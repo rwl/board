@@ -70,6 +70,8 @@ class Point2d // implements Serializable, Cloneable
     return _x;
   }
 
+  double get x => _x;
+
   /**
 	 * Sets the x-coordinate of the point.
 	 * 
@@ -77,6 +79,10 @@ class Point2d // implements Serializable, Cloneable
 	 */
   void setX(double value) {
     _x = value;
+  }
+
+  void set x (double xx) {
+    _x = xx;
   }
 
   /**
@@ -88,6 +94,8 @@ class Point2d // implements Serializable, Cloneable
     return _y;
   }
 
+  double get y => _y;
+
   /**
 	 * Sets the y-coordinate of the point.
 	 * 
@@ -95,6 +103,10 @@ class Point2d // implements Serializable, Cloneable
 	 */
   void setY(double value) {
     _y = value;
+  }
+
+  void set y (double y) {
+    _y = y;
   }
 
   /**

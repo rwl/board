@@ -70,6 +70,8 @@ class Rect extends Point2d {
     return _width;
   }
 
+  double get width => _width;
+
   /**
 	 * Sets the width of the rectangle.
 	 * 
@@ -77,6 +79,10 @@ class Rect extends Point2d {
 	 */
   void setWidth(double value) {
     _width = value;
+  }
+
+  void set width (double w) {
+    _width = w;
   }
 
   /**
@@ -88,6 +94,8 @@ class Rect extends Point2d {
     return _height;
   }
 
+  double get height => _height;
+
   /**
 	 * Sets the height of the rectangle.
 	 * 
@@ -95,6 +103,10 @@ class Rect extends Point2d {
 	 */
   void setHeight(double value) {
     _height = value;
+  }
+
+  void set height (double h) {
+    _height = h;
   }
 
   /**

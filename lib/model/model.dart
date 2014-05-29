@@ -5,6 +5,10 @@ library graph.model;
  */
 
 import 'dart:html' show Element, Node;
+import 'dart:math' as Math;
+import 'dart:collection' show HashSet;
+
+import '../compat/compat.dart';
 
 import '../model/model.dart' show AtomicGraphModelChange;
 

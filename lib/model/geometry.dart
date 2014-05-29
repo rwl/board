@@ -199,10 +199,10 @@ class Geometry extends Rect {
     if (_alternateBounds != null) {
       Rect old = new Rect(getX(), getY(), getWidth(), getHeight());
 
-      _x = _alternateBounds.getX();
-      _y = _alternateBounds.getY();
-      _width = _alternateBounds.getWidth();
-      _height = _alternateBounds.getHeight();
+      x = _alternateBounds.getX();
+      y = _alternateBounds.getY();
+      width = _alternateBounds.getWidth();
+      height = _alternateBounds.getHeight();
 
       _alternateBounds = old;
     }
@@ -252,8 +252,8 @@ class Geometry extends Rect {
   void translate(double dx, double dy) {
     // Translates the geometry
     if (!isRelative()) {
-      _x += dx;
-      _y += dy;
+      x += dx;
+      y += dy;
     }
 
     // Translates the source point
@@ -270,10 +270,10 @@ class Geometry extends Rect {
 
     // Translate the control points
     if (TRANSLATE_CONTROL_POINTS && _points != null) {
-      int count = _points.size();
+      int count = _points.length;
 
       for (int i = 0; i < count; i++) {
-        Point2d pt = _points.get(i);
+        Point2d pt = _points[i];
 
         pt.setX(pt.getX() + dx);
         pt.setY(pt.getY() + dy);
@@ -296,9 +296,9 @@ class Geometry extends Rect {
     List<Point2d> pts = getPoints();
 
     if (pts != null) {
-      clone._points = new List<Point2d>(pts.size());
+      clone._points = new List<Point2d>(pts.length);
 
-      for (int i = 0; i < pts.size(); i++) {
+      for (int i = 0; i < pts.length; i++) {
         clone._points.add(pts[i].clone() as Point2d);
       }
     }

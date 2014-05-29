@@ -82,12 +82,16 @@ class UndoableEdit {
     return _source;
   }
 
+  Object get source => _source;
+
   /**
 	 * @return the changes
 	 */
   List<UndoableChange> getChanges() {
     return _changes;
   }
+
+  List<UndoableChange> get changes => _changes;
 
   /**
 	 * @return the significant

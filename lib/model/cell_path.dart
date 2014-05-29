@@ -15,7 +15,7 @@ class CellPath {
 	 * Defines the separator between the path components. Default is
 	 * <code>.</code>.
 	 */
-  static String PATH_SEPARATOR = ".";
+  static String PATH_SEPARATOR = r"\\.";
 
   /**
 	 * Creates the cell path for the given cell. The cell path is a
@@ -73,7 +73,7 @@ class CellPath {
 	 */
   static ICell resolve(ICell root, String path) {
     ICell parent = root;
-    List<String> tokens = path.split(Pattern.quote(PATH_SEPARATOR));
+    List<String> tokens = path.split(PATH_SEPARATOR);//Pattern.quote(PATH_SEPARATOR));
 
     for (int i = 0; i < tokens.length; i++) {
       parent = parent.getChildAt(int.parse(tokens[i]));
@@ -87,19 +87,26 @@ class CellPath {
 	 * cp1 is equal and 1 if cp1 is greater than cp2.
 	 */
   static int compare(String cp1, String cp2) {
-    StringTokenizer p1 = new StringTokenizer(cp1, CellPath.PATH_SEPARATOR);
-    StringTokenizer p2 = new StringTokenizer(cp2, CellPath.PATH_SEPARATOR);
+//    StringTokenizer p1 = new StringTokenizer(cp1, CellPath.PATH_SEPARATOR);
+//    StringTokenizer p2 = new StringTokenizer(cp2, CellPath.PATH_SEPARATOR);
+    List<String> l1 = cp1.split(PATH_SEPARATOR);//Pattern.quote(PATH_SEPARATOR));
+    List<String> l2 = cp2.split(PATH_SEPARATOR);//Pattern.quote(PATH_SEPARATOR));
+    Iterator<String> p1 = l1.iterator;//Pattern.quote(PATH_SEPARATOR));
+    Iterator<String> p2 = l2.iterator;//Pattern.quote(PATH_SEPARATOR));
     int comp = 0;
 
-    while (p1.hasMoreTokens() && p2.hasMoreTokens()) {
-      String t1 = p1.nextToken();
-      String t2 = p2.nextToken();
+//    while (p1.hasMoreTokens() && p2.hasMoreTokens()) {
+//      String t1 = p1.nextToken();
+//      String t2 = p2.nextToken();
+    while (p1.moveNext() && p2.moveNext()) {
+      String t1 = p1.current;
+      String t2 = p2.current;
 
-      if (!t1.equals(t2)) {
-        if (t1.length() == 0 || t2.length() == 0) {
+      if (t1 != t2) {
+        if (t1.length == 0 || t2.length == 0) {
           comp = t1.compareTo(t2);
         } else {
-          comp = Integer.valueOf(t1).compareTo(Integer.valueOf(t2));
+          comp = int.parse(t1).compareTo(int.parse(t2));
         }
 
         break;
@@ -108,8 +115,8 @@ class CellPath {
 
     // Compares path length if both paths are equal to this point
     if (comp == 0) {
-      int t1 = p1.countTokens();
-      int t2 = p2.countTokens();
+      int t1 = l1.length;
+      int t2 = l2.length;
 
       if (t1 != t2) {
         comp = (t1 > t2) ? 1 : -1;

@@ -179,7 +179,7 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
     Object result = null;
 
     if (_cells != null) {
-      result = _cells.get(id);
+      result = _cells[id];
     }
     return result;
   }
@@ -261,17 +261,14 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
 	 * Creates a new undoable edit.
 	 */
   UndoableEdit _createUndoableEdit() {
-    return new UndoableEdit(this, () {
-      // LATER: Remove changes property (deprecated)
-      (_source as GraphModel).fireEvent(new EventObj(Event.CHANGE, "edit", this, "changes", _changes));
-    });
+    return new GraphModelUndoableEdit(this);
   }
 
   /* (non-Javadoc)
 	 * @see graph.model.IGraphModel#cloneCells(List<Object>, boolean)
 	 */
   List<Object> cloneCells(List<Object> cells, bool includeChildren) {
-    Map<Object, Object> mapping = new Hashtable<Object, Object>();
+    Map<Object, Object> mapping = new Map<Object, Object>();
     List<Object> clones = new List<Object>(cells.length);
 
     for (int i = 0; i < cells.length; i++) {
@@ -296,7 +293,7 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
   {
     if (cell is ICell) {
       ICell mxc = (cell as ICell).clone() as ICell;
-      mapping.put(cell, mxc);
+      mapping[cell] = mxc;
 
       if (includeChildren) {
         int childCount = getChildCount(cell);
@@ -323,7 +320,7 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
       Object source = getTerminal(cell, true);
 
       if (source is ICell) {
-        ICell tmp = mapping.get(source) as ICell;
+        ICell tmp = mapping[source] as ICell;
 
         if (tmp != null) {
           tmp.insertEdge(mxc, true);
@@ -333,7 +330,7 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
       Object target = getTerminal(cell, false);
 
       if (target is ICell) {
-        ICell tmp = mapping.get(target) as ICell;
+        ICell tmp = mapping[target] as ICell;
 
         if (tmp != null) {
           tmp.insertEdge(mxc, false);
@@ -416,16 +413,16 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
           }
 
           if (_cells == null) {
-            _cells = new Hashtable<String, Object>();
+            _cells = new Map<String, Object>();
           }
 
-          _cells.put(mxc.getId(), cell);
+          _cells[mxc.getId()] = cell;
         }
       }
 
       // Makes sure IDs of deleted cells are not reused
       try {
-        int id = Integer.parseInt(mxc.getId());
+        int id = int.parse(mxc.getId());
         _nextId = Math.max(_nextId, id + 1);
       } on NumberFormatException catch (e) {
         // ignore
@@ -447,7 +444,7 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
 	 * @return Returns a new Id for the given cell.
 	 */
   String createId(Object cell) {
-    String id = String.valueOf(_nextId);
+    String id = _nextId.toString();
     _nextId++;
 
     return id;
@@ -498,7 +495,7 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
 
     if (parent != null) {
       if (parent != previous || previous.getIndex(child) != index) {
-        (parent as ICell).insert(child, index);
+        (parent as ICell).insertAt(child, index);
       }
     } else if (previous != null) {
       int oldIndex = previous.getIndex(child);
@@ -606,10 +603,10 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
       edges.add(getEdgeAt(cell, i));
     }
 
-    Iterator<Object> it = edges.iterator();
+    Iterator<Object> it = edges.iterator;
 
-    while (it.hasNext()) {
-      Object edge = it.next();
+    while (it.moveNext()) {
+      Object edge = it.current();
 
       // Updates edge parent if edge and child have
       // a common root node (does not need to be the
@@ -707,7 +704,7 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
       // Creates the cell path for the second cell
       String path = CellPath.create(cell2 as ICell);
 
-      if (path != null && path.length() > 0) {
+      if (path != null && path.length > 0) {
         // Bubbles through the ancestors of the first
         // cell to find the nearest common ancestor.
         Object cell = cell1;
@@ -834,7 +831,7 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
 	 * @see graph.model.IGraphModel#setStyle(Object, String)
 	 */
   String setStyle(Object cell, String style) {
-    if (style == null || !style.equals(getStyle(cell))) {
+    if (style == null || style != getStyle(cell)) {
       execute(new StyleChange(this, cell, style));
     }
 
@@ -920,7 +917,7 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
     change.execute();
     beginUpdate();
     _currentEdit.add(change);
-    fireEvent(new EventObj(Event.EXECUTE, "change", change));
+    fireEvent(new EventObj(Event.EXECUTE, ["change", change]));
     endUpdate();
   }
 
@@ -940,15 +937,15 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
 
     if (!_endingUpdate) {
       _endingUpdate = _updateLevel == 0;
-      fireEvent(new EventObj(Event.END_UPDATE, "edit", _currentEdit));
+      fireEvent(new EventObj(Event.END_UPDATE, ["edit", _currentEdit]));
 
       try {
         if (_endingUpdate && !_currentEdit.isEmpty()) {
-          fireEvent(new EventObj(Event.BEFORE_UNDO, "edit", _currentEdit));
+          fireEvent(new EventObj(Event.BEFORE_UNDO, ["edit", _currentEdit]));
           UndoableEdit tmp = _currentEdit;
           _currentEdit = _createUndoableEdit();
           tmp.dispatch();
-          fireEvent(new EventObj(Event.UNDO, "edit", tmp));
+          fireEvent(new EventObj(Event.UNDO, ["edit", tmp]));
         }
       } finally {
         _endingUpdate = false;
@@ -974,28 +971,28 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
   {
     beginUpdate();
     try {
-      Hashtable<Object, Object> mapping = new Hashtable<Object, Object>();
+      Map<Object, Object> mapping = new Map<Object, Object>();
       _mergeChildrenImpl(from, to, cloneAllEdges, mapping);
 
       // Post-processes all edges in the mapping and
       // reconnects the terminals to the corresponding
       // cells in the target model
-      Iterator<Object> it = mapping.keySet().iterator();
+      Iterator<Object> it = mapping.keys.iterator;
 
-      while (it.hasNext()) {
-        Object edge = it.next();
-        Object cell = mapping.get(edge);
+      while (it.moveNext()) {
+        Object edge = it.current();
+        Object cell = mapping[edge];
         Object terminal = getTerminal(edge, true);
 
         if (terminal != null) {
-          terminal = mapping.get(terminal);
+          terminal = mapping[terminal];
           setTerminal(cell, terminal, true);
         }
 
         terminal = getTerminal(edge, false);
 
         if (terminal != null) {
-          terminal = mapping.get(terminal);
+          terminal = mapping[terminal];
           setTerminal(cell, terminal, false);
         }
       }
@@ -1010,7 +1007,7 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
 	 * cell to the target cell with the same id or the clone of the source cell
 	 * that was inserted into this model.
 	 */
-  void _mergeChildrenImpl(ICell from, ICell to, bool cloneAllEdges, Hashtable<Object, Object> mapping) //throws CloneNotSupportedException
+  void _mergeChildrenImpl(ICell from, ICell to, bool cloneAllEdges, Map<Object, Object> mapping) //throws CloneNotSupportedException
   {
     beginUpdate();
     try {
@@ -1034,7 +1031,7 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
         }
 
         // Stores the mapping for later reconnecting edges
-        mapping.put(cell, target);
+        mapping[cell] = target;
 
         // Recurses
         _mergeChildrenImpl(cell, target, cloneAllEdges, mapping);
@@ -1163,7 +1160,7 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
       }
     }
 
-    return result.toArray();
+    return result;
   }
 
   /**
@@ -1223,7 +1220,7 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
       }
     }
 
-    return result.toArray();
+    return result;
   }
 
   /**
@@ -1276,7 +1273,7 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
       }
     }
 
-    return terminals.toArray();
+    return terminals;
   }
 
   /**
@@ -1352,7 +1349,7 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
       }
     }
 
-    return result.toArray();
+    return result;
   }
 
   /**
@@ -1371,14 +1368,14 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
       }
     }
 
-    return parents.toArray();
+    return parents;
   }
 
   /**
 	 * 
 	 */
   static List<Object> filterCells(List<Object> cells, Filter filter) {
-    ArrayList<Object> result = null;
+    List<Object> result = null;
 
     if (cells != null) {
       result = new List<Object>(cells.length);
@@ -1390,14 +1387,14 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
       }
     }
 
-    return (result != null) ? result.toArray() : null;
+    return (result != null) ? result : null;
   }
 
   /**
 	 * Returns a all descendants of the given cell and the cell itself
 	 * as a collection.
 	 */
-  static Collection<Object> getDescendants(IGraphModel model, Object parent) {
+  static List<Object> getDescendants(IGraphModel model, Object parent) {
     return filterDescendants(model, null, parent);
   }
 
@@ -1413,7 +1410,7 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
   /**
 	 * Creates a collection of cells using the visitor pattern.
 	 */
-  static Collection<Object> filterDescendants(IGraphModel model, Filter filter, [Object parent = null]) {
+  static List<Object> filterDescendants(IGraphModel model, Filter filter, [Object parent = null]) {
     if (parent == null) {
       parent = model.getRoot();
     }
@@ -1446,7 +1443,7 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
 	 */
   static List<Object> getTopmostCells(IGraphModel model, List<Object> cells) {
     Set<Object> hash = new HashSet<Object>();
-    hash.addAll(Arrays.asList(cells));
+    hash.addAll(cells);
     List<Object> result = new List<Object>(cells.length);
 
     for (int i = 0; i < cells.length; i++) {
@@ -1468,18 +1465,26 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
       }
     }
 
-    return result.toArray();
+    return result;
   }
 
   //
   // Visitor patterns
   //
 
-
-
   //
   // Atomic changes
   //
 
+}
 
+class GraphModelUndoableEdit extends UndoableEdit {
+  GraphModelUndoableEdit(Object source) : super(source);
+
+  void dispatch()
+  {
+    // LATER: Remove changes property (deprecated)
+    (source as GraphModel).fireEvent(new EventObj(
+        Event.CHANGE, ["edit", this, "changes", changes]));
+  }
 }
