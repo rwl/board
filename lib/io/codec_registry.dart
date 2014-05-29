@@ -170,9 +170,9 @@ class CodecRegistry {
       // ignore
     }
 
-    for (int i = 0; i < _packages.size(); i++) {
+    for (int i = 0; i < _packages.length; i++) {
       try {
-        String s = _packages.get(i);
+        String s = _packages[i];
 
         return Class.forName(s + "." + name);
       } on Exception catch (e) {

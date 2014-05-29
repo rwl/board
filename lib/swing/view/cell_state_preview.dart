@@ -369,7 +369,7 @@ class CellStatePreview {
 	 * 
 	 */
   void paint(Graphics g) {
-    if (_cellStates != null && _cellStates.size() > 0) {
+    if (_cellStates != null && _cellStates.length > 0) {
       Graphics2DCanvas canvas = _graphComponent.getCanvas();
 
       // Sets antialiasing

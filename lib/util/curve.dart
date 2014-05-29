@@ -34,7 +34,7 @@ class Curve {
   /**
 	 * The curve lengths of the curves
 	 */
-  Map<String, Double> _curveLengths;
+  Map<String, double> _curveLengths;
 
   /**
 	 * Defines the key for the central curve index
@@ -49,7 +49,7 @@ class Curve {
   /**
 	 * Indicates that an invalid position on a curve was requested
 	 */
-  static Line INVALID_POSITION = new Line(new Point2d(0, 0), new Point2d(1, 0));
+  static Line INVALID_POSITION = new Line.between(new Point2d(0, 0), new Point2d(1, 0));
 
   /**
 	 * Offset of the label curve from the curve the label curve is based on.
@@ -285,8 +285,8 @@ class Curve {
         result.add(endPoint);
       }
 
-      List<Point2d> resultArray = new List<Point2d>(result.size());
-      return result.toArray(resultArray);
+      List<Point2d> resultArray = new List<Point2d>(result.length);
+      return resultArray;
     } else {
       return null;
     }
@@ -549,7 +549,7 @@ class Curve {
     List<double> currentIntervals = getIntervals(index);
     int closestSegment = 0;
     double closestSegDistSq = 10000000;
-    Line segment = new Line(currentCurve[0], currentCurve[1]);
+    Line segment = new Line.between(currentCurve[0], currentCurve[1]);
 
     for (int i = 1; i < currentCurve.length; i++) {
       segment.setPoints(currentCurve[i - 1], currentCurve[i]);
@@ -571,7 +571,7 @@ class Curve {
     Point2d startSegPt = currentCurve[closestSegment];
     Point2d endSegPt = currentCurve[closestSegment + 1];
 
-    Line closestSeg = new Line(startSegPt, endSegPt);
+    Line closestSeg = new Line.between(startSegPt, endSegPt);
     double lineDistSq = closestSeg.ptLineDistSq(absPoint);
 
     double orthogonalOffset = Math.sqrt(Math.min(lineDistSq, closestSegDistSq));
@@ -606,15 +606,15 @@ class Curve {
     double cartOffsetY = 0;
 
     // Don't compare for exact equality, there are often rounding errors
-    if (Math.abs(closestSegDistSq - lineDistSq) > 0.0001) {
+    if (math.abs(closestSegDistSq - lineDistSq) > 0.0001) {
       // The orthogonal offset does not move the point onto the
       // segment. Work out an additional cartesian offset that moves
       // the offset point onto the closest end point of the
       // segment
 
       // Not exact distances, but the equation holds
-      double distToStartPoint = Math.abs(orthOffsetPointX - startSegPt.getX()) + Math.abs(orthOffsetPointY - startSegPt.getY());
-      double distToEndPoint = Math.abs(orthOffsetPointX - endSegPt.getX()) + Math.abs(orthOffsetPointY - endSegPt.getY());
+      double distToStartPoint = math.abs(orthOffsetPointX - startSegPt.getX()) + math.abs(orthOffsetPointY - startSegPt.getY());
+      double distToEndPoint = math.abs(orthOffsetPointX - endSegPt.getX()) + math.abs(orthOffsetPointY - endSegPt.getY());
       if (distToStartPoint < distToEndPoint) {
         distAlongEdge = currentIntervals[closestSegment];
         cartOffsetX = orthOffsetPointX - startSegPt.getX();
@@ -651,12 +651,12 @@ class Curve {
     // been checked
     _valid = false;
 
-    if (guidePoints == null || guidePoints.isEmpty()) {
+    if (guidePoints == null || guidePoints.length == 0) {
       return;
     }
 
-    for (int i = 0; i < guidePoints.size(); i++) {
-      if (guidePoints.get(i) == null) {
+    for (int i = 0; i < guidePoints.length; i++) {
+      if (guidePoints[i] == null) {
         return;
       }
     }
@@ -672,7 +672,7 @@ class Curve {
     double lengthSpline = spline.getLength();
 
     // Check for errors in the spline calculation or zero length curves
-    if (Double.isNaN(lengthSpline) || !spline.checkValues() || lengthSpline < 1) {
+    if (lengthSpline.isNaN || !spline.checkValues() || lengthSpline < 1) {
       return;
     }
 
@@ -709,14 +709,14 @@ class Curve {
     double intervalChange = 1;
 
     List<Point2d> coreCurve = new List<Point2d>();
-    List<Double> coreIntervals = new List<Double>();
+    List<double> coreIntervals = new List<double>();
     bool twoLoopsComplete = false;
 
     for (double t = 0; t <= 1.5; t += interval) {
       if (t > 1.0) {
         // Use the point regardless of the accuracy,
         t = 1.0001;
-        Point2d endControlPoint = guidePoints.get(guidePoints.size() - 1);
+        Point2d endControlPoint = guidePoints[guidePoints.length - 1];
         Point2d finalPoint = new Point2d(endControlPoint.getX(), endControlPoint.getY());
         coreCurve.add(finalPoint);
         coreIntervals.add(t);
@@ -736,8 +736,8 @@ class Curve {
         // Work out how far the new spline point
         // deviates from the extrapolation created
         // by the last two points
-        double diffX = Math.abs(((x2 - x1) * intervalChange + x2) - newX);
-        double diffY = Math.abs(((y2 - y1) * intervalChange + y2) - newY);
+        double diffX = math.abs(((x2 - x1) * intervalChange + x2) - newX);
+        double diffY = math.abs(((y2 - y1) * intervalChange + y2) - newY);
 
         // If either the x or y of the straight line
         // extrapolation from the last two points
@@ -799,32 +799,32 @@ class Curve {
       }
     }
 
-    if (coreCurve.size() < 2) {
+    if (coreCurve.length < 2) {
       // A single point makes no sense, leave the curve as invalid
       return;
     }
 
-    List<Point2d> corePoints = new List<Point2d>(coreCurve.size());
+    List<Point2d> corePoints = new List<Point2d>(coreCurve.length);
     int count = 0;
 
     for (Point2d point in coreCurve) {
       corePoints[count++] = point;
     }
 
-    _points = new Hashtable<String, List<Point2d>>();
-    _curveLengths = new Hashtable<String, double>();
-    _points.put(CORE_CURVE, corePoints);
-    _curveLengths.put(CORE_CURVE, lengthSpline);
+    _points = new Map<String, List<Point2d>>();
+    _curveLengths = new Map<String, double>();
+    _points[CORE_CURVE] = corePoints;
+    _curveLengths[CORE_CURVE] = lengthSpline;
 
-    List<double> coreIntervalsArray = new List<double>(coreIntervals.size());
+    List<double> coreIntervalsArray = new List<double>(coreIntervals.length);
     count = 0;
 
     for (double tempInterval in coreIntervals) {
-      coreIntervalsArray[count++] = tempInterval.doubleValue();
+      coreIntervalsArray[count++] = tempInterval;
     }
 
-    _intervals = new Hashtable<String, List<double>>();
-    _intervals.put(CORE_CURVE, coreIntervalsArray);
+    _intervals = new Map<String, List<double>>();
+    _intervals[CORE_CURVE] = coreIntervalsArray;
 
     _valid = true;
   }
@@ -906,8 +906,8 @@ class Curve {
       }
     }
 
-    List<Point2d> tmpPoints = new List<Point2d>(labelCurvePoints.size());
-    _points.put(LABEL_CURVE, labelCurvePoints.toArray(tmpPoints));
+//    List<Point2d> tmpPoints = new List<Point2d>(labelCurvePoints.length);
+    _points[LABEL_CURVE] = labelCurvePoints;//.toArray(tmpPoints);
     _populateIntervals(LABEL_CURVE);
   }
 
@@ -919,7 +919,7 @@ class Curve {
   }
 
   void _populateIntervals(String index) {
-    List<Point2d> currentCurve = _points.get(index);
+    List<Point2d> currentCurve = _points[index];
 
     List<double> newIntervals = new List<double>(currentCurve.length);
 
@@ -948,8 +948,8 @@ class Curve {
       }
     }
 
-    _intervals.put(index, newIntervals);
-    _curveLengths.put(index, totalLength);
+    _intervals[index] = newIntervals;
+    _curveLengths[index] = totalLength;
   }
 
   /**
@@ -966,33 +966,33 @@ class Curve {
       }
     }
 
-    if (newPoints.size() != guidePoints.size()) {
+    if (newPoints.length != guidePoints.length) {
       pointsChanged = true;
     } else {
       // Check for a constant translation of all guide points. In that
       // case apply the translation directly to all curves.
       // Also check whether all of the translations are trivial
-      if (newPoints.size() == guidePoints.size() && newPoints.size() > 1 && guidePoints.size() > 1) {
+      if (newPoints.length == guidePoints.length && newPoints.length > 1 && guidePoints.length > 1) {
         bool constantTranslation = true;
         bool trivialTranslation = true;
-        Point2d newPoint0 = newPoints.get(0);
-        Point2d oldPoint0 = guidePoints.get(0);
+        Point2d newPoint0 = newPoints[0];
+        Point2d oldPoint0 = guidePoints[0];
         double transX = newPoint0.getX() - oldPoint0.getX();
         double transY = newPoint0.getY() - oldPoint0.getY();
 
-        if (Math.abs(transX) > 0.01 || Math.abs(transY) > 0.01) {
+        if (math.abs(transX) > 0.01 || math.abs(transY) > 0.01) {
           trivialTranslation = false;
         }
 
-        for (int i = 1; i < newPoints.size(); i++) {
-          double nextTransX = newPoints.get(i).getX() - guidePoints.get(i).getX();
-          double nextTransY = newPoints.get(i).getY() - guidePoints.get(i).getY();
+        for (int i = 1; i < newPoints.length; i++) {
+          double nextTransX = newPoints[i].getX() - guidePoints[i].getX();
+          double nextTransY = newPoints[i].getY() - guidePoints[i].getY();
 
-          if (Math.abs(transX - nextTransX) > 0.01 || Math.abs(transY - nextTransY) > 0.01) {
+          if (math.abs(transX - nextTransX) > 0.01 || math.abs(transY - nextTransY) > 0.01) {
             constantTranslation = false;
           }
 
-          if (Math.abs(nextTransX) > 0.01 || Math.abs(nextTransY) > 0.01) {
+          if (math.abs(nextTransX) > 0.01 || math.abs(nextTransY) > 0.01) {
             trivialTranslation = false;
           }
         }
@@ -1002,7 +1002,7 @@ class Curve {
         } else if (constantTranslation) {
           pointsChanged = false;
           // Translate all stored points by the translation amounts
-          Collection<List<Point2d>> curves = _points.values();
+          List<List<Point2d>> curves = _points.values;
 
           // Update all geometry information held by the curve
           // That is, all the curve points, the guide points
@@ -1027,7 +1027,7 @@ class Curve {
 
     if (pointsChanged) {
       guidePoints = new List<Point2d>(newPoints);
-      _points = new Hashtable<String, List<Point2d>>();
+      _points = new Map<String, List<Point2d>>();
       _valid = false;
     }
   }
@@ -1042,11 +1042,11 @@ class Curve {
 	 */
   List<Point2d> getCurvePoints(String index) {
     if (_validateCurve()) {
-      if (_points.get(LABEL_CURVE) == null && index == LABEL_CURVE) {
+      if (_points[LABEL_CURVE] == null && index == LABEL_CURVE) {
         _createLabelCurve();
       }
 
-      return _points.get(index);
+      return _points[index];
     }
 
     return null;
@@ -1054,11 +1054,11 @@ class Curve {
 
   List<double> getIntervals(String index) {
     if (_validateCurve()) {
-      if (_points.get(LABEL_CURVE) == null && index == LABEL_CURVE) {
+      if (_points[LABEL_CURVE] == null && index == LABEL_CURVE) {
         _createLabelCurve();
       }
 
-      return _intervals.get(index);
+      return _intervals[index];
     }
 
     return null;
@@ -1066,11 +1066,11 @@ class Curve {
 
   double getCurveLength(String index) {
     if (_validateCurve()) {
-      if (_intervals.get(index) == null) {
+      if (_intervals[index] == null) {
         _createLabelCurve();
       }
 
-      return _curveLengths.get(index);
+      return _curveLengths[index];
     }
 
     return 0;

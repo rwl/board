@@ -73,7 +73,7 @@ class MinimumCycleRemover implements HierarchicalLayoutStage {
 
     Set<Object> possibleNewRoots = null;
 
-    if (unseenNodes.size() > 0) {
+    if (unseenNodes.length > 0) {
       possibleNewRoots = new HashSet<Object>(unseenNodes);
     }
 
@@ -103,7 +103,7 @@ class MinimumCycleRemover implements HierarchicalLayoutStage {
 
     Graph graph = _layout.getGraph();
 
-    if (possibleNewRoots != null && possibleNewRoots.size() > 0) {
+    if (possibleNewRoots != null && possibleNewRoots.length > 0) {
       Iterator<Object> iter = possibleNewRoots.iterator();
       List<Object> roots = model.roots;
 

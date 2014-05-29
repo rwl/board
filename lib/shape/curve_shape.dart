@@ -96,7 +96,7 @@ class CurveShape extends ConnectorShape {
       return new Line(sourceVector.getX(), sourceVector.getY(), points.get(0));
     } else {
       Line targetVector = _curve.getCurveParallel(Curve.CORE_CURVE, 1.0 - markerRatio);
-      int pointCount = points.size();
+      int pointCount = points.length;
       return new Line(targetVector.getX(), targetVector.getY(), points.get(pointCount - 1));
     }
   }

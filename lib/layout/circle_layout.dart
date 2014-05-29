@@ -192,7 +192,7 @@ class CircleLayout extends GraphLayout {
         }
       }
 
-      int vertexCount = vertices.size();
+      int vertexCount = vertices.length;
       double r = Math.max(vertexCount * max / Math.PI, _radius);
 
       // Moves the circle to the specified origin

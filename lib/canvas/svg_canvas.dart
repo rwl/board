@@ -53,15 +53,15 @@ class SvgCanvas extends BasicCanvas {
   /**
 	 * Constructs a new SVG canvas for the specified dimension and scale.
 	 */
-  SvgCanvas() {
-    this(null);
-  }
+//  SvgCanvas() {
+//    this(null);
+//  }
 
   /**
 	 * Constructs a new SVG canvas for the specified bounds, scale and
 	 * background color.
 	 */
-  SvgCanvas(Document document) {
+  SvgCanvas([Document document=null]) {
     setDocument(document);
   }
 
@@ -102,7 +102,7 @@ class SvgCanvas extends BasicCanvas {
 
     if (gradient == null) {
       gradient = _createGradientElement(start, end, direction);
-      gradient.setAttribute("id", "g" + (_gradients.size() + 1));
+      gradient.setAttribute("id", "g" + (_gradients.length + 1));
       _getDefsElement().appendChild(gradient);
       _gradients.put(id, gradient);
     }
@@ -135,7 +135,7 @@ class SvgCanvas extends BasicCanvas {
       stop2.setAttribute("style", "stop-color:#ffffff;stop-opacity:0.1");
       glassGradient.appendChild(stop2);
 
-      glassGradient.setAttribute("id", "g" + (_gradients.size() + 1));
+      glassGradient.setAttribute("id", "g" + (_gradients.length + 1));
       _getDefsElement().appendChild(glassGradient);
       _gradients.put(id, glassGradient);
     }
@@ -303,7 +303,7 @@ class SvgCanvas extends BasicCanvas {
 
       inner.setAttributeNS(Constants.NS_XLINK, "xlink:href", src);
       img.appendChild(inner);
-      img.setAttribute("id", "i" + (_images.size()));
+      img.setAttribute("id", "i" + (_images.length));
       _getDefsElement().appendChild(img);
     }
 
@@ -820,8 +820,8 @@ class SvgCanvas extends BasicCanvas {
       // Draws the end marker
       marker = style.get(Constants.STYLE_ENDARROW);
 
-      pt = pts.get(pts.size() - 2);
-      Point2d pe = pts.get(pts.size() - 1);
+      pt = pts.get(pts.length - 2);
+      Point2d pe = pts.get(pts.length - 1);
 
       if (marker != null) {
         float size = (Utils.getFloat(style, Constants.STYLE_ENDSIZE, Constants.DEFAULT_MARKERSIZE));
@@ -851,12 +851,12 @@ class SvgCanvas extends BasicCanvas {
       pt = p0;
       String d = "M " + pt.getX() + " " + pt.getY();
 
-      for (int i = 1; i < pts.size() - 1; i++) {
-        Point2d tmp = pts.get(i);
+      for (int i = 1; i < pts.length - 1; i++) {
+        Point2d tmp = pts[i];
         double dx = pt.getX() - tmp.getX();
         double dy = pt.getY() - tmp.getY();
 
-        if ((rounded && i < pts.size() - 1) && (dx != 0 || dy != 0)) {
+        if ((rounded && i < pts.length - 1) && (dx != 0 || dy != 0)) {
           // Draws a line from the last point to the current
           // point with a spacing of size off the current point
           // into direction of the last point

@@ -109,7 +109,7 @@ class Perimeter {
     double dy = py - cy;
 
     if (dx == 0 && dy != 0) {
-      return new Point2d(cx, cy + b * dy / Math.abs(dy));
+      return new Point2d(cx, cy + b * dy / math.abs(dy));
     } else if (dx == 0 && dy == 0) {
       return new Point2d(px, py);
     }

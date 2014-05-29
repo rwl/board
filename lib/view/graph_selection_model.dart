@@ -108,7 +108,7 @@ class GraphSelectionModel extends EventSource {
 	 * Returns the number of selected cells.
 	 */
   int size() {
-    return _cells.size();
+    return _cells.length;
   }
 
   /**

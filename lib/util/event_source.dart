@@ -124,8 +124,8 @@ class EventSource {
 	 */
   void removeListener(IEventListener listener, [String eventName = null]) {
     if (_eventListeners != null) {
-      for (int i = _eventListeners.size() - 2; i > -1; i -= 2) {
-        if (_eventListeners.get(i + 1) == listener && (eventName == null || String.valueOf(_eventListeners.get(i)).equals(eventName))) {
+      for (int i = _eventListeners.length - 2; i > -1; i -= 2) {
+        if (_eventListeners[i + 1] == listener && (eventName == null || _eventListeners[i].toString() == eventName)) {
           _eventListeners.remove(i + 1);
           _eventListeners.remove(i);
         }
@@ -148,7 +148,7 @@ class EventSource {
 	 * name to the registered listeners for the event.
 	 */
   void fireEvent(EventObj evt, [Object sender = null]) {
-    if (_eventListeners != null && !_eventListeners.isEmpty() && isEventsEnabled()) {
+    if (_eventListeners != null && _eventListeners != 0 && isEventsEnabled()) {
       if (sender == null) {
         sender = getEventSource();
       }
@@ -160,7 +160,7 @@ class EventSource {
       for (int i = 0; i < _eventListeners.length; i += 2) {
         String listen = _eventListeners[i] as String;
 
-        if (listen == null || listen.equals(evt.getName())) {
+        if (listen == null || listen == evt.getName()) {
           (_eventListeners[i + 1] as IEventListener)(sender, evt);
         }
       }

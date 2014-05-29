@@ -165,7 +165,7 @@ class SharedGraphModel extends SharedState {
       node = node.getNextSibling();
     }
 
-    return changes.toArray(new List<AtomicGraphModelChange>(changes.size()));
+    return changes.toArray(new List<AtomicGraphModelChange>(changes.length));
   }
 
   /**

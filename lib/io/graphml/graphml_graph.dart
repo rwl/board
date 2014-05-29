@@ -313,7 +313,7 @@ class GraphMlGraph {
 	 * @return Returns <code>true</code> if the graph hasn't child nodes or edges.
 	 */
   bool isEmpty() {
-    return _nodes.size() == 0 && _edges.size() == 0;
+    return _nodes.length == 0 && _edges.length == 0;
   }
 
   /**

@@ -220,13 +220,17 @@ class Rect extends Point2d {
 	 * 
 	 * @return Returns a new rectangle for the bounds.
 	 */
-  Rectangle getRectangle() {
+  svg.Rect getRectangle() {
     int ix = Math.round(_x) as int;
     int iy = Math.round(_y) as int;
     int iw = Math.round(_width - ix + _x) as int;
     int ih = Math.round(_height - iy + _y) as int;
 
-    return new Rectangle(ix, iy, iw, ih);
+    return new svg.Rect()
+      ..x = ix
+      ..y = iy
+      ..width = iw
+      ..height = ih;
   }
 
   /**

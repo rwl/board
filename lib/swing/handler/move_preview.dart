@@ -207,7 +207,7 @@ class MovePreview extends EventSource {
         result.add(cellState);
 
         // Terminates early if too many cells
-        if (result.size() >= _threshold) {
+        if (result.length >= _threshold) {
           return null;
         }
 
@@ -220,7 +220,7 @@ class MovePreview extends EventSource {
 
               if (edgeState != null) {
                 // Terminates early if too many cells
-                if (result.size() >= _threshold) {
+                if (result.length >= _threshold) {
                   return null;
                 }
 
@@ -232,7 +232,7 @@ class MovePreview extends EventSource {
       }
     }
 
-    return result.toArray(new List<CellState>(result.size()));
+    return result.toArray(new List<CellState>(result.length));
   }
 
   /**

@@ -46,7 +46,7 @@ class ImageBundle {
   /**
 	 * Maps from keys to images.
 	 */
-  Map<String, String> _images = new Hashtable<String, String>();
+  Map<String, String> _images = new Map<String, String>();
 
   /**
 	 * Returns the images.

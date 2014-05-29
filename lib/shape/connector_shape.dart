@@ -29,7 +29,7 @@ class ConnectorShape extends BasicShape {
       }
 
       _translatePoint(pts, 0, paintMarker(canvas, state, true));
-      _translatePoint(pts, pts.size() - 1, paintMarker(canvas, state, false));
+      _translatePoint(pts, pts.length - 1, paintMarker(canvas, state, false));
 
       if (dashed) {
         // Replace the dash pattern
@@ -47,7 +47,7 @@ class ConnectorShape extends BasicShape {
   void _paintPolyline(Graphics2DCanvas canvas, List<Point2d> points, Map<String, Object> style) {
     bool rounded = isRounded(style) && canvas.getScale() > Constants.MIN_SCALE_FOR_ROUNDED_LINES;
 
-    canvas.paintPolyline(points.toArray(new List<Point2d>(points.size())), rounded);
+    canvas.paintPolyline(points.toArray(new List<Point2d>(points.length)), rounded);
   }
 
   /**
@@ -140,7 +140,7 @@ class ConnectorShape extends BasicShape {
 	 * @return a line describing the vector the marker should be drawn along
 	 */
   Line _getMarkerVector(List<Point2d> points, bool source, double markerSize) {
-    int n = points.size();
+    int n = points.length;
     Point2d p0 = (source) ? points.get(1) : points.get(n - 2);
     Point2d pe = (source) ? points.get(0) : points.get(n - 1);
     int count = 1;

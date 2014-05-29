@@ -712,7 +712,7 @@ class Graph extends EventSource {
 	 */
   Rect graphModelChanged(IGraphModel sender, List<UndoableChange> changes) {
     int thresh = getChangesRepaintThreshold();
-    bool ignoreDirty = thresh > 0 && changes.size() > thresh;
+    bool ignoreDirty = thresh > 0 && changes.length > thresh;
 
     // Ignores dirty rectangle if there was a root change
     if (!ignoreDirty) {
@@ -5896,7 +5896,7 @@ class Graph extends EventSource {
     }
 
     edges.addAll(Arrays.asList(GraphModel.getEdges(_model, cell, incoming, outgoing, includeLoops)));
-    List<Object> result = new List<Object>(edges.size());
+    List<Object> result = new List<Object>(edges.length);
     Iterator<Object> it = edges.iterator();
 
     while (it.hasNext()) {
@@ -6241,7 +6241,7 @@ class Graph extends EventSource {
 	 * 
 	 */
   int getSelectionCount() {
-    return _selectionModel.size();
+    return _selectionModel.length;
   }
 
   /**

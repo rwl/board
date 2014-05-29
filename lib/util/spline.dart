@@ -24,8 +24,8 @@ class Spline {
 
   Spline(List<Point2d> points) {
     if (points != null) {
-      List<double> x = new List<double>(points.size());
-      List<double> y = new List<double>(points.size());
+      List<double> x = new List<double>(points.length);
+      List<double> y = new List<double>(points.length);
       int i = 0;
 
       for (Point2d point in points) {
@@ -71,9 +71,9 @@ class Spline {
 
       // If either diff is zero there is no point performing the square root
       if (0.0 == lx) {
-        _t[i] = Math.abs(ly);
+        _t[i] = math.abs(ly);
       } else if (0.0 == ly) {
-        _t[i] = Math.abs(lx);
+        _t[i] = math.abs(lx);
       } else {
         _t[i] = Math.sqrt(lx * lx + ly * ly);
       }

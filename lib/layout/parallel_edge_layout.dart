@@ -45,7 +45,7 @@ class ParallelEdgeLayout extends GraphLayout {
       while (it.hasNext()) {
         List<Object> parallels = it.next();
 
-        if (parallels.size() > 1) {
+        if (parallels.length > 1) {
           layout(parallels);
         }
       }
@@ -114,8 +114,8 @@ class ParallelEdgeLayout extends GraphLayout {
       double x0 = src.getX() + src.getWidth() + this.spacing;
       double y0 = src.getY() + src.getHeight() / 2;
 
-      for (int i = 0; i < parallels.size(); i++) {
-        route(parallels.get(i), x0, y0);
+      for (int i = 0; i < parallels.length; i++) {
+        route(parallels[i], x0, y0);
         x0 += spacing;
       }
     } else if (src != null && trg != null) {
@@ -137,11 +137,11 @@ class ParallelEdgeLayout extends GraphLayout {
       double nx = dy * spacing / len;
       double ny = dx * spacing / len;
 
-      x0 += nx * (parallels.size() - 1) / 2;
-      y0 -= ny * (parallels.size() - 1) / 2;
+      x0 += nx * (parallels.length - 1) / 2;
+      y0 -= ny * (parallels.length - 1) / 2;
 
-      for (int i = 0; i < parallels.size(); i++) {
-        route(parallels.get(i), x0, y0);
+      for (int i = 0; i < parallels.length; i++) {
+        route(parallels[i], x0, y0);
         x0 -= nx;
         y0 += ny;
       }

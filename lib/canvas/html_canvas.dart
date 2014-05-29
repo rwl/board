@@ -24,15 +24,15 @@ class HtmlCanvas extends BasicCanvas {
   /**
 	 * Constructs a new HTML canvas for the specified dimension and scale.
 	 */
-  HtmlCanvas() {
-    this(null);
-  }
+//  HtmlCanvas() {
+//    this(null);
+//  }
 
   /**
 	 * Constructs a new HTML canvas for the specified bounds, scale and
 	 * background color.
 	 */
-  HtmlCanvas(Document document) {
+  HtmlCanvas([Document document=null]) {
     setDocument(document);
   }
 
@@ -202,8 +202,8 @@ class HtmlCanvas extends BasicCanvas {
 
       Point2d last = pts.get(0);
 
-      for (int i = 1; i < pts.size(); i++) {
-        Point2d pt = pts.get(i);
+      for (int i = 1; i < pts.length; i++) {
+        Point2d pt = pts[i];
 
         _drawSegment(last.getX() as int, last.getY() as int, pt.getX() as int, pt.getY() as int, strokeColor, strokeWidth);
 

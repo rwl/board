@@ -914,7 +914,7 @@ public abstract class PngEncodeParam
 	 */
 	synchronized int getNumPrivateChunks()
 	{
-		return chunkType.size();
+		return chunkType.length;
 	}
 
 	/**

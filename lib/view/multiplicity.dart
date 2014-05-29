@@ -113,7 +113,7 @@ class Multiplicity {
         }
       }
 
-      if (_validNeighbors != null && _typeError != null && _validNeighbors.size() > 0) {
+      if (_validNeighbors != null && _typeError != null && _validNeighbors.length > 0) {
         bool isValid = checkNeighbors(graph, edge, source, target);
 
         if (!isValid) {

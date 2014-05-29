@@ -25,15 +25,15 @@ class VmlCanvas extends BasicCanvas {
   /**
 	 * Constructs a new VML canvas for the specified dimension and scale.
 	 */
-  VmlCanvas() {
-    this(null);
-  }
+//  VmlCanvas() {
+//    this(null);
+//  }
 
   /**
 	 * Constructs a new VML canvas for the specified bounds, scale and
 	 * background color.
 	 */
-  VmlCanvas(Document document) {
+  VmlCanvas([Document document=null]) {
     setDocument(document);
   }
 
@@ -384,8 +384,8 @@ class VmlCanvas extends BasicCanvas {
 
       StringBuilder buf = new StringBuilder("m " + Math.round(pt.getX()) + " " + Math.round(pt.getY()));
 
-      for (int i = 1; i < pts.size(); i++) {
-        pt = pts.get(i);
+      for (int i = 1; i < pts.length; i++) {
+        pt = pts[i];
         buf.append(" l " + Math.round(pt.getX()) + " " + Math.round(pt.getY()));
 
         r = r.union(new Rectangle(pt.getPoint()));

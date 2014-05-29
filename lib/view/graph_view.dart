@@ -893,8 +893,8 @@ class GraphView extends EventSource {
 
         edgeStyle.apply(edge, src, trg, points, pts);
       } else if (points != null) {
-        for (int i = 0; i < points.size(); i++) {
-          pts.add(transformControlPoint(edge, points.get(i)));
+        for (int i = 0; i < points.length; i++) {
+          pts.add(transformControlPoint(edge, points[i]));
         }
       }
 
@@ -1123,8 +1123,8 @@ class GraphView extends EventSource {
     List<Point2d> pts = edge.getAbsolutePoints();
     Point2d point = null;
 
-    if (pts != null && (source || pts.size() > 2 || opposite == null)) {
-      int count = pts.size();
+    if (pts != null && (source || pts.length > 2 || opposite == null)) {
+      int count = pts.length;
       int index = (source) ? Math.min(1, count - 1) : Math.max(0, count - 2);
       point = pts.get(index);
     }
@@ -1175,7 +1175,7 @@ class GraphView extends EventSource {
   void updateEdgeBounds(CellState state) {
     List<Point2d> points = state.getAbsolutePoints();
     Point2d p0 = points.get(0);
-    Point2d pe = points.get(points.size() - 1);
+    Point2d pe = points.get(points.length - 1);
 
     if (p0.getX() != pe.getX() || p0.getY() != pe.getY()) {
       double dx = pe.getX() - p0.getX();
@@ -1186,7 +1186,7 @@ class GraphView extends EventSource {
     }
 
     double length = 0.0;
-    List<double> segments = new List<double>(points.size() - 1);
+    List<double> segments = new List<double>(points.length - 1);
     Point2d pt = p0;
 
     double minX = pt.getX();
@@ -1194,8 +1194,8 @@ class GraphView extends EventSource {
     double maxX = minX;
     double maxY = minY;
 
-    for (int i = 1; i < points.size(); i++) {
-      Point2d tmp = points.get(i);
+    for (int i = 1; i < points.length; i++) {
+      Point2d tmp = points[i];
 
       if (tmp != null) {
         double dx = pt.getX() - tmp.getX();
@@ -1405,7 +1405,7 @@ class GraphView extends EventSource {
       }
     }
 
-    List<CellState> resultArray = new List<CellState>(result.size());
+    List<CellState> resultArray = new List<CellState>(result.length);
     return result.toArray(resultArray);
   }
 

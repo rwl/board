@@ -138,7 +138,7 @@ class PartitionLayout extends GraphLayout {
         }
       }
 
-      int n = children.size();
+      int n = children.length;
 
       if (n > 0) {
         double x0 = border;
@@ -161,7 +161,7 @@ class PartitionLayout extends GraphLayout {
           model.beginUpdate();
           try {
             for (int i = 0; i < n; i++) {
-              Object child = children.get(i);
+              Object child = children[i];
               Geometry geo = model.getGeometry(child);
 
               if (geo != null) {

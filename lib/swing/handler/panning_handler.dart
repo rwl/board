@@ -90,8 +90,8 @@ class PanningHandler extends MouseAdapter {
 	 */
   void mouseReleased(MouseEvent e) {
     if (!e.isConsumed() && _start != null) {
-      int dx = Math.abs(_start.x - e.getX());
-      int dy = Math.abs(_start.y - e.getY());
+      int dx = math.abs(_start.x - e.getX());
+      int dy = math.abs(_start.y - e.getY());
 
       if (_graphComponent.isSignificant(dx, dy)) {
         e.consume();

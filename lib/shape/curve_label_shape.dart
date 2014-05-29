@@ -296,7 +296,7 @@ class CurveLabelShape implements ITextShape {
       _lastValue = label;
       _lastFont = font;
       _lastPoints = _curve.getGuidePoints();
-      this._labelGlyphs = glyphList.toArray(new List<LabelGlyphCache>(glyphList.size()));
+      this._labelGlyphs = glyphList.toArray(new List<LabelGlyphCache>(glyphList.length));
     }
 
     // Store the start/end buffers that pad out the ends of the branch so the label is
@@ -414,8 +414,8 @@ class CurveLabelShape implements ITextShape {
         // Extend the current parallel line in its direction
         // by the length of the next parallel. Use the approximate
         // deviation to work out the angle change
-        double deltaX = Math.abs(x - end2X);
-        double deltaY = Math.abs(y - end2Y);
+        double deltaX = math.abs(x - end2X);
+        double deltaY = math.abs(y - end2Y);
 
         // The difference as a proportion of the length of the next
         // vector. 1 means a variation of 60 degrees.

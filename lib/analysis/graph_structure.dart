@@ -47,7 +47,7 @@ class GraphStructure {
     queue.add(vertices[0]);
 
     //repeat the algorithm until the queue is empty
-    while (queue.size() > 0) {
+    while (queue.length > 0) {
       //cut out the first vertex
       Object currVertex = queue.get(0);
       queue.remove(0);
@@ -327,16 +327,16 @@ class GraphStructure {
     bool oldDirectedness = GraphProperties.isDirected(aGraph.getProperties(), GraphProperties.DEFAULT_DIRECTED);
     GraphProperties.setDirected(aGraph.getProperties(), false);
 
-    while (unvisitedVertexList.size() > 0) {
+    while (unvisitedVertexList.length > 0) {
       //check if the current vertex isn't already in a component
 
       //if yes, just remove it from the unvisited list
       Object currVertex = unvisitedVertexList.remove(0);
-      int componentCount = componentList.size();
+      int componentCount = componentList.length;
       bool isInComponent = false;
 
       for (int i = 0; i < componentCount; i++) {
-        if (componentList.get(i).contains(currVertex)) {
+        if (componentList[i].contains(currVertex)) {
           isInComponent = true;
         }
       }
@@ -350,8 +350,8 @@ class GraphStructure {
           return false;
         });
 
-        for (int i = 0; i < currVertexList.size(); i++) {
-          unvisitedVertexList.remove(currVertexList.get(i));
+        for (int i = 0; i < currVertexList.length; i++) {
+          unvisitedVertexList.remove(currVertexList[i]);
         }
 
         componentList.add(currVertexList);
@@ -359,10 +359,10 @@ class GraphStructure {
     }
 
     GraphProperties.setDirected(aGraph.getProperties(), oldDirectedness);
-    List<List<Object>> result = new List<List<Object>>(componentList.size());//[];
+    List<List<Object>> result = new List<List<Object>>(componentList.length);//[];
 
-    for (int i = 0; i < componentList.size(); i++) {
-      result[i] = componentList.get(i).toArray();
+    for (int i = 0; i < componentList.length; i++) {
+      result[i] = componentList[i].toArray();
     }
 
     return result as List<List<Object>>;
@@ -388,8 +388,8 @@ class GraphStructure {
         return false;
       });
 
-      for (int i = 0; i < bFSList.size(); i++) {
-        Object parentVertex = bFSList.get(i);
+      for (int i = 0; i < bFSList.length; i++) {
+        Object parentVertex = bFSList[i];
         List<Object> currEdges = aGraph.getEdges(parentVertex, parent, true, true, false, true);
         List<Object> neighbors = aGraph.getOpposites(currEdges, parentVertex, true, true);
 
@@ -543,7 +543,7 @@ class GraphStructure {
 
     for (int i = 0; i < vertexCount; i++) {
       ArrayList<Cell> oldNeighbors = new List<Cell>();
-      oldNeighbors = oldConnections.get(i);
+      oldNeighbors = oldConnections[i];
       Cell currVertex = vertices[i] as Cell;
 
       for (int j = 0; j < vertexCount; j++) {

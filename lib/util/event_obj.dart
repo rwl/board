@@ -41,12 +41,12 @@ class EventObj {
 	 */
   EventObj(String name, [List<Object> args=null]) {
     this._name = name;
-    _properties = new Hashtable<String, Object>();
+    _properties = new Map<String, Object>();
 
     if (args != null) {
       for (int i = 0; i < args.length; i += 2) {
         if (args[i + 1] != null) {
-          _properties.put(String.valueOf(args[i]), args[i + 1]);
+          _properties[args[i].toString()] = args[i + 1];
         }
       }
     }
@@ -70,7 +70,7 @@ class EventObj {
 	 * 
 	 */
   Object getProperty(String key) {
-    return _properties.get(key);
+    return _properties[key];
   }
 
   /**

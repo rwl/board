@@ -548,8 +548,8 @@ class ConnectionHandler extends MouseAdapter {
     if (!e.isConsumed() && _graphComponent.isEnabled() && isEnabled()) {
       // Activates the handler
       if (!_active && _first != null) {
-        double dx = Math.abs(_first.getX() - e.getX());
-        double dy = Math.abs(_first.getY() - e.getY());
+        double dx = math.abs(_first.getX() - e.getX());
+        double dy = math.abs(_first.getY() - e.getY());
         int tol = _graphComponent.getTolerance();
 
         if (dx > tol || dy > tol) {

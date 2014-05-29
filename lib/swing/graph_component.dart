@@ -1733,7 +1733,7 @@ class GraphComponent extends JScrollPane implements Printable {
 	 * greater than the tolerance.
 	 */
   bool isSignificant(double dx, double dy) {
-    return Math.abs(dx) > _tolerance || Math.abs(dy) > _tolerance;
+    return math.abs(dx) > _tolerance || math.abs(dy) > _tolerance;
   }
 
   /**
@@ -2701,7 +2701,7 @@ class GraphComponent extends JScrollPane implements Printable {
           _removeCellOverlayComponent(overlay, cell);
         }
 
-        arr = list.toArray(new List<ICellOverlay>(list.size()));
+        arr = list.toArray(new List<ICellOverlay>(list.length));
         _overlays.put(cell, arr);
       }
     }

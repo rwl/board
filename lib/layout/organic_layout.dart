@@ -963,7 +963,7 @@ class OrganicLayout extends GraphLayout {
 
         distSquare -= v[i].radiusSquared;
 
-        // prevents from dividing with Zero. No Math.abs() call
+        // prevents from dividing with Zero. No math.abs() call
         // for performance
         if (distSquare < minDistanceLimitSquared) {
           distSquare = minDistanceLimitSquared;
@@ -1017,7 +1017,7 @@ class OrganicLayout extends GraphLayout {
 
           distSquare -= v[j].radiusSquared;
 
-          // prevents from dividing with Zero. No Math.abs() call
+          // prevents from dividing with Zero. No math.abs() call
           // for performance
           if (distSquare < minDistanceLimitSquared) distSquare = minDistanceLimitSquared;
 
@@ -1059,7 +1059,7 @@ class OrganicLayout extends GraphLayout {
       }
     }
 
-    List<int> relevantEdgeArray = new List<int>(relevantEdgeList.size());
+    List<int> relevantEdgeArray = new List<int>(relevantEdgeList.length);
     Iterator<Integer> iter = relevantEdgeList.iterator();
 
     //Reform the list into an array but replace Integer values with ints
@@ -1089,7 +1089,7 @@ class OrganicLayout extends GraphLayout {
       }
     }
 
-    List<int> connectedEdgeArray = new List<int>(connectedEdgeList.size());
+    List<int> connectedEdgeArray = new List<int>(connectedEdgeList.length);
     Iterator<Integer> iter = connectedEdgeList.iterator();
 
     // Reform the list into an array but replace Integer values with ints

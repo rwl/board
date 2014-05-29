@@ -1165,7 +1165,7 @@ class GraphGenerator {
       nextMove = _getNextKnightMove(aGraph, xDim, yDim, currCoords[0], currCoords[1], resultPath);
     }
 
-    if (resultPath.size() < vertexNum) {
+    if (resultPath.length < vertexNum) {
       //the mirrored strategy should go here, instead of the exception
       //and the exception would be thrown only if the mirrored fails too
       throw new StructuralException("Could not generate a correct Knight tour with size " + xDim + " x " + yDim + ".");
@@ -1315,8 +1315,8 @@ class GraphGenerator {
     float centerX = (xDim + 1) / 2.0;
     float centerY = (yDim + 1) / 2.0;
     List<int> currCoords = getVertexGridCoords(xDim, yDim, currValue);
-    float x = Math.abs(centerX - currCoords[0]);
-    float y = Math.abs(centerY - currCoords[1]);
+    float x = math.abs(centerX - currCoords[0]);
+    float y = math.abs(centerY - currCoords[1]);
 
     return Math.sqrt(x * x + y * y) as float;
   }

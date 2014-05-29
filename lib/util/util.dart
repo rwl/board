@@ -10,6 +10,14 @@ library graph.util;
  */
 
 import 'dart:html';
+import 'dart:collection';
+import 'dart:svg' as svg;
+import 'dart:math' as Math;
+
+import 'package:image/image.dart' as image;
+import 'package:color/color.dart' as color;
+
+import '../compat/math.dart' as math;
 
 import '../canvas/canvas.dart' show Graphics2DCanvas;
 import '../canvas/canvas.dart' show HtmlCanvas;
@@ -506,7 +514,7 @@ class Utils {
       result.add(currentLine.toString());
     }
 
-    return result.toArray(new List<String>(result.size()));
+    return result.toArray(new List<String>(result.length));
   }
 
   /**
@@ -559,8 +567,8 @@ class Utils {
 
     double fS = sweepFlag;
     double psai = angle;
-    r1 = Math.abs(r1);
-    r2 = Math.abs(r2);
+    r1 = math.abs(r1);
+    r2 = math.abs(r2);
     double ctx = -x / 2;
     double cty = -y / 2;
     double cpsi = Math.cos(psai * Math.PI / 180);
@@ -889,7 +897,7 @@ class Utils {
     List<Point2d> result = null;
 
     if (pts != null) {
-      result = new List<Point2d>(pts.size());
+      result = new List<Point2d>(pts.length);
       Iterator<Point2d> it = pts.iterator();
 
       while (it.hasNext()) {

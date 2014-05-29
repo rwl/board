@@ -356,7 +356,7 @@ class EdgeHandler extends CellHandler {
         }
 
         if (_constrainedEvent) {
-          if (Math.abs(e.getX() - _first.x) > Math.abs(e.getY() - _first.y)) {
+          if (math.abs(e.getX() - _first.x) > math.abs(e.getY() - _first.y)) {
             pt.setY(abs.getY());
           } else {
             pt.setX(abs.getX());
@@ -402,7 +402,7 @@ class EdgeHandler extends CellHandler {
 
           if (points == null) {
             points = Arrays.asList([point]);
-          } else if (_index - 1 < points.size()) {
+          } else if (_index - 1 < points.length) {
             points = new List<Point2d>(points);
             points.set(_index - 1, point);
           }
@@ -489,7 +489,7 @@ class EdgeHandler extends CellHandler {
           }
 
           if (_constrainedEvent) {
-            if (Math.abs(e.getX() - _first.x) > Math.abs(e.getY() - _first.y)) {
+            if (math.abs(e.getX() - _first.x) > math.abs(e.getY() - _first.y)) {
               pt.setY(abs.getY());
             } else {
               pt.setX(abs.getX());
@@ -549,9 +549,9 @@ class EdgeHandler extends CellHandler {
           }
 
           if (pts != null) {
-            if (pointIndex <= pts.size()) {
+            if (pointIndex <= pts.length) {
               pts.set(pointIndex - 1, point);
-            } else if (pointIndex - 1 <= pts.size()) {
+            } else if (pointIndex - 1 <= pts.length) {
               pts.add(pointIndex - 1, point);
             }
           }

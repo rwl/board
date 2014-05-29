@@ -116,7 +116,7 @@ class VertexHandler extends CellHandler {
         int idy = Math.round(pt.getY() - _first.y) as int;
 
         if (_constrainedEvent) {
-          if (Math.abs(idx) > Math.abs(idy)) {
+          if (math.abs(idx) > math.abs(idy)) {
             idy = 0;
           } else {
             idx = 0;
@@ -187,7 +187,7 @@ class VertexHandler extends CellHandler {
       double dy = (pt.getY() - _first.y) / scale;
 
       if (_constrainedEvent) {
-        if (Math.abs(dx) > Math.abs(dy)) {
+        if (math.abs(dx) > math.abs(dy)) {
           dy = 0;
         } else {
           dx = 0;
@@ -300,13 +300,13 @@ class VertexHandler extends CellHandler {
     // Flips over left side
     if (width < 0) {
       left += width;
-      width = Math.abs(width);
+      width = math.abs(width);
     }
 
     // Flips over top side
     if (height < 0) {
       top += height;
-      height = Math.abs(height);
+      height = math.abs(height);
     }
 
     return new Rect(left, top, width, height);

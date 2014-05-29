@@ -132,7 +132,7 @@ abstract class GraphViewReader extends DefaultHandler {
     // Parses the absolute points list
     List<Point2d> pts = parsePoints(Utils.getString(style, "points"));
 
-    if (pts.size() > 0) {
+    if (pts.length > 0) {
       state.setAbsolutePoints(pts);
     }
 

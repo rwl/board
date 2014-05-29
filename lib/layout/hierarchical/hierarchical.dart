@@ -273,7 +273,7 @@ JGraphLayout.Stoppable*/
     }
 
     edges.addAll(Arrays.asList(GraphModel.getEdges(model, cell, true, true, false)));
-    List<Object> result = new List<Object>(edges.size());
+    List<Object> result = new List<Object>(edges.length);
     Iterator<Object> it = edges.iterator();
 
     while (it.hasNext()) {
@@ -320,11 +320,11 @@ JGraphLayout.Stoppable*/
     } else {
       // Find vertex set as directed traversal from roots
 
-      for (int i = 0; i < _roots.size(); i++) {
+      for (int i = 0; i < _roots.length; i++) {
         Set<Object> vertexSet = new LinkedHashSet<Object>();
         hierarchyVertices.add(vertexSet);
 
-        _traverse(_roots.get(i), true, null, allVertexSet, vertexSet, hierarchyVertices, null);
+        _traverse(_roots[i], true, null, allVertexSet, vertexSet, hierarchyVertices, null);
       }
     }
 

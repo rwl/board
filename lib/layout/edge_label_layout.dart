@@ -82,14 +82,14 @@ class EdgeLabelLayout extends GraphLayout {
       int dy1 = -labRect.y - labRect.height + vRect.y;
       int dy2 = -labRect.y + vRect.y + vRect.height;
 
-      int dy = (Math.abs(dy1) < Math.abs(dy2)) ? dy1 : dy2;
+      int dy = (math.abs(dy1) < math.abs(dy2)) ? dy1 : dy2;
 
       int dx1 = -labRect.x - labRect.width + vRect.x;
       int dx2 = -labRect.x + vRect.x + vRect.width;
 
-      int dx = (Math.abs(dx1) < Math.abs(dx2)) ? dx1 : dx2;
+      int dx = (math.abs(dx1) < math.abs(dx2)) ? dx1 : dx2;
 
-      if (Math.abs(dx) < Math.abs(dy)) {
+      if (math.abs(dx) < math.abs(dy)) {
         dy = 0;
       } else {
         dx = 0;

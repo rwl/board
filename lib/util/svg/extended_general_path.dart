@@ -192,8 +192,8 @@ class ExtendedGeneralPath implements Shape, Cloneable
 		double x1 = (cosAngle * dx2 + sinAngle * dy2);
 		double y1 = (-sinAngle * dx2 + cosAngle * dy2);
 		// Ensure radii are large enough
-		rx = Math.abs(rx);
-		ry = Math.abs(ry);
+		rx = math.abs(rx);
+		ry = math.abs(ry);
 		double Prx = rx * rx;
 		double Pry = ry * ry;
 		double Px1 = x1 * x1;

@@ -231,7 +231,7 @@ class CellState extends Rect {
 	 * @return the absolutePoints
 	 */
   int getAbsolutePointCount() {
-    return (_absolutePoints != null) ? _absolutePoints.size() : 0;
+    return (_absolutePoints != null) ? _absolutePoints.length : 0;
   }
 
   /**
@@ -399,7 +399,7 @@ class CellState extends Rect {
         _absolutePoints = new List<Point2d>();
       }
 
-      if (_absolutePoints.size() == 0) {
+      if (_absolutePoints.length == 0) {
         _absolutePoints.add(point);
       } else {
         _absolutePoints.set(0, point);
@@ -409,10 +409,10 @@ class CellState extends Rect {
         _absolutePoints = new List<Point2d>();
         _absolutePoints.add(null);
         _absolutePoints.add(point);
-      } else if (_absolutePoints.size() == 1) {
+      } else if (_absolutePoints.length == 1) {
         _absolutePoints.add(point);
       } else {
-        _absolutePoints.set(_absolutePoints.size() - 1, point);
+        _absolutePoints.set(_absolutePoints.length - 1, point);
       }
     }
   }
@@ -468,8 +468,8 @@ class CellState extends Rect {
     if (_absolutePoints != null) {
       clone._absolutePoints = new List<Point2d>();
 
-      for (int i = 0; i < _absolutePoints.size(); i++) {
-        clone._absolutePoints.add(_absolutePoints.get(i).clone() as Point2d);
+      for (int i = 0; i < _absolutePoints.length; i++) {
+        clone._absolutePoints.add(_absolutePoints[i].clone() as Point2d);
       }
     }
 

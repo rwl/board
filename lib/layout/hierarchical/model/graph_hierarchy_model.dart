@@ -141,7 +141,7 @@ class GraphHierarchyModel {
           if (internalTargetCell != null && internalVertices[i] != internalTargetCell) {
             internalEdge.target = internalTargetCell;
 
-            if (internalTargetCell.connectsAsTarget.size() == 0) {
+            if (internalTargetCell.connectsAsTarget.length == 0) {
               internalTargetCell.connectsAsTarget = new LinkedHashSet<GraphHierarchyEdge>(4);
             }
 
@@ -179,7 +179,7 @@ class GraphHierarchyModel {
       // If the layout is deterministic, order the cells
       List<Object> conns = layout.getEdges(vertices[i]);
       List<Object> outgoingCells = Arrays.asList(graph.getOpposites(conns, vertices[i]));
-      internalVertices[i].connectsAsSource = new LinkedHashSet<GraphHierarchyEdge>(outgoingCells.size());
+      internalVertices[i].connectsAsSource = new LinkedHashSet<GraphHierarchyEdge>(outgoingCells.length);
 
       // Create internal edges, but don't do any rank assignment yet
       // First use the information from the greedy cycle remover to
@@ -347,7 +347,7 @@ class GraphHierarchyModel {
         Object removedCell = startNodes.removeFirst();
         startNodes.addLast(internalNode);
 
-        if (removedCell == internalNode && startNodes.size() == 1) {
+        if (removedCell == internalNode && startNodes.length == 1) {
           // This is an error condition, we can't get out of
           // this loop. It could happen for more than one node
           // but that's a lot harder to detect. Log the error
@@ -367,8 +367,8 @@ class GraphHierarchyModel {
     }
 
     // Tighten the roots as far as possible
-    for (int i = 0; i < startNodesCopy.size(); i++) {
-      GraphHierarchyNode internalNode = startNodesCopy.get(i);
+    for (int i = 0; i < startNodesCopy.length; i++) {
+      GraphHierarchyNode internalNode = startNodesCopy[i];
       int currentMaxLayer = 0;
       Iterator<GraphHierarchyEdge> iter2 = internalNode.connectsAsSource.iterator();
 
@@ -423,7 +423,7 @@ class GraphHierarchyModel {
         node.minRank = node.temp[0];
 
         // Set temp[0] to the nodes position in the rank
-        node.temp[0] = rankList[node.maxRank].size() - 1;
+        node.temp[0] = rankList[node.maxRank].length - 1;
       }
 
       if (parent != null && connectingEdge != null) {
@@ -442,7 +442,7 @@ class GraphHierarchyModel {
             // The connecting edge must be added to the
             // appropriate ranks
             rankList[i].add(edge);
-            edge.setGeneralPurposeVariable(i, rankList[i].size() - 1);
+            edge.setGeneralPurposeVariable(i, rankList[i].length - 1);
           }
         }
       }

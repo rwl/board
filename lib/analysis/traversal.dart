@@ -104,7 +104,7 @@ class Traversal {
 	 * @param visitor
 	 */
   static void _bfsRec(AnalysisGraph aGraph, Set<Object> queued, LinkedList<List<Object>> queue, ICellVisitor visitor) {
-    if (queue.size() > 0) {
+    if (queue.length > 0) {
       List<Object> q = queue.removeFirst();
       Object cell = q[0];
       Object incomingEdge = q[1];
@@ -176,7 +176,7 @@ class Traversal {
     CostFunction costFunction = aGraph.getGenerator().getCostFunction();
     GraphView view = aGraph.getGraph().getView();
 
-    while (vertexList.size() > 0) {
+    while (vertexList.length > 0) {
       //find closest vertex
       double minDistance;
       Object currVertex;
@@ -187,9 +187,9 @@ class Traversal {
       minDistance = currDistance;
       closestVertex = currVertex;
 
-      if (vertexList.size() > 1) {
-        for (int i = 1; i < vertexList.size(); i++) {
-          currVertex = vertexList.get(i);
+      if (vertexList.length > 1) {
+        for (int i = 1; i < vertexList.length; i++) {
+          currVertex = vertexList[i];
           currIndex = vertexListStatic.indexOf(currVertex);
           currDistance = distances[currIndex];
 
@@ -249,10 +249,10 @@ class Traversal {
       resultList.add(0, parents[currIndex]);
     }
 
-    resultList.add(resultList.size(), [endVertex, null]);
+    resultList.add(resultList.length, [endVertex, null]);
 
-    for (int i = 0; i < resultList.size(); i++) {
-      visitor.visit(resultList.get(i)[0], resultList.get(i)[1]);
+    for (int i = 0; i < resultList.length; i++) {
+      visitor.visit(resultList[i][0], resultList[i][1]);
     }
   }
 
@@ -451,7 +451,7 @@ class Traversal {
 
       while (startVertex != targetVertex) {
         result = _getWFIPathRec(aGraph, paths, startVertex, targetVertex, currPath, cf, view);
-        startVertex = result.get(result.size() - 1);
+        startVertex = result.get(result.length - 1);
       }
     }
 

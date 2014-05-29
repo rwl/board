@@ -97,14 +97,14 @@ class UndoManager extends EventSource {
 	 * Returns true if a redo is possible.
 	 */
   bool canRedo() {
-    return _indexOfNextAdd < _history.size();
+    return _indexOfNextAdd < _history.length;
   }
 
   /**
 	 * Redoes the last change.
 	 */
   void redo() {
-    int n = _history.size();
+    int n = _history.length;
 
     while (_indexOfNextAdd < n) {
       UndoableEdit edit = _history.get(_indexOfNextAdd++);
@@ -123,12 +123,12 @@ class UndoManager extends EventSource {
   void undoableEditHappened(UndoableEdit undoableEdit) {
     _trim();
 
-    if (_size > 0 && _size == _history.size()) {
+    if (_size > 0 && _size == _history.length) {
       _history.remove(0);
     }
 
     _history.add(undoableEdit);
-    _indexOfNextAdd = _history.size();
+    _indexOfNextAdd = _history.length;
     fireEvent(new EventObj(Event.ADD, "edit", undoableEdit));
   }
 
@@ -137,7 +137,7 @@ class UndoManager extends EventSource {
 	 * invoking die on each edit. This is called from undoableEditHappened.
 	 */
   void _trim() {
-    while (_history.size() > _indexOfNextAdd) {
+    while (_history.length > _indexOfNextAdd) {
       UndoableEdit edit = _history.remove(_indexOfNextAdd);
       edit.die();
     }

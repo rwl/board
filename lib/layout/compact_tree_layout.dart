@@ -267,10 +267,10 @@ class CompactTreeLayout extends GraphLayout {
       else {
         List<Object> roots = findTreeRoots(parent, _invert);
 
-        if (roots.size() > 0) {
-          for (int i = 0; i < roots.size(); i++) {
-            if (!isVertexIgnored(roots.get(i)) && graph.getEdges(roots.get(i), null, _invert, !_invert, false).length > 0) {
-              root = roots.get(i);
+        if (roots.length > 0) {
+          for (int i = 0; i < roots.length; i++) {
+            if (!isVertexIgnored(roots[i]) && graph.getEdges(roots[i], null, _invert, !_invert, false).length > 0) {
+              root = roots[i];
               break;
             }
           }
@@ -318,11 +318,11 @@ class CompactTreeLayout extends GraphLayout {
             double dy = 0;
 
             if (bounds.getX() < 0) {
-              dx = Math.abs(x0 - bounds.getX());
+              dx = math.abs(x0 - bounds.getX());
             }
 
             if (bounds.getY() < 0) {
-              dy = Math.abs(y0 - bounds.getY());
+              dy = math.abs(y0 - bounds.getY());
             }
 
             if (dx != 0 || dy != 0) {
@@ -809,7 +809,7 @@ class CompactTreeLayout extends GraphLayout {
       child = child.next;
     }
 
-    List<_WeightedCellSorter> sortedCellsArray = sortedCells.toArray(new List<_WeightedCellSorter>(sortedCells.size()));
+    List<_WeightedCellSorter> sortedCellsArray = sortedCells.toArray(new List<_WeightedCellSorter>(sortedCells.length));
     Arrays.sort(sortedCellsArray);
 
     double availableWidth = node.width;

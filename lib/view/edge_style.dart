@@ -126,7 +126,7 @@ class EdgeStyle {
     if (source != null) {
       GraphView view = state.getView();
       Graph graph = view.getGraph();
-      Point2d pt = (points != null && points.size() > 0) ? points.get(0) : null;
+      Point2d pt = (points != null && points.length > 0) ? points.get(0) : null;
 
       if (pt != null) {
         pt = view.transformControlPoint(state, pt);
@@ -155,7 +155,7 @@ class EdgeStyle {
       if (pt == null || pt.getX() < source.getX() || pt.getX() > source.getX() + source.getWidth()) {
         if (pt != null) {
           x = pt.getX();
-          dy = Math.max(Math.abs(y - pt.getY()), dy);
+          dy = Math.max(math.abs(y - pt.getY()), dy);
         } else {
           if (dir.equals(Constants.DIRECTION_NORTH)) {
             y = source.getY() - 2 * dx;
@@ -170,7 +170,7 @@ class EdgeStyle {
       } else {
         // pt != null
         x = view.getRoutingCenterX(source);
-        dx = Math.max(Math.abs(x - pt.getX()), dy);
+        dx = Math.max(math.abs(x - pt.getX()), dy);
         y = pt.getY();
         dy = 0;
       }
@@ -186,7 +186,7 @@ class EdgeStyle {
 	 * unspecified.
 	 */
   static EdgeStyleFunction ElbowConnector = (CellState state, CellState source, CellState target, List<Point2d> points, List<Point2d> result) {
-    Point2d pt = (points != null && points.size() > 0) ? points.get(0) : null;
+    Point2d pt = (points != null && points.length > 0) ? points.get(0) : null;
 
     bool vertical = false;
     bool horizontal = false;
@@ -230,7 +230,7 @@ class EdgeStyle {
 	 */
   static EdgeStyleFunction SideToSide = (CellState state, CellState source, CellState target, List<Point2d> points, List<Point2d> result) {
     GraphView view = state.getView();
-    Point2d pt = ((points != null && points.size() > 0) ? points.get(0) : null);
+    Point2d pt = ((points != null && points.length > 0) ? points.get(0) : null);
     Point2d p0 = state.getAbsolutePoint(0);
     Point2d pe = state.getAbsolutePoint(state.getAbsolutePointCount() - 1);
 
@@ -277,7 +277,7 @@ class EdgeStyle {
         result.add(new Point2d(x, y2));
       }
 
-      if (result.size() == 1) {
+      if (result.length == 1) {
         if (pt != null) {
           if (!target.contains(x, pt.getY()) && !source.contains(x, pt.getY())) {
             result.add(new Point2d(x, pt.getY()));
@@ -297,7 +297,7 @@ class EdgeStyle {
 	 */
   static EdgeStyleFunction TopToBottom = (CellState state, CellState source, CellState target, List<Point2d> points, List<Point2d> result) {
     GraphView view = state.getView();
-    Point2d pt = ((points != null && points.size() > 0) ? points.get(0) : null);
+    Point2d pt = ((points != null && points.length > 0) ? points.get(0) : null);
     Point2d p0 = state.getAbsolutePoint(0);
     Point2d pe = state.getAbsolutePoint(state.getAbsolutePointCount() - 1);
 
@@ -343,7 +343,7 @@ class EdgeStyle {
         result.add(new Point2d(x, y));
       }
 
-      if (result.size() == 1) {
+      if (result.length == 1) {
         if (pt != null) {
           if (!target.contains(pt.getX(), y) && !source.contains(pt.getX(), y)) {
             result.add(new Point2d(pt.getX(), y));
@@ -377,10 +377,10 @@ class EdgeStyle {
       pt = pt.clone() as Point2d;
     }
 
-    int lastInx = pts.size() - 1;
+    int lastInx = pts.length - 1;
 
     // Adds the waypoints
-    if (hints != null && hints.size() > 0) {
+    if (hints != null && hints.length > 0) {
       hint = state._view.transformControlPoint(state, hints.get(0));
 
       CellState currentTerm = source;
@@ -388,7 +388,7 @@ class EdgeStyle {
       bool hozChan = false;
       bool vertChan = false;
       Point2d currentHint = hint;
-      int hintsLen = hints.size();
+      int hintsLen = hints.length;
 
       for (int i = 0; i < 2; i++) {
         bool fixedVertAlign = currentPt != null && currentPt.getX() == currentHint.getX();
@@ -409,7 +409,7 @@ class EdgeStyle {
 
           if (i == 1) {
             // Work back from target end
-            horizontal = hints.size() % 2 == 0 ? hozChan : vertChan;
+            horizontal = hints.length % 2 == 0 ? hozChan : vertChan;
           }
 
           break;
@@ -432,9 +432,9 @@ class EdgeStyle {
         pt.setX(hint.getX());
       }
 
-      for (int i = 0; i < hints.size(); i++) {
+      for (int i = 0; i < hints.length; i++) {
         horizontal = !horizontal;
-        hint = state._view.transformControlPoint(state, hints.get(i));
+        hint = state._view.transformControlPoint(state, hints[i]);
 
         //				mxLog.show();
         //				mxLog.debug('hint', i, hint.x, hint.y);
@@ -468,15 +468,15 @@ class EdgeStyle {
 
     // Removes bends inside the source terminal for floating ports
     if (pts.get(0) == null && source != null) {
-      while (result.size() > 1 && source.contains(result.get(1).getX(), result.get(1).getY())) {
+      while (result.length > 1 && source.contains(result.get(1).getX(), result.get(1).getY())) {
         result.remove(1);
       }
     }
 
     // Removes bends inside the target terminal
     if (pts.get(lastInx) == null && target != null) {
-      while (result.size() > 1 && target.contains(result.get(result.size() - 1).getX(), result.get(result.size() - 1).getY())) {
-        result.remove(result.size() - 1);
+      while (result.length > 1 && target.contains(result.get(result.length - 1).getX(), result.get(result.length - 1).getY())) {
+        result.remove(result.length - 1);
       }
     }
   };
@@ -541,7 +541,7 @@ class EdgeStyle {
     bool sourceEdge = source == null ? false : graph.getModel().isEdge(source._cell);
     bool targetEdge = target == null ? false : graph.getModel().isEdge(target._cell);
 
-    if ((points != null && points.size() > 0) || (sourceEdge) || (targetEdge)) {
+    if ((points != null && points.length > 0) || (sourceEdge) || (targetEdge)) {
       EdgeStyle.SegmentConnector.apply(state, source, target, points, result);
       return;
     }
@@ -862,8 +862,8 @@ class EdgeStyle {
           }
         } else if (center) {
           // Which center we're travelling to depend on the current direction
-          wayPoints1[currentIndex][0] += direction[0] * Math.abs(vertexSeperations[directionIndex] / 2);
-          wayPoints1[currentIndex][1] += direction[1] * Math.abs(vertexSeperations[directionIndex] / 2);
+          wayPoints1[currentIndex][0] += direction[0] * math.abs(vertexSeperations[directionIndex] / 2);
+          wayPoints1[currentIndex][1] += direction[1] * math.abs(vertexSeperations[directionIndex] / 2);
         }
 
         if (currentIndex > 0 && wayPoints1[currentIndex][currentOrientation] == wayPoints1[currentIndex - 1][currentOrientation]) {

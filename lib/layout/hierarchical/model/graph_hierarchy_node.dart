@@ -71,7 +71,7 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell {
   List<GraphAbstractHierarchyCell> getNextLayerConnectedCells(int layer) {
     if (_nextLayerConnectedCells == null) {
       _nextLayerConnectedCells = new List<ArrayList>(1);
-      _nextLayerConnectedCells[0] = new List<GraphAbstractHierarchyCell>(connectsAsTarget.size());
+      _nextLayerConnectedCells[0] = new List<GraphAbstractHierarchyCell>(connectsAsTarget.length);
       Iterator<GraphHierarchyEdge> iter = connectsAsTarget.iterator();
 
       while (iter.hasNext()) {
@@ -100,7 +100,7 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell {
   List<GraphAbstractHierarchyCell> getPreviousLayerConnectedCells(int layer) {
     if (_previousLayerConnectedCells == null) {
       _previousLayerConnectedCells = new List<ArrayList>(1);
-      _previousLayerConnectedCells[0] = new List<GraphAbstractHierarchyCell>(connectsAsSource.size());
+      _previousLayerConnectedCells[0] = new List<GraphAbstractHierarchyCell>(connectsAsSource.length);
       Iterator<GraphHierarchyEdge> iter = connectsAsSource.iterator();
 
       while (iter.hasNext()) {

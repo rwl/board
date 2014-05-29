@@ -772,7 +772,7 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
         int x = e.getX();
         int y = e.getY();
 
-        if (Math.abs(e.getX() - _first.x) > Math.abs(e.getY() - _first.y)) {
+        if (math.abs(e.getX() - _first.x) > math.abs(e.getY() - _first.y)) {
           y = _first.y;
         } else {
           x = _first.x;
@@ -958,7 +958,7 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
         }
       } else if (_movePreview.isActive()) {
         if (_graphComponent.isConstrainedEvent(e)) {
-          if (Math.abs(dx) > Math.abs(dy)) {
+          if (math.abs(dx) > math.abs(dy)) {
             dy = 0;
           } else {
             dx = 0;
@@ -985,7 +985,7 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
         e.consume();
       } else if (isVisible()) {
         if (_constrainedEvent) {
-          if (Math.abs(dx) > Math.abs(dy)) {
+          if (math.abs(dx) > math.abs(dy)) {
             dy = 0;
           } else {
             dx = 0;

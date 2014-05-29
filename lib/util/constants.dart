@@ -84,7 +84,7 @@ class Constants {
 	 * the current version of Java. See
 	 * http://docs.oracle.com/javase/6/docs/api/index.html?javax/swing/text/html/CSS.html
 	 */
-  static float LINE_HEIGHT = 1.2;
+  static double LINE_HEIGHT = 1.2;
 
   /**
 	 * Specifies if absolute line heights should be used (px) in CSS. Default

@@ -737,7 +737,7 @@ class ObjectCodec {
           // Converts collection to a typed array before setting
           if (type.isArray() && value is Collection) {
             Collection /*<?>*/ coll = value as Collection/*<?>*/;
-            value = coll.toArray(Array.newInstance(type.getComponentType(), coll.size()) as List<Object>);
+            value = coll.toArray(Array.newInstance(type.getComponentType(), coll.length) as List<Object>);
           }
 
           method.invoke(obj, [value]);

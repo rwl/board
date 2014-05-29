@@ -52,7 +52,7 @@ class StyleUtils {
       }
     }
 
-    return result.toArray(new List<String>(result.size()));
+    return result.toArray(new List<String>(result.length));
   }
 
   /**
