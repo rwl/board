@@ -74,7 +74,7 @@ class LayoutManager extends EventSource {
     };
     _moveHandler = (Object source, EventObj evt) {
       if (isEnabled()) {
-        _cellsMoved(evt.getProperty("cells") as List<Object>, evt.getProperty("location") as Point);
+        _cellsMoved(evt.getProperty("cells") as List<Object>, evt.getProperty("location") as svg.Point);
       }
     };
     setGraph(graph);
@@ -144,7 +144,7 @@ class LayoutManager extends EventSource {
   /**
 	 * 
 	 */
-  void _cellsMoved(List<Object> cells, Point location) {
+  void _cellsMoved(List<Object> cells, svg.Point location) {
     if (cells != null && location != null) {
       IGraphModel model = getGraph().getModel();
 
@@ -163,14 +163,14 @@ class LayoutManager extends EventSource {
 	 * 
 	 */
   void _beforeUndo(UndoableEdit edit) {
-    Collection<Object> cells = _getCellsForChanges(edit.getChanges());
+    Set<Object> cells = _getCellsForChanges(edit.getChanges());
     IGraphModel model = getGraph().getModel();
 
     if (isBubbling()) {
-      List<Object> tmp = GraphModel.getParents(model, cells.toArray());
+      List<Object> tmp = GraphModel.getParents(model, cells);
 
       while (tmp.length > 0) {
-        cells.addAll(Arrays.asList(tmp));
+        cells.addAll(tmp);
         tmp = GraphModel.getParents(model, tmp);
       }
     }
@@ -181,12 +181,12 @@ class LayoutManager extends EventSource {
   /**
 	 * 
 	 */
-  Collection<Object> _getCellsForChanges(List<UndoableChange> changes) {
+  Set<Object> _getCellsForChanges(List<UndoableChange> changes) {
     Set<Object> result = new HashSet<Object>();
-    Iterator<UndoableChange> it = changes.iterator();
+    Iterator<UndoableChange> it = changes.iterator;
 
-    while (it.hasNext()) {
-      UndoableChange change = it.next();
+    while (it.moveNext()) {
+      UndoableChange change = it.current;
 
       if (change is RootChange) {
         return new HashSet<Object>();
@@ -201,7 +201,7 @@ class LayoutManager extends EventSource {
   /**
 	 * 
 	 */
-  Collection<Object> _getCellsForChange(UndoableChange change) {
+  Set<Object> _getCellsForChange(UndoableChange change) {
     IGraphModel model = getGraph().getModel();
     Set<Object> result = new HashSet<Object>();
 
@@ -252,7 +252,7 @@ class LayoutManager extends EventSource {
           }
         }
 
-        fireEvent(new EventObj(Event.LAYOUT_CELLS, "cells", cells));
+        fireEvent(new EventObj(Event.LAYOUT_CELLS, ["cells", cells]));
       } finally {
         model.endUpdate();
       }

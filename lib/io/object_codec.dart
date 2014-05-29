@@ -121,8 +121,8 @@ class ObjectCodec {
     _reverse = new Hashtable<String, String>();
     Iterator<Map.Entry<String, String>> it = mapping.entrySet().iterator();
 
-    while (it.hasNext()) {
-      Map.Entry<String, String> e = it.next();
+    while (it.moveNext()) {
+      Map.Entry<String, String> e = it.current();
       _reverse.put(e.getValue(), e.getKey());
     }
   }
@@ -213,7 +213,7 @@ class ObjectCodec {
 	 * @param obj Object instance that contains the field.
 	 * @param attr Fieldname of the field.
 	 * @param value Value of the field.
-	 * @param write Boolean indicating if the field is being encoded or
+	 * @param write bool indicating if the field is being encoded or
 	 * decoded. write is true if the field is being encoded, else it is
 	 * being decoded.
 	 * @return Returns true if the given attribute should be ignored.
@@ -230,7 +230,7 @@ class ObjectCodec {
 	 * @param obj Object instance that contains the field.
 	 * @param attr Fieldname of the field.
 	 * @param value Value of the field.
-	 * @param isWrite Boolean indicating if the field is being encoded or
+	 * @param isWrite bool indicating if the field is being encoded or
 	 * decoded. isWrite is true if the field is being encoded, else it is being
 	 * decoded.
 	 * @return Returns true if the given attribute should be handled as a
@@ -350,15 +350,15 @@ class ObjectCodec {
     } else if (obj is Map) {
       Iterator<Map.Entry> it = (obj as Map).entrySet().iterator();
 
-      while (it.hasNext()) {
-        Map.Entry e = it.next();
+      while (it.moveNext()) {
+        Map.Entry e = it.current();
         _encodeValue(enc, obj, String.valueOf(e.getKey()), e.getValue(), node);
       }
     } else if (obj is Collection) {
       Iterator /*<?>*/ it = (obj as Collection/*<?>*/).iterator();
 
-      while (it.hasNext()) {
-        Object value = it.next();
+      while (it.moveNext()) {
+        Object value = it.current();
         _encodeValue(enc, obj, null, value, node);
       }
     }
@@ -404,7 +404,7 @@ class ObjectCodec {
 	 * @return Returns true if the given object is a primitive value.
 	 */
   bool _isPrimitiveValue(Object value) {
-    return value is String || value is Boolean || value is Character || value is Byte || value is Short || value is Integer || value is Long || value is Float || value is Double || value.getClass().isPrimitive();
+    return value is String || value is bool || value is Character || value is Byte || value is Short || value is int || value is Long || value is Float || value is Double || value.getClass().isPrimitive();
   }
 
   /**
@@ -460,8 +460,8 @@ class ObjectCodec {
 	 * Converts true to "1" and false to "0". All other values are ignored.
 	 */
   Object _convertValueToXml(Object value) {
-    if (value is Boolean) {
-      value = (value as Boolean).booleanValue() ? "1" : "0";
+    if (value is bool) {
+      value = (value as bool).booleanValue() ? "1" : "0";
     }
 
     return value;
@@ -474,20 +474,20 @@ class ObjectCodec {
     if (value is String) {
       String tmp = value as String;
 
-      if (type.equals(boolean/*.class*/) || type == Boolean/*.class*/) {
+      if (type.equals(boolean/*.class*/) || type == bool/*.class*/) {
         if (tmp.equals("1") || tmp.equals("0")) {
           tmp = (tmp.equals("1")) ? "true" : "false";
         }
 
-        value = Boolean.valueOf(tmp);
+        value = bool.valueOf(tmp);
       } else if (type.equals(char/*.class*/) || type == Character/*.class*/) {
         value = Character.valueOf(tmp.charAt(0));
       } else if (type.equals(byte/*.class*/) || type == Byte/*.class*/) {
         value = Byte.valueOf(tmp);
       } else if (type.equals(short/*.class*/) || type == Short/*.class*/) {
         value = Short.valueOf(tmp);
-      } else if (type.equals(int/*.class*/) || type == Integer/*.class*/) {
-        value = Integer.valueOf(tmp);
+      } else if (type.equals(int/*.class*/) || type == int/*.class*/) {
+        value = int.valueOf(tmp);
       } else if (type.equals(long/*.class*/) || type == Long/*.class*/) {
         value = Long.valueOf(tmp);
       } else if (type.equals(float/*.class*/) || type == Float/*.class*/) {
@@ -705,8 +705,8 @@ class ObjectCodec {
       field = _getField(obj, fieldname);
 
       if (field != null) {
-        if (field.getType() == Boolean/*.class*/) {
-          value = (value.equals("1") || String.valueOf(value).equalsIgnoreCase("true")) ? Boolean.TRUE : Boolean.FALSE;
+        if (field.getType() == bool/*.class*/) {
+          value = (value.equals("1") || String.valueOf(value).equalsIgnoreCase("true")) ? bool.TRUE : bool.FALSE;
         }
 
         if (Modifier.isPublic(field.getModifiers())) {
@@ -837,7 +837,7 @@ class ObjectCodec {
           obj = _cloneTemplate(node);
         }
 
-        if (id != null && id.length() > 0) {
+        if (id != null && id.length > 0) {
           dec.putObject(id, obj);
         }
       }
@@ -976,7 +976,7 @@ class ObjectCodec {
     if (value != null && !value.equals(template)) {
       if (fieldname != null && obj is Map) {
         (obj as Map).put(fieldname, value);
-      } else if (fieldname != null && fieldname.length() > 0) {
+      } else if (fieldname != null && fieldname.length > 0) {
         _setFieldValue(obj, fieldname, value);
       } // Arrays are treated as collections and
       // converted in setFieldValue

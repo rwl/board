@@ -22,12 +22,12 @@ class Stylesheet {
   /**
 	 * Shared immutable empty hashtable (for undefined cell styles).
 	 */
-  static final Map<String, Object> EMPTY_STYLE = new Hashtable<String, Object>();
+  static final Map<String, Object> EMPTY_STYLE = new Map<String, Object>();
 
   /**
 	 * Maps from names to styles.
 	 */
-  Map<String, Map<String, Object>> _styles = new Hashtable<String, Map<String, Object>>();
+  Map<String, Map<String, Object>> _styles = new Map<String, Map<String, Object>>();
 
   /**
 	 * Constructs a new stylesheet and assigns default styles.
@@ -59,15 +59,15 @@ class Stylesheet {
 	 * @return Returns the default vertex style.
 	 */
   Map<String, Object> _createDefaultVertexStyle() {
-    Map<String, Object> style = new Hashtable<String, Object>();
+    Map<String, Object> style = new Map<String, Object>();
 
-    style.put(Constants.STYLE_SHAPE, Constants.SHAPE_RECTANGLE);
-    style.put(Constants.STYLE_PERIMETER, Perimeter.RectanglePerimeter);
-    style.put(Constants.STYLE_VERTICAL_ALIGN, Constants.ALIGN_MIDDLE);
-    style.put(Constants.STYLE_ALIGN, Constants.ALIGN_CENTER);
-    style.put(Constants.STYLE_FILLCOLOR, "#C3D9FF");
-    style.put(Constants.STYLE_STROKECOLOR, "#6482B9");
-    style.put(Constants.STYLE_FONTCOLOR, "#774400");
+    style[Constants.STYLE_SHAPE] = Constants.SHAPE_RECTANGLE;
+    style[Constants.STYLE_PERIMETER] = Perimeter.RectanglePerimeter;
+    style[Constants.STYLE_VERTICAL_ALIGN] = Constants.ALIGN_MIDDLE;
+    style[Constants.STYLE_ALIGN] = Constants.ALIGN_CENTER;
+    style[Constants.STYLE_FILLCOLOR] = "#C3D9FF";
+    style[Constants.STYLE_STROKECOLOR] = "#6482B9";
+    style[Constants.STYLE_FONTCOLOR] = "#774400";
 
     return style;
   }
@@ -78,14 +78,14 @@ class Stylesheet {
 	 * @return Returns the default edge style.
 	 */
   Map<String, Object> _createDefaultEdgeStyle() {
-    Map<String, Object> style = new Hashtable<String, Object>();
+    Map<String, Object> style = new Map<String, Object>();
 
-    style.put(Constants.STYLE_SHAPE, Constants.SHAPE_CONNECTOR);
-    style.put(Constants.STYLE_ENDARROW, Constants.ARROW_CLASSIC);
-    style.put(Constants.STYLE_VERTICAL_ALIGN, Constants.ALIGN_MIDDLE);
-    style.put(Constants.STYLE_ALIGN, Constants.ALIGN_CENTER);
-    style.put(Constants.STYLE_STROKECOLOR, "#6482B9");
-    style.put(Constants.STYLE_FONTCOLOR, "#446299");
+    style[Constants.STYLE_SHAPE] = Constants.SHAPE_CONNECTOR;
+    style[Constants.STYLE_ENDARROW] = Constants.ARROW_CLASSIC;
+    style[Constants.STYLE_VERTICAL_ALIGN] = Constants.ALIGN_MIDDLE;
+    style[Constants.STYLE_ALIGN] = Constants.ALIGN_CENTER;
+    style[Constants.STYLE_STROKECOLOR] = "#6482B9";
+    style[Constants.STYLE_FONTCOLOR] = "#446299";
 
     return style;
   }
@@ -96,7 +96,7 @@ class Stylesheet {
 	 * @return Returns the default vertex style.
 	 */
   Map<String, Object> getDefaultVertexStyle() {
-    return _styles.get("defaultVertex");
+    return _styles["defaultVertex"];
   }
 
   /**
@@ -114,7 +114,7 @@ class Stylesheet {
 	 * @return Returns the default edge style.
 	 */
   Map<String, Object> getDefaultEdgeStyle() {
-    return _styles.get("defaultEdge");
+    return _styles["defaultEdge"];
   }
 
   /**
@@ -133,7 +133,7 @@ class Stylesheet {
 	 * @param style Key, value pairs that define the style.
 	 */
   void putCellStyle(String name, Map<String, Object> style) {
-    _styles.put(name, style);
+    _styles[name] = style;
   }
 
   /**
@@ -148,13 +148,13 @@ class Stylesheet {
   Map<String, Object> getCellStyle(String name, Map<String, Object> defaultStyle) {
     Map<String, Object> style = defaultStyle;
 
-    if (name != null && name.length() > 0) {
+    if (name != null && name.length > 0) {
       List<String> pairs = name.split(";");
 
       if (style != null && !name.startsWith(";")) {
-        style = new Hashtable<String, Object>(style);
+        style = new Map<String, Object>.from(style);
       } else {
-        style = new Hashtable<String, Object>();
+        style = new Map<String, Object>();
       }
 
       for (int i = 0; i < pairs.length; i++) {
@@ -165,16 +165,16 @@ class Stylesheet {
           String key = tmp.substring(0, c);
           String value = tmp.substring(c + 1);
 
-          if (value.equals(Constants.NONE)) {
+          if (value == Constants.NONE) {
             style.remove(key);
           } else {
-            style.put(key, value);
+            style[key] = value;
           }
         } else {
-          Map<String, Object> tmpStyle = _styles.get(tmp);
+          Map<String, Object> tmpStyle = _styles[tmp];
 
           if (tmpStyle != null) {
-            style.putAll(tmpStyle);
+            style.addAll(tmpStyle);
           }
         }
       }

@@ -50,7 +50,7 @@ abstract class GraphLayout implements IGraphLayout {
   Object parent;
 
   /**
-	 * Boolean indicating if the bounding box of the label should be used if
+	 * bool indicating if the bounding box of the label should be used if
 	 * its available. Default is true.
 	 */
   bool useBoundingBox = true;
@@ -278,8 +278,8 @@ abstract class GraphLayout implements IGraphLayout {
 	 * Parameters:
 	 * 
 	 * cell - <Cell> whose geometry is to be set.
-	 * x - Integer that defines the x-coordinate of the new location.
-	 * y - Integer that defines the y-coordinate of the new location.
+	 * x - int that defines the x-coordinate of the new location.
+	 * y - int that defines the y-coordinate of the new location.
 	 */
   Rect setVertexLocation(Object vertex, double x, double y) {
     IGraphModel model = graph.getModel();

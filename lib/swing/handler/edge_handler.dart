@@ -364,7 +364,7 @@ class EdgeHandler extends CellHandler {
         }
 
         Rectangle rect = _getPreviewBounds();
-        rect.translate(Math.round(pt.getX() - _first.x) as int, Math.round(pt.getY() - _first.y) as int);
+        rect.translate(math.round(pt.getX() - _first.x) as int, math.round(pt.getY() - _first.y) as int);
         _preview.setBounds(rect);
       } else {
         // Clones the cell state and updates the absolute points using
@@ -474,7 +474,7 @@ class EdgeHandler extends CellHandler {
 
       if (_graphComponent.isSignificant(dx, dy)) {
         if (_error != null) {
-          if (_error.length() > 0) {
+          if (_error.length > 0) {
             JOptionPane.showMessageDialog(_graphComponent, _error);
           }
         } else if (isLabel(_index)) {
@@ -618,7 +618,7 @@ class EdgeHandler extends CellHandler {
       double scale = graph.getView().getScale();
       geometry.setOffset(new Point2d(0, 0));
       pt = graph.getView().getPoint(edgeState, geometry);
-      geometry.setOffset(new Point2d(Math.round((x - pt.getX()) / scale), Math.round((y - pt.getY()) / scale)));
+      geometry.setOffset(new Point2d(math.round((x - pt.getX()) / scale), math.round((y - pt.getY()) / scale)));
 
       model.setGeometry(edgeState.getCell(), geometry);
     }

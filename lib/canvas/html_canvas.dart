@@ -87,7 +87,7 @@ class HtmlCanvas extends BasicCanvas {
       if (!Utils.getString(style, Constants.STYLE_SHAPE, "").equals(Constants.SHAPE_SWIMLANE)) {
         drawShape(x, y, w, h, style);
       } else {
-        int start = Math.round(Utils.getInt(style, Constants.STYLE_STARTSIZE, Constants.DEFAULT_STARTSIZE) * _scale) as int;
+        int start = math.round(Utils.getInt(style, Constants.STYLE_STARTSIZE, Constants.DEFAULT_STARTSIZE) * _scale) as int;
 
         // Removes some styles to draw the content area
         Map<String, Object> cloned = new Hashtable<String, Object>(style);
@@ -150,10 +150,10 @@ class HtmlCanvas extends BasicCanvas {
       String direction = Utils.getString(style, Constants.STYLE_DIRECTION, Constants.DIRECTION_EAST);
 
       if (direction.equals(Constants.DIRECTION_EAST) || direction.equals(Constants.DIRECTION_WEST)) {
-        y = Math.round(y + h / 2);
+        y = math.round(y + h / 2);
         h = 1;
       } else {
-        x = Math.round(y + w / 2);
+        x = math.round(y + w / 2);
         w = 1;
       }
     }
@@ -161,7 +161,7 @@ class HtmlCanvas extends BasicCanvas {
     if (Utils.isTrue(style, Constants.STYLE_SHADOW, false) && fillColor != null) {
       Element shadow = elem.cloneNode(true) as Element;
 
-      String s = "overflow:hidden;position:absolute;" + "left:" + String.valueOf(x + Constants.SHADOW_OFFSETX) + "px;" + "top:" + String.valueOf(y + Constants.SHADOW_OFFSETY) + "px;" + "width:" + String.valueOf(w) + "px;" + "height:" + String.valueOf(h) + "px;background:" + Constants.W3C_SHADOWCOLOR + ";border-style:solid;border-color:" + Constants.W3C_SHADOWCOLOR + ";border-width:" + String.valueOf(Math.round(strokeWidth)) + ";";
+      String s = "overflow:hidden;position:absolute;" + "left:" + String.valueOf(x + Constants.SHADOW_OFFSETX) + "px;" + "top:" + String.valueOf(y + Constants.SHADOW_OFFSETY) + "px;" + "width:" + String.valueOf(w) + "px;" + "height:" + String.valueOf(h) + "px;background:" + Constants.W3C_SHADOWCOLOR + ";border-style:solid;border-color:" + Constants.W3C_SHADOWCOLOR + ";border-width:" + String.valueOf(math.round(strokeWidth)) + ";";
       shadow.setAttribute("style", s);
 
       appendHtmlElement(shadow);
@@ -179,7 +179,7 @@ class HtmlCanvas extends BasicCanvas {
 
     // TODO: Draw other shapes. eg. SHAPE_LINE here
 
-    String s = "overflow:hidden;position:absolute;" + "left:" + String.valueOf(x) + "px;" + "top:" + String.valueOf(y) + "px;" + "width:" + String.valueOf(w) + "px;" + "height:" + String.valueOf(h) + "px;background:" + fillColor + ";" + ";border-style:solid;border-color:" + strokeColor + ";border-width:" + String.valueOf(Math.round(strokeWidth)) + ";";
+    String s = "overflow:hidden;position:absolute;" + "left:" + String.valueOf(x) + "px;" + "top:" + String.valueOf(y) + "px;" + "width:" + String.valueOf(w) + "px;" + "height:" + String.valueOf(h) + "px;background:" + fillColor + ";" + ";border-style:solid;border-color:" + strokeColor + ";border-width:" + String.valueOf(math.round(strokeWidth)) + ";";
     elem.setAttribute("style", s);
 
     appendHtmlElement(elem);

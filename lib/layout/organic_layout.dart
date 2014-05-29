@@ -404,11 +404,11 @@ class OrganicLayout extends GraphLayout {
     Rect bounds = null;
 
     // Form internal model of nodes
-    Map<Object, Integer> vertexMap = new Hashtable<Object, Integer>();
+    Map<Object, int> vertexMap = new Hashtable<Object, int>();
     v = new List<CellWrapper>(vertices.length);
     for (int i = 0; i < vertices.length; i++) {
       v[i] = new CellWrapper(vertices[i]);
-      vertexMap.put(vertices[i], new Integer(i));
+      vertexMap.put(vertices[i], new int(i));
       bounds = getVertexBounds(vertices[i]);
 
       if (totalBounds == null) {
@@ -487,8 +487,8 @@ class OrganicLayout extends GraphLayout {
 
       Object sourceCell = model.getTerminal(edges[i], true);
       Object targetCell = model.getTerminal(edges[i], false);
-      Integer source = null;
-      Integer target = null;
+      int source = null;
+      int target = null;
       // Check if either end of the edge is not connected
       if (sourceCell != null) {
         source = vertexMap.get(sourceCell);
@@ -1050,21 +1050,21 @@ class OrganicLayout extends GraphLayout {
 	 * @return Array of all interesting Edges
 	 */
   List<int> getRelevantEdges(int cellIndex) {
-    ArrayList<Integer> relevantEdgeList = new List<Integer>(e.length);
+    ArrayList<int> relevantEdgeList = new List<int>(e.length);
 
     for (int i = 0; i < e.length; i++) {
       if (e[i].source != cellIndex && e[i].target != cellIndex) {
         // Add non-connected edges
-        relevantEdgeList.add(new Integer(i));
+        relevantEdgeList.add(new int(i));
       }
     }
 
     List<int> relevantEdgeArray = new List<int>(relevantEdgeList.length);
-    Iterator<Integer> iter = relevantEdgeList.iterator();
+    Iterator<int> iter = relevantEdgeList.iterator();
 
-    //Reform the list into an array but replace Integer values with ints
+    //Reform the list into an array but replace int values with ints
     for (int i = 0; i < relevantEdgeArray.length; i++) {
-      if (iter.hasNext()) {
+      if (iter.moveNext()) {
         relevantEdgeArray[i] = iter.next().intValue();
       }
     }
@@ -1080,21 +1080,21 @@ class OrganicLayout extends GraphLayout {
 	 * @return Array of all connected Edges
 	 */
   List<int> getConnectedEdges(int cellIndex) {
-    ArrayList<Integer> connectedEdgeList = new List<Integer>(e.length);
+    ArrayList<int> connectedEdgeList = new List<int>(e.length);
 
     for (int i = 0; i < e.length; i++) {
       if (e[i].source == cellIndex || e[i].target == cellIndex) {
         // Add connected edges to list by their index number
-        connectedEdgeList.add(new Integer(i));
+        connectedEdgeList.add(new int(i));
       }
     }
 
     List<int> connectedEdgeArray = new List<int>(connectedEdgeList.length);
-    Iterator<Integer> iter = connectedEdgeList.iterator();
+    Iterator<int> iter = connectedEdgeList.iterator();
 
-    // Reform the list into an array but replace Integer values with ints
+    // Reform the list into an array but replace int values with ints
     for (int i = 0; i < connectedEdgeArray.length; i++) {
-      if (iter.hasNext()) {
+      if (iter.moveNext()) {
         connectedEdgeArray[i] = iter.next().intValue();
         ;
       }

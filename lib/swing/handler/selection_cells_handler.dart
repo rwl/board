@@ -213,7 +213,7 @@ class SelectionCellsHandler implements MouseListener, MouseMotionListener {
     if (_graphComponent.isEnabled() && !_graphComponent.isForceMarqueeEvent(e) && isEnabled()) {
       Iterator<CellHandler> it = _handlers.values().iterator();
 
-      while (it.hasNext() && !e.isConsumed()) {
+      while (it.moveNext() && !e.isConsumed()) {
         it.next().mousePressed(e);
       }
     }
@@ -226,7 +226,7 @@ class SelectionCellsHandler implements MouseListener, MouseMotionListener {
     if (_graphComponent.isEnabled() && isEnabled()) {
       Iterator<CellHandler> it = _handlers.values().iterator();
 
-      while (it.hasNext() && !e.isConsumed()) {
+      while (it.moveNext() && !e.isConsumed()) {
         it.next().mouseMoved(e);
       }
     }
@@ -239,7 +239,7 @@ class SelectionCellsHandler implements MouseListener, MouseMotionListener {
     if (_graphComponent.isEnabled() && isEnabled()) {
       Iterator<CellHandler> it = _handlers.values().iterator();
 
-      while (it.hasNext() && !e.isConsumed()) {
+      while (it.moveNext() && !e.isConsumed()) {
         it.next().mouseDragged(e);
       }
     }
@@ -252,7 +252,7 @@ class SelectionCellsHandler implements MouseListener, MouseMotionListener {
     if (_graphComponent.isEnabled() && isEnabled()) {
       Iterator<CellHandler> it = _handlers.values().iterator();
 
-      while (it.hasNext() && !e.isConsumed()) {
+      while (it.moveNext() && !e.isConsumed()) {
         it.next().mouseReleased(e);
       }
     }
@@ -270,7 +270,7 @@ class SelectionCellsHandler implements MouseListener, MouseMotionListener {
     Iterator<CellHandler> it = _handlers.values().iterator();
     String tip = null;
 
-    while (it.hasNext() && tip == null) {
+    while (it.moveNext() && tip == null) {
       tip = it.next().getToolTipText(tmp);
     }
 
@@ -283,7 +283,7 @@ class SelectionCellsHandler implements MouseListener, MouseMotionListener {
   void reset() {
     Iterator<CellHandler> it = _handlers.values().iterator();
 
-    while (it.hasNext()) {
+    while (it.moveNext()) {
       it.next().reset();
     }
   }
@@ -363,7 +363,7 @@ class SelectionCellsHandler implements MouseListener, MouseMotionListener {
   void paintHandles(Graphics g) {
     Iterator<CellHandler> it = _handlers.values().iterator();
 
-    while (it.hasNext()) {
+    while (it.moveNext()) {
       it.next().paint(g);
     }
   }

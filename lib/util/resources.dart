@@ -99,13 +99,13 @@ class Resources {
       StringBuffer result = new StringBuffer();
       String index = null;
 
-      for (int i = 0; i < value.length(); i++) {
+      for (int i = 0; i < value.length; i++) {
         char c = value.charAt(i);
 
         if (c == '{') {
           index = "";
         } else if (index != null && c == '}') {
-          int tmp = Integer.parseInt(index) - 1;
+          int tmp = int.parseInt(index) - 1;
 
           if (tmp >= 0 && tmp < params.length) {
             result.append(params[tmp]);
@@ -133,7 +133,7 @@ class Resources {
   static String _getResource(String key) {
     Iterator<ResourceBundle> it = _bundles.iterator();
 
-    while (it.hasNext()) {
+    while (it.moveNext()) {
       try {
         return it.next().getString(key);
       } on MissingResourceException catch (mrex) {

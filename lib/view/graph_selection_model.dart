@@ -101,7 +101,7 @@ class GraphSelectionModel extends EventSource {
 	 * Returns true if no cells are selected.
 	 */
   bool isEmpty() {
-    return _cells.isEmpty();
+    return _cells.length == 0;
   }
 
   /**
@@ -122,14 +122,14 @@ class GraphSelectionModel extends EventSource {
 	 * Returns the first selected cell.
 	 */
   Object getCell() {
-    return (_cells.isEmpty()) ? null : _cells.iterator().next();
+    return (_cells.length == 0) ? null : _cells.iterator.current;
   }
 
   /**
 	 * Returns the selection cells.
 	 */
   List<Object> getCells() {
-    return _cells.toArray();
+    return _cells;
   }
 
   /**
@@ -198,7 +198,7 @@ class GraphSelectionModel extends EventSource {
 	 */
   void addCells(List<Object> cells) {
     if (cells != null) {
-      Collection<Object> remove = null;
+      Set<Object> remove = null;
 
       if (_singleSelection) {
         remove = this._cells;
@@ -246,13 +246,13 @@ class GraphSelectionModel extends EventSource {
   /**
 	 * 
 	 */
-  void _changeSelection(Collection<Object> added, Collection<Object> removed) {
-    if ((added != null && !added.isEmpty()) || (removed != null && !removed.isEmpty())) {
+  void _changeSelection(Set<Object> added, Set<Object> removed) {
+    if ((added != null && added.length > 0) || (removed != null && removed.length > 0)) {
       SelectionChange change = new SelectionChange(this, added, removed);
       change.execute();
       UndoableEdit edit = new UndoableEdit(this, false);
       edit.add(change);
-      fireEvent(new EventObj(Event.UNDO, "edit", edit));
+      fireEvent(new EventObj(Event.UNDO, ["edit", edit]));
     }
   }
 
@@ -289,7 +289,7 @@ class SelectionChange implements UndoableChange {
   /**
    * 
    */
-  Collection<Object> added, removed;
+  List<Object> added, removed;
 
   /**
    * 
@@ -297,7 +297,7 @@ class SelectionChange implements UndoableChange {
    * @param added
    * @param removed
    */
-  SelectionChange(GraphSelectionModel model, Collection<Object> added, Collection<Object> removed) {
+  SelectionChange(GraphSelectionModel model, List<Object> added, List<Object> removed) {
     this.model = model;
     this.added = (added != null) ? new List<Object>(added) : null;
     this.removed = (removed != null) ? new List<Object>(removed) : null;
@@ -308,25 +308,25 @@ class SelectionChange implements UndoableChange {
    */
   void execute() {
     if (removed != null) {
-      Iterator<Object> it = removed.iterator();
+      Iterator<Object> it = removed.iterator;
 
-      while (it.hasNext()) {
-        model._cellRemoved(it.next());
+      while (it.moveNext()) {
+        model._cellRemoved(it.current);
       }
     }
 
     if (added != null) {
-      Iterator<Object> it = added.iterator();
+      Iterator<Object> it = added.iterator;
 
-      while (it.hasNext()) {
-        model._cellAdded(it.next());
+      while (it.moveNext()) {
+        model._cellAdded(it.current);
       }
     }
 
-    Collection<Object> tmp = added;
+    List<Object> tmp = added;
     added = removed;
     removed = tmp;
-    model.fireEvent(new EventObj(Event.CHANGE, "added", added, "removed", removed));
+    model.fireEvent(new EventObj(Event.CHANGE, ["added", added, "removed", removed]));
   }
 
 }

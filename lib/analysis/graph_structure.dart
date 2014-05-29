@@ -198,7 +198,7 @@ class GraphStructure {
     List<Object> vertices = aGraph.getChildVertices(aGraph.getGraph().getDefaultParent());
     int vertexCount = vertices.length;
 
-    int lowestEdgeCount = Integer.MAX_VALUE;
+    int lowestEdgeCount = int.MAX_VALUE;
     Object bestVertex = null;
     List<Object> omitList = null;
 
@@ -303,8 +303,8 @@ class GraphStructure {
 
     // find a random vertex in each group and connect them.
     for (int i = 1; i < componentNum; i++) {
-      Object sourceVertex = components[i - 1][Math.round(Math.random() * (components[i - 1].length - 1)) as int];
-      Object targetVertex = components[i][Math.round(Math.random() * (components[i].length - 1)) as int];
+      Object sourceVertex = components[i - 1][math.round(Math.random() * (components[i - 1].length - 1)) as int];
+      Object targetVertex = components[i][math.round(Math.random() * (components[i].length - 1)) as int];
       graph.insertEdge(parent, null, aGraph.getGenerator().getNewEdgeValue(aGraph), sourceVertex, targetVertex);
     }
   }
@@ -774,8 +774,8 @@ class GraphStructure {
       while (currSrcValue != srcValue || currDestValue != destValue) {
         i++;
         currEdge = edges[i];
-        currSrcValue = Integer.parseInt(modelCopy.getValue(aGraphCopy.getTerminal(currEdge, true)) as String);
-        currDestValue = Integer.parseInt(modelCopy.getValue(aGraphCopy.getTerminal(currEdge, false)) as String);
+        currSrcValue = int.parseInt(modelCopy.getValue(aGraphCopy.getTerminal(currEdge, true)) as String);
+        currDestValue = int.parseInt(modelCopy.getValue(aGraphCopy.getTerminal(currEdge, false)) as String);
       }
 
       graphCopy.removeCells([currEdge], true);

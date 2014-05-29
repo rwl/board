@@ -167,7 +167,7 @@ class Traversal {
     ArrayList<Object> vertexListStatic = new List<Object>();
 
     for (int i = 0; i < vertexCount; i++) {
-      distances[i] = Integer.MAX_VALUE;
+      distances[i] = int.MAX_VALUE;
       vertexList.add(vertexes[i] as Object);
       vertexListStatic.add(vertexes[i] as Object);
     }
@@ -346,7 +346,7 @@ class Traversal {
       dist[k] = new List<Object>(vertices.length);
       paths[k] = new List<Object>(vertices.length);
     }
-    Map<Object, Integer> indexMap = new HashMap<Object, Integer>();
+    Map<Object, int> indexMap = new HashMap<Object, int>();
 
     for (int i = 0; i < vertices.length; i++) {
       indexMap.put(vertices[i], i);
@@ -386,7 +386,7 @@ class Traversal {
 	 * @param indexMap
 	 * @return
 	 */
-  static List<List<Double>> _initializeWeight(AnalysisGraph aGraph, List<Object> nodes, List<Object> edges, Map<Object, Integer> indexMap) {
+  static List<List<Double>> _initializeWeight(AnalysisGraph aGraph, List<Object> nodes, List<Object> edges, Map<Object, int> indexMap) {
     List<List<Double>> weight = new List<List<Double>>(nodes.length);//][nodes.length];
     for (int k = 0; k < nodes.length; k++) {
       weight[k] = new List<Double>(nodes.length);

@@ -71,7 +71,7 @@ abstract class ICanvas2D {
   /**
 	 * Sets the dashed state. This should default to false if unset.
 	 * 
-	 * @param value Boolean representing the dashed state.
+	 * @param value bool representing the dashed state.
 	 */
   void setDashed(bool value);
 

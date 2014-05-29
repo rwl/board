@@ -59,7 +59,7 @@ class UndoManager extends EventSource {
 	 * 
 	 */
   bool isEmpty() {
-    return _history.isEmpty();
+    return _history.length == 0;
   }
 
   /**
@@ -83,11 +83,11 @@ class UndoManager extends EventSource {
 	 */
   void undo() {
     while (_indexOfNextAdd > 0) {
-      UndoableEdit edit = _history.get(--_indexOfNextAdd);
+      UndoableEdit edit = _history[--_indexOfNextAdd];
       edit.undo();
 
       if (edit.isSignificant()) {
-        fireEvent(new EventObj(Event.UNDO, "edit", edit));
+        fireEvent(new EventObj(Event.UNDO, ["edit", edit]));
         break;
       }
     }
@@ -107,11 +107,11 @@ class UndoManager extends EventSource {
     int n = _history.length;
 
     while (_indexOfNextAdd < n) {
-      UndoableEdit edit = _history.get(_indexOfNextAdd++);
+      UndoableEdit edit = _history[_indexOfNextAdd++];
       edit.redo();
 
       if (edit.isSignificant()) {
-        fireEvent(new EventObj(Event.REDO, "edit", edit));
+        fireEvent(new EventObj(Event.REDO, ["edit", edit]));
         break;
       }
     }
@@ -129,7 +129,7 @@ class UndoManager extends EventSource {
 
     _history.add(undoableEdit);
     _indexOfNextAdd = _history.length;
-    fireEvent(new EventObj(Event.ADD, "edit", undoableEdit));
+    fireEvent(new EventObj(Event.ADD, ["edit", undoableEdit]));
   }
 
   /**

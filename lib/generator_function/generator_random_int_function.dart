@@ -23,7 +23,7 @@ class GeneratorRandomIntFunction extends GeneratorFunction {
       return _minWeight;
     }
 
-    double currValue = _minWeight + Math.round((Math.random() * (_maxWeight - _minWeight)));
+    double currValue = _minWeight + math.round((Math.random() * (_maxWeight - _minWeight)));
     return currValue;
   }
 
@@ -32,8 +32,8 @@ class GeneratorRandomIntFunction extends GeneratorFunction {
   }
 
   void setWeightRange(double minWeight, double maxWeight) {
-    this._maxWeight = Math.round(Math.max(minWeight, maxWeight));
-    this._minWeight = Math.round(Math.min(minWeight, maxWeight));
+    this._maxWeight = math.round(Math.max(minWeight, maxWeight));
+    this._minWeight = math.round(Math.min(minWeight, maxWeight));
   }
 
   double getMinWeight() {

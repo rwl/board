@@ -446,7 +446,7 @@ class GraphComponent extends JScrollPane implements Printable {
   Hashtable<Object, List<ICellOverlay>> _overlays = new Hashtable<Object, List<ICellOverlay>>();
 
   /**
-	 * Boolean flag to disable centering after the first time.
+	 * bool flag to disable centering after the first time.
 	 */
   /*transient*/ bool _centerOnResize = true;
 
@@ -1253,21 +1253,21 @@ class GraphComponent extends JScrollPane implements Printable {
 	 * by pageScale).
 	 */
   Dimension _getPreferredSizeForPage() {
-    return new Dimension(Math.round(_pageFormat.getWidth() * _pageScale * _horizontalPageCount) as int, Math.round(_pageFormat.getHeight() * _pageScale * _verticalPageCount) as int);
+    return new Dimension(math.round(_pageFormat.getWidth() * _pageScale * _horizontalPageCount) as int, math.round(_pageFormat.getHeight() * _pageScale * _verticalPageCount) as int);
   }
 
   /**
 	 * Returns the vertical border between the page and the control.
 	 */
   int getVerticalPageBorder() {
-    return Math.round(_pageFormat.getWidth() * _pageScale) as int;
+    return math.round(_pageFormat.getWidth() * _pageScale) as int;
   }
 
   /**
 	 * Returns the horizontal border between the page and the control.
 	 */
   int getHorizontalPageBorder() {
-    return Math.round(0.5 * _pageFormat.getHeight() * _pageScale) as int;
+    return math.round(0.5 * _pageFormat.getHeight() * _pageScale) as int;
   }
 
   /**
@@ -1277,7 +1277,7 @@ class GraphComponent extends JScrollPane implements Printable {
     Rect bounds = _graph.getGraphBounds();
     int border = _graph.getBorder();
 
-    return new Dimension((Math.round(bounds.getX() + bounds.getWidth()) as int) + border + 1, (Math.round(bounds.getY() as int) + bounds.getHeight()) + border + 1);
+    return new Dimension((math.round(bounds.getX() + bounds.getWidth()) as int) + border + 1, (math.round(bounds.getY() as int) + bounds.getHeight()) + border + 1);
   }
 
   /**
@@ -1477,7 +1477,7 @@ class GraphComponent extends JScrollPane implements Printable {
 
     if (scrollBar != null) {
       BoundedRangeModel model = scrollBar.getModel();
-      int newValue = (Math.round(model.getValue() * factor) as int) + (Math.round((center) ? (model.getExtent() * (factor - 1) / 2) : 0) as int);
+      int newValue = (math.round(model.getValue() * factor) as int) + (math.round((center) ? (model.getExtent() * (factor - 1) / 2) : 0) as int);
       model.setValue(newValue);
     }
   }
@@ -1761,8 +1761,8 @@ class GraphComponent extends JScrollPane implements Printable {
     bool isEdge = model.isEdge(state.getCell());
     double scale = getGraph().getView().getScale();
 
-    int x = Math.round(state.getX() + 4 * scale) as int;
-    int y = Math.round(state.getY() + 4 * scale) as int;
+    int x = math.round(state.getX() + 4 * scale) as int;
+    int y = math.round(state.getY() + 4 * scale) as int;
     int w = Math.max(8, icon.getIconWidth() * scale) as int;
     int h = Math.max(8, icon.getIconHeight() * scale) as int;
 
@@ -2475,8 +2475,8 @@ class GraphComponent extends JScrollPane implements Printable {
   void removeAllComponents(Hashtable<Object, List<Component>> map) {
     Iterator<Map.Entry<Object, List<Component>>> it = map.entrySet().iterator();
 
-    while (it.hasNext()) {
-      Map.Entry<Object, List<Component>> entry = it.next();
+    while (it.moveNext()) {
+      Map.Entry<Object, List<Component>> entry = it.current();
       List<Component> c = entry.getValue();
 
       for (int i = 0; i < c.length; i++) {
@@ -2491,8 +2491,8 @@ class GraphComponent extends JScrollPane implements Printable {
   void removeAllOverlays(Hashtable<Object, List<ICellOverlay>> map) {
     Iterator<Map.Entry<Object, List<ICellOverlay>>> it = map.entrySet().iterator();
 
-    while (it.hasNext()) {
-      Map.Entry<Object, List<ICellOverlay>> entry = it.next();
+    while (it.moveNext()) {
+      Map.Entry<Object, List<ICellOverlay>> entry = it.current();
       List<ICellOverlay> c = entry.getValue();
 
       for (int i = 0; i < c.length; i++) {
@@ -2586,7 +2586,7 @@ class GraphComponent extends JScrollPane implements Printable {
 
       if (warn != null) {
         String html = warn.replaceAll("\n", "<br>");
-        int len = html.length();
+        int len = html.length;
         setCellWarning(tmp, html.substring(0, Math.max(0, len - 4)));
       } else {
         setCellWarning(tmp, null);
@@ -2630,7 +2630,7 @@ class GraphComponent extends JScrollPane implements Printable {
       view.validate();
     }
 
-    return (warning.length() > 0 || !isValid) ? warning.toString() : null;
+    return (warning.length > 0 || !isValid) ? warning.toString() : null;
   }
 
   /**
@@ -2858,7 +2858,7 @@ class GraphComponent extends JScrollPane implements Printable {
 	 *            select the corresponding cell. Default is false.
 	 */
   ICellOverlay setCellWarning(final Object cell, String warning, [ImageIcon icon = null, bool select = false]) {
-    if (warning != null && warning.length() > 0) {
+    if (warning != null && warning.length > 0) {
       icon = (icon != null) ? icon : _warningIcon;
 
       // Creates the overlay with the image and warning
@@ -2942,12 +2942,12 @@ class GraphComponent extends JScrollPane implements Printable {
     Point2d translate = _graph.getView().getTranslate();
     double scale = _graph.getView().getScale();
 
-    int x0 = (Math.round(translate.getX() * scale) as int) - 1;
-    int y0 = (Math.round(translate.getY() * scale) as int) - 1;
+    int x0 = (math.round(translate.getX() * scale) as int) - 1;
+    int y0 = (math.round(translate.getY() * scale) as int) - 1;
 
     Dimension d = _getPreferredSizeForPage();
-    int w = (Math.round(d.width * scale) as int) + 2;
-    int h = (Math.round(d.height * scale) as int) + 2;
+    int w = (math.round(d.width * scale) as int) + 2;
+    int h = (math.round(d.height * scale) as int) + 2;
 
     if (isPageVisible()) {
       // Draws the background behind the page
@@ -3061,7 +3061,7 @@ class GraphComponent extends JScrollPane implements Printable {
       double stepping = gridSize * scale;
 
       if (stepping < minStepping) {
-        int count = (Math.round(Math.ceil(minStepping / stepping) / 2) as int) * 2;
+        int count = (math.round(Math.ceil(minStepping / stepping) / 2) as int) * 2;
         stepping = count * stepping;
       }
 
@@ -3083,11 +3083,11 @@ class GraphComponent extends JScrollPane implements Printable {
                 // xs or ys multiple times (leads to double grid lines
                 // when zoom
                 // is set to eg. 121%)
-                x = Math.round((x - tx) / stepping) * stepping + tx;
-                y = Math.round((y - ty) / stepping) * stepping + ty;
+                x = math.round((x - tx) / stepping) * stepping + tx;
+                y = math.round((y - ty) / stepping) * stepping + ty;
 
-                int ix = Math.round(x) as int;
-                int iy = Math.round(y) as int;
+                int ix = math.round(x) as int;
+                int iy = math.round(y) as int;
                 g.drawLine(ix - cs, iy, ix + cs, iy);
                 g.drawLine(ix, iy - cs, ix, iy + cs);
               }
@@ -3100,10 +3100,10 @@ class GraphComponent extends JScrollPane implements Printable {
             xe += Math.ceil(stepping) as int;
             ye += Math.ceil(stepping) as int;
 
-            int ixs = Math.round(xs) as int;
-            int ixe = Math.round(xe) as int;
-            int iys = Math.round(ys) as int;
-            int iye = Math.round(ye) as int;
+            int ixs = math.round(xs) as int;
+            int ixe = math.round(xe) as int;
+            int iys = math.round(ys) as int;
+            int iye = math.round(ye) as int;
 
             for (double x = xs; x <= xe; x += stepping) {
               // FIXME: Workaround for rounding errors when adding
@@ -3111,9 +3111,9 @@ class GraphComponent extends JScrollPane implements Printable {
               // xs or ys multiple times (leads to double grid lines when
               // zoom
               // is set to eg. 121%)
-              x = Math.round((x - tx) / stepping) * stepping + tx;
+              x = math.round((x - tx) / stepping) * stepping + tx;
 
-              int ix = Math.round(x) as int;
+              int ix = math.round(x) as int;
               g.drawLine(ix, iys, ix, iye);
             }
 
@@ -3124,9 +3124,9 @@ class GraphComponent extends JScrollPane implements Printable {
               // xs or ys multiple times (leads to double grid lines when
               // zoom
               // is set to eg. 121%)
-              y = Math.round((y - ty) / stepping) * stepping + ty;
+              y = math.round((y - ty) / stepping) * stepping + ty;
 
-              int iy = Math.round(y) as int;
+              int iy = math.round(y) as int;
               g.drawLine(ixs, iy, ixe, iy);
             }
 
@@ -3140,10 +3140,10 @@ class GraphComponent extends JScrollPane implements Printable {
             xe += Math.ceil(stepping) as int;
             ye += Math.ceil(stepping) as int;
 
-            int ixs = Math.round(xs) as int;
-            int ixe = Math.round(xe) as int;
-            int iys = Math.round(ys) as int;
-            int iye = Math.round(ye) as int;
+            int ixs = math.round(xs) as int;
+            int ixe = math.round(xe) as int;
+            int iys = math.round(ys) as int;
+            int iye = math.round(ye) as int;
 
             // Creates a set of strokes with individual dash offsets
             // for each direction
@@ -3157,9 +3157,9 @@ class GraphComponent extends JScrollPane implements Printable {
               // xs or ys multiple times (leads to double grid lines when
               // zoom
               // is set to eg. 121%)
-              double xx = Math.round((x - tx) / stepping) * stepping + tx;
+              double xx = math.round((x - tx) / stepping) * stepping + tx;
 
-              int ix = Math.round(xx) as int;
+              int ix = math.round(xx) as int;
               g.drawLine(ix, iys, ix, iye);
             }
 
@@ -3173,9 +3173,9 @@ class GraphComponent extends JScrollPane implements Printable {
               // xs or ys multiple times (leads to double grid lines when
               // zoom
               // is set to eg. 121%)
-              double yy = Math.round((y - ty) / stepping) * stepping + ty;
+              double yy = math.round((y - ty) / stepping) * stepping + ty;
 
-              int iy = Math.round(yy) as int;
+              int iy = math.round(yy) as int;
               g.drawLine(ixs, iy, ixe, iy);
             }
 
@@ -3193,11 +3193,11 @@ class GraphComponent extends JScrollPane implements Printable {
                 // xs or ys multiple times (leads to double grid lines
                 // when zoom
                 // is set to eg. 121%)
-                x = Math.round((x - tx) / stepping) * stepping + tx;
-                y = Math.round((y - ty) / stepping) * stepping + ty;
+                x = math.round((x - tx) / stepping) * stepping + tx;
+                y = math.round((y - ty) / stepping) * stepping + ty;
 
-                int ix = Math.round(x) as int;
-                int iy = Math.round(y) as int;
+                int ix = math.round(x) as int;
+                int iy = math.round(y) as int;
                 g.drawLine(ix, iy, ix, iy);
               }
             }

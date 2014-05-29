@@ -68,7 +68,7 @@ class ElbowEdgeHandler extends EdgeHandler {
     Point pt = null;
 
     if (points == null || points.isEmpty()) {
-      pt = new Point((int)(Math.round(p0.getX()) + Math.round((pe.getX() - p0.getX()) / 2)), (int)(Math.round(p0.getY()) + Math.round((pe.getY() - p0.getY()) / 2)));
+      pt = new Point((int)(math.round(p0.getX()) + math.round((pe.getX() - p0.getX()) / 2)), (int)(math.round(p0.getY()) + math.round((pe.getY() - p0.getY()) / 2)));
     } else {
       GraphView view = _graphComponent.getGraph().getView();
       pt = view.transformControlPoint(_state, points.get(0)).getPoint();

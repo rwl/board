@@ -107,7 +107,7 @@ class MinimumCycleRemover implements HierarchicalLayoutStage {
       Iterator<Object> iter = possibleNewRoots.iterator();
       List<Object> roots = model.roots;
 
-      while (iter.hasNext()) {
+      while (iter.moveNext()) {
         GraphHierarchyNode node = iter.next() as GraphHierarchyNode;
         Object realNode = node.cell;
         int numIncomingEdges = graph.getIncomingEdges(realNode).length;

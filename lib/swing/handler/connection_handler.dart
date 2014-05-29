@@ -175,7 +175,7 @@ class ConnectionHandler extends MouseAdapter {
 					{
 						_error = validateConnection(_source.getCell(), cell);
 
-						if (_error != null && _error.length() == 0)
+						if (_error != null && _error.length == 0)
 						{
 							cell = null;
 
@@ -577,7 +577,7 @@ class ConnectionHandler extends MouseAdapter {
   void mouseReleased(MouseEvent e) {
     if (isActive()) {
       if (_error != null) {
-        if (_error.length() > 0) {
+        if (_error.length > 0) {
           JOptionPane.showMessageDialog(_graphComponent, _error);
         }
       } else if (_first != null) {

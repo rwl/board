@@ -76,7 +76,7 @@ abstract class GraphViewReader extends DefaultHandler {
       String name = atts.getQName(i);
 
       // Workaround for possible null name
-      if (name == null || name.length() == 0) {
+      if (name == null || name.length == 0) {
         name = atts.getLocalName(i);
       }
 
@@ -139,7 +139,7 @@ abstract class GraphViewReader extends DefaultHandler {
     // Parses the label and label bounds
     String label = Utils.getString(style, "label");
 
-    if (label != null && label.length() > 0) {
+    if (label != null && label.length > 0) {
       Point2d offset = new Point2d(Utils.getDouble(style, "dx"), Utils.getDouble(style, "dy"));
       Rect vertexBounds = (!edge) ? state : null;
       state.setLabelBounds(Utils.getLabelPaintBounds(label, state.getStyle(), Utils.isTrue(style, "html", false), offset, vertexBounds, _scale));
@@ -158,7 +158,7 @@ abstract class GraphViewReader extends DefaultHandler {
     List<Point2d> result = new List<Point2d>();
 
     if (pts != null) {
-      int len = pts.length();
+      int len = pts.length;
       String tmp = "";
       String x = null;
 

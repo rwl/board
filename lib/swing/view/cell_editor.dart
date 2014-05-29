@@ -346,7 +346,7 @@ class CellEditor implements ICellEditor {
       }
     }
 
-    bounds.setSize(Math.max(bounds.getWidth(), Math.round(_minimumWidth * scale)) as int, Math.max(bounds.getHeight(), Math.round(_minimumHeight * scale)) as int);
+    bounds.setSize(Math.max(bounds.getWidth(), math.round(_minimumWidth * scale)) as int, Math.max(bounds.getHeight(), math.round(_minimumHeight * scale)) as int);
 
     return bounds;
   }

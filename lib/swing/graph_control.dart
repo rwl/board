@@ -111,7 +111,7 @@ class GraphControl extends JComponent {
       d.width = sp.width;
 
       if (min != null) {
-        d.width = Math.max(d.width, Math.round(min.getWidth() * scale)) as int;
+        d.width = Math.max(d.width, math.round(min.getWidth() * scale)) as int;
       }
 
       d.width += translate.x;
@@ -126,7 +126,7 @@ class GraphControl extends JComponent {
       d.height = sp.height;
 
       if (min != null) {
-        d.height = Math.max(d.height, Math.round(min.getHeight() * scale)) as int;
+        d.height = Math.max(d.height, math.round(min.getHeight() * scale)) as int;
       }
 
       d.height += translate.y;
@@ -161,7 +161,7 @@ class GraphControl extends JComponent {
       }
     }
 
-    if (tip != null && tip.length() > 0) {
+    if (tip != null && tip.length > 0) {
       return tip;
     }
 
@@ -192,8 +192,8 @@ class GraphControl extends JComponent {
     Rect min = this.graphComponent._graph.getMinimumGraphSize();
 
     if (min != null) {
-      d.width = Math.max(d.width, Math.round(min.getWidth() * scale)) as int;
-      d.height = Math.max(d.height, Math.round(min.getHeight() * scale)) as int;
+      d.width = Math.max(d.width, math.round(min.getWidth() * scale)) as int;
+      d.height = Math.max(d.height, math.round(min.getHeight() * scale)) as int;
     }
 
     if (!getPreferredSize().equals(d)) {

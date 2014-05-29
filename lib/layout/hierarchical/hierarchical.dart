@@ -276,8 +276,8 @@ JGraphLayout.Stoppable*/
     List<Object> result = new List<Object>(edges.length);
     Iterator<Object> it = edges.iterator();
 
-    while (it.hasNext()) {
-      Object edge = it.next();
+    while (it.moveNext()) {
+      Object edge = it.current();
       CellState state = graph.getView().getState(edge);
       Object source = (state != null) ? state.getVisibleTerminal(true) : graph.getView().getVisibleTerminal(edge, true);
       Object target = (state != null) ? state.getVisibleTerminal(false) : graph.getView().getVisibleTerminal(edge, false);
@@ -336,8 +336,8 @@ JGraphLayout.Stoppable*/
     double initialX = 0;
     Iterator<Set<Object>> iter = hierarchyVertices.iterator();
 
-    while (iter.hasNext()) {
-      Set<Object> vertexSet = iter.next();
+    while (iter.moveNext()) {
+      Set<Object> vertexSet = iter.current();
 
       this._model = new GraphHierarchyModel(this, vertexSet.toArray(), _roots, parent);
 

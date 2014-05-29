@@ -411,7 +411,7 @@ class Stencil implements IShape {
         StringBuffer pat = new StringBuffer();
 
         for (int i = 0; i < tmp.length; i++) {
-          if (tmp[i].length() > 0) {
+          if (tmp[i].length > 0) {
             pat.append(Double.parseDouble(tmp[i]) * minScale);
             pat.append(" ");
           }
@@ -448,7 +448,7 @@ class Stencil implements IShape {
   int _getInt(Element elt, String attribute, int defaultValue) {
     String value = elt.getAttribute(attribute);
 
-    if (value != null && value.length() > 0) {
+    if (value != null && value.length > 0) {
       try {
         defaultValue = Math.floor(Float.parseFloat(value)) as int;
       } on NumberFormatException catch (e) {
@@ -473,7 +473,7 @@ class Stencil implements IShape {
   double _getDouble(Element elt, String attribute, [double defaultValue = 0.0]) {
     String value = elt.getAttribute(attribute);
 
-    if (value != null && value.length() > 0) {
+    if (value != null && value.length > 0) {
       try {
         defaultValue = Double.parseDouble(value);
       } on NumberFormatException catch (e) {
@@ -490,7 +490,7 @@ class Stencil implements IShape {
   String _getString(Element elt, String attribute, String defaultValue) {
     String value = elt.getAttribute(attribute);
 
-    if (value != null && value.length() > 0) {
+    if (value != null && value.length > 0) {
       defaultValue = value;
     }
 

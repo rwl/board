@@ -3,21 +3,15 @@
  */
 part of graph.view;
 
-
-
 /**
  * Defines the requirements for a perimeter function.
- */
-
-/**
- * Implements a perimeter function.
  * 
  * @param bounds Rectangle that represents the absolute bounds of the
  * vertex.
  * @param vertex Cell state that represents the vertex.
  * @param next Point that represents the nearest neighbour point on the
  * given edge.
- * @param orthogonal Boolean that specifies if the orthogonal projection onto
+ * @param orthogonal bool that specifies if the orthogonal projection onto
  * the perimeter should be returned. If this is false then the intersection
  * of the perimeter and the line between the next and the center point is
  * returned.
@@ -119,7 +113,7 @@ class Perimeter {
         double ty = py - cy;
         double tx = Math.sqrt(a * a * (1 - (ty * ty) / (b * b)));
 
-        if (Double.isNaN(tx)) {
+        if (tx.isNaN) {
           tx = 0;
         }
 
@@ -134,7 +128,7 @@ class Perimeter {
         double tx = px - cx;
         double ty = Math.sqrt(b * b * (1 - (tx * tx) / (a * a)));
 
-        if (Double.isNaN(ty)) {
+        if (ty.isNaN) {
           ty = 0;
         }
 
@@ -239,7 +233,7 @@ class Perimeter {
 	 */
   static PerimeterFunction TrianglePerimeter = (Rect bounds, CellState vertex, Point2d next, bool orthogonal) {
     Object direction = (vertex != null) ? Utils.getString(vertex._style, Constants.STYLE_DIRECTION, Constants.DIRECTION_EAST) : Constants.DIRECTION_EAST;
-    bool vertical = direction.equals(Constants.DIRECTION_NORTH) || direction.equals(Constants.DIRECTION_SOUTH);
+    bool vertical = direction == Constants.DIRECTION_NORTH || direction == Constants.DIRECTION_SOUTH;
 
     double x = bounds.getX();
     double y = bounds.getY();
@@ -253,14 +247,14 @@ class Perimeter {
     Point2d corner = new Point2d(x + w, cy);
     Point2d end = new Point2d(x, y + h);
 
-    if (direction.equals(Constants.DIRECTION_NORTH)) {
+    if (direction == Constants.DIRECTION_NORTH) {
       start = end;
       corner = new Point2d(cx, y);
       end = new Point2d(x + w, y + h);
-    } else if (direction.equals(Constants.DIRECTION_SOUTH)) {
+    } else if (direction == Constants.DIRECTION_SOUTH) {
       corner = new Point2d(cx, y + h);
       end = new Point2d(x + w, y);
-    } else if (direction.equals(Constants.DIRECTION_WEST)) {
+    } else if (direction == Constants.DIRECTION_WEST) {
       start = new Point2d(x + w, y);
       corner = new Point2d(x, cy);
       end = new Point2d(x + w, y + h);
@@ -275,7 +269,7 @@ class Perimeter {
 
     bool base = false;
 
-    if (direction.equals(Constants.DIRECTION_NORTH) || direction.equals(Constants.DIRECTION_WEST)) {
+    if (direction == Constants.DIRECTION_NORTH || direction == Constants.DIRECTION_WEST) {
       base = alpha > -t && alpha < t;
     } else {
       base = alpha < -Math.PI + t || alpha > Math.PI - t;
@@ -291,13 +285,13 @@ class Perimeter {
           result = new Point2d(start.getX(), next.getY());
         }
       } else {
-        if (direction.equals(Constants.DIRECTION_EAST)) {
+        if (direction == Constants.DIRECTION_EAST) {
           result = new Point2d(x, y + h / 2 - w * Math.tan(alpha) / 2);
-        } else if (direction.equals(Constants.DIRECTION_NORTH)) {
+        } else if (direction == Constants.DIRECTION_NORTH) {
           result = new Point2d(x + w / 2 + h * Math.tan(alpha) / 2, y + h);
-        } else if (direction.equals(Constants.DIRECTION_SOUTH)) {
+        } else if (direction == Constants.DIRECTION_SOUTH) {
           result = new Point2d(x + w / 2 - h * Math.tan(alpha) / 2, y);
-        } else if (direction.equals(Constants.DIRECTION_WEST)) {
+        } else if (direction == Constants.DIRECTION_WEST) {
           result = new Point2d(x + w, y + h / 2 + w * Math.tan(alpha) / 2);
         }
       }
@@ -306,11 +300,11 @@ class Perimeter {
         Point2d pt = new Point2d(cx, cy);
 
         if (next.getY() >= y && next.getY() <= y + h) {
-          pt.setX((vertical) ? cx : ((direction.equals(Constants.DIRECTION_WEST)) ? x + w : x));
+          pt.setX((vertical) ? cx : ((direction == Constants.DIRECTION_WEST) ? x + w : x));
           pt.setY(next.getY());
         } else if (next.getX() >= x && next.getX() <= x + w) {
           pt.setX(next.getX());
-          pt.setY((!vertical) ? cy : ((direction.equals(Constants.DIRECTION_NORTH)) ? y + h : y));
+          pt.setY((!vertical) ? cy : ((direction == Constants.DIRECTION_NORTH) ? y + h : y));
         }
 
         // Compute angle
@@ -358,7 +352,7 @@ class Perimeter {
     Point2d result = new Point2d(cx, cy);
 
     Object direction = (vertex != null) ? Utils.getString(vertex._style, Constants.STYLE_DIRECTION, Constants.DIRECTION_EAST) : Constants.DIRECTION_EAST;
-    bool vertical = direction.equals(Constants.DIRECTION_NORTH) || direction.equals(Constants.DIRECTION_SOUTH);
+    bool vertical = direction == Constants.DIRECTION_NORTH || direction == Constants.DIRECTION_SOUTH;
     Point2d a = new Point2d();
     Point2d b = new Point2d();
 

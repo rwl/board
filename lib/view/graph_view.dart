@@ -77,7 +77,7 @@ class GraphView extends EventSource {
   /**
 	 * Maps from cells to cell states.
 	 */
-  Hashtable<Object, CellState> _states = new Hashtable<Object, CellState>();
+  Map<Object, CellState> _states = new Map<Object, CellState>();
 
   /**
 	 * Constructs a new view for the given graph.
@@ -100,14 +100,14 @@ class GraphView extends EventSource {
   /**
 	 * Returns the dictionary that maps from cells to states.
 	 */
-  Hashtable<Object, CellState> getStates() {
+  Map<Object, CellState> getStates() {
     return _states;
   }
 
   /**
 	 * Returns the dictionary that maps from cells to states.
 	 */
-  void setStates(Hashtable<Object, CellState> states) {
+  void setStates(Map<Object, CellState> states) {
     this._states = states;
   }
 
@@ -146,7 +146,7 @@ class GraphView extends EventSource {
       change.execute();
       UndoableEdit edit = new UndoableEdit(this, false);
       edit.add(change);
-      fireEvent(new EventObj(Event.UNDO, "edit", edit));
+      fireEvent(new EventObj(Event.UNDO, ["edit", edit]));
     }
 
     return root;
@@ -174,7 +174,7 @@ class GraphView extends EventSource {
       }
     }
 
-    fireEvent(new EventObj(Event.SCALE_AND_TRANSLATE, "scale", scale, "previousScale", previousScale, "translate", _translate, "previousTranslate", previousTranslate));
+    fireEvent(new EventObj(Event.SCALE_AND_TRANSLATE, ["scale", scale, "previousScale", previousScale, "translate", _translate, "previousTranslate", previousTranslate]));
   }
 
   /**
@@ -204,7 +204,7 @@ class GraphView extends EventSource {
       }
     }
 
-    fireEvent(new EventObj(Event.SCALE, "scale", _scale, "previousScale", previousScale));
+    fireEvent(new EventObj(Event.SCALE, ["scale", _scale, "previousScale", previousScale]));
   }
 
   /**
@@ -234,7 +234,7 @@ class GraphView extends EventSource {
       }
     }
 
-    fireEvent(new EventObj(Event.TRANSLATE, "translate", _translate, "previousTranslate", previousTranslate));
+    fireEvent(new EventObj(Event.TRANSLATE, ["translate", _translate, "previousTranslate", previousTranslate]));
   }
 
   /**
@@ -396,7 +396,7 @@ class GraphView extends EventSource {
 	 * cell state and its children if recurse is true.
 	 * 
 	 * @param state Cell state whose bounding box should be returned.
-	 * @param recurse Boolean indicating if the children should be included.
+	 * @param recurse bool indicating if the children should be included.
 	 */
   Rect getBoundingBox(CellState state, [bool recurse = true]) {
     Rect bbox = null;
@@ -441,7 +441,7 @@ class GraphView extends EventSource {
 	 * then it is removed using removeState.
 	 * 
 	 * @param cell Cell whose cell state should be created.
-	 * @param visible Boolean indicating if the cell should be visible.
+	 * @param visible bool indicating if the cell should be visible.
 	 */
   Object validateCell(Object cell, [bool visible = true]) {
     if (cell != null) {
@@ -475,7 +475,7 @@ class GraphView extends EventSource {
 	 * Validates the cell state for the given cell.
 	 * 
 	 * @param cell Cell whose cell state should be validated.
-	 * @param recurse Boolean indicating if the children of the cell should be
+	 * @param recurse bool indicating if the children of the cell should be
 	 * validated.
 	 */
   CellState validateCellState(Object cell, [bool recurse = true]) {
@@ -640,17 +640,17 @@ class GraphView extends EventSource {
   void updateVertexLabelOffset(CellState state) {
     String horizontal = Utils.getString(state.getStyle(), Constants.STYLE_LABEL_POSITION, Constants.ALIGN_CENTER);
 
-    if (horizontal.equals(Constants.ALIGN_LEFT)) {
+    if (horizontal == Constants.ALIGN_LEFT) {
       state._absoluteOffset.setX(state._absoluteOffset.getX() - state.getWidth());
-    } else if (horizontal.equals(Constants.ALIGN_RIGHT)) {
+    } else if (horizontal == Constants.ALIGN_RIGHT) {
       state._absoluteOffset.setX(state._absoluteOffset.getX() + state.getWidth());
     }
 
     String vertical = Utils.getString(state.getStyle(), Constants.STYLE_VERTICAL_LABEL_POSITION, Constants.ALIGN_MIDDLE);
 
-    if (vertical.equals(Constants.ALIGN_TOP)) {
+    if (vertical == Constants.ALIGN_TOP) {
       state._absoluteOffset.setY(state._absoluteOffset.getY() - state.getHeight());
-    } else if (vertical.equals(Constants.ALIGN_BOTTOM)) {
+    } else if (vertical == Constants.ALIGN_BOTTOM) {
       state._absoluteOffset.setY(state._absoluteOffset.getY() + state.getHeight());
     }
   }
@@ -663,7 +663,7 @@ class GraphView extends EventSource {
     Map<String, Object> style = state.getStyle();
 
     // Applies word wrapping to non-HTML labels and stores the result in the state
-    if (label != null && label.length() > 0 && !_graph.isHtmlLabel(state.getCell()) && !_graph.getModel().isEdge(state.getCell()) && Utils.getString(style, Constants.STYLE_WHITE_SPACE, "nowrap").equals("wrap")) {
+    if (label != null && label.length > 0 && !_graph.isHtmlLabel(state.getCell()) && !_graph.getModel().isEdge(state.getCell()) && Utils.getString(style, Constants.STYLE_WHITE_SPACE, "nowrap") == "wrap") {
       double w = getWordWrapWidth(state);
 
       // The lines for wrapping within the given width are calculated for no
@@ -679,10 +679,10 @@ class GraphView extends EventSource {
         StringBuffer buffer = new StringBuffer();
 
         for (String line in lines) {
-          buffer.append(line + '\n');
+          buffer.write(line + '\n');
         }
 
-        label = buffer.substring(0, buffer.length() - 1);
+        label = buffer.toString().substring(0, buffer.length - 1);
       }
     }
 
@@ -716,7 +716,7 @@ class GraphView extends EventSource {
     Map<String, Object> style = state.getStyle();
     String overflow = Utils.getString(style, Constants.STYLE_OVERFLOW, "");
 
-    if (overflow.equals("fill")) {
+    if (overflow == "fill") {
       state.setLabelBounds(new Rect(state));
     } else if (state.getLabel() != null) {
       // For edges, the width of the geometry is used for wrapping HTML
@@ -735,7 +735,7 @@ class GraphView extends EventSource {
 
       state.setLabelBounds(Utils.getLabelPaintBounds(state.getLabel(), style, _graph.isHtmlLabel(cell), state.getAbsoluteOffset(), vertexBounds, _scale, _graph.getModel().isEdge(cell)));
 
-      if (overflow.equals("width")) {
+      if (overflow == "width") {
         state.getLabelBounds().setX(state.getX());
         state.getLabelBounds().setWidth(state.getWidth());
       }
@@ -756,21 +756,21 @@ class GraphView extends EventSource {
     // Adds extra pixels for the marker and stroke assuming
     // that the border stroke is centered around the bounds
     // and the first pixel is drawn inside the bounds
-    double strokeWidth = Math.max(1, Math.round(Utils.getInt(style, Constants.STYLE_STROKEWIDTH, 1) * _scale));
+    double strokeWidth = Math.max(1, math.round(Utils.getInt(style, Constants.STYLE_STROKEWIDTH, 1) * _scale));
     strokeWidth -= Math.max(1, strokeWidth / 2);
 
     if (_graph.getModel().isEdge(state.getCell())) {
       int ms = 0;
 
       if (style.containsKey(Constants.STYLE_ENDARROW) || style.containsKey(Constants.STYLE_STARTARROW)) {
-        ms = Math.round(Constants.DEFAULT_MARKERSIZE * _scale) as int;
+        ms = math.round(Constants.DEFAULT_MARKERSIZE * _scale) as int;
       }
 
       // Adds the strokewidth
       rect.grow(ms + strokeWidth);
 
       // Adds worst case border for an arrow shape
-      if (Utils.getString(style, Constants.STYLE_SHAPE, "").equals(Constants.SHAPE_ARROW)) {
+      if (Utils.getString(style, Constants.STYLE_SHAPE, "") == Constants.SHAPE_ARROW) {
         rect.grow(Constants.ARROW_WIDTH / 2);
       }
     } else {
@@ -784,7 +784,7 @@ class GraphView extends EventSource {
     }
 
     // Adds oversize images in labels
-    if (Utils.getString(style, Constants.STYLE_SHAPE, "").equals(Constants.SHAPE_LABEL)) {
+    if (Utils.getString(style, Constants.STYLE_SHAPE, "") == Constants.SHAPE_LABEL) {
       if (Utils.getString(style, Constants.STYLE_IMAGE) != null) {
         double w = Utils.getInt(style, Constants.STYLE_IMAGE_WIDTH, Constants.DEFAULT_IMAGESIZE) * _scale;
         double h = Utils.getInt(style, Constants.STYLE_IMAGE_HEIGHT, Constants.DEFAULT_IMAGESIZE) * _scale;
@@ -795,15 +795,15 @@ class GraphView extends EventSource {
         String imgAlign = Utils.getString(style, Constants.STYLE_IMAGE_ALIGN, Constants.ALIGN_LEFT);
         String imgValign = Utils.getString(style, Constants.STYLE_IMAGE_VERTICAL_ALIGN, Constants.ALIGN_MIDDLE);
 
-        if (imgAlign.equals(Constants.ALIGN_RIGHT)) {
+        if (imgAlign == Constants.ALIGN_RIGHT) {
           x += state.getWidth() - w;
-        } else if (imgAlign.equals(Constants.ALIGN_CENTER)) {
+        } else if (imgAlign == Constants.ALIGN_CENTER) {
           x += (state.getWidth() - w) / 2;
         }
 
-        if (imgValign.equals(Constants.ALIGN_TOP)) {
+        if (imgValign == Constants.ALIGN_TOP) {
           y = state.getY();
-        } else if (imgValign.equals(Constants.ALIGN_BOTTOM)) {
+        } else if (imgValign == Constants.ALIGN_BOTTOM) {
           y = state.getY() + state.getHeight() - h;
         } else // MIDDLE
         {
@@ -891,7 +891,7 @@ class GraphView extends EventSource {
         CellState src = getTerminalPort(edge, source, true);
         CellState trg = getTerminalPort(edge, target, false);
 
-        edgeStyle.apply(edge, src, trg, points, pts);
+        edgeStyle(edge, src, trg, points, pts);
       } else if (points != null) {
         for (int i = 0; i < points.length; i++) {
           pts.add(transformControlPoint(edge, points[i]));
@@ -931,7 +931,7 @@ class GraphView extends EventSource {
 
     // Converts string values to objects
     if (edgeStyle is String) {
-      String str = String.valueOf(edgeStyle);
+      String str = edgeStyle.toString();
       Object tmp = StyleRegistry.getValue(str);
 
       if (tmp == null) {
@@ -976,7 +976,7 @@ class GraphView extends EventSource {
 	 * @param edge Cell state whose terminal point should be updated.
 	 * @param start Cell state for the terminal on "this" side of the edge.
 	 * @param end Cell state for the terminal on the other side of the edge.
-	 * @param source Boolean indicating if start is the source terminal state.
+	 * @param source bool indicating if start is the source terminal state.
 	 */
   void updateFloatingTerminalPoint(CellState edge, CellState start, CellState end, bool source) {
     start = getTerminalPort(edge, start, source);
@@ -1023,7 +1023,7 @@ class GraphView extends EventSource {
 	 * 
 	 * @param terminal Cell state for the source or target terminal.
 	 * @param next Point that lies outside of the given terminal.
-	 * @param orthogonal Boolean that specifies if the orthogonal projection onto
+	 * @param orthogonal bool that specifies if the orthogonal projection onto
 	 * the perimeter should be returned. If this is false then the intersection
 	 * of the perimeter and the line between the next and the center point is
 	 * returned.
@@ -1039,7 +1039,7 @@ class GraphView extends EventSource {
         Rect bounds = getPerimeterBounds(terminal, border);
 
         if (bounds.getWidth() > 0 || bounds.getHeight() > 0) {
-          point = perimeter.apply(bounds, terminal, next, orthogonal);
+          point = perimeter(bounds, terminal, next, orthogonal);
         }
       }
 
@@ -1057,7 +1057,7 @@ class GraphView extends EventSource {
 	 * @return Returns the x-coordinate of the routing center point.
 	 */
   double getRoutingCenterX(CellState state) {
-    float f = (state.getStyle() != null) ? Utils.getFloat(state.getStyle(), Constants.STYLE_ROUTING_CENTER_X) : 0;
+    double f = (state.getStyle() != null) ? Utils.getFloat(state.getStyle(), Constants.STYLE_ROUTING_CENTER_X) : 0;
 
     return state.getCenterX() + f * state.getWidth();
   }
@@ -1068,7 +1068,7 @@ class GraphView extends EventSource {
 	 * @return Returns the y-coordinate of the routing center point.
 	 */
   double getRoutingCenterY(CellState state) {
-    float f = (state.getStyle() != null) ? Utils.getFloat(state.getStyle(), Constants.STYLE_ROUTING_CENTER_Y) : 0;
+    double f = (state.getStyle() != null) ? Utils.getFloat(state.getStyle(), Constants.STYLE_ROUTING_CENTER_Y) : 0;
 
     return state.getCenterY() + f * state.getHeight();
   }
@@ -1092,7 +1092,7 @@ class GraphView extends EventSource {
 
     // Converts string values to objects
     if (perimeter is String) {
-      String str = String.valueOf(perimeter);
+      String str = perimeter.toString();
       Object tmp = StyleRegistry.getValue(str);
 
       if (tmp == null) {
@@ -1115,7 +1115,7 @@ class GraphView extends EventSource {
 	 * 
 	 * @param edge Cell state that represents the edge.
 	 * @param opposite Cell state that represents the opposite terminal.
-	 * @param source Boolean indicating if the next point for the source or target
+	 * @param source bool indicating if the next point for the source or target
 	 * should be returned.
 	 * @return Returns the nearest point of the opposite side.
 	 */
@@ -1126,7 +1126,7 @@ class GraphView extends EventSource {
     if (pts != null && (source || pts.length > 2 || opposite == null)) {
       int count = pts.length;
       int index = (source) ? Math.min(1, count - 1) : Math.max(0, count - 2);
-      point = pts.get(index);
+      point = pts[index];
     }
 
     if (point == null && opposite != null) {
@@ -1141,7 +1141,7 @@ class GraphView extends EventSource {
 	 * to be connected to this terminal on the display.
 	 * 
 	 * @param edge Cell whose visible terminal should be returned.
-	 * @param source Boolean that specifies if the source or target terminal
+	 * @param source bool that specifies if the source or target terminal
 	 * should be returned.
 	 * @return Returns the visible source or target terminal.
 	 */
@@ -1174,8 +1174,8 @@ class GraphView extends EventSource {
 	 */
   void updateEdgeBounds(CellState state) {
     List<Point2d> points = state.getAbsolutePoints();
-    Point2d p0 = points.get(0);
-    Point2d pe = points.get(points.length - 1);
+    Point2d p0 = points[0];
+    Point2d pe = points[points.length - 1];
 
     if (p0.getX() != pe.getX() || p0.getY() != pe.getY()) {
       double dx = pe.getX() - p0.getX();
@@ -1382,7 +1382,7 @@ class GraphView extends EventSource {
         }
 
         // Constructs the relative point for the label
-        return new Point2d(Math.round(((totalLength / 2 - length - projlen) / totalLength) * -2), Math.round(yDistance / _scale));
+        return new Point2d(math.round(((totalLength / 2 - length - projlen) / totalLength) * -2), math.round(yDistance / _scale));
       }
     }
 
@@ -1405,8 +1405,8 @@ class GraphView extends EventSource {
       }
     }
 
-    List<CellState> resultArray = new List<CellState>(result.length);
-    return result.toArray(resultArray);
+    //List<CellState> resultArray = new List<CellState>(result.length);
+    return result;//.toArray(resultArray);
   }
 
   /**
@@ -1426,7 +1426,7 @@ class GraphView extends EventSource {
 	 * the state is created if it does not yet exist.
 	 * 
 	 * @param cell Cell for which a new state should be returned.
-	 * @param create Boolean indicating if a new state should be created if it
+	 * @param create bool indicating if a new state should be created if it
 	 * does not yet exist.
 	 * @return Returns the state for the given cell.
 	 */
@@ -1434,11 +1434,11 @@ class GraphView extends EventSource {
     CellState state = null;
 
     if (cell != null) {
-      state = _states.get(cell);
+      state = _states[cell];
 
       if (state == null && create && _graph.isCellVisible(cell)) {
         state = createState(cell);
-        _states.put(cell, state);
+        _states[cell] = state;
       }
     }
 
@@ -1559,7 +1559,7 @@ class CurrentRootChange implements UndoableChange {
     up = !up;
 
     String eventName = (up) ? Event.UP : Event.DOWN;
-    view.fireEvent(new EventObj(eventName, "root", view._currentRoot, "previous", previous));
+    view.fireEvent(new EventObj(eventName, ["root", view._currentRoot, "previous", previous]));
   }
 
 }

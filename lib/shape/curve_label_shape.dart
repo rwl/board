@@ -208,7 +208,7 @@ class CurveLabelShape implements ITextShape {
     // Check that the size of the widths array matches
     // that of the label size
     if (_labelGlyphs == null || (!label.equals(_lastValue))) {
-      _labelGlyphs = new List<LabelGlyphCache>(label.length());
+      _labelGlyphs = new List<LabelGlyphCache>(label.length);
     }
 
     if (!label.equals(_lastValue) || !font.equals(_lastFont)) {
@@ -229,7 +229,7 @@ class CurveLabelShape implements ITextShape {
 
         for (int i = 0; i < bidi.getRunCount(); i++) {
           final String labelSection = label.substring(bidi.getRunStart(i), bidi.getRunLimit(i));
-          rtlGlyphVectors[i] = font.layoutGlyphVector(CurveLabelShape.frc, labelSection.toCharArray(), 0, labelSection.length(), Font.LAYOUT_RIGHT_TO_LEFT);
+          rtlGlyphVectors[i] = font.layoutGlyphVector(CurveLabelShape.frc, labelSection.toCharArray(), 0, labelSection.length, Font.LAYOUT_RIGHT_TO_LEFT);
         }
 
         int charCount = 0;
@@ -259,8 +259,8 @@ class CurveLabelShape implements ITextShape {
         BreakIterator it = BreakIterator.getCharacterInstance(Locale.getDefault());
         it.setText(label);
 
-        for (int i = 0; i < label.length(); ) {
-          int next = it.next();
+        for (int i = 0; i < label.length; ) {
+          int next = it.current();
           int characterLen = 1;
 
           if (next != BreakIterator.DONE) {
@@ -410,7 +410,7 @@ class CurveLabelShape implements ITextShape {
       double end2X = nextVector.getX();
       double end2Y = nextVector.getY();
 
-      if (nextParallel != Curve.INVALID_POSITION && j + 1 < label.length()) {
+      if (nextParallel != Curve.INVALID_POSITION && j + 1 < label.length) {
         // Extend the current parallel line in its direction
         // by the length of the next parallel. Use the approximate
         // deviation to work out the angle change

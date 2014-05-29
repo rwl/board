@@ -61,7 +61,7 @@ class StringNormalizingReader extends NormalizingReader
 	StringNormalizingReader(String s)
 	{
 		string = s;
-		length = s.length();
+		length = s.length;
 	}
 
 	/**

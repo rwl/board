@@ -118,7 +118,7 @@ class UndoableEdit {
 	 * Returns true if the this edit contains no changes.
 	 */
   bool isEmpty() {
-    return _changes.isEmpty();
+    return _changes.length == 0;
   }
 
   /**

@@ -119,7 +119,7 @@ class FastOrganicLayout extends GraphLayout {
   List<List<int>> neighbours;
 
   /**
-	 * Boolean flag that specifies if the layout is allowed to run. If this is
+	 * bool flag that specifies if the layout is allowed to run. If this is
 	 * set to false, then the layout exits in the following iteration.
 	 */
   bool allowedToRun = true;
@@ -127,7 +127,7 @@ class FastOrganicLayout extends GraphLayout {
   /**
 	 * Maps from vertices to indices.
 	 */
-  Hashtable<Object, Integer> indices = new Hashtable<Object, Integer>();
+  Hashtable<Object, int> indices = new Hashtable<Object, int>();
 
   /**
 	 * Constructs a new fast organic layout for the specified graph.
@@ -325,7 +325,7 @@ class FastOrganicLayout extends GraphLayout {
       cellLocation[i] = new List<double>(2);
 
       // Set up the mapping from array indices to cells
-      indices.put(vertex, new Integer(i));
+      indices.put(vertex, new int(i));
       Rect bounds = getVertexBounds(vertex);
 
       // Set the X,Y value of the internal version of the cell to
@@ -372,7 +372,7 @@ class FastOrganicLayout extends GraphLayout {
         neighbours[i] = new List<int>(cells.length);
 
         for (int j = 0; j < cells.length; j++) {
-          Integer index = indices.get(cells[j]);
+          int index = indices.get(cells[j]);
 
           // Check the connected cell in part of the vertex list to be
           // acted on by this layout

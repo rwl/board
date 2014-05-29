@@ -89,9 +89,9 @@ class CellState extends Rect {
   /**
 	 * Constructs an empty cell state.
 	 */
-  CellState() {
-    this(null, null, null);
-  }
+//  CellState() {
+//    this(null, null, null);
+//  }
 
   /**
 	 * Constructs a new object that represents the current state of the given
@@ -101,7 +101,7 @@ class CellState extends Rect {
 	 * @param cell Cell that this state represents.
 	 * @param style Array of key, value pairs that constitute the style.
 	 */
-  CellState(GraphView view, Object cell, Map<String, Object> style) {
+  CellState([GraphView view=null, Object cell=null, Map<String, Object> style=null]) {
     setView(view);
     setCell(cell);
     setStyle(style);
@@ -390,7 +390,7 @@ class CellState extends Rect {
 	 * Sets the first or last point in the list of points depending on isSource.
 	 * 
 	 * @param point Point that represents the terminal point.
-	 * @param isSource Boolean that specifies if the first or last point should
+	 * @param isSource bool that specifies if the first or last point should
 	 * be assigned.
 	 */
   void setAbsoluteTerminalPoint(Point2d point, bool isSource) {
@@ -420,7 +420,7 @@ class CellState extends Rect {
   /**
 	 * Returns the visible source or target terminal cell.
 	 * 
-	 * @param source Boolean that specifies if the source or target cell should be
+	 * @param source bool that specifies if the source or target cell should be
 	 * returned.
 	 */
   Object getVisibleTerminal(bool source) {
@@ -432,7 +432,7 @@ class CellState extends Rect {
   /**
 	 * Returns the visible source or target terminal state.
 	 * 
-	 * @param Boolean that specifies if the source or target state should be
+	 * @param bool that specifies if the source or target state should be
 	 * returned.
 	 */
   CellState getVisibleTerminalState(bool source) {
@@ -443,7 +443,7 @@ class CellState extends Rect {
 	 * Sets the visible source or target terminal state.
 	 * 
 	 * @param terminalState Cell state that represents the terminal.
-	 * @param source Boolean that specifies if the source or target state should be set.
+	 * @param source bool that specifies if the source or target state should be set.
 	 */
   void setVisibleTerminalState(CellState terminalState, bool source) {
     if (source) {

@@ -64,7 +64,7 @@ class GraphHierarchyModel {
   /**
 	 * Mapping from rank number to actual rank
 	 */
-  Map<Integer, GraphHierarchyRank> ranks = null;
+  Map<int, GraphHierarchyRank> ranks = null;
 
   /**
 	 * Store of roots of this hierarchy model, these are real graph cells, not
@@ -120,15 +120,15 @@ class GraphHierarchyModel {
       Collection<GraphHierarchyEdge> edges = internalVertices[i].connectsAsSource;
       Iterator<GraphHierarchyEdge> iter = edges.iterator();
 
-      while (iter.hasNext()) {
-        GraphHierarchyEdge internalEdge = iter.next();
+      while (iter.moveNext()) {
+        GraphHierarchyEdge internalEdge = iter.current();
         Collection<Object> realEdges = internalEdge.edges;
         Iterator<Object> iter2 = realEdges.iterator();
 
         // Only need to process the first real edge, since
         // all the edges connect to the same other vertex
-        if (iter2.hasNext()) {
-          Object realEdge = iter2.next();
+        if (iter2.moveNext()) {
+          Object realEdge = iter2.current();
           Object targetCell = graph.getView().getVisibleTerminal(realEdge, false);
           GraphHierarchyNode internalTargetCell = _vertexMapper.get(targetCell);
 
@@ -186,9 +186,9 @@ class GraphHierarchyModel {
       // invert the leftward edges internally
       Iterator<Object> iter = outgoingCells.iterator();
 
-      while (iter.hasNext()) {
+      while (iter.moveNext()) {
         // Don't add self-loops
-        Object cell = iter.next();
+        Object cell = iter.current();
 
         if (cell != vertices[i] && graph.getModel().isVertex(cell) && !layout.isVertexIgnored(cell)) {
           // We process all edge between this source and its targets
@@ -218,8 +218,8 @@ class GraphHierarchyModel {
             GraphHierarchyEdge internalEdge = new GraphHierarchyEdge(listEdges);
             Iterator<Object> iter2 = listEdges.iterator();
 
-            while (iter2.hasNext()) {
-              Object edge = iter2.next();
+            while (iter2.moveNext()) {
+              Object edge = iter2.current();
               _edgeMapper.put(edge, internalEdge);
 
               // Resets all point on the edge and disables the edge style
@@ -255,7 +255,7 @@ class GraphHierarchyModel {
     if (roots != null) {
       Iterator<Object> iter = roots.iterator();
 
-      while (iter.hasNext()) {
+      while (iter.moveNext()) {
         GraphHierarchyNode internalNode = _vertexMapper.get(iter.next());
 
         if (internalNode != null) {
@@ -266,8 +266,8 @@ class GraphHierarchyModel {
 
     Iterator<GraphHierarchyNode> iter = internalNodes.iterator();
 
-    while (iter.hasNext()) {
-      GraphHierarchyNode internalNode = iter.next();
+    while (iter.moveNext()) {
+      GraphHierarchyNode internalNode = iter.current();
       // Mark the node as not having had a layer assigned
       internalNode.temp[0] = -1;
     }
@@ -296,8 +296,8 @@ class GraphHierarchyModel {
       // normalise down afterwards
       int minimumLayer = _SOURCESCANSTARTRANK;
 
-      while (allEdgesScanned && iter2.hasNext()) {
-        GraphHierarchyEdge internalEdge = iter2.next();
+      while (allEdgesScanned && iter2.moveNext()) {
+        GraphHierarchyEdge internalEdge = iter2.current();
 
         if (internalEdge.temp[0] == 5270620) {
           // This edge has been scanned, get the layer of the
@@ -318,8 +318,8 @@ class GraphHierarchyModel {
         if (edgesToBeMarked != null) {
           Iterator<GraphHierarchyEdge> iter3 = edgesToBeMarked.iterator();
 
-          while (iter3.hasNext()) {
-            GraphHierarchyEdge internalEdge = iter3.next();
+          while (iter3.moveNext()) {
+            GraphHierarchyEdge internalEdge = iter3.current();
             // Assign unique stamp ( y/m/d/h )
             internalEdge.temp[0] = 5270620;
 
@@ -360,8 +360,8 @@ class GraphHierarchyModel {
     // Normalize the ranks down from their large starting value to place
     // at least 1 sink on layer 0
     iter = internalNodes.iterator();
-    while (iter.hasNext()) {
-      GraphHierarchyNode internalNode = iter.next();
+    while (iter.moveNext()) {
+      GraphHierarchyNode internalNode = iter.current();
       // Mark the node as not having had a layer assigned
       internalNode.temp[0] -= maxRank;
     }
@@ -372,8 +372,8 @@ class GraphHierarchyModel {
       int currentMaxLayer = 0;
       Iterator<GraphHierarchyEdge> iter2 = internalNode.connectsAsSource.iterator();
 
-      while (iter2.hasNext()) {
-        GraphHierarchyEdge internalEdge = iter2.next();
+      while (iter2.moveNext()) {
+        GraphHierarchyEdge internalEdge = iter2.current();
         GraphHierarchyNode otherNode = internalEdge.target;
         internalNode.temp[0] = Math.max(currentMaxLayer, otherNode.temp[0] + 1);
         currentMaxLayer = internalNode.temp[0];
@@ -391,11 +391,11 @@ class GraphHierarchyModel {
 	 */
   void fixRanks() {
     final List<GraphHierarchyRank> rankList = new List<GraphHierarchyRank>(maxRank + 1);
-    ranks = new LinkedHashMap<Integer, GraphHierarchyRank>(maxRank + 1);
+    ranks = new LinkedHashMap<int, GraphHierarchyRank>(maxRank + 1);
 
     for (int i = 0; i < maxRank + 1; i++) {
       rankList[i] = new GraphHierarchyRank();
-      ranks.put(new Integer(i), rankList[i]);
+      ranks.put(new int(i), rankList[i]);
     }
 
     // Perform a DFS to obtain an initial ordering for each rank.

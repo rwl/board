@@ -198,7 +198,7 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
 	 * Specifies if the model automatically updates parents of edges so that
 	 * the edge is contained in the nearest-common-ancestor of its terminals.
 	 * 
-	 * @param maintainEdgeParent Boolean indicating if the model should
+	 * @param maintainEdgeParent bool indicating if the model should
 	 * maintain edge parents.
 	 */
   void setMaintainEdgeParent(bool maintainEdgeParent) {
@@ -219,7 +219,7 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
 	 * Specifies if the model automatically creates Ids for new cells and
 	 * resolves Id collisions.
 	 * 
-	 * @param value Boolean indicating if the model should created Ids.
+	 * @param value bool indicating if the model should created Ids.
 	 */
   void setCreateIds(bool value) {
     _createIds = value;
@@ -1055,7 +1055,7 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
 	 * 
 	 * @param model Graph model that contains the connection data.
 	 * @param cell Cell whose edges should be counted.
-	 * @param outgoing Boolean that specifies if the number of outgoing or
+	 * @param outgoing bool that specifies if the number of outgoing or
 	 * incoming edges should be returned.
 	 * @return Returns the number of incoming or outgoing edges.
 	 */
@@ -1071,7 +1071,7 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
 	 *
 	 * @param model Graph model that contains the connection data.
 	 * @param cell Cell whose edges should be counted.
-	 * @param outgoing Boolean that specifies if the number of outgoing or
+	 * @param outgoing bool that specifies if the number of outgoing or
 	 * incoming edges should be returned.
 	 * @param ignoredEdge Object that represents an edge to be ignored.
 	 * @return Returns the number of incoming or outgoing edges.
@@ -1185,7 +1185,7 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
 	 * @param model The graph model that contains the graph.
 	 * @param source Object that defines the source cell.
 	 * @param target Object that defines the target cell.
-	 * @param directed Boolean that specifies if the direction of the edge
+	 * @param directed bool that specifies if the direction of the edge
 	 * should be taken into account.
 	 * @return Returns all edges between the given source and target.
 	 */
@@ -1245,9 +1245,9 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
 	 * @param model Model that contains the connection information.
 	 * @param edges Array of edges to be examined.
 	 * @param terminal Cell that specifies the known end of the edges.
-	 * @param sources Boolean that specifies if source terminals should
+	 * @param sources bool that specifies if source terminals should
 	 * be contained in the result. Default is true.
-	 * @param targets Boolean that specifies if target terminals should
+	 * @param targets bool that specifies if target terminals should
 	 * be contained in the result. Default is true.
 	 * @return Returns the array of opposite terminals for the given edges.
 	 */
@@ -1333,8 +1333,8 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
 	 *
 	 * @param model Model that contains the hierarchical information.
 	 * @param parent Cell whose child vertices or edges should be returned.
-	 * @param vertices Boolean indicating if child vertices should be returned.
-	 * @param edges Boolean indicating if child edges should be returned.
+	 * @param vertices bool indicating if child vertices should be returned.
+	 * @param edges bool indicating if child edges should be returned.
 	 * @return Returns the child vertices and/or edges of the given parent.
 	 */
   static List<Object> getChildCells(IGraphModel model, Object parent, bool vertices, bool edges) {

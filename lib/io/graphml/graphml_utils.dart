@@ -208,9 +208,9 @@ class GraphMlUtils {
     Iterator<Object> it = styleMap.values().iterator();
     Iterator<String> kit = styleMap.keySet().iterator();
 
-    while (kit.hasNext()) {
-      String key = kit.next();
-      Object value = it.next();
+    while (kit.moveNext()) {
+      String key = kit.current();
+      Object value = it.current();
       style = style + key + asig + value + ";";
     }
     return style;

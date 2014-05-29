@@ -27,7 +27,7 @@ class Multiplicity {
   String _value;
 
   /**
-	 * Boolean that specifies if the rule is applied to the source or target
+	 * bool that specifies if the rule is applied to the source or target
 	 * terminal of an edge.
 	 */
   bool _source;
@@ -49,10 +49,10 @@ class Multiplicity {
 	 * this rule applies. The strings are used in Cell.is on the opposite
 	 * terminal to check if the rule applies to the connection.
 	 */
-  Collection<String> _validNeighbors;
+  List<String> _validNeighbors;
 
   /**
-	 * Boolean indicating if the list of validNeighbors are those that are allowed
+	 * bool indicating if the list of validNeighbors are those that are allowed
 	 * for this rule or those that are not allowed for this rule.
 	 */
   bool _validNeighborsAllowed = true;
@@ -73,7 +73,7 @@ class Multiplicity {
   /**
 	 * 
 	 */
-  Multiplicity(bool source, String type, String attr, String value, int min, String max, Collection<String> validNeighbors, String countError, String typeError, bool validNeighborsAllowed) {
+  Multiplicity(bool source, String type, String attr, String value, int min, String max, List<String> validNeighbors, String countError, String typeError, bool validNeighborsAllowed) {
     this._source = source;
     this._type = type;
     this._attr = attr;
@@ -109,7 +109,7 @@ class Multiplicity {
         int m = getMaxValue();
 
         if (m == 0 || (this._source && sourceOut >= m) || (!this._source && targetIn >= m)) {
-          error.append(_countError + "\n");
+          error.write(_countError + "\n");
         }
       }
 
@@ -117,12 +117,12 @@ class Multiplicity {
         bool isValid = checkNeighbors(graph, edge, source, target);
 
         if (!isValid) {
-          error.append(_typeError + "\n");
+          error.write(_typeError + "\n");
         }
       }
     }
 
-    return (error.length() > 0) ? error.toString() : null;
+    return (error.length > 0) ? error.toString() : null;
   }
 
   /**
@@ -133,10 +133,10 @@ class Multiplicity {
     Object sourceValue = model.getValue(source);
     Object targetValue = model.getValue(target);
     bool isValid = !_validNeighborsAllowed;
-    Iterator<String> it = _validNeighbors.iterator();
+    Iterator<String> it = _validNeighbors.iterator;
 
-    while (it.hasNext()) {
-      String tmp = it.next();
+    while (it.moveNext()) {
+      String tmp = it.current;
 
       if (this._source && checkType(graph, targetValue, tmp)) {
         isValid = _validNeighborsAllowed;
@@ -175,7 +175,7 @@ class Multiplicity {
       if (value is Element) {
         return Utils.isNode(value, type, attr, attrValue);
       } else {
-        return value.equals(type);
+        return value == type;
       }
     }
 
@@ -194,8 +194,8 @@ class Multiplicity {
 	 */
   int getMaxValue() {
     try {
-      return Integer.parseInt(_max);
-    } on NumberFormatException catch (e) {
+      return int.parse(_max);
+    } on FormatException catch (e) {
       // ignore
     }
 

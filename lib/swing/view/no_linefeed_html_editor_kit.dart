@@ -24,7 +24,7 @@ class NoLinefeedHtmlEditorKit extends HTMLEditorKit {
       // line. This was not good because if a merge tag was in that range, it would
       // insert CR/LF in between the merge tag and then the replacement of
       // merge tag with bean values was not working.
-      w.setLineLength(Integer.MAX_VALUE);
+      w.setLineLength(int.MAX_VALUE);
       w.write();
     } else if (doc is StyledDocument) {
       MinimalHTMLWriter w = new MinimalHTMLWriter(out, doc as StyledDocument, pos, len);

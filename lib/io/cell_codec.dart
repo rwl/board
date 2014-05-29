@@ -110,7 +110,7 @@ class CellCodec extends ObjectCodec {
           while (tmp2 != null && tmp2.getNodeType() == Node.TEXT_NODE) {
             Node tmp3 = tmp2.getPreviousSibling();
 
-            if (tmp2.getTextContent().trim().length() == 0) {
+            if (tmp2.getTextContent().trim().length == 0) {
               tmp2.getParentNode().removeChild(tmp2);
             }
 
@@ -123,7 +123,7 @@ class CellCodec extends ObjectCodec {
           while (tmp2 != null && tmp2.getNodeType() == Node.TEXT_NODE) {
             Node tmp3 = tmp2.getPreviousSibling();
 
-            if (tmp2.getTextContent().trim().length() == 0) {
+            if (tmp2.getTextContent().trim().length == 0) {
               tmp2.getParentNode().removeChild(tmp2);
             }
 
@@ -154,11 +154,11 @@ class CellCodec extends ObjectCodec {
       if (inner != null && _idrefs != null) {
         Iterator<String> it = _idrefs.iterator();
 
-        while (it.hasNext()) {
-          String attr = it.next();
+        while (it.moveNext()) {
+          String attr = it.current();
           String ref = inner.getAttribute(attr);
 
-          if (ref != null && ref.length() > 0) {
+          if (ref != null && ref.length > 0) {
             inner.removeAttribute(attr);
             Object object = dec._objects.get(ref);
 

@@ -180,7 +180,7 @@ class Geometry extends Rect {
   /**
 	 * Sets the relative state of the geometry.
 	 * 
-	 * @param value Boolean value to be used as the new relative state.
+	 * @param value bool value to be used as the new relative state.
 	 */
   void setRelative(bool value) {
     _relative = value;
@@ -212,7 +212,7 @@ class Geometry extends Rect {
 	 * Returns the point representing the source or target point of this edge.
 	 * This is only used if the edge has no source or target vertex.
 	 * 
-	 * @param isSource Boolean that specifies if the source or target point
+	 * @param isSource bool that specifies if the source or target point
 	 * should be returned.
 	 * @return Returns the source or target point.
 	 */
@@ -225,7 +225,7 @@ class Geometry extends Rect {
 	 * new point.
 	 * 
 	 * @param point Point to be used as the new source or target point.
-	 * @param isSource Boolean that specifies if the source or target point
+	 * @param isSource bool that specifies if the source or target point
 	 * should be set.
 	 * @return Returns the new point.
 	 */
@@ -246,8 +246,8 @@ class Geometry extends Rect {
 	 * geometry is not relative. If TRANSLATE_CONTROL_POINTS is false, then
 	 * are not modified by this function.
 	 * 
-	 * @param dx Integer that specifies the x-coordinate of the translation.
-	 * @param dy Integer that specifies the y-coordinate of the translation.
+	 * @param dx int that specifies the x-coordinate of the translation.
+	 * @param dy int that specifies the y-coordinate of the translation.
 	 */
   void translate(double dx, double dy) {
     // Translates the geometry

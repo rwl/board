@@ -38,7 +38,7 @@ class HtmlColor {
 	 * @return Returns a hex string for the given color.
 	 */
   static String getHexColorString(Color color) {
-    return Integer.toHexString((color.getRGB() & 0x00FFFFFF) | (color.getAlpha() << 24));
+    return int.toHexString((color.getRGB() & 0x00FFFFFF) | (color.getAlpha() << 24));
   }
 
   /**
@@ -68,7 +68,7 @@ class HtmlColor {
       if (result != null) {
         return result;
       }
-    } else if (str.length() == 4) {
+    } else if (str.length == 4) {
       // Adds support for special short notation of hex colors, eg. #abc=#aabbcc
       str = new String(['#', str.charAt(1), str.charAt(1), str.charAt(2), str.charAt(2), str.charAt(3), str.charAt(3)]);
     }
@@ -113,11 +113,11 @@ class HtmlColor {
       return (float)(_parsePercent(val) * max / max);
     }
 
-    return (float)(Integer.parseInt(val) / max);
+    return (float)(int.parseInt(val) / max);
   }
 
   static double _parsePercent(String perc) {
-    return Integer.parseInt(perc.substring(0, perc.length() - 1)) / 100.0;
+    return int.parseInt(perc.substring(0, perc.length - 1)) / 100.0;
   }
 
   static float _parseAlpha(String alpha) {

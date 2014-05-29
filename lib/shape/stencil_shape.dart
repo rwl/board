@@ -325,19 +325,19 @@ class StencilShape extends BasicShape {
           double width = 0;
           double height = 0;
 
-          if (xString.length() > 0) {
+          if (xString.length > 0) {
             x = Double.valueOf(xString);
           }
-          if (yString.length() > 0) {
+          if (yString.length > 0) {
             y = Double.valueOf(yString);
           }
-          if (widthString.length() > 0) {
+          if (widthString.length > 0) {
             width = Double.valueOf(widthString);
             if (width < 0) {
               return null; // error in SVG spec
             }
           }
-          if (heightString.length() > 0) {
+          if (heightString.length > 0) {
             height = Double.valueOf(heightString);
             if (height < 0) {
               return null; // error in SVG spec
@@ -349,13 +349,13 @@ class StencilShape extends BasicShape {
           double rx = 0;
           double ry = 0;
 
-          if (rxString.length() > 0) {
+          if (rxString.length > 0) {
             rx = Double.valueOf(rxString);
             if (rx < 0) {
               return null; // error in SVG spec
             }
           }
-          if (ryString.length() > 0) {
+          if (ryString.length > 0) {
             ry = Double.valueOf(ryString);
             if (ry < 0) {
               return null; // error in SVG spec
@@ -364,9 +364,9 @@ class StencilShape extends BasicShape {
 
           if (rx > 0 || ry > 0) {
             // Specification rules on rx and ry
-            if (rx > 0 && ryString.length() == 0) {
+            if (rx > 0 && ryString.length == 0) {
               ry = rx;
-            } else if (ry > 0 && rxString.length() == 0) {
+            } else if (ry > 0 && rxString.length == 0) {
               rx = ry;
             }
             if (rx > width / 2.0) {
@@ -396,16 +396,16 @@ class StencilShape extends BasicShape {
         double y1 = 0;
         double y2 = 0;
 
-        if (x1String.length() > 0) {
+        if (x1String.length > 0) {
           x1 = Double.valueOf(x1String);
         }
-        if (x2String.length() > 0) {
+        if (x2String.length > 0) {
           x2 = Double.valueOf(x2String);
         }
-        if (y1String.length() > 0) {
+        if (y1String.length > 0) {
           y1 = Double.valueOf(y1String);
         }
-        if (y2String.length() > 0) {
+        if (y2String.length > 0) {
           y2 = Double.valueOf(y2String);
         }
 
@@ -435,13 +435,13 @@ class StencilShape extends BasicShape {
         String cyString = element.getAttribute("cy");
         String rString = element.getAttribute("r");
 
-        if (cxString.length() > 0) {
+        if (cxString.length > 0) {
           cx = Double.valueOf(cxString);
         }
-        if (cyString.length() > 0) {
+        if (cyString.length > 0) {
           cy = Double.valueOf(cyString);
         }
-        if (rString.length() > 0) {
+        if (rString.length > 0) {
           r = Double.valueOf(rString);
 
           if (r < 0) {
@@ -461,20 +461,20 @@ class StencilShape extends BasicShape {
         String rxString = element.getAttribute("rx");
         String ryString = element.getAttribute("ry");
 
-        if (cxString.length() > 0) {
+        if (cxString.length > 0) {
           cx = Double.valueOf(cxString);
         }
-        if (cyString.length() > 0) {
+        if (cyString.length > 0) {
           cy = Double.valueOf(cyString);
         }
-        if (rxString.length() > 0) {
+        if (rxString.length > 0) {
           rx = Double.valueOf(rxString);
 
           if (rx < 0) {
             return null; // error in SVG spec
           }
         }
-        if (ryString.length() > 0) {
+        if (ryString.length > 0) {
           ry = Double.valueOf(ryString);
 
           if (ry < 0) {
@@ -555,7 +555,7 @@ class StencilShape extends BasicShape {
 	 * @return Returns the stylename from the given formatted string.
 	 */
   static Map<String, Object> getStylenames(String style) {
-    if (style != null && style.length() > 0) {
+    if (style != null && style.length > 0) {
       Map<String, Object> result = new Hashtable<String, Object>();
 
       if (style != null) {

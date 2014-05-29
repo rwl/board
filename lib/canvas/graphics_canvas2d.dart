@@ -311,7 +311,7 @@ class GraphicsCanvas2D implements ICanvas2D {
 	 * 
 	 */
   void setDashPattern(String value) {
-    if (value != null && value.length() > 0) {
+    if (value != null && value.length > 0) {
       List<String> tokens = value.split(" ");
       List<float> dashpattern = new List<float>(tokens.length);
 
@@ -442,7 +442,7 @@ class GraphicsCanvas2D implements ICanvas2D {
     h *= _state.scale;
     w *= _state.scale;
 
-    if (direction == null || direction.length() == 0 || direction.equals(Constants.DIRECTION_SOUTH)) {
+    if (direction == null || direction.length == 0 || direction.equals(Constants.DIRECTION_SOUTH)) {
       y2 = (float)(y1 + h);
     } else if (direction.equals(Constants.DIRECTION_EAST)) {
       x2 = (float)(x1 + w);
@@ -561,15 +561,15 @@ class GraphicsCanvas2D implements ICanvas2D {
     if (aspect) {
       Dimension size = _getImageSize(img);
       double s = Math.min(w / size.width, h / size.height);
-      int sw = Math.round(size.width * s) as int;
-      int sh = Math.round(size.height * s) as int;
+      int sw = math.round(size.width * s) as int;
+      int sh = math.round(size.height * s) as int;
       x += (w - sw) / 2;
       y += (h - sh) / 2;
       w = sw;
       h = sh;
     } else {
-      w = Math.round(w);
-      h = Math.round(h);
+      w = math.round(w);
+      h = math.round(h);
     }
 
     return new Rectangle(x as int, y as int, w as int, h as int);
@@ -637,10 +637,10 @@ class GraphicsCanvas2D implements ICanvas2D {
     StringBuffer css = new StringBuffer();
     css.append("display:inline;");
     css.append("font-family:" + _state.fontFamily + ";");
-    css.append("font-size:" + Math.round(_state.fontSize) + " pt;");
+    css.append("font-size:" + math.round(_state.fontSize) + " pt;");
     css.append("color:" + _state.fontColorValue + ";");
     // KNOWN: Line-height ignored in JLabel
-    css.append("line-height:" + ((Constants.ABSOLUTE_LINE_HEIGHT) ? Math.round(_state.fontSize * Constants.LINE_HEIGHT) + " pt" : Constants.LINE_HEIGHT));
+    css.append("line-height:" + ((Constants.ABSOLUTE_LINE_HEIGHT) ? math.round(_state.fontSize * Constants.LINE_HEIGHT) + " pt" : Constants.LINE_HEIGHT));
 
     bool setWidth = false;
 
@@ -679,13 +679,13 @@ class GraphicsCanvas2D implements ICanvas2D {
       setWidth = true;
     } else if (overflow != null) {
       if (overflow.equals("fill")) {
-        css.append("height:" + Math.round(h) + "pt;");
+        css.append("height:" + math.round(h) + "pt;");
         setWidth = true;
       } else if (overflow.equals("width")) {
         setWidth = true;
 
         if (h > 0) {
-          css.append("height:" + Math.round(h) + "pt;");
+          css.append("height:" + math.round(h) + "pt;");
         }
       }
     }
@@ -702,7 +702,7 @@ class GraphicsCanvas2D implements ICanvas2D {
     }
 
     if (setWidth && w > 0) {
-      css.append("width:" + Math.round(w) + "pt;");
+      css.append("width:" + math.round(w) + "pt;");
     }
 
     return "<html><div style=\"" + css.toString() + "\">" + text + "</div></html>";
@@ -770,7 +770,7 @@ class GraphicsCanvas2D implements ICanvas2D {
         fill = overflow.equals("fill");
       }
 
-      str = _createHtmlDocument(str, align, valign, (widthFill || fill) ? Math.round(w) as int : 0, (fill) ? Math.round(h) as int : 0, wrap, overflow, clip);
+      str = _createHtmlDocument(str, align, valign, (widthFill || fill) ? math.round(w) as int : 0, (fill) ? math.round(h) as int : 0, wrap, overflow, clip);
       textRenderer.setText(str);
       Dimension pref = textRenderer.getPreferredSize();
       int prefWidth = pref.width;
@@ -779,8 +779,8 @@ class GraphicsCanvas2D implements ICanvas2D {
       // Poor man's max-width
       if (((clip || wrap) && prefWidth > w && w > 0) || (clip && prefHeight > h && h > 0)) {
         // +2 is workaround for inconsistent word wrapping in Java
-        int cw = Math.round(w + ((wrap) ? 2 : 0)) as int;
-        int ch = Math.round(h) as int;
+        int cw = math.round(w + ((wrap) ? 2 : 0)) as int;
+        int ch = math.round(h) as int;
         str = _createHtmlDocument(original, align, valign, cw, ch, wrap, overflow, clip);
         textRenderer.setText(str);
 
@@ -821,7 +821,7 @@ class GraphicsCanvas2D implements ICanvas2D {
         h = prefHeight;
       }
 
-      _rendererPane.paintComponent(_state.g, textRenderer, _rendererPane, Math.round(x) as int, Math.round(y) as int, Math.round(w) as int, Math.round(h) as int, true);
+      _rendererPane.paintComponent(_state.g, textRenderer, _rendererPane, math.round(x) as int, math.round(y) as int, math.round(w) as int, math.round(h) as int, true);
 
       _state.g.setTransform(previous);
     }
@@ -865,7 +865,7 @@ class GraphicsCanvas2D implements ICanvas2D {
         textWidth = Math.max(textWidth, stringWidths[i]);
       }
 
-      int textHeight = Math.round(lines.length * (fm.getFont().getSize() * Constants.LINE_HEIGHT)) as int;
+      int textHeight = math.round(lines.length * (fm.getFont().getSize() * Constants.LINE_HEIGHT)) as int;
 
       if (clip && textHeight > h && h > 0) {
         textHeight = h as int;
@@ -882,7 +882,7 @@ class GraphicsCanvas2D implements ICanvas2D {
 
         if (_state.fontBackgroundColor != null) {
           g2.setColor(_state.fontBackgroundColor);
-          g2.fillRect(Math.round(x) as int, Math.round(y - 1) as int, textWidth + 1, textHeight + 2);
+          g2.fillRect(math.round(x) as int, math.round(y - 1) as int, textWidth + 1, textHeight + 2);
         }
       }
 
@@ -893,7 +893,7 @@ class GraphicsCanvas2D implements ICanvas2D {
 
         if (_state.fontBorderColor != null) {
           g2.setColor(_state.fontBorderColor);
-          g2.drawRect(Math.round(x) as int, Math.round(y - 1) as int, textWidth + 1, textHeight + 2);
+          g2.drawRect(math.round(x) as int, math.round(y - 1) as int, textWidth + 1, textHeight + 2);
         }
       }
 
@@ -918,13 +918,13 @@ class GraphicsCanvas2D implements ICanvas2D {
             as.addAttribute(TextAttribute.FONT, g2.getFont());
             as.addAttribute(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
 
-            g2.drawString(as.getIterator(), Math.round(x + dx) as int, Math.round(y) as int);
+            g2.drawString(as.getIterator(), math.round(x + dx) as int, math.round(y) as int);
           } else {
-            g2.drawString(lines[i], Math.round(x + dx) as int, Math.round(y) as int);
+            g2.drawString(lines[i], math.round(x + dx) as int, math.round(y) as int);
           }
         }
 
-        y += Math.round(fm.getFont().getSize() * Constants.LINE_HEIGHT) as int;
+        y += math.round(fm.getFont().getSize() * Constants.LINE_HEIGHT) as int;
       }
     }
   }
@@ -1163,7 +1163,7 @@ class GraphicsCanvas2D implements ICanvas2D {
 	 * 
 	 */
   void _updateFont() {
-    int size = Math.round(_state.fontSize * _state.scale) as int;
+    int size = math.round(_state.fontSize * _state.scale) as int;
     int style = ((_state.fontStyle & Constants.FONT_BOLD) == Constants.FONT_BOLD) ? Font.BOLD : Font.PLAIN;
     style += ((_state.fontStyle & Constants.FONT_ITALIC) == Constants.FONT_ITALIC) ? Font.ITALIC : Font.PLAIN;
 

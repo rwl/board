@@ -399,7 +399,7 @@ class ExtendedGeneralPath implements Shape, Cloneable
 		{
 			Arrays.fill(vals, 0);
 			int type = pi.currentSegment(vals);
-			pi.next();
+			pi.current();
 			if (connect && (numVals != 0))
 			{
 				if (type == PathIterator.SEG_MOVETO)
@@ -417,7 +417,7 @@ class ExtendedGeneralPath implements Shape, Cloneable
 						if (pi.isDone())
 							break; // Nothing interesting
 						type = pi.currentSegment(vals);
-						pi.next();
+						pi.current();
 					}
 				}
 				connect = false;
@@ -456,7 +456,7 @@ class ExtendedGeneralPath implements Shape, Cloneable
 		{
 			Arrays.fill(vals, 0);
 			int type = epi.currentSegment(vals);
-			epi.next();
+			epi.current();
 			if (connect && (numVals != 0))
 			{
 				if (type == PathIterator.SEG_MOVETO)
@@ -474,7 +474,7 @@ class ExtendedGeneralPath implements Shape, Cloneable
 						if (epi.isDone())
 							break; // Nothing interesting
 						type = epi.currentSegment(vals);
-						epi.next();
+						epi.current();
 					}
 				}
 				connect = false;

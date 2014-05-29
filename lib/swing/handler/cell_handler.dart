@@ -133,7 +133,7 @@ class CellHandler {
     Graph graph = _graphComponent.getGraph();
     String label = graph.getLabel(_state.getCell());
 
-    return graph.isLabelMovable(_state.getCell()) && label != null && label.length() > 0;
+    return graph.isLabelMovable(_state.getCell()) && label != null && label.length > 0;
   }
 
   /**

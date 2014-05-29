@@ -21,7 +21,7 @@ class GeneratorRandomFunction extends GeneratorFunction {
     Double edgeWeight = null;
 
     edgeWeight = Math.random() * (_maxWeight - _minWeight) + _minWeight;
-    edgeWeight = Math.round(edgeWeight * Math.pow(10, getRoundToDecimals())) / Math.pow(10, getRoundToDecimals()) as double;
+    edgeWeight = math.round(edgeWeight * Math.pow(10, getRoundToDecimals())) / Math.pow(10, getRoundToDecimals()) as double;
 
     return edgeWeight;
   }

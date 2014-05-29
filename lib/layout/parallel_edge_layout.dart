@@ -42,8 +42,8 @@ class ParallelEdgeLayout extends GraphLayout {
     try {
       Iterator<List<Object>> it = lookup.values().iterator();
 
-      while (it.hasNext()) {
-        List<Object> parallels = it.next();
+      while (it.moveNext()) {
+        List<Object> parallels = it.current();
 
         if (parallels.length > 1) {
           layout(parallels);

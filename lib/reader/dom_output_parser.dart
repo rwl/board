@@ -22,8 +22,8 @@ typedef void IElementHandler(Element elt);
 
 			Document doc = Utils.parseXml(xml);
 			Element root = doc.getDocumentElement();
-			int width = Integer.parseInt(root.getAttribute("width"));
-			int height = Integer.parseInt(root.getAttribute("height"));
+			int width = int.parseInt(root.getAttribute("width"));
+			int height = int.parseInt(root.getAttribute("height"));
 
 			System.out.println("width=" + width + " height=" + height);
 
@@ -161,7 +161,7 @@ class DomOutputParser {
     });
 
     _handlers.put("fontstyle", (Element elt) {
-      _canvas.setFontStyle(Integer.parseInt(elt.getAttribute("style")));
+      _canvas.setFontStyle(int.parseInt(elt.getAttribute("style")));
     });
 
     _handlers.put("alpha", (Element elt) {

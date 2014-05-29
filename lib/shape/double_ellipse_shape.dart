@@ -10,7 +10,7 @@ class DoubleEllipseShape extends EllipseShape {
   void paintShape(Graphics2DCanvas canvas, CellState state) {
     super.paintShape(canvas, state);
 
-    int inset = Math.round((Utils.getFloat(state.getStyle(), Constants.STYLE_STROKEWIDTH, 1) + 3) * canvas.getScale()) as int;
+    int inset = math.round((Utils.getFloat(state.getStyle(), Constants.STYLE_STROKEWIDTH, 1) + 3) * canvas.getScale()) as int;
 
     Rectangle rect = state.getRectangle();
     int x = rect.x + inset;

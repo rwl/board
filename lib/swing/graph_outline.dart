@@ -418,10 +418,10 @@ class GraphOutline extends JComponent {
   void updateFinder(bool repaint) {
     Rectangle rect = _graphComponent.getViewport().getViewRect();
 
-    int x = Math.round(rect.x * _scale) as int;
-    int y = Math.round(rect.y * _scale) as int;
-    int w = (Math.round((rect.x + rect.width) * _scale) as int) - x;
-    int h = (Math.round((rect.y + rect.height) * _scale) as int) - y;
+    int x = math.round(rect.x * _scale) as int;
+    int y = math.round(rect.y * _scale) as int;
+    int w = (math.round((rect.x + rect.width) * _scale) as int) - x;
+    int h = (math.round((rect.y + rect.height) * _scale) as int) - y;
 
     updateFinderBounds(new Rectangle(x + _translate.x, y + _translate.y, w + 1, h + 1), repaint);
   }
@@ -596,18 +596,18 @@ class GraphOutline extends JComponent {
         int h = (outlineSize.getHeight() as int) - 2 * _outlineBorder;
 
         if (magnifyPage) {
-          gw -= 2 * Math.round(trans.getX() * graphScale);
-          gh -= 2 * Math.round(trans.getY() * graphScale);
+          gw -= 2 * math.round(trans.getX() * graphScale);
+          gh -= 2 * math.round(trans.getY() * graphScale);
         }
 
         newScale = Math.min((w as double) / gw, (h as double) / gh);
 
-        dx += Math.round((outlineSize.getWidth() - gw * newScale) / 2) as int;
-        dy += Math.round((outlineSize.getHeight() - gh * newScale) / 2) as int;
+        dx += math.round((outlineSize.getWidth() - gw * newScale) / 2) as int;
+        dy += math.round((outlineSize.getHeight() - gh * newScale) / 2) as int;
 
         if (magnifyPage) {
-          dx -= Math.round(trans.getX() * newScale * graphScale);
-          dy -= Math.round(trans.getY() * newScale * graphScale);
+          dx -= math.round(trans.getX() * newScale * graphScale);
+          dy -= math.round(trans.getY() * newScale * graphScale);
         }
       }
     }

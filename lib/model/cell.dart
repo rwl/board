@@ -98,7 +98,7 @@ abstract class ICell {
   /**
    * Specifies if the cell is visible.
    * 
-   * @param visible Boolean that specifies the new visible state.
+   * @param visible bool that specifies the new visible state.
    */
   void setVisible(bool visible);
 
@@ -112,7 +112,7 @@ abstract class ICell {
   /**
    * Sets the collapsed state.
    * 
-   * @param collapsed Boolean that specifies the new collapsed state.
+   * @param collapsed bool that specifies the new collapsed state.
    */
   void setCollapsed(bool collapsed);
 
@@ -133,7 +133,7 @@ abstract class ICell {
   /**
    * Returns the source or target terminal.
    * 
-   * @param source Boolean that specifies if the source terminal should be
+   * @param source bool that specifies if the source terminal should be
    * returned.
    * @return Returns the source or target terminal.
    */
@@ -143,7 +143,7 @@ abstract class ICell {
    * Sets the source or target terminal and returns the new terminal.
    * 
    * @param terminal Cell that represents the new source or target terminal.
-   * @param isSource Boolean that specifies if the source or target terminal
+   * @param isSource bool that specifies if the source or target terminal
    * should be set.
    * @return Returns the new terminal.
    */
@@ -167,7 +167,7 @@ abstract class ICell {
   /**
    * Returns the child at the specified index.
    * 
-   * @param index Integer that specifies the child to be returned.
+   * @param index int that specifies the child to be returned.
    * @return Returns the child at the given index.
    */
   ICell getChildAt(int index);
@@ -186,7 +186,7 @@ abstract class ICell {
    * and updates the parent reference of the child. Returns the inserted child.
    * 
    * @param child Cell to be inserted into the child array.
-   * @param index Integer that specifies the index at which the child should
+   * @param index int that specifies the index at which the child should
    * be inserted into the child array.
    * @return Returns the new child.
    */
@@ -197,7 +197,7 @@ abstract class ICell {
    * returns the child that was removed. Will remove the parent reference of
    * the child.
    * 
-   * @param index Integer that specifies the index of the child to be
+   * @param index int that specifies the index of the child to be
    * removed.
    * @return Returns the child that was removed.
    */
@@ -235,7 +235,7 @@ abstract class ICell {
   /**
    * Returns the edge at the specified index in the edge array.
    * 
-   * @param index Integer that specifies the index of the edge to be
+   * @param index int that specifies the index of the edge to be
    * returned.
    * @return Returns the edge at the given index.
    */
@@ -246,7 +246,7 @@ abstract class ICell {
    * Will update the respective terminal reference of the edge.
    * 
    * @param edge Cell to be inserted into the edge array.
-   * @param isOutgoing Boolean that specifies if the edge is outgoing.
+   * @param isOutgoing bool that specifies if the edge is outgoing.
    * @return Returns the new edge.
    */
   ICell insertEdge(ICell edge, bool isOutgoing);
@@ -256,7 +256,7 @@ abstract class ICell {
    * Will remove the respective terminal reference from the edge.
    * 
    * @param edge Cell to be removed from the edge array.
-   * @param isOutgoing Boolean that specifies if the edge is outgoing.
+   * @param isOutgoing bool that specifies if the edge is outgoing.
    * @return Returns the edge that was removed.
    */
   ICell removeEdge(ICell edge, bool isOutgoing);
@@ -264,7 +264,7 @@ abstract class ICell {
   /**
    * Removes the edge from its source or target terminal.
    * 
-   * @param isSource Boolean that specifies if the edge should be removed
+   * @param isSource bool that specifies if the edge should be removed
    * from its source or target terminal.
    */
   void removeFromTerminal(bool isSource);

@@ -24,7 +24,7 @@ class GraphTransferHandler extends TransferHandler {
   //	static final long serialVersionUID = -6443287704811197675L;
 
   /**
-	 * Boolean that specifies if an image of the cells should be created for
+	 * bool that specifies if an image of the cells should be created for
 	 * each transferable. Default is true.
 	 */
   static bool DEFAULT_TRANSFER_IMAGE_ENABLED = true;

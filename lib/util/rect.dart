@@ -221,10 +221,10 @@ class Rect extends Point2d {
 	 * @return Returns a new rectangle for the bounds.
 	 */
   svg.Rect getRectangle() {
-    int ix = Math.round(_x) as int;
-    int iy = Math.round(_y) as int;
-    int iw = Math.round(_width - ix + _x) as int;
-    int ih = Math.round(_height - iy + _y) as int;
+    int ix = math.round(_x) as int;
+    int iy = math.round(_y) as int;
+    int iw = math.round(_width - ix + _x) as int;
+    int ih = math.round(_height - iy + _y) as int;
 
     return new svg.Rect()
       ..x = ix
@@ -266,6 +266,6 @@ class Rect extends Point2d {
 	 * <code>Rect</code>.
 	 */
   String toString() {
-    return getClass().getName() + "[x=$_x,y=$_y,w=$_width,h=$_height]";
+    return /*getClass().getName() + */"Rect[x=$_x,y=$_y,w=$_width,h=$_height]";
   }
 }

@@ -134,7 +134,7 @@ class SaxOutputHandler extends DefaultHandler {
     });
 
     _handlers.put("fontstyle", (Attributes atts) {
-      _canvas.setFontStyle(Integer.parseInt(atts.getValue("style")));
+      _canvas.setFontStyle(int.parseInt(atts.getValue("style")));
     });
 
     _handlers.put("alpha", (Attributes atts) {

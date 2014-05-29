@@ -112,8 +112,8 @@ class VertexHandler extends CellHandler {
           pt = _graphComponent.snapScaledPoint(pt);
         }
 
-        int idx = Math.round(pt.getX() - _first.x) as int;
-        int idy = Math.round(pt.getY() - _first.y) as int;
+        int idx = math.round(pt.getX() - _first.x) as int;
+        int idy = math.round(pt.getY() - _first.y) as int;
 
         if (_constrainedEvent) {
           if (math.abs(idx) > math.abs(idy)) {
@@ -204,7 +204,7 @@ class VertexHandler extends CellHandler {
       dy += offset.getY();
 
       geometry = geometry.clone() as Geometry;
-      geometry.setOffset(new Point2d(Math.round(dx), Math.round(dy)));
+      geometry.setOffset(new Point2d(math.round(dx), math.round(dy)));
       graph.getModel().setGeometry(_state.getCell(), geometry);
     }
   }

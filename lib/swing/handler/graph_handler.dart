@@ -716,8 +716,8 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
 
         // Centers the preview image
         if (_centerPreview && _transferBounds != null) {
-          dx -= Math.round(_transferBounds.getWidth() * scale / 2);
-          dy -= Math.round(_transferBounds.getHeight() * scale / 2);
+          dx -= math.round(_transferBounds.getWidth() * scale / 2);
+          dy -= math.round(_transferBounds.getHeight() * scale / 2);
         }
 
         // Sets the drop offset so that the location in the transfer
@@ -728,8 +728,8 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
         // Shifts the preview so that overlapping parts do not
         // affect the centering
         if (_transferBounds != null && _dragImage != null) {
-          dx = Math.round((_dragImage.getIconWidth() - 2 - _transferBounds.getWidth() * scale) / 2) as int;
-          dy = Math.round((_dragImage.getIconHeight() - 2 - _transferBounds.getHeight() * scale) / 2) as int;
+          dx = math.round((_dragImage.getIconWidth() - 2 - _transferBounds.getWidth() * scale) / 2) as int;
+          dy = math.round((_dragImage.getIconHeight() - 2 - _transferBounds.getHeight() * scale) / 2) as int;
           pt.translate(-dx, -dy);
         }
 
@@ -850,8 +850,8 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
         dyg = graph.snap(dyg);
       }
 
-      x = (Math.round((dxg + trans.getX()) * scale) as int) + (Math.round(_bbox.getX()) as int) - (Math.round(_cellBounds.getX()) as int);
-      y = (Math.round((dyg + trans.getY()) * scale) as int) + (Math.round(_bbox.getY()) as int) - (Math.round(_cellBounds.getY()) as int);
+      x = (math.round((dxg + trans.getX()) * scale) as int) + (math.round(_bbox.getX()) as int) - (math.round(_cellBounds.getX()) as int);
+      y = (math.round((dyg + trans.getY()) * scale) as int) + (math.round(_bbox.getY()) as int) - (math.round(_cellBounds.getY()) as int);
     }
 
     return new Point(x, y);
@@ -923,8 +923,8 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
           double x = ((dxg + trans.getX()) * scale) + (_bbox.getX()) - (_cellBounds.getX());
           double y = ((dyg + trans.getY()) * scale) + (_bbox.getY()) - (_cellBounds.getY());
 
-          dx = Math.round((x - _bbox.getX()) / scale);
-          dy = Math.round((y - _bbox.getY()) / scale);
+          dx = math.round((x - _bbox.getX()) / scale);
+          dy = math.round((y - _bbox.getY()) / scale);
         }
       }
 

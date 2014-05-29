@@ -56,7 +56,7 @@ abstract class IGraphModel {
    * cell is contained in the passed in array.
    * 
    * @param cells Array of cells to be cloned.
-   * @param includeChildren Boolean indicating if the cells should be cloned
+   * @param includeChildren bool indicating if the cells should be cloned
    * with all descendants.
    * @return Returns a cloned array of cells.
    */
@@ -94,7 +94,7 @@ abstract class IGraphModel {
    * 
    * @param parent Cell that specifies the parent to contain the child.
    * @param child Cell that specifies the child to be inserted.
-   * @param index Integer that specifies the index of the child.
+   * @param index int that specifies the index of the child.
    * @return Returns the inserted child.
    */
   Object add(Object parent, Object child, int index);
@@ -120,7 +120,7 @@ abstract class IGraphModel {
    * Returns the child of the given parent at the given index.
    * 
    * @param parent Cell that represents the parent.
-   * @param index Integer that specifies the index of the child to be
+   * @param index int that specifies the index of the child to be
    * returned.
    * @return Returns the child at index in parent.
    */
@@ -131,7 +131,7 @@ abstract class IGraphModel {
    * value of the bool parameter.
    * 
    * @param edge Cell that specifies the edge.
-   * @param isSource Boolean indicating which end of the edge should be
+   * @param isSource bool indicating which end of the edge should be
    * returned.
    * @return Returns the source or target of the given edge.
    */
@@ -142,7 +142,7 @@ abstract class IGraphModel {
    * 
    * @param edge Cell that specifies the edge.
    * @param terminal Cell that specifies the new terminal.
-   * @param isSource Boolean indicating if the terminal is the new source or
+   * @param isSource bool indicating if the terminal is the new source or
    * target terminal of the edge.
    * @return Returns the new terminal.
    */
@@ -160,7 +160,7 @@ abstract class IGraphModel {
    * Returns the edge of cell at the given index.
    * 
    * @param cell Cell that specifies the vertex.
-   * @param index Integer that specifies the index of the edge to return.
+   * @param index int that specifies the index of the edge to return.
    * @return Returns the edge at the given index.
    */
   Object getEdgeAt(Object cell, int index);
@@ -253,7 +253,7 @@ abstract class IGraphModel {
    * Sets the collapsed state of the given cell.
    * 
    * @param cell Cell whose collapsed state should be changed.
-   * @param collapsed Boolean that specifies the new collpased state.
+   * @param collapsed bool that specifies the new collpased state.
    * @return Returns the new collapsed state.
    */
   bool setCollapsed(Object cell, bool collapsed);
@@ -270,7 +270,7 @@ abstract class IGraphModel {
    * Sets the visible state of the given cell.
    * 
    * @param cell Cell whose visible state should be changed.
-   * @param visible Boolean that specifies the new visible state.
+   * @param visible bool that specifies the new visible state.
    * @return Returns the new visible state.
    */
   bool setVisible(Object cell, bool visible);

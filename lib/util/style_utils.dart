@@ -52,7 +52,7 @@ class StyleUtils {
       }
     }
 
-    return result.toArray(new List<String>(result.length));
+    return result;
   }
 
   /**
@@ -66,11 +66,11 @@ class StyleUtils {
       int pos = 0;
 
       for (int i = 0; i < tokens.length; i++) {
-        if (tokens[i].equals(stylename)) {
+        if (tokens[i] == stylename) {
           return pos;
         }
 
-        pos += tokens[i].length() + 1;
+        pos += tokens[i].length + 1;
       }
     }
 
@@ -85,7 +85,7 @@ class StyleUtils {
     if (indexOfStylename(style, stylename) < 0) {
       if (style == null) {
         style = "";
-      } else if (style.length() > 0 && style.charAt(style.length() - 1) != ';') {
+      } else if (style.length > 0 && style[style.length - 1] != ';') {
         style += ';';
       }
 
@@ -106,13 +106,13 @@ class StyleUtils {
       List<String> tokens = style.split(";");
 
       for (int i = 0; i < tokens.length; i++) {
-        if (!tokens[i].equals(stylename)) {
-          buffer.append(tokens[i] + ";");
+        if (tokens[i] != stylename) {
+          buffer.write(tokens[i] + ";");
         }
       }
     }
 
-    return (buffer.length() > 1) ? buffer.substring(0, buffer.length() - 1) : buffer.toString();
+    return (buffer.length > 1) ? buffer.toString().substring(0, buffer.length - 1) : buffer.toString();
   }
 
   /**
@@ -127,12 +127,12 @@ class StyleUtils {
 
       for (int i = 0; i < tokens.length; i++) {
         if (tokens[i].indexOf('=') >= 0) {
-          buffer.append(tokens[i] + ";");
+          buffer.write(tokens[i] + ";");
         }
       }
     }
 
-    return (buffer.length() > 1) ? buffer.substring(0, buffer.length() - 1) : buffer.toString();
+    return (buffer.length > 1) ? buffer.toString().substring(0, buffer.length - 1) : buffer.toString();
   }
 
   /**
@@ -178,9 +178,9 @@ class StyleUtils {
 	 * @return Returns the new style.
 	 */
   static String setStyle(String style, String key, String value) {
-    bool isValue = value != null && value.length() > 0;
+    bool isValue = value != null && value.length > 0;
 
-    if (style == null || style.length() == 0) {
+    if (style == null || style.length == 0) {
       if (isValue) {
         style = key + "=" + value;
       }
@@ -227,11 +227,11 @@ class StyleUtils {
 	 * @param key
 	 *            Key of the style to be changed.
 	 * @param flag
-	 *            Integer for the bit to be changed.
+	 *            int for the bit to be changed.
 	 * @param value
 	 *            Optional bool value for the flag.
 	 */
-  static void setCellStyleFlags(IGraphModel model, List<Object> cells, String key, int flag, Boolean value) {
+  static void setCellStyleFlags(IGraphModel model, List<Object> cells, String key, int flag, bool value) {
     if (cells != null && cells.length > 0) {
       model.beginUpdate();
       try {
@@ -256,13 +256,13 @@ class StyleUtils {
 	 * @param key
 	 *            Key of the style to be changed.
 	 * @param flag
-	 *            Integer for the bit to be changed.
+	 *            int for the bit to be changed.
 	 * @param value
 	 *            Optional bool value for the given flag.
 	 */
-  static String setStyleFlag(String style, String key, int flag, Boolean value) {
-    if (style == null || style.length() == 0) {
-      if (value == null || value.booleanValue()) {
+  static String setStyleFlag(String style, String key, int flag, bool value) {
+    if (style == null || style.length == 0) {
+      if (value == null || value == true) {
         style = key + "=" + flag;
       } else {
         style = key + "=0";
@@ -273,7 +273,7 @@ class StyleUtils {
       if (index < 0) {
         String sep = (style.endsWith(";")) ? "" : ";";
 
-        if (value == null || value.booleanValue()) {
+        if (value == null || value == true) {
           style = style + sep + key + "=" + flag;
         } else {
           style = style + sep + key + "=0";
@@ -284,17 +284,17 @@ class StyleUtils {
         int result = 0;
 
         if (cont < 0) {
-          tmp = style.substring(index + key.length() + 1);
+          tmp = style.substring(index + key.length + 1);
         } else {
-          tmp = style.substring(index + key.length() + 1, cont);
+          tmp = style.substring(index + key.length + 1, cont);
         }
 
         if (value == null) {
-          result = Integer.parseInt(tmp) ^ flag;
-        } else if (value.booleanValue()) {
-          result = Integer.parseInt(tmp) | flag;
+          result = int.parse(tmp) ^ flag;
+        } else if (value) {
+          result = int.parse(tmp) | flag;
         } else {
-          result = Integer.parseInt(tmp) & ~flag;
+          result = int.parse(tmp) & ~flag;
         }
 
         style = style.substring(0, index) + key + "=" + result + ((cont >= 0) ? style.substring(cont) : "");

@@ -43,7 +43,7 @@ class GraphGenerator {
     Object parent = graph.getDefaultParent();
 
     for (int i = 0; i < numVertices; i++) {
-      graph.insertVertex(parent, null, new Integer(i).toString(), i * 50, 0, 25, 25);
+      graph.insertVertex(parent, null, new int(i).toString(), i * 50, 0, 25, 25);
     }
   }
 
@@ -62,7 +62,7 @@ class GraphGenerator {
     List<Object> vertices = new List<Object>(numVertices);
 
     for (int i = 0; i < numVertices; i++) {
-      vertices[i] = graph.insertVertex(parent, null, new Integer(i).toString(), i * 50, 0, 25, 25);
+      vertices[i] = graph.insertVertex(parent, null, new int(i).toString(), i * 50, 0, 25, 25);
     }
 
     for (int i = 0; i < numVertices; i++) {
@@ -95,7 +95,7 @@ class GraphGenerator {
     List<Object> vertices = new List<Object>(numVertices);
 
     for (int i = 0; i < numVertices; i++) {
-      vertices[i] = graph.insertVertex(parent, null, new Integer(i).toString(), 0, 0, 25, 25);
+      vertices[i] = graph.insertVertex(parent, null, new int(i).toString(), 0, 0, 25, 25);
     }
 
     int vertexCount = 0;
@@ -165,7 +165,7 @@ class GraphGenerator {
     List<Object> vertices = new List<Object>(numVertices);
 
     for (int i = 0; i < numVertices; i++) {
-      vertices[i] = graph.insertVertex(parent, null, new Integer(i).toString(), 0, 0, 25, 25);
+      vertices[i] = graph.insertVertex(parent, null, new int(i).toString(), 0, 0, 25, 25);
     }
 
     for (int i = 0; i < numVerticesGroup1; i++) {
@@ -249,7 +249,7 @@ class GraphGenerator {
     List<Object> vertices = new List<Object>(numVertices);
 
     for (int i = 0; i < numVertices; i++) {
-      vertices[i] = graph.insertVertex(parent, null, new Integer(i).toString(), 0, 0, 25, 25);
+      vertices[i] = graph.insertVertex(parent, null, new int(i).toString(), 0, 0, 25, 25);
     }
 
     for (int i = 0; i < numVerticesGroup1; i++) {
@@ -279,7 +279,7 @@ class GraphGenerator {
     List<Object> vertices = new List<Object>(numVertices);
 
     for (int i = 0; i < numVertices; i++) {
-      vertices[i] = graph.insertVertex(parent, null, new Integer(i).toString(), 0, 0, 25, 25);
+      vertices[i] = graph.insertVertex(parent, null, new int(i).toString(), 0, 0, 25, 25);
     }
 
     //now we set up the starting conditions
@@ -465,7 +465,7 @@ class GraphGenerator {
     List<Object> vertices = new List<Object>(numVertices);
 
     for (int i = 0; i < numVertices; i++) {
-      vertices[i] = graph.insertVertex(parent, null, new Integer(i).toString(), 0, 0, 25, 25);
+      vertices[i] = graph.insertVertex(parent, null, new int(i).toString(), 0, 0, 25, 25);
     }
 
     //now we set up the starting conditions
@@ -593,7 +593,7 @@ class GraphGenerator {
     List<Object> vertices = new List<Object>(10);
 
     for (int i = 0; i < 10; i++) {
-      vertices[i] = graph.insertVertex(parent, null, new Integer(i).toString(), 0, 0, 25, 25);
+      vertices[i] = graph.insertVertex(parent, null, new int(i).toString(), 0, 0, 25, 25);
     }
 
     graph.insertEdge(parent, null, getNewEdgeValue(aGraph), vertices[0], vertices[2]);
@@ -628,7 +628,7 @@ class GraphGenerator {
     List<Object> vertices = new List<Object>(numVertices);
 
     for (int i = 0; i < numVertices; i++) {
-      vertices[i] = graph.insertVertex(parent, null, new Integer(i).toString(), 0, 0, 25, 25);
+      vertices[i] = graph.insertVertex(parent, null, new int(i).toString(), 0, 0, 25, 25);
     }
 
     for (int i = 0; i < numVertices - 1; i++) {
@@ -677,7 +677,7 @@ class GraphGenerator {
     List<Object> vertices = new List<Object>(numVertices);
 
     for (int i = 0; i < numVertices; i++) {
-      vertices[i] = graph.insertVertex(parent, null, new Integer(i).toString(), 0, 0, 25, 25);
+      vertices[i] = graph.insertVertex(parent, null, new int(i).toString(), 0, 0, 25, 25);
     }
 
     int numVertexesInPerimeter = numVertices - 1;
@@ -715,8 +715,8 @@ class GraphGenerator {
       double currRatio = ((i as double) / (numVertexesInPerimeter as double));
       currRatio = currRatio * 2;
       currRatio = currRatio * (Math.PI as double);
-      x = Math.round(centerX + Math.round(graphSize * Math.sin(currRatio) / 2));
-      y = Math.round(centerY - Math.round(graphSize * Math.cos(currRatio) / 2));
+      x = math.round(centerX + math.round(graphSize * Math.sin(currRatio) / 2));
+      y = math.round(centerY - math.round(graphSize * Math.cos(currRatio) / 2));
       Object currVertex = vertices[i];
       Geometry geometry = model.getGeometry(currVertex);
       geometry.setX(x);
@@ -743,7 +743,7 @@ class GraphGenerator {
     List<Object> vertices = new List<Object>(numVertices);
 
     for (int i = 0; i < numVertices; i++) {
-      vertices[i] = graph.insertVertex(parent, null, new Integer(i).toString(), 0, 0, 25, 25);
+      vertices[i] = graph.insertVertex(parent, null, new int(i).toString(), 0, 0, 25, 25);
     }
 
     int numVerticesInPerimeter = numVertices - 1;
@@ -778,12 +778,12 @@ class GraphGenerator {
 
     for (int i = 0; i < numBranches; i++) {
       for (int j = 0; j < branchSize; j++) {
-        vertices[vertexCount] = graph.insertVertex(parent, null, new Integer(vertexCount).toString(), 0, 0, 25, 25);
+        vertices[vertexCount] = graph.insertVertex(parent, null, new int(vertexCount).toString(), 0, 0, 25, 25);
         vertexCount++;
       }
     }
 
-    vertices[numVertices - 1] = graph.insertVertex(parent, null, new Integer(numVertices - 1).toString(), 0, 0, 25, 25);
+    vertices[numVertices - 1] = graph.insertVertex(parent, null, new int(numVertices - 1).toString(), 0, 0, 25, 25);
 
     //make the connections
     for (int i = 0; i < numBranches; i++) {
@@ -820,12 +820,12 @@ class GraphGenerator {
 
     for (int i = 0; i < numBranches; i++) {
       for (int j = 0; j < branchSize; j++) {
-        vertices[vertexCount] = graph.insertVertex(parent, null, new Integer(vertexCount).toString(), 0, 0, 25, 25);
+        vertices[vertexCount] = graph.insertVertex(parent, null, new int(vertexCount).toString(), 0, 0, 25, 25);
         vertexCount++;
       }
     }
 
-    vertices[numVertices - 1] = graph.insertVertex(parent, null, new Integer(numVertices - 1).toString(), 0, 0, 25, 25);
+    vertices[numVertices - 1] = graph.insertVertex(parent, null, new int(numVertices - 1).toString(), 0, 0, 25, 25);
     Object centerVertex = vertices[numVertices - 1];
 
     //make the connections
@@ -902,8 +902,8 @@ class GraphGenerator {
 
         currRatio = currRatio * 2;
         currRatio = currRatio * (Math.PI as double);
-        x = Math.round(centerX + Math.round(currSize * Math.sin(currRatio) / 2));
-        y = Math.round(centerY - Math.round(currSize * Math.cos(currRatio) / 2));
+        x = math.round(centerX + math.round(currSize * Math.sin(currRatio) / 2));
+        y = math.round(centerY - math.round(currSize * Math.cos(currRatio) / 2));
         //shoot
         int currIndex = i * (numVerticesInBranch) + j;
         Object currVertex = vertices[currIndex];
@@ -962,7 +962,7 @@ class GraphGenerator {
     List<Object> vertices = new List<Object>(numNodes);
 
     for (int i = 0; i < numNodes; i++) {
-      vertices[i] = graph.insertVertex(parent, null, new Integer(i).toString(), 0, 0, 25, 25);
+      vertices[i] = graph.insertVertex(parent, null, new int(i).toString(), 0, 0, 25, 25);
     }
 
     for (int i = 0; i < numEdges; i++) {
@@ -972,8 +972,8 @@ class GraphGenerator {
 
       do {
         goodPair = true;
-        startVertex = vertices[Math.round(Math.random() * (vertices.length - 1)) as int];
-        endVertex = vertices[Math.round(Math.random() * (vertices.length - 1)) as int];
+        startVertex = vertices[math.round(Math.random() * (vertices.length - 1)) as int];
+        endVertex = vertices[math.round(Math.random() * (vertices.length - 1)) as int];
 
         if (!allowSelfLoops && startVertex.equals(endVertex)) {
           goodPair = false;
@@ -996,7 +996,7 @@ class GraphGenerator {
 	 * @param vertexCount
 	 */
   void getSimpleRandomTree(AnalysisGraph aGraph, int vertexCount) {
-    int edgeCount = Math.round(vertexCount * 2) as int;
+    int edgeCount = math.round(vertexCount * 2) as int;
     this.getSimpleRandomGraph(aGraph, vertexCount, edgeCount, false, false, true);
 
     //still need to remove surplus edges
@@ -1009,7 +1009,7 @@ class GraphGenerator {
     }
 
     try {
-      GraphStructure.makeTreeDirected(aGraph, vertices[Math.round(Math.random() * (vertices.length - 1)) as int]);
+      GraphStructure.makeTreeDirected(aGraph, vertices[math.round(Math.random() * (vertices.length - 1)) as int]);
     } on StructuralException catch (e) {
       System.out.println(e);
     }
@@ -1062,7 +1062,7 @@ class GraphGenerator {
     }
 
     int currValue = 0;
-    currValue = minValue + (Math.round((Math.random() * (maxValue - minValue))) as int);
+    currValue = minValue + (math.round((Math.random() * (maxValue - minValue))) as int);
     return currValue;
   }
 
@@ -1135,7 +1135,7 @@ class GraphGenerator {
     int vertexCount = 0;
 
     for (int i = 0; i < vertexNum; i++) {
-      graph.insertVertex(parent, null, new Integer(vertexCount).toString(), 0, 0, 25, 25);
+      graph.insertVertex(parent, null, new int(vertexCount).toString(), 0, 0, 25, 25);
       vertexCount++;
     }
 

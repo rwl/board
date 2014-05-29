@@ -10,7 +10,8 @@ library graph.util;
  */
 
 import 'dart:html';
-import 'dart:collection';
+import 'dart:collection' show HashMap, binarySearch;
+//import 'dart:collection.algorithms' show binarySearch;
 import 'dart:svg' as svg;
 import 'dart:math' as Math;
 
@@ -87,7 +88,7 @@ import '../view/view.dart' show CellState;
 //import org.w3c.dom.NamedNodeMap;
 //import org.w3c.dom.Node;
 
-part 'base64.dart';
+//part 'base64.dart';
 part 'cell_renderer.dart';
 part 'constants.dart';
 part 'curve.dart';
@@ -118,12 +119,12 @@ class Utils {
   /**
 	 * True if the machine is a Mac.
 	 */
-  static bool IS_MAC = System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0;
+  static bool IS_MAC = false;//System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0;
 
   /**
 	 * True if the machine is running a linux kernel.
 	 */
-  static bool IS_LINUX = System.getProperty("os.name").toLowerCase().indexOf("linux") >= 0;
+  static bool IS_LINUX = false;//System.getProperty("os.name").toLowerCase().indexOf("linux") >= 0;
 
   /**
 	 * Static Graphics used for Font Metrics.
@@ -211,9 +212,9 @@ class Utils {
 	 * Returns the paint bounds for the given label.
 	 */
   static Rect getLabelPaintBounds(String label, Map<String, Object> style, bool isHtml, Point2d offset, Rect vertexBounds, double scale, [bool isEdge = false]) {
-    double wrapWidth = 0;
+    double wrapWidth = 0.0;
 
-    if (isHtml && vertexBounds != null && Utils.getString(style, Constants.STYLE_WHITE_SPACE, "nowrap").equals("wrap")) {
+    if (isHtml && vertexBounds != null && Utils.getString(style, Constants.STYLE_WHITE_SPACE, "nowrap") == "wrap") {
       wrapWidth = vertexBounds.getWidth();
     }
 
@@ -225,17 +226,17 @@ class Utils {
 
     double x = offset.getX();
     double y = offset.getY();
-    double width = 0;
-    double height = 0;
+    double width = 0.0;
+    double height = 0.0;
 
     if (vertexBounds != null) {
       x += vertexBounds.getX();
       y += vertexBounds.getY();
 
-      if (Utils.getString(style, Constants.STYLE_SHAPE, "").equals(Constants.SHAPE_SWIMLANE)) {
+      if (Utils.getString(style, Constants.STYLE_SHAPE, "") == Constants.SHAPE_SWIMLANE) {
         // Limits the label to the swimlane title
         bool horizontal = Utils.isTrue(style, Constants.STYLE_HORIZONTAL, true);
-        double start = Utils.getDouble(style, Constants.STYLE_STARTSIZE, Constants.DEFAULT_STARTSIZE) * scale;
+        double start = Utils.getDouble(style, Constants.STYLE_STARTSIZE, Constants.DEFAULT_STARTSIZE.toDouble()) * scale;
 
         if (horizontal) {
           width += vertexBounds.getWidth();
@@ -270,19 +271,19 @@ class Utils {
 
     // Gets the global spacing and orientation
     bool horizontal = isTrue(style, Constants.STYLE_HORIZONTAL, true);
-    int spacing = (int)(getInt(style, Constants.STYLE_SPACING) * scale);
+    int spacing = (getInt(style, Constants.STYLE_SPACING) * scale) as int;
 
     // Gets the alignment settings
     Object align = getString(style, Constants.STYLE_ALIGN, Constants.ALIGN_CENTER);
     Object valign = getString(style, Constants.STYLE_VERTICAL_ALIGN, Constants.ALIGN_MIDDLE);
 
     // Gets the vertical spacing
-    int top = (int)(getInt(style, Constants.STYLE_SPACING_TOP) * scale);
-    int bottom = (int)(getInt(style, Constants.STYLE_SPACING_BOTTOM) * scale);
+    int top = (getInt(style, Constants.STYLE_SPACING_TOP) * scale) as int;
+    int bottom = (getInt(style, Constants.STYLE_SPACING_BOTTOM) * scale) as int;
 
     // Gets the horizontal spacing
-    int left = (int)(getInt(style, Constants.STYLE_SPACING_LEFT) * scale);
-    int right = (int)(getInt(style, Constants.STYLE_SPACING_RIGHT) * scale);
+    int left = (getInt(style, Constants.STYLE_SPACING_LEFT) * scale) as int;
+    int right = (getInt(style, Constants.STYLE_SPACING_RIGHT) * scale) as int;
 
     // Applies the orientation to the spacings and dimension
     if (!horizontal) {
@@ -298,18 +299,18 @@ class Utils {
     }
 
     // Computes the position of the label for the horizontal alignment
-    if ((horizontal && align.equals(Constants.ALIGN_CENTER)) || (!horizontal && valign.equals(Constants.ALIGN_MIDDLE))) {
+    if ((horizontal && align == Constants.ALIGN_CENTER) || (!horizontal && valign == Constants.ALIGN_MIDDLE)) {
       x += (outerWidth - width) / 2 + left - right;
-    } else if ((horizontal && align.equals(Constants.ALIGN_RIGHT)) || (!horizontal && valign.equals(Constants.ALIGN_BOTTOM))) {
+    } else if ((horizontal && align == Constants.ALIGN_RIGHT) || (!horizontal && valign == Constants.ALIGN_BOTTOM)) {
       x += outerWidth - width - spacing - right;
     } else {
       x += spacing + left;
     }
 
     // Computes the position of the label for the vertical alignment
-    if ((!horizontal && align.equals(Constants.ALIGN_CENTER)) || (horizontal && valign.equals(Constants.ALIGN_MIDDLE))) {
+    if ((!horizontal && align == Constants.ALIGN_CENTER) || (horizontal && valign == Constants.ALIGN_MIDDLE)) {
       y += (outerHeight - height) / 2 + top - bottom;
-    } else if ((!horizontal && align.equals(Constants.ALIGN_LEFT)) || (horizontal && valign.equals(Constants.ALIGN_BOTTOM))) {
+    } else if ((!horizontal && align == Constants.ALIGN_LEFT) || (horizontal && valign == Constants.ALIGN_BOTTOM)) {
       y += outerHeight - height - spacing - bottom;
     } else {
       y += spacing + top;
@@ -342,14 +343,14 @@ class Utils {
 	 */
   static Rect getSizeForString(String text, Font font, double scale) {
     FontRenderContext frc = new FontRenderContext(null, false, false);
-    font = font.deriveFont((float)(font.getSize2D() * scale));
+    font = font.deriveFont((font.getSize2D() * scale) as double);
     FontMetrics metrics = null;
 
     if (_fontGraphics != null) {
       metrics = _fontGraphics.getFontMetrics(font);
     }
 
-    double lineHeight = Constants.LINESPACING;
+    double lineHeight = Constants.LINESPACING.toDouble();
 
     if (metrics != null) {
       lineHeight += metrics.getHeight();
@@ -418,14 +419,14 @@ class Utils {
         // and add the width of the whitespace to the calculation
         int whitespaceCount = 0;
 
-        if (word.length() > 0) {
+        if (word.length > 0) {
           // Concatenate any preceding whitespace to the
           // word and calculate the number of characters of that
           // whitespace
-          char firstWordLetter = word.charAt(0);
+          String firstWordLetter = word[0];
           int letterIndex = lines[i].indexOf(firstWordLetter, charCount);
           String whitespace = lines[i].substring(charCount, letterIndex);
-          whitespaceCount = whitespace.length();
+          whitespaceCount = whitespace.length;
           word = whitespace.concat(word);
         }
 
@@ -461,7 +462,7 @@ class Utils {
             // in the available width
             word = word.trim();
 
-            for (int j = 1; j <= word.length(); j++) {
+            for (int j = 1; j <= word.length; j++) {
               wordLength = metrics.stringWidth(word.substring(0, j));
 
               if (lineWidth + wordLength > width) {
@@ -474,13 +475,13 @@ class Utils {
                 currentLine = currentLine.append(chars);
                 // Return the unprocessed part of the word
                 // to the stack
-                wordStack.push(word.substring(j, word.length()));
+                wordStack.push(word.substring(j, word.length));
                 result.add(currentLine.toString());
                 currentLine = new StringBuilder();
                 lineWidth = 0;
                 // Increment char counter allowing for white
                 // space in the original word
-                charCount = charCount + chars.length() + whitespaceCount;
+                charCount = charCount + chars.length + whitespaceCount;
                 break;
               }
             }
@@ -493,7 +494,7 @@ class Utils {
             lineWidth = 0;
             // Increment char counter allowing for white
             // space in the original word
-            charCount = word.length() + whitespaceCount;
+            charCount = word.length + whitespaceCount;
           }
         } else {
           // The current word does not take the total line width
@@ -507,14 +508,14 @@ class Utils {
           }
 
           lineWidth += wordLength;
-          charCount += word.length();
+          charCount += word.length;
         }
       }
 
       result.add(currentLine.toString());
     }
 
-    return result.toArray(new List<String>(result.length));
+    return result;
   }
 
   /**
@@ -537,7 +538,7 @@ class Utils {
       // is not supported and we can't get the width of an
       // inner HTML element (or is this possible?).
       if (wrapWidth > 0) {
-        textRenderer.setText(createHtmlDocument(style, markup, 1, Math.ceil(wrapWidth - Constants.LABEL_INSET * scale) as int));
+        textRenderer.setText(createHtmlDocument(style, markup, 1.0, math.ceil(wrapWidth - Constants.LABEL_INSET * scale) as int));
         Dimension size2 = textRenderer.getPreferredSize();
 
         // Uses wrapped text size if any text was actually wrapped
@@ -585,12 +586,12 @@ class Utils {
     if (lamda > 1) {
       r1 = Math.sqrt(lamda) * r1;
       r2 = Math.sqrt(lamda) * r2;
-      sds = 0;
+      sds = 0.0;
     } else {
-      double seif = 1;
+      double seif = 1.0;
 
       if (largeArcFlag == fS) {
-        seif = -1;
+        seif = -1.0;
       }
 
       sds = seif * Math.sqrt((r1x * r2y - r1x * rydd - r2y * rxdd) / (r1x * rydd + r2y * rxdd));
@@ -612,7 +613,7 @@ class Utils {
     }
 
     double sse = dr * 2 / Math.PI;
-    int seg = Math.ceil(sse < 0 ? -1 * sse : sse) as int;
+    int seg = math.ceil(sse < 0 ? -1 * sse : sse) as int;
     double segr = dr / seg;
     double t = 8 / 3 * Math.sin(segr / 4) * Math.sin(segr / 4) / Math.sin(segr / 2);
     double cpsir1 = cpsi * r1;
@@ -623,8 +624,8 @@ class Utils {
     double ms = Math.sin(s1);
     double x2 = -t * (cpsir1 * ms + spsir2 * mc);
     double y2 = -t * (spsir1 * ms - cpsir2 * mc);
-    double x3 = 0;
-    double y3 = 0;
+    double x3 = 0.0;
+    double y3 = 0.0;
 
     List<double> result = new List<double>(seg * 6);
 
@@ -661,7 +662,7 @@ class Utils {
     Rect result = null;
 
     if (rect != null && rotation != 0) {
-      double rad = Math.toRadians(rotation);
+      double rad = math.toRadians(rotation);
       double cos = Math.cos(rad);
       double sin = Math.sin(rad);
 
@@ -712,7 +713,7 @@ class Utils {
         // Check there is a whitespace or symbol before the hit character
         if (Character.isLetter(text.codePointAt(result - 1))) {
           // The pre-increment is used in if and else branches.
-          if (++fromIndex >= text.length()) {
+          if (++fromIndex >= text.length) {
             return -1;
           } else {
             // Test again from next candidate character
@@ -746,11 +747,11 @@ class Utils {
 
     if (state.getAbsolutePointCount() > 0) {
       Point2d last = state.getAbsolutePoint(0);
-      double min = Double.MAX_VALUE;
+      double min = double.MAX_FINITE;
 
       for (int i = 1; i < state.getAbsolutePointCount(); i++) {
         Point2d current = state.getAbsolutePoint(i);
-        double dist = new /*Line2D.*/Double(last._x, last._y, current._x, current._y).ptSegDistSq(x, y);
+        double dist = new Line2D(last._x, last._y, current._x, current._y).ptSegDistSq(x, y);
 
         if (dist < min) {
           min = dist;
@@ -898,10 +899,10 @@ class Utils {
 
     if (pts != null) {
       result = new List<Point2d>(pts.length);
-      Iterator<Point2d> it = pts.iterator();
+      Iterator<Point2d> it = pts.iterator;
 
-      while (it.hasNext()) {
-        Point2d point = it.next().clone() as Point2d;
+      while (it.moveNext()) {
+        Point2d point = it.current.clone() as Point2d;
 
         point.setX(point.getX() + dx);
         point.setY(point.getY() + dy);
@@ -965,7 +966,7 @@ class Utils {
   /**
 	 * Sorts the given cells according to the order in the cell hierarchy.
 	 */
-  static Collection<Object> sortCells(Collection<Object> cells, final bool ascending) {
+  static Set<Object> sortCells(Collection<Object> cells, final bool ascending) {
     SortedSet<Object> result = new TreeSet<Object>((Object o1, Object o2) {
       int comp = CellPath.compare(CellPath.create(o1 as ICell), CellPath.create(o2 as ICell));
 
@@ -1101,12 +1102,12 @@ class Utils {
 	 * @param key
 	 *            Key of the style to be changed.
 	 * @param flag
-	 *            Integer for the bit to be changed.
+	 *            int for the bit to be changed.
 	 * @param value
 	 *            Optional bool value for the flag.
-	 * @deprecated Use <code>StyleUtils.setCellStyleFlags(IGraphModel, List<Object>,String, int, Boolean)</code> (Jan 2012)
+	 * @deprecated Use <code>StyleUtils.setCellStyleFlags(IGraphModel, List<Object>,String, int, bool)</code> (Jan 2012)
 	 */
-  static void setCellStyleFlags(IGraphModel model, List<Object> cells, String key, int flag, Boolean value) {
+  static void setCellStyleFlags(IGraphModel model, List<Object> cells, String key, int flag, bool value) {
     StyleUtils.setCellStyleFlags(model, cells, key, flag, value);
   }
 
@@ -1119,12 +1120,12 @@ class Utils {
 	 * @param key
 	 *            Key of the style to be changed.
 	 * @param flag
-	 *            Integer for the bit to be changed.
+	 *            int for the bit to be changed.
 	 * @param value
 	 *            Optional bool value for the given flag.
-	 * @deprecated Use <code>StyleUtils.setStyleFlag(String, String, int, Boolean)</code> (Jan 2012)
+	 * @deprecated Use <code>StyleUtils.setStyleFlag(String, String, int, bool)</code> (Jan 2012)
 	 */
-  static String setStyleFlag(String style, String key, int flag, Boolean value) {
+  static String setStyleFlag(String style, String key, int flag, bool value) {
     return StyleUtils.setStyleFlag(style, key, flag, value);
   }
 
@@ -1140,19 +1141,19 @@ class Utils {
 	 */
   static bool intersectsHotspot(CellState state, int x, int y, double hotspot, [int min = 0, int max = 0]) {
     if (hotspot > 0) {
-      int cx = Math.round(state.getCenterX()) as int;
-      int cy = Math.round(state.getCenterY()) as int;
-      int width = Math.round(state.getWidth()) as int;
-      int height = Math.round(state.getHeight()) as int;
+      int cx = math.round(state.getCenterX()) as int;
+      int cy = math.round(state.getCenterY()) as int;
+      int width = math.round(state.getWidth()) as int;
+      int height = math.round(state.getHeight()) as int;
 
       if (Utils.getString(state.getStyle(), Constants.STYLE_SHAPE, "").equals(Constants.SHAPE_SWIMLANE)) {
         int start = Utils.getInt(state.getStyle(), Constants.STYLE_STARTSIZE, Constants.DEFAULT_STARTSIZE);
 
         if (Utils.isTrue(state.getStyle(), Constants.STYLE_HORIZONTAL, true)) {
-          cy = Math.round(state.getY() + start / 2) as int;
+          cy = math.round(state.getY() + start / 2) as int;
           height = start;
         } else {
-          cx = Math.round(state.getX() + start / 2) as int;
+          cx = math.round(state.getX() + start / 2) as int;
           width = start;
         }
       }
@@ -1165,7 +1166,7 @@ class Utils {
         h = Math.min(h, max);
       }
 
-      Rectangle rect = new Rectangle(Math.round(cx - w / 2), Math.round(cy - h / 2), w, h);
+      Rectangle rect = new Rectangle(math.round(cx - w / 2), math.round(cy - h / 2), w, h);
 
       return rect.contains(x, y);
     }
@@ -1723,7 +1724,7 @@ class Utils {
     // Does not use a textbox as this must go inside another VML shape
     Element table = document.createElement("table");
 
-    if (text != null && text.length() > 0) {
+    if (text != null && text.length > 0) {
       Element tr = document.createElement("tr");
       Element td = document.createElement("td");
 

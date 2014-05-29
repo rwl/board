@@ -54,18 +54,18 @@ class Spline1D {
 	 */
   double getValue(double x) {
     if (_len.length == 0) {
-      return Double.NaN;
+      return double.NAN;
     }
 
     if (_len.length == 1) {
       if (_len[0] == x) {
         return _pos1D[0];
       } else {
-        return double.NaN;
+        return double.NAN;
       }
     }
 
-    int index = Arrays.binarySearch(_len, x);
+    int index = binarySearch(_len, x);
     if (index > 0) {
       return _pos1D[index];
     }
@@ -91,7 +91,7 @@ class Spline1D {
     if (_storageIndex > -1 && _storageIndex < _len.length - 1 && x > _len[_storageIndex] && x < _len[_storageIndex + 1]) {
 
     } else {
-      int index = Arrays.binarySearch(_len, x);
+      int index = binarySearch(_len, x);
       if (index > 0) {
         return _pos1D[index];
       }
@@ -117,7 +117,7 @@ class Spline1D {
       return 0;
     }
 
-    int index = Arrays.binarySearch(_len, x);
+    int index = binarySearch(_len, x);
     if (index < 0) {
       index = -(index + 1) - 1;
     }

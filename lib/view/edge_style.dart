@@ -126,7 +126,7 @@ class EdgeStyle {
     if (source != null) {
       GraphView view = state.getView();
       Graph graph = view.getGraph();
-      Point2d pt = (points != null && points.length > 0) ? points.get(0) : null;
+      Point2d pt = (points != null && points.length > 0) ? points[0] : null;
 
       if (pt != null) {
         pt = view.transformControlPoint(state, pt);
@@ -144,7 +144,7 @@ class EdgeStyle {
       double seg = Utils.getDouble(state.getStyle(), Constants.STYLE_SEGMENT, graph.getGridSize()) * view.getScale();
       String dir = Utils.getString(state.getStyle(), Constants.STYLE_DIRECTION, Constants.DIRECTION_WEST);
 
-      if (dir.equals(Constants.DIRECTION_NORTH) || dir.equals(Constants.DIRECTION_SOUTH)) {
+      if (dir == Constants.DIRECTION_NORTH || dir == Constants.DIRECTION_SOUTH) {
         x = view.getRoutingCenterX(source);
         dx = seg;
       } else {
@@ -157,11 +157,11 @@ class EdgeStyle {
           x = pt.getX();
           dy = Math.max(math.abs(y - pt.getY()), dy);
         } else {
-          if (dir.equals(Constants.DIRECTION_NORTH)) {
+          if (dir == Constants.DIRECTION_NORTH) {
             y = source.getY() - 2 * dx;
-          } else if (dir.equals(Constants.DIRECTION_SOUTH)) {
+          } else if (dir == Constants.DIRECTION_SOUTH) {
             y = source.getY() + source.getHeight() + 2 * dx;
-          } else if (dir.equals(Constants.DIRECTION_EAST)) {
+          } else if (dir == Constants.DIRECTION_EAST) {
             x = source.getX() - 2 * dy;
           } else {
             x = source.getX() + source.getWidth() + 2 * dy;
@@ -186,7 +186,7 @@ class EdgeStyle {
 	 * unspecified.
 	 */
   static EdgeStyleFunction ElbowConnector = (CellState state, CellState source, CellState target, List<Point2d> points, List<Point2d> result) {
-    Point2d pt = (points != null && points.length > 0) ? points.get(0) : null;
+    Point2d pt = (points != null && points.length > 0) ? points[0] : null;
 
     bool vertical = false;
     bool horizontal = false;
@@ -218,10 +218,10 @@ class EdgeStyle {
       }
     }
 
-    if (!horizontal && (vertical || Utils.getString(state.getStyle(), Constants.STYLE_ELBOW, "").equals(Constants.ELBOW_VERTICAL))) {
-      EdgeStyle.TopToBottom.apply(state, source, target, points, result);
+    if (!horizontal && (vertical || Utils.getString(state.getStyle(), Constants.STYLE_ELBOW, "") == Constants.ELBOW_VERTICAL)) {
+      EdgeStyle.TopToBottom(state, source, target, points, result);
     } else {
-      EdgeStyle.SideToSide.apply(state, source, target, points, result);
+      EdgeStyle.SideToSide(state, source, target, points, result);
     }
   };
 
@@ -230,7 +230,7 @@ class EdgeStyle {
 	 */
   static EdgeStyleFunction SideToSide = (CellState state, CellState source, CellState target, List<Point2d> points, List<Point2d> result) {
     GraphView view = state.getView();
-    Point2d pt = ((points != null && points.length > 0) ? points.get(0) : null);
+    Point2d pt = ((points != null && points.length > 0) ? points[0] : null);
     Point2d p0 = state.getAbsolutePoint(0);
     Point2d pe = state.getAbsolutePoint(state.getAbsolutePointCount() - 1);
 
@@ -297,7 +297,7 @@ class EdgeStyle {
 	 */
   static EdgeStyleFunction TopToBottom = (CellState state, CellState source, CellState target, List<Point2d> points, List<Point2d> result) {
     GraphView view = state.getView();
-    Point2d pt = ((points != null && points.length > 0) ? points.get(0) : null);
+    Point2d pt = ((points != null && points.length > 0) ? points[0] : null);
     Point2d p0 = state.getAbsolutePoint(0);
     Point2d pe = state.getAbsolutePoint(state.getAbsolutePointCount() - 1);
 
@@ -369,7 +369,7 @@ class EdgeStyle {
     Point2d hint = null;
 
     // Adds the first point
-    Point2d pt = pts.get(0);
+    Point2d pt = pts[0];
 
     if (pt == null && source != null) {
       pt = new Point2d(state._view.getRoutingCenterX(source), state._view.getRoutingCenterY(source));
@@ -381,10 +381,10 @@ class EdgeStyle {
 
     // Adds the waypoints
     if (hints != null && hints.length > 0) {
-      hint = state._view.transformControlPoint(state, hints.get(0));
+      hint = state._view.transformControlPoint(state, hints[0]);
 
       CellState currentTerm = source;
-      Point2d currentPt = pts.get(0);
+      Point2d currentPt = pts[0];
       bool hozChan = false;
       bool vertChan = false;
       Point2d currentHint = hint;
@@ -416,13 +416,13 @@ class EdgeStyle {
         }
 
         currentTerm = target;
-        currentPt = pts.get(lastInx);
-        currentHint = state._view.transformControlPoint(state, hints.get(hintsLen - 1));
+        currentPt = pts[lastInx];
+        currentHint = state._view.transformControlPoint(state, hints[hintsLen - 1]);
       }
 
-      if (horizontal && ((pts.get(0) != null && pts.get(0).getY() != hint.getY()) || (pts.get(0) == null && source != null && (hint.getY() < source.getY() || hint.getY() > source.getY() + source.getHeight())))) {
+      if (horizontal && ((pts[0] != null && pts[0].getY() != hint.getY()) || (pts[0] == null && source != null && (hint.getY() < source.getY() || hint.getY() > source.getY() + source.getHeight())))) {
         result.add(new Point2d(pt.getX(), hint.getY()));
-      } else if (!horizontal && ((pts.get(0) != null && pts.get(0).getX() != hint.getX()) || (pts.get(0) == null && source != null && (hint.getX() < source.getX() || hint.getX() > source.getX() + source.getWidth())))) {
+      } else if (!horizontal && ((pts[0] != null && pts[0].getX() != hint.getX()) || (pts[0] == null && source != null && (hint.getX() < source.getX() || hint.getX() > source.getX() + source.getWidth())))) {
         result.add(new Point2d(hint.getX(), pt.getY()));
       }
 
@@ -454,28 +454,28 @@ class EdgeStyle {
     }
 
     // Adds the last point
-    pt = pts.get(lastInx);
+    pt = pts[lastInx];
 
     if (pt == null && target != null) {
       pt = new Point2d(state._view.getRoutingCenterX(target), state._view.getRoutingCenterY(target));
     }
 
-    if (horizontal && ((pts.get(lastInx) != null && pts.get(lastInx).getY() != hint.getY()) || (pts.get(lastInx) == null && target != null && (hint.getY() < target.getY() || hint.getY() > target.getY() + target.getHeight())))) {
+    if (horizontal && ((pts[lastInx] != null && pts[lastInx].getY() != hint.getY()) || (pts[lastInx] == null && target != null && (hint.getY() < target.getY() || hint.getY() > target.getY() + target.getHeight())))) {
       result.add(new Point2d(pt.getX(), hint.getY()));
-    } else if (!horizontal && ((pts.get(lastInx) != null && pts.get(lastInx).getX() != hint.getX()) || (pts.get(lastInx) == null && target != null && (hint.getX() < target.getX() || hint.getX() > target.getX() + target.getWidth())))) {
+    } else if (!horizontal && ((pts[lastInx] != null && pts[lastInx].getX() != hint.getX()) || (pts[lastInx] == null && target != null && (hint.getX() < target.getX() || hint.getX() > target.getX() + target.getWidth())))) {
       result.add(new Point2d(hint.getX(), pt.getY()));
     }
 
     // Removes bends inside the source terminal for floating ports
-    if (pts.get(0) == null && source != null) {
-      while (result.length > 1 && source.contains(result.get(1).getX(), result.get(1).getY())) {
+    if (pts[0] == null && source != null) {
+      while (result.length > 1 && source.contains(result[1].getX(), result[1].getY())) {
         result.remove(1);
       }
     }
 
     // Removes bends inside the target terminal
-    if (pts.get(lastInx) == null && target != null) {
-      while (result.length > 1 && target.contains(result.get(result.length - 1).getX(), result.get(result.length - 1).getY())) {
+    if (pts[lastInx] == null && target != null) {
+      while (result.length > 1 && target.contains(result[result.length - 1].getX(), result[result.length - 1].getY())) {
         result.remove(result.length - 1);
       }
     }
@@ -542,7 +542,7 @@ class EdgeStyle {
     bool targetEdge = target == null ? false : graph.getModel().isEdge(target._cell);
 
     if ((points != null && points.length > 0) || (sourceEdge) || (targetEdge)) {
-      EdgeStyle.SegmentConnector.apply(state, source, target, points, result);
+      EdgeStyle.SegmentConnector(state, source, target, points, result);
       return;
     }
 
@@ -617,7 +617,7 @@ class EdgeStyle {
       Point2d currentTerm = p0;
 
       // constraint[source, target] [x, y]
-      List<double> constraint = [[0.5, 0.5], [0.5, 0.5]];
+      List<List<double>> constraint = [[0.5, 0.5], [0.5, 0.5]];
 
       for (int i = 0; i < 2; i++) {
         if (currentTerm != null) {

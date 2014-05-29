@@ -138,11 +138,11 @@ class Point2d // implements Serializable, Cloneable
   Object clone() {
     Point2d clone;
 
-    try {
-      clone = super.clone() as Point2d;
-    } on CloneNotSupportedException catch (e) {
+//    try {
+//      clone = super.clone() as Point2d;
+//    } on CloneNotSupportedException catch (e) {
       clone = new Point2d();
-    }
+//    }
 
     clone.setX(getX());
     clone.setY(getY());
@@ -156,6 +156,6 @@ class Point2d // implements Serializable, Cloneable
 	 * @return a string representation of this <code>Point2d</code>.
 	 */
   String toString() {
-    return getClass().getName() + "[" + _x + ", " + _y + "]";
+    return /*getClass().getName() + */"Point2d[$_x, $_y]";
   }
 }

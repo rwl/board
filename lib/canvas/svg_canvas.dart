@@ -261,7 +261,7 @@ class SvgCanvas extends BasicCanvas {
       String format = "png";
       int dot = src.lastIndexOf('.');
 
-      if (dot > 0 && dot < src.length()) {
+      if (dot > 0 && dot < src.length) {
         format = src.substring(dot + 1);
       }
 
@@ -365,7 +365,7 @@ class SvgCanvas extends BasicCanvas {
       transform += "translate(" + dx + " " + dy + ") ";
     }
 
-    if (transform.length() > 0) {
+    if (transform.length > 0) {
       elem.setAttribute("transform", transform);
     }
 
@@ -436,7 +436,7 @@ class SvgCanvas extends BasicCanvas {
       if (!Utils.getString(style, Constants.STYLE_SHAPE, "").equals(Constants.SHAPE_SWIMLANE)) {
         elem = drawShape(x, y, w, h, style);
       } else {
-        int start = Math.round(Utils.getInt(style, Constants.STYLE_STARTSIZE, Constants.DEFAULT_STARTSIZE) * _scale) as int;
+        int start = math.round(Utils.getInt(style, Constants.STYLE_STARTSIZE, Constants.DEFAULT_STARTSIZE) * _scale) as int;
 
         // Removes some styles to draw the content area
         Map<String, Object> cloned = new Hashtable<String, Object>(style);
@@ -981,7 +981,7 @@ class SvgCanvas extends BasicCanvas {
     String fontFamily = Utils.getString(style, Constants.STYLE_FONTFAMILY, Constants.DEFAULT_FONTFAMILIES);
     int fontSize = (int)(Utils.getInt(style, Constants.STYLE_FONTSIZE, Constants.DEFAULT_FONTSIZE) * _scale);
 
-    if (text != null && text.length() > 0) {
+    if (text != null && text.length > 0) {
       float strokeWidth = (float)(Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1) * _scale);
 
       // Applies the opacity

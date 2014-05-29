@@ -6,25 +6,25 @@ part of graph.layout;
 class PartitionLayout extends GraphLayout {
 
   /**
-	 * Boolean indicating the direction in which the space is partitioned.
+	 * bool indicating the direction in which the space is partitioned.
 	 * Default is true.
 	 */
   bool horizontal;
 
   /**
-	 * Integer that specifies the absolute spacing in pixels between the
+	 * int that specifies the absolute spacing in pixels between the
 	 * children. Default is 0.
 	 */
   int spacing;
 
   /**
-	 * Integer that specifies the absolute inset in pixels for the parent that
+	 * int that specifies the absolute inset in pixels for the parent that
 	 * contains the children. Default is 0.
 	 */
   int border;
 
   /**
-	 * Boolean that specifies if vertices should be resized. Default is true.
+	 * bool that specifies if vertices should be resized. Default is true.
 	 */
   bool resizeVertices = true;
 

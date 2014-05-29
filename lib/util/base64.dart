@@ -1,4 +1,4 @@
-part of graph.util;
+library graph.util.base64;
 
 //import java.util.Arrays;
 
@@ -490,7 +490,7 @@ class Base64
 	final static List<byte> decode(String str)
 	{
 		// Check special case
-		int sLen = str != null ? str.length() : 0;
+		int sLen = str != null ? str.length : 0;
 		if (sLen == 0)
 			return new byte[0];
 
@@ -552,7 +552,7 @@ class Base64
 	final static List<byte> decodeFast(String s)
 	{
 		// Check special case
-		int sLen = s.length();
+		int sLen = s.length;
 		if (sLen == 0)
 			return new byte[0];
 

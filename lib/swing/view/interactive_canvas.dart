@@ -125,7 +125,7 @@ class InteractiveCanvas extends Graphics2DCanvas {
 	 */
   bool hitSwimlaneContent(GraphComponent graphComponent, CellState swimlane, int x, int y) {
     if (swimlane != null) {
-      int start = Math.max(2, Math.round(Utils.getInt(swimlane.getStyle(), Constants.STYLE_STARTSIZE, Constants.DEFAULT_STARTSIZE) * graphComponent.getGraph().getView().getScale())) as int;
+      int start = Math.max(2, math.round(Utils.getInt(swimlane.getStyle(), Constants.STYLE_STARTSIZE, Constants.DEFAULT_STARTSIZE) * graphComponent.getGraph().getView().getScale())) as int;
       Rectangle rect = swimlane.getRectangle();
 
       if (Utils.isTrue(swimlane.getStyle(), Constants.STYLE_HORIZONTAL, true)) {

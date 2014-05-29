@@ -144,12 +144,12 @@ class Session implements DiagramChangeListener {
 
     /*synchronized (this)
 		{
-			if (_buffer.length() == 0)
+			if (_buffer.length == 0)
 			{
 				wait(timeout);
 			}
 
-			if (_buffer.length() > 0)
+			if (_buffer.length > 0)
 			{
 				result.append("<delta>");
 				result.append(_buffer.toString());

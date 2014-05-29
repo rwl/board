@@ -16,14 +16,14 @@ class MarkerRegistry {
   static init() {
     IMarker tmp = (Graphics2DCanvas canvas, CellState state, String type, Point2d pe, double nx, double ny, double size, bool source) {
       Polygon poly = new Polygon();
-      poly.addPoint(Math.round(pe.getX()) as int, Math.round(pe.getY()) as int);
-      poly.addPoint(Math.round(pe.getX() - nx - ny / 2) as int, Math.round(pe.getY() - ny + nx / 2) as int);
+      poly.addPoint(math.round(pe.getX()) as int, math.round(pe.getY()) as int);
+      poly.addPoint(math.round(pe.getX() - nx - ny / 2) as int, math.round(pe.getY() - ny + nx / 2) as int);
 
       if (type.equals(Constants.ARROW_CLASSIC)) {
-        poly.addPoint(Math.round(pe.getX() - nx * 3 / 4) as int, Math.round(pe.getY() - ny * 3 / 4) as int);
+        poly.addPoint(math.round(pe.getX() - nx * 3 / 4) as int, math.round(pe.getY() - ny * 3 / 4) as int);
       }
 
-      poly.addPoint(Math.round(pe.getX() + ny / 2 - nx) as int, Math.round(pe.getY() - ny - nx / 2) as int);
+      poly.addPoint(math.round(pe.getX() + ny / 2 - nx) as int, math.round(pe.getY() - ny - nx / 2) as int);
 
       if (Utils.isTrue(state.getStyle(), (source) ? "startFill" : "endFill", true)) {
         canvas.fillShape(poly);
@@ -38,8 +38,8 @@ class MarkerRegistry {
     registerMarker(Constants.ARROW_BLOCK, tmp);
 
     registerMarker(Constants.ARROW_OPEN, (Graphics2DCanvas canvas, CellState state, String type, Point2d pe, double nx, double ny, double size, bool source) {
-      canvas.getGraphics().draw(new Line2D.Float(Math.round(pe.getX() - nx - ny / 2) as int, Math.round(pe.getY() - ny + nx / 2) as int, Math.round(pe.getX() - nx / 6) as int, Math.round(pe.getY() - ny / 6) as int));
-      canvas.getGraphics().draw(new Line2D.Float(Math.round(pe.getX() - nx / 6) as int, Math.round(pe.getY() - ny / 6) as int, Math.round(pe.getX() + ny / 2 - nx) as int, Math.round(pe.getY() - ny - nx / 2) as int));
+      canvas.getGraphics().draw(new Line2D.Float(math.round(pe.getX() - nx - ny / 2) as int, math.round(pe.getY() - ny + nx / 2) as int, math.round(pe.getX() - nx / 6) as int, math.round(pe.getY() - ny / 6) as int));
+      canvas.getGraphics().draw(new Line2D.Float(math.round(pe.getX() - nx / 6) as int, math.round(pe.getY() - ny / 6) as int, math.round(pe.getX() + ny / 2 - nx) as int, math.round(pe.getY() - ny - nx / 2) as int));
 
       return new Point2d(-nx / 2, -ny / 2);
     });
@@ -62,10 +62,10 @@ class MarkerRegistry {
 
     registerMarker(Constants.ARROW_DIAMOND, (Graphics2DCanvas canvas, CellState state, String type, Point2d pe, double nx, double ny, double size, bool source) {
       Polygon poly = new Polygon();
-      poly.addPoint(Math.round(pe.getX()) as int, Math.round(pe.getY())) as int;
-      poly.addPoint(Math.round(pe.getX() - nx / 2 - ny / 2) as int, Math.round(pe.getY() + nx / 2 - ny / 2) as int);
-      poly.addPoint(Math.round(pe.getX() - nx) as int, Math.round(pe.getY() - ny) as int);
-      poly.addPoint(Math.round(pe.getX() - nx / 2 + ny / 2) as int, Math.round(pe.getY() - ny / 2 - nx / 2) as int);
+      poly.addPoint(math.round(pe.getX()) as int, math.round(pe.getY())) as int;
+      poly.addPoint(math.round(pe.getX() - nx / 2 - ny / 2) as int, math.round(pe.getY() + nx / 2 - ny / 2) as int);
+      poly.addPoint(math.round(pe.getX() - nx) as int, math.round(pe.getY() - ny) as int);
+      poly.addPoint(math.round(pe.getX() - nx / 2 + ny / 2) as int, math.round(pe.getY() - ny / 2 - nx / 2) as int);
 
       if (Utils.isTrue(state.getStyle(), (source) ? "startFill" : "endFill", true)) {
         canvas.fillShape(poly);

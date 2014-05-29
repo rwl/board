@@ -94,7 +94,7 @@ class HtmlTextShape implements ITextShape {
       }
 
       // Renders the scaled text
-      textRenderer.setText(_createHtmlDocument(style, text, Math.round(w / state.getView().getScale()) as int, Math.round(h / state.getView().getScale()) as int));
+      textRenderer.setText(_createHtmlDocument(style, text, math.round(w / state.getView().getScale()) as int, math.round(h / state.getView().getScale()) as int));
       textRenderer.setFont(Utils.getFont(style, canvas.getScale()));
       g.scale(scale, scale);
       rendererPane.paintComponent(g, textRenderer, rendererPane, (x / scale) + Constants.LABEL_INSET as int, (y / scale) + Constants.LABEL_INSET as int, (w / scale) as int, (h / scale) as int, true);

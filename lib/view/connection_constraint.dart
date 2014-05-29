@@ -14,7 +14,7 @@ class ConnectionConstraint {
   Point2d _point;
 
   /**
-	 * Boolean that specifies if the point should be projected onto the perimeter
+	 * bool that specifies if the point should be projected onto the perimeter
 	 * of the terminal.
 	 */
   bool _perimeter;

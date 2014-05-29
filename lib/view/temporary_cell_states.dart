@@ -11,7 +11,7 @@ class TemporaryCellStates {
   /**
 	 * 
 	 */
-  Hashtable<Object, CellState> _oldStates;
+  Map<Object, CellState> _oldStates;
 
   /**
 	 * 
@@ -51,7 +51,7 @@ class TemporaryCellStates {
     _oldScale = view.getScale();
 
     // Creates space for the new states
-    view.setStates(new Hashtable<Object, CellState>());
+    view.setStates(new Map<Object, CellState>());
     view.setScale(scale);
 
     if (cells != null) {

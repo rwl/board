@@ -146,7 +146,7 @@ class ConnectorShape extends BasicShape {
     int count = 1;
 
     // Uses next non-overlapping point
-    while (count < n - 1 && Math.round(p0.getX() - pe.getX()) == 0 && Math.round(p0.getY() - pe.getY()) == 0) {
+    while (count < n - 1 && math.round(p0.getX() - pe.getX()) == 0 && math.round(p0.getY() - pe.getY()) == 0) {
       p0 = (source) ? points.get(1 + count) : points.get(n - 2 - count);
       count++;
     }

@@ -28,7 +28,7 @@ class StackLayout extends GraphLayout {
   int border;
 
   /**
-	 * Boolean indicating if dimension should be changed to fill out the parent
+	 * bool indicating if dimension should be changed to fill out the parent
 	 * cell. Default is false.
 	 */
   bool fill = false;

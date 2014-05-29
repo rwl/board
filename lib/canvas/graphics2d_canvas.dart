@@ -202,7 +202,7 @@ class Graphics2DCanvas extends BasicCanvas {
     Map<String, Object> style = state.getStyle();
     ITextShape shape = getTextShape(style, html);
 
-    if (_g != null && shape != null && _drawLabels && text != null && text.length() > 0) {
+    if (_g != null && shape != null && _drawLabels && text != null && text.length > 0) {
       // Creates a temporary graphics instance for drawing this shape
       float opacity = Utils.getFloat(style, Constants.STYLE_TEXT_OPACITY, 100);
       Graphics2D previousGraphics = _g;
@@ -342,7 +342,7 @@ class Graphics2DCanvas extends BasicCanvas {
           Point2d next = points[i + 1];
 
           // Uses next non-overlapping point
-          while (i < points.length - 2 && Math.round(next.getX() - tmp.getX()) == 0 && Math.round(next.getY() - tmp.getY()) == 0) {
+          while (i < points.length - 2 && math.round(next.getX() - tmp.getX()) == 0 && math.round(next.getY() - tmp.getY()) == 0) {
             next = points[i + 2];
             i++;
           }

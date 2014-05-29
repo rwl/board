@@ -148,7 +148,7 @@ class VmlCanvas extends BasicCanvas {
           elem.appendChild(strokeNode);
         }
       } else {
-        int start = Math.round(Utils.getInt(style, Constants.STYLE_STARTSIZE, Constants.DEFAULT_STARTSIZE) * _scale) as int;
+        int start = math.round(Utils.getInt(style, Constants.STYLE_STARTSIZE, Constants.DEFAULT_STARTSIZE) * _scale) as int;
 
         // Removes some styles to draw the content area
         Map<String, Object> cloned = new Hashtable<String, Object>(style);
@@ -218,10 +218,10 @@ class VmlCanvas extends BasicCanvas {
       String points = null;
 
       if (direction.equals(Constants.DIRECTION_EAST) || direction.equals(Constants.DIRECTION_WEST)) {
-        int mid = Math.round(h / 2);
+        int mid = math.round(h / 2);
         points = "m 0 " + mid + " l " + w + " " + mid;
       } else {
-        int mid = Math.round(w / 2);
+        int mid = math.round(w / 2);
         points = "m " + mid + " 0 L " + mid + " " + h;
       }
 
@@ -382,11 +382,11 @@ class VmlCanvas extends BasicCanvas {
       Point2d pt = pts.get(0);
       Rectangle r = new Rectangle(pt.getPoint());
 
-      StringBuilder buf = new StringBuilder("m " + Math.round(pt.getX()) + " " + Math.round(pt.getY()));
+      StringBuilder buf = new StringBuilder("m " + math.round(pt.getX()) + " " + math.round(pt.getY()));
 
       for (int i = 1; i < pts.length; i++) {
         pt = pts[i];
-        buf.append(" l " + Math.round(pt.getX()) + " " + Math.round(pt.getY()));
+        buf.append(" l " + math.round(pt.getX()) + " " + math.round(pt.getY()));
 
         r = r.union(new Rectangle(pt.getPoint()));
       }

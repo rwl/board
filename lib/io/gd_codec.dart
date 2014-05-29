@@ -62,7 +62,7 @@ class GdCodec {
           case NUM_NODES:
             {
               if (!line.startsWith("#")) {
-                int numVertices = Integer.valueOf(line);
+                int numVertices = int.valueOf(line);
 
                 for (int i = 0; i < numVertices; i++) {
                   String label = String.valueOf(i);

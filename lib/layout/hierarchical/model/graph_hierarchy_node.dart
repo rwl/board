@@ -74,8 +74,8 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell {
       _nextLayerConnectedCells[0] = new List<GraphAbstractHierarchyCell>(connectsAsTarget.length);
       Iterator<GraphHierarchyEdge> iter = connectsAsTarget.iterator();
 
-      while (iter.hasNext()) {
-        GraphHierarchyEdge edge = iter.next();
+      while (iter.moveNext()) {
+        GraphHierarchyEdge edge = iter.current();
 
         if (edge.maxRank == -1 || edge.maxRank == layer + 1) {
           // Either edge is not in any rank or
@@ -103,8 +103,8 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell {
       _previousLayerConnectedCells[0] = new List<GraphAbstractHierarchyCell>(connectsAsSource.length);
       Iterator<GraphHierarchyEdge> iter = connectsAsSource.iterator();
 
-      while (iter.hasNext()) {
-        GraphHierarchyEdge edge = iter.next();
+      while (iter.moveNext()) {
+        GraphHierarchyEdge edge = iter.current();
 
         if (edge.minRank == -1 || edge.minRank == layer - 1) {
           // No dummy nodes in edge, add node of other side of edge

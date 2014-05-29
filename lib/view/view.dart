@@ -8,6 +8,13 @@ library graph.view;
  * class.
  */
 
+import 'dart:html';
+import 'dart:math' as Math;
+import 'dart:collection' show LinkedList, LinkedHashSet, HashSet;
+import 'dart:svg' as svg;
+
+import '../compat/math.dart' as math;
+
 import '../layout/layout.dart' show IGraphLayout;
 
 import '../canvas/canvas.dart' show Graphics2DCanvas;
@@ -29,8 +36,8 @@ import '../model/model.dart' show TerminalChange;
 import '../model/model.dart' show ValueChange;
 import '../model/model.dart' show VisibleChange;
 
-import '../view/view.dart' show EdgeStyleFunction;
-import '../view/view.dart' show PerimeterFunction;
+//import '../view/view.dart' show EdgeStyleFunction;
+//import '../view/view.dart' show PerimeterFunction;
 
 import '../util/util.dart' show Constants;
 import '../util/util.dart' show Utils;
@@ -39,6 +46,7 @@ import '../util/util.dart' show Rect;
 import '../util/util.dart' show Event;
 import '../util/util.dart' show EventObj;
 import '../util/util.dart' show EventSource;
+import '../util/util.dart' show IEventListener;
 import '../util/util.dart' show UndoableEdit;
 import '../util/util.dart' show UndoableChange;
 import '../util/util.dart' show ImageBundle;

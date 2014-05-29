@@ -141,9 +141,9 @@ class ChunkStream extends OutputStream implements DataOutput
 		_dos.write(b);
 	}
 
-	void writeBoolean(bool v) //throws IOException
+	void writebool(bool v) //throws IOException
 	{
-		_dos.writeBoolean(v);
+		_dos.writebool(v);
 	}
 
 	void writeByte(int v) //throws IOException

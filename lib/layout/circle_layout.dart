@@ -6,24 +6,24 @@ part of graph.layout;
 class CircleLayout extends GraphLayout {
 
   /**
-	 * Integer specifying the size of the radius. Default is 100.
+	 * int specifying the size of the radius. Default is 100.
 	 */
   double _radius;
 
   /**
-	 * Boolean specifying if the circle should be moved to the top,
+	 * bool specifying if the circle should be moved to the top,
 	 * left corner specified by x0 and y0. Default is false.
 	 */
   bool _moveCircle = true;
 
   /**
-	 * Integer specifying the left coordinate of the circle.
+	 * int specifying the left coordinate of the circle.
 	 * Default is 0.
 	 */
   double _x0 = 0;
 
   /**
-	 * Integer specifying the top coordinate of the circle.
+	 * int specifying the top coordinate of the circle.
 	 * Default is 0.
 	 */
   double _y0 = 0;

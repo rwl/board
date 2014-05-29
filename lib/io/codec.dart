@@ -199,7 +199,7 @@ class Codec {
           // Uses an on-the-fly Id
           id = CellPath.create(obj as ICell);
 
-          if (id.length() == 0) {
+          if (id.length == 0) {
             id = "root";
           }
         }
@@ -304,7 +304,7 @@ class Codec {
 	 * 
 	 * @param cell Cell to be encoded.
 	 * @param node Parent XML node to add the encoded cell into.
-	 * @param includeChildren Boolean indicating if the method
+	 * @param includeChildren bool indicating if the method
 	 * should include all descendents.
 	 */
   void encodeCell(ICell cell, Node node, bool includeChildren) {
@@ -326,7 +326,7 @@ class Codec {
 	 * that represents the given node.
 	 * 
 	 * @param node XML node that contains the cell data.
-	 * @param restoreStructures Boolean indicating whether the graph
+	 * @param restoreStructures bool indicating whether the graph
 	 * structure should be restored by calling insert and insertEdge on the
 	 * parent and terminals, respectively.
 	 * @return Graph cell that represents the given node.

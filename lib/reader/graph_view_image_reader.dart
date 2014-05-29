@@ -179,10 +179,10 @@ class GraphViewImageReader extends GraphViewReader {
       width = tmp.getWidth() as int;
       height = tmp.getHeight() as int;
     } else {
-      int x = Math.round(Utils.getDouble(attrs, "x")) as int;
-      int y = Math.round(Utils.getDouble(attrs, "y")) as int;
-      width = (Math.round(Utils.getDouble(attrs, "width")) as int) + _border + 3;
-      height = (Math.round(Utils.getDouble(attrs, "height")) as int) + _border + 3;
+      int x = math.round(Utils.getDouble(attrs, "x")) as int;
+      int y = math.round(Utils.getDouble(attrs, "y")) as int;
+      width = (math.round(Utils.getDouble(attrs, "width")) as int) + _border + 3;
+      height = (math.round(Utils.getDouble(attrs, "height")) as int) + _border + 3;
 
       if (isCropping()) {
         dx = -x + 3;

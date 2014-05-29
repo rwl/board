@@ -155,8 +155,8 @@ class CellStatePreview {
       previousStates = new LinkedList<CellState>();
       Iterator<CellState> it = _deltas.keySet().iterator();
 
-      while (it.hasNext()) {
-        CellState state = it.next();
+      while (it.moveNext()) {
+        CellState state = it.current();
         previousStates.addAll(snapshot(state));
       }
     }
@@ -164,8 +164,8 @@ class CellStatePreview {
     // Translates the states in step
     Iterator<CellState> it = _deltas.keySet().iterator();
 
-    while (it.hasNext()) {
-      CellState state = it.next();
+    while (it.moveNext()) {
+      CellState state = it.current();
       Point2d delta = _deltas.get(state);
       CellState parentState = graph.getView().getState(model.getParent(state.getCell()));
       _translateState(parentState, state, delta.getX(), delta.getY());
@@ -175,8 +175,8 @@ class CellStatePreview {
     Rect dirty = null;
     it = _deltas.keySet().iterator();
 
-    while (it.hasNext()) {
-      CellState state = it.next();
+    while (it.moveNext()) {
+      CellState state = it.current();
       Point2d delta = _deltas.get(state);
       CellState parentState = graph.getView().getState(model.getParent(state.getCell()));
       Rect tmp = _revalidateState(parentState, state, delta.getX(), delta.getY());
@@ -195,8 +195,8 @@ class CellStatePreview {
       _cellStates = new LinkedList<CellState>();
       it = _deltas.keySet().iterator();
 
-      while (it.hasNext()) {
-        CellState state = it.next();
+      while (it.moveNext()) {
+        CellState state = it.current();
         _cellStates.addAll(snapshot(state));
       }
 
@@ -218,8 +218,8 @@ class CellStatePreview {
     Graph graph = _graphComponent.getGraph();
     Iterator<CellState> it = snapshot.iterator();
 
-    while (it.hasNext()) {
-      CellState state = it.next();
+    while (it.moveNext()) {
+      CellState state = it.current();
       CellState orig = graph.getView().getState(state.getCell());
 
       if (orig != null && orig != state) {
@@ -411,8 +411,8 @@ class CellStatePreview {
     // Paints the preview states
     Iterator<CellState> it = _cellStates.iterator();
 
-    while (it.hasNext()) {
-      CellState state = it.next();
+    while (it.moveNext()) {
+      CellState state = it.current();
       canvas.getGraphics().setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, _getOpacityForCell(state.getCell())));
       _paintPreviewState(canvas, state);
     }

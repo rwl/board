@@ -16,7 +16,7 @@ class StyleRegistry {
   /**
 	 * Maps from strings to objects.
 	 */
-  static Map<String, Object> _values = new Hashtable<String, Object>();
+  static Map<String, Object> _values = new Map<String, Object>();
 
   // Registers the known object styles
   static init() {
@@ -39,29 +39,25 @@ class StyleRegistry {
 	 * Puts the given object into the registry under the given name.
 	 */
   static void putValue(String name, Object value) {
-    _values.put(name, value);
+    _values[name] = value;
   }
 
   /**
 	 * Returns the value associated with the given name.
 	 */
   static Object getValue(String name) {
-    return _values.get(name);
+    return _values[name];
   }
 
   /**
 	 * Returns the name for the given value.
 	 */
   static String getName(Object value) {
-    Iterator<Map.Entry<String, Object>> it = _values.entrySet().iterator();
-
-    while (it.hasNext()) {
-      Map.Entry<String, Object> entry = it.next();
-
-      if (entry.getValue() == value) {
-        return entry.getKey();
+    _values.forEach((String k, Object v) {
+      if (v == value) {
+        return k;
       }
-    }
+    });
 
     return null;
   }
