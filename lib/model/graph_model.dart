@@ -424,7 +424,7 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
       try {
         int id = int.parse(mxc.getId());
         _nextId = Math.max(_nextId, id + 1);
-      } on NumberFormatException catch (e) {
+      } on FormatException catch (e) {
         // ignore
       }
 

@@ -2174,7 +2174,7 @@ class Graph extends EventSource {
 	 * @param target Optional cell that represents the target terminal.
 	 * @return Returns the cell that was added.
 	 */
-  Object addCell(Object cell, Object parent, [int index = null, Object source = null, Object target = null]) {
+  Object addCell(Object cell, [Object parent=null, int index = null, Object source = null, Object target = null]) {
     return addCells([cell], parent, index, source, target)[0];
   }
 

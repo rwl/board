@@ -61,7 +61,7 @@ class AnalysisGraph {
         }
       }
 
-      return result.toArray();
+      return result;
     }
   }
 

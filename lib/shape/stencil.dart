@@ -451,7 +451,7 @@ class Stencil implements IShape {
     if (value != null && value.length > 0) {
       try {
         defaultValue = Math.floor(Float.parseFloat(value)) as int;
-      } on NumberFormatException catch (e) {
+      } on FormatException catch (e) {
         // ignore
       }
     }
@@ -476,7 +476,7 @@ class Stencil implements IShape {
     if (value != null && value.length > 0) {
       try {
         defaultValue = Double.parseDouble(value);
-      } on NumberFormatException catch (e) {
+      } on FormatException catch (e) {
         // ignore
       }
     }

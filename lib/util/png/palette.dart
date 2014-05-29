@@ -31,14 +31,14 @@ class Palette extends PngEncodeParam
 	/**
 	 * Sets the desired bit depth for a palette image.  The bit
 	 * depth must be one of 1, 2, 4, or 8, or else an
-	 * <code>IllegalArgumentException</code> will be thrown.
+	 * <code>ArgumentError</code> will be thrown.
 	 */
 	void setBitDepth(int bitDepth)
 	{
 		if (bitDepth != 1 && bitDepth != 2 && bitDepth != 4
 				&& bitDepth != 8)
 		{
-			throw new IllegalArgumentException("PNGEncodeParam2");
+			throw new ArgumentError("PNGEncodeParam2");
 		}
 		this._bitDepth = bitDepth;
 		_bitDepthSet = true;
@@ -65,11 +65,11 @@ class Palette extends PngEncodeParam
 	{
 		if (rgb.length < 1 * 3 || rgb.length > 256 * 3)
 		{
-			throw new IllegalArgumentException("PNGEncodeParam0");
+			throw new ArgumentError("PNGEncodeParam0");
 		}
 		if ((rgb.length % 3) != 0)
 		{
-			throw new IllegalArgumentException("PNGEncodeParam1");
+			throw new ArgumentError("PNGEncodeParam1");
 		}
 
 		palette = (rgb.clone());

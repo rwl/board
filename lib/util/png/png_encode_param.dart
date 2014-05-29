@@ -247,7 +247,7 @@ public abstract class PngEncodeParam
 	{
 		if (chromaticity.length != 8)
 		{
-			throw new IllegalArgumentException();
+			throw new ArgumentError();
 		}
 		this._chromaticity = (chromaticity.clone());
 		_chromaticitySet = true;

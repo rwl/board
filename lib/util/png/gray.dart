@@ -43,7 +43,7 @@ class Gray extends PngEncodeParam
 		if (bitDepth != 1 && bitDepth != 2 && bitDepth != 4
 				&& bitDepth != 8 && bitDepth != 16)
 		{
-			throw new IllegalArgumentException();
+			throw new ArgumentError();
 		}
 		this._bitDepth = bitDepth;
 		_bitDepthSet = true;

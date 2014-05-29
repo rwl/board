@@ -47,7 +47,7 @@ class GraphProperties {
 	 */
   static void setTraverseVisible(Map<String, Object> properties, bool isTraverseVisible) {
     if (properties != null) {
-      properties.put(TRAVERSE_VISIBLE, isTraverseVisible);
+      properties[TRAVERSE_VISIBLE] = isTraverseVisible;
     }
   }
 
@@ -71,7 +71,7 @@ class GraphProperties {
 	 */
   static void setDirected(Map<String, Object> properties, bool isDirected) {
     if (properties != null) {
-      properties.put(DIRECTED, isDirected);
+      properties[DIRECTED] = isDirected;
     }
   }
 

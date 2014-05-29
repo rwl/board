@@ -7,9 +7,9 @@ class CloneNotSupportedException extends Exception {
   }
 }
 
-class NumberFormatException extends Exception {
+/*class NumberFormatException extends Exception {
   factory NumberFormatException([var msg=null])
   {
     return new Exception(msg);
   }
-}
+}*/

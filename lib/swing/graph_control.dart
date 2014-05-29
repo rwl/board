@@ -304,7 +304,7 @@ class GraphControl extends JComponent {
     Rect tmp = Utils.getBoundingBox(new Rect(state), rotation);
 
     // Adds scaled stroke width
-    int border = (Math.ceil(Utils.getDouble(state.getStyle(), Constants.STYLE_STROKEWIDTH) * this.graphComponent._graph.getView().getScale()) as int) + 1;
+    int border = (math.ceil(Utils.getDouble(state.getStyle(), Constants.STYLE_STROKEWIDTH) * this.graphComponent._graph.getView().getScale()) as int) + 1;
     tmp.grow(border);
 
     if (Utils.isTrue(state.getStyle(), Constants.STYLE_SHADOW)) {

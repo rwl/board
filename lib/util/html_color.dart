@@ -51,7 +51,7 @@ class HtmlColor {
 	 * @param str
 	 *            the 24/32bit hex string value (ARGB)
 	 * @return java.awt.Color (24bit RGB on JDK 1.1, 24/32bit ARGB on JDK1.2)
-	 * @exception NumberFormatException
+	 * @exception FormatException
 	 *                if the specified string cannot be interpreted as a
 	 *                hexidecimal integer
 	 */
@@ -82,10 +82,10 @@ class HtmlColor {
       }
 
       value = Long.parse(tmp, 16) as int;
-    } on NumberFormatException catch (nfe) {
+    } on FormatException catch (nfe) {
       try {
         value = Long.decode(str).intValue();
-      } on NumberFormatException catch (e) {
+      } on FormatException catch (e) {
         // ignores exception and returns black
       }
     }

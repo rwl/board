@@ -33,7 +33,7 @@ class FibonacciHeap {
     _FibonacciHeapNode node = _nodes[element];
 
     if (node == null && create) {
-      node = new _FibonacciHeapNode(element, Double.MAX_VALUE);
+      node = new _FibonacciHeapNode(element, double.MAX_FINITE);
       _nodes[element] = node;
       insert(node, node.getKey());
     }
@@ -58,12 +58,12 @@ class FibonacciHeap {
 	 * @param x Node whose value should be decreased.
 	 * @param k New key value for node x.
 	 * 
-	 * @exception IllegalArgumentException
+	 * @exception ArgumentError
 	 *                Thrown if k is larger than x.key value.
 	 */
   void decreaseKey(_FibonacciHeapNode x, double k) {
     if (k > x._key) {
-      throw new IllegalArgumentException("decreaseKey() got larger key value");
+      throw new ArgumentError("decreaseKey() got larger key value");
     }
 
     x._key = k;
@@ -93,7 +93,7 @@ class FibonacciHeap {
 	 */
   void delete(_FibonacciHeapNode x) {
     // make x as small as possible
-    decreaseKey(x, Double.NEGATIVE_INFINITY);
+    decreaseKey(x, double.NEGATIVE_INFINITY);
 
     // remove the smallest, which decreases n also
     removeMin();

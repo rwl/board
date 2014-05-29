@@ -37,7 +37,7 @@ class GraphGenerator {
 	 */
   void getNullGraph(AnalysisGraph aGraph, int numVertices) {
     if (numVertices < 0) {
-      throw new IllegalArgumentException();
+      throw new ArgumentError();
     }
     Graph graph = aGraph.getGraph();
     Object parent = graph.getDefaultParent();
@@ -54,7 +54,7 @@ class GraphGenerator {
 	 */
   void getCompleteGraph(AnalysisGraph aGraph, int numVertices) {
     if (numVertices < 0) {
-      throw new IllegalArgumentException();
+      throw new ArgumentError();
     }
 
     Graph graph = aGraph.getGraph();
@@ -86,7 +86,7 @@ class GraphGenerator {
 	 */
   void getGridGraph(AnalysisGraph aGraph, int numColumns, int numRows) {
     if (numColumns < 0 || numRows < 0) {
-      throw new IllegalArgumentException();
+      throw new ArgumentError();
     }
 
     Graph graph = aGraph.getGraph();
@@ -131,7 +131,7 @@ class GraphGenerator {
     Graph graph = aGraph.getGraph();
 
     if (xSpacing < 0 || ySpacing < 0 || numColumns < 1 || numRows < 1) {
-      throw new IllegalArgumentException();
+      throw new ArgumentError();
     }
 
     Object parent = graph.getDefaultParent();
@@ -156,7 +156,7 @@ class GraphGenerator {
 	 */
   void getBipartiteGraph(AnalysisGraph aGraph, int numVerticesGroup1, int numVerticesGroup2) {
     if (numVerticesGroup1 < 0 || numVerticesGroup2 < 0) {
-      throw new IllegalArgumentException();
+      throw new ArgumentError();
     }
 
     int numVertices = numVerticesGroup1 + numVerticesGroup2;
@@ -196,7 +196,7 @@ class GraphGenerator {
 	 */
   void setBipartiteGraphSpacing(AnalysisGraph aGraph, int numVerticesGroup1, int numVerticesGroup2, double vertexSpacing, double groupSpacing) {
     if (numVerticesGroup1 < 0 || numVerticesGroup2 < 0) {
-      throw new IllegalArgumentException();
+      throw new ArgumentError();
     }
 
     Graph graph = aGraph.getGraph();
@@ -240,7 +240,7 @@ class GraphGenerator {
 	 */
   void getCompleteBipartiteGraph(AnalysisGraph aGraph, int numVerticesGroup1, int numVerticesGroup2) {
     if (numVerticesGroup1 < 0 || numVerticesGroup2 < 0) {
-      throw new IllegalArgumentException();
+      throw new ArgumentError();
     }
 
     int numVertices = numVerticesGroup1 + numVerticesGroup2;
@@ -270,7 +270,7 @@ class GraphGenerator {
 	 */
   void getKnightGraph(AnalysisGraph aGraph, int xDim, int yDim) {
     if (xDim < 3 || yDim < 3) {
-      throw new IllegalArgumentException();
+      throw new ArgumentError();
     }
 
     int numVertices = xDim * yDim;
@@ -311,7 +311,7 @@ class GraphGenerator {
 	 */
   List<Object> getKnightMoveVertexes(AnalysisGraph aGraph, int xDim, int yDim, int xCoord, int yCoord) {
     if (xCoord > xDim || yCoord > yDim || xDim < 1 || yDim < 1 || xCoord < 1 || yCoord < 1) {
-      throw new IllegalArgumentException();
+      throw new ArgumentError();
     }
 
     Graph graph = aGraph.getGraph();
@@ -322,7 +322,7 @@ class GraphGenerator {
     //location 1
     int currX = xCoord + 1;
     int currY = yCoord - 2;
-    ArrayList<Object> possibleMoves = new List<Object>();
+    List<Object> possibleMoves = new List<Object>();
     // check if in bounds
     Object currVertex;
 
@@ -401,7 +401,7 @@ class GraphGenerator {
       possibleMoves.add(currVertex);
     }
 
-    return possibleMoves.toArray();
+    return possibleMoves;
   }
 
   /**
@@ -414,10 +414,10 @@ class GraphGenerator {
 	 */
   List<int> getVertexGridCoords(int xDim, int yDim, int value) {
     if (value > ((yDim * xDim) - 1) || xDim < 0 || yDim < 0 || value < 0) {
-      throw new IllegalArgumentException();
+      throw new ArgumentError();
     }
 
-    int yCoord = Math.floor(value / xDim) as int;
+    int yCoord = math.floor(value / xDim) as int;
     int xCoord = (value - yCoord * xDim) + 1;
     yCoord += 1;
 
@@ -439,7 +439,7 @@ class GraphGenerator {
 	 */
   Object _getVertexFromGrid(List<Object> vertices, int xDim, int yDim, int xCoord, int yCoord) {
     if (xCoord > xDim || yCoord > yDim || xDim < 1 || yDim < 1 || xCoord < 1 || yCoord < 1) {
-      throw new IllegalArgumentException();
+      throw new ArgumentError();
     }
 
     int value = (yCoord - 1) * xDim + xCoord - 1;
@@ -456,7 +456,7 @@ class GraphGenerator {
 	 */
   void getKingGraph(AnalysisGraph aGraph, int xDim, int yDim) {
     if (xDim < 2 || yDim < 2) {
-      throw new IllegalArgumentException();
+      throw new ArgumentError();
     }
 
     int numVertices = xDim * yDim;
@@ -497,7 +497,7 @@ class GraphGenerator {
 	 */
   List<Object> getKingMoveVertexes(AnalysisGraph aGraph, int xDim, int yDim, int xCoord, int yCoord) {
     if (xDim < 0 || yDim < 0 || xCoord < 0 || yCoord < 0) {
-      throw new IllegalArgumentException();
+      throw new ArgumentError();
     }
 
     Graph graph = aGraph.getGraph();
@@ -508,7 +508,7 @@ class GraphGenerator {
     //location 1
     int currX = xCoord + 1;
     int currY = yCoord - 1;
-    ArrayList<Object> possibleMoves = new List<Object>();
+    List<Object> possibleMoves = new List<Object>();
     // check if in bounds
     Object currVertex;
 
@@ -580,7 +580,7 @@ class GraphGenerator {
       possibleMoves.add(currVertex);
     }
 
-    return possibleMoves.toArray();
+    return possibleMoves;
   }
 
   /**
@@ -620,7 +620,7 @@ class GraphGenerator {
 	 */
   void getPathGraph(AnalysisGraph aGraph, int numVertices) {
     if (numVertices < 0) {
-      throw new IllegalArgumentException();
+      throw new ArgumentError();
     }
 
     Graph graph = aGraph.getGraph();
@@ -644,7 +644,7 @@ class GraphGenerator {
 	 */
   void setPathGraphSpacing(AnalysisGraph aGraph, double spacing) {
     if (spacing < 0) {
-      throw new IllegalArgumentException();
+      throw new ArgumentError();
     }
 
     Graph graph = aGraph.getGraph();
@@ -669,7 +669,7 @@ class GraphGenerator {
 	 */
   void getStarGraph(AnalysisGraph aGraph, int numVertices) {
     if (numVertices < 4) {
-      throw new IllegalArgumentException();
+      throw new ArgumentError();
     }
 
     Graph graph = aGraph.getGraph();
@@ -694,7 +694,7 @@ class GraphGenerator {
 	 */
   void setStarGraphLayout(AnalysisGraph aGraph, double graphSize) {
     if (graphSize < 4) {
-      throw new IllegalArgumentException();
+      throw new ArgumentError();
     }
 
     Graph graph = aGraph.getGraph();
@@ -735,7 +735,7 @@ class GraphGenerator {
 	 */
   void getWheelGraph(AnalysisGraph aGraph, int numVertices) {
     if (numVertices < 4) {
-      throw new IllegalArgumentException();
+      throw new ArgumentError();
     }
 
     Graph graph = aGraph.getGraph();
@@ -767,7 +767,7 @@ class GraphGenerator {
 	 */
   void getFriendshipWindmillGraph(AnalysisGraph aGraph, int numBranches, int branchSize) {
     if (numBranches < 2 || branchSize < 2) {
-      throw new IllegalArgumentException();
+      throw new ArgumentError();
     }
 
     Graph graph = aGraph.getGraph();
@@ -808,7 +808,7 @@ class GraphGenerator {
 	 */
   void getWindmillGraph(AnalysisGraph aGraph, int numBranches, int branchSize) {
     if (numBranches < 2 || branchSize < 2) {
-      throw new IllegalArgumentException();
+      throw new ArgumentError();
     }
 
     Graph graph = aGraph.getGraph();
@@ -857,7 +857,7 @@ class GraphGenerator {
 	 */
   void setWindmillGraphLayout(AnalysisGraph aGraph, int numBranches, int numVerticesInBranch, double graphSize) {
     if (graphSize < 0 || numBranches < 2 || numVerticesInBranch < 1) {
-      throw new IllegalArgumentException();
+      throw new ArgumentError();
     }
 
     Graph graph = aGraph.getGraph();
@@ -868,7 +868,7 @@ class GraphGenerator {
     double centerX = graphSize / 2.0;
     double centerY = centerX;
     bool isBranchSizeEven = ((numVerticesInBranch) % 2 == 0);
-    int middleIndex = Math.ceil(numVerticesInBranch / 2.0) as int;
+    int middleIndex = math.ceil(numVerticesInBranch / 2.0) as int;
 
     //create the circle
     for (int i = 0; i < numBranches; i++) {
@@ -929,13 +929,13 @@ class GraphGenerator {
 	 */
   double _getRingSize(int currIndex, int branchSize, double fullSize) {
     if (currIndex < 1 || currIndex > branchSize || branchSize < 1 || fullSize < 0) {
-      throw new IllegalArgumentException();
+      throw new ArgumentError();
     }
 
     int middleIndex = 0;
     bool isBranchSizeEven = ((branchSize) % 2 == 0);
 
-    middleIndex = Math.ceil(branchSize / 2.0) as int;
+    middleIndex = math.ceil(branchSize / 2.0) as int;
 
     if (currIndex == middleIndex || (isBranchSizeEven && currIndex == middleIndex + 1)) {
       //full size
@@ -944,7 +944,7 @@ class GraphGenerator {
       //after middle
       currIndex = branchSize - currIndex + 1;
     }
-    return (((Math.pow(currIndex, 0.75) as float) / (Math.pow(middleIndex, 0.75) as float)) * fullSize);
+    return (((Math.pow(currIndex, 0.75) as double) / (Math.pow(middleIndex, 0.75) as double)) * fullSize);
   }
 
   /**
@@ -972,10 +972,10 @@ class GraphGenerator {
 
       do {
         goodPair = true;
-        startVertex = vertices[math.round(Math.random() * (vertices.length - 1)) as int];
-        endVertex = vertices[math.round(Math.random() * (vertices.length - 1)) as int];
+        startVertex = vertices[math.round(Math.Random.nextDouble() * (vertices.length - 1)) as int];
+        endVertex = vertices[math.round(Math.Random.nextDouble() * (vertices.length - 1)) as int];
 
-        if (!allowSelfLoops && startVertex.equals(endVertex)) {
+        if (!allowSelfLoops && startVertex == endVertex) {
           goodPair = false;
         } else if (!allowMultipleEdges && GraphStructure.areConnected(aGraph, startVertex, endVertex)) {
           goodPair = false;
@@ -1009,7 +1009,7 @@ class GraphGenerator {
     }
 
     try {
-      GraphStructure.makeTreeDirected(aGraph, vertices[math.round(Math.random() * (vertices.length - 1)) as int]);
+      GraphStructure.makeTreeDirected(aGraph, vertices[math.round(Math.Random.nextDouble() * (vertices.length - 1)) as int]);
     } on StructuralException catch (e) {
       System.out.println(e);
     }
@@ -1020,7 +1020,7 @@ class GraphGenerator {
 	 * @param aGraph
 	 * @return
 	 */
-  Double getNewEdgeValue(AnalysisGraph aGraph) {
+  double getNewEdgeValue(AnalysisGraph aGraph) {
     if (getGeneratorFunction() != null) {
       Graph graph = aGraph.getGraph();
       return getGeneratorFunction().getCost(graph.getView().getState(graph.getDefaultParent()));
@@ -1036,13 +1036,13 @@ class GraphGenerator {
 	 * @param maxWeight maximum edge weight if weighted
 	 * @return a generator function
 	 */
-  static GeneratorFunction getGeneratorFunction(Graph graph, bool weighted, double minWeight, double maxWeight) {
+  /*static GeneratorFunction getGeneratorFunction(Graph graph, bool weighted, double minWeight, double maxWeight) {
     if (weighted) {
       return new GeneratorRandomFunction(minWeight, maxWeight, 2);
     } else {
       return null;
     }
-  }
+  }*/
 
   GeneratorFunction getGeneratorFunction() {
     return this._generatorFunction;
@@ -1062,7 +1062,7 @@ class GraphGenerator {
     }
 
     int currValue = 0;
-    currValue = minValue + (math.round((Math.random() * (maxValue - minValue))) as int);
+    currValue = minValue + (math.round((Math.Random.nextDouble() * (maxValue - minValue))) as int);
     return currValue;
   }
 
@@ -1124,10 +1124,10 @@ class GraphGenerator {
   void getKnightTour(AnalysisGraph aGraph, int xDim, int yDim, int startVertexValue) //throws StructuralException
   {
     if (xDim < 5 || yDim < 5) {
-      throw new IllegalArgumentException();
+      throw new ArgumentError();
     }
 
-    ArrayList<Object> resultPath = new List<Object>();
+    List<Object> resultPath = new List<Object>();
     int vertexNum = xDim * yDim;
 
     Graph graph = aGraph.getGraph();
@@ -1182,11 +1182,11 @@ class GraphGenerator {
 	 * @param resultPath
 	 * @return
 	 */
-  Object _getNextKnightMove(AnalysisGraph aGraph, int xDim, int yDim, int xCoord, int yCoord, ArrayList<Object> resultPath) {
+  Object _getNextKnightMove(AnalysisGraph aGraph, int xDim, int yDim, int xCoord, int yCoord, List<Object> resultPath) {
     List<Object> possibleMoves = getKnightMoveVertexes(aGraph, xDim, yDim, xCoord, yCoord);
     //get the position with minimum possible moves
     int minMoveNum = 9;
-    float biggestDistance = 0;
+    double biggestDistance = 0.0;
     Object currVertex = null;
     CostFunction costFunction = aGraph.getGenerator().getCostFunction();
     GraphView view = aGraph.getGraph().getView();
@@ -1195,7 +1195,7 @@ class GraphGenerator {
       int currValue = costFunction.getCost(new CellState(view, possibleMoves[i], null)) as int;
       List<int> currCoords = getVertexGridCoords(xDim, yDim, currValue);
       int currMoveNum = _getPossibleKnightMoveCount(aGraph, xDim, yDim, currCoords[0], currCoords[1]);
-      float currDistance = _getDistanceFromGridCenter(xDim, yDim, currValue);
+      double currDistance = _getDistanceFromGridCenter(xDim, yDim, currValue);
 
       if ((currMoveNum < minMoveNum || (currMoveNum == minMoveNum && currDistance > biggestDistance)) && !resultPath.contains(possibleMoves[i])) {
         biggestDistance = currDistance;
@@ -1311,14 +1311,14 @@ class GraphGenerator {
 	 * @param currValue
 	 * @return
 	 */
-  float _getDistanceFromGridCenter(int xDim, int yDim, int currValue) {
-    float centerX = (xDim + 1) / 2.0;
-    float centerY = (yDim + 1) / 2.0;
+  double _getDistanceFromGridCenter(int xDim, int yDim, int currValue) {
+    double centerX = (xDim + 1) / 2.0;
+    double centerY = (yDim + 1) / 2.0;
     List<int> currCoords = getVertexGridCoords(xDim, yDim, currValue);
-    float x = math.abs(centerX - currCoords[0]);
-    float y = math.abs(centerY - currCoords[1]);
+    double x = math.abs(centerX - currCoords[0]);
+    double y = math.abs(centerY - currCoords[1]);
 
-    return Math.sqrt(x * x + y * y) as float;
+    return Math.sqrt(x * x + y * y) as double;
   }
 
   CostFunction getCostFunction() {

@@ -140,7 +140,7 @@ class GraphAnalysis {
               double oldPrio = node.getKey();
 
               if (newPrio < oldPrio) {
-                pred.put(neighbour, e[i]);
+                pred[neighbour] = e[i];
                 q.decreaseKey(node, newPrio);
               }
             }
@@ -155,27 +155,27 @@ class GraphAnalysis {
 
     // Constructs a path array by walking backwards through the predessecor
     // map and filling up a list of edges, which is subsequently returned.
-    ArrayList<Object> list = new List<Object>(2 * steps);
+    List<Object> list = new List<Object>(2 * steps);
     Object obj = to;
-    Object edge = pred.get(obj);
+    Object edge = pred[obj];
 
     if (edge != null) {
       list.add(obj);
 
       while (edge != null) {
-        list.add(0, edge);
+        list.insert(0, edge);
 
         CellState state = view.getState(edge);
         Object source = (state != null) ? state.getVisibleTerminal(true) : view.getVisibleTerminal(edge, true);
         bool isSource = source == obj;
         obj = (state != null) ? state.getVisibleTerminal(!isSource) : view.getVisibleTerminal(edge, !isSource);
-        list.add(0, obj);
+        list.insert(0, obj);
 
-        edge = pred.get(obj);
+        edge = pred[obj];
       }
     }
 
-    return list.toArray();
+    return list;
   }
 
   /**
@@ -245,7 +245,7 @@ class GraphAnalysis {
               double oldPrio = node.getKey();
 
               if (newPrio < oldPrio) {
-                pred.put(neighbour, e[i]);
+                pred[neighbour] = e[i];
                 q.decreaseKey(node, newPrio);
               }
             }
@@ -254,7 +254,7 @@ class GraphAnalysis {
       }
     }
 
-    return mst.toArray();
+    return mst;
   }
 
   /**
@@ -288,7 +288,7 @@ class GraphAnalysis {
     // unified.
     GraphView view = graph.getView();
     UnionFind uf = _createUnionFind(v);
-    ArrayList<Object> result = new List<Object>(e.length);
+    List<Object> result = new List<Object>(e.length);
     List<CellState> edgeStates = sort(view.getCellStates(e), cf);
 
     for (int i = 0; i < edgeStates.length; i++) {
@@ -304,7 +304,7 @@ class GraphAnalysis {
       }
     }
 
-    return result.toArray();
+    return result;
   }
 
   /**
@@ -346,16 +346,16 @@ class GraphAnalysis {
 	 *         <code>cf</code>
 	 */
   List<CellState> sort(List<CellState> states, final ICostFunction cf) {
-    List<CellState> result = Arrays.asList(states);
+    List<CellState> result = new List<CellState>.from(states);
 
     Collections.sort(result, (CellState o1, CellState o2) {
-      Double d1 = new Double(cf.getCost(o1));
-      Double d2 = new Double(cf.getCost(o2));
+      double d1 = cf.getCost(o1);
+      double d2 = cf.getCost(o2);
 
       return d1.compareTo(d2);
     });
 
-    return result.toArray() as List<CellState>;
+    return result;// as List<CellState>;
   }
 
   /**

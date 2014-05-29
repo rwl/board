@@ -111,7 +111,7 @@ class Graphics2DCanvas extends BasicCanvas {
 	 * 
 	 */
   static void putShape(String name, IShape shape) {
-    _shapes.put(name, shape);
+    _shapes[name] = shape;
   }
 
   /**
@@ -119,7 +119,7 @@ class Graphics2DCanvas extends BasicCanvas {
 	 */
   IShape getShape(Map<String, Object> style) {
     String name = Utils.getString(style, Constants.STYLE_SHAPE, null);
-    IShape shape = _shapes.get(name);
+    IShape shape = _shapes[name];
 
     if (shape == null && name != null) {
       shape = StencilRegistry.getStencil(name);
@@ -132,7 +132,7 @@ class Graphics2DCanvas extends BasicCanvas {
 	 * 
 	 */
   static void putTextShape(String name, ITextShape shape) {
-    _textShapes.put(name, shape);
+    _textShapes[name] = shape;
   }
 
   /**
@@ -147,7 +147,7 @@ class Graphics2DCanvas extends BasicCanvas {
       name = TEXT_SHAPE_DEFAULT;
     }
 
-    return _textShapes.get(name);
+    return _textShapes[name];
   }
 
   /**
@@ -181,7 +181,7 @@ class Graphics2DCanvas extends BasicCanvas {
 
     if (_g != null && shape != null) {
       // Creates a temporary graphics instance for drawing this shape
-      float opacity = Utils.getFloat(style, Constants.STYLE_OPACITY, 100);
+      double opacity = Utils.getFloat(style, Constants.STYLE_OPACITY, 100);
       Graphics2D previousGraphics = _g;
       _g = createTemporaryGraphics(style, opacity, state);
 
@@ -204,13 +204,13 @@ class Graphics2DCanvas extends BasicCanvas {
 
     if (_g != null && shape != null && _drawLabels && text != null && text.length > 0) {
       // Creates a temporary graphics instance for drawing this shape
-      float opacity = Utils.getFloat(style, Constants.STYLE_TEXT_OPACITY, 100);
+      double opacity = Utils.getFloat(style, Constants.STYLE_TEXT_OPACITY, 100);
       Graphics2D previousGraphics = _g;
       _g = createTemporaryGraphics(style, opacity, null);
 
       // Draws the label background and border
-      Color bg = Utils.getColor(style, Constants.STYLE_LABEL_BACKGROUNDCOLOR);
-      Color border = Utils.getColor(style, Constants.STYLE_LABEL_BORDERCOLOR);
+      color.Color bg = Utils.getColor(style, Constants.STYLE_LABEL_BACKGROUNDCOLOR);
+      color.Color border = Utils.getColor(style, Constants.STYLE_LABEL_BORDERCOLOR);
       paintRectangle(state.getLabelBounds().getRectangle(), bg, border);
 
       // Paints the label and restores the graphics object
@@ -316,7 +316,7 @@ class Graphics2DCanvas extends BasicCanvas {
       double arcSize = Constants.LINE_ARCSIZE * _scale;
 
       GeneralPath path = new GeneralPath();
-      path.moveTo(pt.getX() as float, pt.getY() as float);
+      path.moveTo(pt.getX() as double, pt.getY() as double);
 
       // Draws the line segments
       for (int i = 1; i < points.length - 1; i++) {
@@ -334,7 +334,7 @@ class Graphics2DCanvas extends BasicCanvas {
 
           double x1 = tmp.getX() + nx1;
           double y1 = tmp.getY() + ny1;
-          path.lineTo(x1 as float, y1 as float);
+          path.lineTo(x1 as double, y1 as double);
 
           // Draws a curve from the last point to the current
           // point with a spacing of size off the current point
@@ -357,16 +357,16 @@ class Graphics2DCanvas extends BasicCanvas {
           double x2 = tmp.getX() + nx2;
           double y2 = tmp.getY() + ny2;
 
-          path.quadTo(tmp.getX() as float, tmp.getY() as float, x2 as float, y2 as float);
+          path.quadTo(tmp.getX() as double, tmp.getY() as double, x2 as double, y2 as double);
           tmp = new Point2d(x2, y2);
         } else {
-          path.lineTo(tmp.getX() as float, tmp.getY() as float);
+          path.lineTo(tmp.getX() as double, tmp.getY() as double);
         }
 
         pt = tmp;
       }
 
-      path.lineTo((pe.getX() as float), pe.getY() as float);
+      path.lineTo((pe.getX() as double), pe.getY() as double);
       _g.draw(path);
     }
   }
@@ -374,7 +374,7 @@ class Graphics2DCanvas extends BasicCanvas {
   /**
 	 *
 	 */
-  void paintRectangle(Rectangle bounds, Color background, Color border) {
+  void paintRectangle(Rectangle bounds, color.Color background, color.Color border) {
     if (background != null) {
       _g.setColor(background);
       fillShape(bounds);
@@ -404,7 +404,7 @@ class Graphics2DCanvas extends BasicCanvas {
     if (shadow) {
       // Saves the state and configures the graphics object
       Paint p = _g.getPaint();
-      Color previousColor = _g.getColor();
+      color.Color previousColor = _g.getColor();
       _g.setColor(SwingConstants.SHADOW_COLOR);
       _g.translate(shadowOffsetX, shadowOffsetY);
 
@@ -427,16 +427,16 @@ class Graphics2DCanvas extends BasicCanvas {
     double width = Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1) * _scale;
     bool dashed = Utils.isTrue(style, Constants.STYLE_DASHED);
     if (dashed) {
-      List<float> dashPattern = Utils.getFloatArray(style, Constants.STYLE_DASH_PATTERN, Constants.DEFAULT_DASHED_PATTERN, " ");
-      List<float> scaledDashPattern = new List<float>(dashPattern.length);
+      List<double> dashPattern = Utils.getFloatArray(style, Constants.STYLE_DASH_PATTERN, Constants.DEFAULT_DASHED_PATTERN, " ");
+      List<double> scaledDashPattern = new List<double>(dashPattern.length);
 
       for (int i = 0; i < dashPattern.length; i++) {
-        scaledDashPattern[i] = (dashPattern[i] * _scale * width) as float;
+        scaledDashPattern[i] = (dashPattern[i] * _scale * width) as double;
       }
 
-      return new BasicStroke(width as float, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0, scaledDashPattern, 0.0);
+      return new BasicStroke(width as double, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0, scaledDashPattern, 0.0);
     } else {
-      return new BasicStroke(width as float);
+      return new BasicStroke(width as double);
     }
   }
 
@@ -444,28 +444,28 @@ class Graphics2DCanvas extends BasicCanvas {
 	 * 
 	 */
   Paint createFillPaint(Rect bounds, Map<String, Object> style) {
-    Color fillColor = Utils.getColor(style, Constants.STYLE_FILLCOLOR);
+    color.Color fillColor = Utils.getColor(style, Constants.STYLE_FILLCOLOR);
     Paint fillPaint = null;
 
     if (fillColor != null) {
-      Color gradientColor = Utils.getColor(style, Constants.STYLE_GRADIENTCOLOR);
+      color.Color gradientColor = Utils.getColor(style, Constants.STYLE_GRADIENTCOLOR);
 
       if (gradientColor != null) {
         String gradientDirection = Utils.getString(style, Constants.STYLE_GRADIENT_DIRECTION);
 
-        float x1 = bounds.getX() as float;
-        float y1 = bounds.getY() as float;
-        float x2 = bounds.getX() as float;
-        float y2 = bounds.getY() as float;
+        double x1 = bounds.getX() as double;
+        double y1 = bounds.getY() as double;
+        double x2 = bounds.getX() as double;
+        double y2 = bounds.getY() as double;
 
-        if (gradientDirection == null || gradientDirection.equals(Constants.DIRECTION_SOUTH)) {
-          y2 = (bounds.getY() + bounds.getHeight()) as float;
-        } else if (gradientDirection.equals(Constants.DIRECTION_EAST)) {
-          x2 = (bounds.getX() + bounds.getWidth()) as float;
-        } else if (gradientDirection.equals(Constants.DIRECTION_NORTH)) {
-          y1 = (bounds.getY() + bounds.getHeight()) as float;
-        } else if (gradientDirection.equals(Constants.DIRECTION_WEST)) {
-          x1 = (bounds.getX() + bounds.getWidth()) as float;
+        if (gradientDirection == null || gradientDirection == Constants.DIRECTION_SOUTH) {
+          y2 = (bounds.getY() + bounds.getHeight()) as double;
+        } else if (gradientDirection == Constants.DIRECTION_EAST) {
+          x2 = (bounds.getX() + bounds.getWidth()) as double;
+        } else if (gradientDirection == Constants.DIRECTION_NORTH) {
+          y1 = (bounds.getY() + bounds.getHeight()) as double;
+        } else if (gradientDirection == Constants.DIRECTION_WEST) {
+          x1 = (bounds.getX() + bounds.getWidth()) as double;
         }
 
         fillPaint = new GradientPaint(x1, y1, fillColor, x2, y2, gradientColor, true);
@@ -478,7 +478,7 @@ class Graphics2DCanvas extends BasicCanvas {
   /**
 	 * 
 	 */
-  Graphics2D createTemporaryGraphics(Map<String, Object> style, float opacity, Rect bounds) {
+  Graphics2D createTemporaryGraphics(Map<String, Object> style, double opacity, Rect bounds) {
     Graphics2D temporaryGraphics = _g.create() as Graphics2D;
 
     // Applies the default translate
@@ -489,7 +489,7 @@ class Graphics2DCanvas extends BasicCanvas {
       double rotation = Utils.getDouble(style, Constants.STYLE_ROTATION, 0);
 
       if (rotation != 0) {
-        temporaryGraphics.rotate(Math.toRadians(rotation), bounds.getCenterX(), bounds.getCenterY());
+        temporaryGraphics.rotate(math.toRadians(rotation), bounds.getCenterX(), bounds.getCenterY());
       }
     }
 

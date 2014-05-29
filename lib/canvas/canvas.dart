@@ -8,6 +8,13 @@ library graph.canvas;
  * different technologies, such as Graphics2D, HTML, SVG or VML.
  */
 
+import 'dart:collection' show HashMap
+import 'dart:math' as Math;
+
+import 'package:color/color.dart' as color;
+
+import '../compat/math.dart' as math;
+
 //import '../shape/shape.dart' show ActorShape;
 //import '../shape/shape.dart' show ArrowShape;
 //import '../shape/shape.dart' show CloudShape;

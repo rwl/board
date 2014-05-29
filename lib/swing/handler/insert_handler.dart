@@ -135,7 +135,7 @@ class InsertHandler extends MouseAdapter {
       }
 
       Rectangle tmp = dirty.getRectangle();
-      int b = Math.ceil(_lineWidth) as int;
+      int b = math.ceil(_lineWidth) as int;
       _graphComponent.getGraphControl().repaint(tmp.x - b, tmp.y - b, tmp.width + 2 * b, tmp.height + 2 * b);
 
       e.consume();
@@ -185,7 +185,7 @@ class InsertHandler extends MouseAdapter {
     _first = null;
 
     if (dirty != null) {
-      int b = Math.ceil(_lineWidth) as int;
+      int b = math.ceil(_lineWidth) as int;
       _graphComponent.getGraphControl().repaint(dirty.x - b, dirty.y - b, dirty.width + 2 * b, dirty.height + 2 * b);
     }
   }

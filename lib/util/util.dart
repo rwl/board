@@ -10,7 +10,7 @@ library graph.util;
  */
 
 import 'dart:html';
-import 'dart:collection' show HashMap, binarySearch;
+import 'dart:collection' show HashMap, SplayTreeSet, binarySearch;
 //import 'dart:collection.algorithms' show binarySearch;
 import 'dart:svg' as svg;
 import 'dart:math' as Math;
@@ -966,8 +966,8 @@ class Utils {
   /**
 	 * Sorts the given cells according to the order in the cell hierarchy.
 	 */
-  static Set<Object> sortCells(Collection<Object> cells, final bool ascending) {
-    SortedSet<Object> result = new TreeSet<Object>((Object o1, Object o2) {
+  static Set<Object> sortCells(Set<Object> cells, final bool ascending) {
+    Set<Object> result = new SplayTreeSet<Object>((Object o1, Object o2) {
       int comp = CellPath.compare(CellPath.create(o1 as ICell), CellPath.create(o2 as ICell));
 
       return (comp == 0) ? 0 : (((comp > 0) == ascending) ? 1 : -1);
@@ -1146,7 +1146,7 @@ class Utils {
       int width = math.round(state.getWidth()) as int;
       int height = math.round(state.getHeight()) as int;
 
-      if (Utils.getString(state.getStyle(), Constants.STYLE_SHAPE, "").equals(Constants.SHAPE_SWIMLANE)) {
+      if (Utils.getString(state.getStyle(), Constants.STYLE_SHAPE, "") == Constants.SHAPE_SWIMLANE) {
         int start = Utils.getInt(state.getStyle(), Constants.STYLE_STARTSIZE, Constants.DEFAULT_STARTSIZE);
 
         if (Utils.isTrue(state.getStyle(), Constants.STYLE_HORIZONTAL, true)) {
@@ -1202,12 +1202,12 @@ class Utils {
 	 * @return Returns the bool value for key in dict.
 	 */
   static bool isTrue(Map<String, Object> dict, String key, [bool defaultValue = false]) {
-    Object value = dict.get(key);
+    Object value = dict[key];
 
     if (value == null) {
       return defaultValue;
     } else {
-      return value.equals("1") || value.toString().toLowerCase().equals("true");
+      return value == "1" || value.toString().toLowerCase() == "true";
     }
   }
 
@@ -1239,13 +1239,13 @@ class Utils {
 	 * @return Returns the integer value for key in dict.
 	 */
   static int getInt(Map<String, Object> dict, String key, [int defaultValue = 0]) {
-    Object value = dict.get(key);
+    Object value = dict[key];
 
     if (value == null) {
       return defaultValue;
     } else {
       // Handles commas by casting them to an int
-      return Float.parseFloat(value.toString()) as int;
+      return double.parse(value.toString()) as int;
     }
   }
 
@@ -1276,13 +1276,13 @@ class Utils {
 	 *            Default value to return if the key is undefined.
 	 * @return Returns the float value for key in dict.
 	 */
-  static float getFloat(Map<String, Object> dict, String key, [float defaultValue = 0.0]) {
-    Object value = dict.get(key);
+  static double getFloat(Map<String, Object> dict, String key, [double defaultValue = 0.0]) {
+    Object value = dict[key];
 
     if (value == null) {
       return defaultValue;
     } else {
-      return Float.parseFloat(value.toString());
+      return double.parse(value.toString());
     }
   }
 
@@ -1316,8 +1316,8 @@ class Utils {
 	 *            Default value to return if the key is undefined.
 	 * @return Returns the float array value for key in dict.
 	 */
-  static List<double> getFloatArray(Map<String, Object> dict, String key, List<float> defaultValue, [String separator = ","]) {
-    Object value = dict.get(key);
+  static List<double> getFloatArray(Map<String, Object> dict, String key, List<double> defaultValue, [String separator = ","]) {
+    Object value = dict[key];
 
     if (value == null) {
       return defaultValue;
@@ -1326,7 +1326,7 @@ class Utils {
       List<double> result = new List<double>(floatChars.length);
 
       for (int i = 0; i < floatChars.length; i++) {
-        result[i] = Float.parseFloat(floatChars[i]);
+        result[i] = double.parse(floatChars[i]);
       }
 
       return result;
@@ -1361,12 +1361,12 @@ class Utils {
 	 * @return Returns the double value for key in dict.
 	 */
   static double getDouble(Map<String, Object> dict, String key, [double defaultValue = 0.0]) {
-    Object value = dict.get(key);
+    Object value = dict[key];
 
     if (value == null) {
       return defaultValue;
     } else {
-      return Double.parseDouble(value.toString());
+      return double.parse(value.toString());
     }
   }
 
@@ -1398,7 +1398,7 @@ class Utils {
 	 * @return Returns the string value for key in dict.
 	 */
   static String getString(Map<String, Object> dict, String key, [String defaultValue = null]) {
-    Object value = dict.get(key);
+    Object value = dict[key];
 
     if (value == null) {
       return defaultValue;
@@ -1434,8 +1434,8 @@ class Utils {
 	 *            Default value to return if the key is undefined.
 	 * @return Returns the color value for key in dict.
 	 */
-  static Color getColor(Map<String, Object> dict, String key, [Color defaultValue = null]) {
-    Object value = dict.get(key);
+  static color.Color getColor(Map<String, Object> dict, String key, [color.Color defaultValue = null]) {
+    Object value = dict[key];
 
     if (value == null) {
       return defaultValue;
@@ -1463,13 +1463,13 @@ class Utils {
     int swingFontStyle = ((fontStyle & Constants.FONT_BOLD) == Constants.FONT_BOLD) ? Font.BOLD : Font.PLAIN;
     swingFontStyle += ((fontStyle & Constants.FONT_ITALIC) == Constants.FONT_ITALIC) ? Font.ITALIC : Font.PLAIN;
 
-    return new Font(fontFamily, swingFontStyle, (int)(fontSize * scale));
+    return new Font(fontFamily, swingFontStyle, (fontSize * scale) as int);
   }
 
   /**
 	 * 
 	 */
-  static String hexString(Color color) {
+  static String hexString(color.Color color) {
     return HtmlColor.hexString(color);
   }
 
@@ -1483,11 +1483,11 @@ class Utils {
 	 * @param colorString
 	 *            the 24/32bit hex string value (ARGB)
 	 * @return java.awt.Color (24bit RGB on JDK 1.1, 24/32bit ARGB on JDK1.2)
-	 * @exception NumberFormatException
+	 * @exception FormatException
 	 *                if the specified string cannot be interpreted as a
 	 *                hexidecimal integer
 	 */
-  static Color parseColor(String colorString) /*throws NumberFormatException*/
+  static color.Color parseColor(String colorString) /*throws NumberFormatException*/
   {
     return HtmlColor.parseColor(colorString);
   }
@@ -1499,7 +1499,7 @@ class Utils {
 	 *            Color to return the hex string for.
 	 * @return Returns a hex string for the given color.
 	 */
-  static String getHexColorString(Color color) {
+  static String getHexColorString(color.Color color) {
     return HtmlColor.getHexColorString(color);
   }
 
@@ -1618,10 +1618,10 @@ class Utils {
     if (value is Element) {
       Element element = value;// as Element;
 
-      if (nodeName == null || element.getNodeName().equalsIgnoreCase(nodeName)) {
+      if (nodeName == null || element.nodeName.toLowerCase() == nodeName.toLowerCase()) {
         String tmp = (attributeName != null) ? element.getAttribute(attributeName) : null;
 
-        return attributeName == null || (tmp != null && tmp.equals(attributeValue));
+        return attributeName == null || (tmp != null && tmp == attributeValue);
       }
     }
 
@@ -1644,7 +1644,7 @@ class Utils {
 	 * Clears the given area of the specified graphics object with the given
 	 * color or makes the region transparent.
 	 */
-  static void clearRect(Graphics2D g, Rectangle rect, Color background) {
+  static void clearRect(Graphics2D g, Rectangle rect, color.Color background) {
     if (background != null) {
       g.setColor(background);
       g.fillRect(rect.x, rect.y, rect.width, rect.height);
@@ -1734,11 +1734,13 @@ class Utils {
 
       String fontColor = getString(style, Constants.STYLE_FONTCOLOR, "black");
       String fontFamily = getString(style, Constants.STYLE_FONTFAMILY, Constants.DEFAULT_FONTFAMILIES);
-      int fontSize = (int)(getInt(style, Constants.STYLE_FONTSIZE, Constants.DEFAULT_FONTSIZE) * scale);
+      int fontSize = (getInt(style, Constants.STYLE_FONTSIZE, Constants.DEFAULT_FONTSIZE) * scale) as int;
 
-      String s = "position:absolute;" + "left:" + String.valueOf(x) + "px;" + "top:" + String.valueOf(y) + "px;" + "width:" + String.valueOf(w) + "px;" + "height:" + String.valueOf(h) + "px;" + "font-size:" + String.valueOf(fontSize) + "px;" + "font-family:" + fontFamily + ";" + "color:" + fontColor + ";";
+      String s = "position:absolute;" + "left:" + x.toString() + "px;" + "top:" + y.toString() + "px;" +
+        "width:" + w.toString() + "px;" + "height:" + h.toString() + "px;" + "font-size:" + fontSize.toString() + "px;" +
+        "font-family:" + fontFamily + ";" + "color:" + fontColor + ";";
 
-      if (Utils.getString(style, Constants.STYLE_WHITE_SPACE, "nowrap").equals("wrap")) {
+      if (Utils.getString(style, Constants.STYLE_WHITE_SPACE, "nowrap") == "wrap") {
         s += "whiteSpace:wrap;";
       }
 
@@ -1757,7 +1759,7 @@ class Utils {
       }
 
       // Applies the opacity
-      float opacity = getFloat(style, Constants.STYLE_TEXT_OPACITY, 100);
+      double opacity = getFloat(style, Constants.STYLE_TEXT_OPACITY, 100.0);
 
       if (opacity < 100) {
         // Adds all rules (first for IE)
@@ -1769,12 +1771,12 @@ class Utils {
       List<String> lines = text.split("\n");
 
       for (int i = 0; i < lines.length; i++) {
-        td.appendChild(document.createTextNode(lines[i]));
-        td.appendChild(document.createElement("br"));
+        td.append(document.createTextNode(lines[i]));
+        td.append(document.createElement("br"));
       }
 
-      tr.appendChild(td);
-      table.appendChild(tr);
+      tr.append(td);
+      table.append(tr);
     }
 
     return table;
@@ -1876,40 +1878,40 @@ class Utils {
 	 */
   static String createHtmlDocument(Map<String, Object> style, String text, [double scale = 1.0, int width = 0, String head = null, String bodyCss = null]) {
     StringBuffer css = (bodyCss != null) ? new StringBuffer(bodyCss) : new StringBuffer();
-    css.append("font-family:" + getString(style, Constants.STYLE_FONTFAMILY, Constants.DEFAULT_FONTFAMILIES) + ";");
-    css.append("font-size:" + (int)(getInt(style, Constants.STYLE_FONTSIZE, Constants.DEFAULT_FONTSIZE) * scale) + "pt;");
+    css.write("font-family:" + getString(style, Constants.STYLE_FONTFAMILY, Constants.DEFAULT_FONTFAMILIES) + ";");
+    css.write("font-size:" + ((getInt(style, Constants.STYLE_FONTSIZE, Constants.DEFAULT_FONTSIZE) * scale) as int).toString() + "pt;");
 
     String color = Utils.getString(style, Constants.STYLE_FONTCOLOR);
 
     if (color != null) {
-      css.append("color:" + color + ";");
+      css.write("color:" + color + ";");
     }
 
     int fontStyle = Utils.getInt(style, Constants.STYLE_FONTSTYLE);
 
     if ((fontStyle & Constants.FONT_BOLD) == Constants.FONT_BOLD) {
-      css.append("font-weight:bold;");
+      css.write("font-weight:bold;");
     }
 
     if ((fontStyle & Constants.FONT_ITALIC) == Constants.FONT_ITALIC) {
-      css.append("font-style:italic;");
+      css.write("font-style:italic;");
     }
 
     if ((fontStyle & Constants.FONT_UNDERLINE) == Constants.FONT_UNDERLINE) {
-      css.append("text-decoration:underline;");
+      css.write("text-decoration:underline;");
     }
 
     String align = getString(style, Constants.STYLE_ALIGN, Constants.ALIGN_LEFT);
 
-    if (align.equals(Constants.ALIGN_CENTER)) {
-      css.append("text-align:center;");
-    } else if (align.equals(Constants.ALIGN_RIGHT)) {
-      css.append("text-align:right;");
+    if (align == Constants.ALIGN_CENTER) {
+      css.write("text-align:center;");
+    } else if (align == Constants.ALIGN_RIGHT) {
+      css.write("text-align:right;");
     }
 
     if (width > 0) {
       // LATER: With max-width support, wrapped text can be measured in 1 step
-      css.append("width:" + width + "pt;");
+      css.write("width:${width}pt;");
     }
 
     String result = "<html>";
@@ -1926,44 +1928,44 @@ class Utils {
 	 * 
 	 * @return Returns a new DOM document.
 	 */
-  static HTMLDocument createHtmlDocumentObject(Map<String, Object> style, double scale) {
+  static HtmlDocument createHtmlDocumentObject(Map<String, Object> style, double scale) {
     // Applies the font settings
-    HTMLDocument document = new HTMLDocument();
+    HtmlDocument document = new HtmlDocument();
 
     StringBuffer rule = new StringBuffer("body {");
-    rule.append("font-family:" + getString(style, Constants.STYLE_FONTFAMILY, Constants.DEFAULT_FONTFAMILIES) + ";");
-    rule.append("font-size:" + (int)(getInt(style, Constants.STYLE_FONTSIZE, Constants.DEFAULT_FONTSIZE) * scale) + "pt;");
+    rule.write("font-family:" + getString(style, Constants.STYLE_FONTFAMILY, Constants.DEFAULT_FONTFAMILIES) + ";");
+    rule.write("font-size:" + ((getInt(style, Constants.STYLE_FONTSIZE, Constants.DEFAULT_FONTSIZE) * scale) as int).toString() + "pt;");
 
     String color = Utils.getString(style, Constants.STYLE_FONTCOLOR);
 
     if (color != null) {
-      rule.append("color:" + color + ";");
+      rule.write("color:" + color + ";");
     }
 
     int fontStyle = Utils.getInt(style, Constants.STYLE_FONTSTYLE);
 
     if ((fontStyle & Constants.FONT_BOLD) == Constants.FONT_BOLD) {
-      rule.append("font-weight:bold;");
+      rule.write("font-weight:bold;");
     }
 
     if ((fontStyle & Constants.FONT_ITALIC) == Constants.FONT_ITALIC) {
-      rule.append("font-style:italic;");
+      rule.write("font-style:italic;");
     }
 
     if ((fontStyle & Constants.FONT_UNDERLINE) == Constants.FONT_UNDERLINE) {
-      rule.append("text-decoration:underline;");
+      rule.write("text-decoration:underline;");
     }
 
     String align = getString(style, Constants.STYLE_ALIGN, Constants.ALIGN_LEFT);
 
-    if (align.equals(Constants.ALIGN_CENTER)) {
-      rule.append("text-align:center;");
-    } else if (align.equals(Constants.ALIGN_RIGHT)) {
-      rule.append("text-align:right;");
+    if (align == Constants.ALIGN_CENTER) {
+      rule.write("text-align:center;");
+    } else if (align == Constants.ALIGN_RIGHT) {
+      rule.write("text-align:right;");
     }
 
-    rule.append("}");
-    document.getStyleSheet().addRule(rule.toString());
+    rule.write("}");
+    document.styleSheets.first.addRule(rule.toString());
 
     return document;
   }
@@ -2035,11 +2037,11 @@ class Utils {
   static Node findNode(Node node, String attr, String value) {
     String tmp = (node is Element) ? (node as Element).getAttribute(attr) : null;
 
-    if (tmp != null && tmp.equals(value)) {
+    if (tmp != null && tmp == value) {
       return node;
     }
 
-    node = node.getFirstChild();
+    node = node.firstChild;
 
     while (node != null) {
       Node result = findNode(node, attr, value);
@@ -2048,7 +2050,7 @@ class Utils {
         return result;
       }
 
-      node = node.getNextSibling();
+      node = node.nextNode;//getNextSibling();
     }
 
     return null;
@@ -2124,32 +2126,32 @@ class Utils {
     StringBuffer result = new StringBuffer();
 
     if (node != null) {
-      if (node.getNodeType() == Node.TEXT_NODE) {
-        result.append(node.getNodeValue());
+      if (node.nodeType == Node.TEXT_NODE) {
+        result.write(node.getNodeValue());
       } else {
-        result.append(indent + "<" + node.getNodeName());
+        result.write(indent + "<" + node.getNodeName());
         NamedNodeMap attrs = node.getAttributes();
 
         if (attrs != null) {
           for (int i = 0; i < attrs.getLength(); i++) {
             String value = attrs.item(i).getNodeValue();
             value = Utils.htmlEntities(value);
-            result.append(" " + attrs.item(i).getNodeName() + "=\"" + value + "\"");
+            result.write(" " + attrs.item(i).getNodeName() + "=\"" + value + "\"");
           }
         }
         Node tmp = node.getFirstChild();
 
         if (tmp != null) {
-          result.append(">\n");
+          result.write(">\n");
 
           while (tmp != null) {
-            result.append(getPrettyXml(tmp, tab, indent + tab));
+            result.write(getPrettyXml(tmp, tab, indent + tab));
             tmp = tmp.getNextSibling();
           }
 
-          result.append(indent + "</" + node.getNodeName() + ">\n");
+          result.write(indent + "</" + node.getNodeName() + ">\n");
         } else {
-          result.append("/>\n");
+          result.write("/>\n");
         }
       }
     }

@@ -583,8 +583,8 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
             Graph graph = _graphComponent.getGraph();
             double scale = graph.getView().getScale();
             _transferBounds = gt.getBounds();
-            int w = Math.ceil((_transferBounds.getWidth() + 1) * scale) as int;
-            int h = Math.ceil((_transferBounds.getHeight() + 1) * scale) as int;
+            int w = math.ceil((_transferBounds.getWidth() + 1) * scale) as int;
+            int h = math.ceil((_transferBounds.getHeight() + 1) * scale) as int;
             setPreviewBounds(new Rectangle(_transferBounds.getX() as int, _transferBounds.getY() as int, w, h));
 
             if (_imagePreview) {

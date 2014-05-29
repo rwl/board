@@ -5,7 +5,11 @@ library graph.analysis;
  * shortest path and minimum spanning tree.
  */
 
+import 'dart:collection' show HashSet, LinkedList, Queue;
+import 'dart:math' as Math;
 import 'dart:collection' show HashMap;
+
+import '../compat/math.dart' as math;
 
 import '../graph.dart';
 
@@ -28,3 +32,15 @@ part 'cost_function.dart';
 part 'structural_exception.dart';
 part 'traversal.dart';
 part 'union_find.dart';
+
+
+class StructuralException extends Error {
+  /**
+   * A custom exception for irregular graph structure for certain algorithms
+   */
+  //	static final long serialVersionUID = -468633497832330356L;
+
+  String message;
+
+  StructuralException(this.message);
+}

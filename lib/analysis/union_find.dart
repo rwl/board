@@ -31,7 +31,7 @@ class UnionFind {
 	 */
   UnionFind(List<Object> elements) {
     for (int i = 0; i < elements.length; i++) {
-      _nodes.put(elements[i], new _UnionFindNode());
+      _nodes[elements[i]] = new _UnionFindNode();
     }
   }
 
@@ -39,7 +39,7 @@ class UnionFind {
 	 * Returns the node that represents element.
 	 */
   _UnionFindNode getNode(Object element) {
-    return _nodes.get(element);
+    return _nodes[element];
   }
 
   /**

@@ -14,6 +14,10 @@ double ceil(double x) {
   return x.ceilToDouble();
 }
 
+double floor(double x) {
+  return x.floorToDouble();
+}
+
 double toRadians(double d) {
   return d / 180.0 * PI;
 }

@@ -89,7 +89,7 @@ class Traversal {
       Set<Object> queued = new HashSet<Object>();
       LinkedList<List<Object>> queue = new LinkedList<List<Object>>();
       List<Object> q = [startVertex, null];
-      queue.addLast(q);
+      queue.add(q);
       queued.add(startVertex);
 
       _bfsRec(aGraph, queued, queue, visitor);
@@ -103,7 +103,7 @@ class Traversal {
 	 * @param queue
 	 * @param visitor
 	 */
-  static void _bfsRec(AnalysisGraph aGraph, Set<Object> queued, LinkedList<List<Object>> queue, ICellVisitor visitor) {
+  static void _bfsRec(AnalysisGraph aGraph, Set<Object> queued, Queue<List<Object>> queue, ICellVisitor visitor) {
     if (queue.length > 0) {
       List<Object> q = queue.removeFirst();
       Object cell = q[0];
@@ -163,11 +163,11 @@ class Traversal {
     //		parents[][0] is the traveled vertex
     //		parents[][1] is the traveled outgoing edge
     List<List<Object>> parents = new List<List<Object>>(vertexCount);//[2];
-    ArrayList<Object> vertexList = new List<Object>();
-    ArrayList<Object> vertexListStatic = new List<Object>();
+    List<Object> vertexList = new List<Object>();
+    List<Object> vertexListStatic = new List<Object>();
 
     for (int i = 0; i < vertexCount; i++) {
-      distances[i] = int.MAX_VALUE;
+      distances[i] = 1 << 32;
       vertexList.add(vertexes[i] as Object);
       vertexListStatic.add(vertexes[i] as Object);
     }
@@ -181,7 +181,7 @@ class Traversal {
       double minDistance;
       Object currVertex;
       Object closestVertex;
-      currVertex = vertexList.get(0);
+      currVertex = vertexList[0];
       int currIndex = vertexListStatic.indexOf(currVertex);
       double currDistance = distances[currIndex];
       minDistance = currDistance;
@@ -217,7 +217,7 @@ class Traversal {
           for (int k = 0; k < neighborEdges.length; k++) {
             currEdge = neighborEdges[k];
 
-            if (aGraph.getTerminal(currEdge, true).equals(closestVertex) || aGraph.getTerminal(currEdge, false).equals(closestVertex)) {
+            if (aGraph.getTerminal(currEdge, true) == closestVertex || aGraph.getTerminal(currEdge, false) == closestVertex) {
               connectingEdge = currEdge;
             }
           }
@@ -240,16 +240,16 @@ class Traversal {
       }
     }
 
-    ArrayList<List<Object>> resultList = new List<List<Object>>();
+    List<List<Object>> resultList = new List<List<Object>>();
     Object currVertex = endVertex;
 
     while (currVertex != startVertex) {
       int currIndex = vertexListStatic.indexOf(currVertex);
       currVertex = parents[currIndex][0];
-      resultList.add(0, parents[currIndex]);
+      resultList.insert(0, parents[currIndex]);
     }
 
-    resultList.add(resultList.length, [endVertex, null]);
+    resultList.insert(resultList.length, [endVertex, null]);
 
     for (int i = 0; i < resultList.length; i++) {
       visitor.visit(resultList[i][0], resultList[i][1]);
@@ -278,11 +278,11 @@ class Traversal {
 
     for (int i = 0; i < vertexNum; i++) {
       Object currVertex = vertices[i];
-      distanceMap.put(currVertex, Double.MAX_VALUE);
+      distanceMap[currVertex] = double.MAX_FINITE;
     }
 
-    distanceMap.put(startVertex, 0.0);
-    parentMap.put(startVertex, startVertex);
+    distanceMap[startVertex] = 0.0;
+    parentMap[startVertex] = startVertex;
 
     for (int i = 0; i < vertexNum; i++) {
       for (int j = 0; j < edgeNum; j++) {
@@ -290,20 +290,20 @@ class Traversal {
         Object source = aGraph.getTerminal(currEdge, true);
         Object target = aGraph.getTerminal(currEdge, false);
 
-        double dist = distanceMap.get(source) + costFunction.getCost(new CellState(view, currEdge, null)) as Double;
+        double dist = (distanceMap[source] as double) + costFunction.getCost(new CellState(view, currEdge, null));
 
-        if (dist < (distanceMap.get(target) as Double)) {
-          distanceMap.put(target, dist);
-          parentMap.put(target, source);
+        if (dist < (distanceMap[target] as double)) {
+          distanceMap[target] = dist;
+          parentMap[target] = source;
         }
 
         //for undirected graphs, check the reverse direction too
         if (!GraphProperties.isDirected(aGraph.getProperties(), GraphProperties.DEFAULT_DIRECTED)) {
-          dist = (distanceMap.get(target) as Double) + costFunction.getCost(new CellState(view, currEdge, null));
+          dist = (distanceMap[target] as double) + costFunction.getCost(new CellState(view, currEdge, null));
 
-          if (dist < (distanceMap.get(source) as Double)) {
-            distanceMap.put(source, dist);
-            parentMap.put(source, target);
+          if (dist < (distanceMap[source] as double)) {
+            distanceMap[source] = dist;
+            parentMap[source] = target;
           }
         }
 
@@ -315,9 +315,9 @@ class Traversal {
       Object source = aGraph.getTerminal(currEdge, true);
       Object target = aGraph.getTerminal(currEdge, false);
 
-      double dist = (distanceMap.get(source) as Double) + costFunction.getCost(new CellState(view, currEdge, null));
+      double dist = (distanceMap[source] as double) + costFunction.getCost(new CellState(view, currEdge, null));
 
-      if (dist < (distanceMap.get(target) as Double)) {
+      if (dist < (distanceMap[target] as double)) {
         throw new StructuralException("The graph contains a negative cycle, so Bellman-Ford can't be completed.");
       }
     }
@@ -336,11 +336,11 @@ class Traversal {
 	 * @return an ArrayList where ArrayList(0) is the distance map and List(1) is the path map. See the example in GraphConfigDialog.java
 	 * @throws StructuralException - The Floyd-Roy-Warshall algorithm only works for graphs without negative cycles
 	 */
-  static ArrayList<List<List<Object>>> floydRoyWarshall(AnalysisGraph aGraph) //throws StructuralException
+  static List<List<List<Object>>> floydRoyWarshall(AnalysisGraph aGraph) //throws StructuralException
   {
 
     List<Object> vertices = aGraph.getChildVertices(aGraph.getGraph().getDefaultParent());
-    List<List<Double>> dist = new List<List<Double>>(vertices.length);//][vertices.length];
+    List<List<double>> dist = new List<List<double>>(vertices.length);//][vertices.length];
     List<List<Object>> paths = new List<List<Object>>(vertices.length);//][vertices.length];
     for (int k = 0; k < vertices.length; k++) {
       dist[k] = new List<Object>(vertices.length);
@@ -349,7 +349,7 @@ class Traversal {
     Map<Object, int> indexMap = new HashMap<Object, int>();
 
     for (int i = 0; i < vertices.length; i++) {
-      indexMap.put(vertices[i], i);
+      indexMap[vertices[i]] = i;
     }
 
     List<Object> edges = aGraph.getChildEdges(aGraph.getGraph().getDefaultParent());
@@ -367,12 +367,12 @@ class Traversal {
     }
 
     for (int i = 0; i < dist[0].length; i++) {
-      if ((dist[i][i] as Double) < 0) {
+      if ((dist[i][i] as double) < 0) {
         throw new StructuralException("The graph has negative cycles");
       }
     }
 
-    ArrayList<List<List<Object>>> result = new List<List<List<Object>>>();
+    List<List<List<Object>>> result = new List<List<List<Object>>>();
     result.add(dist);
     result.add(paths);
     return result;
@@ -386,14 +386,14 @@ class Traversal {
 	 * @param indexMap
 	 * @return
 	 */
-  static List<List<Double>> _initializeWeight(AnalysisGraph aGraph, List<Object> nodes, List<Object> edges, Map<Object, int> indexMap) {
-    List<List<Double>> weight = new List<List<Double>>(nodes.length);//][nodes.length];
-    for (int k = 0; k < nodes.length; k++) {
-      weight[k] = new List<Double>(nodes.length);
-    }
+  static List<List<double>> _initializeWeight(AnalysisGraph aGraph, List<Object> nodes, List<Object> edges, Map<Object, int> indexMap) {
+    List<List<double>> weight = new List<List<double>>(nodes.length);//][nodes.length];
+//    for (int k = 0; k < nodes.length; k++) {
+//      weight[k] = new List<double>(nodes.length);
+//    }
 
     for (int i = 0; i < nodes.length; i++) {
-      Arrays.fill(weight[i], Double.MAX_VALUE);
+      weight[i] = new List<double>.generate(nodes.length, (int i) => double.MAX_FINITE);
     }
 
     bool isDirected = GraphProperties.isDirected(aGraph.getProperties(), GraphProperties.DEFAULT_DIRECTED);
@@ -404,10 +404,10 @@ class Traversal {
       Object source = aGraph.getTerminal(currEdge, true);
       Object target = aGraph.getTerminal(currEdge, false);
 
-      weight[indexMap.get(source)][indexMap.get(target)] = costFunction.getCost(view.getState(currEdge));
+      weight[indexMap[source]][indexMap[target]] = costFunction.getCost(view.getState(currEdge));
 
       if (!isDirected) {
-        weight[indexMap.get(target)][indexMap.get(source)] = costFunction.getCost(view.getState(currEdge));
+        weight[indexMap[target]][indexMap[source]] = costFunction.getCost(view.getState(currEdge));
       }
     }
 
@@ -427,18 +427,18 @@ class Traversal {
 	 * @return returns the shortest path from <b>startVertex</b> to <b>endVertex</b>
 	 * @throws StructuralException - The Floyd-Roy-Warshall algorithm only works for graphs without negative cycles
 	 */
-  static List<Object> getWFIPath(AnalysisGraph aGraph, ArrayList<List<List<Object>>> FWIresult, Object startVertex, Object targetVertex) //throws StructuralException
+  static List<Object> getWFIPath(AnalysisGraph aGraph, List<List<List<Object>>> FWIresult, Object startVertex, Object targetVertex) //throws StructuralException
   {
-    List<List<Object>> dist = FWIresult.get(0);
-    List<List<Object>> paths = FWIresult.get(1);
-    ArrayList<Object> result = null;
+    List<List<Object>> dist = FWIresult[0];
+    List<List<Object>> paths = FWIresult[1];
+    List<Object> result = null;
 
     if (aGraph == null || paths == null || startVertex == null || targetVertex == null) {
-      throw new IllegalArgumentException();
+      throw new ArgumentError();
     }
 
     for (int i = 0; i < dist[0].length; i++) {
-      if ((dist[i][i] as Double) < 0) {
+      if ((dist[i][i] as double) < 0) {
         throw new StructuralException("The graph has negative cycles");
       }
     }
@@ -446,12 +446,12 @@ class Traversal {
     if (startVertex != targetVertex) {
       CostFunction cf = aGraph.getGenerator().getCostFunction();
       GraphView view = aGraph.getGraph().getView();
-      ArrayList<Object> currPath = new List<Object>();
+      List<Object> currPath = new List<Object>();
       currPath.add(startVertex);
 
       while (startVertex != targetVertex) {
         result = _getWFIPathRec(aGraph, paths, startVertex, targetVertex, currPath, cf, view);
-        startVertex = result.get(result.length - 1);
+        startVertex = result[result.length - 1];
       }
     }
 
@@ -459,7 +459,7 @@ class Traversal {
       result = new List<Object>();
     }
 
-    return result.toArray();
+    return result;
   }
 
   /**
@@ -474,12 +474,12 @@ class Traversal {
 	 * @return
 	 * @throws StructuralException
 	 */
-  static ArrayList<Object> _getWFIPathRec(AnalysisGraph aGraph, List<List<Object>> paths, Object startVertex, Object targetVertex, ArrayList<Object> currPath, CostFunction cf, GraphView view) //throws StructuralException
+  static List<Object> _getWFIPathRec(AnalysisGraph aGraph, List<List<Object>> paths, Object startVertex, Object targetVertex, List<Object> currPath, CostFunction cf, GraphView view) //throws StructuralException
   {
-    Double sourceIndexD = cf.getCost(view.getState(startVertex)) as Double;
-    List<Object> parents = paths[sourceIndexD.intValue()];
-    Double targetIndexD = cf.getCost(view.getState(targetVertex)) as Double;
-    int tIndex = targetIndexD.intValue();
+    double sourceIndexD = cf.getCost(view.getState(startVertex)) as double;
+    List<Object> parents = paths[sourceIndexD.toInt()];
+    double targetIndexD = cf.getCost(view.getState(targetVertex)) as double;
+    int tIndex = targetIndexD.toInt();
 
     if (parents[tIndex] != null) {
       currPath = _getWFIPathRec(aGraph, paths, startVertex, parents[tIndex], currPath, cf, view);

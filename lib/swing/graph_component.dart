@@ -2315,12 +2315,12 @@ class GraphComponent extends JScrollPane implements Printable {
       view.revalidate();
 
       Rect graphBounds = _graph.getGraphBounds();
-      Dimension pSize = new Dimension((Math.ceil(graphBounds.getX() + graphBounds.getWidth()) as int) + 1, (Math.ceil(graphBounds.getY() + graphBounds.getHeight()) as int) + 1);
+      Dimension pSize = new Dimension((math.ceil(graphBounds.getX() + graphBounds.getWidth()) as int) + 1, (math.ceil(graphBounds.getY() + graphBounds.getHeight()) as int) + 1);
 
       int w = printFormat.getImageableWidth() as int;
       int h = printFormat.getImageableHeight() as int;
-      int cols = Math.max(Math.ceil(((pSize.width - 5) as double) / (w as double)), 1) as int;
-      int rows = Math.max(Math.ceil(((pSize.height - 5) as double) / (h as double)), 1) as int;
+      int cols = Math.max(math.ceil(((pSize.width - 5) as double) / (w as double)), 1) as int;
+      int rows = Math.max(math.ceil(((pSize.height - 5) as double) / (h as double)), 1) as int;
 
       if (page < cols * rows) {
         int dx = ((page % cols) * printFormat.getImageableWidth()) as int;
@@ -3061,14 +3061,14 @@ class GraphComponent extends JScrollPane implements Printable {
       double stepping = gridSize * scale;
 
       if (stepping < minStepping) {
-        int count = (math.round(Math.ceil(minStepping / stepping) / 2) as int) * 2;
+        int count = (math.round(math.ceil(minStepping / stepping) / 2) as int) * 2;
         stepping = count * stepping;
       }
 
       double xs = Math.floor((left - tx) / stepping) * stepping + tx;
-      double xe = Math.ceil(right / stepping) * stepping;
+      double xe = math.ceil(right / stepping) * stepping;
       double ys = Math.floor((top - ty) / stepping) * stepping + ty;
-      double ye = Math.ceil(bottom / stepping) * stepping;
+      double ye = math.ceil(bottom / stepping) * stepping;
 
       switch (style) {
         case GRID_STYLE_CROSS:
@@ -3097,8 +3097,8 @@ class GraphComponent extends JScrollPane implements Printable {
           }
         case GRID_STYLE_LINE:
           {
-            xe += Math.ceil(stepping) as int;
-            ye += Math.ceil(stepping) as int;
+            xe += math.ceil(stepping) as int;
+            ye += math.ceil(stepping) as int;
 
             int ixs = math.round(xs) as int;
             int ixe = math.round(xe) as int;
@@ -3137,8 +3137,8 @@ class GraphComponent extends JScrollPane implements Printable {
             Graphics2D g2 = g as Graphics2D;
             Stroke stroke = g2.getStroke();
 
-            xe += Math.ceil(stepping) as int;
-            ye += Math.ceil(stepping) as int;
+            xe += math.ceil(stepping) as int;
+            ye += math.ceil(stepping) as int;
 
             int ixs = math.round(xs) as int;
             int ixe = math.round(xe) as int;
@@ -3229,8 +3229,8 @@ class GraphComponent extends JScrollPane implements Printable {
 	 */
   void checkTripleBuffer() {
     Rect bounds = _graph.getGraphBounds();
-    int width = Math.ceil(bounds.getX() + bounds.getWidth() + 2) as int;
-    int height = Math.ceil(bounds.getY() + bounds.getHeight() + 2) as int;
+    int width = math.ceil(bounds.getX() + bounds.getWidth() + 2) as int;
+    int height = math.ceil(bounds.getY() + bounds.getHeight() + 2) as int;
 
     if (_tripleBuffer != null) {
       if (_tripleBuffer.getWidth() != width || _tripleBuffer.getHeight() != height) {
