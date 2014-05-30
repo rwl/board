@@ -1,5 +1,9 @@
 library graph.io.graphml;
 
+import 'dart:html';
+
+import 'dart:collection' show HashMap;
+
 import '../../util/util.dart' show Constants, Point2d;
 import '../../model/model.dart' show Cell;
 import '../../view/view.dart' show ConnectionConstraint, Graph;

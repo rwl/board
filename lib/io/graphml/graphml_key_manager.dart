@@ -50,13 +50,13 @@ class GraphMlKeyManager {
   void initialise(Document doc) {
     NodeList gmlKeys = doc.getElementsByTagName(GraphMlConstants.KEY);
 
-    int keyLength = gmlKeys.getLength();
+    int keyLength = gmlKeys.length;
 
     for (int i = 0; i < keyLength; i++) {
-      Element key = gmlKeys.item(i) as Element;
+      Element key = gmlKeys[i] as Element;
       String keyId = key.getAttribute(GraphMlConstants.ID);
-      GraphMlKey keyElement = new GraphMlKey(key);
-      _keyMap.put(keyId, keyElement);
+      GraphMlKey keyElement = new GraphMlKey.from(key);
+      _keyMap[keyId] = keyElement;
     }
   }
 

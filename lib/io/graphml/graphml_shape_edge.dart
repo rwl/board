@@ -23,16 +23,13 @@ class GraphMlShapeEdge {
 	 * @param text
 	 * @param style
 	 */
-  factory GraphMlShapeEdge.text(String text, String style) {
-    this._text = text;
-    this._style = style;
-  }
+  GraphMlShapeEdge([String this._text="", String this._style=""]);
 
   /**
 	 * Constructs a ShapeEdge from a xml shapeEdgeElement.
 	 * @param shapeEdgeElement
 	 */
-  factory GraphMlShapeEdge.elem(Element shapeEdgeElement) {
+  factory GraphMlShapeEdge.from(Element shapeEdgeElement) {
     Element labelElement = GraphMlUtils.childsTag(shapeEdgeElement, GraphMlConstants.JGRAPH + GraphMlConstants.LABEL);
 
     if (labelElement != null) {
@@ -50,8 +47,8 @@ class GraphMlShapeEdge {
   /**
 	 * Construct an empty Shape Edge Element.
 	 */
-  GraphMlShapeEdge() {
-  }
+//  GraphMlShapeEdge() {
+//  }
 
   /**
 	 * Generates a ShapeEdge Element from this class.
@@ -61,17 +58,17 @@ class GraphMlShapeEdge {
   Element generateElement(Document document) {
     Element dataEdge = document.createElementNS(GraphMlConstants.JGRAPH_URL, GraphMlConstants.JGRAPH + GraphMlConstants.SHAPEEDGE);
 
-    if (!this._text.equals("")) {
+    if (this._text != "") {
       Element dataEdgeLabel = document.createElementNS(GraphMlConstants.JGRAPH_URL, GraphMlConstants.JGRAPH + GraphMlConstants.LABEL);
       dataEdgeLabel.setAttribute(GraphMlConstants.TEXT, this._text);
-      dataEdge.appendChild(dataEdgeLabel);
+      dataEdge.append(dataEdgeLabel);
     }
 
-    if (!this._style.equals("")) {
+    if (this._style != "") {
       Element dataEdgeStyle = document.createElementNS(GraphMlConstants.JGRAPH_URL, GraphMlConstants.JGRAPH + GraphMlConstants.STYLE);
 
       dataEdgeStyle.setAttribute(GraphMlConstants.PROPERTIES, this._style);
-      dataEdge.appendChild(dataEdgeStyle);
+      dataEdge.append(dataEdgeStyle);
     }
 
     return dataEdge;

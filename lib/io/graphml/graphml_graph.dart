@@ -52,7 +52,7 @@ class GraphMlGraph {
     List<Element> nodeElements = GraphMlUtils.childsTags(graphElement, GraphMlConstants.NODE);
 
     for (Element nodeElem in nodeElements) {
-      GraphMlNode node = new GraphMlNode(nodeElem);
+      GraphMlNode node = new GraphMlNode.from(nodeElem);
 
       _nodes.add(node);
     }
@@ -61,12 +61,12 @@ class GraphMlGraph {
     List<Element> edgeElements = GraphMlUtils.childsTags(graphElement, GraphMlConstants.EDGE);
 
     for (Element edgeElem in edgeElements) {
-      GraphMlEdge edge = new GraphMlEdge(edgeElem);
+      GraphMlEdge edge = new GraphMlEdge.from(edgeElem);
 
-      if (edge.getEdgeDirected().equals("")) {
-        if (_edgedefault.equals(GraphMlConstants.EDGE_DIRECTED)) {
+      if (edge.getEdgeDirected() == "") {
+        if (_edgedefault == GraphMlConstants.EDGE_DIRECTED) {
           edge.setEdgeDirected("true");
-        } else if (_edgedefault.equals(GraphMlConstants.EDGE_UNDIRECTED)) {
+        } else if (_edgedefault == GraphMlConstants.EDGE_UNDIRECTED) {
           edge.setEdgeDirected("false");
         }
       }
@@ -118,15 +118,15 @@ class GraphMlGraph {
     String keyId = "";
     HashMap<String, GraphMlKey> keyMap = GraphMlKeyManager.getInstance().getKeyMap();
 
-    for (GraphMlKey key in keyMap.values()) {
-      if (key.getKeyName().equals(GraphMlConstants.KEY_NODE_NAME)) {
+    for (GraphMlKey key in keyMap.values) {
+      if (key.getKeyName() == GraphMlConstants.KEY_NODE_NAME) {
         keyId = key.getKeyId();
       }
     }
 
     GraphMlData data = null;
     HashMap<String, GraphMlData> nodeDataMap = node.getNodeDataMap();
-    data = nodeDataMap.get(keyId);
+    data = nodeDataMap[keyId];
 
     return data;
   }
@@ -140,15 +140,15 @@ class GraphMlGraph {
   static GraphMlData dataEdgeKey(GraphMlEdge edge) {
     String keyId = "";
     HashMap<String, GraphMlKey> keyMap = GraphMlKeyManager.getInstance().getKeyMap();
-    for (GraphMlKey key in keyMap.values()) {
-      if (key.getKeyName().equals(GraphMlConstants.KEY_EDGE_NAME)) {
+    for (GraphMlKey key in keyMap.values) {
+      if (key.getKeyName() == GraphMlConstants.KEY_EDGE_NAME) {
         keyId = key.getKeyId();
       }
     }
 
     GraphMlData data = null;
     HashMap<String, GraphMlData> nodeDataMap = edge.getEdgeDataMap();
-    data = nodeDataMap.get(keyId);
+    data = nodeDataMap[keyId];
 
     return data;
   }
@@ -167,10 +167,10 @@ class GraphMlGraph {
     GraphMlData data = dataNodeKey(node);
 
     if (data != null && data.getDataShapeNode() != null) {
-      Double x = Double.valueOf(data.getDataShapeNode().getDataX());
-      Double y = Double.valueOf(data.getDataShapeNode().getDataY());
-      Double h = Double.valueOf(data.getDataShapeNode().getDataHeight());
-      Double w = Double.valueOf(data.getDataShapeNode().getDataWidth());
+      double x = double.parse(data.getDataShapeNode().getDataX());
+      double y = double.parse(data.getDataShapeNode().getDataY());
+      double h = double.parse(data.getDataShapeNode().getDataHeight());
+      double w = double.parse(data.getDataShapeNode().getDataWidth());
       String label = data.getDataShapeNode().getDataLabel();
       String style = data.getDataShapeNode().getDataStyle();
       v1 = graph.insertVertex(parent, id, label, x, y, w, h, style) as Cell;
@@ -178,7 +178,7 @@ class GraphMlGraph {
       v1 = graph.insertVertex(parent, id, "", 0, 0, 100, 100) as Cell;
     }
 
-    _cellsMap.put(id, v1);
+    _cellsMap[id] = v1;
     List<GraphMlGraph> graphs = node.getNodeGraph();
 
     for (GraphMlGraph gmlGraph in graphs) {
@@ -198,32 +198,32 @@ class GraphMlGraph {
   static Point2d _portValue(String source) {
     Point2d fromConstraint = null;
 
-    if (source != null && !source.equals("")) {
+    if (source != null && source != "") {
 
-      if (source.equals("North")) {
+      if (source == "North") {
         fromConstraint = new Point2d(0.5, 0);
-      } else if (source.equals("South")) {
+      } else if (source == "South") {
         fromConstraint = new Point2d(0.5, 1);
 
-      } else if (source.equals("East")) {
+      } else if (source == "East") {
         fromConstraint = new Point2d(1, 0.5);
 
-      } else if (source.equals("West")) {
+      } else if (source == "West") {
         fromConstraint = new Point2d(0, 0.5);
 
-      } else if (source.equals("NorthWest")) {
+      } else if (source == "NorthWest") {
         fromConstraint = new Point2d(0, 0);
-      } else if (source.equals("SouthWest")) {
+      } else if (source == "SouthWest") {
         fromConstraint = new Point2d(0, 1);
-      } else if (source.equals("SouthEast")) {
+      } else if (source == "SouthEast") {
         fromConstraint = new Point2d(1, 1);
-      } else if (source.equals("NorthEast")) {
+      } else if (source == "NorthEast") {
         fromConstraint = new Point2d(1, 0);
       } else {
         try {
           List<String> s = source.split(",");
-          Double x = Double.valueOf(s[0]);
-          Double y = Double.valueOf(s[1]);
+          double x = double.parse(s[0]);
+          double y = double.parse(s[1]);
           fromConstraint = new Point2d(x, y);
         } on Exception catch (e) {
           e.printStackTrace();
@@ -244,8 +244,8 @@ class GraphMlGraph {
     //Get source and target vertex
     Point2d fromConstraint = null;
     Point2d toConstraint = null;
-    Object source = _cellsMap.get(edge.getEdgeSource());
-    Object target = _cellsMap.get(edge.getEdgeTarget());
+    Object source = _cellsMap[edge.getEdgeSource()];
+    Object target = _cellsMap[edge.getEdgeTarget()];
     String sourcePort = edge.getEdgeSourcePort();
     String targetPort = edge.getEdgeTargetPort();
 
@@ -321,21 +321,21 @@ class GraphMlGraph {
   Element generateElement(Document document) {
     Element graph = document.createElement(GraphMlConstants.GRAPH);
 
-    if (!_id.equals("")) {
+    if (_id != "") {
       graph.setAttribute(GraphMlConstants.ID, _id);
     }
-    if (!_edgedefault.equals("")) {
+    if (_edgedefault !="") {
       graph.setAttribute(GraphMlConstants.EDGE_DEFAULT, _edgedefault);
     }
 
     for (GraphMlNode node in _nodes) {
       Element nodeElement = node.generateElement(document);
-      graph.appendChild(nodeElement);
+      graph.append(nodeElement);
     }
 
     for (GraphMlEdge edge in _edges) {
       Element edgeElement = edge.generateElement(document);
-      graph.appendChild(edgeElement);
+      graph.append(edgeElement);
     }
 
     return graph;

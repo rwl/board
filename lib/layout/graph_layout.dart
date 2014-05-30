@@ -111,7 +111,7 @@ abstract class GraphLayout implements IGraphLayout {
     CellState state = graph.getView().getState(cell);
     Map<String, Object> style = (state != null) ? state.getStyle() : graph.getCellStyle(cell);
 
-    return (style != null) ? style.get(key) : null;
+    return (style != null) ? style[key] : null;
   }
 
   /**

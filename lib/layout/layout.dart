@@ -4,6 +4,11 @@ library graph.layout;
  * This package contains various graph layouts.
  */
 
+import 'dart:collection' show HashSet;
+import 'dart:math' as Math;
+
+import '../compat/math.dart' as math;
+
 import '../model/model.dart' show IGraphModel, GraphModel, Geometry, CellPath, ICell;
 import '../util/util.dart' show Point2d, Rect, Utils, Constants;
 import '../view/view.dart' show CellState, Graph, GraphView, ICellVisitor;

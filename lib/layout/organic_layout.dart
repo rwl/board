@@ -377,7 +377,7 @@ class OrganicLayout extends GraphLayout {
     IGraphModel model = graph.getModel();
     GraphView view = graph.getView();
     List<Object> vertices = graph.getChildVertices(parent);
-    HashSet<Object> vertexSet = new HashSet<Object>(Arrays.asList(vertices));
+    HashSet<Object> vertexSet = new HashSet<Object>.from(vertices);
 
     HashSet<Object> validEdges = new HashSet<Object>();
 
@@ -396,7 +396,7 @@ class OrganicLayout extends GraphLayout {
 
     }
 
-    List<Object> edges = validEdges.toArray();
+    List<Object> edges = validEdges;
 
     // If the bounds dimensions have not been set see if the average area
     // per node has been
@@ -404,11 +404,11 @@ class OrganicLayout extends GraphLayout {
     Rect bounds = null;
 
     // Form internal model of nodes
-    Map<Object, int> vertexMap = new Hashtable<Object, int>();
+    Map<Object, int> vertexMap = new Map<Object, int>();
     v = new List<CellWrapper>(vertices.length);
     for (int i = 0; i < vertices.length; i++) {
       v[i] = new CellWrapper(vertices[i]);
-      vertexMap.put(vertices[i], new int(i));
+      vertexMap[vertices[i]] = new int(i);
       bounds = getVertexBounds(vertices[i]);
 
       if (totalBounds == null) {
@@ -491,19 +491,19 @@ class OrganicLayout extends GraphLayout {
       int target = null;
       // Check if either end of the edge is not connected
       if (sourceCell != null) {
-        source = vertexMap.get(sourceCell);
+        source = vertexMap[sourceCell];
       }
       if (targetCell != null) {
-        target = vertexMap.get(targetCell);
+        target = vertexMap[targetCell];
       }
       if (source != null) {
-        e[i].source = source.intValue();
+        e[i].source = source;
       } else {
         // source end is not connected
         e[i].source = -1;
       }
       if (target != null) {
-        e[i].target = target.intValue();
+        e[i].target = target;
       } else {
         // target end is not connected
         e[i].target = -1;
@@ -1050,7 +1050,7 @@ class OrganicLayout extends GraphLayout {
 	 * @return Array of all interesting Edges
 	 */
   List<int> getRelevantEdges(int cellIndex) {
-    ArrayList<int> relevantEdgeList = new List<int>(e.length);
+    List<int> relevantEdgeList = new List<int>(e.length);
 
     for (int i = 0; i < e.length; i++) {
       if (e[i].source != cellIndex && e[i].target != cellIndex) {
@@ -1060,12 +1060,12 @@ class OrganicLayout extends GraphLayout {
     }
 
     List<int> relevantEdgeArray = new List<int>(relevantEdgeList.length);
-    Iterator<int> iter = relevantEdgeList.iterator();
+    Iterator<int> iter = relevantEdgeList.iterator;
 
     //Reform the list into an array but replace int values with ints
     for (int i = 0; i < relevantEdgeArray.length; i++) {
       if (iter.moveNext()) {
-        relevantEdgeArray[i] = iter.next().intValue();
+        relevantEdgeArray[i] = iter.current;
       }
     }
 
@@ -1080,7 +1080,7 @@ class OrganicLayout extends GraphLayout {
 	 * @return Array of all connected Edges
 	 */
   List<int> getConnectedEdges(int cellIndex) {
-    ArrayList<int> connectedEdgeList = new List<int>(e.length);
+    List<int> connectedEdgeList = new List<int>(e.length);
 
     for (int i = 0; i < e.length; i++) {
       if (e[i].source == cellIndex || e[i].target == cellIndex) {
@@ -1090,12 +1090,12 @@ class OrganicLayout extends GraphLayout {
     }
 
     List<int> connectedEdgeArray = new List<int>(connectedEdgeList.length);
-    Iterator<int> iter = connectedEdgeList.iterator();
+    Iterator<int> iter = connectedEdgeList.iterator;
 
     // Reform the list into an array but replace int values with ints
     for (int i = 0; i < connectedEdgeArray.length; i++) {
       if (iter.moveNext()) {
-        connectedEdgeArray[i] = iter.next().intValue();
+        connectedEdgeArray[i] = iter.current;
         ;
       }
     }

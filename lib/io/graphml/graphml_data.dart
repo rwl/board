@@ -52,13 +52,13 @@ class GraphMlData {
     } else if (shapeEdgeElement != null) {
       this._dataShapeEdge = new GraphMlShapeEdge(shapeEdgeElement);
     } else {
-      NodeList childs = dataElement.getChildNodes();
+      NodeList childs = dataElement.childNodes;
       List<Node> childrens = GraphMlUtils.copyNodeList(childs);
 
       for (Node n in childrens) {
-        if (n.getNodeName().equals("#text")) {
+        if (n.nodeName == "#text") {
 
-          this._dataValue += n.getNodeValue();
+          this._dataValue += n.nodeValue;
         }
       }
       this._dataValue = this._dataValue.trim();
@@ -121,7 +121,7 @@ class GraphMlData {
     data.setAttribute(GraphMlConstants.KEY, _dataKey);
 
     Element shapeNodeElement = _dataShapeNode.generateElement(document);
-    data.appendChild(shapeNodeElement);
+    data.append(shapeNodeElement);
 
     return data;
   }
@@ -136,7 +136,7 @@ class GraphMlData {
     data.setAttribute(GraphMlConstants.KEY, _dataKey);
 
     Element shapeEdgeElement = _dataShapeEdge.generateElement(document);
-    data.appendChild(shapeEdgeElement);
+    data.append(shapeEdgeElement);
 
     return data;
   }

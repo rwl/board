@@ -74,21 +74,21 @@ class GraphMlShapeNode {
     dataShapeGeometry.setAttribute(GraphMlConstants.X, _dataX);
     dataShapeGeometry.setAttribute(GraphMlConstants.Y, _dataY);
 
-    dataShape.appendChild(dataShapeGeometry);
+    dataShape.append(dataShapeGeometry);
 
-    if (!this._dataStyle.equals("")) {
+    if (this._dataStyle != "") {
       Element dataShapeStyle = document.createElementNS(GraphMlConstants.JGRAPH_URL, GraphMlConstants.JGRAPH + GraphMlConstants.STYLE);
       dataShapeStyle.setAttribute(GraphMlConstants.PROPERTIES, _dataStyle);
-      dataShape.appendChild(dataShapeStyle);
+      dataShape.append(dataShapeStyle);
     }
 
     //Sets Label
-    if (!this._dataLabel.equals("")) {
+    if (this._dataLabel != "") {
 
       Element dataShapeLabel = document.createElementNS(GraphMlConstants.JGRAPH_URL, GraphMlConstants.JGRAPH + GraphMlConstants.LABEL);
       dataShapeLabel.setAttribute(GraphMlConstants.TEXT, _dataLabel);
 
-      dataShape.appendChild(dataShapeLabel);
+      dataShape.append(dataShapeLabel);
     }
 
     return dataShape;

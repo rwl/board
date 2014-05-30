@@ -64,7 +64,7 @@ class GraphMlEdge {
     for (Element dataElem in dataList) {
       GraphMlData data = new GraphMlData(dataElem);
       String key = data.getDataKey();
-      _edgeDataMap.put(key, data);
+      _edgeDataMap[key] = data;
     }
   }
 
@@ -140,26 +140,26 @@ class GraphMlEdge {
   Element generateElement(Document document) {
     Element edge = document.createElement(GraphMlConstants.EDGE);
 
-    if (!_edgeId.equals("")) {
+    if (_edgeId != "") {
       edge.setAttribute(GraphMlConstants.ID, _edgeId);
     }
     edge.setAttribute(GraphMlConstants.EDGE_SOURCE, _edgeSource);
     edge.setAttribute(GraphMlConstants.EDGE_TARGET, _edgeTarget);
 
-    if (!_edgeSourcePort.equals("")) {
+    if (_edgeSourcePort != "") {
       edge.setAttribute(GraphMlConstants.EDGE_SOURCE_PORT, _edgeSourcePort);
     }
 
-    if (!_edgeTargetPort.equals("")) {
+    if (_edgeTargetPort != "") {
       edge.setAttribute(GraphMlConstants.EDGE_TARGET_PORT, _edgeTargetPort);
     }
 
-    if (!_edgeDirected.equals("")) {
+    if (_edgeDirected != "") {
       edge.setAttribute(GraphMlConstants.EDGE_DIRECTED, _edgeDirected);
     }
 
     Element dataElement = _edgeData.generateEdgeElement(document);
-    edge.appendChild(dataElement);
+    edge.append(dataElement);
 
     return edge;
   }
@@ -170,15 +170,15 @@ class GraphMlEdge {
 	 */
   String getEdgeStyle() {
     String style = "";
-    Hashtable<String, Object> styleMap = new Hashtable<String, Object>();
+    Map<String, Object> styleMap = new Map<String, Object>();
 
     //Defines style of the edge.
-    if (_edgeDirected.equals("true")) {
-      styleMap.put(Constants.STYLE_ENDARROW, Constants.ARROW_CLASSIC);
+    if (_edgeDirected == "true") {
+      styleMap[Constants.STYLE_ENDARROW] = Constants.ARROW_CLASSIC;
 
       style = GraphMlUtils.getStyleString(styleMap, "=");
-    } else if (_edgeDirected.equals("false")) {
-      styleMap.put(Constants.STYLE_ENDARROW, Constants.NONE);
+    } else if (_edgeDirected == "false") {
+      styleMap[Constants.STYLE_ENDARROW] = Constants.NONE;
 
       style = GraphMlUtils.getStyleString(styleMap, "=");
     }

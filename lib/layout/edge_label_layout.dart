@@ -38,7 +38,7 @@ class EdgeLabelLayout extends GraphLayout {
       }
     }
 
-    placeLabels(vertices.toArray(), edges.toArray());
+    placeLabels(vertices, edges);
   }
 
   /**

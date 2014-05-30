@@ -156,8 +156,8 @@ class CircleLayout extends GraphLayout {
       // Gets all vertices inside the parent and finds
       // the maximum dimension of the largest vertex
       double max = 0;
-      Double top = null;
-      Double left = null;
+      double top = null;
+      double left = null;
       List<Object> vertices = new List<Object>();
       int childCount = model.getChildCount(parent);
 
@@ -201,7 +201,7 @@ class CircleLayout extends GraphLayout {
         top = _y0;
       }
 
-      circle(vertices.toArray(), r, left.doubleValue(), top.doubleValue());
+      circle(vertices, r, left, top);
     } finally {
       model.endUpdate();
     }

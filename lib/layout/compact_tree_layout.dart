@@ -397,7 +397,7 @@ class CompactTreeLayout extends GraphLayout {
         }
       }
 
-      if (roots.isEmpty() && best != null) {
+      if (roots.length == 0 && best != null) {
         roots.add(best);
       }
     }
@@ -765,7 +765,7 @@ class CompactTreeLayout extends GraphLayout {
 	 * a padding.
 	 */
   void _adjustParents() {
-    arrangeGroups(Utils.sortCells(this._parentsChanged, true).toArray(), _groupPadding);
+    arrangeGroups(Utils.sortCells(this._parentsChanged, true), _groupPadding);
   }
 
   /**
@@ -809,8 +809,9 @@ class CompactTreeLayout extends GraphLayout {
       child = child.next;
     }
 
-    List<_WeightedCellSorter> sortedCellsArray = sortedCells.toArray(new List<_WeightedCellSorter>(sortedCells.length));
-    Arrays.sort(sortedCellsArray);
+//    List<_WeightedCellSorter> sortedCellsArray = sortedCells.toArray(new List<_WeightedCellSorter>(sortedCells.length));
+//    Arrays.sort(sortedCellsArray);
+    sortedCells.sort((_WeightedCellSorter x, _WeightedCellSorter y) => x.compareTo(y));
 
     double availableWidth = node.width;
 
@@ -835,8 +836,8 @@ class CompactTreeLayout extends GraphLayout {
     Rect parentBounds = getVertexBounds(parentCell);
     child = node.child;
 
-    for (int j = 0; j < sortedCellsArray.length; j++) {
-      Object childCell = sortedCellsArray[j].cell.cell;
+    for (int j = 0; j < sortedCells.length; j++) {
+      Object childCell = sortedCells[j].cell.cell;
       Rect childBounds = getVertexBounds(childCell);
 
       List<Object> edges = GraphModel.getEdgesBetween(model, parentCell, childCell);
@@ -869,9 +870,9 @@ class CompactTreeLayout extends GraphLayout {
         }
       }
 
-      if (j < (childCount as float) / 2.0) {
+      if (j < (childCount as double) / 2.0) {
         currentYOffset += _prefVertEdgeOff;
-      } else if (j > (childCount as float) / 2.0) {
+      } else if (j > (childCount as double) / 2.0) {
         currentYOffset -= _prefVertEdgeOff;
       }
       // Ignore the case if equals, this means the second of 2
@@ -914,14 +915,11 @@ class _WeightedCellSorter implements Comparable<Object> {
    */
   _TreeNode cell = null;
 
-  _WeightedCellSorter() {
-    this(null, 0);
-  }
+//  _WeightedCellSorter() {
+//    this(null, 0);
+//  }
 
-  _WeightedCellSorter(_TreeNode cell, int weightedValue) {
-    this.cell = cell;
-    this.weightedValue = weightedValue;
-  }
+  _WeightedCellSorter([_TreeNode this._cell=null, this._weightedValue=0]);
 
   /**
    * comparator on the medianValue

@@ -40,10 +40,10 @@ class ParallelEdgeLayout extends GraphLayout {
 
     graph.getModel().beginUpdate();
     try {
-      Iterator<List<Object>> it = lookup.values().iterator();
+      Iterator<List<Object>> it = lookup.values.iterator;
 
       while (it.moveNext()) {
-        List<Object> parallels = it.current();
+        List<Object> parallels = it.current;
 
         if (parallels.length > 1) {
           layout(parallels);
@@ -58,7 +58,7 @@ class ParallelEdgeLayout extends GraphLayout {
 	 * 
 	 */
   Map<String, List<Object>> findParallels(Object parent) {
-    Map<String, List<Object>> lookup = new Hashtable<String, List<Object>>();
+    Map<String, List<Object>> lookup = new Map<String, List<Object>>();
     IGraphModel model = graph.getModel();
     int childCount = model.getChildCount(parent);
 
@@ -70,10 +70,10 @@ class ParallelEdgeLayout extends GraphLayout {
 
         if (id != null) {
           if (!lookup.containsKey(id)) {
-            lookup.put(id, new List<Object>());
+            lookup[id] = new List<Object>();
           }
 
-          lookup.get(id).add(child);
+          lookup[id].add(child);
         }
       }
     }
@@ -104,7 +104,7 @@ class ParallelEdgeLayout extends GraphLayout {
 	 * 
 	 */
   void layout(List<Object> parallels) {
-    Object edge = parallels.get(0);
+    Object edge = parallels[0];
     IGraphModel model = graph.getModel();
     Geometry src = model.getGeometry(model.getTerminal(edge, true));
     Geometry trg = model.getGeometry(model.getTerminal(edge, false));
@@ -153,7 +153,7 @@ class ParallelEdgeLayout extends GraphLayout {
 	 */
   void route(Object edge, double x, double y) {
     if (graph.isCellMovable(edge)) {
-      setEdgePoints(edge, Arrays.asList([new Point2d(x, y)]));
+      setEdgePoints(edge, [ new Point2d(x, y) ]);
     }
   }
 

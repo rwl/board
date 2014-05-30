@@ -127,7 +127,7 @@ class FastOrganicLayout extends GraphLayout {
   /**
 	 * Maps from vertices to indices.
 	 */
-  Hashtable<Object, int> indices = new Hashtable<Object, int>();
+  Map<Object, int> indices = new Map<Object, int>();
 
   /**
 	 * Constructs a new fast organic layout for the specified graph.
@@ -296,14 +296,14 @@ class FastOrganicLayout extends GraphLayout {
       }
     }
 
-    vertexArray = tmp.toArray();
+    vertexArray = tmp;
     Rect initialBounds = (useInputOrigin) ? graph.getBoundsForCells(vertexArray, false, false, true) : null;
     int n = vertexArray.length;
 
     dispX = new List<double>(n);
     dispY = new List<double>(n);
     cellLocation = new List<List<double>>(n);
-    isMoveable = new List<boolean>(n);
+    isMoveable = new List<bool>(n);
     neighbours = new List<int>(n);
     radius = new List<double>(n);
     radiusSquared = new List<double>(n);
@@ -325,7 +325,7 @@ class FastOrganicLayout extends GraphLayout {
       cellLocation[i] = new List<double>(2);
 
       // Set up the mapping from array indices to cells
-      indices.put(vertex, new int(i));
+      indices[vertex] = i;
       Rect bounds = getVertexBounds(vertex);
 
       // Set the X,Y value of the internal version of the cell to
@@ -372,12 +372,12 @@ class FastOrganicLayout extends GraphLayout {
         neighbours[i] = new List<int>(cells.length);
 
         for (int j = 0; j < cells.length; j++) {
-          int index = indices.get(cells[j]);
+          int index = indices[cells[j]];
 
           // Check the connected cell in part of the vertex list to be
           // acted on by this layout
           if (index != null) {
-            neighbours[i][j] = index.intValue();
+            neighbours[i][j] = index;
           } // Else if index of the other cell doesn't correspond to
           // any cell listed to be acted upon in this layout. Set
           // the index to the value of this vertex (a dummy self-loop)
@@ -411,8 +411,8 @@ class FastOrganicLayout extends GraphLayout {
         reduceTemperature();
       }
 
-      Double minx = null;
-      Double miny = null;
+      double minx = null;
+      double miny = null;
 
       for (int i = 0; i < vertexArray.length; i++) {
         Object vertex = vertexArray[i];
@@ -427,15 +427,15 @@ class FastOrganicLayout extends GraphLayout {
           setVertexLocation(vertex, x, y);
 
           if (minx == null) {
-            minx = new Double(x);
+            minx = x;
           } else {
-            minx = new Double(Math.min(minx.doubleValue(), x));
+            minx = Math.min(minx, x);
           }
 
           if (miny == null) {
-            miny = new Double(y);
+            miny = y;
           } else {
-            miny = new Double(Math.min(miny.doubleValue(), y));
+            miny = Math.min(miny, y);
           }
         }
       }
@@ -443,8 +443,8 @@ class FastOrganicLayout extends GraphLayout {
       // Modifies the cloned geometries in-place. Not needed
       // to clone the geometries again as we're in the same
       // undoable change.
-      double dx = (minx != null) ? -minx.doubleValue() - 1 : 0;
-      double dy = (miny != null) ? -miny.doubleValue() - 1 : 0;
+      double dx = (minx != null) ? -minx - 1 : 0;
+      double dy = (miny != null) ? -miny - 1 : 0;
 
       if (initialBounds != null) {
         dx += initialBounds.getX();
@@ -551,11 +551,11 @@ class FastOrganicLayout extends GraphLayout {
           double yDelta = cellLocation[i][1] - cellLocation[j][1];
 
           if (xDelta == 0) {
-            xDelta = 0.01 + Math.random();
+            xDelta = 0.01 + Math.Random.nextDouble();
           }
 
           if (yDelta == 0) {
-            yDelta = 0.01 + Math.random();
+            yDelta = 0.01 + Math.Random.nextDouble();
           }
 
           // Distance between nodes

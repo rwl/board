@@ -132,32 +132,32 @@ class GraphMlKey {
   String _defaultValue() {
     String val = "";
     switch (this._keyType) {
-      case BOOLEAN:
+      case keyTypeValues.BOOLEAN:
         {
           val = "false";
           break;
         }
-      case DOUBLE:
+      case keyTypeValues.DOUBLE:
         {
           val = "0";
           break;
         }
-      case FLOAT:
+      case keyTypeValues.FLOAT:
         {
           val = "0";
           break;
         }
-      case INT:
+      case keyTypeValues.INT:
         {
           val = "0";
           break;
         }
-      case LONG:
+      case keyTypeValues.LONG:
         {
           val = "0";
           break;
         }
-      case STRING:
+      case keyTypeValues.STRING:
         {
           val = "";
           break;
@@ -174,21 +174,21 @@ class GraphMlKey {
   Element generateElement(Document document) {
     Element key = document.createElement(GraphMlConstants.KEY);
 
-    if (!_keyName.equals("")) {
+    if (_keyName != "") {
       key.setAttribute(GraphMlConstants.KEY_NAME, _keyName);
     }
     key.setAttribute(GraphMlConstants.ID, _keyId);
 
-    if (!_keyName.equals("")) {
+    if (_keyName != "") {
       key.setAttribute(GraphMlConstants.KEY_FOR, stringForValue(_keyFor));
     }
 
-    if (!_keyName.equals("")) {
+    if (_keyName != "") {
       key.setAttribute(GraphMlConstants.KEY_TYPE, stringTypeValue(_keyType));
     }
 
-    if (!_keyName.equals("")) {
-      key.setTextContent(_keyDefault);
+    if (_keyName != "") {
+      key.text = _keyDefault;
     }
 
     return key;
@@ -203,19 +203,19 @@ class GraphMlKey {
   keyForValues enumForValue(String value) {
     keyForValues enumVal = keyForValues.ALL;
 
-    if (value.equals(GraphMlConstants.GRAPH)) {
+    if (value == GraphMlConstants.GRAPH) {
       enumVal = keyForValues.GRAPH;
-    } else if (value.equals(GraphMlConstants.NODE)) {
+    } else if (value == GraphMlConstants.NODE) {
       enumVal = keyForValues.NODE;
-    } else if (value.equals(GraphMlConstants.EDGE)) {
+    } else if (value == GraphMlConstants.EDGE) {
       enumVal = keyForValues.EDGE;
-    } else if (value.equals(GraphMlConstants.HYPEREDGE)) {
+    } else if (value == GraphMlConstants.HYPEREDGE) {
       enumVal = keyForValues.HYPEREDGE;
-    } else if (value.equals(GraphMlConstants.PORT)) {
+    } else if (value == GraphMlConstants.PORT) {
       enumVal = keyForValues.PORT;
-    } else if (value.equals(GraphMlConstants.ENDPOINT)) {
+    } else if (value == GraphMlConstants.ENDPOINT) {
       enumVal = keyForValues.ENDPOINT;
-    } else if (value.equals(GraphMlConstants.ALL)) {
+    } else if (value == GraphMlConstants.ALL) {
       enumVal = keyForValues.ALL;
     }
 
@@ -233,37 +233,37 @@ class GraphMlKey {
     String val = GraphMlConstants.ALL;
 
     switch (value) {
-      case GRAPH:
+      case keyForValues.GRAPH:
         {
           val = GraphMlConstants.GRAPH;
           break;
         }
-      case NODE:
+      case keyForValues.NODE:
         {
           val = GraphMlConstants.NODE;
           break;
         }
-      case EDGE:
+      case keyForValues.EDGE:
         {
           val = GraphMlConstants.EDGE;
           break;
         }
-      case HYPEREDGE:
+      case keyForValues.HYPEREDGE:
         {
           val = GraphMlConstants.HYPEREDGE;
           break;
         }
-      case PORT:
+      case keyForValues.PORT:
         {
           val = GraphMlConstants.PORT;
           break;
         }
-      case ENDPOINT:
+      case keyForValues.ENDPOINT:
         {
           val = GraphMlConstants.ENDPOINT;
           break;
         }
-      case ALL:
+      case keyForValues.ALL:
         {
           val = GraphMlConstants.ALL;
           break;
@@ -282,17 +282,17 @@ class GraphMlKey {
   keyTypeValues enumTypeValue(String value) {
     keyTypeValues enumVal = keyTypeValues.STRING;
 
-    if (value.equals("boolean")) {
+    if (value == "boolean") {
       enumVal = keyTypeValues.BOOLEAN;
-    } else if (value.equals("double")) {
+    } else if (value == "double") {
       enumVal = keyTypeValues.DOUBLE;
-    } else if (value.equals("float")) {
+    } else if (value == "float") {
       enumVal = keyTypeValues.FLOAT;
-    } else if (value.equals("int")) {
+    } else if (value == "int") {
       enumVal = keyTypeValues.INT;
-    } else if (value.equals("long")) {
+    } else if (value == "long") {
       enumVal = keyTypeValues.LONG;
-    } else if (value.equals("string")) {
+    } else if (value == "string") {
       enumVal = keyTypeValues.STRING;
     }
 
@@ -309,32 +309,32 @@ class GraphMlKey {
     String val = "string";
 
     switch (value) {
-      case BOOLEAN:
+      case keyTypeValues.BOOLEAN:
         {
           val = "boolean";
           break;
         }
-      case DOUBLE:
+      case keyTypeValues.DOUBLE:
         {
           val = "double";
           break;
         }
-      case FLOAT:
+      case keyTypeValues.FLOAT:
         {
           val = "float";
           break;
         }
-      case INT:
+      case keyTypeValues.INT:
         {
           val = "int";
           break;
         }
-      case LONG:
+      case keyTypeValues.LONG:
         {
           val = "long";
           break;
         }
-      case STRING:
+      case keyTypeValues.STRING:
         {
           val = "string";
           break;

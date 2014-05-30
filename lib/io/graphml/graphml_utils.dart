@@ -26,10 +26,10 @@ class GraphMlUtils {
     bool has = false;
 
     if (nl != null) {
-      int length = nl.getLength();
+      int length = nl.length;
 
       for (int i = 0; (i < length) && !has; i++) {
-        has = (nl.item(i)).getNodeName().equals(tag);
+        has = nl[i].nodeName == tag;
       }
     }
 
@@ -44,14 +44,14 @@ class GraphMlUtils {
 	 */
   static Element nodeListTag(NodeList nl, String tag) {
     if (nl != null) {
-      int length = nl.getLength();
+      int length = nl.length;
       bool has = false;
 
       for (int i = 0; (i < length) && !has; i++) {
-        has = (nl.item(i)).getNodeName().equals(tag);
+        has = nl[i].nodeName == tag;
 
         if (has) {
-          return nl.item(i) as Element;
+          return nl[i] as Element;
         }
       }
     }
@@ -66,14 +66,14 @@ class GraphMlUtils {
 	 * @return List with the indicated elements.
 	 */
   static List<Element> nodeListTags(NodeList nl, String tag) {
-    ArrayList<Element> ret = new List<Element>();
+    List<Element> ret = new List<Element>();
 
     if (nl != null) {
-      int length = nl.getLength();
+      int length = nl.length;
 
       for (int i = 0; i < length; i++) {
-        if (tag.equals((nl.item(i)).getNodeName())) {
-          ret.add(nl.item(i) as Element);
+        if (tag == nl[i].nodeName) {
+          ret.add(nl[i] as Element);
         }
       }
     }
@@ -87,15 +87,15 @@ class GraphMlUtils {
 	 * @return Returns <code>true</code> if the childrens of element has a Node with name = tag.
 	 */
   static bool childsHasTag(Element element, String tag) {
-    NodeList nl = element.getChildNodes();
+    NodeList nl = element.childNodes;
 
     bool has = false;
 
     if (nl != null) {
-      int length = nl.getLength();
+      int length = nl.length;
 
       for (int i = 0; (i < length) && !has; i++) {
-        has = (nl.item(i)).getNodeName().equals(tag);
+        has = nl[i].nodeName == tag;
       }
     }
     return has;
@@ -108,17 +108,17 @@ class GraphMlUtils {
 	 * @return Element with name = 'tag'.
 	 */
   static Element childsTag(Element element, String tag) {
-    NodeList nl = element.getChildNodes();
+    NodeList nl = element.childNodes;
 
     if (nl != null) {
-      int length = nl.getLength();
+      int length = nl.length;
       bool has = false;
 
       for (int i = 0; (i < length) && !has; i++) {
-        has = (nl.item(i)).getNodeName().equals(tag);
+        has = nl[i].nodeName == tag;
 
         if (has) {
-          return nl.item(i) as Element;
+          return nl[i] as Element;
         }
       }
     }
@@ -134,16 +134,16 @@ class GraphMlUtils {
 	 * @return List with the indicated elements.
 	 */
   static List<Element> childsTags(Element element, String tag) {
-    NodeList nl = element.getChildNodes();
+    NodeList nl = element.childNodes;
 
-    ArrayList<Element> ret = new List<Element>();
+    List<Element> ret = new List<Element>();
 
     if (nl != null) {
-      int length = nl.getLength();
+      int length = nl.length;
 
       for (int i = 0; i < length; i++) {
-        if (tag.equals((nl.item(i)).getNodeName())) {
-          ret.add(nl.item(i) as Element);
+        if (tag == nl[i].nodeName) {
+          ret.add(nl[i] as Element);
         }
       }
     }
@@ -156,11 +156,11 @@ class GraphMlUtils {
 	 * @return List with the elements of nodeList.
 	 */
   static List<Node> copyNodeList(NodeList nodeList) {
-    ArrayList<Node> copy = new List<Node>();
-    int length = nodeList.getLength();
+    List<Node> copy = new List<Node>();
+    int length = nodeList.length;
 
     for (int i = 0; i < length; i++) {
-      copy.add(nodeList.item(i) as Node);
+      copy.add(nodeList[i] as Node);
     }
 
     return copy;
@@ -178,7 +178,7 @@ class GraphMlUtils {
     String value = "";
     int index = 0;
 
-    if (!style.equals("")) {
+    if (style != "") {
       List<String> entries = style.split(";");
 
       for (String entry in entries) {
@@ -187,11 +187,11 @@ class GraphMlUtils {
         if (index == -1) {
           key = "";
           value = entry;
-          styleMap.put(key, value);
+          styleMap[key] = value;
         } else {
           key = entry.substring(0, index);
           value = entry.substring(index + 1);
-          styleMap.put(key, value);
+          styleMap[key] = value;
         }
       }
     }
@@ -205,12 +205,12 @@ class GraphMlUtils {
 	 */
   static String getStyleString(Map<String, Object> styleMap, String asig) {
     String style = "";
-    Iterator<Object> it = styleMap.values().iterator();
-    Iterator<String> kit = styleMap.keySet().iterator();
+    Iterator<Object> it = styleMap.values.iterator;
+    Iterator<String> kit = styleMap.keys.iterator;
 
     while (kit.moveNext()) {
-      String key = kit.current();
-      Object value = it.current();
+      String key = kit.current;
+      Object value = it.current;
       style = style + key + asig + value + ";";
     }
     return style;
