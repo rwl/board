@@ -23,7 +23,7 @@ class GeneratorRandomIntFunction extends GeneratorFunction {
       return _minWeight;
     }
 
-    double currValue = _minWeight + math.round((Math.random() * (_maxWeight - _minWeight)));
+    double currValue = _minWeight + math.round((Math.Random.nextDouble() * (_maxWeight - _minWeight)));
     return currValue;
   }
 

@@ -30,12 +30,12 @@ class ImageCanvas implements ICanvas {
   /**
 	 * 
 	 */
-  BufferedImage _image;
+  image.Image _image;
 
   /**
 	 * 
 	 */
-  ImageCanvas(Graphics2DCanvas canvas, int width, int height, Color background, bool antiAlias) {
+  ImageCanvas(Graphics2DCanvas canvas, int width, int height, color.Color background, bool antiAlias) {
     this._canvas = canvas;
     _previousGraphics = canvas.getGraphics();
     _image = Utils.createBufferedImage(width, height, background);
@@ -57,7 +57,7 @@ class ImageCanvas implements ICanvas {
   /**
 	 * 
 	 */
-  BufferedImage getImage() {
+  image.Image getImage() {
     return _image;
   }
 
@@ -106,8 +106,8 @@ class ImageCanvas implements ICanvas {
   /**
 	 * 
 	 */
-  BufferedImage destroy() {
-    BufferedImage tmp = _image;
+  image.Image destroy() {
+    image.Image tmp = _image;
 
     if (_canvas.getGraphics() != null) {
       _canvas.getGraphics().dispose();

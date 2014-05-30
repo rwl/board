@@ -58,10 +58,10 @@ class VmlCanvas extends BasicCanvas {
 	 */
   void appendVmlElement(Element node) {
     if (_document != null) {
-      Node body = _document.getDocumentElement().getFirstChild().getNextSibling();
+      Node body = _document.documentElement.firstChild.nextNode;
 
       if (body != null) {
-        body.appendChild(node);
+        body.append(node);
       }
     }
 
@@ -132,26 +132,26 @@ class VmlCanvas extends BasicCanvas {
         strokeNode.setAttribute("dashstyle", "2 2");
       }
 
-      elem.appendChild(strokeNode);
+      elem.append(strokeNode);
     } else {
       int x = (state.getX() as int) + _translate.x;
       int y = (state.getY() as int) + _translate.y;
       int w = (state.getWidth() as int);
       int h = (state.getHeight() as int);
 
-      if (!Utils.getString(style, Constants.STYLE_SHAPE, "").equals(Constants.SHAPE_SWIMLANE)) {
+      if (Utils.getString(style, Constants.STYLE_SHAPE, "") != Constants.SHAPE_SWIMLANE) {
         elem = drawShape(x, y, w, h, style);
 
         if (Utils.isTrue(style, Constants.STYLE_DASHED)) {
           Element strokeNode = _document.createElement("v:stroke");
           strokeNode.setAttribute("dashstyle", "2 2");
-          elem.appendChild(strokeNode);
+          elem.append(strokeNode);
         }
       } else {
         int start = math.round(Utils.getInt(style, Constants.STYLE_STARTSIZE, Constants.DEFAULT_STARTSIZE) * _scale) as int;
 
         // Removes some styles to draw the content area
-        Map<String, Object> cloned = new Hashtable<String, Object>(style);
+        Map<String, Object> cloned = new Map<String, Object>(style);
         cloned.remove(Constants.STYLE_FILLCOLOR);
         cloned.remove(Constants.STYLE_ROUNDED);
 
@@ -200,24 +200,24 @@ class VmlCanvas extends BasicCanvas {
   Element drawShape(int x, int y, int w, int h, Map<String, Object> style) {
     String fillColor = Utils.getString(style, Constants.STYLE_FILLCOLOR);
     String strokeColor = Utils.getString(style, Constants.STYLE_STROKECOLOR);
-    float strokeWidth = (float)(Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1) * _scale);
+    double strokeWidth = (Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1) * _scale) as double;
 
     // Draws the shape
     String shape = Utils.getString(style, Constants.STYLE_SHAPE);
     Element elem = null;
 
-    if (shape.equals(Constants.SHAPE_IMAGE)) {
+    if (shape == Constants.SHAPE_IMAGE) {
       String img = getImageForStyle(style);
 
       if (img != null) {
         elem = _document.createElement("v:img");
         elem.setAttribute("src", img);
       }
-    } else if (shape.equals(Constants.SHAPE_LINE)) {
+    } else if (shape == Constants.SHAPE_LINE) {
       String direction = Utils.getString(style, Constants.STYLE_DIRECTION, Constants.DIRECTION_EAST);
       String points = null;
 
-      if (direction.equals(Constants.DIRECTION_EAST) || direction.equals(Constants.DIRECTION_WEST)) {
+      if (direction == Constants.DIRECTION_EAST || direction == Constants.DIRECTION_WEST) {
         int mid = math.round(h / 2);
         points = "m 0 " + mid + " l " + w + " " + mid;
       } else {
@@ -228,9 +228,9 @@ class VmlCanvas extends BasicCanvas {
       elem = _document.createElement("v:shape");
       elem.setAttribute("coordsize", w + " " + h);
       elem.setAttribute("path", points + " x e");
-    } else if (shape.equals(Constants.SHAPE_ELLIPSE)) {
+    } else if (shape == Constants.SHAPE_ELLIPSE) {
       elem = _document.createElement("v:oval");
-    } else if (shape.equals(Constants.SHAPE_DOUBLE_ELLIPSE)) {
+    } else if (shape == Constants.SHAPE_DOUBLE_ELLIPSE) {
       elem = _document.createElement("v:shape");
       elem.setAttribute("coordsize", w + " " + h);
       int inset = (int)((3 + strokeWidth) * _scale);
@@ -238,25 +238,25 @@ class VmlCanvas extends BasicCanvas {
       String points = "ar 0 0 " + w + " " + h + " 0 " + (h / 2) + " " + (w / 2) + " " + (h / 2) + " e ar " + inset + " " + inset + " " + (w - inset) + " " + (h - inset) + " 0 " + (h / 2) + " " + (w / 2) + " " + (h / 2);
 
       elem.setAttribute("path", points + " x e");
-    } else if (shape.equals(Constants.SHAPE_RHOMBUS)) {
+    } else if (shape == Constants.SHAPE_RHOMBUS) {
       elem = _document.createElement("v:shape");
       elem.setAttribute("coordsize", w + " " + h);
 
       String points = "m " + (w / 2) + " 0 l " + w + " " + (h / 2) + " l " + (w / 2) + " " + h + " l 0 " + (h / 2);
 
       elem.setAttribute("path", points + " x e");
-    } else if (shape.equals(Constants.SHAPE_TRIANGLE)) {
+    } else if (shape == Constants.SHAPE_TRIANGLE) {
       elem = _document.createElement("v:shape");
       elem.setAttribute("coordsize", w + " " + h);
 
       String direction = Utils.getString(style, Constants.STYLE_DIRECTION, "");
       String points = null;
 
-      if (direction.equals(Constants.DIRECTION_NORTH)) {
+      if (direction == Constants.DIRECTION_NORTH) {
         points = "m 0 " + h + " l " + (w / 2) + " 0 " + " l " + w + " " + h;
-      } else if (direction.equals(Constants.DIRECTION_SOUTH)) {
+      } else if (direction == Constants.DIRECTION_SOUTH) {
         points = "m 0 0 l " + (w / 2) + " " + h + " l " + w + " 0";
-      } else if (direction.equals(Constants.DIRECTION_WEST)) {
+      } else if (direction == Constants.DIRECTION_WEST) {
         points = "m " + w + " 0 l " + w + " " + (h / 2) + " l " + w + " " + h;
       } else // east
       {
@@ -264,28 +264,28 @@ class VmlCanvas extends BasicCanvas {
       }
 
       elem.setAttribute("path", points + " x e");
-    } else if (shape.equals(Constants.SHAPE_HEXAGON)) {
+    } else if (shape == Constants.SHAPE_HEXAGON) {
       elem = _document.createElement("v:shape");
       elem.setAttribute("coordsize", w + " " + h);
 
       String direction = Utils.getString(style, Constants.STYLE_DIRECTION, "");
       String points = null;
 
-      if (direction.equals(Constants.DIRECTION_NORTH) || direction.equals(Constants.DIRECTION_SOUTH)) {
+      if (direction == Constants.DIRECTION_NORTH || direction == Constants.DIRECTION_SOUTH) {
         points = "m " + (int)(0.5 * w) + " 0 l " + w + " " + (int)(0.25 * h) + " l " + w + " " + (int)(0.75 * h) + " l " + (int)(0.5 * w) + " " + h + " l 0 " + (int)(0.75 * h) + " l 0 " + (int)(0.25 * h);
       } else {
         points = "m " + (int)(0.25 * w) + " 0 l " + (int)(0.75 * w) + " 0 l " + w + " " + (int)(0.5 * h) + " l " + (int)(0.75 * w) + " " + h + " l " + (int)(0.25 * w) + " " + h + " l 0 " + (int)(0.5 * h);
       }
 
       elem.setAttribute("path", points + " x e");
-    } else if (shape.equals(Constants.SHAPE_CLOUD)) {
+    } else if (shape == Constants.SHAPE_CLOUD) {
       elem = _document.createElement("v:shape");
       elem.setAttribute("coordsize", w + " " + h);
 
       String points = "m " + (int)(0.25 * w) + " " + (int)(0.25 * h) + " c " + (int)(0.05 * w) + " " + (int)(0.25 * h) + " 0 " + (int)(0.5 * h) + " " + (int)(0.16 * w) + " " + (int)(0.55 * h) + " c 0 " + (int)(0.66 * h) + " " + (int)(0.18 * w) + " " + (int)(0.9 * h) + " " + (int)(0.31 * w) + " " + (int)(0.8 * h) + " c " + (int)(0.4 * w) + " " + (h) + " " + (int)(0.7 * w) + " " + (h) + " " + (int)(0.8 * w) + " " + (int)(0.8 * h) + " c " + (w) + " " + (int)(0.8 * h) + " " + (w) + " " + (int)(0.6 * h) + " " + (int)(0.875 * w) + " " + (int)(0.5 * h) + " c " + (w) + " " + (int)(0.3 * h) + " " + (int)(0.8 * w) + " " + (int)(0.1 * h) + " " + (int)(0.625 * w) + " " + (int)(0.2 * h) + " c " + (int)(0.5 * w) + " " + (int)(0.05 * h) + " " + (int)(0.3 * w) + " " + (int)(0.05 * h) + " " + (int)(0.25 * w) + " " + (int)(0.25 * h);
 
       elem.setAttribute("path", points + " x e");
-    } else if (shape.equals(Constants.SHAPE_ACTOR)) {
+    } else if (shape == Constants.SHAPE_ACTOR) {
       elem = _document.createElement("v:shape");
       elem.setAttribute("coordsize", w + " " + h);
 
@@ -293,11 +293,11 @@ class VmlCanvas extends BasicCanvas {
       String points = "m 0 " + (h) + " C 0 " + (3 * h / 5) + " 0 " + (2 * h / 5) + " " + (w / 2) + " " + (2 * h / 5) + " c " + (int)(w / 2 - width3) + " " + (2 * h / 5) + " " + (int)(w / 2 - width3) + " 0 " + (w / 2) + " 0 c " + (int)(w / 2 + width3) + " 0 " + (int)(w / 2 + width3) + " " + (2 * h / 5) + " " + (w / 2) + " " + (2 * h / 5) + " c " + (w) + " " + (2 * h / 5) + " " + (w) + " " + (3 * h / 5) + " " + (w) + " " + (h);
 
       elem.setAttribute("path", points + " x e");
-    } else if (shape.equals(Constants.SHAPE_CYLINDER)) {
+    } else if (shape == Constants.SHAPE_CYLINDER) {
       elem = _document.createElement("v:shape");
       elem.setAttribute("coordsize", w + " " + h);
 
-      double dy = Math.min(40, Math.floor(h / 5));
+      double dy = Math.min(40, math.floor(h / 5));
       String points = "m 0 " + (int)(dy) + " C 0 " + (int)(dy / 3) + " " + (w) + " " + (int)(dy / 3) + " " + (w) + " " + (int)(dy) + " L " + (w) + " " + (int)(h - dy) + " C " + (w) + " " + (int)(h + dy / 3) + " 0 " + (int)(h + dy / 3) + " 0 " + (int)(h - dy) + " x e" + " m 0 " + (int)(dy) + " C 0 " + (int)(2 * dy) + " " + (w) + " " + (int)(2 * dy) + " " + (w) + " " + (int)(dy);
 
       elem.setAttribute("path", points + " e");
@@ -310,7 +310,7 @@ class VmlCanvas extends BasicCanvas {
       }
     }
 
-    String s = "position:absolute;left:" + String.valueOf(x) + "px;top:" + String.valueOf(y) + "px;width:" + String.valueOf(w) + "px;height:" + String.valueOf(h) + "px;";
+    String s = "position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${h}px;";
 
     // Applies rotation
     double rotation = Utils.getDouble(style, Constants.STYLE_ROTATION);
@@ -326,10 +326,10 @@ class VmlCanvas extends BasicCanvas {
       Element shadow = _document.createElement("v:shadow");
       shadow.setAttribute("on", "true");
       shadow.setAttribute("color", Constants.W3C_SHADOWCOLOR);
-      elem.appendChild(shadow);
+      elem.append(shadow);
     }
 
-    float opacity = Utils.getFloat(style, Constants.STYLE_OPACITY, 100);
+    double opacity = Utils.getFloat(style, Constants.STYLE_OPACITY, 100);
 
     // Applies opacity to fill
     if (fillColor != null) {
@@ -337,10 +337,10 @@ class VmlCanvas extends BasicCanvas {
       fill.setAttribute("color", fillColor);
 
       if (opacity != 100) {
-        fill.setAttribute("opacity", String.valueOf(opacity / 100));
+        fill.setAttribute("opacity", (opacity / 100).toString());
       }
 
-      elem.appendChild(fill);
+      elem.append(fill);
     } else {
       elem.setAttribute("filled", "false");
     }
@@ -351,15 +351,15 @@ class VmlCanvas extends BasicCanvas {
       Element stroke = _document.createElement("v:stroke");
 
       if (opacity != 100) {
-        stroke.setAttribute("opacity", String.valueOf(opacity / 100));
+        stroke.setAttribute("opacity", (opacity / 100).toString());
       }
 
-      elem.appendChild(stroke);
+      elem.append(stroke);
     } else {
       elem.setAttribute("stroked", "false");
     }
 
-    elem.setAttribute("strokeweight", String.valueOf(strokeWidth) + "px");
+    elem.setAttribute("strokeweight", "${strokeWidth}px");
     appendVmlElement(elem);
 
     return elem;
@@ -374,12 +374,12 @@ class VmlCanvas extends BasicCanvas {
 	 */
   Element drawLine(List<Point2d> pts, Map<String, Object> style) {
     String strokeColor = Utils.getString(style, Constants.STYLE_STROKECOLOR);
-    float strokeWidth = (float)(Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1) * _scale);
+    double strokeWidth = (Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1) * _scale) as double;
 
     Element elem = _document.createElement("v:shape");
 
     if (strokeColor != null && strokeWidth > 0) {
-      Point2d pt = pts.get(0);
+      Point2d pt = pts[0];
       Rectangle r = new Rectangle(pt.getPoint());
 
       StringBuilder buf = new StringBuilder("m " + math.round(pt.getX()) + " " + math.round(pt.getY()));
@@ -395,13 +395,13 @@ class VmlCanvas extends BasicCanvas {
       elem.setAttribute("path", d);
       elem.setAttribute("filled", "false");
       elem.setAttribute("strokecolor", strokeColor);
-      elem.setAttribute("strokeweight", String.valueOf(strokeWidth) + "px");
+      elem.setAttribute("strokeweight", "${strokeWidth}px");
 
-      String s = "position:absolute;" + "left:" + String.valueOf(r.x) + "px;" + "top:" + String.valueOf(r.y) + "px;" + "width:" + String.valueOf(r.width) + "px;" + "height:" + String.valueOf(r.height) + "px;";
+      String s = "position:absolute;left:${r.x}px;top:${r.y}px;width:${r.width}px;height:${r.height}px;";
       elem.setAttribute("style", s);
 
-      elem.setAttribute("coordorigin", String.valueOf(r.x) + " " + String.valueOf(r.y));
-      elem.setAttribute("coordsize", String.valueOf(r.width) + " " + String.valueOf(r.height));
+      elem.setAttribute("coordorigin", "${r.x} ${r.y}");
+      elem.setAttribute("coordsize", "${r.width} ${r.height}");
     }
 
     appendVmlElement(elem);

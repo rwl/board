@@ -18,9 +18,9 @@ class GeneratorRandomFunction extends GeneratorFunction {
   }
 
   double getCost(CellState state) {
-    Double edgeWeight = null;
+    double edgeWeight = null;
 
-    edgeWeight = Math.random() * (_maxWeight - _minWeight) + _minWeight;
+    edgeWeight = Math.Random.nextDouble() * (_maxWeight - _minWeight) + _minWeight;
     edgeWeight = math.round(edgeWeight * Math.pow(10, getRoundToDecimals())) / Math.pow(10, getRoundToDecimals()) as double;
 
     return edgeWeight;

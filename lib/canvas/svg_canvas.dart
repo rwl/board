@@ -32,12 +32,12 @@ class SvgCanvas extends BasicCanvas {
 	 * Used internally for looking up elements. Workaround for getElementById
 	 * not working.
 	 */
-  Map<String, Element> _gradients = new Hashtable<String, Element>();
+  Map<String, Element> _gradients = new Map<String, Element>();
 
   /**
 	 * Used internally for looking up images.
 	 */
-  Map<String, Element> _images = new Hashtable<String, Element>();
+  Map<String, Element> _images = new Map<String, Element>();
 
   /**
 	 * 
@@ -70,7 +70,7 @@ class SvgCanvas extends BasicCanvas {
 	 */
   void appendSvgElement(Element node) {
     if (_document != null) {
-      _document.getDocumentElement().appendChild(node);
+      _document.documentElement.append(node);
     }
   }
 
@@ -81,12 +81,12 @@ class SvgCanvas extends BasicCanvas {
     if (_defs == null) {
       _defs = _document.createElement("defs");
 
-      Element svgNode = _document.getDocumentElement();
+      Element svgNode = _document.documentElement;
 
       if (svgNode.hasChildNodes()) {
-        svgNode.insertBefore(_defs, svgNode.getFirstChild());
+        svgNode.insertBefore(_defs, svgNode.firstChild);
       } else {
-        svgNode.appendChild(_defs);
+        svgNode.append(_defs);
       }
     }
 
@@ -98,13 +98,13 @@ class SvgCanvas extends BasicCanvas {
 	 */
   Element getGradientElement(String start, String end, String direction) {
     String id = getGradientId(start, end, direction);
-    Element gradient = _gradients.get(id);
+    Element gradient = _gradients[id];
 
     if (gradient == null) {
       gradient = _createGradientElement(start, end, direction);
       gradient.setAttribute("id", "g" + (_gradients.length + 1));
-      _getDefsElement().appendChild(gradient);
-      _gradients.put(id, gradient);
+      _getDefsElement().append(gradient);
+      _gradients[id] = gradient;
     }
 
     return gradient;
@@ -116,7 +116,7 @@ class SvgCanvas extends BasicCanvas {
   Element getGlassGradientElement() {
     String id = "mx-glass-gradient";
 
-    Element glassGradient = _gradients.get(id);
+    Element glassGradient = _gradients[id];
 
     if (glassGradient == null) {
       glassGradient = _document.createElement("linearGradient");
@@ -128,16 +128,16 @@ class SvgCanvas extends BasicCanvas {
       Element stop1 = _document.createElement("stop");
       stop1.setAttribute("offset", "0%");
       stop1.setAttribute("style", "stop-color:#ffffff;stop-opacity:0.9");
-      glassGradient.appendChild(stop1);
+      glassGradient.append(stop1);
 
       Element stop2 = _document.createElement("stop");
       stop2.setAttribute("offset", "100%");
       stop2.setAttribute("style", "stop-color:#ffffff;stop-opacity:0.1");
-      glassGradient.appendChild(stop2);
+      glassGradient.append(stop2);
 
       glassGradient.setAttribute("id", "g" + (_gradients.length + 1));
-      _getDefsElement().appendChild(glassGradient);
-      _gradients.put(id, glassGradient);
+      _getDefsElement().append(glassGradient);
+      _gradients[id] = glassGradient;
     }
 
     return glassGradient;
@@ -153,25 +153,25 @@ class SvgCanvas extends BasicCanvas {
     gradient.setAttribute("x2", "0%");
     gradient.setAttribute("y2", "0%");
 
-    if (direction == null || direction.equals(Constants.DIRECTION_SOUTH)) {
+    if (direction == null || direction == Constants.DIRECTION_SOUTH) {
       gradient.setAttribute("y2", "100%");
-    } else if (direction.equals(Constants.DIRECTION_EAST)) {
+    } else if (direction == Constants.DIRECTION_EAST) {
       gradient.setAttribute("x2", "100%");
-    } else if (direction.equals(Constants.DIRECTION_NORTH)) {
+    } else if (direction == Constants.DIRECTION_NORTH) {
       gradient.setAttribute("y1", "100%");
-    } else if (direction.equals(Constants.DIRECTION_WEST)) {
+    } else if (direction == Constants.DIRECTION_WEST) {
       gradient.setAttribute("x1", "100%");
     }
 
     Element stop = _document.createElement("stop");
     stop.setAttribute("offset", "0%");
     stop.setAttribute("style", "stop-color:" + start);
-    gradient.appendChild(stop);
+    gradient.append(stop);
 
     stop = _document.createElement("stop");
     stop.setAttribute("offset", "100%");
     stop.setAttribute("style", "stop-color:" + end);
-    gradient.appendChild(stop);
+    gradient.append(stop);
 
     return gradient;
   }
@@ -196,18 +196,18 @@ class SvgCanvas extends BasicCanvas {
 
     String dir = null;
 
-    if (direction == null || direction.equals(Constants.DIRECTION_SOUTH)) {
+    if (direction == null || direction == Constants.DIRECTION_SOUTH) {
       dir = "south";
-    } else if (direction.equals(Constants.DIRECTION_EAST)) {
+    } else if (direction == Constants.DIRECTION_EAST) {
       dir = "east";
     } else {
       String tmp = start;
       start = end;
       end = tmp;
 
-      if (direction.equals(Constants.DIRECTION_NORTH)) {
+      if (direction == Constants.DIRECTION_NORTH) {
         dir = "south";
-      } else if (direction.equals(Constants.DIRECTION_WEST)) {
+      } else if (direction == Constants.DIRECTION_WEST) {
         dir = "east";
       }
     }
@@ -275,7 +275,7 @@ class SvgCanvas extends BasicCanvas {
 	 * 
 	 */
   Element _getEmbeddedImageElement(String src) {
-    Element img = _images.get(src);
+    Element img = _images[src];
 
     if (img == null) {
       img = _document.createElement("svg");
@@ -287,7 +287,7 @@ class SvgCanvas extends BasicCanvas {
       inner.setAttribute("height", "100%");
 
       // Store before transforming to DataURL
-      _images.put(src, img);
+      _images[src] = img;
 
       if (!src.startsWith("data:image/")) {
         try {
@@ -302,9 +302,9 @@ class SvgCanvas extends BasicCanvas {
       }
 
       inner.setAttributeNS(Constants.NS_XLINK, "xlink:href", src);
-      img.appendChild(inner);
+      img.append(inner);
       img.setAttribute("id", "i" + (_images.length));
-      _getDefsElement().appendChild(img);
+      _getDefsElement().append(img);
     }
 
     return img;
@@ -327,10 +327,10 @@ class SvgCanvas extends BasicCanvas {
       elem.setAttributeNS(Constants.NS_XLINK, "xlink:href", src);
     }
 
-    elem.setAttribute("x", String.valueOf(x));
-    elem.setAttribute("y", String.valueOf(y));
-    elem.setAttribute("width", String.valueOf(w));
-    elem.setAttribute("height", String.valueOf(h));
+    elem.setAttribute("x", x.toString());
+    elem.setAttribute("y", y.toString());
+    elem.setAttribute("width", w.toString());
+    elem.setAttribute("height", h.toString());
 
     // FIXME: SVG element must be used for reference to image with
     // aspect but for images with no aspect this does not work.
@@ -420,10 +420,10 @@ class SvgCanvas extends BasicCanvas {
       elem = drawLine(pts, style);
 
       // Applies opacity
-      float opacity = Utils.getFloat(style, Constants.STYLE_OPACITY, 100);
+      double opacity = Utils.getFloat(style, Constants.STYLE_OPACITY, 100);
 
       if (opacity != 100) {
-        String value = String.valueOf(opacity / 100);
+        String value = (opacity / 100).toString();
         elem.setAttribute("fill-opacity", value);
         elem.setAttribute("stroke-opacity", value);
       }
@@ -433,13 +433,13 @@ class SvgCanvas extends BasicCanvas {
       int w = (state.getWidth() as int);
       int h = (state.getHeight() as int);
 
-      if (!Utils.getString(style, Constants.STYLE_SHAPE, "").equals(Constants.SHAPE_SWIMLANE)) {
+      if (Utils.getString(style, Constants.STYLE_SHAPE, "") != Constants.SHAPE_SWIMLANE) {
         elem = drawShape(x, y, w, h, style);
       } else {
         int start = math.round(Utils.getInt(style, Constants.STYLE_STARTSIZE, Constants.DEFAULT_STARTSIZE) * _scale) as int;
 
         // Removes some styles to draw the content area
-        Map<String, Object> cloned = new Hashtable<String, Object>(style);
+        Map<String, Object> cloned = new Map<String, Object>.from(style);
         cloned.remove(Constants.STYLE_FILLCOLOR);
         cloned.remove(Constants.STYLE_ROUNDED);
 
@@ -489,15 +489,15 @@ class SvgCanvas extends BasicCanvas {
     String fillColor = Utils.getString(style, Constants.STYLE_FILLCOLOR, "none");
     String gradientColor = Utils.getString(style, Constants.STYLE_GRADIENTCOLOR, "none");
     String strokeColor = Utils.getString(style, Constants.STYLE_STROKECOLOR, "none");
-    float strokeWidth = (float)(Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1) * _scale);
-    float opacity = Utils.getFloat(style, Constants.STYLE_OPACITY, 100);
+    double strokeWidth = (Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1) * _scale) as double;
+    double opacity = Utils.getFloat(style, Constants.STYLE_OPACITY, 100);
 
     // Draws the shape
     String shape = Utils.getString(style, Constants.STYLE_SHAPE, "");
     Element elem = null;
     Element background = null;
 
-    if (shape.equals(Constants.SHAPE_IMAGE)) {
+    if (shape == Constants.SHAPE_IMAGE) {
       String img = getImageForStyle(style);
 
       if (img != null) {
@@ -507,11 +507,11 @@ class SvgCanvas extends BasicCanvas {
 
         elem = _createImageElement(x, y, w, h, img, PRESERVE_IMAGE_ASPECT, flipH, flipV, isEmbedded());
       }
-    } else if (shape.equals(Constants.SHAPE_LINE)) {
+    } else if (shape == Constants.SHAPE_LINE) {
       String direction = Utils.getString(style, Constants.STYLE_DIRECTION, Constants.DIRECTION_EAST);
       String d = null;
 
-      if (direction.equals(Constants.DIRECTION_EAST) || direction.equals(Constants.DIRECTION_WEST)) {
+      if (direction == Constants.DIRECTION_EAST || direction == Constants.DIRECTION_WEST) {
         int mid = (y + h / 2);
         d = "M " + x + " " + mid + " L " + (x + w) + " " + mid;
       } else {
@@ -521,50 +521,50 @@ class SvgCanvas extends BasicCanvas {
 
       elem = _document.createElement("path");
       elem.setAttribute("d", d + " Z");
-    } else if (shape.equals(Constants.SHAPE_ELLIPSE)) {
+    } else if (shape == Constants.SHAPE_ELLIPSE) {
       elem = _document.createElement("ellipse");
 
-      elem.setAttribute("cx", String.valueOf(x + w / 2));
-      elem.setAttribute("cy", String.valueOf(y + h / 2));
-      elem.setAttribute("rx", String.valueOf(w / 2));
-      elem.setAttribute("ry", String.valueOf(h / 2));
-    } else if (shape.equals(Constants.SHAPE_DOUBLE_ELLIPSE)) {
+      elem.setAttribute("cx", (x + w / 2).toString());
+      elem.setAttribute("cy", (y + h / 2).toString());
+      elem.setAttribute("rx", (w / 2).toString());
+      elem.setAttribute("ry", (h / 2).toString());
+    } else if (shape == Constants.SHAPE_DOUBLE_ELLIPSE) {
       elem = _document.createElement("g");
       background = _document.createElement("ellipse");
-      background.setAttribute("cx", String.valueOf(x + w / 2));
-      background.setAttribute("cy", String.valueOf(y + h / 2));
-      background.setAttribute("rx", String.valueOf(w / 2));
-      background.setAttribute("ry", String.valueOf(h / 2));
-      elem.appendChild(background);
+      background.setAttribute("cx", (x + w / 2).toString());
+      background.setAttribute("cy", (y + h / 2).toString());
+      background.setAttribute("rx", (w / 2).toString());
+      background.setAttribute("ry", (h / 2).toString());
+      elem.append(background);
 
       int inset = (int)((3 + strokeWidth) * _scale);
 
       Element foreground = _document.createElement("ellipse");
       foreground.setAttribute("fill", "none");
       foreground.setAttribute("stroke", strokeColor);
-      foreground.setAttribute("stroke-width", String.valueOf(strokeWidth));
+      foreground.setAttribute("stroke-width", strokeWidth.toString());
 
-      foreground.setAttribute("cx", String.valueOf(x + w / 2));
-      foreground.setAttribute("cy", String.valueOf(y + h / 2));
-      foreground.setAttribute("rx", String.valueOf(w / 2 - inset));
-      foreground.setAttribute("ry", String.valueOf(h / 2 - inset));
-      elem.appendChild(foreground);
-    } else if (shape.equals(Constants.SHAPE_RHOMBUS)) {
+      foreground.setAttribute("cx", (x + w / 2).toString());
+      foreground.setAttribute("cy", (y + h / 2).toString());
+      foreground.setAttribute("rx", (w / 2 - inset).toString());
+      foreground.setAttribute("ry", (h / 2 - inset).toString());
+      elem.append(foreground);
+    } else if (shape == Constants.SHAPE_RHOMBUS) {
       elem = _document.createElement("path");
 
       String d = "M " + (x + w / 2) + " " + y + " L " + (x + w) + " " + (y + h / 2) + " L " + (x + w / 2) + " " + (y + h) + " L " + x + " " + (y + h / 2);
 
       elem.setAttribute("d", d + " Z");
-    } else if (shape.equals(Constants.SHAPE_TRIANGLE)) {
+    } else if (shape == Constants.SHAPE_TRIANGLE) {
       elem = _document.createElement("path");
       String direction = Utils.getString(style, Constants.STYLE_DIRECTION, "");
       String d = null;
 
-      if (direction.equals(Constants.DIRECTION_NORTH)) {
+      if (direction == Constants.DIRECTION_NORTH) {
         d = "M " + x + " " + (y + h) + " L " + (x + w / 2) + " " + y + " L " + (x + w) + " " + (y + h);
-      } else if (direction.equals(Constants.DIRECTION_SOUTH)) {
+      } else if (direction == Constants.DIRECTION_SOUTH) {
         d = "M " + x + " " + y + " L " + (x + w / 2) + " " + (y + h) + " L " + (x + w) + " " + y;
-      } else if (direction.equals(Constants.DIRECTION_WEST)) {
+      } else if (direction == Constants.DIRECTION_WEST) {
         d = "M " + (x + w) + " " + y + " L " + x + " " + (y + h / 2) + " L " + (x + w) + " " + (y + h);
       } else // east
       {
@@ -572,39 +572,39 @@ class SvgCanvas extends BasicCanvas {
       }
 
       elem.setAttribute("d", d + " Z");
-    } else if (shape.equals(Constants.SHAPE_HEXAGON)) {
+    } else if (shape == Constants.SHAPE_HEXAGON) {
       elem = _document.createElement("path");
       String direction = Utils.getString(style, Constants.STYLE_DIRECTION, "");
       String d = null;
 
-      if (direction.equals(Constants.DIRECTION_NORTH) || direction.equals(Constants.DIRECTION_SOUTH)) {
+      if (direction == Constants.DIRECTION_NORTH || direction == Constants.DIRECTION_SOUTH) {
         d = "M " + (x + 0.5 * w) + " " + y + " L " + (x + w) + " " + (y + 0.25 * h) + " L " + (x + w) + " " + (y + 0.75 * h) + " L " + (x + 0.5 * w) + " " + (y + h) + " L " + x + " " + (y + 0.75 * h) + " L " + x + " " + (y + 0.25 * h);
       } else {
         d = "M " + (x + 0.25 * w) + " " + y + " L " + (x + 0.75 * w) + " " + y + " L " + (x + w) + " " + (y + 0.5 * h) + " L " + (x + 0.75 * w) + " " + (y + h) + " L " + (x + 0.25 * w) + " " + (y + h) + " L " + x + " " + (y + 0.5 * h);
       }
 
       elem.setAttribute("d", d + " Z");
-    } else if (shape.equals(Constants.SHAPE_CLOUD)) {
+    } else if (shape == Constants.SHAPE_CLOUD) {
       elem = _document.createElement("path");
 
       String d = "M " + (x + 0.25 * w) + " " + (y + 0.25 * h) + " C " + (x + 0.05 * w) + " " + (y + 0.25 * h) + " " + x + " " + (y + 0.5 * h) + " " + (x + 0.16 * w) + " " + (y + 0.55 * h) + " C " + x + " " + (y + 0.66 * h) + " " + (x + 0.18 * w) + " " + (y + 0.9 * h) + " " + (x + 0.31 * w) + " " + (y + 0.8 * h) + " C " + (x + 0.4 * w) + " " + (y + h) + " " + (x + 0.7 * w) + " " + (y + h) + " " + (x + 0.8 * w) + " " + (y + 0.8 * h) + " C " + (x + w) + " " + (y + 0.8 * h) + " " + (x + w) + " " + (y + 0.6 * h) + " " + (x + 0.875 * w) + " " + (y + 0.5 * h) + " C " + (x + w) + " " + (y + 0.3 * h) + " " + (x + 0.8 * w) + " " + (y + 0.1 * h) + " " + (x + 0.625 * w) + " " + (y + 0.2 * h) + " C " + (x + 0.5 * w) + " " + (y + 0.05 * h) + " " + (x + 0.3 * w) + " " + (y + 0.05 * h) + " " + (x + 0.25 * w) + " " + (y + 0.25 * h);
 
       elem.setAttribute("d", d + " Z");
-    } else if (shape.equals(Constants.SHAPE_ACTOR)) {
+    } else if (shape == Constants.SHAPE_ACTOR) {
       elem = _document.createElement("path");
       double width3 = w / 3;
 
       String d = " M " + x + " " + (y + h) + " C " + x + " " + (y + 3 * h / 5) + " " + x + " " + (y + 2 * h / 5) + " " + (x + w / 2) + " " + (y + 2 * h / 5) + " C " + (x + w / 2 - width3) + " " + (y + 2 * h / 5) + " " + (x + w / 2 - width3) + " " + y + " " + (x + w / 2) + " " + y + " C " + (x + w / 2 + width3) + " " + y + " " + (x + w / 2 + width3) + " " + (y + 2 * h / 5) + " " + (x + w / 2) + " " + (y + 2 * h / 5) + " C " + (x + w) + " " + (y + 2 * h / 5) + " " + (x + w) + " " + (y + 3 * h / 5) + " " + (x + w) + " " + (y + h);
 
       elem.setAttribute("d", d + " Z");
-    } else if (shape.equals(Constants.SHAPE_CYLINDER)) {
+    } else if (shape == Constants.SHAPE_CYLINDER) {
       elem = _document.createElement("g");
       background = _document.createElement("path");
 
-      double dy = Math.min(40, Math.floor(h / 5));
+      double dy = Math.min(40, math.floor(h / 5));
       String d = " M " + x + " " + (y + dy) + " C " + x + " " + (y - dy / 3) + " " + (x + w) + " " + (y - dy / 3) + " " + (x + w) + " " + (y + dy) + " L " + (x + w) + " " + (y + h - dy) + " C " + (x + w) + " " + (y + h + dy / 3) + " " + x + " " + (y + h + dy / 3) + " " + x + " " + (y + h - dy);
       background.setAttribute("d", d + " Z");
-      elem.appendChild(background);
+      elem.append(background);
 
       Element foreground = _document.createElement("path");
       d = "M " + x + " " + (y + dy) + " C " + x + " " + (y + 2 * dy) + " " + (x + w) + " " + (y + 2 * dy) + " " + (x + w) + " " + (y + dy);
@@ -612,50 +612,50 @@ class SvgCanvas extends BasicCanvas {
       foreground.setAttribute("d", d);
       foreground.setAttribute("fill", "none");
       foreground.setAttribute("stroke", strokeColor);
-      foreground.setAttribute("stroke-width", String.valueOf(strokeWidth));
+      foreground.setAttribute("stroke-width", strokeWidth.toString());
 
-      elem.appendChild(foreground);
+      elem.append(foreground);
     } else {
       background = _document.createElement("rect");
       elem = background;
 
-      elem.setAttribute("x", String.valueOf(x));
-      elem.setAttribute("y", String.valueOf(y));
-      elem.setAttribute("width", String.valueOf(w));
-      elem.setAttribute("height", String.valueOf(h));
+      elem.setAttribute("x", x.toString());
+      elem.setAttribute("y", y.toString());
+      elem.setAttribute("width", w.toString());
+      elem.setAttribute("height", h.toString());
 
       if (Utils.isTrue(style, Constants.STYLE_ROUNDED, false)) {
-        String r = String.valueOf(Math.min(w * Constants.RECTANGLE_ROUNDING_FACTOR, h * Constants.RECTANGLE_ROUNDING_FACTOR));
+        String r = (Math.min(w * Constants.RECTANGLE_ROUNDING_FACTOR, h * Constants.RECTANGLE_ROUNDING_FACTOR)).toString();
 
         elem.setAttribute("rx", r);
         elem.setAttribute("ry", r);
       }
 
       // Paints the label image
-      if (shape.equals(Constants.SHAPE_LABEL)) {
+      if (shape == Constants.SHAPE_LABEL) {
         String img = getImageForStyle(style);
 
         if (img != null) {
           String imgAlign = Utils.getString(style, Constants.STYLE_IMAGE_ALIGN, Constants.ALIGN_LEFT);
           String imgValign = Utils.getString(style, Constants.STYLE_IMAGE_VERTICAL_ALIGN, Constants.ALIGN_MIDDLE);
-          int imgWidth = (int)(Utils.getInt(style, Constants.STYLE_IMAGE_WIDTH, Constants.DEFAULT_IMAGESIZE) * _scale);
-          int imgHeight = (int)(Utils.getInt(style, Constants.STYLE_IMAGE_HEIGHT, Constants.DEFAULT_IMAGESIZE) * _scale);
-          int spacing = (int)(Utils.getInt(style, Constants.STYLE_SPACING, 2) * _scale);
+          int imgWidth = (Utils.getInt(style, Constants.STYLE_IMAGE_WIDTH, Constants.DEFAULT_IMAGESIZE) * _scale) as int;
+          int imgHeight = (Utils.getInt(style, Constants.STYLE_IMAGE_HEIGHT, Constants.DEFAULT_IMAGESIZE) * _scale) as int;
+          int spacing = (Utils.getInt(style, Constants.STYLE_SPACING, 2) * _scale) as int;
 
           Rect imageBounds = new Rect(x, y, w, h);
 
-          if (imgAlign.equals(Constants.ALIGN_CENTER)) {
+          if (imgAlign == Constants.ALIGN_CENTER) {
             imageBounds.setX(imageBounds.getX() + (imageBounds.getWidth() - imgWidth) / 2);
-          } else if (imgAlign.equals(Constants.ALIGN_RIGHT)) {
+          } else if (imgAlign == Constants.ALIGN_RIGHT) {
             imageBounds.setX(imageBounds.getX() + imageBounds.getWidth() - imgWidth - spacing - 2);
           } else // LEFT
           {
             imageBounds.setX(imageBounds.getX() + spacing + 4);
           }
 
-          if (imgValign.equals(Constants.ALIGN_TOP)) {
+          if (imgValign == Constants.ALIGN_TOP) {
             imageBounds.setY(imageBounds.getY() + spacing);
-          } else if (imgValign.equals(Constants.ALIGN_BOTTOM)) {
+          } else if (imgValign == Constants.ALIGN_BOTTOM) {
             imageBounds.setY(imageBounds.getY() + imageBounds.getHeight() - imgHeight - spacing);
           } else // MIDDLE
           {
@@ -666,16 +666,16 @@ class SvgCanvas extends BasicCanvas {
           imageBounds.setHeight(imgHeight);
 
           elem = _document.createElement("g");
-          elem.appendChild(background);
+          elem.append(background);
 
           Element imageElement = _createImageElement(imageBounds.getX(), imageBounds.getY(), imageBounds.getWidth(), imageBounds.getHeight(), img, false, false, false, isEmbedded());
 
           if (opacity != 100) {
-            String value = String.valueOf(opacity / 100);
+            String value = (opacity / 100).toString();
             imageElement.setAttribute("opacity", value);
           }
 
-          elem.appendChild(imageElement);
+          elem.append(imageElement);
         }
 
         // Paints the glass effect
@@ -692,9 +692,9 @@ class SvgCanvas extends BasicCanvas {
           glassOverlay.setAttribute("fill", "url(#" + getGlassGradientElement().getAttribute("id") + ")");
 
           String d = "m " + (x - strokeWidth) + "," + (y - strokeWidth) + " L " + (x - strokeWidth) + "," + (y + h * size) + " Q " + (x + w * 0.5) + "," + (y + h * 0.7) + " " + (x + w + strokeWidth) + "," + (y + h * size) + " L " + (x + w + strokeWidth) + "," + (y - strokeWidth) + " z";
-          glassOverlay.setAttribute("stroke-width", String.valueOf(strokeWidth / 2));
+          glassOverlay.setAttribute("stroke-width", (strokeWidth / 2).toString());
           glassOverlay.setAttribute("d", d);
-          elem.appendChild(glassOverlay);
+          elem.append(glassOverlay);
         }
       }
     }
@@ -709,8 +709,8 @@ class SvgCanvas extends BasicCanvas {
       bg = elem;
     }
 
-    if (!bg.getNodeName().equalsIgnoreCase("use") && !bg.getNodeName().equalsIgnoreCase("image")) {
-      if (!fillColor.equalsIgnoreCase("none") && !gradientColor.equalsIgnoreCase("none")) {
+    if (bg.nodeName.toLowerCase() != "use" && bg.nodeName.toLowerCase() != "image")  {
+      if (fillColor.toLowerCase() != "none" && gradientColor.toLowerCase() != "none") {
         String direction = Utils.getString(style, Constants.STYLE_GRADIENT_DIRECTION);
         Element gradient = getGradientElement(fillColor, gradientColor, direction);
 
@@ -722,25 +722,25 @@ class SvgCanvas extends BasicCanvas {
       }
 
       bg.setAttribute("stroke", strokeColor);
-      bg.setAttribute("stroke-width", String.valueOf(strokeWidth));
+      bg.setAttribute("stroke-width", strokeWidth.toString());
 
       // Adds the shadow element
       Element shadowElement = null;
 
-      if (Utils.isTrue(style, Constants.STYLE_SHADOW, false) && !fillColor.equals("none")) {
-        shadowElement = bg.cloneNode(true) as Element;
+      if (Utils.isTrue(style, Constants.STYLE_SHADOW, false) && fillColor != "none") {
+        shadowElement = bg.clone(true) as Element;
 
         shadowElement.setAttribute("transform", Constants.SVG_SHADOWTRANSFORM);
         shadowElement.setAttribute("fill", Constants.W3C_SHADOWCOLOR);
         shadowElement.setAttribute("stroke", Constants.W3C_SHADOWCOLOR);
-        shadowElement.setAttribute("stroke-width", String.valueOf(strokeWidth));
+        shadowElement.setAttribute("stroke-width", strokeWidth.toString());
 
         if (rotation != 0) {
           shadowElement.setAttribute("transform", "rotate(" + rotation + "," + cx + "," + cy + ") " + Constants.SVG_SHADOWTRANSFORM);
         }
 
         if (opacity != 100) {
-          String value = String.valueOf(opacity / 100);
+          String value = (opacity / 100).toString();
           shadowElement.setAttribute("fill-opacity", value);
           shadowElement.setAttribute("stroke-opacity", value);
         }
@@ -755,7 +755,7 @@ class SvgCanvas extends BasicCanvas {
     }
 
     if (opacity != 100) {
-      String value = String.valueOf(opacity / 100);
+      String value = (opacity / 100).toString();
       elem.setAttribute("fill-opacity", value);
       elem.setAttribute("stroke-opacity", value);
     }
@@ -783,19 +783,19 @@ class SvgCanvas extends BasicCanvas {
 
     bool rounded = Utils.isTrue(style, Constants.STYLE_ROUNDED, false);
     String strokeColor = Utils.getString(style, Constants.STYLE_STROKECOLOR);
-    float tmpStroke = (Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1));
-    float strokeWidth = (float)(tmpStroke * _scale);
+    double tmpStroke = Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1);
+    double strokeWidth = (tmpStroke * _scale) as double;
 
     if (strokeColor != null && strokeWidth > 0) {
       // Draws the start marker
-      Object marker = style.get(Constants.STYLE_STARTARROW);
+      Object marker = style[Constants.STYLE_STARTARROW];
 
-      Point2d pt = pts.get(1);
-      Point2d p0 = pts.get(0);
+      Point2d pt = pts[1];
+      Point2d p0 = pts[0];
       Point2d offset = null;
 
       if (marker != null) {
-        float size = (Utils.getFloat(style, Constants.STYLE_STARTSIZE, Constants.DEFAULT_MARKERSIZE));
+        double size = Utils.getFloat(style, Constants.STYLE_STARTSIZE, Constants.DEFAULT_MARKERSIZE);
         offset = drawMarker(group, marker, pt, p0, size, tmpStroke, strokeColor);
       } else {
         double dx = pt.getX() - p0.getX();
@@ -818,13 +818,13 @@ class SvgCanvas extends BasicCanvas {
       }
 
       // Draws the end marker
-      marker = style.get(Constants.STYLE_ENDARROW);
+      marker = style[Constants.STYLE_ENDARROW];
 
-      pt = pts.get(pts.length - 2);
-      Point2d pe = pts.get(pts.length - 1);
+      pt = pts[pts.length - 2];
+      Point2d pe = pts[pts.length - 1];
 
       if (marker != null) {
-        float size = (Utils.getFloat(style, Constants.STYLE_ENDSIZE, Constants.DEFAULT_MARKERSIZE));
+        double size = Utils.getFloat(style, Constants.STYLE_ENDSIZE, Constants.DEFAULT_MARKERSIZE);
         offset = drawMarker(group, marker, pt, pe, size, tmpStroke, strokeColor);
       } else {
         double dx = pt.getX() - p0.getX();
@@ -871,7 +871,7 @@ class SvgCanvas extends BasicCanvas {
           // Draws a curve from the last point to the current
           // point with a spacing of size off the current point
           // into direction of the next point
-          Point2d next = pts.get(i + 1);
+          Point2d next = pts[i + 1];
           dx = next.getX() - tmp.getX();
           dy = next.getY() - tmp.getY();
 
@@ -896,14 +896,14 @@ class SvgCanvas extends BasicCanvas {
       path.setAttribute("d", d);
       path.setAttribute("stroke", strokeColor);
       path.setAttribute("fill", "none");
-      path.setAttribute("stroke-width", String.valueOf(strokeWidth));
+      path.setAttribute("stroke-width", strokeWidth.toString());
 
       if (Utils.isTrue(style, Constants.STYLE_DASHED)) {
         String pattern = Utils.getString(style, Constants.STYLE_DASH_PATTERN, "3, 3");
         path.setAttribute("stroke-dasharray", pattern);
       }
 
-      group.appendChild(path);
+      group.append(path);
       appendSvgElement(group);
     }
 
@@ -913,7 +913,7 @@ class SvgCanvas extends BasicCanvas {
   /**
 	 * Draws the specified marker as a child path in the given parent.
 	 */
-  Point2d drawMarker(Element parent, Object type, Point2d p0, Point2d pe, float size, float strokeWidth, String color) {
+  Point2d drawMarker(Element parent, Object type, Point2d p0, Point2d pe, double size, double strokeWidth, String color) {
     Point2d offset = null;
 
     // Computes the norm and the inverse norm
@@ -933,33 +933,33 @@ class SvgCanvas extends BasicCanvas {
     ny *= 0.5 + strokeWidth / 2;
 
     Element path = _document.createElement("path");
-    path.setAttribute("stroke-width", String.valueOf(strokeWidth * _scale));
+    path.setAttribute("stroke-width", (strokeWidth * _scale).toString());
     path.setAttribute("stroke", color);
     path.setAttribute("fill", color);
 
     String d = null;
 
-    if (type.equals(Constants.ARROW_CLASSIC) || type.equals(Constants.ARROW_BLOCK)) {
-      d = "M " + pe.getX() + " " + pe.getY() + " L " + (pe.getX() - nx - ny / 2) + " " + (pe.getY() - ny + nx / 2) + ((!type.equals(Constants.ARROW_CLASSIC)) ? "" : " L " + (pe.getX() - nx * 3 / 4) + " " + (pe.getY() - ny * 3 / 4)) + " L " + (pe.getX() + ny / 2 - nx) + " " + (pe.getY() - ny - nx / 2) + " z";
-    } else if (type.equals(Constants.ARROW_OPEN)) {
+    if (type == Constants.ARROW_CLASSIC || type == Constants.ARROW_BLOCK) {
+      d = "M " + pe.getX() + " " + pe.getY() + " L " + (pe.getX() - nx - ny / 2) + " " + (pe.getY() - ny + nx / 2) + ((type != Constants.ARROW_CLASSIC) ? "" : " L " + (pe.getX() - nx * 3 / 4) + " " + (pe.getY() - ny * 3 / 4)) + " L " + (pe.getX() + ny / 2 - nx) + " " + (pe.getY() - ny - nx / 2) + " z";
+    } else if (type == Constants.ARROW_OPEN) {
       nx *= 1.2;
       ny *= 1.2;
 
       d = "M " + (pe.getX() - nx - ny / 2) + " " + (pe.getY() - ny + nx / 2) + " L " + (pe.getX() - nx / 6) + " " + (pe.getY() - ny / 6) + " L " + (pe.getX() + ny / 2 - nx) + " " + (pe.getY() - ny - nx / 2) + " M " + pe.getX() + " " + pe.getY();
       path.setAttribute("fill", "none");
-    } else if (type.equals(Constants.ARROW_OVAL)) {
+    } else if (type == Constants.ARROW_OVAL) {
       nx *= 1.2;
       ny *= 1.2;
       absSize *= 1.2;
 
       d = "M " + (pe.getX() - ny / 2) + " " + (pe.getY() + nx / 2) + " a " + (absSize / 2) + " " + (absSize / 2) + " 0  1,1 " + (nx / 8) + " " + (ny / 8) + " z";
-    } else if (type.equals(Constants.ARROW_DIAMOND)) {
+    } else if (type == Constants.ARROW_DIAMOND) {
       d = "M " + (pe.getX() + nx / 2) + " " + (pe.getY() + ny / 2) + " L " + (pe.getX() - ny / 2) + " " + (pe.getY() + nx / 2) + " L " + (pe.getX() - nx / 2) + " " + (pe.getY() - ny / 2) + " L " + (pe.getX() + ny / 2) + " " + (pe.getY() - nx / 2) + " z";
     }
 
     if (d != null) {
       path.setAttribute("d", d);
-      parent.appendChild(path);
+      parent.append(path);
     }
 
     return offset;
@@ -982,10 +982,10 @@ class SvgCanvas extends BasicCanvas {
     int fontSize = (int)(Utils.getInt(style, Constants.STYLE_FONTSIZE, Constants.DEFAULT_FONTSIZE) * _scale);
 
     if (text != null && text.length > 0) {
-      float strokeWidth = (float)(Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1) * _scale);
+      double strokeWidth = (Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1) * _scale) as double;
 
       // Applies the opacity
-      float opacity = Utils.getFloat(style, Constants.STYLE_TEXT_OPACITY, 100);
+      double opacity = Utils.getFloat(style, Constants.STYLE_TEXT_OPACITY, 100);
 
       // Draws the label background and border
       String bg = Utils.getString(style, Constants.STYLE_LABEL_BACKGROUNDCOLOR);
@@ -1002,10 +1002,10 @@ class SvgCanvas extends BasicCanvas {
       if (bg != null || border != null) {
         Element background = _document.createElement("rect");
 
-        background.setAttribute("x", String.valueOf(x));
-        background.setAttribute("y", String.valueOf(y));
-        background.setAttribute("width", String.valueOf(w));
-        background.setAttribute("height", String.valueOf(h));
+        background.setAttribute("x", x.toString());
+        background.setAttribute("y", y.toString());
+        background.setAttribute("width", w.toString());
+        background.setAttribute("height", h.toString());
 
         if (bg != null) {
           background.setAttribute("fill", bg);
@@ -1019,10 +1019,10 @@ class SvgCanvas extends BasicCanvas {
           background.setAttribute("stroke", "none");
         }
 
-        background.setAttribute("stroke-width", String.valueOf(strokeWidth));
+        background.setAttribute("stroke-width", strokeWidth.toString());
 
         if (opacity != 100) {
-          String value = String.valueOf(opacity / 100);
+          String value = (opacity / 100).toString();
           background.setAttribute("fill-opacity", value);
           background.setAttribute("stroke-opacity", value);
         }
@@ -1046,12 +1046,12 @@ class SvgCanvas extends BasicCanvas {
         elem.setAttribute("font-style", "italic");
       }
 
-      elem.setAttribute("font-size", String.valueOf(fontSize));
+      elem.setAttribute("font-size", (fontSize).toString());
       elem.setAttribute("font-family", fontFamily);
       elem.setAttribute("fill", fontColor);
 
       if (opacity != 100) {
-        String value = String.valueOf(opacity / 100);
+        String value = (opacity / 100).toString();
         elem.setAttribute("fill-opacity", value);
         elem.setAttribute("stroke-opacity", value);
       }
@@ -1065,10 +1065,10 @@ class SvgCanvas extends BasicCanvas {
       String align = Utils.getString(style, Constants.STYLE_ALIGN, Constants.ALIGN_CENTER);
       String anchor = "start";
 
-      if (align.equals(Constants.ALIGN_RIGHT)) {
+      if (align == Constants.ALIGN_RIGHT) {
         anchor = "end";
         x += w - Constants.LABEL_INSET * _scale;
-      } else if (align.equals(Constants.ALIGN_CENTER)) {
+      } else if (align == Constants.ALIGN_CENTER) {
         anchor = "middle";
         x += w / 2;
       } else {
@@ -1080,11 +1080,11 @@ class SvgCanvas extends BasicCanvas {
       for (int i = 0; i < lines.length; i++) {
         Element tspan = _document.createElement("tspan");
 
-        tspan.setAttribute("x", String.valueOf(x));
-        tspan.setAttribute("y", String.valueOf(y));
+        tspan.setAttribute("x", x.toString());
+        tspan.setAttribute("y", y.toString());
 
-        tspan.appendChild(_document.createTextNode(lines[i]));
-        elem.appendChild(tspan);
+        tspan.append(_document.createTextNode(lines[i]));
+        elem.append(tspan);
 
         y += fontSize + Constants.LINESPACING;
       }

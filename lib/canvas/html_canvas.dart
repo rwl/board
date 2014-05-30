@@ -41,10 +41,10 @@ class HtmlCanvas extends BasicCanvas {
 	 */
   void appendHtmlElement(Element node) {
     if (_document != null) {
-      Node body = _document.getDocumentElement().getFirstChild().getNextSibling();
+      Node body = _document.documentElement.firstChild.nextNode;
 
       if (body != null) {
-        body.appendChild(node);
+        body.append(node);
       }
     }
   }
@@ -84,13 +84,13 @@ class HtmlCanvas extends BasicCanvas {
       int w = state.getWidth() as int;
       int h = state.getHeight() as int;
 
-      if (!Utils.getString(style, Constants.STYLE_SHAPE, "").equals(Constants.SHAPE_SWIMLANE)) {
+      if (!Utils.getString(style, Constants.STYLE_SHAPE, "") == Constants.SHAPE_SWIMLANE) {
         drawShape(x, y, w, h, style);
       } else {
         int start = math.round(Utils.getInt(style, Constants.STYLE_STARTSIZE, Constants.DEFAULT_STARTSIZE) * _scale) as int;
 
         // Removes some styles to draw the content area
-        Map<String, Object> cloned = new Hashtable<String, Object>(style);
+        Map<String, Object> cloned = new Map<String, Object>.from(style);
         cloned.remove(Constants.STYLE_FILLCOLOR);
         cloned.remove(Constants.STYLE_ROUNDED);
 
@@ -139,17 +139,17 @@ class HtmlCanvas extends BasicCanvas {
   Element drawShape(int x, int y, int w, int h, Map<String, Object> style) {
     String fillColor = Utils.getString(style, Constants.STYLE_FILLCOLOR);
     String strokeColor = Utils.getString(style, Constants.STYLE_STROKECOLOR);
-    float strokeWidth = (float)(Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1) * _scale);
+    double strokeWidth = (Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1) * _scale) as double;
 
     // Draws the shape
     String shape = Utils.getString(style, Constants.STYLE_SHAPE);
 
     Element elem = _document.createElement("div");
 
-    if (shape.equals(Constants.SHAPE_LINE)) {
+    if (shape == Constants.SHAPE_LINE) {
       String direction = Utils.getString(style, Constants.STYLE_DIRECTION, Constants.DIRECTION_EAST);
 
-      if (direction.equals(Constants.DIRECTION_EAST) || direction.equals(Constants.DIRECTION_WEST)) {
+      if (direction == Constants.DIRECTION_EAST || direction == Constants.DIRECTION_WEST) {
         y = math.round(y + h / 2);
         h = 1;
       } else {
@@ -159,15 +159,15 @@ class HtmlCanvas extends BasicCanvas {
     }
 
     if (Utils.isTrue(style, Constants.STYLE_SHADOW, false) && fillColor != null) {
-      Element shadow = elem.cloneNode(true) as Element;
+      Element shadow = elem.clone(true) as Element;
 
-      String s = "overflow:hidden;position:absolute;" + "left:" + String.valueOf(x + Constants.SHADOW_OFFSETX) + "px;" + "top:" + String.valueOf(y + Constants.SHADOW_OFFSETY) + "px;" + "width:" + String.valueOf(w) + "px;" + "height:" + String.valueOf(h) + "px;background:" + Constants.W3C_SHADOWCOLOR + ";border-style:solid;border-color:" + Constants.W3C_SHADOWCOLOR + ";border-width:" + String.valueOf(math.round(strokeWidth)) + ";";
+      String s = "overflow:hidden;position:absolute;left:${x + Constants.SHADOW_OFFSETX}px;top:${y + Constants.SHADOW_OFFSETY}px;width:${w}px;height:${h}px;background:${Constants.W3C_SHADOWCOLOR};border-style:solid;border-color:${Constants.W3C_SHADOWCOLOR};border-width:${math.round(strokeWidth)};";
       shadow.setAttribute("style", s);
 
       appendHtmlElement(shadow);
     }
 
-    if (shape.equals(Constants.SHAPE_IMAGE)) {
+    if (shape == Constants.SHAPE_IMAGE) {
       String img = getImageForStyle(style);
 
       if (img != null) {
@@ -179,7 +179,7 @@ class HtmlCanvas extends BasicCanvas {
 
     // TODO: Draw other shapes. eg. SHAPE_LINE here
 
-    String s = "overflow:hidden;position:absolute;" + "left:" + String.valueOf(x) + "px;" + "top:" + String.valueOf(y) + "px;" + "width:" + String.valueOf(w) + "px;" + "height:" + String.valueOf(h) + "px;background:" + fillColor + ";" + ";border-style:solid;border-color:" + strokeColor + ";border-width:" + String.valueOf(math.round(strokeWidth)) + ";";
+    String s = "overflow:hidden;position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${h}px;background:${fillColor};;border-style:solid;border-color:${strokeColor};border-width:${math.round(strokeWidth)};";
     elem.setAttribute("style", s);
 
     appendHtmlElement(elem);
@@ -200,7 +200,7 @@ class HtmlCanvas extends BasicCanvas {
 
     if (strokeColor != null && strokeWidth > 0) {
 
-      Point2d last = pts.get(0);
+      Point2d last = pts[0];
 
       for (int i = 1; i < pts.length; i++) {
         Point2d pt = pts[i];
@@ -233,7 +233,7 @@ class HtmlCanvas extends BasicCanvas {
     y0 = tmpY;
 
     if (width == 0 || height == 0) {
-      String s = "overflow:hidden;position:absolute;" + "left:" + String.valueOf(x0) + "px;" + "top:" + String.valueOf(y0) + "px;" + "width:" + String.valueOf(width) + "px;" + "height:" + String.valueOf(height) + "px;" + "border-color:" + strokeColor + ";" + "border-style:solid;" + "border-width:1 1 0 0px;";
+      String s = "overflow:hidden;position:absolute;left:${x0}px;top:${y0}px;width:${width}px;height:${height}px;border-color:${strokeColor};border-style:solid;border-width:1 1 0 0px;";
 
       Element elem = _document.createElement("div");
       elem.setAttribute("style", s);

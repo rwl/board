@@ -17,14 +17,14 @@ class DoubleValCostFunction extends CostFunction {
     Graph graph = state.getView().getGraph();
     Object cell = state.getCell();
 
-    Double edgeWeight = null;
+    double edgeWeight = null;
 
     if (graph.getModel().getValue(cell) == null || graph.getModel().getValue(cell) == "") {
       return 1.0;
     } else if (graph.getModel().getValue(cell) is String) {
-      edgeWeight = Double.parseDouble(graph.getModel().getValue(cell) as String);
+      edgeWeight = double.parse(graph.getModel().getValue(cell) as String);
     } else {
-      edgeWeight = graph.getModel().getValue(cell) as Double;
+      edgeWeight = graph.getModel().getValue(cell) as double;
     }
 
     return edgeWeight;
