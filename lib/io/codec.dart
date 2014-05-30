@@ -25,7 +25,7 @@ class Codec {
   /**
 	 * Maps from IDs to objects.
 	 */
-  Map<String, Object> _objects = new Hashtable<String, Object>();
+  Map<String, Object> _objects = new Map<String, Object>();
 
   /**
 	 * Specifies if default values should be encoded. Default is false.
@@ -99,7 +99,7 @@ class Codec {
 	 * @return Returns the given object.
 	 */
   Object putObject(String id, Object object) {
-    return _objects.put(id, object);
+    return _objects[id] = object;
   }
 
   /**
@@ -115,7 +115,7 @@ class Codec {
     Object obj = null;
 
     if (id != null) {
-      obj = _objects.get(id);
+      obj = _objects[id];
 
       if (obj == null) {
         obj = lookup(id);
@@ -237,7 +237,7 @@ class Codec {
         node = enc.encode(this, obj);
       } else {
         if (obj is Node) {
-          node = (obj as Node).cloneNode(true);
+          node = (obj as Node).clone(true);
         } else {
           System.err.println("No codec for " + name);
         }
@@ -273,18 +273,18 @@ class Codec {
   Object decode(Node node, [Object into = null]) {
     Object obj = null;
 
-    if (node != null && node.getNodeType() == Node.ELEMENT_NODE) {
-      ObjectCodec codec = CodecRegistry.getCodec(node.getNodeName());
+    if (node != null && node.nodeType == Node.ELEMENT_NODE) {
+      ObjectCodec codec = CodecRegistry.getCodec(node.nodeName);
 
       try {
         if (codec != null) {
           obj = codec.decode(this, node, into);
         } else {
-          obj = node.cloneNode(true);
-          (obj as Element).removeAttribute("as");
+          obj = node.clone(true);
+          (obj as Element).attributes.remove("as");
         }
       } on Exception catch (e) {
-        System.err.println("Cannot decode " + node.getNodeName() + ": " + e.getMessage());
+        System.err.println("Cannot decode " + node.nodeName + ": " + e.getMessage());
         e.printStackTrace();
       }
     }
@@ -308,7 +308,7 @@ class Codec {
 	 * should include all descendents.
 	 */
   void encodeCell(ICell cell, Node node, bool includeChildren) {
-    node.appendChild(encode(cell));
+    node.append(encode(cell));
 
     if (includeChildren) {
       int childCount = cell.getChildCount();
@@ -334,21 +334,21 @@ class Codec {
   ICell decodeCell(Node node, bool restoreStructures) {
     ICell cell = null;
 
-    if (node != null && node.getNodeType() == Node.ELEMENT_NODE) {
+    if (node != null && node.nodeType == Node.ELEMENT_NODE) {
       // Tries to find a codec for the given node name. If that does
       // not return a codec then the node is the user object (an XML node
       // that contains the Cell, aka inversion).
-      ObjectCodec decoder = CodecRegistry.getCodec(node.getNodeName());
+      ObjectCodec decoder = CodecRegistry.getCodec(node.nodeName);
 
       // Tries to find the codec for the cell inside the user object.
       // This assumes all node names inside the user object are either
       // not registered or they correspond to a class for cells.
       if (!(decoder is CellCodec)) {
-        Node child = node.getFirstChild();
+        Node child = node.firstChild;
 
         while (child != null && !(decoder is CellCodec)) {
-          decoder = CodecRegistry.getCodec(child.getNodeName());
-          child = child.getNextSibling();
+          decoder = CodecRegistry.getCodec(child.nodeName);
+          child = child.nextNode;
         }
 
         throw new Exception();
@@ -408,8 +408,8 @@ class Codec {
 	 * @param value New value of the attribute.
 	 */
   static void setAttribute(Node node, String attribute, Object value) {
-    if (node.getNodeType() == Node.ELEMENT_NODE && attribute != null && value != null) {
-      (node as Element).setAttribute(attribute, String.valueOf(value));
+    if (node.nodeType == Node.ELEMENT_NODE && attribute != null && value != null) {
+      (node as Element).setAttribute(attribute, value.toString());
     }
   }
 

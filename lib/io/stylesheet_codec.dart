@@ -36,7 +36,12 @@ class StylesheetCodec extends ObjectCodec {
   /**
 	 * Constructs a new model codec for the given arguments.
 	 */
-  StylesheetCodec(Object template, [List<String> exclude = null, List<String> idrefs = null, Map<String, String> mapping = null]) : super(template, exclude, idrefs, mapping);
+  StylesheetCodec([Object template=null, List<String> exclude = null, List<String> idrefs = null,
+      Map<String, String> mapping = null]) : super(template, exclude, idrefs, mapping) {
+    if (template == null) {
+      this._template = new Stylesheet();
+    }
+  }
 
   /**
 	 * Encodes the given Stylesheet.
@@ -46,30 +51,32 @@ class StylesheetCodec extends ObjectCodec {
 
     if (obj is Stylesheet) {
       Stylesheet stylesheet = obj as Stylesheet;
-      Iterator<Map.Entry<String, Map<String, Object>>> it = stylesheet.getStyles().entrySet().iterator();
+//      Iterator<Map.Entry<String, Map<String, Object>>> it = stylesheet.getStyles().entrySet().iterator();
 
-      while (it.moveNext()) {
-        Map.Entry<String, Map<String, Object>> entry = it.current();
+//      while (it.moveNext()) {
+//        Map.Entry<String, Map<String, Object>> entry = it.current();
 
+      stylesheet.getStyles().forEach((String stylename, Map<String, Object> style) {
         Element styleNode = enc._document.createElement("add");
-        String stylename = entry.getKey();
+        //String stylename = entry.getKey();
         styleNode.setAttribute("as", stylename);
 
-        Map<String, Object> style = entry.getValue();
-        Iterator<Map.Entry<String, Object>> it2 = style.entrySet().iterator();
+        //Map<String, Object> style = entry.getValue();
+        //Iterator<Map.Entry<String, Object>> it2 = style.entrySet().iterator();
 
-        while (it2.moveNext()) {
-          Map.Entry<String, Object> entry2 = it2.current();
+        //while (it2.moveNext()) {
+          //Map.Entry<String, Object> entry2 = it2.current();
+        style.forEach((String k, Object v) {
           Element entryNode = enc._document.createElement("add");
-          entryNode.setAttribute("as", String.valueOf(entry2.getKey()));
-          entryNode.setAttribute("value", _getStringValue(entry2));
-          styleNode.appendChild(entryNode);
-        }
+          entryNode.setAttribute("as", k);
+          entryNode.setAttribute("value", _getStringValue(v));
+          styleNode.append(entryNode);
+        });
 
-        if (styleNode.getChildNodes().getLength() > 0) {
-          node.appendChild(styleNode);
+        if (styleNode.childNodes.length > 0) {
+          node.append(styleNode);
         }
-      }
+      });
     }
 
     return node;
@@ -78,12 +85,12 @@ class StylesheetCodec extends ObjectCodec {
   /**
 	 * Returns the string for encoding the given value.
 	 */
-  String _getStringValue(Map.Entry<String, Object> entry) {
-    if (entry.getValue() is bool) {
-      return (entry.getValue() as bool) ? "1" : "0";
+  String _getStringValue(Object v) {
+    if (v is bool) {
+      return v ? "1" : "0";
     }
 
-    return entry.getValue().toString();
+    return v.toString();
   }
 
   /**
@@ -94,7 +101,7 @@ class StylesheetCodec extends ObjectCodec {
 
     if (node is Element) {
       String id = (node as Element).getAttribute("id");
-      obj = dec._objects.get(id);
+      obj = dec._objects[id];
 
       if (obj == null) {
         obj = into;
@@ -108,31 +115,31 @@ class StylesheetCodec extends ObjectCodec {
         }
       }
 
-      node = node.getFirstChild();
+      node = node.firstChild;
 
       while (node != null) {
-        if (!processInclude(dec, node, obj) && node.getNodeName().equals("add") && node is Element) {
+        if (!processInclude(dec, node, obj) && node.nodeName == "add" && node is Element) {
           String as = (node as Element).getAttribute("as");
 
           if (as != null && as.length > 0) {
             String extend = (node as Element).getAttribute("extend");
-            Map<String, Object> style = (extend != null) ? (obj as Stylesheet).getStyles().get(extend) : null;
+            Map<String, Object> style = (extend != null) ? (obj as Stylesheet).getStyles()[extend] : null;
 
             if (style == null) {
-              style = new Hashtable<String, Object>();
+              style = new Map<String, Object>();
             } else {
-              style = new Hashtable<String, Object>(style);
+              style = new Map<String, Object>.from(style);
             }
 
-            Node entry = node.getFirstChild();
+            Node entry = node.firstChild;
 
             while (entry != null) {
               if (entry is Element) {
                 Element entryElement = entry as Element;
                 String key = entryElement.getAttribute("as");
 
-                if (entry.getNodeName().equals("add")) {
-                  String text = entry.getTextContent();
+                if (entry.nodeName == "add") {
+                  String text = entry.text;
                   Object value = null;
 
                   if (text != null && text.length > 0) {
@@ -143,21 +150,21 @@ class StylesheetCodec extends ObjectCodec {
                   }
 
                   if (value != null) {
-                    style.put(key, value);
+                    style[key] = value;
                   }
-                } else if (entry.getNodeName().equals("remove")) {
+                } else if (entry.nodeName == "remove") {
                   style.remove(key);
                 }
               }
 
-              entry = entry.getNextSibling();
+              entry = entry.nextNode;
             }
 
             (obj as Stylesheet).putCellStyle(as, style);
           }
         }
 
-        node = node.getNextSibling();
+        node = node.nextNode;
       }
     }
 

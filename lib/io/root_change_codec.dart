@@ -28,7 +28,12 @@ class RootChangeCodec extends ObjectCodec {
   /**
 	 * Constructs a new model codec for the given arguments.
 	 */
-  RootChangeCodec(Object template, [List<String> exclude = _DEFAULT_EXCLUDE, List<String> idrefs = null, Map<String, String> mapping = null]) : super(template, exclude, idrefs, mapping);
+  RootChangeCodec([Object template=null, List<String> exclude = _DEFAULT_EXCLUDE, List<String> idrefs = null,
+                   Map<String, String> mapping = null]) : super(template, exclude, idrefs, mapping) {
+    if (template == null) {
+      this._template = new RootChange();
+    }
+  }
 
   /* (non-Javadoc)
 	 * @see graph.io.ObjectCodec#afterEncode(graph.io.Codec, java.lang.Object, org.w3c.dom.Node)
@@ -50,25 +55,27 @@ class RootChangeCodec extends ObjectCodec {
     if (into is RootChange) {
       RootChange change = into as RootChange;
 
-      if (node.getFirstChild() != null && node.getFirstChild().getNodeType() == Node.ELEMENT_NODE) {
+      if (node.firstChild != null && node.firstChild.nodeType == Node.ELEMENT_NODE) {
         // Makes sure the original node isn't modified
-        node = node.cloneNode(true);
+        node = node.clone(true);
 
-        Node tmp = node.getFirstChild();
+        Node tmp = node.firstChild;
         change.setRoot(dec.decodeCell(tmp, false));
 
-        Node tmp2 = tmp.getNextSibling();
-        tmp.getParentNode().removeChild(tmp);
+        Node tmp2 = tmp.nextNode;
+        //tmp.parentNode.removeChild(tmp);
+        tmp.remove();
         tmp = tmp2;
 
         while (tmp != null) {
-          tmp2 = tmp.getNextSibling();
+          tmp2 = tmp.nextNode;
 
-          if (tmp.getNodeType() == Node.ELEMENT_NODE) {
+          if (tmp.nodeType == Node.ELEMENT_NODE) {
             dec.decodeCell(tmp, true);
           }
 
-          tmp.getParentNode().removeChild(tmp);
+          //tmp.parentNode.removeChild(tmp);
+          tmp.remove();
           tmp = tmp2;
         }
       }

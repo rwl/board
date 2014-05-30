@@ -44,7 +44,7 @@ class ModelCodec extends ObjectCodec {
       Node rootNode = enc._document.createElement("root");
       GraphModel model = obj as GraphModel;
       enc.encodeCell(model.getRoot() as ICell, rootNode, true);
-      node.appendChild(rootNode);
+      node.append(rootNode);
     }
   }
 
@@ -65,11 +65,11 @@ class ModelCodec extends ObjectCodec {
 
       // Reads the cells into the graph model. All cells
       // are children of the root element in the node.
-      Node root = elt.getElementsByTagName("root").item(0);
+      Node root = elt.querySelectorAll("root")[0];
       ICell rootCell = null;
 
       if (root != null) {
-        Node tmp = root.getFirstChild();
+        Node tmp = root.firstChild;
 
         while (tmp != null) {
           ICell cell = dec.decodeCell(tmp, true);
@@ -78,10 +78,11 @@ class ModelCodec extends ObjectCodec {
             rootCell = cell;
           }
 
-          tmp = tmp.getNextSibling();
+          tmp = tmp.nextNode;
         }
 
-        root.getParentNode().removeChild(root);
+        //root.getParentNode().removeChild(root);
+        root.remove();
       }
 
       // Sets the root on the model if one has been decoded

@@ -32,7 +32,7 @@ class ChildChangeCodec extends ObjectCodec {
 	 */
   //	@Override
   bool isReference(Object obj, String attr, Object value, bool isWrite) {
-    if (attr.equals("child") && obj is ChildChange && ((obj as ChildChange).getPrevious() != null || !isWrite)) {
+    if (attr == "child" && obj is ChildChange && ((obj as ChildChange).getPrevious() != null || !isWrite)) {
       return true;
     }
 
@@ -72,21 +72,22 @@ class ChildChangeCodec extends ObjectCodec {
     if (into is ChildChange) {
       ChildChange change = into as ChildChange;
 
-      if (node.getFirstChild() != null && node.getFirstChild().getNodeType() == Node.ELEMENT_NODE) {
+      if (node.firstChild != null && node.firstChild.nodeType == Node.ELEMENT_NODE) {
         // Makes sure the original node isn't modified
-        node = node.cloneNode(true);
+        node = node.clone(true);
 
-        Node tmp = node.getFirstChild();
+        Node tmp = node.firstChild;
         change.setChild(dec.decodeCell(tmp, false));
 
-        Node tmp2 = tmp.getNextSibling();
-        tmp.getParentNode().removeChild(tmp);
+        Node tmp2 = tmp.nextNode;
+        //tmp.getParentNode().removeChild(tmp);
+        tmp.remove();
         tmp = tmp2;
 
         while (tmp != null) {
-          tmp2 = tmp.getNextSibling();
+          tmp2 = tmp.nextNode;
 
-          if (tmp.getNodeType() == Node.ELEMENT_NODE) {
+          if (tmp.nodeType == Node.ELEMENT_NODE) {
             // Ignores all existing cells because those do not need
             // to be re-inserted into the model. Since the encoded
             // version of these cells contains the new parent, this
@@ -100,7 +101,8 @@ class ChildChangeCodec extends ObjectCodec {
             }
           }
 
-          tmp.getParentNode().removeChild(tmp);
+          //tmp.getParentNode().removeChild(tmp);
+          tmp.remove();
           tmp = tmp2;
         }
       } else {

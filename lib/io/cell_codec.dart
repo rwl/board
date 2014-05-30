@@ -36,13 +36,18 @@ class CellCodec extends ObjectCodec {
   /**
 	 * Constructs a new cell codec for the given arguments.
 	 */
-  CellCodec(Object template, [List<String> exclude = null, List<String> idrefs = null, Map<String, String> mapping = null]) : super(template, exclude, idrefs, mapping);
+  CellCodec([Object template=null, List<String> exclude = null, List<String> idrefs = null,
+      Map<String, String> mapping = null]) : super(template, exclude, idrefs, mapping) {
+    if (template == null) {
+      this._template = new Cell();
+    }
+  }
 
   /**
 	 * Excludes user objects that are XML nodes.
 	 */
   bool isExcluded(Object obj, String attr, Object value, bool write) {
-    return _exclude.contains(attr) || (write && attr.equals("value") && value is Node && (value as Node).getNodeType() == Node.ELEMENT_NODE);
+    return _exclude.contains(attr) || (write && attr == "value" && value is Node && (value as Node).nodeType == Node.ELEMENT_NODE);
   }
 
   /**
@@ -61,14 +66,14 @@ class CellCodec extends ObjectCodec {
         // and returning this cloned user object.
         Element tmp = node as Element;
         node = enc.getDocument().importNode(cell.getValue() as Node, true);
-        node.appendChild(tmp);
+        node.append(tmp);
 
         // Moves the id attribute to the outermost
         // XML node, namely the node which denotes
         // the object boundaries in the file.
         String id = tmp.getAttribute("id");
         (node as Element).setAttribute("id", id);
-        tmp.removeAttribute("id");
+        tmp.attributes.remove("id");
       }
     }
 
@@ -85,64 +90,67 @@ class CellCodec extends ObjectCodec {
     if (obj is Cell) {
       Cell cell = obj as Cell;
       String classname = getName();
-      String nodeName = node.getNodeName();
+      String nodeName = node.nodeName;
 
       // Handles aliased names
-      if (!nodeName.equals(classname)) {
-        String tmp = CodecRegistry._aliases.get(nodeName);
+      if (nodeName != classname) {
+        String tmp = CodecRegistry._aliases[nodeName];
 
         if (tmp != null) {
           nodeName = tmp;
         }
       }
 
-      if (!nodeName.equals(classname)) {
+      if (nodeName != classname) {
         // Passes the inner graphical annotation node to the
         // object codec for further processing of the cell.
-        Node tmp = inner.getElementsByTagName(classname).item(0);
+        Node tmp = inner.querySelectorAll(classname)[0];
 
-        if (tmp != null && tmp.getParentNode() == node) {
+        if (tmp != null && tmp.parentNode == node) {
           inner = tmp as Element;
 
           // Removes annotation and whitespace from node
-          Node tmp2 = tmp.getPreviousSibling();
+          Node tmp2 = tmp.previousNode;
 
-          while (tmp2 != null && tmp2.getNodeType() == Node.TEXT_NODE) {
-            Node tmp3 = tmp2.getPreviousSibling();
+          while (tmp2 != null && tmp2.nodeType == Node.TEXT_NODE) {
+            Node tmp3 = tmp2.previousNode;
 
-            if (tmp2.getTextContent().trim().length == 0) {
-              tmp2.getParentNode().removeChild(tmp2);
+            if (tmp2.text.trim().length == 0) {
+              //tmp2.parentNode.removeChild(tmp2);
+              tmp2.remove();
             }
 
             tmp2 = tmp3;
           }
 
           // Removes more whitespace
-          tmp2 = tmp.getNextSibling();
+          tmp2 = tmp.nextNode;
 
-          while (tmp2 != null && tmp2.getNodeType() == Node.TEXT_NODE) {
-            Node tmp3 = tmp2.getPreviousSibling();
+          while (tmp2 != null && tmp2.nodeType == Node.TEXT_NODE) {
+            Node tmp3 = tmp2.previousNode;
 
-            if (tmp2.getTextContent().trim().length == 0) {
-              tmp2.getParentNode().removeChild(tmp2);
+            if (tmp2.text.trim().length == 0) {
+              //tmp2.parentNode.removeChild(tmp2);
+              tmp2.remove();
             }
 
             tmp2 = tmp3;
           }
 
-          tmp.getParentNode().removeChild(tmp);
+          //tmp.parentNode.removeChild(tmp);
+          tmp.remove();
         } else {
           inner = null;
         }
 
         // Creates the user object out of the XML node
-        Element value = node.cloneNode(true) as Element;
+        Element value = node.clone(true) as Element;
         cell.setValue(value);
         String id = value.getAttribute("id");
 
         if (id != null) {
           cell.setId(id);
-          value.removeAttribute("id");
+          value.attributes.remove("id");
         }
       } else {
         cell.setId((node as Element).getAttribute("id"));
@@ -152,15 +160,15 @@ class CellCodec extends ObjectCodec {
       // in order to use the correct encoder (this)
       // for the known references to cells (all).
       if (inner != null && _idrefs != null) {
-        Iterator<String> it = _idrefs.iterator();
+        Iterator<String> it = _idrefs.iterator;
 
         while (it.moveNext()) {
-          String attr = it.current();
+          String attr = it.current;
           String ref = inner.getAttribute(attr);
 
           if (ref != null && ref.length > 0) {
-            inner.removeAttribute(attr);
-            Object object = dec._objects.get(ref);
+            inner.attributes.remove(attr);
+            Object object = dec._objects[ref];
 
             if (object == null) {
               object = dec.lookup(ref);
@@ -171,7 +179,7 @@ class CellCodec extends ObjectCodec {
               Node element = dec.getElementById(ref);
 
               if (element != null) {
-                ObjectCodec decoder = CodecRegistry.getCodec(element.getNodeName());
+                ObjectCodec decoder = CodecRegistry.getCodec(element.nodeName);
 
                 if (decoder == null) {
                   decoder = this;

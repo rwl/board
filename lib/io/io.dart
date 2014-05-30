@@ -3,6 +3,9 @@ library graph.io;
 /**
  * This package contains all classes for input/output.
  */
+import 'dart:html';
+import 'dart:mirrors';
+import 'dart:collection' show HashMap, HashSet;
 
 //import '../model/model.dart' show ICell;
 //import '../model/model.dart' show Cell;

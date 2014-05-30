@@ -27,25 +27,19 @@ class GraphMlShapeNode {
 	 * @param dataY Node's Y coordinate.
 	 * @param dataStyle Node's style.
 	 */
-  GraphMlShapeNode(String dataHeight, String dataWidth, String dataX, String dataY, String dataStyle) {
-    this._dataHeight = dataHeight;
-    this._dataWidth = dataWidth;
-    this._dataX = dataX;
-    this._dataY = dataY;
-    this._dataStyle = dataStyle;
-  }
+  GraphMlShapeNode([this._dataHeight="", this._dataWidth="", this._dataX="", this._dataY="", this._dataStyle=""]);
 
   /**
 	 * Construct an empty shape Node
 	 */
-  GraphMlShapeNode() {
-  }
+//  GraphMlShapeNode() {
+//  }
 
   /**
 	 * Construct a Shape Node from a xml Shape Node Element.
 	 * @param shapeNodeElement Xml Shape Node Element.
 	 */
-  GraphMlShapeNode(Element shapeNodeElement) {
+  factory GraphMlShapeNode.from(Element shapeNodeElement) {
     //Defines Geometry
     Element geometryElement = GraphMlUtils.childsTag(shapeNodeElement, GraphMlConstants.JGRAPH + GraphMlConstants.GEOMETRY);
     this._dataHeight = geometryElement.getAttribute(GraphMlConstants.HEIGHT);

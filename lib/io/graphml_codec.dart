@@ -33,12 +33,12 @@ class GraphMlCodec {
     GraphMlKeyManager.getInstance().initialise(document);
 
     NodeList graphs = document.getElementsByTagName(GraphMlConstants.GRAPH);
-    if (graphs.getLength() > 0) {
+    if (graphs.length > 0) {
 
-      Element graphElement = graphs.item(0) as Element;
+      Element graphElement = graphs[0] as Element;
 
       //Create the graph model.
-      GraphMlGraph gmlGraph = new GraphMlGraph(graphElement);
+      GraphMlGraph gmlGraph = new GraphMlGraph.elem(graphElement);
 
       gmlGraph.addGraph(graph, parent);
     }
@@ -71,15 +71,15 @@ class GraphMlCodec {
 
     HashMap<String, GraphMlKey> keyMap = GraphMlKeyManager.getInstance().getKeyMap();
 
-    for (GraphMlKey key in keyMap.values()) {
+    for (GraphMlKey key in keyMap.values) {
       Element keyElement = key.generateElement(doc);
-      graphml.appendChild(keyElement);
+      graphml.append(keyElement);
     }
 
     Element graphE = gmlGraph.generateElement(doc);
-    graphml.appendChild(graphE);
+    graphml.append(graphE);
 
-    doc.appendChild(graphml);
+    doc.append(graphml);
     _cleanMaps();
     return doc;
 
@@ -109,10 +109,10 @@ class GraphMlCodec {
 	 */
   static void _createKeyElements() {
     HashMap<String, GraphMlKey> keyMap = GraphMlKeyManager.getInstance().getKeyMap();
-    GraphMlKey keyNode = new GraphMlKey(GraphMlConstants.KEY_NODE_ID, GraphMlKey.keyForValues.NODE, GraphMlConstants.KEY_NODE_NAME, GraphMlKey.keyTypeValues.STRING);
-    keyMap.put(GraphMlConstants.KEY_NODE_ID, keyNode);
-    GraphMlKey keyEdge = new GraphMlKey(GraphMlConstants.KEY_EDGE_ID, GraphMlKey.keyForValues.EDGE, GraphMlConstants.KEY_EDGE_NAME, GraphMlKey.keyTypeValues.STRING);
-    keyMap.put(GraphMlConstants.KEY_EDGE_ID, keyEdge);
+    GraphMlKey keyNode = new GraphMlKey(GraphMlConstants.KEY_NODE_ID, keyForValues.NODE, GraphMlConstants.KEY_NODE_NAME, keyTypeValues.STRING);
+    keyMap[GraphMlConstants.KEY_NODE_ID] = keyNode;
+    GraphMlKey keyEdge = new GraphMlKey(GraphMlConstants.KEY_EDGE_ID, keyForValues.EDGE, GraphMlConstants.KEY_EDGE_NAME, keyTypeValues.STRING);
+    keyMap[GraphMlConstants.KEY_EDGE_ID] = keyEdge;
     GraphMlKeyManager.getInstance().setKeyMap(keyMap);
   }
 
@@ -163,10 +163,10 @@ class GraphMlCodec {
     GraphMlShapeNode dataShapeNode = new GraphMlShapeNode();
 
     data.setDataKey(GraphMlConstants.KEY_NODE_ID);
-    dataShapeNode.setDataHeight(String.valueOf(v.getGeometry().getHeight()));
-    dataShapeNode.setDataWidth(String.valueOf(v.getGeometry().getWidth()));
-    dataShapeNode.setDataX(String.valueOf(v.getGeometry().getX()));
-    dataShapeNode.setDataY(String.valueOf(v.getGeometry().getY()));
+    dataShapeNode.setDataHeight(v.getGeometry().getHeight().toString());
+    dataShapeNode.setDataWidth(v.getGeometry().getWidth().toString());
+    dataShapeNode.setDataX(v.getGeometry().getX().toString());
+    dataShapeNode.setDataY(v.getGeometry().getY().toString());
     dataShapeNode.setDataLabel(v.getValue() != null ? v.getValue().toString() : "");
     dataShapeNode.setDataStyle(v.getStyle() != null ? v.getStyle() : "");
 
@@ -282,8 +282,8 @@ class GraphMlCodec {
       }
 
       HashMap<String, Object> styleMap = GraphMlUtils.getStyleMap(style, "=");
-      String endArrow = styleMap.get(Constants.STYLE_ENDARROW) as String;
-      if ((endArrow != null && !endArrow.equals(Constants.NONE)) || endArrow == null) {
+      String endArrow = styleMap[Constants.STYLE_ENDARROW] as String;
+      if ((endArrow != null && endArrow != Constants.NONE) || endArrow == null) {
         Gmledge.setEdgeDirected("true");
       } else {
         Gmledge.setEdgeDirected("false");

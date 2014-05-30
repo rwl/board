@@ -32,22 +32,19 @@ class GraphMlGraph {
 	 * @param id Graph's ID
 	 * @param edgedefault Edge Default direction.("directed" or "undirected")
 	 */
-  GraphMlGraph(String id, String edgedefault) {
-    this._id = id;
-    this._edgedefault = edgedefault;
-  }
+  GraphMlGraph([this._id="", this._edgedefault=""]);
 
   /**
 	 * Constructs an empty graph.
 	 */
-  GraphMlGraph() {
-  }
+//  GraphMlGraph() {
+//  }
 
   /**
 	 * Constructs a graph from a xml graph element.
 	 * @param graphElement Xml graph element.
 	 */
-  GraphMlGraph(Element graphElement) {
+  factory GraphMlGraph.from(Element graphElement) {
     this._id = graphElement.getAttribute(GraphMlConstants.ID);
     this._edgedefault = graphElement.getAttribute(GraphMlConstants.EDGE_DEFAULT);
 

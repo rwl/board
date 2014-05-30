@@ -18,12 +18,12 @@ class CodecRegistry {
   /**
 	 * Maps from constructor names to codecs.
 	 */
-  static Hashtable<String, ObjectCodec> _codecs = new Hashtable<String, ObjectCodec>();
+  static Map<String, ObjectCodec> _codecs = new Map<String, ObjectCodec>();
 
   /**
 	 * Maps from classnames to codecnames.
 	 */
-  static Hashtable<String, String> _aliases = new Hashtable<String, String>();
+  static Map<String, String> _aliases = new Map<String, String>();
 
   /**
 	 * Holds the list of known packages. Packages are used to prefix short

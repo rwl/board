@@ -31,19 +31,14 @@ class GraphMlData {
 	 * @param dataShapeEdge JGraph specific edge properties.
 	 * @param dataShapeNode JGraph specific node properties.
 	 */
-  GraphMlData(String dataId, String dataKey, String dataValue, GraphMlShapeEdge dataShapeEdge, GraphMlShapeNode dataShapeNode) {
-    this._dataId = dataId;
-    this._dataKey = dataKey;
-    this._dataValue = dataValue;
-    this._dataShapeNode = dataShapeNode;
-    this._dataShapeEdge = dataShapeEdge;
-  }
+  GraphMlData([this._dataId="", this._dataKey="", this._dataValue="",
+              this._dataShapeEdge=null, this._dataShapeNode=null]);
 
   /**
 	 * Construct a data from one xml data element.
 	 * @param dataElement Xml Data Element.
 	 */
-  GraphMlData(Element dataElement) {
+  factory GraphMlData.from(Element dataElement) {
     this._dataId = dataElement.getAttribute(GraphMlConstants.ID);
     this._dataKey = dataElement.getAttribute(GraphMlConstants.KEY);
 
@@ -73,8 +68,8 @@ class GraphMlData {
   /**
 	 * Construct an empty data.
 	 */
-  GraphMlData() {
-  }
+//  GraphMlData() {
+//  }
 
   String getDataId() {
     return _dataId;

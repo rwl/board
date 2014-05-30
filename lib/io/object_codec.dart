@@ -63,19 +63,19 @@ class ObjectCodec {
   /**
 	 * Caches accessors for the given method names.
 	 */
-  Map<String, Method> _accessors;
+  Map<String, MethodMirror> _accessors;
 
   /**
 	 * Caches fields for faster access.
 	 */
-  Map<Class, Map<String, Field>> _fields;
+  Map<ClassMirror, Map<String, DeclarationMirror>> _fields;
 
   /**
 	 * Constructs a new codec for the specified template object.
 	 */
-  ObjectCodec(Object template) {
-    this(template, null, null, null);
-  }
+//  ObjectCodec(Object template) {
+//    this(template, null, null, null);
+//  }
 
   /**
 	 * Constructs a new codec for the specified template object. The variables
@@ -89,7 +89,7 @@ class ObjectCodec {
 	 * @param idrefs Optional array of fieldnames to be converted to/from references.
 	 * @param mapping Optional mapping from field- to attributenames.
 	 */
-  ObjectCodec(Object template, List<String> exclude, List<String> idrefs, Map<String, String> mapping) {
+  ObjectCodec(Object template, [List<String> exclude=null, List<String> idrefs=null, Map<String, String> mapping=null]) {
     this._template = template;
 
     if (exclude != null) {
@@ -113,18 +113,21 @@ class ObjectCodec {
     }
 
     if (mapping == null) {
-      mapping = new Hashtable<String, String>();
+      mapping = new Map<String, String>();
     }
 
     this._mapping = mapping;
 
-    _reverse = new Hashtable<String, String>();
-    Iterator<Map.Entry<String, String>> it = mapping.entrySet().iterator();
+    _reverse = new Map<String, String>();
+    /*Iterator<Map.Entry<String, String>> it = mapping.entrySet().iterator();
 
     while (it.moveNext()) {
       Map.Entry<String, String> e = it.current();
       _reverse.put(e.getValue(), e.getKey());
-    }
+    }*/
+    mapping.forEach((String k, String v) {
+      _reverse[v] = k;
+    });
   }
 
   /**
@@ -183,15 +186,15 @@ class ObjectCodec {
       // required because in JavaScript, the
       // map and array object are the same.
       if (obj is Collection) {
-        node = node.getFirstChild();
+        node = node.firstChild;
 
         // Skips text nodes
         while (node != null && !(node is Element)) {
-          node = node.getNextSibling();
+          node = node.nextNode;
         }
 
-        if (node != null && node is Element && (node as Element).hasAttribute("as")) {
-          obj = new Hashtable<Object, Object>();
+        if (node != null && node is Element && (node as Element).attributes.containsKey("as")) {
+          obj = new Map<Object, Object>();
         }
       }
     } on InstantiationException catch (e) {
@@ -317,13 +320,13 @@ class ObjectCodec {
     Class /*<?>*/ type = obj.getClass();
 
     while (type != null) {
-      List<Field> fields = type.getDeclaredFields();
+      List<DeclarationMirror> fields = type.getDeclaredFields();
 
       for (int i = 0; i < fields.length; i++) {
-        Field f = fields[i];
+        DeclarationMirror f = fields[i];
 
         if ((f.getModifiers() & Modifier.TRANSIENT) != Modifier.TRANSIENT) {
-          String fieldname = f.getName();
+          String fieldname = f.simpleName;
           Object value = _getFieldValue(obj, fieldname);
           _encodeValue(enc, obj, fieldname, value, node);
         }
@@ -348,12 +351,15 @@ class ObjectCodec {
         _encodeValue(enc, obj, null, tmp[i], node);
       }
     } else if (obj is Map) {
-      Iterator<Map.Entry> it = (obj as Map).entrySet().iterator();
+      /*Iterator<Map.Entry> it = (obj as Map).entrySet().iterator();
 
       while (it.moveNext()) {
         Map.Entry e = it.current();
         _encodeValue(enc, obj, String.valueOf(e.getKey()), e.getValue(), node);
-      }
+      }*/
+      (obj as Map).forEach((Object k, Object v) {
+        _encodeValue(enc, obj, k.toString(), v, node);
+      });
     } else if (obj is Collection) {
       Iterator /*<?>*/ it = (obj as Collection/*<?>*/).iterator();
 
@@ -391,7 +397,7 @@ class ObjectCodec {
 
       Object defaultValue = _getFieldValue(_template, fieldname);
 
-      if (fieldname == null || enc.isEncodeDefaults() || defaultValue == null || !defaultValue.equals(value)) {
+      if (fieldname == null || enc.isEncodeDefaults() || defaultValue == null || defaultValue != value) {
         _writeAttribute(enc, obj, _getAttributeName(fieldname), value, node);
       }
     }
@@ -433,7 +439,7 @@ class ObjectCodec {
       }
 
       Codec.setAttribute(child, "value", value);
-      node.appendChild(child);
+      node.append(child);
     } else {
       Codec.setAttribute(node, attr, value);
     }
@@ -450,7 +456,7 @@ class ObjectCodec {
         Codec.setAttribute(child, "as", attr);
       }
 
-      node.appendChild(child);
+      node.append(child);
     } else {
       System.err.println("ObjectCodec.encode: No node for " + getName() + "." + attr + ": " + value);
     }
@@ -461,7 +467,7 @@ class ObjectCodec {
 	 */
   Object _convertValueToXml(Object value) {
     if (value is bool) {
-      value = (value as bool).booleanValue() ? "1" : "0";
+      return value ? "1" : "0";
     }
 
     return value;
@@ -474,12 +480,12 @@ class ObjectCodec {
     if (value is String) {
       String tmp = value as String;
 
-      if (type.equals(boolean/*.class*/) || type == bool/*.class*/) {
-        if (tmp.equals("1") || tmp.equals("0")) {
-          tmp = (tmp.equals("1")) ? "true" : "false";
+      if (type.equals(bool/*.class*/) || type == bool/*.class*/) {
+        if (tmp == "1" || tmp == "0") {
+          tmp = (tmp == "1") ? "true" : "false";
         }
 
-        value = bool.valueOf(tmp);
+        value = bool.parse(tmp);
       } else if (type.equals(char/*.class*/) || type == Character/*.class*/) {
         value = Character.valueOf(tmp.charAt(0));
       } else if (type.equals(byte/*.class*/) || type == Byte/*.class*/) {
@@ -506,7 +512,7 @@ class ObjectCodec {
 	 */
   String _getAttributeName(String fieldname) {
     if (fieldname != null) {
-      Object mapped = _mapping.get(fieldname);
+      Object mapped = _mapping[fieldname];
 
       if (mapped != null) {
         fieldname = mapped.toString();
@@ -526,7 +532,7 @@ class ObjectCodec {
 	 */
   String _getFieldName(String attributename) {
     if (attributename != null) {
-      Object mapped = _reverse.get(attributename);
+      Object mapped = _reverse[attributename];
 
       if (mapped != null) {
         attributename = mapped.toString();
@@ -539,24 +545,24 @@ class ObjectCodec {
   /**
 	 * Returns the field with the specified name.
 	 */
-  Field _getField(Object obj, String fieldname) {
+  DeclarationMirror _getField(Object obj, String fieldname) {
     Class /*<?>*/ type = obj.getClass();
 
     // Creates the fields cache
     if (_fields == null) {
-      _fields = new HashMap<Class, Map<String, Field>>();
+      _fields = new HashMap<Class, Map<String, DeclarationMirror>>();
     }
 
     // Creates the fields cache entry for the given type
-    Map<String, Field> map = _fields.get(type);
+    Map<String, DeclarationMirror> map = _fields[type];
 
     if (map == null) {
-      map = new HashMap<String, Field>();
-      _fields.put(type, map);
+      map = new HashMap<String, DeclarationMirror>();
+      _fields[type] = map;
     }
 
     // Tries to get cached field
-    Field field = map.get(fieldname);
+    DeclarationMirror field = map[fieldname];
 
     if (field != null) {
       return field;
@@ -568,7 +574,7 @@ class ObjectCodec {
 
         if (field != null) {
           // Adds field to fields cache
-          map.put(fieldname, field);
+          map[fieldname] = field;
 
           return field;
         }
@@ -585,19 +591,19 @@ class ObjectCodec {
   /**
 	 * Returns the accessor (getter, setter) for the specified field.
 	 */
-  Method _getAccessor(Object obj, Field field, bool isGetter) {
-    String name = field.getName();
+  MethodMirror _getAccessor(Object obj, DeclarationMirror field, bool isGetter) {
+    String name = field.simpleName;
     name = name.substring(0, 1).toUpperCase() + name.substring(1);
 
     if (!isGetter) {
       name = "set" + name;
-    } else if (boolean/*.class*/.isAssignableFrom(field.getType())) {
+    } else if (bool/*.class*/.isAssignableFrom(field.getType())) {
       name = "is" + name;
     } else {
       name = "get" + name;
     }
 
-    Method method = (_accessors != null) ? _accessors.get(name) : null;
+    MethodMirror method = (_accessors != null) ? _accessors[name] : null;
 
     if (method == null) {
       try {
@@ -613,10 +619,10 @@ class ObjectCodec {
       // Adds accessor to cache
       if (method != null) {
         if (_accessors == null) {
-          _accessors = new Hashtable<String, Method>();
+          _accessors = new Map<String, MethodMirror>();
         }
 
-        _accessors.put(name, method);
+        _accessors[name] = method;
       }
     }
 
@@ -626,12 +632,12 @@ class ObjectCodec {
   /**
 	 * Returns the method with the specified signature.
 	 */
-  Method _getMethod(Object obj, String methodname, List<Class> params) {
+  MethodMirror _getMethod(Object obj, String methodname, List<Class> params) {
     Class /*<?>*/ type = obj.getClass();
 
     while (type != null) {
       try {
-        Method method = type.getDeclaredMethod(methodname, params);
+        MethodMirror method = type.getDeclaredMethod(methodname, params);
 
         if (method != null) {
           return method;
@@ -653,11 +659,11 @@ class ObjectCodec {
     Object value = null;
 
     if (obj != null && fieldname != null) {
-      Field field = _getField(obj, fieldname);
+      DeclarationMirror field = _getField(obj, fieldname);
 
       try {
         if (field != null) {
-          if (Modifier.isPublic(field.getModifiers())) {
+          if (!field.isPrivate) {
             value = field.get(obj);
           } else {
             value = _getFieldValueWithAccessor(obj, field);
@@ -676,12 +682,12 @@ class ObjectCodec {
   /**
 	 * Returns the value of the field using the accessor for the field if one exists.
 	 */
-  Object _getFieldValueWithAccessor(Object obj, Field field) {
+  Object _getFieldValueWithAccessor(Object obj, DeclarationMirror field) {
     Object value = null;
 
     if (field != null) {
       try {
-        Method method = _getAccessor(obj, field, true);
+        MethodMirror method = _getAccessor(obj, field, true);
 
         if (method != null) {
           value = method.invoke(obj, null as List<Object>);
@@ -699,17 +705,17 @@ class ObjectCodec {
 	 * in the specified object instance.
 	 */
   void _setFieldValue(Object obj, String fieldname, Object value) {
-    Field field = null;
+    DeclarationMirror field = null;
 
     try {
       field = _getField(obj, fieldname);
 
       if (field != null) {
         if (field.getType() == bool/*.class*/) {
-          value = (value.equals("1") || String.valueOf(value).equalsIgnoreCase("true")) ? bool.TRUE : bool.FALSE;
+          value = (value == "1" || value.toString().toLowerCase() == "true") ? true : false;
         }
 
-        if (Modifier.isPublic(field.getModifiers())) {
+        if (!field.isPrivate) {
           field.set(obj, value);
         } else {
           _setFieldValueWithAccessor(obj, field, value);
@@ -725,10 +731,10 @@ class ObjectCodec {
   /**
 	 * Sets the value of the given field using the accessor if one exists.
 	 */
-  void _setFieldValueWithAccessor(Object obj, Field field, Object value) {
+  void _setFieldValueWithAccessor(Object obj, DeclarationMirror field, Object value) {
     if (field != null) {
       try {
-        Method method = _getAccessor(obj, field, false);
+        MethodMirror method = _getAccessor(obj, field, false);
 
         if (method != null) {
           Class /*<?>*/ type = method.getParameterTypes()[0];
@@ -787,9 +793,9 @@ class ObjectCodec {
 	 * @param node XML node to be decoded.
 	 * @return Returns the resulting object that represents the given XML node.
 	 */
-  Object decode(Codec dec, Node node) {
-    return decode(dec, node, null);
-  }
+//  Object decode(Codec dec, Node node) {
+//    return decode(dec, node, null);
+//  }
 
   /**
 	 * Parses the given node into the object or returns a new object
@@ -823,12 +829,12 @@ class ObjectCodec {
 	 * @return Returns the resulting object that represents the given XML node
 	 * or the object given to the method as the into parameter.
 	 */
-  Object decode(Codec dec, Node node, Object into) {
+  Object decode(Codec dec, Node node, [Object into=null]) {
     Object obj = null;
 
     if (node is Element) {
       String id = (node as Element).getAttribute("id");
-      obj = dec._objects.get(id);
+      obj = dec._objects[id];
 
       if (obj == null) {
         obj = into;
@@ -878,14 +884,14 @@ class ObjectCodec {
 	 * Reads the given attribute into the specified object.
 	 */
   void _decodeAttribute(Codec dec, Node attr, Object obj) {
-    String name = attr.getNodeName();
+    String name = attr.nodeName;
 
-    if (!name.equalsIgnoreCase("as") && !name.equalsIgnoreCase("id")) {
-      Object value = attr.getNodeValue();
+    if (name.toLowerCase() != "as" && name.toLowerCase() != "id") {
+      Object value = attr.nodeValue;
       String fieldname = _getFieldName(name);
 
       if (isReference(obj, fieldname, value, false)) {
-        Object tmp = dec.getObject(String.valueOf(value));
+        Object tmp = dec.getObject(value.toString());
 
         if (tmp == null) {
           System.err.println("ObjectCodec.decode: No object for " + getName() + "." + fieldname + "=" + value);
@@ -905,14 +911,14 @@ class ObjectCodec {
 	 * Decodec all children of the given node using decodeChild.
 	 */
   void _decodeChildren(Codec dec, Node node, Object obj) {
-    Node child = node.getFirstChild();
+    Node child = node.firstChild;
 
     while (child != null) {
-      if (child.getNodeType() == Node.ELEMENT_NODE && !processInclude(dec, child, obj)) {
+      if (child.nodeType == Node.ELEMENT_NODE && !processInclude(dec, child, obj)) {
         _decodeChild(dec, child, obj);
       }
 
-      child = child.getNextSibling();
+      child = child.nextNode;
     }
   }
 
@@ -926,11 +932,11 @@ class ObjectCodec {
       Object template = _getFieldTemplate(obj, fieldname, child);
       Object value = null;
 
-      if (child.getNodeName().equals("add")) {
+      if (child.nodeName == "add") {
         value = (child as Element).getAttribute("value");
 
         if (value == null) {
-          value = child.getTextContent();
+          value = child.text;
         }
       } else {
         value = dec.decode(child, template);
@@ -973,9 +979,9 @@ class ObjectCodec {
 	 * override this with the correct code to add an entry to an object.
 	 */
   void _addObjectValue(Object obj, String fieldname, Object value, Object template) {
-    if (value != null && !value.equals(template)) {
+    if (value != null && value != template) {
       if (fieldname != null && obj is Map) {
-        (obj as Map).put(fieldname, value);
+        (obj as Map)[fieldname] = value;
       } else if (fieldname != null && fieldname.length > 0) {
         _setFieldValue(obj, fieldname, value);
       } // Arrays are treated as collections and
@@ -997,7 +1003,7 @@ class ObjectCodec {
 	 * @return Returns true if the given node was processed as an include.
 	 */
   bool processInclude(Codec dec, Node node, Object into) {
-    if (node.getNodeType() == Node.ELEMENT_NODE && node.getNodeName().equalsIgnoreCase("include")) {
+    if (node.nodeType == Node.ELEMENT_NODE && node.nodeName.toLowerCase() == "include") {
       String name = (node as Element).getAttribute("name");
 
       if (name != null) {
