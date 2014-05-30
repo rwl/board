@@ -5,6 +5,8 @@ author: Richard Lincoln <r.w.lincoln@gmail.com>
 homepage: https://github.com/rwl/dgraph.dart
 dependencies:
   intl: any
+  image: any
+  color: any
 dev_dependencies:
   browser: any
   unittest: any
