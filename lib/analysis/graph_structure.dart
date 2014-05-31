@@ -301,8 +301,8 @@ class GraphStructure {
 
     // find a random vertex in each group and connect them.
     for (int i = 1; i < componentNum; i++) {
-      Object sourceVertex = components[i - 1][math.round(Math.Random.nextDouble() * (components[i - 1].length - 1)) as int];
-      Object targetVertex = components[i][math.round(Math.Random.nextDouble() * (components[i].length - 1)) as int];
+      Object sourceVertex = components[i - 1][math.round(math.random() * (components[i - 1].length - 1)) as int];
+      Object targetVertex = components[i][math.round(math.random() * (components[i].length - 1)) as int];
       graph.insertEdge(parent, null, aGraph.getGenerator().getNewEdgeValue(aGraph), sourceVertex, targetVertex);
     }
   }

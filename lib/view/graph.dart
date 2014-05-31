@@ -2904,18 +2904,18 @@ class Graph extends EventSource {
       Map<String, Object> style = (state != null) ? state._style : getCellStyle(cell);
 
       if (style != null && !_model.isEdge(cell)) {
-        double dx = 0;
-        double dy = 0;
+        double dx = 0.0;
+        double dy = 0.0;
 
         // Adds dimension of image if shape is a label
         if (getImage(state) != null || Utils.getString(style, Constants.STYLE_IMAGE) != null) {
           if (Utils.getString(style, Constants.STYLE_SHAPE, "") == Constants.SHAPE_LABEL) {
             if (Utils.getString(style, Constants.STYLE_VERTICAL_ALIGN, "") == Constants.ALIGN_MIDDLE) {
-              dx += Utils.getDouble(style, Constants.STYLE_IMAGE_WIDTH, Constants.DEFAULT_IMAGESIZE);
+              dx += Utils.getDouble(style, Constants.STYLE_IMAGE_WIDTH, Constants.DEFAULT_IMAGESIZE.toDouble());
             }
 
             if (Utils.getString(style, Constants.STYLE_ALIGN, "") == Constants.ALIGN_CENTER) {
-              dy += Utils.getDouble(style, Constants.STYLE_IMAGE_HEIGHT, Constants.DEFAULT_IMAGESIZE);
+              dy += Utils.getDouble(style, Constants.STYLE_IMAGE_HEIGHT, Constants.DEFAULT_IMAGESIZE.toDouble());
             }
           }
         }
@@ -2936,7 +2936,7 @@ class Graph extends EventSource {
         String value = getLabel(cell);
 
         if (value != null && value.length > 0) {
-          Rect size = Utils.getLabelSize(value, style, isHtmlLabel(cell), 1);
+          Rect size = Utils.getLabelSize(value, style, isHtmlLabel(cell), 1.0);
           double width = size.getWidth() + dx;
           double height = size.getHeight() + dy;
 
@@ -2952,10 +2952,10 @@ class Graph extends EventSource {
             height = snap(height + _gridSize / 2);
           }
 
-          result = new Rect(0, 0, width, height);
+          result = new Rect(0.0, 0.0, width, height);
         } else {
-          double gs2 = 4 * _gridSize;
-          result = new Rect(0, 0, gs2, gs2);
+          double gs2 = 4.0 * _gridSize;
+          result = new Rect(0.0, 0.0, gs2, gs2);
         }
       }
     }
@@ -3230,8 +3230,8 @@ class Graph extends EventSource {
         Geometry g = _model.getGeometry(parent);
 
         if (g != null) {
-          double x = 0;
-          double y = 0;
+          double x = 0.0;
+          double y = 0.0;
           double w = g.getWidth();
           double h = g.getHeight();
 
@@ -3384,10 +3384,10 @@ class Graph extends EventSource {
 	 */
   ConnectionConstraint getConnectionConstraint(CellState edge, CellState terminal, bool source) {
     Point2d point = null;
-    Object x = edge.getStyle().get((source) ? Constants.STYLE_EXIT_X : Constants.STYLE_ENTRY_X);
+    Object x = edge.getStyle()[(source) ? Constants.STYLE_EXIT_X : Constants.STYLE_ENTRY_X];
 
     if (x != null) {
-      Object y = edge.getStyle().get((source) ? Constants.STYLE_EXIT_Y : Constants.STYLE_ENTRY_Y);
+      Object y = edge.getStyle()[(source) ? Constants.STYLE_EXIT_Y : Constants.STYLE_ENTRY_Y];
 
       if (y != null) {
         point = new Point2d(double.parse(x.toString()), double.parse(y.toString()));
@@ -3833,7 +3833,7 @@ class Graph extends EventSource {
           Geometry geo = getCellGeometry(cells[i]);
 
           if (result == null) {
-            result = new Rect(geo);
+            result = new Rect.from(geo);
           } else {
             result.add(geo);
           }
@@ -3888,7 +3888,7 @@ class Graph extends EventSource {
 
         if (tmp != null) {
           if (result == null) {
-            result = new Rect(tmp);
+            result = new Rect.from(tmp);
           } else {
             result.add(tmp);
           }
@@ -3927,7 +3927,7 @@ class Graph extends EventSource {
         edges = tmp;
       }
 
-      cells = allCells;
+      cells = new List<Object>.from(allCells);
     } else {
       cells = [cell];
     }
@@ -4153,7 +4153,7 @@ class Graph extends EventSource {
 
         // Checks if the source and target are not connected by another edge
         if (tmp.length > 1 || (tmp.length == 1 && tmp[0] != edge)) {
-          error.write(Resources.get("alreadyConnected", "Already Connected") + "\n");
+          error.write(Resources.get("alreadyConnected", ["Already Connected"]) + "\n");
         }
       }
 

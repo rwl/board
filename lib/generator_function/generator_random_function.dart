@@ -6,9 +6,9 @@ part of graph.generatorfunction;
  * It will generate random (type "double") edge weights in the range of (<b>minWeight</b>, <b>maxWeight</b>) and rounds the values to <b>roundToDecimals</b>
  */
 class GeneratorRandomFunction extends GeneratorFunction {
-  double _maxWeight = 1;
+  double _maxWeight = 1.0;
 
-  double _minWeight = 0;
+  double _minWeight = 0.0;
 
   int _roundToDecimals = 2;
 
@@ -20,7 +20,7 @@ class GeneratorRandomFunction extends GeneratorFunction {
   double getCost(CellState state) {
     double edgeWeight = null;
 
-    edgeWeight = Math.Random.nextDouble() * (_maxWeight - _minWeight) + _minWeight;
+    edgeWeight = math.random() * (_maxWeight - _minWeight) + _minWeight;
     edgeWeight = math.round(edgeWeight * Math.pow(10, getRoundToDecimals())) / Math.pow(10, getRoundToDecimals()) as double;
 
     return edgeWeight;

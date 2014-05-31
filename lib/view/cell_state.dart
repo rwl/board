@@ -367,17 +367,17 @@ class CellState extends Rect {
 	 * 
 	 * @return Returns the rectangle that defines the perimeter.
 	 */
-  Rect getPerimeterBounds() {
-    return getPerimeterBounds(0);
-  }
+//  Rect getPerimeterBounds() {
+//    return getPerimeterBounds(0);
+//  }
 
   /**
 	 * Returns the rectangle that should be used as the perimeter of the cell.
 	 * 
 	 * @return Returns the rectangle that defines the perimeter.
 	 */
-  Rect getPerimeterBounds(double border) {
-    Rect bounds = new Rect(getRectangle());
+  Rect getPerimeterBounds([double border=0.0]) {
+    Rect bounds = new Rect.from(getRectangle());
 
     if (border != 0) {
       bounds.grow(border);
@@ -402,7 +402,7 @@ class CellState extends Rect {
       if (_absolutePoints.length == 0) {
         _absolutePoints.add(point);
       } else {
-        _absolutePoints.set(0, point);
+        _absolutePoints[0] = point;
       }
     } else {
       if (_absolutePoints == null) {

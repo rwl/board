@@ -15,8 +15,8 @@ class CylinderShape extends BasicShape {
     int y = rect.y;
     int w = rect.width;
     int h = rect.height;
-    int h4 = h / 4;
-    int h2 = h4 / 2;
+    int h4 = (h / 4) as int;
+    int h2 = (h4 / 2) as int;
     int r = w;
 
     // Paints the background

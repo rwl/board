@@ -13,7 +13,7 @@ class DistanceCostFunction implements ICostFunction {
 	 * points in the given state or 0 if no points are defined.
 	 */
   double getCost(CellState state) {
-    double cost = 0;
+    double cost = 0.0;
     int pointCount = state.getAbsolutePointCount();
 
     if (pointCount > 0) {

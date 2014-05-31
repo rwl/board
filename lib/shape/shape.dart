@@ -1,5 +1,9 @@
 library graph.shape;
 
+import 'dart:math' as Math;
+
+import '../harmony/harmony.dart' as harmony;
+
 import '../canvas/canvas.dart' show Graphics2DCanvas;
 
 import '../view/view.dart' show CellState;

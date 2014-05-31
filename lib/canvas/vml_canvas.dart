@@ -218,22 +218,22 @@ class VmlCanvas extends BasicCanvas {
       String points = null;
 
       if (direction == Constants.DIRECTION_EAST || direction == Constants.DIRECTION_WEST) {
-        int mid = math.round(h / 2);
-        points = "m 0 " + mid + " l " + w + " " + mid;
+        int mid = math.round(h / 2) as int;
+        points = "m 0 $mid l $w $mid";
       } else {
-        int mid = math.round(w / 2);
-        points = "m " + mid + " 0 L " + mid + " " + h;
+        int mid = math.round(w / 2) as int;
+        points = "m $mid 0 L $mid $h";
       }
 
       elem = _document.createElement("v:shape");
-      elem.setAttribute("coordsize", w + " " + h);
-      elem.setAttribute("path", points + " x e");
+      elem.setAttribute("coordsize", "$w $h");
+      elem.setAttribute("path", "$points x e");
     } else if (shape == Constants.SHAPE_ELLIPSE) {
       elem = _document.createElement("v:oval");
     } else if (shape == Constants.SHAPE_DOUBLE_ELLIPSE) {
       elem = _document.createElement("v:shape");
-      elem.setAttribute("coordsize", w + " " + h);
-      int inset = (int)((3 + strokeWidth) * _scale);
+      elem.setAttribute("coordsize", "$w $h");
+      int inset = ((3 + strokeWidth) * _scale) as int;
 
       String points = "ar 0 0 " + w + " " + h + " 0 " + (h / 2) + " " + (w / 2) + " " + (h / 2) + " e ar " + inset + " " + inset + " " + (w - inset) + " " + (h - inset) + " 0 " + (h / 2) + " " + (w / 2) + " " + (h / 2);
 

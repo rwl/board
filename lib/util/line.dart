@@ -19,7 +19,7 @@
  */
 part of graph.util;
 
-//import java.awt.geom.Line2D;
+//import java.awt.geom.harmony.Line2D;
 
 /**
  * Implements a line with double precision coordinates.

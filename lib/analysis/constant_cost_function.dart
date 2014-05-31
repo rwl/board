@@ -12,7 +12,7 @@ class ConstantCostFunction implements ICostFunction {
   /**
 	 * 
 	 */
-  double _cost = 0;
+  double _cost = 0.0;
 
   /**
 	 * 

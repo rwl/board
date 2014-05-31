@@ -11,7 +11,7 @@ part of graph.swing.handler;
 //import java.awt.harmony.Rectangle;
 //import java.awt.Stroke;
 //import java.awt.event.MouseEvent;
-//import java.awt.geom.Line2D;
+//import java.awt.geom.harmony.Line2D;
 //import java.util.ArrayList;
 //import java.util.Arrays;
 //import java.util.List;
@@ -667,7 +667,7 @@ class EdgeHandler extends CellHandler {
 
     for (int i = 1; i < _state.getAbsolutePointCount(); i++) {
       harmony.Point current = _state.getAbsolutePoint(i).getPoint();
-      Line2D line = new Line2D.Float(last.x, last.y, current.x, current.y);
+      harmony.Line2D line = new harmony.Line2D.Float(last.x, last.y, current.x, current.y);
 
       harmony.Rectangle bounds = g2.getStroke().createStrokedShape(line).getBounds();
 

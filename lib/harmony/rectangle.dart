@@ -167,7 +167,7 @@ class Rectangle {//extends Rectangle2D implements Shape, Serializable {
         setBounds(x1, y1, x2 - x1, y2 - y1);
     }
 
-    bool containsCoords(int px, int py) {
+    bool contains(int px, int py) {
         if (isEmpty()) {
             return false;
         }
@@ -180,15 +180,15 @@ class Rectangle {//extends Rectangle2D implements Shape, Serializable {
     }
 
     bool containsPoint(Point p) {
-        return containsCoords(p.x, p.y);
+        return contains(p.x, p.y);
     }
 
-    bool contains(int rx, int ry, int rw, int rh) {
-        return containsCoords(rx, ry) && containsCoords(rx + rw - 1, ry + rh - 1);
+    bool containsRect(int rx, int ry, int rw, int rh) {
+        return contains(rx, ry) && contains(rx + rw - 1, ry + rh - 1);
     }
 
-    bool containsRect(Rectangle r) {
-        return contains(r.x, r.y, r.width, r.height);
+    bool containsRectangle(Rectangle r) {
+        return containsRect(r.x, r.y, r.width, r.height);
     }
 
     /*Rectangle2D createIntersection(Rectangle2D r) {
@@ -210,6 +210,22 @@ class Rectangle {//extends Rectangle2D implements Shape, Serializable {
 
     bool intersects(Rectangle r) {
         return !intersection(r).isEmpty();
+    }
+
+    bool intersectsLineBetween(double x1, double y1, double x2, double y2) {
+        double rx1 = getX();
+        double ry1 = getY();
+        double rx2 = rx1 + getWidth();
+        double ry2 = ry1 + getHeight();
+        return
+            (rx1 <= x1 && x1 <= rx2 && ry1 <= y1 && y1 <= ry2) ||
+            (rx1 <= x2 && x2 <= rx2 && ry1 <= y2 && y2 <= ry2) ||
+            Line2D.linesIntersect(rx1, ry1, rx2, ry2, x1, y1, x2, y2) ||
+            Line2D.linesIntersect(rx2, ry1, rx1, ry2, x1, y1, x2, y2);
+    }
+
+    bool intersectsLine(Line2D l) {
+        return intersectsLineBetween(l.getX1(), l.getY1(), l.getX2(), l.getY2());
     }
 
     int outcode(double px, double py) {

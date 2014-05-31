@@ -53,6 +53,7 @@ import '../util/util.dart' show ImageBundle;
 import '../util/util.dart' show Resources;
 import '../util/util.dart' show StyleUtils;
 
+part 'cell_state.dart';
 part 'graph.dart';
 part 'connection_constraint.dart';
 part 'edge_style.dart';

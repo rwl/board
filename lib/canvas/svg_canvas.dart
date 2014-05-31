@@ -512,15 +512,15 @@ class SvgCanvas extends BasicCanvas {
       String d = null;
 
       if (direction == Constants.DIRECTION_EAST || direction == Constants.DIRECTION_WEST) {
-        int mid = (y + h / 2);
-        d = "M " + x + " " + mid + " L " + (x + w) + " " + mid;
+        int mid = (y + h / 2) as int;
+        d = "M $x $mid L ${x + w} $mid";
       } else {
-        int mid = (x + w / 2);
-        d = "M " + mid + " " + y + " L " + mid + " " + (y + h);
+        int mid = (x + w / 2) as int;
+        d = "M $mid $y L $mid ${y + h}";
       }
 
       elem = _document.createElement("path");
-      elem.setAttribute("d", d + " Z");
+      elem.setAttribute("d", "$d Z");
     } else if (shape == Constants.SHAPE_ELLIPSE) {
       elem = _document.createElement("ellipse");
 
@@ -691,7 +691,7 @@ class SvgCanvas extends BasicCanvas {
           // node which when removed will result in an undefined background.
           glassOverlay.setAttribute("fill", "url(#" + getGlassGradientElement().getAttribute("id") + ")");
 
-          String d = "m " + (x - strokeWidth) + "," + (y - strokeWidth) + " L " + (x - strokeWidth) + "," + (y + h * size) + " Q " + (x + w * 0.5) + "," + (y + h * 0.7) + " " + (x + w + strokeWidth) + "," + (y + h * size) + " L " + (x + w + strokeWidth) + "," + (y - strokeWidth) + " z";
+          String d = "m ${x - strokeWidth},${y - strokeWidth} L ${x - strokeWidth},${y + h * size} Q ${x + w * 0.5},${y + h * 0.7} ${x + w + strokeWidth},${y + h * size} L ${x + w + strokeWidth},${y - strokeWidth} z";
           glassOverlay.setAttribute("stroke-width", (strokeWidth / 2).toString());
           glassOverlay.setAttribute("d", d);
           elem.append(glassOverlay);
@@ -700,8 +700,8 @@ class SvgCanvas extends BasicCanvas {
     }
 
     double rotation = Utils.getDouble(style, Constants.STYLE_ROTATION);
-    int cx = x + w / 2;
-    int cy = y + h / 2;
+    int cx = (x + w / 2) as int;
+    int cy = (y + h / 2) as int;
 
     Element bg = background;
 

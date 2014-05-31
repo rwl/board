@@ -61,7 +61,7 @@ class CellRenderer {
       }
 
       if (clip != null && clip.getWidth() > 0 && clip.getHeight() > 0) {
-        svg.Rect rect = clip.getRectangle();
+        harmony.Rectangle rect = clip.getRectangle();
         canvas = factory(rect.width + 1, rect.height + 1);
 
         if (canvas != null) {

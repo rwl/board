@@ -39,7 +39,7 @@ class EdgeStyle {
   static EdgeStyleFunction EntityRelation = (CellState state, CellState source, CellState target, List<Point2d> points, List<Point2d> result) {
     GraphView view = state.getView();
     IGraphModel model = view.getGraph().getModel();
-    double segment = Utils.getDouble(state.getStyle(), Constants.STYLE_SEGMENT, Constants.ENTITY_SEGMENT) * state._view.getScale();
+    double segment = Utils.getDouble(state.getStyle(), Constants.STYLE_SEGMENT, Constants.ENTITY_SEGMENT.toDouble()) * state._view.getScale();
 
     Point2d p0 = state.getAbsolutePoint(0);
     Point2d pe = state.getAbsolutePoint(state.getAbsolutePointCount() - 1);
@@ -136,12 +136,12 @@ class EdgeStyle {
         }
       }
 
-      double x = 0;
-      double dx = 0;
-      double y = 0;
-      double dy = 0;
+      double x = 0.0;
+      double dx = 0.0;
+      double y = 0.0;
+      double dy = 0.0;
 
-      double seg = Utils.getDouble(state.getStyle(), Constants.STYLE_SEGMENT, graph.getGridSize()) * view.getScale();
+      double seg = Utils.getDouble(state.getStyle(), Constants.STYLE_SEGMENT, graph.getGridSize().toDouble()) * view.getScale();
       String dir = Utils.getString(state.getStyle(), Constants.STYLE_DIRECTION, Constants.DIRECTION_WEST);
 
       if (dir == Constants.DIRECTION_NORTH || dir == Constants.DIRECTION_SOUTH) {
@@ -172,7 +172,7 @@ class EdgeStyle {
         x = view.getRoutingCenterX(source);
         dx = Math.max(math.abs(x - pt.getX()), dy);
         y = pt.getY();
-        dy = 0;
+        dy = 0.0;
       }
 
       result.add(new Point2d(x - dx, y - dy));
@@ -481,11 +481,11 @@ class EdgeStyle {
     }
   };
 
-  static double orthBuffer = 10;
+  static double orthBuffer = 10.0;
 
   static List<List<double>> dirVectors = [[-1, 0], [0, -1], [1, 0], [0, 1], [-1, 0], [0, -1], [1, 0]];
 
-  static List<List<double>> wayPoints1 = new List<double>(128);//[2];
+  static List<List<double>> wayPoints1 = new List<List<double>>(128);//[2];
 
   /**
 	 * The default routing patterns for orthogonal connections
@@ -562,7 +562,7 @@ class EdgeStyle {
       // in a way that would allow a 3-segment connection if port constraints
       // permitted.
       // geo -> [source, target] [x, y, width, height]
-      List<List<double>> geo = new List<double>(2);//[4];
+      List<List<double>> geo = new List<List<double>>(2);//[4];
       geo[0] = new List<double>(4);
       geo[0][0] = source.getX();
       geo[0][1] = source.getY();
@@ -759,7 +759,7 @@ class EdgeStyle {
       //==============================================================
       // End of source and target direction determination
 
-      List<int> routePattern = getRoutePattern(dir, quad, dx, dy);
+      List<int> routePattern = getRoutePattern(dir, quad.toDouble(), dx, dy);
 
       if (dx == 0 || dy == 0) {
 
@@ -834,7 +834,7 @@ class EdgeStyle {
         bool center = (routePattern[i] & CENTER_MASK) > 0;
 
         if ((sou || tar) && side < 9) {
-          double limit = 0;
+          double limit = 0.0;
           int souTar = sou ? 0 : 1;
 
           if (center && currentOrientation == 0) {

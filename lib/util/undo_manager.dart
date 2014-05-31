@@ -138,7 +138,8 @@ class UndoManager extends EventSource {
 	 */
   void _trim() {
     while (_history.length > _indexOfNextAdd) {
-      UndoableEdit edit = _history.remove(_indexOfNextAdd);
+      UndoableEdit edit = _history[_indexOfNextAdd];
+      _history.remove(_indexOfNextAdd);
       edit.die();
     }
   }

@@ -17,13 +17,13 @@ class Curve {
   Map<String, List<Point2d>> _points;
 
   // harmony.Rectangle just completely enclosing branch and label/
-  double _minXBounds = 10000000;
+  double _minXBounds = 10000000.0;
 
-  double _maxXBounds = 0;
+  double _maxXBounds = 0.0;
 
-  double _minYBounds = 10000000;
+  double _minYBounds = 10000000.0;
 
-  double _maxYBounds = 0;
+  double _maxYBounds = 0.0;
 
   /**
 	 * An array of arrays of intervals. These intervals define the distance
@@ -49,7 +49,7 @@ class Curve {
   /**
 	 * Indicates that an invalid position on a curve was requested
 	 */
-  static Line INVALID_POSITION = new Line.between(new Point2d(0, 0), new Point2d(1, 0));
+  static Line INVALID_POSITION = new Line.between(new Point2d(0.0, 0.0), new Point2d(1.0, 0.0));
 
   /**
 	 * Offset of the label curve from the curve the label curve is based on.
@@ -115,7 +115,7 @@ class Curve {
     }
 
     if (!nullPoints) {
-      guidePoints = new List<Point2d>(points);
+      guidePoints = new List<Point2d>.from(points);
     }
   }
 
@@ -142,7 +142,7 @@ class Curve {
 
     // Pick a starting index roughly where you expect the point
     // to be
-    int testIndex = (int)(numIntervals * distance);
+    int testIndex = (numIntervals * distance) as int;
 
     if (testIndex >= numIntervals) {
       testIndex = numIntervals - 1;
@@ -180,7 +180,7 @@ class Curve {
         break;
       }
 
-      testIndex = (int)(testIndex + indexDifference * multiplier);
+      testIndex = (testIndex + indexDifference * multiplier) as int;
 
       if (testIndex == lowerLimit) {
         testIndex = lowerLimit + 1;
@@ -217,7 +217,7 @@ class Curve {
       // We can't calculate in this case
       if (pointsCurve.length == 1) {
         Point2d point = pointsCurve[0];
-        return new Line(point.getX(), point.getY(), new Point2d(1, 0));
+        return new Line(point.getX(), point.getY(), new Point2d(1.0, 0.0));
       }
 
       int lowerLimit = _getLowerIndexOfSegment(index, distance);
@@ -308,7 +308,7 @@ class Curve {
     List<Point2d> pointsCurve = getCurvePoints(Curve.CORE_CURVE);
 
     if (pointsCurve != null && pointsCurve.length > 1) {
-      Rect r = new Rect(rect);
+      Rect r = new Rect.from(rect);
       // First check for any of the curve points lying within the
       // rectangle, then for any of the curve segments intersecting
       // with the rectangle sides
@@ -370,7 +370,7 @@ class Curve {
 	 * the intersection occurs
 	 */
   double intersectsRectPerimeterDist(String index, Rect rect) {
-    double result = -1;
+    double result = -1.0;
     List<Point2d> pointsCurve = getCurvePoints(index);
     List<double> curveIntervals = getIntervals(index);
 
@@ -548,7 +548,7 @@ class Curve {
     List<Point2d> currentCurve = getCurvePoints(index);
     List<double> currentIntervals = getIntervals(index);
     int closestSegment = 0;
-    double closestSegDistSq = 10000000;
+    double closestSegDistSq = 10000000.0;
     Line segment = new Line.between(currentCurve[0], currentCurve[1]);
 
     for (int i = 1; i < currentCurve.length; i++) {
@@ -591,8 +591,8 @@ class Curve {
     double candidateDist1 = (candidateOffX1 * candidateOffX1) + (candidateOffY1 * candidateOffY1);
     double candidateDist2 = (candidateOffX2 * candidateOffX2) + (candidateOffY2 * candidateOffY2);
 
-    double orthOffsetPointX = 0;
-    double orthOffsetPointY = 0;
+    double orthOffsetPointX = 0.0;
+    double orthOffsetPointY = 0.0;
 
     if (candidateDist2 < candidateDist1) {
       orthogonalOffset = -orthogonalOffset;
@@ -601,9 +601,9 @@ class Curve {
     orthOffsetPointX = absPoint.getX() - segNormY * orthogonalOffset;
     orthOffsetPointY = absPoint.getY() + segNormX * orthogonalOffset;
 
-    double distAlongEdge = 0;
-    double cartOffsetX = 0;
-    double cartOffsetY = 0;
+    double distAlongEdge = 0.0;
+    double cartOffsetX = 0.0;
+    double cartOffsetY = 0.0;
 
     // Don't compare for exact equality, there are often rounding errors
     if (math.abs(closestSegDistSq - lineDistSq) > 0.0001) {
@@ -706,13 +706,13 @@ class Curve {
     // Store the change in interval amount between iterations.
     // If it changes the extrapolation calculation must
     // take this into account.
-    double intervalChange = 1;
+    double intervalChange = 1.0;
 
     List<Point2d> coreCurve = new List<Point2d>();
     List<double> coreIntervals = new List<double>();
     bool twoLoopsComplete = false;
 
-    for (double t = 0; t <= 1.5; t += interval) {
+    for (double t = 0.0; t <= 1.5; t += interval) {
       if (t > 1.0) {
         // Use the point regardless of the accuracy,
         t = 1.0001;
@@ -924,7 +924,7 @@ class Curve {
     List<double> newIntervals = new List<double>(currentCurve.length);
 
     double totalLength = 0.0;
-    newIntervals[0] = 0;
+    newIntervals[0] = 0.0;
 
     for (int i = 0; i < currentCurve.length - 1; i++) {
       double changeX = currentCurve[i + 1].getX() - currentCurve[i].getX();
@@ -1014,7 +1014,7 @@ class Curve {
             }
           }
 
-          guidePoints = new List<Point2d>(newPoints);
+          guidePoints = new List<Point2d>.from(newPoints);
           _minXBounds += transX;
           _minYBounds += transY;
           _maxXBounds += transX;
@@ -1026,7 +1026,7 @@ class Curve {
     }
 
     if (pointsChanged) {
-      guidePoints = new List<Point2d>(newPoints);
+      guidePoints = new List<Point2d>.from(newPoints);
       _points = new Map<String, List<Point2d>>();
       _valid = false;
     }
@@ -1073,7 +1073,7 @@ class Curve {
       return _curveLengths[index];
     }
 
-    return 0;
+    return 0.0;
   }
 
   /**

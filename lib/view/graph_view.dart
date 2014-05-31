@@ -3,7 +3,7 @@
  */
 part of graph.view;
 
-//import java.awt.geom.Line2D;
+//import java.awt.geom.harmony.Line2D;
 //import java.util.ArrayList;
 //import java.util.Hashtable;
 //import java.util.List;
@@ -66,13 +66,13 @@ class GraphView extends EventSource {
   /**
 	 * Specifies the scale. Default is 1 (100%).
 	 */
-  double _scale = 1;
+  double _scale = 1.0;
 
   /**
 	 * Point that specifies the current translation. Default is a new
 	 * empty point.
 	 */
-  Point2d _translate = new Point2d(0, 0);
+  Point2d _translate = new Point2d(0.0, 0.0);
 
   /**
 	 * Maps from cells to cell states.
@@ -283,7 +283,7 @@ class GraphView extends EventSource {
 
             if (tmp != null) {
               if (result == null) {
-                result = new Rect(tmp);
+                result = new Rect.from(tmp);
               } else {
                 result.add(tmp);
               }
@@ -524,11 +524,11 @@ class GraphView extends EventSource {
 	 * @param state Cell state to be updated.
 	 */
   void updateCellState(CellState state) {
-    state.getAbsoluteOffset().setX(0);
-    state.getAbsoluteOffset().setY(0);
-    state.getOrigin().setX(0);
-    state.getOrigin().setY(0);
-    state.setLength(0);
+    state.getAbsoluteOffset().setX(0.0);
+    state.getAbsoluteOffset().setY(0.0);
+    state.getOrigin().setX(0.0);
+    state.getOrigin().setY(0.0);
+    state.setLength(0.0);
 
     if (state.getCell() != _currentRoot) {
       IGraphModel model = _graph.getModel();
@@ -696,7 +696,7 @@ class GraphView extends EventSource {
   double getWordWrapWidth(CellState state) {
     Map<String, Object> style = state.getStyle();
     bool horizontal = Utils.isTrue(style, Constants.STYLE_HORIZONTAL, true);
-    double w = 0;
+    double w = 0.0;
 
     // Computes the available width for the wrapped label
     if (horizontal) {
@@ -717,7 +717,7 @@ class GraphView extends EventSource {
     String overflow = Utils.getString(style, Constants.STYLE_OVERFLOW, "");
 
     if (overflow == "fill") {
-      state.setLabelBounds(new Rect(state));
+      state.setLabelBounds(new Rect.from(state));
     } else if (state.getLabel() != null) {
       // For edges, the width of the geometry is used for wrapping HTML
       // labels or no wrapping is applied if the width is set to 0
@@ -727,7 +727,7 @@ class GraphView extends EventSource {
         Geometry geo = _graph.getCellGeometry(cell);
 
         if (geo != null && geo.getWidth() > 0) {
-          vertexBounds = new Rect(0, 0, geo.getWidth() * this.getScale(), 0);
+          vertexBounds = new Rect(0.0, 0.0, geo.getWidth() * this.getScale(), 0.0);
         } else {
           vertexBounds = null;
         }
@@ -750,7 +750,7 @@ class GraphView extends EventSource {
 	 */
   Rect updateBoundingBox(CellState state) {
     // Gets the cell bounds and adds shadows and markers
-    Rect rect = new Rect(state);
+    Rect rect = new Rect.from(state);
     Map<String, Object> style = state.getStyle();
 
     // Adds extra pixels for the marker and stroke assuming
@@ -790,7 +790,7 @@ class GraphView extends EventSource {
         double h = Utils.getInt(style, Constants.STYLE_IMAGE_HEIGHT, Constants.DEFAULT_IMAGESIZE) * _scale;
 
         double x = state.getX();
-        double y = 0;
+        double y = 0.0;
 
         String imgAlign = Utils.getString(style, Constants.STYLE_IMAGE_ALIGN, Constants.ALIGN_LEFT);
         String imgValign = Utils.getString(style, Constants.STYLE_IMAGE_VERTICAL_ALIGN, Constants.ALIGN_MIDDLE);
@@ -920,13 +920,13 @@ class GraphView extends EventSource {
     Object edgeStyle = null;
 
     if (source != null && source == target) {
-      edgeStyle = edge.getStyle().get(Constants.STYLE_LOOP);
+      edgeStyle = edge.getStyle()[Constants.STYLE_LOOP];
 
       if (edgeStyle == null) {
         edgeStyle = _graph.getDefaultLoopStyle();
       }
     } else if (!Utils.isTrue(edge.getStyle(), Constants.STYLE_NOEDGESTYLE, false)) {
-      edgeStyle = edge.getStyle().get(Constants.STYLE_EDGE);
+      edgeStyle = edge.getStyle()[Constants.STYLE_EDGE];
     }
 
     // Converts string values to objects
@@ -1088,7 +1088,7 @@ class GraphView extends EventSource {
 	 * Returns the perimeter function for the given state.
 	 */
   PerimeterFunction getPerimeterFunction(CellState state) {
-    Object perimeter = state.getStyle().get(Constants.STYLE_PERIMETER);
+    Object perimeter = state.getStyle()[Constants.STYLE_PERIMETER];
 
     // Converts string values to objects
     if (perimeter is String) {
@@ -1182,7 +1182,7 @@ class GraphView extends EventSource {
       double dy = pe.getY() - p0.getY();
       state.setTerminalDistance(Math.sqrt(dx * dx + dy * dy));
     } else {
-      state.setTerminalDistance(0);
+      state.setTerminalDistance(0.0);
     }
 
     double length = 0.0;
@@ -1215,7 +1215,7 @@ class GraphView extends EventSource {
 
     state.setLength(length);
     state.setSegments(segments);
-    double markerSize = 1; // TODO: include marker size
+    double markerSize = 1.0; // TODO: include marker size
 
     state.setX(minX);
     state.setY(minY);
@@ -1250,7 +1250,7 @@ class GraphView extends EventSource {
       double dist = (gx + 0.5) * state.getLength();
       List<double> segments = state.getSegments();
       double segment = segments[0];
-      double length = 0;
+      double length = 0.0;
       int index = 1;
 
       while (dist > length + segment && index < pointCount - 1) {
@@ -1263,9 +1263,9 @@ class GraphView extends EventSource {
       Point2d pe = state.getAbsolutePoint(index);
 
       if (p0 != null && pe != null) {
-        double gy = 0;
-        double offsetX = 0;
-        double offsetY = 0;
+        double gy = 0.0;
+        double offsetX = 0.0;
+        double offsetY = 0.0;
 
         if (geometry != null) {
           gy = geometry.getY();
@@ -1315,7 +1315,7 @@ class GraphView extends EventSource {
         // Works which line segment the point of the label is closest to
         Point2d p0 = edgeState.getAbsolutePoint(0);
         Point2d pe = edgeState.getAbsolutePoint(1);
-        Line2D line = new Line2D.Double(p0.getPoint(), pe.getPoint());
+        harmony.Line2D line = new harmony.Line2D(p0.getPoint(), pe.getPoint());
         double minDist = line.ptSegDistSq(x, y);
 
         int index = 0;
@@ -1326,7 +1326,7 @@ class GraphView extends EventSource {
           tmp += segments[i - 2];
           pe = edgeState.getAbsolutePoint(i);
 
-          line = new Line2D.Double(p0.getPoint(), pe.getPoint());
+          line = new harmony.Line2D(p0.getPoint(), pe.getPoint());
           double dist = line.ptSegDistSq(x, y);
 
           if (dist < minDist) {
@@ -1374,8 +1374,8 @@ class GraphView extends EventSource {
           projlen = seg;
         }
 
-        double yDistance = Line2D.ptLineDist(p0.getX(), p0.getY(), pe.getX(), pe.getY(), x, y);
-        int direction = Line2D.relativeCCW(p0.getX(), p0.getY(), pe.getX(), pe.getY(), x, y);
+        double yDistance = harmony.Line2D.ptLineDist(p0.getX(), p0.getY(), pe.getX(), pe.getY(), x, y);
+        int direction = harmony.Line2D.relativeCCW(p0.getX(), p0.getY(), pe.getX(), pe.getY(), x, y);
 
         if (direction == -1) {
           yDistance = -yDistance;

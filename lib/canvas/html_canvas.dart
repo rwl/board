@@ -150,10 +150,10 @@ class HtmlCanvas extends BasicCanvas {
       String direction = Utils.getString(style, Constants.STYLE_DIRECTION, Constants.DIRECTION_EAST);
 
       if (direction == Constants.DIRECTION_EAST || direction == Constants.DIRECTION_WEST) {
-        y = math.round(y + h / 2);
+        y = math.round(y + h / 2) as int;
         h = 1;
       } else {
-        x = math.round(y + w / 2);
+        x = math.round(y + w / 2) as int;
         w = 1;
       }
     }
@@ -240,7 +240,7 @@ class HtmlCanvas extends BasicCanvas {
 
       appendHtmlElement(elem);
     } else {
-      int x = x0 + (x1 - x0) / 2;
+      int x = (x0 + (x1 - x0) / 2) as int;
 
       _drawSegment(x0, y0, x, y0, strokeColor, strokeWidth);
       _drawSegment(x, y0, x, y1, strokeColor, strokeWidth);

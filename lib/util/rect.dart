@@ -34,10 +34,10 @@ class Rect extends Point2d {
 	 * 
 	 * @param rect harmony.Rectangle to construct a copy of.
 	 */
-  /*Rect(Rectangle2D rect)
+  factory Rect.rectangle(harmony.Rectangle rect)
 	{
-		this(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
-	}*/
+		new Rect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
+	}
 
   /**
 	 * Constructs a copy of the given rectangle.
@@ -220,17 +220,13 @@ class Rect extends Point2d {
 	 * 
 	 * @return Returns a new rectangle for the bounds.
 	 */
-  svg.Rect getRectangle() {
+  harmony.Rectangle getRectangle() {
     int ix = math.round(_x) as int;
     int iy = math.round(_y) as int;
     int iw = math.round(_width - ix + _x) as int;
     int ih = math.round(_height - iy + _y) as int;
 
-    return new svg.Rect()
-      ..x = ix
-      ..y = iy
-      ..width = iw
-      ..height = ih;
+    return new harmony.Rectangle(ix, iy, iw, ih);
   }
 
   /**

@@ -21,3 +21,9 @@ double floor(double x) {
 double toRadians(double d) {
   return d / 180.0 * PI;
 }
+
+final _random = new Random();
+
+double random() {
+  return _random.nextDouble();
+}

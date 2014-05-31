@@ -49,7 +49,7 @@ import '../view/view.dart' show CellState;
 //import java.awt.harmony.Rectangle;
 //import java.awt.RenderingHints;
 //import java.awt.font.FontRenderContext;
-//import java.awt.geom.Line2D;
+//import java.awt.geom.harmony.Line2D;
 //import java.awt.geom.Rectangle2D;
 //import java.awt.image.BufferedImage;
 //import java.awt.image.ImageObserver;
@@ -680,9 +680,9 @@ class Utils {
       p4 = getRotatedPoint(p4, cos, sin, cx);
 
       harmony.Rectangle tmp = new harmony.Rectangle(p1.getX() as int, p1.getY() as int, 0, 0);
-      tmp.add(p2.getPoint());
-      tmp.add(p3.getPoint());
-      tmp.add(p4.getPoint());
+      tmp.addPoint(p2.getPoint());
+      tmp.addPoint(p3.getPoint());
+      tmp.addPoint(p4.getPoint());
 
       result = new Rect(tmp);
     } else if (rect != null) {
@@ -752,7 +752,7 @@ class Utils {
 
       for (int i = 1; i < state.getAbsolutePointCount(); i++) {
         Point2d current = state.getAbsolutePoint(i);
-        double dist = new Line2D(last._x, last._y, current._x, current._y).ptSegDistSq(x, y);
+        double dist = new harmony.Line2D(last._x, last._y, current._x, current._y).ptSegDistSq(x, y);
 
         if (dist < min) {
           min = dist;
@@ -967,7 +967,7 @@ class Utils {
   /**
 	 * Sorts the given cells according to the order in the cell hierarchy.
 	 */
-  static Set<Object> sortCells(Set<Object> cells, final bool ascending) {
+  static List<Object> sortCells(Set<Object> cells, final bool ascending) {
     Set<Object> result = new SplayTreeSet<Object>((Object o1, Object o2) {
       int comp = CellPath.compare(CellPath.create(o1 as ICell), CellPath.create(o2 as ICell));
 
@@ -976,7 +976,7 @@ class Utils {
 
     result.addAll(cells);
 
-    return result;
+    return new List<Object>.from(result);
   }
 
   /**

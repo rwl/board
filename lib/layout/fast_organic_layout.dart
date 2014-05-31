@@ -34,49 +34,49 @@ class FastOrganicLayout extends GraphLayout {
 	 * replusive forces are multiple by the square of. The value equates to the
 	 * average radius there is of free space around each node. Default is 50.
 	 */
-  double forceConstant = 50;
+  double forceConstant = 50.0;
 
   /**
 	 * Cache of <forceConstant>^2 for performance.
 	 */
-  double forceConstantSquared = 0;
+  double forceConstantSquared = 0.0;
 
   /**
 	 * Minimal distance limit. Default is 2. Prevents of
 	 * dividing by zero.
 	 */
-  double minDistanceLimit = 2;
+  double minDistanceLimit = 2.0;
 
   /**
 	 * Cached version of <minDistanceLimit> squared.
 	 */
-  double minDistanceLimitSquared = 0;
+  double minDistanceLimitSquared = 0.0;
 
   /**
 	 * The maximum distance between vertices, beyond which their
 	 * repulsion no longer has an effect
 	 */
-  double maxDistanceLimit = 500;
+  double maxDistanceLimit = 500.0;
 
   /**
 	 * Start value of temperature. Default is 200.
 	 */
-  double initialTemp = 200;
+  double initialTemp = 200.0;
 
   /**
 	 * Temperature to limit displacement at later stages of layout.
 	 */
-  double temperature = 0;
+  double temperature = 0.0;
 
   /**
 	 * Total number of iterations to run the layout though.
 	 */
-  double maxIterations = 0;
+  double maxIterations = 0.0;
 
   /**
 	 * Current iteration count.
 	 */
-  double iteration = 0;
+  double iteration = 0.0;
 
   /**
 	 * An array of all vertices to be laid out.
@@ -304,7 +304,7 @@ class FastOrganicLayout extends GraphLayout {
     dispY = new List<double>(n);
     cellLocation = new List<List<double>>(n);
     isMoveable = new List<bool>(n);
-    neighbours = new List<int>(n);
+    neighbours = new List<List<int>>(n);
     radius = new List<double>(n);
     radiusSquared = new List<double>(n);
 

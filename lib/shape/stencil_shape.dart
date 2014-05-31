@@ -10,7 +10,7 @@ part of graph.shape;
 //import java.awt.geom.AffineTransform;
 //import java.awt.geom.Ellipse2D;
 //import java.awt.geom.GeneralPath;
-//import java.awt.geom.Line2D;
+//import java.awt.geom.harmony.Line2D;
 //import java.awt.geom.Rectangle2D;
 //import java.awt.geom.RoundRectangle2D;
 //import java.util.Hashtable;
@@ -218,8 +218,8 @@ class StencilShape extends BasicShape {
       if (widthRatio != 1 || heightRatio != 1) {
         rect.setFrame(rect.getX() * widthRatio, rect.getY() * heightRatio, rect.getWidth() * widthRatio, rect.getHeight() * heightRatio);
       }
-    } else if (shape is Line2D) {
-      Line2D line = shape as Line2D;
+    } else if (shape is harmony.Line2D) {
+      harmony.Line2D line = shape as harmony.Line2D;
       if (transX != 0 || transY != 0) {
         line.setLine(line.getX1() + transX, line.getY1() + transY, line.getX2() + transX, line.getY2() + transY);
       }
@@ -409,7 +409,7 @@ class StencilShape extends BasicShape {
           y2 = Double.valueOf(y2String);
         }
 
-        _svgShape lineShape = new _svgShape(new Line2D.Double(x1, y1, x2, y2), styleMap);
+        _svgShape lineShape = new _svgShape(new harmony.Line2D(x1, y1, x2, y2), styleMap);
         return lineShape;
       } else if (_isPolyline(root.getNodeName()) || _isPolygon(root.getNodeName())) {
         String pointsString = element.getAttribute("points");

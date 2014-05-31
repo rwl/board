@@ -4,7 +4,7 @@
 
 part of graph.layout;
 
-//import java.awt.geom.Line2D;
+//import java.awt.geom.harmony.Line2D;
 //import java.awt.geom.Point2D;
 //import java.awt.geom.Rectangle2D;
 //import java.util.ArrayList;
@@ -396,7 +396,7 @@ class OrganicLayout extends GraphLayout {
 
     }
 
-    List<Object> edges = validEdges;
+    List<Object> edges = new List<Object>.from(validEdges);
 
     // If the bounds dimensions have not been set see if the average area
     // per node has been
@@ -919,7 +919,7 @@ class OrganicLayout extends GraphLayout {
 
           // Ignore if any end points are coincident
           if (((iP1X != jP1X) && (iP1Y != jP1Y)) && ((iP1X != jP2X) && (iP1Y != jP2Y)) && ((iP2X != jP1X) && (iP2Y != jP1Y)) && ((iP2X != jP2X) && (iP2Y != jP2Y))) {
-            // Values of zero returned from Line2D.relativeCCW are
+            // Values of zero returned from harmony.Line2D.relativeCCW are
             // ignored because the point being exactly on the line
             // is very rare for double and we've already checked if
             // any end point share the same vertex. Should zero
@@ -931,7 +931,7 @@ class OrganicLayout extends GraphLayout {
             // otherwise. Because of ignoring the zero this code
             // below can behave like only a 1 or -1 will be
             // returned. See Lines2D.linesIntersects().
-            bool intersects = ((Line2D.relativeCCW(iP1X, iP1Y, iP2X, iP2Y, jP1X, jP1Y) != Line2D.relativeCCW(iP1X, iP1Y, iP2X, iP2Y, jP2X, jP2Y)) && (Line2D.relativeCCW(jP1X, jP1Y, jP2X, jP2Y, iP1X, iP1Y) != Line2D.relativeCCW(jP1X, jP1Y, jP2X, jP2Y, iP2X, iP2Y)));
+            bool intersects = ((harmony.Line2D.relativeCCW(iP1X, iP1Y, iP2X, iP2Y, jP1X, jP1Y) != harmony.Line2D.relativeCCW(iP1X, iP1Y, iP2X, iP2Y, jP2X, jP2Y)) && (harmony.Line2D.relativeCCW(jP1X, jP1Y, jP2X, jP2Y, iP1X, iP1Y) != harmony.Line2D.relativeCCW(jP1X, jP1Y, jP2X, jP2Y, iP2X, iP2Y)));
 
             if (intersects) {
               n++;
@@ -959,7 +959,7 @@ class OrganicLayout extends GraphLayout {
       List<int> edges = v[i].relevantEdges;
       for (int j = 0; j < edges.length; j++) {
         // Note that the distance value is squared
-        double distSquare = Line2D.ptSegDistSq(v[e[edges[j]].source].x, v[e[edges[j]].source].y, v[e[edges[j]].target].x, v[e[edges[j]].target].y, v[i].x, v[i].y);
+        double distSquare = harmony.Line2D.ptSegDistSq(v[e[edges[j]].source].x, v[e[edges[j]].source].y, v[e[edges[j]].target].x, v[e[edges[j]].target].y, v[i].x, v[i].y);
 
         distSquare -= v[i].radiusSquared;
 
@@ -1013,7 +1013,7 @@ class OrganicLayout extends GraphLayout {
       for (int j = 0; j < v.length; j++) {
         // Don't calculate for connected nodes
         if (e[i].source != j && e[i].target != j) {
-          double distSquare = Line2D.ptSegDistSq(v[e[i].source].x, v[e[i].source].y, v[e[i].target].x, v[e[i].target].y, v[j].x, v[j].y);
+          double distSquare = harmony.Line2D.ptSegDistSq(v[e[i].source].x, v[e[i].source].y, v[e[i].target].x, v[e[i].target].y, v[j].x, v[j].y);
 
           distSquare -= v[j].radiusSquared;
 

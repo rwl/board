@@ -972,8 +972,8 @@ class GraphGenerator {
 
       do {
         goodPair = true;
-        startVertex = vertices[math.round(Math.Random.nextDouble() * (vertices.length - 1)) as int];
-        endVertex = vertices[math.round(Math.Random.nextDouble() * (vertices.length - 1)) as int];
+        startVertex = vertices[math.round(math.random() * (vertices.length - 1)) as int];
+        endVertex = vertices[math.round(math.random() * (vertices.length - 1)) as int];
 
         if (!allowSelfLoops && startVertex == endVertex) {
           goodPair = false;
@@ -1009,7 +1009,7 @@ class GraphGenerator {
     }
 
     try {
-      GraphStructure.makeTreeDirected(aGraph, vertices[math.round(Math.Random.nextDouble() * (vertices.length - 1)) as int]);
+      GraphStructure.makeTreeDirected(aGraph, vertices[math.round(math.random() * (vertices.length - 1)) as int]);
     } on StructuralException catch (e) {
       System.out.println(e);
     }
@@ -1062,7 +1062,7 @@ class GraphGenerator {
     }
 
     int currValue = 0;
-    currValue = minValue + (math.round((Math.Random.nextDouble() * (maxValue - minValue))) as int);
+    currValue = minValue + (math.round((math.random() * (maxValue - minValue))) as int);
     return currValue;
   }
 

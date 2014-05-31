@@ -6,3 +6,4 @@ part 'color.dart';
 part 'point.dart';
 part 'rectangle.dart';
 part 'dimension.dart';
+part 'line2d.dart';

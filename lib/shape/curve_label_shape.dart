@@ -13,7 +13,7 @@ part of graph.shape;
 //import java.awt.font.FontRenderContext;
 //import java.awt.font.GlyphVector;
 //import java.awt.geom.AffineTransform;
-//import java.awt.geom.Line2D;
+//import java.awt.geom.harmony.Line2D;
 //import java.text.Bidi;
 //import java.text.BreakIterator;
 //import java.util.ArrayList;
@@ -76,7 +76,7 @@ class CurveLabelShape implements ITextShape {
   /**
 	 * Buffer at both ends of the label
 	 */
-  static double LABEL_BUFFER = 30;
+  static double LABEL_BUFFER = 30.0;
 
   /**
 	 * Factor by which text on the inside of curve is stretched
@@ -87,7 +87,7 @@ class CurveLabelShape implements ITextShape {
 	 * Indicates that a glyph does not have valid drawing bounds, usually 
 	 * because it is not visible
 	 */
-  static Rect INVALID_GLYPH_BOUNDS = new Rect(0, 0, 0, 0);
+  static Rect INVALID_GLYPH_BOUNDS = new Rect(0.0, 0.0, 0.0, 0.0);
 
   /**
 	 * The index of the central glyph of the label that is visible
@@ -216,7 +216,7 @@ class CurveLabelShape implements ITextShape {
       ArrayList<LabelGlyphCache> glyphList = new List<LabelGlyphCache>();
       bool bidiRequired = Bidi.requiresBidi(labelChars, 0, labelChars.length);
 
-      _labelSize = 0;
+      _labelSize = 0.0;
 
       if (bidiRequired) {
         Bidi bidi = new Bidi(label, Bidi.DIRECTION_DEFAULT_LEFT_TO_RIGHT);
@@ -235,7 +235,7 @@ class CurveLabelShape implements ITextShape {
         int charCount = 0;
 
         for (GlyphVector gv in rtlGlyphVectors) {
-          float vectorOffset = 0.0;
+          double vectorOffset = 0.0;
 
           for (int j = 0; j < gv.getNumGlyphs(); j++) {
             Shape shape = gv.getGlyphOutline(j, -vectorOffset, 0);
@@ -281,7 +281,7 @@ class CurveLabelShape implements ITextShape {
             _labelSize += size.getWidth();
           } else {
             double width = fm.stringWidth(glyph);
-            labelGlyph.labelGlyphBounds = new Rect(0, 0, width, ascent);
+            labelGlyph.labelGlyphBounds = new Rect(0.0, 0.0, width, ascent.toDouble());
             _labelSize += width;
           }
 
@@ -424,7 +424,7 @@ class CurveLabelShape implements ITextShape {
 
       if (currentCurveDelta > curveDeltaSignificant) {
         // Work out which direction the curve is going in
-        int ccw = Line2D.relativeCCW(0, 0, x, y, end2X, end2Y);
+        int ccw = harmony.Line2D.relativeCCW(0, 0, x, y, end2X, end2Y);
 
         if (ccw == 1) {
           // Text is on inside of curve
@@ -456,7 +456,7 @@ class CurveLabelShape implements ITextShape {
       centerVisibleIndex++;
     }
 
-    centerVisibleIndex /= 2;
+    centerVisibleIndex = (centerVisibleIndex / 2) as int;
 
     if (overallLabelBounds == null) {
       // Return a small rectangle in the center of the label curve
@@ -527,6 +527,19 @@ class CurveLabelShape implements ITextShape {
   void setCurve(Curve curve) {
     this._curve = curve;
   }
+
+  Rect getLabelBounds() {
+    return _labelBounds;
+  }
+  
+  /**
+   * Returns the drawing bounds of the central indexed visible glyph
+   * @return the centerVisibleIndex
+   */
+  Rect getCenterVisiblePosition() {
+    return _labelGlyphs[centerVisibleIndex].drawingBounds;
+  }
+
 }
 
 
@@ -575,21 +588,9 @@ class LabelGlyphCache {
  * on the curve
  */
 class LabelPosition {
-  double startBuffer = LABEL_BUFFER;
+  double startBuffer = CurveLabelShape.LABEL_BUFFER;
 
-  double endBuffer = LABEL_BUFFER;
+  double endBuffer = CurveLabelShape.LABEL_BUFFER;
 
-  double defaultInterGlyphSpace = 0;
-}
-
-Rect getLabelBounds() {
-  return _labelBounds;
-}
-
-/**
- * Returns the drawing bounds of the central indexed visible glyph
- * @return the centerVisibleIndex
- */
-Rect getCenterVisiblePosition() {
-  return _labelGlyphs[centerVisibleIndex].drawingBounds;
+  double defaultInterGlyphSpace = 0.0;
 }

@@ -202,7 +202,7 @@ class Constants {
   /**
 	 * Defines the size of the arcs for rounded edges. Default is 10.
 	 */
-  static double LINE_ARCSIZE = 10;
+  static double LINE_ARCSIZE = 10.0;
 
   /**
 	 * Defines the spacing between the arrow shape and its terminals. Default

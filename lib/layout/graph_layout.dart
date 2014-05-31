@@ -265,7 +265,7 @@ abstract class GraphLayout implements IGraphLayout {
       }
     }
 
-    return new Rect(geo);
+    return new Rect.from(geo);
   }
 
   /**
@@ -351,8 +351,8 @@ abstract class GraphLayout implements IGraphLayout {
         Rect bounds = graph.getBoundingBoxFromGeometry(children);
 
         Geometry geometry = graph.getCellGeometry(group);
-        double left = 0;
-        double top = 0;
+        double left = 0.0;
+        double top = 0.0;
 
         // Adds the size of the title area for swimlanes
         if (this.graph.isSwimlane(group)) {

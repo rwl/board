@@ -54,9 +54,9 @@ class DefaultTextShape implements ITextShape {
       Object vertAlign = Utils.getString(style, Constants.STYLE_VERTICAL_ALIGN, Constants.ALIGN_MIDDLE);
       double vertAlignProportion = 0.5;
 
-      if (vertAlign.equals(Constants.ALIGN_TOP)) {
-        vertAlignProportion = 0;
-      } else if (vertAlign.equals(Constants.ALIGN_BOTTOM)) {
+      if (vertAlign == Constants.ALIGN_TOP) {
+        vertAlignProportion = 0.0;
+      } else if (vertAlign == Constants.ALIGN_BOTTOM) {
         vertAlignProportion = 1.0;
       }
 
@@ -65,9 +65,9 @@ class DefaultTextShape implements ITextShape {
       // Gets the alignment settings
       Object align = Utils.getString(style, Constants.STYLE_ALIGN, Constants.ALIGN_CENTER);
 
-      if (align.equals(Constants.ALIGN_LEFT)) {
+      if (align == Constants.ALIGN_LEFT) {
         x += Constants.LABEL_INSET * scale;
-      } else if (align.equals(Constants.ALIGN_RIGHT)) {
+      } else if (align == Constants.ALIGN_RIGHT) {
         x -= Constants.LABEL_INSET * scale;
       }
 
@@ -77,15 +77,15 @@ class DefaultTextShape implements ITextShape {
       for (int i = 0; i < lines.length; i++) {
         int dx = 0;
 
-        if (align.equals(Constants.ALIGN_CENTER)) {
+        if (align == Constants.ALIGN_CENTER) {
           int sw = fm.stringWidth(lines[i]);
 
           if (horizontal) {
-            dx = (w - sw) / 2;
+            dx = ((w - sw) / 2) as int;
           } else {
-            dx = (h - sw) / 2;
+            dx = ((h - sw) / 2) as int;
           }
-        } else if (align.equals(Constants.ALIGN_RIGHT)) {
+        } else if (align == Constants.ALIGN_RIGHT) {
           int sw = fm.stringWidth(lines[i]);
           dx = ((horizontal) ? w : h) - sw;
         }

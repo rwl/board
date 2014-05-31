@@ -15,8 +15,8 @@ class RhombusShape extends BasicShape {
     int y = temp.y;
     int w = temp.width;
     int h = temp.height;
-    int halfWidth = w / 2;
-    int halfHeight = h / 2;
+    int halfWidth = (w / 2) as int;
+    int halfHeight = (h / 2) as int;
 
     Polygon rhombus = new Polygon();
     rhombus.addPoint(x + halfWidth, y);

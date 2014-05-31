@@ -231,7 +231,7 @@ class CompactTreeLayout extends GraphLayout {
   }
 
   double getGroupPadding() {
-    return _groupPadding;
+    return _groupPadding.toDouble();
   }
 
   void setGroupPadding(int groupPadding) {
@@ -293,7 +293,7 @@ class CompactTreeLayout extends GraphLayout {
         if (node != null) {
           _layout(node);
 
-          double x0 = graph.getGridSize();
+          double x0 = graph.getGridSize().toDouble();
           double y0 = x0;
 
           if (!_moveTree) {
@@ -314,8 +314,8 @@ class CompactTreeLayout extends GraphLayout {
           }
 
           if (bounds != null) {
-            double dx = 0;
-            double dy = 0;
+            double dx = 0.0;
+            double dy = 0.0;
 
             if (bounds.getX() < 0) {
               dx = math.abs(x0 - bounds.getX());
@@ -550,34 +550,34 @@ class CompactTreeLayout extends GraphLayout {
 	 * 
 	 */
   void _attachParent(_TreeNode node, double height) {
-    double x = _nodeDistance + _levelDistance;
+    double x = (_nodeDistance + _levelDistance).toDouble();
     double y2 = (height - node.width) / 2 - _nodeDistance;
     double y1 = y2 + node.width + 2 * _nodeDistance - height;
 
     node.child.offsetX = x + node.height;
     node.child.offsetY = y1;
 
-    node.contour.upperHead = _createLine(node.height, 0, _createLine(x, y1, node.contour.upperHead));
-    node.contour.lowerHead = _createLine(node.height, 0, _createLine(x, y2, node.contour.lowerHead));
+    node.contour.upperHead = _createLine(node.height, 0.0, _createLine(x, y1, node.contour.upperHead));
+    node.contour.lowerHead = _createLine(node.height, 0.0, _createLine(x, y2, node.contour.lowerHead));
   }
 
   /**
 	 * 
 	 */
   void _layoutLeaf(_TreeNode node) {
-    double dist = 2 * _nodeDistance;
+    double dist = (2 * _nodeDistance).toDouble();
 
-    node.contour.upperTail = _createLine(node.height + dist, 0, null);
+    node.contour.upperTail = _createLine(node.height + dist, 0.0, null);
     node.contour.upperHead = node.contour.upperTail;
-    node.contour.lowerTail = _createLine(0, -node.width - dist, null);
-    node.contour.lowerHead = _createLine(node.height + dist, 0, node.contour.lowerTail);
+    node.contour.lowerTail = _createLine(0.0, -node.width - dist, null);
+    node.contour.lowerHead = _createLine(node.height + dist, 0.0, node.contour.lowerTail);
   }
 
   /**
 	 * 
 	 */
   double _join(_TreeNode node) {
-    double dist = 2 * _nodeDistance;
+    double dist = 2.0 * _nodeDistance;
 
     _TreeNode child = node.child;
     node.contour = child.contour;
@@ -588,7 +588,7 @@ class CompactTreeLayout extends GraphLayout {
     while (child != null) {
       double d = _merge(node.contour, child.contour);
       child.offsetY = d + h;
-      child.offsetX = 0;
+      child.offsetX = 0.0;
       h = child.width + dist;
       sum += d + h;
       child = child.next;
@@ -601,9 +601,9 @@ class CompactTreeLayout extends GraphLayout {
 	 * 
 	 */
   double _merge(_Polygon p1, _Polygon p2) {
-    double x = 0;
-    double y = 0;
-    double total = 0;
+    double x = 0.0;
+    double y = 0.0;
+    double total = 0.0;
 
     _Polyline upper = p1.lowerHead;
     _Polyline lower = p2.upperHead;
@@ -625,11 +625,11 @@ class CompactTreeLayout extends GraphLayout {
     }
 
     if (lower != null) {
-      _Polyline b = _bridge(p1.upperTail, 0, 0, lower, x, y);
+      _Polyline b = _bridge(p1.upperTail, 0.0, 0.0, lower, x, y);
       p1.upperTail = (b.next != null) ? p2.upperTail : b;
       p1.lowerTail = p2.lowerTail;
     } else {
-      _Polyline b = _bridge(p2.lowerTail, x, y, upper, 0, 0);
+      _Polyline b = _bridge(p2.lowerTail, x, y, upper, 0.0, 0.0);
 
       if (b.next == null) {
         p1.lowerTail = b;
@@ -645,10 +645,10 @@ class CompactTreeLayout extends GraphLayout {
 	 * 
 	 */
   double _offset(double p1, double p2, double a1, double a2, double b1, double b2) {
-    double d = 0;
+    double d = 0.0;
 
     if (b1 <= p1 || p1 + a1 <= 0) {
-      return 0;
+      return 0.0;
     }
 
     double t = b1 * a2 - a1 * b2;
@@ -677,7 +677,7 @@ class CompactTreeLayout extends GraphLayout {
       return d;
     }
 
-    return 0;
+    return 0.0;
   }
 
   /**
@@ -685,8 +685,8 @@ class CompactTreeLayout extends GraphLayout {
 	 */
   _Polyline _bridge(_Polyline line1, double x1, double y1, _Polyline line2, double x2, double y2) {
     double dx = x2 + line2.dx - x1;
-    double dy = 0;
-    double s = 0;
+    double dy = 0.0;
+    double s = 0.0;
 
     if (line2.dx == 0) {
       dy = line2.dy;
@@ -696,7 +696,7 @@ class CompactTreeLayout extends GraphLayout {
     }
 
     _Polyline r = _createLine(dx, dy, line2.next);
-    line1.next = _createLine(0, y2 + line2.dy - dy - y1, r);
+    line1.next = _createLine(0.0, y2 + line2.dy - dy - y1, r);
 
     return r;
   }
@@ -815,7 +815,7 @@ class CompactTreeLayout extends GraphLayout {
 
     double availableWidth = node.width;
 
-    double requiredWidth = (childCount + 1) * _prefHozEdgeSep;
+    double requiredWidth = ((childCount + 1) * _prefHozEdgeSep).toDouble();
 
     // Add a buffer on the edges of the vertex if the edge count allows
     if (availableWidth > requiredWidth + (2 * _prefHozEdgeSep)) {
@@ -830,8 +830,8 @@ class CompactTreeLayout extends GraphLayout {
       currentXOffset += _prefHozEdgeSep;
     }
 
-    double currentYOffset = _minEdgeJetty - _prefVertEdgeOff;
-    double maxYOffset = 0;
+    double currentYOffset = (_minEdgeJetty - _prefVertEdgeOff).toDouble();
+    double maxYOffset = 0.0;
 
     Rect parentBounds = getVertexBounds(parentCell);
     child = node.child;
@@ -843,8 +843,8 @@ class CompactTreeLayout extends GraphLayout {
       List<Object> edges = GraphModel.getEdgesBetween(model, parentCell, childCell);
 
       List<Point2d> newPoints = new List<Point2d>(3);
-      double x = 0;
-      double y = 0;
+      double x = 0.0;
+      double y = 0.0;
 
       for (int i = 0; i < edges.length; i++) {
         if (this._horizontal) {
@@ -931,9 +931,9 @@ class _WeightedCellSorter implements Comparable<Object> {
    */
   int compareTo(Object arg0) {
     if (arg0 is _WeightedCellSorter) {
-      if (weightedValue > (arg0 as _WeightedCellSorter).weightedValue) {
+      if (weightedValue > arg0.weightedValue) {
         return 1;
-      } else if (weightedValue < (arg0 as _WeightedCellSorter).weightedValue) {
+      } else if (weightedValue < arg0.weightedValue) {
         return -1;
       }
     }

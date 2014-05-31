@@ -32,7 +32,7 @@ abstract class BasicCanvas implements ICanvas {
   /**
 	 * Specifies the current scale. Default is 1.
 	 */
-  double _scale = 1;
+  double _scale = 1.0;
 
   /**
 	 * Specifies whether labels should be painted. Default is true.

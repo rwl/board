@@ -6,9 +6,9 @@ part of graph.generatorfunction;
  * It will generate random integer edge weights in the range of (<b>minWeight</b>, <b>maxWeight</b>) and rounds the values to <b>roundToDecimals</b>
  */
 class GeneratorRandomIntFunction extends GeneratorFunction {
-  double _maxWeight = 10;
+  double _maxWeight = 10.0;
 
-  double _minWeight = 0;
+  double _minWeight = 0.0;
 
   GeneratorRandomIntFunction(double minWeight, double maxWeight) {
     setWeightRange(minWeight, maxWeight);
@@ -23,7 +23,7 @@ class GeneratorRandomIntFunction extends GeneratorFunction {
       return _minWeight;
     }
 
-    double currValue = _minWeight + math.round((Math.Random.nextDouble() * (_maxWeight - _minWeight)));
+    double currValue = _minWeight + math.round((math.random() * (_maxWeight - _minWeight)));
     return currValue;
   }
 

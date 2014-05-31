@@ -18,7 +18,6 @@ part 'cell.dart';
 part 'cell_path.dart';
 part 'child_change.dart';
 part 'collapse_change.dart';
-part 'filter.dart';
 part 'geometry.dart';
 part 'geometry_change.dart';
 part 'graph_model.dart';
@@ -29,6 +28,7 @@ part 'terminal_change.dart';
 part 'value_change.dart';
 part 'visible_change.dart';
 
+typedef bool Filter(Object cell);
 
 /**
  * Defines the requirements for a graph model to be used with Graph.

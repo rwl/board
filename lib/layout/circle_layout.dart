@@ -20,13 +20,13 @@ class CircleLayout extends GraphLayout {
 	 * int specifying the left coordinate of the circle.
 	 * Default is 0.
 	 */
-  double _x0 = 0;
+  double _x0 = 0.0;
 
   /**
 	 * int specifying the top coordinate of the circle.
 	 * Default is 0.
 	 */
-  double _y0 = 0;
+  double _y0 = 0.0;
 
   /**
 	 * Specifies if all edge points of traversed edges should be removed.
@@ -155,7 +155,7 @@ class CircleLayout extends GraphLayout {
     try {
       // Gets all vertices inside the parent and finds
       // the maximum dimension of the largest vertex
-      double max = 0;
+      double max = 0.0;
       double top = null;
       double left = null;
       List<Object> vertices = new List<Object>();
