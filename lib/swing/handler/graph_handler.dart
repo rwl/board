@@ -15,7 +15,7 @@ part of graph.swing.handler;
 //import java.awt.Graphics2D;
 //import java.awt.Image;
 //import java.awt.Point;
-//import java.awt.Rectangle;
+//import java.awt.harmony.Rectangle;
 //import java.awt.datatransfer.Transferable;
 //import java.awt.dnd.DnDConstants;
 //import java.awt.dnd.DragGestureEvent;
@@ -138,7 +138,7 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
   /**
 	 * Holds the start location of the mouse gesture.
 	 */
-  /*transient*/ Point _first;
+  /*transient*/ harmony.Point _first;
 
   /**
 	 * 
@@ -188,7 +188,7 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
   /**
 	 * 
 	 */
-  /*transient*/ Rectangle _previewBounds = null;
+  /*transient*/ harmony.Rectangle _previewBounds = null;
 
   /**
 	 * Workaround for alt-key-state not correct in mouseReleased. Note: State
@@ -257,7 +257,7 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
           final GraphTransferable t = (th as GraphTransferHandler).createTransferable(_graphComponent) as GraphTransferable;
 
           if (t != null) {
-            e.startDrag(null, SwingConstants.EMPTY_IMAGE, new Point(), t, new GraphHandlerDragSourceAdapter(this, t, th));
+            e.startDrag(null, SwingConstants.EMPTY_IMAGE, new harmony.Point(), t, new GraphHandlerDragSourceAdapter(this, t, th));
           }
         }
       }
@@ -306,9 +306,9 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
   /**
 	 * 
 	 */
-  void setPreviewBounds(Rectangle bounds) {
+  void setPreviewBounds(harmony.Rectangle bounds) {
     if ((bounds == null && _previewBounds != null) || (bounds != null && _previewBounds == null) || (bounds != null && _previewBounds != null && !bounds.equals(_previewBounds))) {
-      Rectangle dirty = null;
+      harmony.Rectangle dirty = null;
 
       if (isVisible()) {
         dirty = _previewBounds;
@@ -585,7 +585,7 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
             _transferBounds = gt.getBounds();
             int w = math.ceil((_transferBounds.getWidth() + 1) * scale) as int;
             int h = math.ceil((_transferBounds.getHeight() + 1) * scale) as int;
-            setPreviewBounds(new Rectangle(_transferBounds.getX() as int, _transferBounds.getY() as int, w, h));
+            setPreviewBounds(new harmony.Rectangle(_transferBounds.getX() as int, _transferBounds.getY() as int, w, h));
 
             if (_imagePreview) {
               // Does not render fixed cells for local preview
@@ -677,7 +677,7 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
         // charge of painting all other handlers
         _bbox = graph.getView().getBoundingBox(_cells);
 
-        Rectangle bounds = _cellBounds.getRectangle();
+        harmony.Rectangle bounds = _cellBounds.getRectangle();
         bounds.width += 1;
         bounds.height += 1;
         setPreviewBounds(bounds);
@@ -706,10 +706,10 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
       if (handler != null) {
         Graph graph = _graphComponent.getGraph();
         double scale = graph.getView().getScale();
-        Point pt = SwingUtilities.convertPoint(_graphComponent, e.getLocation(), _graphComponent.getGraphControl());
+        harmony.Point pt = SwingUtilities.convertPoint(_graphComponent, e.getLocation(), _graphComponent.getGraphControl());
 
         pt = _graphComponent.snapScaledPoint(new Point2d(pt)).getPoint();
-        handler.setLocation(new Point(pt));
+        handler.setLocation(new harmony.Point(pt));
 
         int dx = 0;
         int dy = 0;
@@ -722,7 +722,7 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
 
         // Sets the drop offset so that the location in the transfer
         // handler reflects the actual mouse position
-        handler.setOffset(new Point(graph.snap(dx / scale) as int, graph.snap(dy / scale) as int));
+        handler.setOffset(new harmony.Point(graph.snap(dx / scale) as int, graph.snap(dy / scale) as int));
         pt.translate(dx, dy);
 
         // Shifts the preview so that overlapping parts do not
@@ -734,7 +734,7 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
         }
 
         if (!handler.isLocalDrag() && _previewBounds != null) {
-          setPreviewBounds(new Rectangle(pt, _previewBounds.getSize()));
+          setPreviewBounds(new harmony.Rectangle(pt, _previewBounds.getSize()));
         }
       }
     } else {
@@ -745,7 +745,7 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
   /**
 	 * 
 	 */
-  Point convertPoint(Point pt) {
+  harmony.Point convertPoint(harmony.Point pt) {
     pt = SwingUtilities.convertPoint(_graphComponent, pt, _graphComponent.getGraphControl());
 
     pt.x -= _graphComponent.getHorizontalScrollBar().getValue();
@@ -761,7 +761,7 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
     // LATER: Check scrollborder, use scroll-increments, do not
     // scroll when over ruler dragging from library
     if (_graphComponent.isAutoScroll()) {
-      _graphComponent.getGraphControl().scrollRectToVisible(new Rectangle(e.getPoint()));
+      _graphComponent.getGraphControl().scrollRectToVisible(new harmony.Rectangle(e.getPoint()));
     }
 
     if (!e.isConsumed()) {
@@ -805,7 +805,7 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
           double dy = e.getY() - _first.y;
 
           if (_previewBounds != null) {
-            setPreviewBounds(new Rectangle(_getPreviewLocation(e, _gridEnabledEvent), _previewBounds.getSize()));
+            setPreviewBounds(new harmony.Rectangle(_getPreviewLocation(e, _gridEnabledEvent), _previewBounds.getSize()));
           }
 
           if (!isVisible() && _graphComponent.isSignificant(dx, dy)) {
@@ -825,7 +825,7 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
   /**
 	 * 
 	 */
-  Point _getPreviewLocation(MouseEvent e, bool gridEnabled) {
+  harmony.Point _getPreviewLocation(MouseEvent e, bool gridEnabled) {
     int x = 0;
     int y = 0;
 
@@ -854,7 +854,7 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
       y = (math.round((dyg + trans.getY()) * scale) as int) + (math.round(_bbox.getY()) as int) - (math.round(_cellBounds.getY()) as int);
     }
 
-    return new Point(x, y);
+    return new harmony.Point(x, y);
   }
 
   /**
@@ -1103,7 +1103,7 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
 	 */
   MouseEvent _createEvent(DropTargetEvent e) {
     JComponent component = _getDropTarget(e);
-    Point location = null;
+    harmony.Point location = null;
     int action = 0;
 
     if (e is DropTargetDropEvent) {
@@ -1116,7 +1116,7 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
 
     if (location != null) {
       location = convertPoint(location);
-      Rectangle r = _graphComponent.getViewport().getViewRect();
+      harmony.Rectangle r = _graphComponent.getViewport().getViewRect();
       location.translate(r.x, r.y);
     }
 

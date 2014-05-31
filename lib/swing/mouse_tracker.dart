@@ -2,7 +2,7 @@ part of graph.swing;
 
 //import java.awt.Cursor;
 //import java.awt.Point;
-//import java.awt.Rectangle;
+//import java.awt.harmony.Rectangle;
 //import java.awt.event.MouseEvent;
 //import java.awt.event.MouseListener;
 //import java.awt.event.MouseMotionListener;
@@ -28,7 +28,7 @@ class MouseTracker implements MouseListener, MouseMotionListener {
   /**
 	 * 
 	 */
-  Point start = null;
+  harmony.Point start = null;
 
   /*
 	 * (non-Javadoc)
@@ -49,10 +49,10 @@ class MouseTracker implements MouseListener, MouseMotionListener {
   void mouseDragged(MouseEvent e) {
     if (this.graphOutline.isEnabled() && start != null) {
       if (this.graphOutline._zoomGesture) {
-        Rectangle bounds = this.graphOutline._graphComponent.getViewport().getViewRect();
+        harmony.Rectangle bounds = this.graphOutline._graphComponent.getViewport().getViewRect();
         double viewRatio = bounds.getWidth() / bounds.getHeight();
 
-        bounds = new Rectangle(this.graphOutline._finderBounds);
+        bounds = new harmony.Rectangle(this.graphOutline._finderBounds);
         bounds.width = Math.max(0, (e.getX() - bounds.getX())) as int;
         bounds.height = Math.max(0, (bounds.getWidth() / viewRatio)) as int;
 
@@ -128,7 +128,7 @@ class MouseTracker implements MouseListener, MouseMotionListener {
 	 * 
 	 */
   bool hitZoomHandle(int x, int y) {
-    return new Rectangle(this.graphOutline._finderBounds.x + this.graphOutline._finderBounds.width - 6, this.graphOutline._finderBounds.y + this.graphOutline._finderBounds.height - 6, 8, 8).contains(x, y);
+    return new harmony.Rectangle(this.graphOutline._finderBounds.x + this.graphOutline._finderBounds.width - 6, this.graphOutline._finderBounds.y + this.graphOutline._finderBounds.height - 6, 8, 8).contains(x, y);
   }
 
   /*

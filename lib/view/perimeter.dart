@@ -6,7 +6,7 @@ part of graph.view;
 /**
  * Defines the requirements for a perimeter function.
  * 
- * @param bounds Rectangle that represents the absolute bounds of the
+ * @param bounds harmony.Rectangle that represents the absolute bounds of the
  * vertex.
  * @param vertex Cell state that represents the vertex.
  * @param next Point that represents the nearest neighbour point on the

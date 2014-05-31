@@ -5,7 +5,7 @@ part of graph.view;
 
 //import java.awt.Graphics;
 //import java.awt.Point;
-//import java.awt.Rectangle;
+//import java.awt.harmony.Rectangle;
 //import java.awt.Shape;
 //import java.beans.PropertyChangeListener;
 //import java.beans.PropertyChangeSupport;
@@ -6559,7 +6559,7 @@ class Graph extends EventSource {
       // Holds the current clipping region in case the label will
       // be clipped
       Shape clip = null;
-      Rectangle newClip = state.getRectangle();
+      harmony.Rectangle newClip = state.getRectangle();
 
       // Indirection for image canvas that contains a graphics canvas
       ICanvas clippedCanvas = (isLabelClipped(state.getCell())) ? canvas : null;
@@ -6567,7 +6567,7 @@ class Graph extends EventSource {
       if (clippedCanvas is ImageCanvas) {
         clippedCanvas = (clippedCanvas as ImageCanvas).getGraphicsCanvas();
         // TODO: Shift newClip to match the image offset
-        //Point pt = ((ImageCanvas) canvas).getTranslate();
+        //harmony.Point pt = ((ImageCanvas) canvas).getTranslate();
         //newClip.translate(-pt.x, -pt.y);
       }
 
@@ -6576,8 +6576,8 @@ class Graph extends EventSource {
         clip = g.getClip();
 
         // Ensure that our new clip resides within our old clip
-        if (clip is Rectangle) {
-          g.setClip(newClip.intersection(clip as Rectangle));
+        if (clip is harmony.Rectangle) {
+          g.setClip(newClip.intersection(clip as harmony.Rectangle));
         } // Otherwise, default to original implementation
         else {
           g.setClip(newClip);

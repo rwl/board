@@ -3,7 +3,7 @@
  */
 part of graph.util;
 
-//import java.awt.Rectangle;
+//import java.awt.harmony.Rectangle;
 //import java.util.ArrayList;
 //import java.util.Collection;
 //import java.util.Hashtable;
@@ -16,7 +16,7 @@ class Curve {
 	 */
   Map<String, List<Point2d>> _points;
 
-  // Rectangle just completely enclosing branch and label/
+  // harmony.Rectangle just completely enclosing branch and label/
   double _minXBounds = 10000000;
 
   double _maxXBounds = 0;
@@ -298,7 +298,7 @@ class Curve {
 	 * @param rect the rectangle to detect for a hit
 	 * @return whether or not the rectangle hits this curve
 	 */
-  bool intersectsRect(Rectangle rect) {
+  bool intersectsRect(harmony.Rectangle rect) {
     // To save CPU, we can test if the rectangle intersects the entire
     // bounds of this curve
     if (!getBounds().getRectangle().intersects(rect)) {
@@ -662,8 +662,8 @@ class Curve {
     }
 
     // Reset the cached bounds value
-    _minXBounds = _minYBounds = 10000000;
-    _maxXBounds = _maxYBounds = 0;
+    _minXBounds = _minYBounds = 10000000.0;
+    _maxXBounds = _maxYBounds = 0.0;
 
     Spline spline = new Spline(guidePoints);
 

@@ -72,12 +72,12 @@ class GraphTransferHandler extends TransferHandler {
   /**
 	 * 
 	 */
-  Point _location;
+  harmony.Point _location;
 
   /**
 	 * 
 	 */
-  Point _offset;
+  harmony.Point _offset;
 
   /**
 	 * 
@@ -131,14 +131,14 @@ class GraphTransferHandler extends TransferHandler {
   /**
 	 * 
 	 */
-  void setLocation(Point value) {
+  void setLocation(harmony.Point value) {
     _location = value;
   }
 
   /**
 	 * 
 	 */
-  void setOffset(Point value) {
+  void setOffset(harmony.Point value) {
     _offset = value;
   }
 

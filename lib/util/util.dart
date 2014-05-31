@@ -16,9 +16,10 @@ import 'dart:svg' as svg;
 import 'dart:math' as Math;
 
 import 'package:image/image.dart' as image;
-import 'package:color/color.dart' as color;
+//import 'package:color/color.dart' as color;
 
 import '../compat/math.dart' as math;
+import '../harmony/harmony.dart' as harmony;
 
 import '../canvas/canvas.dart' show Graphics2DCanvas;
 import '../canvas/canvas.dart' show HtmlCanvas;
@@ -45,7 +46,7 @@ import '../view/view.dart' show CellState;
 //import java.awt.FontMetrics;
 //import java.awt.Graphics;
 //import java.awt.Graphics2D;
-//import java.awt.Rectangle;
+//import java.awt.harmony.Rectangle;
 //import java.awt.RenderingHints;
 //import java.awt.font.FontRenderContext;
 //import java.awt.geom.Line2D;
@@ -531,7 +532,7 @@ class Utils {
     if (textRenderer != null) {
       // First run measures size with no wrapping
       textRenderer.setText(createHtmlDocument(style, markup));
-      Dimension size = textRenderer.getPreferredSize();
+      harmony.Dimension size = textRenderer.getPreferredSize();
 
       // Second run measures size with wrapping if required.
       // Note that this is only required because max-width
@@ -539,7 +540,7 @@ class Utils {
       // inner HTML element (or is this possible?).
       if (wrapWidth > 0) {
         textRenderer.setText(createHtmlDocument(style, markup, 1.0, math.ceil(wrapWidth - Constants.LABEL_INSET * scale) as int));
-        Dimension size2 = textRenderer.getPreferredSize();
+        harmony.Dimension size2 = textRenderer.getPreferredSize();
 
         // Uses wrapped text size if any text was actually wrapped
         if (size2.width < size.width) {
@@ -678,7 +679,7 @@ class Utils {
       p3 = getRotatedPoint(p3, cos, sin, cx);
       p4 = getRotatedPoint(p4, cos, sin, cx);
 
-      Rectangle tmp = new Rectangle(p1.getX() as int, p1.getY() as int, 0, 0);
+      harmony.Rectangle tmp = new harmony.Rectangle(p1.getX() as int, p1.getY() as int, 0, 0);
       tmp.add(p2.getPoint());
       tmp.add(p3.getPoint());
       tmp.add(p4.getPoint());
@@ -851,7 +852,7 @@ class Utils {
 	 * Draws the image inside the clip bounds to the given graphics object.
 	 */
   static void drawImageClip(Graphics g, BufferedImage image, ImageObserver observer) {
-    Rectangle clip = g.getClipBounds();
+    harmony.Rectangle clip = g.getClipBounds();
 
     if (clip != null) {
       int w = image.getWidth();
@@ -876,7 +877,7 @@ class Utils {
 	 * 
 	 */
   static void fillClippedRect(Graphics g, int x, int y, int width, int height) {
-    Rectangle bg = new Rectangle(x, y, width, height);
+    harmony.Rectangle bg = new harmony.Rectangle(x, y, width, height);
 
     try {
       if (g.getClipBounds() != null) {
@@ -1166,7 +1167,7 @@ class Utils {
         h = Math.min(h, max);
       }
 
-      Rectangle rect = new Rectangle(math.round(cx - w / 2), math.round(cy - h / 2), w, h);
+      harmony.Rectangle rect = new harmony.Rectangle(math.round(cx - w / 2), math.round(cy - h / 2), w, h);
 
       return rect.contains(x, y);
     }
@@ -1434,7 +1435,7 @@ class Utils {
 	 *            Default value to return if the key is undefined.
 	 * @return Returns the color value for key in dict.
 	 */
-  static color.Color getColor(Map<String, Object> dict, String key, [color.Color defaultValue = null]) {
+  static harmony.Color getColor(Map<String, Object> dict, String key, [harmony.Color defaultValue = null]) {
     Object value = dict[key];
 
     if (value == null) {
@@ -1469,7 +1470,7 @@ class Utils {
   /**
 	 * 
 	 */
-  static String hexString(color.Color color) {
+  static String hexString(harmony.Color color) {
     return HtmlColor.hexString(color);
   }
 
@@ -1487,7 +1488,7 @@ class Utils {
 	 *                if the specified string cannot be interpreted as a
 	 *                hexidecimal integer
 	 */
-  static color.Color parseColor(String colorString) /*throws NumberFormatException*/
+  static harmony.Color parseColor(String colorString) /*throws NumberFormatException*/
   {
     return HtmlColor.parseColor(colorString);
   }
@@ -1499,7 +1500,7 @@ class Utils {
 	 *            Color to return the hex string for.
 	 * @return Returns a hex string for the given color.
 	 */
-  static String getHexColorString(color.Color color) {
+  static String getHexColorString(harmony.Color color) {
     return HtmlColor.getHexColorString(color);
   }
 
@@ -1644,7 +1645,7 @@ class Utils {
 	 * Clears the given area of the specified graphics object with the given
 	 * color or makes the region transparent.
 	 */
-  static void clearRect(Graphics2D g, Rectangle rect, color.Color background) {
+  static void clearRect(Graphics2D g, harmony.Rectangle rect, harmony.Color background) {
     if (background != null) {
       g.setColor(background);
       g.fillRect(rect.x, rect.y, rect.width, rect.height);
@@ -1669,7 +1670,7 @@ class Utils {
       // Clears background
       if (background != null) {
         Graphics2D g2 = result.createGraphics();
-        clearRect(g2, new Rectangle(w, h), background);
+        clearRect(g2, new harmony.Rectangle(w, h), background);
         g2.dispose();
       }
     }

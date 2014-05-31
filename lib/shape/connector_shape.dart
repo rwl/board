@@ -151,7 +151,7 @@ class ConnectorShape extends BasicShape {
       count++;
     }
 
-    return new Line(p0, pe);
+    return new Line.between(p0, pe);
   }
 
 }

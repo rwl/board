@@ -3,7 +3,7 @@
  */
 part of graph.util;
 
-//import java.awt.Rectangle;
+//import java.awt.harmony.Rectangle;
 //import java.awt.geom.Rectangle2D;
 
 /**
@@ -32,7 +32,7 @@ class Rect extends Point2d {
   /**
 	 * Constructs a copy of the given rectangle.
 	 * 
-	 * @param rect Rectangle to construct a copy of.
+	 * @param rect harmony.Rectangle to construct a copy of.
 	 */
   /*Rect(Rectangle2D rect)
 	{
@@ -42,7 +42,7 @@ class Rect extends Point2d {
   /**
 	 * Constructs a copy of the given rectangle.
 	 * 
-	 * @param rect Rectangle to construct a copy of.
+	 * @param rect harmony.Rectangle to construct a copy of.
 	 */
   factory Rect.from(Rect rect) {
     new Rect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());

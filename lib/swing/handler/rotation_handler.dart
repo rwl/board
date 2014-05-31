@@ -4,7 +4,7 @@ part of graph.swing.handler;
 //import java.awt.Graphics;
 //import java.awt.Graphics2D;
 //import java.awt.Point;
-//import java.awt.Rectangle;
+//import java.awt.harmony.Rectangle;
 //import java.awt.event.MouseEvent;
 
 //import javax.swing.ImageIcon;
@@ -74,7 +74,7 @@ class RotationHandler extends MouseAdapter {
   /**
 	 * 
 	 */
-  Point _first;
+  harmony.Point _first;
 
   /**
 	 * Constructs a new rotation handler.
@@ -204,7 +204,7 @@ class RotationHandler extends MouseAdapter {
   void mouseDragged(MouseEvent e) {
     if (_graphComponent.isEnabled() && isEnabled() && !e.isConsumed() && _first != null) {
       Rect dirty = Utils.getBoundingBox(_currentState, _currentAngle * Constants.DEG_PER_RAD);
-      Point pt = SwingUtilities.convertPoint(e.getComponent(), e.getPoint(), _graphComponent.getGraphControl());
+      harmony.Point pt = SwingUtilities.convertPoint(e.getComponent(), e.getPoint(), _graphComponent.getGraphControl());
 
       double cx = _currentState.getCenterX();
       double cy = _currentState.getCenterY();
@@ -287,7 +287,7 @@ class RotationHandler extends MouseAdapter {
 	 */
   void paint(Graphics g) {
     if (_currentState != null && _first != null) {
-      Rectangle rect = _currentState.getRectangle();
+      harmony.Rectangle rect = _currentState.getRectangle();
       double deg = _currentAngle * Constants.DEG_PER_RAD;
 
       if (deg != 0) {

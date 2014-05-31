@@ -463,7 +463,7 @@ class GraphComponent extends JScrollPane implements Printable {
 	 */
   IEventListener _repaintHandler = (Object source, EventObj evt) {
     Rect dirty = evt.getProperty("region") as Rect;
-    Rectangle rect = (dirty != null) ? dirty.getRectangle() : null;
+    harmony.Rectangle rect = (dirty != null) ? dirty.getRectangle() : null;
 
     if (rect != null) {
       rect.grow(1, 1);
@@ -826,11 +826,11 @@ class GraphComponent extends JScrollPane implements Printable {
 	 */
   Rect getLayoutAreaSize() {
     if (_pageVisible) {
-      Dimension d = _getPreferredSizeForPage();
+      harmony.Dimension d = _getPreferredSizeForPage();
 
-      return new Rect(new Rectangle(d));
+      return new Rect(new harmony.Rectangle(d));
     } else {
-      return new Rect(new Rectangle(_graphControl.getSize()));
+      return new Rect(new harmony.Rectangle(_graphControl.getSize()));
     }
   }
 
@@ -1139,7 +1139,7 @@ class GraphComponent extends JScrollPane implements Printable {
 	 * and returns the inserted cells. This shortcut is used if cells are
 	 * inserted via datatransfer.
 	 */
-  List<Object> importCells(List<Object> cells, double dx, double dy, Object target, Point location) {
+  List<Object> importCells(List<Object> cells, double dx, double dy, Object target, harmony.Point location) {
     return _graph.moveCells(cells, dx, dy, true, target, location);
   }
 
@@ -1252,8 +1252,8 @@ class GraphComponent extends JScrollPane implements Printable {
 	 * Returns the (unscaled) preferred size for the current page format (scaled
 	 * by pageScale).
 	 */
-  Dimension _getPreferredSizeForPage() {
-    return new Dimension(math.round(_pageFormat.getWidth() * _pageScale * _horizontalPageCount) as int, math.round(_pageFormat.getHeight() * _pageScale * _verticalPageCount) as int);
+  harmony.Dimension _getPreferredSizeForPage() {
+    return new harmony.Dimension(math.round(_pageFormat.getWidth() * _pageScale * _horizontalPageCount) as int, math.round(_pageFormat.getHeight() * _pageScale * _verticalPageCount) as int);
   }
 
   /**
@@ -1273,19 +1273,19 @@ class GraphComponent extends JScrollPane implements Printable {
   /**
 	 * Returns the scaled preferred size for the current graph.
 	 */
-  Dimension _getScaledPreferredSizeForGraph() {
+  harmony.Dimension _getScaledPreferredSizeForGraph() {
     Rect bounds = _graph.getGraphBounds();
     int border = _graph.getBorder();
 
-    return new Dimension((math.round(bounds.getX() + bounds.getWidth()) as int) + border + 1, (math.round(bounds.getY() as int) + bounds.getHeight()) + border + 1);
+    return new harmony.Dimension((math.round(bounds.getX() + bounds.getWidth()) as int) + border + 1, (math.round(bounds.getY() as int) + bounds.getHeight()) + border + 1);
   }
 
   /**
 	 * Should be called by a hook inside GraphView/Graph
 	 */
   Point2d _getPageTranslate(double scale) {
-    Dimension d = _getPreferredSizeForPage();
-    Dimension bd = new Dimension(d);
+    harmony.Dimension d = _getPreferredSizeForPage();
+    harmony.Dimension bd = new harmony.Dimension(d);
 
     if (!_preferPageSize) {
       bd.width += 2 * getHorizontalPageBorder();
@@ -1390,7 +1390,7 @@ class GraphComponent extends JScrollPane implements Printable {
     if (isPageVisible()) {
       // Causes two repaints, see zoomTo for more details
       SwingUtilities.invokeLater(() {
-        Dimension pageSize = _getPreferredSizeForPage();
+        harmony.Dimension pageSize = _getPreferredSizeForPage();
 
         if (getViewport().getWidth() > pageSize.getWidth()) {
           scrollToCenter(true);
@@ -1429,7 +1429,7 @@ class GraphComponent extends JScrollPane implements Printable {
         double width = getViewport().getWidth() - off;
         double height = getViewport().getHeight() - off;
 
-        Dimension d = _getPreferredSizeForPage();
+        harmony.Dimension d = _getPreferredSizeForPage();
         double pageWidth = d.width;
         double pageHeight = d.height;
 
@@ -1571,7 +1571,7 @@ class GraphComponent extends JScrollPane implements Printable {
     }
 
     if (parent != null) {
-      Point previousTranslate = _canvas.getTranslate();
+      harmony.Point previousTranslate = _canvas.getTranslate();
       double previousScale = _canvas.getScale();
 
       try {
@@ -1581,7 +1581,7 @@ class GraphComponent extends JScrollPane implements Printable {
         IGraphModel model = _graph.getModel();
         GraphView view = _graph.getView();
 
-        Rectangle hit = new Rectangle(x, y, 1, 1);
+        harmony.Rectangle hit = new harmony.Rectangle(x, y, 1, 1);
         int childCount = model.getChildCount(parent);
 
         for (int i = childCount - 1; i >= 0; i--) {
@@ -1627,7 +1627,7 @@ class GraphComponent extends JScrollPane implements Printable {
   /**
 	 * 
 	 */
-  List<Object> selectRegion(Rectangle rect, MouseEvent e) {
+  List<Object> selectRegion(harmony.Rectangle rect, MouseEvent e) {
     List<Object> cells = getCells(rect);
 
     if (cells.length > 0) {
@@ -1644,7 +1644,7 @@ class GraphComponent extends JScrollPane implements Printable {
 	 * 
 	 * @return Returns the cells inside the given rectangle.
 	 */
-  //	List<Object> getCells(Rectangle rect)
+  //	List<Object> getCells(harmony.Rectangle rect)
   //	{
   //		return getCells(rect, null);
   //	}
@@ -1657,7 +1657,7 @@ class GraphComponent extends JScrollPane implements Printable {
 	 * 
 	 * @return Returns the children inside the given rectangle.
 	 */
-  List<Object> getCells(Rectangle rect, [Object parent = null]) {
+  List<Object> getCells(harmony.Rectangle rect, [Object parent = null]) {
     Collection<Object> result = new List<Object>();
 
     if (rect.width > 0 || rect.height > 0) {
@@ -1666,7 +1666,7 @@ class GraphComponent extends JScrollPane implements Printable {
       }
 
       if (parent != null) {
-        Point previousTranslate = _canvas.getTranslate();
+        harmony.Point previousTranslate = _canvas.getTranslate();
         double previousScale = _canvas.getScale();
 
         try {
@@ -1756,7 +1756,7 @@ class GraphComponent extends JScrollPane implements Printable {
   /**
 	 * 
 	 */
-  Rectangle getFoldingIconBounds(CellState state, ImageIcon icon) {
+  harmony.Rectangle getFoldingIconBounds(CellState state, ImageIcon icon) {
     IGraphModel model = _graph.getModel();
     bool isEdge = model.isEdge(state.getCell());
     double scale = getGraph().getView().getScale();
@@ -1773,7 +1773,7 @@ class GraphComponent extends JScrollPane implements Printable {
       y = (pt.getY() as int) - h / 2;
     }
 
-    return new Rectangle(x, y, w, h);
+    return new harmony.Rectangle(x, y, w, h);
   }
 
   /**
@@ -2315,7 +2315,7 @@ class GraphComponent extends JScrollPane implements Printable {
       view.revalidate();
 
       Rect graphBounds = _graph.getGraphBounds();
-      Dimension pSize = new Dimension((math.ceil(graphBounds.getX() + graphBounds.getWidth()) as int) + 1, (math.ceil(graphBounds.getY() + graphBounds.getHeight()) as int) + 1);
+      harmony.Dimension pSize = new harmony.Dimension((math.ceil(graphBounds.getX() + graphBounds.getWidth()) as int) + 1, (math.ceil(graphBounds.getY() + graphBounds.getHeight()) as int) + 1);
 
       int w = printFormat.getImageableWidth() as int;
       int h = printFormat.getImageableHeight() as int;
@@ -2430,7 +2430,7 @@ class GraphComponent extends JScrollPane implements Printable {
     int width = state.getWidth() as int;
     int height = state.getHeight() as int;
 
-    Dimension s = c.getMinimumSize();
+    harmony.Dimension s = c.getMinimumSize();
 
     if (s.width > width) {
       x -= (s.width - width) / 2;
@@ -2920,8 +2920,8 @@ class GraphComponent extends JScrollPane implements Printable {
 	 * 
 	 */
   void _paintBackground(Graphics g) {
-    Rectangle clip = g.getClipBounds();
-    Rectangle rect = _paintBackgroundPage(g);
+    harmony.Rectangle clip = g.getClipBounds();
+    harmony.Rectangle rect = _paintBackgroundPage(g);
 
     if (isPageVisible()) {
       g.clipRect(rect.x + 1, rect.y + 1, rect.width - 1, rect.height - 1);
@@ -2938,14 +2938,14 @@ class GraphComponent extends JScrollPane implements Printable {
   /**
 	 * 
 	 */
-  Rectangle _paintBackgroundPage(Graphics g) {
+  harmony.Rectangle _paintBackgroundPage(Graphics g) {
     Point2d translate = _graph.getView().getTranslate();
     double scale = _graph.getView().getScale();
 
     int x0 = (math.round(translate.getX() * scale) as int) - 1;
     int y0 = (math.round(translate.getY() * scale) as int) - 1;
 
-    Dimension d = _getPreferredSizeForPage();
+    harmony.Dimension d = _getPreferredSizeForPage();
     int w = (math.round(d.width * scale) as int) + 2;
     int h = (math.round(d.height * scale) as int) + 2;
 
@@ -3009,7 +3009,7 @@ class GraphComponent extends JScrollPane implements Printable {
       g2.setStroke(previousStroke);
     }
 
-    return new Rectangle(x0, y0, w, h);
+    return new harmony.Rectangle(x0, y0, w, h);
   }
 
   /**
@@ -3030,7 +3030,7 @@ class GraphComponent extends JScrollPane implements Printable {
   void _paintGrid(Graphics g) {
     if (isGridVisible()) {
       g.setColor(getGridColor());
-      Rectangle clip = g.getClipBounds();
+      harmony.Rectangle clip = g.getClipBounds();
 
       if (clip == null) {
         clip = getGraphControl().getBounds();
@@ -3215,8 +3215,8 @@ class GraphComponent extends JScrollPane implements Printable {
 	 */
   void redraw(CellState state) {
     if (state != null) {
-      Rectangle dirty = state.getBoundingBox().getRectangle();
-      repaintTripleBuffer(new Rectangle(dirty));
+      harmony.Rectangle dirty = state.getBoundingBox().getRectangle();
+      repaintTripleBuffer(new harmony.Rectangle(dirty));
       dirty = SwingUtilities.convertRectangle(_graphControl, dirty, this);
       repaint(dirty);
     }
@@ -3281,10 +3281,10 @@ class GraphComponent extends JScrollPane implements Printable {
 	 * 
 	 * @param dirty
 	 */
-  void repaintTripleBuffer(Rectangle dirty) {
+  void repaintTripleBuffer(harmony.Rectangle dirty) {
     if (_tripleBuffered && _tripleBufferGraphics != null) {
       if (dirty == null) {
-        dirty = new Rectangle(_tripleBuffer.getWidth(), _tripleBuffer.getHeight());
+        dirty = new harmony.Rectangle(_tripleBuffer.getWidth(), _tripleBuffer.getHeight());
       }
 
       // Clears and repaints the dirty rectangle using the

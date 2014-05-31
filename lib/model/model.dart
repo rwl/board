@@ -305,7 +305,7 @@ abstract class IGraphModel {
    *
    * Removes the given listener from the list of listeners.
    */
-  void removeListener(IEventListener listener, String eventName);
+  void removeListener(IEventListener listener, [String eventName=null]);
 
 }
 

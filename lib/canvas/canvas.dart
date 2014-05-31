@@ -12,10 +12,11 @@ import 'dart:html';
 import 'dart:collection' show HashMap;
 import 'dart:math' as Math;
 
-import 'package:color/color.dart' as color;
+//import 'package:color/color.dart' as color;
 import 'package:image/image.dart' as image;
 
 import '../compat/math.dart' as math;
+import '../harmony/harmony.dart' as harmony;
 
 //import '../shape/shape.dart' show ActorShape;
 //import '../shape/shape.dart' show ArrowShape;
@@ -73,7 +74,7 @@ abstract class ICanvas {
 	 * 
 	 * @return Returns the current translation.
 	 */
-  Point getTranslate();
+  harmony.Point getTranslate();
 
   /**
 	 * Sets the scale for the following drawing requests.

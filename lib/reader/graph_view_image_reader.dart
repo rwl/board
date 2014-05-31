@@ -27,7 +27,7 @@ class GraphViewImageReader extends GraphViewReader {
   /**
 	 * Specifies the background color. Default is null.
 	 */
-  color.Color _background;
+  harmony.Color _background;
 
   /**
 	 * Specifies if the image should be anti-aliased. Default is true.
@@ -61,28 +61,28 @@ class GraphViewImageReader extends GraphViewReader {
   /**
 	 * Constructs a new reader with the given background color.
 	 */
-  GraphViewImageReader([color.Color background=null]) {
+  GraphViewImageReader([harmony.Color background=null]) {
     this(background, 0);
   }
 
   /**
 	 * Constructs a new reader with a transparent background.
 	 */
-  GraphViewImageReader(color.Color background, int border) {
+  GraphViewImageReader(harmony.Color background, int border) {
     this(background, border, true);
   }
 
   /**
 	 * Constructs a new reader with a transparent background.
 	 */
-  GraphViewImageReader(color.Color background, int border, bool antiAlias) {
+  GraphViewImageReader(harmony.Color background, int border, bool antiAlias) {
     this(background, border, antiAlias, true);
   }
 
   /**
 	 * Constructs a new reader with a transparent background.
 	 */
-  GraphViewImageReader(color.Color background, int border, bool antiAlias, bool cropping) {
+  GraphViewImageReader(harmony.Color background, int border, bool antiAlias, bool cropping) {
     setBackground(background);
     setBorder(border);
     setAntiAlias(antiAlias);
@@ -92,14 +92,14 @@ class GraphViewImageReader extends GraphViewReader {
   /**
 	 * 
 	 */
-  color.Color getBackground() {
+  harmony.Color getBackground() {
     return _background;
   }
 
   /**
 	 * 
 	 */
-  void setBackground(color.Color background) {
+  void setBackground(harmony.Color background) {
     this._background = background;
   }
 

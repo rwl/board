@@ -4,7 +4,7 @@
 part of graph.swing.handler;
 
 //import java.awt.Point;
-//import java.awt.Rectangle;
+//import java.awt.harmony.Rectangle;
 //import java.awt.event.MouseEvent;
 
 /**
@@ -30,7 +30,7 @@ class PanningHandler extends MouseAdapter {
   /**
 	 * 
 	 */
-  /*transient*/ Point _start;
+  /*transient*/ harmony.Point _start;
 
   /**
 	 * 
@@ -74,12 +74,12 @@ class PanningHandler extends MouseAdapter {
       int dx = e.getX() - _start.x;
       int dy = e.getY() - _start.y;
 
-      Rectangle r = _graphComponent.getViewport().getViewRect();
+      harmony.Rectangle r = _graphComponent.getViewport().getViewRect();
 
       int right = r.x + ((dx > 0) ? 0 : r.width) - dx;
       int bottom = r.y + ((dy > 0) ? 0 : r.height) - dy;
 
-      _graphComponent.getGraphControl().scrollRectToVisible(new Rectangle(right, bottom, 0, 0));
+      _graphComponent.getGraphControl().scrollRectToVisible(new harmony.Rectangle(right, bottom, 0, 0));
 
       e.consume();
     }

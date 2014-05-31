@@ -10,11 +10,11 @@ class SwimlaneShape extends BasicShape {
   void paintShape(Graphics2DCanvas canvas, CellState state) {
     int start = math.round(Utils.getInt(state.getStyle(), Constants.STYLE_STARTSIZE, Constants.DEFAULT_STARTSIZE) * canvas.getScale()) as int;
 
-    Rectangle tmp = state.getRectangle();
+    harmony.Rectangle tmp = state.getRectangle();
 
     if (Utils.isTrue(state.getStyle(), Constants.STYLE_HORIZONTAL, true)) {
       if (_configureGraphics(canvas, state, true)) {
-        canvas.fillShape(new Rectangle(tmp.x, tmp.y, tmp.width, Math.min(tmp.height, start)));
+        canvas.fillShape(new harmony.Rectangle(tmp.x, tmp.y, tmp.width, Math.min(tmp.height, start)));
       }
 
       if (_configureGraphics(canvas, state, false)) {
@@ -23,7 +23,7 @@ class SwimlaneShape extends BasicShape {
       }
     } else {
       if (_configureGraphics(canvas, state, true)) {
-        canvas.fillShape(new Rectangle(tmp.x, tmp.y, Math.min(tmp.width, start), tmp.height));
+        canvas.fillShape(new harmony.Rectangle(tmp.x, tmp.y, Math.min(tmp.width, start), tmp.height));
       }
 
       if (_configureGraphics(canvas, state, false)) {

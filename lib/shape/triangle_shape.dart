@@ -10,7 +10,7 @@ class TriangleShape extends BasicShape {
 	 * 
 	 */
   Shape createShape(Graphics2DCanvas canvas, CellState state) {
-    Rectangle temp = state.getRectangle();
+    harmony.Rectangle temp = state.getRectangle();
     int x = temp.x;
     int y = temp.y;
     int w = temp.width;

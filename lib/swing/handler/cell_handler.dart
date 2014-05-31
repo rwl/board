@@ -31,7 +31,7 @@ class CellHandler {
   /**
 	 * Holds the rectangles that define the handles.
 	 */
-  List<Rectangle> _handles;
+  List<harmony.Rectangle> _handles;
 
   /**
 	 * Specifies if the handles should be painted. Default is true.
@@ -41,7 +41,7 @@ class CellHandler {
   /**
 	 * Holds the bounding box of the handler.
 	 */
-  /*transient*/ Rectangle _bounds;
+  /*transient*/ harmony.Rectangle _bounds;
 
   /**
 	 * Holds the component that is used for preview.
@@ -51,7 +51,7 @@ class CellHandler {
   /**
 	 * Holds the start location of the mouse gesture.
 	 */
-  /*transient*/ Point _first;
+  /*transient*/ harmony.Point _first;
 
   /**
 	 * Holds the index of the handle that was clicked.
@@ -122,7 +122,7 @@ class CellHandler {
   /**
 	 * Returns the bounding box of this handler.
 	 */
-  Rectangle getBounds() {
+  harmony.Rectangle getBounds() {
     return _bounds;
   }
 
@@ -160,7 +160,7 @@ class CellHandler {
   /**
 	 * Creates the rectangles that define the handles.
 	 */
-  List<Rectangle> _createHandles() {
+  List<harmony.Rectangle> _createHandles() {
     return null;
   }
 
@@ -189,7 +189,7 @@ class CellHandler {
   int getIndexAt(int x, int y) {
     if (_handles != null && isHandlesVisible()) {
       int tol = _graphComponent.getTolerance();
-      Rectangle rect = new Rectangle(x - tol / 2, y - tol / 2, tol, tol);
+      harmony.Rectangle rect = new harmony.Rectangle(x - tol / 2, y - tol / 2, tol, tol);
 
       for (int i = _handles.length - 1; i >= 0; i--) {
         if (_isHandleVisible(i) && _handles[i].intersects(rect)) {

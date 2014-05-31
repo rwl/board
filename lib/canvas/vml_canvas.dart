@@ -380,7 +380,7 @@ class VmlCanvas extends BasicCanvas {
 
     if (strokeColor != null && strokeWidth > 0) {
       Point2d pt = pts[0];
-      Rectangle r = new Rectangle(pt.getPoint());
+      harmony.Rectangle r = new harmony.Rectangle(pt.getPoint());
 
       StringBuilder buf = new StringBuilder("m " + math.round(pt.getX()) + " " + math.round(pt.getY()));
 
@@ -388,7 +388,7 @@ class VmlCanvas extends BasicCanvas {
         pt = pts[i];
         buf.append(" l " + math.round(pt.getX()) + " " + math.round(pt.getY()));
 
-        r = r.union(new Rectangle(pt.getPoint()));
+        r = r.union(new harmony.Rectangle(pt.getPoint()));
       }
 
       String d = buf.toString();

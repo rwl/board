@@ -28,8 +28,11 @@ class TerminalChangeCodec extends ObjectCodec {
   /**
 	 * Constructs a new model codec for the given arguments.
 	 */
-  TerminalChangeCodec(Object template, [List<String> exclude = null,
-      List<String> idrefs = null, Map<String, String> mapping = null]) : super(template, exclude, idrefs, mapping) {
+  TerminalChangeCodec([Object template=null, List<String> exclude = null,
+      List<String> idrefs = null, Map<String, String> mapping = null]) : super(template) {
+    if (template == null) {
+      this._template = new TerminalChange();
+    }
     if (exclude == null) {
       exclude = ["model", "previous"];
     }

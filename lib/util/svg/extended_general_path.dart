@@ -19,7 +19,7 @@
 part of graph.util.svg;
 
 //import java.awt.Shape;
-//import java.awt.Rectangle;
+//import java.awt.harmony.Rectangle;
 //import java.awt.geom.AffineTransform;
 //import java.awt.geom.Arc2D;
 //import java.awt.geom.GeneralPath;
@@ -564,7 +564,7 @@ class ExtendedGeneralPath implements Shape, Cloneable
 	/**
 	 * Delegates to the enclosed <code>GeneralPath</code>.
 	 */
-	synchronized Rectangle getBounds()
+	synchronized harmony.Rectangle getBounds()
 	{
 		return path.getBounds();
 	}

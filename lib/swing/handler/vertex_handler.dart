@@ -7,7 +7,7 @@ part of graph.swing.handler;
 //import java.awt.Cursor;
 //import java.awt.Graphics;
 //import java.awt.Graphics2D;
-//import java.awt.Rectangle;
+//import java.awt.harmony.Rectangle;
 //import java.awt.Stroke;
 //import java.awt.event.MouseEvent;
 
@@ -44,11 +44,11 @@ class VertexHandler extends CellHandler {
   /**
 	 * 
 	 */
-  List<Rectangle> _createHandles() {
-    List<Rectangle> h = null;
+  List<harmony.Rectangle> _createHandles() {
+    List<harmony.Rectangle> h = null;
 
     if (_graphComponent.getGraph().isCellResizable(getState().getCell())) {
-      Rectangle bounds = getState().getRectangle();
+      harmony.Rectangle bounds = getState().getRectangle();
       int half = Constants.HANDLE_SIZE / 2;
 
       int left = bounds.x - half;
@@ -60,24 +60,24 @@ class VertexHandler extends CellHandler {
       int right = bounds.x + bounds.width - half;
       int bottom = bounds.y + bounds.height - half;
 
-      h = new List<Rectangle>(9);
+      h = new List<harmony.Rectangle>(9);
 
       int s = Constants.HANDLE_SIZE;
-      h[0] = new Rectangle(left, top, s, s);
-      h[1] = new Rectangle(w2, top, s, s);
-      h[2] = new Rectangle(right, top, s, s);
-      h[3] = new Rectangle(left, h2, s, s);
-      h[4] = new Rectangle(right, h2, s, s);
-      h[5] = new Rectangle(left, bottom, s, s);
-      h[6] = new Rectangle(w2, bottom, s, s);
-      h[7] = new Rectangle(right, bottom, s, s);
+      h[0] = new harmony.Rectangle(left, top, s, s);
+      h[1] = new harmony.Rectangle(w2, top, s, s);
+      h[2] = new harmony.Rectangle(right, top, s, s);
+      h[3] = new harmony.Rectangle(left, h2, s, s);
+      h[4] = new harmony.Rectangle(right, h2, s, s);
+      h[5] = new harmony.Rectangle(left, bottom, s, s);
+      h[6] = new harmony.Rectangle(w2, bottom, s, s);
+      h[7] = new harmony.Rectangle(right, bottom, s, s);
     } else {
-      h = new List<Rectangle>(1);
+      h = new List<harmony.Rectangle>(1);
     }
 
     int s = Constants.LABEL_HANDLE_SIZE;
     Rect bounds = _state.getLabelBounds();
-    h[h.length - 1] = new Rectangle((int)(bounds.getX() + bounds.getWidth() / 2 - s), (int)(bounds.getY() + bounds.getHeight() / 2 - s), 2 * s, 2 * s);
+    h[h.length - 1] = new harmony.Rectangle((int)(bounds.getX() + bounds.getWidth() / 2 - s), (int)(bounds.getY() + bounds.getHeight() / 2 - s), 2 * s, 2 * s);
 
     return h;
   }
@@ -123,7 +123,7 @@ class VertexHandler extends CellHandler {
           }
         }
 
-        Rectangle rect = _state.getLabelBounds().getRectangle();
+        harmony.Rectangle rect = _state.getLabelBounds().getRectangle();
         rect.translate(idx, idy);
         _preview.setBounds(rect);
       } else {
@@ -241,7 +241,7 @@ class VertexHandler extends CellHandler {
         graph.getModel().setGeometry(cell, geometry);
       } else {
         Rect bounds = _union(geometry, dx, dy, _index);
-        Rectangle rect = bounds.getRectangle();
+        harmony.Rectangle rect = bounds.getRectangle();
 
         // Snaps new bounds to grid (unscaled)
         if (_gridEnabledEvent) {
@@ -330,7 +330,7 @@ class VertexHandler extends CellHandler {
 	 * 
 	 */
   void paint(Graphics g) {
-    Rectangle bounds = getState().getRectangle();
+    harmony.Rectangle bounds = getState().getRectangle();
 
     if (g.hitClip(bounds.x, bounds.y, bounds.width, bounds.height)) {
       Graphics2D g2 = g as Graphics2D;

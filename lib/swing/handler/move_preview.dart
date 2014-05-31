@@ -4,7 +4,7 @@
 part of graph.swing.handler;
 
 //import java.awt.Graphics;
-//import java.awt.Rectangle;
+//import java.awt.harmony.Rectangle;
 //import java.awt.event.MouseEvent;
 //import java.util.Collection;
 //import java.util.LinkedList;
@@ -68,12 +68,12 @@ class MovePreview extends EventSource {
   /**
 	 * 
 	 */
-  /*transient*/ Rectangle _initialPlaceholder;
+  /*transient*/ harmony.Rectangle _initialPlaceholder;
 
   /**
 	 * 
 	 */
-  /*transient*/ Rectangle _placeholder;
+  /*transient*/ harmony.Rectangle _placeholder;
 
   /**
 	 * 
@@ -252,7 +252,7 @@ class MovePreview extends EventSource {
 
     if (_previewStates == null || _previewStates.length >= _threshold) {
       _placeholder = _getPlaceholderBounds(_startState).getRectangle();
-      _initialPlaceholder = new Rectangle(_placeholder);
+      _initialPlaceholder = new harmony.Rectangle(_placeholder);
       _graphComponent.getGraphControl().repaint(_placeholder);
     }
 
@@ -282,7 +282,7 @@ class MovePreview extends EventSource {
     Graph graph = _graphComponent.getGraph();
 
     if (_placeholder != null) {
-      Rectangle tmp = new Rectangle(_placeholder);
+      harmony.Rectangle tmp = new harmony.Rectangle(_placeholder);
       _placeholder.x = _initialPlaceholder.x + dx as int;
       _placeholder.y = _initialPlaceholder.x + dy as int;
       tmp.add(_placeholder);
@@ -349,7 +349,7 @@ class MovePreview extends EventSource {
     Graph graph = _graphComponent.getGraph();
 
     if (_placeholder != null) {
-      Rectangle tmp = _placeholder;
+      harmony.Rectangle tmp = _placeholder;
       _placeholder = null;
       _graphComponent.getGraphControl().repaint(tmp);
     }

@@ -137,7 +137,7 @@ class CurveLabelShape implements ITextShape {
 	 * 
 	 */
   void paintShape(Graphics2DCanvas canvas, String text, CellState state, Map<String, Object> style) {
-    Rectangle rect = state.getLabelBounds().getRectangle();
+    harmony.Rectangle rect = state.getLabelBounds().getRectangle();
     Graphics2D g = canvas.getGraphics();
 
     if (_labelGlyphs == null) {
@@ -486,7 +486,7 @@ class CurveLabelShape implements ITextShape {
 	 * @param rect the rectangle to detect for a hit
 	 * @return whether or not the rectangle hits this curve
 	 */
-  bool intersectsRect(Rectangle rect) {
+  bool intersectsRect(harmony.Rectangle rect) {
     // To save CPU, we can test if the rectangle intersects the entire
     // bounds of this label
     if ((_labelBounds != null && (!_labelBounds.getRectangle().intersects(rect))) || _labelGlyphs == null) {

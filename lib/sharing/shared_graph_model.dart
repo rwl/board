@@ -89,8 +89,8 @@ class SharedGraphModel extends SharedState {
 
       // No notify event here to avoid the edit from being encoded and transmitted
       // LATER: Remove changes property (deprecated)
-      _model.fireEvent(new EventObj(Event.CHANGE, "edit", edit, "changes", changes));
-      _model.fireEvent(new EventObj(Event.UNDO, "edit", edit));
+      _model.fireEvent(new EventObj(Event.CHANGE, ["edit", edit, "changes", changes]));
+      _model.fireEvent(new EventObj(Event.UNDO, ["edit", edit]));
       fireEvent(new EventObj(Event.FIRED, "edit", edit));
     }
 

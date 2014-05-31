@@ -5,7 +5,7 @@ part of graph.swing.handler;
 //import java.awt.Graphics;
 //import java.awt.Graphics2D;
 //import java.awt.Point;
-//import java.awt.Rectangle;
+//import java.awt.harmony.Rectangle;
 //import java.awt.event.MouseEvent;
 
 class InsertHandler extends MouseAdapter {
@@ -28,7 +28,7 @@ class InsertHandler extends MouseAdapter {
   /**
 	 * 
 	 */
-  Point _first;
+  harmony.Point _first;
 
   /**
 	 * 
@@ -134,7 +134,7 @@ class InsertHandler extends MouseAdapter {
         dirty = _current;
       }
 
-      Rectangle tmp = dirty.getRectangle();
+      harmony.Rectangle tmp = dirty.getRectangle();
       int b = math.ceil(_lineWidth) as int;
       _graphComponent.getGraphControl().repaint(tmp.x - b, tmp.y - b, tmp.width + 2 * b, tmp.height + 2 * b);
 
@@ -175,7 +175,7 @@ class InsertHandler extends MouseAdapter {
 	 * 
 	 */
   void reset() {
-    Rectangle dirty = null;
+    harmony.Rectangle dirty = null;
 
     if (_current != null) {
       dirty = _current.getRectangle();
@@ -197,7 +197,7 @@ class InsertHandler extends MouseAdapter {
     if (_first != null && _current != null) {
       (g as Graphics2D).setStroke(new BasicStroke(_lineWidth));
       g.setColor(_lineColor);
-      Rectangle rect = _current.getRectangle();
+      harmony.Rectangle rect = _current.getRectangle();
 
       if (_rounded) {
         g.drawRoundRect(rect.x, rect.y, rect.width, rect.height, 8, 8);

@@ -8,7 +8,7 @@ part of graph.swing.handler;
 //import java.awt.Graphics;
 //import java.awt.Graphics2D;
 //import java.awt.Point;
-//import java.awt.Rectangle;
+//import java.awt.harmony.Rectangle;
 //import java.awt.Stroke;
 //import java.awt.event.MouseEvent;
 
@@ -54,7 +54,7 @@ part of graph.swing.handler;
  *   {
  *     if (validState != state)
  *     {
- *       Rectangle dirty = null;
+ *       harmony.Rectangle dirty = null;
  *       
  *       if (validState != null)
  *       {
@@ -71,7 +71,7 @@ part of graph.swing.handler;
  *         state.getStyle().put("fontColor", "#00ff00");
  *         state.getStyle().put("strokeWidth", "3");
  *          
- *         Rectangle tmp = state.getBoundingBox().getRectangle();
+ *         harmony.Rectangle tmp = state.getBoundingBox().getRectangle();
  *         
  *         if (dirty != null)
  *         {
@@ -413,7 +413,7 @@ class CellMarker extends JComponent {
 	 */
   void mark() {
     if (_markedState != null) {
-      Rectangle bounds = _markedState.getRectangle();
+      harmony.Rectangle bounds = _markedState.getRectangle();
       bounds.grow(3, 3);
       bounds.width += 1;
       bounds.height += 1;
@@ -533,10 +533,10 @@ class CellMarker extends JComponent {
       g.setColor(_currentColor);
 
       if (_markedState.getAbsolutePointCount() > 0) {
-        Point last = _markedState.getAbsolutePoint(0).getPoint();
+        harmony.Point last = _markedState.getAbsolutePoint(0).getPoint();
 
         for (int i = 1; i < _markedState.getAbsolutePointCount(); i++) {
-          Point current = _markedState.getAbsolutePoint(i).getPoint();
+          harmony.Point current = _markedState.getAbsolutePoint(i).getPoint();
           g.drawLine(last.x - getX(), last.y - getY(), current.x - getX(), current.y - getY());
           last = current;
         }

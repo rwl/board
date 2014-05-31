@@ -9,7 +9,7 @@
 part of graph.swing.handler;
 
 //import java.awt.Graphics;
-//import java.awt.Rectangle;
+//import java.awt.harmony.Rectangle;
 //import java.awt.Stroke;
 //import java.awt.event.MouseEvent;
 //import java.awt.event.MouseListener;
@@ -52,7 +52,7 @@ class SelectionCellsHandler implements MouseListener, MouseMotionListener {
   /**
 	 * Reference to the enclosing graph component.
 	 */
-  Rectangle _bounds = null;
+  harmony.Rectangle _bounds = null;
 
   /**
 	 * Defines the maximum number of handlers to paint individually.
@@ -302,7 +302,7 @@ class SelectionCellsHandler implements MouseListener, MouseMotionListener {
     // Creates handles for all selection cells
     List<Object> tmp = graph.getSelectionCells();
     bool handlesVisible = tmp.length <= getMaxHandlers();
-    Rectangle handleBounds = null;
+    harmony.Rectangle handleBounds = null;
 
     for (int i = 0; i < tmp.length; i++) {
       CellState state = graph.getView().getState(tmp[i]);
@@ -319,7 +319,7 @@ class SelectionCellsHandler implements MouseListener, MouseMotionListener {
         if (handler != null) {
           handler.setHandlesVisible(handlesVisible);
           _handlers.put(tmp[i], handler);
-          Rectangle bounds = handler.getBounds();
+          harmony.Rectangle bounds = handler.getBounds();
           Stroke stroke = handler.getSelectionStroke();
 
           if (stroke != null) {
@@ -339,7 +339,7 @@ class SelectionCellsHandler implements MouseListener, MouseMotionListener {
       handler._destroy();
     }
 
-    Rectangle dirty = _bounds;
+    harmony.Rectangle dirty = _bounds;
 
     if (handleBounds != null) {
       if (dirty != null) {

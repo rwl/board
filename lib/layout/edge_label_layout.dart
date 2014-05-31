@@ -75,8 +75,8 @@ class EdgeLabelLayout extends GraphLayout {
 	 */
   void avoid(CellState edge, CellState vertex) {
     IGraphModel model = graph.getModel();
-    Rectangle labRect = edge.getLabelBounds().getRectangle();
-    Rectangle vRect = vertex.getRectangle();
+    harmony.Rectangle labRect = edge.getLabelBounds().getRectangle();
+    harmony.Rectangle vRect = vertex.getRectangle();
 
     if (labRect.intersects(vRect)) {
       int dy1 = -labRect.y - labRect.height + vRect.y;
