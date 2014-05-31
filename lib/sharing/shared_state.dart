@@ -153,7 +153,7 @@ class SharedState extends EventSource {
 	 */
   void dispatchDiagramChangeEvent(Object sender, String edits) {
     if (_diagramChangeListeners != null) {
-      Iterator<DiagramChangeListener> it = _diagramChangeListeners.iterator();
+      Iterator<DiagramChangeListener> it = _diagramChangeListeners.iterator;
 
       while (it.moveNext()) {
         DiagramChangeListener listener = it.current();

@@ -39,18 +39,19 @@ class GraphMlData {
 	 * @param dataElement Xml Data Element.
 	 */
   factory GraphMlData.from(Element dataElement) {
-    this._dataId = dataElement.getAttribute(GraphMlConstants.ID);
-    this._dataKey = dataElement.getAttribute(GraphMlConstants.KEY);
+    final data = new GraphMlData();
+    data._dataId = dataElement.getAttribute(GraphMlConstants.ID);
+    data._dataKey = dataElement.getAttribute(GraphMlConstants.KEY);
 
-    this._dataValue = "";
+    data._dataValue = "";
 
     Element shapeNodeElement = GraphMlUtils.childsTag(dataElement, GraphMlConstants.JGRAPH + GraphMlConstants.SHAPENODE);
     Element shapeEdgeElement = GraphMlUtils.childsTag(dataElement, GraphMlConstants.JGRAPH + GraphMlConstants.SHAPEEDGE);
 
     if (shapeNodeElement != null) {
-      this._dataShapeNode = new GraphMlShapeNode(shapeNodeElement);
+      data._dataShapeNode = new GraphMlShapeNode.from(shapeNodeElement);
     } else if (shapeEdgeElement != null) {
-      this._dataShapeEdge = new GraphMlShapeEdge(shapeEdgeElement);
+      data._dataShapeEdge = new GraphMlShapeEdge.from(shapeEdgeElement);
     } else {
       NodeList childs = dataElement.childNodes;
       List<Node> childrens = GraphMlUtils.copyNodeList(childs);
@@ -58,11 +59,12 @@ class GraphMlData {
       for (Node n in childrens) {
         if (n.nodeName == "#text") {
 
-          this._dataValue += n.nodeValue;
+          data._dataValue += n.nodeValue;
         }
       }
-      this._dataValue = this._dataValue.trim();
+      data._dataValue = data._dataValue.trim();
     }
+    return data;
   }
 
   /**

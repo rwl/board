@@ -37,10 +37,14 @@ class CellCodec extends ObjectCodec {
 	 * Constructs a new cell codec for the given arguments.
 	 */
   CellCodec([Object template=null, List<String> exclude = null, List<String> idrefs = null,
-      Map<String, String> mapping = null]) : super(template, exclude, idrefs, mapping) {
+      Map<String, String> mapping = null]) : super(template) {
     if (template == null) {
       this._template = new Cell();
+      if (idrefs == null) {
+        idrefs = [ "parent", "source", "target" ];
+      }
     }
+    _init(exclude, idrefs, mapping);
   }
 
   /**

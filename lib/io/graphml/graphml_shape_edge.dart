@@ -30,18 +30,21 @@ class GraphMlShapeEdge {
 	 * @param shapeEdgeElement
 	 */
   factory GraphMlShapeEdge.from(Element shapeEdgeElement) {
+    final edge = new GraphMlShapeEdge();
+    
     Element labelElement = GraphMlUtils.childsTag(shapeEdgeElement, GraphMlConstants.JGRAPH + GraphMlConstants.LABEL);
 
     if (labelElement != null) {
-      this._text = labelElement.getAttribute(GraphMlConstants.TEXT);
+      edge._text = labelElement.getAttribute(GraphMlConstants.TEXT);
     }
 
     Element styleElement = GraphMlUtils.childsTag(shapeEdgeElement, GraphMlConstants.JGRAPH + GraphMlConstants.STYLE);
 
     if (styleElement != null) {
-      this._style = styleElement.getAttribute(GraphMlConstants.PROPERTIES);
+      edge._style = styleElement.getAttribute(GraphMlConstants.PROPERTIES);
 
     }
+    return edge;
   }
 
   /**

@@ -18,8 +18,8 @@ class GenericChangeCodec extends ObjectCodec {
 	 */
   String _fieldname;
 
-  static const _DEFAULT_EXCLUDE = ["model", "previous"];
-  static const _DEFAULT_IDREFS = ["cell"];
+//  static const _DEFAULT_EXCLUDE = ["model", "previous"];
+//  static const _DEFAULT_IDREFS = ["cell"];
 
   /**
 	 * Constructs a new model codec.
@@ -33,9 +33,16 @@ class GenericChangeCodec extends ObjectCodec {
   /**
 	 * Constructs a new model codec for the given arguments.
 	 */
-  GenericChangeCodec(Object template, String fieldname, [List<String> exclude = _DEFAULT_EXCLUDE,
-      List<String> idrefs = _DEFAULT_IDREFS, Map<String, String> mapping = null]) : super(template, exclude, idrefs, mapping) {
+  GenericChangeCodec(Object template, String fieldname, [List<String> exclude = null,
+      List<String> idrefs = null, Map<String, String> mapping = null]) : super(template) {
     this._fieldname = fieldname;
+    if (exclude == null) {
+      exclude = ["model", "previous"];
+    }
+    if (idrefs == null) {
+      idrefs = ["cell"];
+    }
+    _init(exclude, idrefs, mapping);
   }
 
   /* (non-Javadoc)

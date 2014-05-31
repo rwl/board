@@ -12,8 +12,8 @@ part of graph.reader;
 /**
 	XMLReader reader = SAXParserFactory.newInstance().newSAXParser()
 			.getXMLReader();
-	reader.setContentHandler(new mxSaxExportHandler(
-			new mxGraphicsExportCanvas(g2)));
+	reader.setContentHandler(new SaxExportHandler(
+			new GraphicsExportCanvas(g2)));
 	reader.parse(new InputSource(new StringReader(xml)));
  */
 class SaxOutputHandler extends DefaultHandler {
@@ -25,7 +25,7 @@ class SaxOutputHandler extends DefaultHandler {
   /**
 	 * 
 	 */
-  /*transient*/ Map<String, IElementHandler> _handlers = new Hashtable<String, IElementHandler>();
+  /*transient*/ Map<String, IElementHandler> _handlers = new Map<String, IElementHandler>();
 
   /**
 	 * 
@@ -54,10 +54,10 @@ class SaxOutputHandler extends DefaultHandler {
 	 */
   void startElement(String uri, String localName, String qName, Attributes atts) //throws SAXException
   {
-    IElementHandler handler = _handlers.get(qName.toLowerCase());
+    IElementHandler handler = _handlers[qName.toLowerCase()];
 
     if (handler != null) {
-      handler.parseElement(atts);
+      handler(atts);
     }
   }
 
@@ -65,161 +65,161 @@ class SaxOutputHandler extends DefaultHandler {
 	 * 
 	 */
   void _initHandlers() {
-    _handlers.put("save", (Attributes atts) {
+    _handlers["save"] = (Attributes atts) {
       _canvas.save();
-    });
+    };
 
-    _handlers.put("restore", (Attributes atts) {
+    _handlers["restore"] = (Attributes atts) {
       _canvas.restore();
-    });
+    };
 
-    _handlers.put("scale", (Attributes atts) {
-      _canvas.scale(Double.parseDouble(atts.getValue("scale")));
-    });
+    _handlers["scale"] = (Attributes atts) {
+      _canvas.scale(double.parse(atts.getValue("scale")));
+    };
 
-    _handlers.put("translate", (Attributes atts) {
-      _canvas.translate(Double.parseDouble(atts.getValue("dx")), Double.parseDouble(atts.getValue("dy")));
-    });
+    _handlers["translate"] = (Attributes atts) {
+      _canvas.translate(double.parse(atts.getValue("dx")), double.parse(atts.getValue("dy")));
+    };
 
-    _handlers.put("rotate", (Attributes atts) {
-      _canvas.rotate(Double.parseDouble(atts.getValue("theta")), atts.getValue("flipH").equals("1"), atts.getValue("flipV").equals("1"), Double.parseDouble(atts.getValue("cx")), Double.parseDouble(atts.getValue("cy")));
-    });
+    _handlers["rotate"] = (Attributes atts) {
+      _canvas.rotate(double.parse(atts.getValue("theta")), atts.getValue("flipH") == "1", atts.getValue("flipV") == "1", double.parse(atts.getValue("cx")), double.parse(atts.getValue("cy")));
+    };
 
-    _handlers.put("strokewidth", (Attributes atts) {
-      _canvas.setStrokeWidth(Double.parseDouble(atts.getValue("width")));
-    });
+    _handlers["strokewidth"] = (Attributes atts) {
+      _canvas.setStrokeWidth(double.parse(atts.getValue("width")));
+    };
 
-    _handlers.put("strokecolor", (Attributes atts) {
+    _handlers["strokecolor"] = (Attributes atts) {
       _canvas.setStrokeColor(atts.getValue("color"));
-    });
+    };
 
-    _handlers.put("dashed", (Attributes atts) {
-      _canvas.setDashed(atts.getValue("dashed").equals("1"));
-    });
+    _handlers["dashed"] = (Attributes atts) {
+      _canvas.setDashed(atts.getValue("dashed") == "1");
+    };
 
-    _handlers.put("dashpattern", (Attributes atts) {
+    _handlers["dashpattern"] = (Attributes atts) {
       _canvas.setDashPattern(atts.getValue("pattern"));
-    });
+    };
 
-    _handlers.put("linecap", (Attributes atts) {
+    _handlers["linecap"] = (Attributes atts) {
       _canvas.setLineCap(atts.getValue("cap"));
-    });
+    };
 
-    _handlers.put("linejoin", (Attributes atts) {
+    _handlers["linejoin"] = (Attributes atts) {
       _canvas.setLineJoin(atts.getValue("join"));
-    });
+    };
 
-    _handlers.put("miterlimit", (Attributes atts) {
-      _canvas.setMiterLimit(Double.parseDouble(atts.getValue("limit")));
-    });
+    _handlers["miterlimit"] = (Attributes atts) {
+      _canvas.setMiterLimit(double.parse(atts.getValue("limit")));
+    };
 
-    _handlers.put("fontsize", (Attributes atts) {
-      _canvas.setFontSize(Double.parseDouble(atts.getValue("size")));
-    });
+    _handlers["fontsize"] = (Attributes atts) {
+      _canvas.setFontSize(double.parse(atts.getValue("size")));
+    };
 
-    _handlers.put("fontcolor", (Attributes atts) {
+    _handlers["fontcolor"] = (Attributes atts) {
       _canvas.setFontColor(atts.getValue("color"));
-    });
+    };
 
-    _handlers.put("fontbackgroundcolor", (Attributes atts) {
+    _handlers["fontbackgroundcolor"] = (Attributes atts) {
       _canvas.setFontBackgroundColor(atts.getValue("color"));
-    });
+    };
 
-    _handlers.put("fontbordercolor", (Attributes atts) {
+    _handlers["fontbordercolor"] = (Attributes atts) {
       _canvas.setFontBorderColor(atts.getValue("color"));
-    });
+    };
 
-    _handlers.put("fontfamily", (Attributes atts) {
+    _handlers["fontfamily"] = (Attributes atts) {
       _canvas.setFontFamily(atts.getValue("family"));
-    });
+    };
 
-    _handlers.put("fontstyle", (Attributes atts) {
-      _canvas.setFontStyle(int.parseInt(atts.getValue("style")));
-    });
+    _handlers["fontstyle"] = (Attributes atts) {
+      _canvas.setFontStyle(int.parse(atts.getValue("style")));
+    };
 
-    _handlers.put("alpha", (Attributes atts) {
-      _canvas.setAlpha(Double.parseDouble(atts.getValue("alpha")));
-    });
+    _handlers["alpha"] = (Attributes atts) {
+      _canvas.setAlpha(double.parse(atts.getValue("alpha")));
+    };
 
-    _handlers.put("fillcolor", (Attributes atts) {
+    _handlers["fillcolor"] = (Attributes atts) {
       _canvas.setFillColor(atts.getValue("color"));
-    });
+    };
 
-    _handlers.put("shadowcolor", (Attributes atts) {
+    _handlers["shadowcolor"] = (Attributes atts) {
       _canvas.setShadowColor(atts.getValue("color"));
-    });
+    };
 
-    _handlers.put("shadowalpha", (Attributes atts) {
-      _canvas.setShadowAlpha(Double.parseDouble(atts.getValue("alpha")));
-    });
+    _handlers["shadowalpha"] = (Attributes atts) {
+      _canvas.setShadowAlpha(double.parse(atts.getValue("alpha")));
+    };
 
-    _handlers.put("shadowoffset", (Attributes atts) {
-      _canvas.setShadowOffset(Double.parseDouble(atts.getValue("dx")), Double.parseDouble(atts.getValue("dy")));
-    });
+    _handlers["shadowoffset"] = (Attributes atts) {
+      _canvas.setShadowOffset(double.parse(atts.getValue("dx")), double.parse(atts.getValue("dy")));
+    };
 
-    _handlers.put("shadow", (Attributes atts) {
-      _canvas.setShadow(_getValue(atts, "enabled", "1").equals("1"));
-    });
+    _handlers["shadow"] = (Attributes atts) {
+      _canvas.setShadow(_getValue(atts, "enabled", "1") == "1");
+    };
 
-    _handlers.put("gradient", (Attributes atts) {
-      _canvas.setGradient(atts.getValue("c1"), atts.getValue("c2"), Double.parseDouble(atts.getValue("x")), Double.parseDouble(atts.getValue("y")), Double.parseDouble(atts.getValue("w")), Double.parseDouble(atts.getValue("h")), atts.getValue("direction"), Double.parseDouble(_getValue(atts, "alpha1", "1")), Double.parseDouble(_getValue(atts, "alpha2", "1")));
-    });
+    _handlers["gradient"] = (Attributes atts) {
+      _canvas.setGradient(atts.getValue("c1"), atts.getValue("c2"), double.parse(atts.getValue("x")), double.parse(atts.getValue("y")), double.parse(atts.getValue("w")), double.parse(atts.getValue("h")), atts.getValue("direction"), double.parse(_getValue(atts, "alpha1", "1")), double.parse(_getValue(atts, "alpha2", "1")));
+    };
 
-    _handlers.put("rect", (Attributes atts) {
-      _canvas.rect(Double.parseDouble(atts.getValue("x")), Double.parseDouble(atts.getValue("y")), Double.parseDouble(atts.getValue("w")), Double.parseDouble(atts.getValue("h")));
-    });
+    _handlers["rect"] = (Attributes atts) {
+      _canvas.rect(double.parse(atts.getValue("x")), double.parse(atts.getValue("y")), double.parse(atts.getValue("w")), double.parse(atts.getValue("h")));
+    };
 
-    _handlers.put("roundrect", (Attributes atts) {
-      _canvas.roundrect(Double.parseDouble(atts.getValue("x")), Double.parseDouble(atts.getValue("y")), Double.parseDouble(atts.getValue("w")), Double.parseDouble(atts.getValue("h")), Double.parseDouble(atts.getValue("dx")), Double.parseDouble(atts.getValue("dy")));
-    });
+    _handlers["roundrect"] = (Attributes atts) {
+      _canvas.roundrect(double.parse(atts.getValue("x")), double.parse(atts.getValue("y")), double.parse(atts.getValue("w")), double.parse(atts.getValue("h")), double.parse(atts.getValue("dx")), double.parse(atts.getValue("dy")));
+    };
 
-    _handlers.put("ellipse", (Attributes atts) {
-      _canvas.ellipse(Double.parseDouble(atts.getValue("x")), Double.parseDouble(atts.getValue("y")), Double.parseDouble(atts.getValue("w")), Double.parseDouble(atts.getValue("h")));
-    });
+    _handlers["ellipse"] = (Attributes atts) {
+      _canvas.ellipse(double.parse(atts.getValue("x")), double.parse(atts.getValue("y")), double.parse(atts.getValue("w")), double.parse(atts.getValue("h")));
+    };
 
-    _handlers.put("image", (Attributes atts) {
-      _canvas.image(Double.parseDouble(atts.getValue("x")), Double.parseDouble(atts.getValue("y")), Double.parseDouble(atts.getValue("w")), Double.parseDouble(atts.getValue("h")), atts.getValue("src"), atts.getValue("aspect").equals("1"), atts.getValue("flipH").equals("1"), atts.getValue("flipV").equals("1"));
-    });
+    _handlers["image"] = (Attributes atts) {
+      _canvas.image(double.parse(atts.getValue("x")), double.parse(atts.getValue("y")), double.parse(atts.getValue("w")), double.parse(atts.getValue("h")), atts.getValue("src"), atts.getValue("aspect") == "1", atts.getValue("flipH") == "1", atts.getValue("flipV") == "1");
+    };
 
-    _handlers.put("text", (Attributes atts) {
-      _canvas.text(Double.parseDouble(atts.getValue("x")), Double.parseDouble(atts.getValue("y")), Double.parseDouble(atts.getValue("w")), Double.parseDouble(atts.getValue("h")), atts.getValue("str"), atts.getValue("align"), atts.getValue("valign"), _getValue(atts, "wrap", "").equals("1"), atts.getValue("format"), atts.getValue("overflow"), _getValue(atts, "clip", "").equals("1"), Double.parseDouble(_getValue(atts, "rotation", "0")));
-    });
+    _handlers["text"] = (Attributes atts) {
+      _canvas.text(double.parse(atts.getValue("x")), double.parse(atts.getValue("y")), double.parse(atts.getValue("w")), double.parse(atts.getValue("h")), atts.getValue("str"), atts.getValue("align"), atts.getValue("valign"), _getValue(atts, "wrap", "") == "1", atts.getValue("format"), atts.getValue("overflow"), _getValue(atts, "clip", "") == "1", double.parse(_getValue(atts, "rotation", "0")));
+    };
 
-    _handlers.put("begin", (Attributes atts) {
+    _handlers["begin"] = (Attributes atts) {
       _canvas.begin();
-    });
+    };
 
-    _handlers.put("move", (Attributes atts) {
-      _canvas.moveTo(Double.parseDouble(atts.getValue("x")), Double.parseDouble(atts.getValue("y")));
-    });
+    _handlers["move"] = (Attributes atts) {
+      _canvas.moveTo(double.parse(atts.getValue("x")), double.parse(atts.getValue("y")));
+    };
 
-    _handlers.put("line", (Attributes atts) {
-      _canvas.lineTo(Double.parseDouble(atts.getValue("x")), Double.parseDouble(atts.getValue("y")));
-    });
+    _handlers["line"] = (Attributes atts) {
+      _canvas.lineTo(double.parse(atts.getValue("x")), double.parse(atts.getValue("y")));
+    };
 
-    _handlers.put("quad", (Attributes atts) {
-      _canvas.quadTo(Double.parseDouble(atts.getValue("x1")), Double.parseDouble(atts.getValue("y1")), Double.parseDouble(atts.getValue("x2")), Double.parseDouble(atts.getValue("y2")));
-    });
+    _handlers["quad"] = (Attributes atts) {
+      _canvas.quadTo(double.parse(atts.getValue("x1")), double.parse(atts.getValue("y1")), double.parse(atts.getValue("x2")), double.parse(atts.getValue("y2")));
+    };
 
-    _handlers.put("curve", (Attributes atts) {
-      _canvas.curveTo(Double.parseDouble(atts.getValue("x1")), Double.parseDouble(atts.getValue("y1")), Double.parseDouble(atts.getValue("x2")), Double.parseDouble(atts.getValue("y2")), Double.parseDouble(atts.getValue("x3")), Double.parseDouble(atts.getValue("y3")));
-    });
+    _handlers["curve"] = (Attributes atts) {
+      _canvas.curveTo(double.parse(atts.getValue("x1")), double.parse(atts.getValue("y1")), double.parse(atts.getValue("x2")), double.parse(atts.getValue("y2")), double.parse(atts.getValue("x3")), double.parse(atts.getValue("y3")));
+    };
 
-    _handlers.put("close", (Attributes atts) {
+    _handlers["close"] = (Attributes atts) {
       _canvas.close();
-    });
+    };
 
-    _handlers.put("stroke", (Attributes atts) {
+    _handlers["stroke"] = (Attributes atts) {
       _canvas.stroke();
-    });
+    };
 
-    _handlers.put("fill", (Attributes atts) {
+    _handlers["fill"] = (Attributes atts) {
       _canvas.fill();
-    });
+    };
 
-    _handlers.put("fillstroke", (Attributes atts) {
+    _handlers["fillstroke"] = (Attributes atts) {
       _canvas.fillAndStroke();
-    });
+    };
   }
 
   /**

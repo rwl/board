@@ -38,12 +38,8 @@ class GraphMlEdge {
 	 * @param edgeSource Source Node's ID.
 	 * @param edgeTarget Target Node's ID.
 	 */
-  GraphMlEdge(String edgeSource, String edgeTarget, String edgeSourcePort, String edgeTargetPort) {
+  GraphMlEdge(this._edgeSource, this_edgeTarget, this._edgeSourcePort, this._edgeTargetPort) {
     this._edgeId = "";
-    this._edgeSource = edgeSource;
-    this._edgeSourcePort = edgeSourcePort;
-    this._edgeTarget = edgeTarget;
-    this._edgeTargetPort = edgeTargetPort;
     this._edgeDirected = "";
   }
 
@@ -51,21 +47,25 @@ class GraphMlEdge {
 	 * Construct an edge from a xml edge element.
 	 * @param edgeElement Xml edge element.
 	 */
-  GraphMlEdge(Element edgeElement) {
-    this._edgeId = edgeElement.getAttribute(GraphMlConstants.ID);
-    this._edgeSource = edgeElement.getAttribute(GraphMlConstants.EDGE_SOURCE);
-    this._edgeSourcePort = edgeElement.getAttribute(GraphMlConstants.EDGE_SOURCE_PORT);
-    this._edgeTarget = edgeElement.getAttribute(GraphMlConstants.EDGE_TARGET);
-    this._edgeTargetPort = edgeElement.getAttribute(GraphMlConstants.EDGE_TARGET_PORT);
-    this._edgeDirected = edgeElement.getAttribute(GraphMlConstants.EDGE_DIRECTED);
+  factory GraphMlEdge.from(Element edgeElement) {
+    final edgeSource = edgeElement.getAttribute(GraphMlConstants.EDGE_SOURCE);
+    final edgeSourcePort = edgeElement.getAttribute(GraphMlConstants.EDGE_SOURCE_PORT);
+    final edgeTarget = edgeElement.getAttribute(GraphMlConstants.EDGE_TARGET);
+    final edgeTargetPort = edgeElement.getAttribute(GraphMlConstants.EDGE_TARGET_PORT);
+    
+    final edge = new GraphMlEdge(edgeSource, edgeTarget, edgeSourcePort, edgeTargetPort);
+    
+    edge._edgeId = edgeElement.getAttribute(GraphMlConstants.ID);
+    edge._edgeDirected = edgeElement.getAttribute(GraphMlConstants.EDGE_DIRECTED);
 
     List<Element> dataList = GraphMlUtils.childsTags(edgeElement, GraphMlConstants.DATA);
 
     for (Element dataElem in dataList) {
-      GraphMlData data = new GraphMlData(dataElem);
+      GraphMlData data = new GraphMlData.from(dataElem);
       String key = data.getDataKey();
-      _edgeDataMap[key] = data;
+      edge._edgeDataMap[key] = data;
     }
+    return edge;
   }
 
   String getEdgeDirected() {

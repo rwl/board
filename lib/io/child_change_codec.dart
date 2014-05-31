@@ -18,14 +18,26 @@ class ChildChangeCodec extends ObjectCodec {
   /**
 	 * Constructs a new model codec.
 	 */
-  ChildChangeCodec() {
-    this(new ChildChange(), ["model", "child", "previousIndex"], ["parent", "previous"], null);
-  }
+//  ChildChangeCodec() {
+//    this(new ChildChange(), ["model", "child", "previousIndex"], ["parent", "previous"], null);
+//  }
 
   /**
 	 * Constructs a new model codec for the given arguments.
 	 */
-  ChildChangeCodec(Object template, List<String> exclude, List<String> idrefs, Map<String, String> mapping) : super(template, exclude, idrefs, mapping);
+  ChildChangeCodec([Object template=null, List<String> exclude=null, List<String> idrefs=null,
+      Map<String, String> mapping=null]) : super(template) {
+    if (template == null) {
+      this._template = new ChildChange();
+    }
+    if (exclude == null) {
+      exclude = ["model", "child", "previousIndex"];
+    }
+    if (idrefs == null) {
+      idrefs = ["parent", "previous"];
+    }
+    _init(exclude, idrefs, mapping);
+  }
 
   /* (non-Javadoc)
 	 * @see graph.io.ObjectCodec#isReference(java.lang.Object, java.lang.String, java.lang.Object, boolean)

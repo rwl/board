@@ -27,7 +27,7 @@ class GraphViewImageReader extends GraphViewReader {
   /**
 	 * Specifies the background color. Default is null.
 	 */
-  Color _background;
+  color.Color _background;
 
   /**
 	 * Specifies if the image should be anti-aliased. Default is true.
@@ -54,35 +54,35 @@ class GraphViewImageReader extends GraphViewReader {
   /**
 	 * Constructs a new reader with a transparent background.
 	 */
-  GraphViewImageReader() {
-    this(null);
-  }
+//  GraphViewImageReader() {
+//    this(null);
+//  }
 
   /**
 	 * Constructs a new reader with the given background color.
 	 */
-  GraphViewImageReader(Color background) {
+  GraphViewImageReader([color.Color background=null]) {
     this(background, 0);
   }
 
   /**
 	 * Constructs a new reader with a transparent background.
 	 */
-  GraphViewImageReader(Color background, int border) {
+  GraphViewImageReader(color.Color background, int border) {
     this(background, border, true);
   }
 
   /**
 	 * Constructs a new reader with a transparent background.
 	 */
-  GraphViewImageReader(Color background, int border, bool antiAlias) {
+  GraphViewImageReader(color.Color background, int border, bool antiAlias) {
     this(background, border, antiAlias, true);
   }
 
   /**
 	 * Constructs a new reader with a transparent background.
 	 */
-  GraphViewImageReader(Color background, int border, bool antiAlias, bool cropping) {
+  GraphViewImageReader(color.Color background, int border, bool antiAlias, bool cropping) {
     setBackground(background);
     setBorder(border);
     setAntiAlias(antiAlias);
@@ -92,14 +92,14 @@ class GraphViewImageReader extends GraphViewReader {
   /**
 	 * 
 	 */
-  Color getBackground() {
+  color.Color getBackground() {
     return _background;
   }
 
   /**
 	 * 
 	 */
-  void setBackground(Color background) {
+  void setBackground(color.Color background) {
     this._background = background;
   }
 
@@ -214,7 +214,7 @@ class GraphViewImageReader extends GraphViewReader {
 	 *            Filename of the display XML file.
 	 * @return Returns an image representing the display XML file.
 	 */
-  static BufferedImage convertFile(String filename, GraphViewImageReader viewReader) //throws ParserConfigurationException, SAXException, IOException
+  static image.Image convertFile(String filename, GraphViewImageReader viewReader) //throws ParserConfigurationException, SAXException, IOException
   {
     return convert(new InputSource(new FileInputStream(filename)), viewReader);
   }
@@ -227,9 +227,9 @@ class GraphViewImageReader extends GraphViewReader {
 	 *            Input source that contains the display XML.
 	 * @return Returns an image representing the display XML input source.
 	 */
-  static BufferedImage convert(InputSource inputSource, GraphViewImageReader viewReader) //throws ParserConfigurationException, SAXException, IOException
+  static image.Image convert(InputSource inputSource, GraphViewImageReader viewReader) //throws ParserConfigurationException, SAXException, IOException
   {
-    BufferedImage result = null;
+    image.Image result = null;
     SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
     XMLReader reader = parser.getXMLReader();
 

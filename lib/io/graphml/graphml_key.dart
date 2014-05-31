@@ -65,11 +65,7 @@ class GraphMlKey {
 	 * @param keyName Key Name
 	 * @param keyType Type of the values represented for this key.
 	 */
-  GraphMlKey(String keyId, keyForValues keyFor, String keyName, keyTypeValues keyType) {
-    this._keyId = keyId;
-    this._keyFor = keyFor;
-    this._keyName = keyName;
-    this._keyType = keyType;
+  GraphMlKey(this._keyId, this._keyFor, this._keyName, this._keyType) {
     this._keyDefault = _defaultValue();
   }
 
@@ -77,12 +73,12 @@ class GraphMlKey {
 	 * Construct a key from a xml key element.
 	 * @param keyElement Xml key element.
 	 */
-  GraphMlKey(Element keyElement) {
-    this._keyId = keyElement.getAttribute(GraphMlConstants.ID);
-    this._keyFor = enumForValue(keyElement.getAttribute(GraphMlConstants.KEY_FOR));
-    this._keyName = keyElement.getAttribute(GraphMlConstants.KEY_NAME);
-    this._keyType = enumTypeValue(keyElement.getAttribute(GraphMlConstants.KEY_TYPE));
-    this._keyDefault = _defaultValue();
+  factory GraphMlKey.from(Element keyElement) {
+    final keyId = keyElement.getAttribute(GraphMlConstants.ID);
+    final keyFor = enumForValue(keyElement.getAttribute(GraphMlConstants.KEY_FOR));
+    final keyName = keyElement.getAttribute(GraphMlConstants.KEY_NAME);
+    final keyType = enumTypeValue(keyElement.getAttribute(GraphMlConstants.KEY_TYPE));
+    return new GraphMlKey(keyId, keyFor, keyName, keyType);
   }
 
   String getKeyDefault() {
@@ -133,35 +129,35 @@ class GraphMlKey {
     String val = "";
     switch (this._keyType) {
       case keyTypeValues.BOOLEAN:
-        {
-          val = "false";
-          break;
-        }
+
+        val = "false";
+        break;
+
       case keyTypeValues.DOUBLE:
-        {
-          val = "0";
-          break;
-        }
+
+        val = "0";
+        break;
+
       case keyTypeValues.FLOAT:
-        {
-          val = "0";
-          break;
-        }
+
+        val = "0";
+        break;
+
       case keyTypeValues.INT:
-        {
-          val = "0";
-          break;
-        }
+
+        val = "0";
+        break;
+
       case keyTypeValues.LONG:
-        {
-          val = "0";
-          break;
-        }
+
+        val = "0";
+        break;
+
       case keyTypeValues.STRING:
-        {
-          val = "";
-          break;
-        }
+
+        val = "";
+        break;
+
     }
     return val;
   }
@@ -234,40 +230,40 @@ class GraphMlKey {
 
     switch (value) {
       case keyForValues.GRAPH:
-        {
-          val = GraphMlConstants.GRAPH;
-          break;
-        }
+
+        val = GraphMlConstants.GRAPH;
+        break;
+
       case keyForValues.NODE:
-        {
-          val = GraphMlConstants.NODE;
-          break;
-        }
+
+        val = GraphMlConstants.NODE;
+        break;
+
       case keyForValues.EDGE:
-        {
-          val = GraphMlConstants.EDGE;
-          break;
-        }
+
+        val = GraphMlConstants.EDGE;
+        break;
+
       case keyForValues.HYPEREDGE:
-        {
-          val = GraphMlConstants.HYPEREDGE;
-          break;
-        }
+
+        val = GraphMlConstants.HYPEREDGE;
+        break;
+
       case keyForValues.PORT:
-        {
-          val = GraphMlConstants.PORT;
-          break;
-        }
+
+        val = GraphMlConstants.PORT;
+        break;
+
       case keyForValues.ENDPOINT:
-        {
-          val = GraphMlConstants.ENDPOINT;
-          break;
-        }
+
+        val = GraphMlConstants.ENDPOINT;
+        break;
+
       case keyForValues.ALL:
-        {
-          val = GraphMlConstants.ALL;
-          break;
-        }
+
+        val = GraphMlConstants.ALL;
+        break;
+
     }
 
     return val;
@@ -310,35 +306,35 @@ class GraphMlKey {
 
     switch (value) {
       case keyTypeValues.BOOLEAN:
-        {
-          val = "boolean";
-          break;
-        }
+
+        val = "boolean";
+        break;
+
       case keyTypeValues.DOUBLE:
-        {
-          val = "double";
-          break;
-        }
+
+        val = "double";
+        break;
+
       case keyTypeValues.FLOAT:
-        {
-          val = "float";
-          break;
-        }
+
+        val = "float";
+        break;
+
       case keyTypeValues.INT:
-        {
-          val = "int";
-          break;
-        }
+
+        val = "int";
+        break;
+
       case keyTypeValues.LONG:
-        {
-          val = "long";
-          break;
-        }
+
+        val = "long";
+        break;
+
       case keyTypeValues.STRING:
-        {
-          val = "string";
-          break;
-        }
+
+        val = "string";
+        break;
+
     }
 
     return val;

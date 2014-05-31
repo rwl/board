@@ -89,14 +89,14 @@ class Graphics2DCanvas extends BasicCanvas {
   /**
 	 * Constructs a new graphics canvas with an empty graphics object.
 	 */
-  Graphics2DCanvas() {
-    this(null);
-  }
+//  Graphics2DCanvas() {
+//    this(null);
+//  }
 
   /**
 	 * Constructs a new graphics canvas for the given graphics object.
 	 */
-  Graphics2DCanvas(Graphics2D g) {
+  Graphics2DCanvas([Graphics2D g=null]) {
     this._g = g;
 
     // Initializes the cell renderer pane for drawing HTML markup
@@ -233,7 +233,7 @@ class Graphics2DCanvas extends BasicCanvas {
   /**
 	 * 
 	 */
-  void drawImage(Rectangle bounds, String imageUrl, [bool preserveAspect = PRESERVE_IMAGE_ASPECT, bool flipH = false, bool flipV = false]) {
+  void drawImage(Rectangle bounds, String imageUrl, [bool preserveAspect = null, bool flipH = false, bool flipV = false]) {
     if (imageUrl != null && bounds.getWidth() > 0 && bounds.getHeight() > 0) {
       Image img = loadImage(imageUrl);
 
@@ -243,6 +243,9 @@ class Graphics2DCanvas extends BasicCanvas {
         int y = bounds.y;
         Dimension size = _getImageSize(img);
 
+        if (preserveAspect == null) {
+          preserveAspect = Graphics2DCanvas.PRESERVE_IMAGE_ASPECT;
+        }
         if (preserveAspect) {
           double s = Math.min(bounds.width / (size.width as double), bounds.height / (size.height as double));
           w = (size.width * s) as int;

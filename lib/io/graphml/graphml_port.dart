@@ -20,25 +20,25 @@ class GraphMlPort {
 	 * Construct a Port with name.
 	 * @param name Port Name
 	 */
-  GraphMlPort(String name) {
-    this._name = name;
-  }
+  GraphMlPort(this._name);
 
   /**
 	 * Construct a Port from a xml port Element.
 	 * @param portElement Xml port Element.
 	 */
-  GraphMlPort(Element portElement) {
-    this._name = portElement.getAttribute(GraphMlConstants.PORT_NAME);
+  factory GraphMlPort.from(Element portElement) {
+    final name = portElement.getAttribute(GraphMlConstants.PORT_NAME);
+    final port = new GraphMlPort(name);
 
     //Add data elements
     List<Element> dataList = GraphMlUtils.childsTags(portElement, GraphMlConstants.DATA);
 
     for (Element dataElem in dataList) {
-      GraphMlData data = new GraphMlData(dataElem);
+      GraphMlData data = new GraphMlData.from(dataElem);
       String key = data.getDataKey();
       _portDataMap[key] = data;
     }
+    return port;
   }
 
   String getName() {

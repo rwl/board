@@ -28,43 +28,42 @@ class GraphMlNode {
 	 * @param nodeId Node`s ID
 	 * @param nodeData Gml Data.
 	 */
-  GraphMlNode(String nodeId, GraphMlData nodeData) {
-    this._nodeId = nodeId;
-    this._nodeData = nodeData;
-  }
+  GraphMlNode([String this._nodeId=null, GraphMlData this._nodeData=null]);
 
   /**
 	 * Construct a Node from a xml Node Element.
 	 * @param nodeElement Xml Node Element.
 	 */
-  GraphMlNode(Element nodeElement) {
-    this._nodeId = nodeElement.getAttribute(GraphMlConstants.ID);
+  factory GraphMlNode.from(Element nodeElement) {
+    final node = new GraphMlNode();
+    node._nodeId = nodeElement.getAttribute(GraphMlConstants.ID);
 
     //Add data elements
     List<Element> dataList = GraphMlUtils.childsTags(nodeElement, GraphMlConstants.DATA);
 
     for (Element dataElem in dataList) {
-      GraphMlData data = new GraphMlData(dataElem);
+      GraphMlData data = new GraphMlData.from(dataElem);
       String key = data.getDataKey();
-      _nodeDataMap[key] = data;
+      node._nodeDataMap[key] = data;
     }
 
     //Add graph elements
     List<Element> graphList = GraphMlUtils.childsTags(nodeElement, GraphMlConstants.GRAPH);
 
     for (Element graphElem in graphList) {
-      GraphMlGraph graph = new GraphMlGraph(graphElem);
-      _nodeGraphList.add(graph);
+      GraphMlGraph graph = new GraphMlGraph.from(graphElem);
+      node._nodeGraphList.add(graph);
     }
 
     //Add port elements
     List<Element> portList = GraphMlUtils.childsTags(nodeElement, GraphMlConstants.PORT);
 
     for (Element portElem in portList) {
-      GraphMlPort port = new GraphMlPort(portElem);
+      GraphMlPort port = new GraphMlPort.from(portElem);
       String name = port.getName();
-      _nodePortMap[name] = port;
+      node._nodePortMap[name] = port;
     }
+    return node;
   }
 
   String getNodeId() {

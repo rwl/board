@@ -888,7 +888,7 @@ class EdgeStyle {
      * @param dy
      * @return
      */
-  List<int> getRoutePattern(List<int> dir, double quad, double dx, double dy) {
+  static List<int> getRoutePattern(List<int> dir, double quad, double dx, double dy) {
     int sourceIndex = dir[0] == Constants.DIRECTION_MASK_EAST ? 3 : dir[0];
     int targetIndex = dir[1] == Constants.DIRECTION_MASK_EAST ? 3 : dir[1];
 

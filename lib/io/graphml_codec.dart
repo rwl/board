@@ -38,7 +38,7 @@ class GraphMlCodec {
       Element graphElement = graphs[0] as Element;
 
       //Create the graph model.
-      GraphMlGraph gmlGraph = new GraphMlGraph.elem(graphElement);
+      GraphMlGraph gmlGraph = new GraphMlGraph.from(graphElement);
 
       gmlGraph.addGraph(graph, parent);
     }

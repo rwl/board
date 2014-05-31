@@ -18,21 +18,26 @@ class ModelCodec extends ObjectCodec {
   /**
 	 * Constructs a new model codec.
 	 */
-  ModelCodec() {
-    this(new GraphModel());
-  }
+//  ModelCodec() {
+//    this(new GraphModel());
+//  }
 
   /**
 	 * Constructs a new model codec for the given template.
 	 */
-  ModelCodec(Object template) {
-    this(template, null, null, null);
-  }
+//  ModelCodec(Object template) {
+//    this(template, null, null, null);
+//  }
 
   /**
 	 * Constructs a new model codec for the given arguments.
 	 */
-  ModelCodec(Object template, List<String> exclude, List<String> idrefs, Map<String, String> mapping) : super(template, exclude, idrefs, mapping);
+  ModelCodec([Object template=null, List<String> exclude=null, List<String> idrefs=null,
+      Map<String, String> mapping=null]) : super(template, exclude, idrefs, mapping) {
+    if (template == null) {
+      this._template = new GraphModel();
+    }
+  }
 
   /**
 	 * Encodes the given GraphModel by writing a (flat) XML sequence

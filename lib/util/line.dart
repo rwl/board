@@ -39,9 +39,7 @@ class Line extends Point2d {
 	 * Creates a new line
 	 */
   factory Line.between(Point2d startPt, Point2d endPt) {
-    this.setX(startPt.getX());
-    this.setY(startPt.getY());
-    this._endPoint = endPt;
+    return new Line(startPt.getX(), startPt.getY(), endPt);
   }
 
   /**

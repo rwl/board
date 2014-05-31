@@ -40,24 +40,27 @@ class GraphMlShapeNode {
 	 * @param shapeNodeElement Xml Shape Node Element.
 	 */
   factory GraphMlShapeNode.from(Element shapeNodeElement) {
-    //Defines Geometry
+    final node = new GraphMlShapeNode();
+    
+    // Defines geometry.
     Element geometryElement = GraphMlUtils.childsTag(shapeNodeElement, GraphMlConstants.JGRAPH + GraphMlConstants.GEOMETRY);
-    this._dataHeight = geometryElement.getAttribute(GraphMlConstants.HEIGHT);
-    this._dataWidth = geometryElement.getAttribute(GraphMlConstants.WIDTH);
-    this._dataX = geometryElement.getAttribute(GraphMlConstants.X);
-    this._dataY = geometryElement.getAttribute(GraphMlConstants.Y);
+    node._dataHeight = geometryElement.getAttribute(GraphMlConstants.HEIGHT);
+    node._dataWidth = geometryElement.getAttribute(GraphMlConstants.WIDTH);
+    node._dataX = geometryElement.getAttribute(GraphMlConstants.X);
+    node._dataY = geometryElement.getAttribute(GraphMlConstants.Y);
 
     Element styleElement = GraphMlUtils.childsTag(shapeNodeElement, GraphMlConstants.JGRAPH + GraphMlConstants.STYLE);
 
     if (styleElement != null) {
-      this._dataStyle = styleElement.getAttribute(GraphMlConstants.PROPERTIES);
+      node._dataStyle = styleElement.getAttribute(GraphMlConstants.PROPERTIES);
     }
     //Defines Label
     Element labelElement = GraphMlUtils.childsTag(shapeNodeElement, GraphMlConstants.JGRAPH + GraphMlConstants.LABEL);
 
     if (labelElement != null) {
-      this._dataLabel = labelElement.getAttribute(GraphMlConstants.TEXT);
+      node._dataLabel = labelElement.getAttribute(GraphMlConstants.TEXT);
     }
+    return node;
   }
 
   /**

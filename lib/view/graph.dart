@@ -481,7 +481,7 @@ class Graph extends EventSource {
   /**
 	 * Holds the list of bundles.
 	 */
-  static List<ImageBundle> _imageBundles = new LinkedList<ImageBundle>();
+  static List<ImageBundle> _imageBundles = new /*Linked*/List<ImageBundle>();
 
   /**
 	 * Fires repaint events for full repaints.

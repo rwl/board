@@ -14,7 +14,7 @@ part of graph.io;
  */
 class RootChangeCodec extends ObjectCodec {
 
-  static const List<String> _DEFAULT_EXCLUDE = ["model", "previous", "root"];
+//  static const List<String> _DEFAULT_EXCLUDE = ["model", "previous", "root"];
 
   /**
 	 * Constructs a new model codec.
@@ -28,11 +28,15 @@ class RootChangeCodec extends ObjectCodec {
   /**
 	 * Constructs a new model codec for the given arguments.
 	 */
-  RootChangeCodec([Object template=null, List<String> exclude = _DEFAULT_EXCLUDE, List<String> idrefs = null,
+  RootChangeCodec([Object template=null, List<String> exclude = null, List<String> idrefs = null,
                    Map<String, String> mapping = null]) : super(template, exclude, idrefs, mapping) {
     if (template == null) {
       this._template = new RootChange();
     }
+    if (exclude == null) {
+      exclude = ["model", "previous", "root"];
+    }
+    _init(exclude, idrefs, mapping);
   }
 
   /* (non-Javadoc)
@@ -41,7 +45,7 @@ class RootChangeCodec extends ObjectCodec {
   //	@Override
   Node afterEncode(Codec enc, Object obj, Node node) {
     if (obj is RootChange) {
-      enc.encodeCell((ICell)(obj as RootChange).getRoot(), node, true);
+      enc.encodeCell((obj as RootChange).getRoot() as ICell, node, true);
     }
 
     return node;

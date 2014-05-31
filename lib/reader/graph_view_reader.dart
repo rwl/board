@@ -70,7 +70,7 @@ abstract class GraphViewReader extends DefaultHandler {
   void startElement(String uri, String localName, String qName, Attributes atts) //throws SAXException
   {
     String tagName = qName.toUpperCase();
-    Map<String, Object> attrs = new Hashtable<String, Object>();
+    Map<String, Object> attrs = new Map<String, Object>();
 
     for (int i = 0; i < atts.getLength(); i++) {
       String name = atts.getQName(i);
@@ -80,7 +80,7 @@ abstract class GraphViewReader extends DefaultHandler {
         name = atts.getLocalName(i);
       }
 
-      attrs.put(name, atts.getValue(i));
+      attrs[name] = atts.getValue(i);
     }
 
     parseElement(tagName, attrs);
@@ -93,7 +93,7 @@ abstract class GraphViewReader extends DefaultHandler {
 	 * @param attrs Attributes of the node to be parsed.
 	 */
   void parseElement(String tagName, Map<String, Object> attrs) {
-    if (_canvas == null && tagName.equalsIgnoreCase("graph")) {
+    if (_canvas == null && tagName.toLowerCase() == "graph") {
       _scale = Utils.getDouble(attrs, "scale", 1);
       _canvas = createCanvas(attrs);
 
@@ -101,9 +101,9 @@ abstract class GraphViewReader extends DefaultHandler {
         _canvas.setScale(_scale);
       }
     } else if (_canvas != null) {
-      bool edge = tagName.equalsIgnoreCase("edge");
-      bool group = tagName.equalsIgnoreCase("group");
-      bool vertex = tagName.equalsIgnoreCase("vertex");
+      bool edge = tagName.toLowerCase() == "edge";
+      bool group = tagName.toLowerCase() == "group";
+      bool vertex = tagName.toLowerCase() == "vertex";
 
       if ((edge && attrs.containsKey("points")) || ((vertex || group) && attrs.containsKey("x") && attrs.containsKey("y") && attrs.containsKey("width") && attrs.containsKey("height"))) {
         CellState state = new CellState(null, null, attrs);
@@ -163,13 +163,13 @@ abstract class GraphViewReader extends DefaultHandler {
       String x = null;
 
       for (int i = 0; i < len; i++) {
-        char c = pts.charAt(i);
+        String c = pts[i];
 
         if (c == ',' || c == ' ') {
           if (x == null) {
             x = tmp;
           } else {
-            result.add(new Point2d(Double.parseDouble(x), Double.parseDouble(tmp)));
+            result.add(new Point2d(double.parse(x), double.parse(tmp)));
             x = null;
           }
           tmp = "";
@@ -178,7 +178,7 @@ abstract class GraphViewReader extends DefaultHandler {
         }
       }
 
-      result.add(new Point2d(Double.parseDouble(x), Double.parseDouble(tmp)));
+      result.add(new Point2d(double.parse(x), double.parse(tmp)));
     }
 
     return result;

@@ -151,7 +151,7 @@ class VmlCanvas extends BasicCanvas {
         int start = math.round(Utils.getInt(style, Constants.STYLE_STARTSIZE, Constants.DEFAULT_STARTSIZE) * _scale) as int;
 
         // Removes some styles to draw the content area
-        Map<String, Object> cloned = new Map<String, Object>(style);
+        Map<String, Object> cloned = new Map<String, Object>.from(style);
         cloned.remove(Constants.STYLE_FILLCOLOR);
         cloned.remove(Constants.STYLE_ROUNDED);
 

@@ -45,8 +45,9 @@ class GraphMlGraph {
 	 * @param graphElement Xml graph element.
 	 */
   factory GraphMlGraph.from(Element graphElement) {
-    this._id = graphElement.getAttribute(GraphMlConstants.ID);
-    this._edgedefault = graphElement.getAttribute(GraphMlConstants.EDGE_DEFAULT);
+    final id = graphElement.getAttribute(GraphMlConstants.ID);
+    final edgedefault = graphElement.getAttribute(GraphMlConstants.EDGE_DEFAULT);
+    final graph = new GraphMlGraph(id, edgedefault);
 
     //Adds node elements
     List<Element> nodeElements = GraphMlUtils.childsTags(graphElement, GraphMlConstants.NODE);
@@ -54,7 +55,7 @@ class GraphMlGraph {
     for (Element nodeElem in nodeElements) {
       GraphMlNode node = new GraphMlNode.from(nodeElem);
 
-      _nodes.add(node);
+      graph._nodes.add(node);
     }
 
     //Adds edge elements
@@ -71,8 +72,9 @@ class GraphMlGraph {
         }
       }
 
-      _edges.add(edge);
+      graph._edges.add(edge);
     }
+    return graph;
   }
 
   /**
@@ -175,7 +177,7 @@ class GraphMlGraph {
       String style = data.getDataShapeNode().getDataStyle();
       v1 = graph.insertVertex(parent, id, label, x, y, w, h, style) as Cell;
     } else {
-      v1 = graph.insertVertex(parent, id, "", 0, 0, 100, 100) as Cell;
+      v1 = graph.insertVertex(parent, id, "", 0.0, 0.0, 100.0, 100.0) as Cell;
     }
 
     _cellsMap[id] = v1;
@@ -201,24 +203,24 @@ class GraphMlGraph {
     if (source != null && source != "") {
 
       if (source == "North") {
-        fromConstraint = new Point2d(0.5, 0);
+        fromConstraint = new Point2d(0.5, 0.0);
       } else if (source == "South") {
-        fromConstraint = new Point2d(0.5, 1);
+        fromConstraint = new Point2d(0.5, 10.0);
 
       } else if (source == "East") {
-        fromConstraint = new Point2d(1, 0.5);
+        fromConstraint = new Point2d(1.0, 0.5);
 
       } else if (source == "West") {
-        fromConstraint = new Point2d(0, 0.5);
+        fromConstraint = new Point2d(00.0, 0.5);
 
       } else if (source == "NorthWest") {
-        fromConstraint = new Point2d(0, 0);
+        fromConstraint = new Point2d(0.0, 0.0);
       } else if (source == "SouthWest") {
-        fromConstraint = new Point2d(0, 1);
+        fromConstraint = new Point2d(0.0, 1.0);
       } else if (source == "SouthEast") {
-        fromConstraint = new Point2d(1, 1);
+        fromConstraint = new Point2d(1.0, 1.0);
       } else if (source == "NorthEast") {
-        fromConstraint = new Point2d(1, 0);
+        fromConstraint = new Point2d(1.0, 0.0);
       } else {
         try {
           List<String> s = source.split(",");

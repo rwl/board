@@ -60,7 +60,7 @@ class DomOutputParser {
   /**
 	 * 
 	 */
-  /*transient*/ Map<String, IElementHandler> _handlers = new Hashtable<String, IElementHandler>();
+  /*transient*/ Map<String, IElementHandler> _handlers = new Map<String, IElementHandler>();
 
   /**
 	 * 
@@ -77,14 +77,14 @@ class DomOutputParser {
     while (node != null) {
       if (node is Element) {
         Element elt = node as Element;
-        IElementHandler handler = _handlers.get(elt.getNodeName());
+        IElementHandler handler = _handlers[elt.nodeName];
 
         if (handler != null) {
-          handler.parseElement(elt);
+          handler(elt);
         }
       }
 
-      node = node.getNextSibling();
+      node = node.nextNode;
     }
   }
 
@@ -92,161 +92,161 @@ class DomOutputParser {
 	 * 
 	 */
   void _initHandlers() {
-    _handlers.put("save", (Element elt) {
+    _handlers["save"] = (Element elt) {
       _canvas.save();
-    });
+    };
 
-    _handlers.put("restore", (Element elt) {
+    _handlers["restore"] = (Element elt) {
       _canvas.restore();
-    });
+    }; 
 
-    _handlers.put("scale", (Element elt) {
-      _canvas.scale(Double.parseDouble(elt.getAttribute("scale")));
-    });
+    _handlers["scale"] = (Element elt) {
+      _canvas.scale(double.parse(elt.getAttribute("scale")));
+    }; 
 
-    _handlers.put("translate", (Element elt) {
-      _canvas.translate(Double.parseDouble(elt.getAttribute("dx")), Double.parseDouble(elt.getAttribute("dy")));
-    });
+    _handlers["translate"] = (Element elt) {
+      _canvas.translate(double.parse(elt.getAttribute("dx")), double.parse(elt.getAttribute("dy")));
+    }; 
 
-    _handlers.put("rotate", (Element elt) {
-      _canvas.rotate(Double.parseDouble(elt.getAttribute("theta")), elt.getAttribute("flipH").equals("1"), elt.getAttribute("flipV").equals("1"), Double.parseDouble(elt.getAttribute("cx")), Double.parseDouble(elt.getAttribute("cy")));
-    });
+    _handlers["rotate"] = (Element elt) {
+      _canvas.rotate(double.parse(elt.getAttribute("theta")), elt.getAttribute("flipH") == "1", elt.getAttribute("flipV") == "1", double.parse(elt.getAttribute("cx")), double.parse(elt.getAttribute("cy")));
+    }; 
 
-    _handlers.put("strokewidth", (Element elt) {
-      _canvas.setStrokeWidth(Double.parseDouble(elt.getAttribute("width")));
-    });
+    _handlers["strokewidth"] = (Element elt) {
+      _canvas.setStrokeWidth(double.parse(elt.getAttribute("width")));
+    }; 
 
-    _handlers.put("strokecolor", (Element elt) {
+    _handlers["strokecolor"] = (Element elt) {
       _canvas.setStrokeColor(elt.getAttribute("color"));
-    });
+    }; 
 
-    _handlers.put("dashed", (Element elt) {
-      _canvas.setDashed(elt.getAttribute("dashed").equals("1"));
-    });
+    _handlers["dashed"] = (Element elt) {
+      _canvas.setDashed(elt.getAttribute("dashed") == "1");
+    }; 
 
-    _handlers.put("dashpattern", (Element elt) {
+    _handlers["dashpattern"] = (Element elt) {
       _canvas.setDashPattern(elt.getAttribute("pattern"));
-    });
+    }; 
 
-    _handlers.put("linecap", (Element elt) {
+    _handlers["linecap"] = (Element elt) {
       _canvas.setLineCap(elt.getAttribute("cap"));
-    });
+    }; 
 
-    _handlers.put("linejoin", (Element elt) {
+    _handlers["linejoin"] = (Element elt) {
       _canvas.setLineJoin(elt.getAttribute("join"));
-    });
+    }; 
 
-    _handlers.put("miterlimit", (Element elt) {
-      _canvas.setMiterLimit(Double.parseDouble(elt.getAttribute("limit")));
-    });
+    _handlers["miterlimit"] = (Element elt) {
+      _canvas.setMiterLimit(double.parse(elt.getAttribute("limit")));
+    }; 
 
-    _handlers.put("fontsize", (Element elt) {
-      _canvas.setFontSize(Double.parseDouble(elt.getAttribute("size")));
-    });
+    _handlers["fontsize"] = (Element elt) {
+      _canvas.setFontSize(double.parse(elt.getAttribute("size")));
+    }; 
 
-    _handlers.put("fontcolor", (Element elt) {
+    _handlers["fontcolor"] = (Element elt) {
       _canvas.setFontColor(elt.getAttribute("color"));
-    });
+    }; 
 
-    _handlers.put("fontbackgroundcolor", (Element elt) {
+    _handlers["fontbackgroundcolor"] = (Element elt) {
       _canvas.setFontBackgroundColor(elt.getAttribute("color"));
-    });
+    }; 
 
-    _handlers.put("fontbordercolor", (Element elt) {
+    _handlers["fontbordercolor"] = (Element elt) {
       _canvas.setFontBorderColor(elt.getAttribute("color"));
-    });
+    }; 
 
-    _handlers.put("fontfamily", (Element elt) {
+    _handlers["fontfamily"] = (Element elt) {
       _canvas.setFontFamily(elt.getAttribute("family"));
-    });
+    }; 
 
-    _handlers.put("fontstyle", (Element elt) {
-      _canvas.setFontStyle(int.parseInt(elt.getAttribute("style")));
-    });
+    _handlers["fontstyle"] = (Element elt) {
+      _canvas.setFontStyle(int.parse(elt.getAttribute("style")));
+    }; 
 
-    _handlers.put("alpha", (Element elt) {
-      _canvas.setAlpha(Double.parseDouble(elt.getAttribute("alpha")));
-    });
+    _handlers["alpha"] = (Element elt) {
+      _canvas.setAlpha(double.parse(elt.getAttribute("alpha")));
+    }; 
 
-    _handlers.put("fillcolor", (Element elt) {
+    _handlers["fillcolor"] = (Element elt) {
       _canvas.setFillColor(elt.getAttribute("color"));
-    });
+    }; 
 
-    _handlers.put("shadowcolor", (Element elt) {
+    _handlers["shadowcolor"] = (Element elt) {
       _canvas.setShadowColor(elt.getAttribute("color"));
-    });
+    }; 
 
-    _handlers.put("shadowalpha", (Element elt) {
-      _canvas.setShadowAlpha(Double.parseDouble(elt.getAttribute("alpha")));
-    });
+    _handlers["shadowalpha"] = (Element elt) {
+      _canvas.setShadowAlpha(double.parse(elt.getAttribute("alpha")));
+    }; 
 
-    _handlers.put("shadowoffset", (Element elt) {
-      _canvas.setShadowOffset(Double.parseDouble(elt.getAttribute("dx")), Double.parseDouble(elt.getAttribute("dy")));
-    });
+    _handlers["shadowoffset"] = (Element elt) {
+      _canvas.setShadowOffset(double.parse(elt.getAttribute("dx")), double.parse(elt.getAttribute("dy")));
+    }; 
 
-    _handlers.put("shadow", (Element elt) {
-      _canvas.setShadow(elt.getAttribute("enabled").equals("1"));
-    });
+    _handlers["shadow"] = (Element elt) {
+      _canvas.setShadow(elt.getAttribute("enabled") == "1");
+    }; 
 
-    _handlers.put("gradient", (Element elt) {
-      _canvas.setGradient(elt.getAttribute("c1"), elt.getAttribute("c2"), Double.parseDouble(elt.getAttribute("x")), Double.parseDouble(elt.getAttribute("y")), Double.parseDouble(elt.getAttribute("w")), Double.parseDouble(elt.getAttribute("h")), elt.getAttribute("direction"), Double.parseDouble(_getValue(elt, "alpha1", "1")), Double.parseDouble(_getValue(elt, "alpha2", "1")));
-    });
+    _handlers["gradient"] = (Element elt) {
+      _canvas.setGradient(elt.getAttribute("c1"), elt.getAttribute("c2"), double.parse(elt.getAttribute("x")), double.parse(elt.getAttribute("y")), double.parse(elt.getAttribute("w")), double.parse(elt.getAttribute("h")), elt.getAttribute("direction"), double.parse(_getValue(elt, "alpha1", "1")), double.parse(_getValue(elt, "alpha2", "1")));
+    }; 
 
-    _handlers.put("rect", (Element elt) {
-      _canvas.rect(Double.parseDouble(elt.getAttribute("x")), Double.parseDouble(elt.getAttribute("y")), Double.parseDouble(elt.getAttribute("w")), Double.parseDouble(elt.getAttribute("h")));
-    });
+    _handlers["rect"] = (Element elt) {
+      _canvas.rect(double.parse(elt.getAttribute("x")), double.parse(elt.getAttribute("y")), double.parse(elt.getAttribute("w")), double.parse(elt.getAttribute("h")));
+    }; 
 
-    _handlers.put("roundrect", (Element elt) {
-      _canvas.roundrect(Double.parseDouble(elt.getAttribute("x")), Double.parseDouble(elt.getAttribute("y")), Double.parseDouble(elt.getAttribute("w")), Double.parseDouble(elt.getAttribute("h")), Double.parseDouble(elt.getAttribute("dx")), Double.parseDouble(elt.getAttribute("dy")));
-    });
+    _handlers["roundrect"] = (Element elt) {
+      _canvas.roundrect(double.parse(elt.getAttribute("x")), double.parse(elt.getAttribute("y")), double.parse(elt.getAttribute("w")), double.parse(elt.getAttribute("h")), double.parse(elt.getAttribute("dx")), double.parse(elt.getAttribute("dy")));
+    }; 
 
-    _handlers.put("ellipse", (Element elt) {
-      _canvas.ellipse(Double.parseDouble(elt.getAttribute("x")), Double.parseDouble(elt.getAttribute("y")), Double.parseDouble(elt.getAttribute("w")), Double.parseDouble(elt.getAttribute("h")));
-    });
+    _handlers["ellipse"] = (Element elt) {
+      _canvas.ellipse(double.parse(elt.getAttribute("x")), double.parse(elt.getAttribute("y")), double.parse(elt.getAttribute("w")), double.parse(elt.getAttribute("h")));
+    }; 
 
-    _handlers.put("image", (Element elt) {
-      _canvas.image(Double.parseDouble(elt.getAttribute("x")), Double.parseDouble(elt.getAttribute("y")), Double.parseDouble(elt.getAttribute("w")), Double.parseDouble(elt.getAttribute("h")), elt.getAttribute("src"), elt.getAttribute("aspect").equals("1"), elt.getAttribute("flipH").equals("1"), elt.getAttribute("flipV").equals("1"));
-    });
+    _handlers["image"] = (Element elt) {
+      _canvas.image(double.parse(elt.getAttribute("x")), double.parse(elt.getAttribute("y")), double.parse(elt.getAttribute("w")), double.parse(elt.getAttribute("h")), elt.getAttribute("src"), elt.getAttribute("aspect") == "1", elt.getAttribute("flipH") == "1", elt.getAttribute("flipV") == "1");
+    }; 
 
-    _handlers.put("text", (Element elt) {
-      _canvas.text(Double.parseDouble(elt.getAttribute("x")), Double.parseDouble(elt.getAttribute("y")), Double.parseDouble(elt.getAttribute("w")), Double.parseDouble(elt.getAttribute("h")), elt.getAttribute("str"), elt.getAttribute("align"), elt.getAttribute("valign"), _getValue(elt, "wrap", "").equals("1"), elt.getAttribute("format"), elt.getAttribute("overflow"), _getValue(elt, "clip", "").equals("1"), Double.parseDouble(_getValue(elt, "rotation", "0")));
-    });
+    _handlers["text"] = (Element elt) {
+      _canvas.text(double.parse(elt.getAttribute("x")), double.parse(elt.getAttribute("y")), double.parse(elt.getAttribute("w")), double.parse(elt.getAttribute("h")), elt.getAttribute("str"), elt.getAttribute("align"), elt.getAttribute("valign"), _getValue(elt, "wrap", "") == "1", elt.getAttribute("format"), elt.getAttribute("overflow"), _getValue(elt, "clip", "") == "1", double.parse(_getValue(elt, "rotation", "0")));
+    }; 
 
-    _handlers.put("begin", (Element elt) {
+    _handlers["begin"] = (Element elt) {
       _canvas.begin();
-    });
+    }; 
 
-    _handlers.put("move", (Element elt) {
-      _canvas.moveTo(Double.parseDouble(elt.getAttribute("x")), Double.parseDouble(elt.getAttribute("y")));
-    });
+    _handlers["move"] = (Element elt) {
+      _canvas.moveTo(double.parse(elt.getAttribute("x")), double.parse(elt.getAttribute("y")));
+    }; 
 
-    _handlers.put("line", (Element elt) {
-      _canvas.lineTo(Double.parseDouble(elt.getAttribute("x")), Double.parseDouble(elt.getAttribute("y")));
-    });
+    _handlers["line"] = (Element elt) {
+      _canvas.lineTo(double.parse(elt.getAttribute("x")), double.parse(elt.getAttribute("y")));
+    }; 
 
-    _handlers.put("quad", (Element elt) {
-      _canvas.quadTo(Double.parseDouble(elt.getAttribute("x1")), Double.parseDouble(elt.getAttribute("y1")), Double.parseDouble(elt.getAttribute("x2")), Double.parseDouble(elt.getAttribute("y2")));
-    });
+    _handlers["quad"] = (Element elt) {
+      _canvas.quadTo(double.parse(elt.getAttribute("x1")), double.parse(elt.getAttribute("y1")), double.parse(elt.getAttribute("x2")), double.parse(elt.getAttribute("y2")));
+    }; 
 
-    _handlers.put("curve", (Element elt) {
-      _canvas.curveTo(Double.parseDouble(elt.getAttribute("x1")), Double.parseDouble(elt.getAttribute("y1")), Double.parseDouble(elt.getAttribute("x2")), Double.parseDouble(elt.getAttribute("y2")), Double.parseDouble(elt.getAttribute("x3")), Double.parseDouble(elt.getAttribute("y3")));
-    });
+    _handlers["curve"] = (Element elt) {
+      _canvas.curveTo(double.parse(elt.getAttribute("x1")), double.parse(elt.getAttribute("y1")), double.parse(elt.getAttribute("x2")), double.parse(elt.getAttribute("y2")), double.parse(elt.getAttribute("x3")), double.parse(elt.getAttribute("y3")));
+    }; 
 
-    _handlers.put("close", (Element elt) {
+    _handlers["close"] = (Element elt) {
       _canvas.close();
-    });
+    }; 
 
-    _handlers.put("stroke", (Element elt) {
+    _handlers["stroke"] = (Element elt) {
       _canvas.stroke();
-    });
+    }; 
 
-    _handlers.put("fill", (Element elt) {
+    _handlers["fill"] = (Element elt) {
       _canvas.fill();
-    });
+    }; 
 
-    _handlers.put("fillstroke", (Element elt) {
+    _handlers["fillstroke"] = (Element elt) {
       _canvas.fillAndStroke();
-    });
+    }; 
   }
 
   /**

@@ -919,7 +919,7 @@ class _WeightedCellSorter implements Comparable<Object> {
 //    this(null, 0);
 //  }
 
-  _WeightedCellSorter([_TreeNode this._cell=null, this._weightedValue=0]);
+  _WeightedCellSorter([_TreeNode this.cell=null, this.weightedValue=0]);
 
   /**
    * comparator on the medianValue

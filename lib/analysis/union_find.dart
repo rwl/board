@@ -102,12 +102,16 @@ class _UnionFindNode {
   /**
    * Reference to the parent node. Root nodes point to themselves.
    */
-  _UnionFindNode parent = this;
+  _UnionFindNode parent;
 
   /**
    * The size of the tree. Initial value is 1.
    */
   int size = 1;
+  
+  _UnionFindNode() {
+    parent = this;
+  }
 
   /**
    * @return Returns the parent node

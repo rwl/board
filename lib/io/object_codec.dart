@@ -89,9 +89,11 @@ class ObjectCodec {
 	 * @param idrefs Optional array of fieldnames to be converted to/from references.
 	 * @param mapping Optional mapping from field- to attributenames.
 	 */
-  ObjectCodec(Object template, [List<String> exclude=null, List<String> idrefs=null, Map<String, String> mapping=null]) {
-    this._template = template;
+  ObjectCodec(this._template, [List<String> exclude=null, List<String> idrefs=null, Map<String, String> mapping=null]) {
+    _init(exclude, idrefs, mapping);
+  }
 
+  void _init(List<String> exclude, List<String> idrefs, Map<String, String> mapping) {
     if (exclude != null) {
       this._exclude = new HashSet<String>();
 

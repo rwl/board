@@ -5,6 +5,13 @@ library graph.reader;
  * into an image using SAX and without having to create a graph model.
  */
 
+import 'dart:html';
+
+import 'package:image/image.dart' as image;
+import 'package:color/color.dart' as color;
+
+import '../compat/math.dart' as math;
+
 import '../canvas/canvas.dart' show ICanvas2D, Graphics2DCanvas, ICanvas, ImageCanvas;
 import '../reader/reader.dart' show IElementHandler;
 import '../view/view.dart' show CellState;
