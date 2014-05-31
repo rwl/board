@@ -196,7 +196,7 @@ class HtmlCanvas extends BasicCanvas {
 	 */
   void drawLine(List<Point2d> pts, Map<String, Object> style) {
     String strokeColor = Utils.getString(style, Constants.STYLE_STROKECOLOR);
-    int strokeWidth = (int)(Utils.getInt(style, Constants.STYLE_STROKEWIDTH, 1) * _scale);
+    int strokeWidth = (Utils.getInt(style, Constants.STYLE_STROKEWIDTH, 1) * _scale) as int;
 
     if (strokeColor != null && strokeWidth > 0) {
 

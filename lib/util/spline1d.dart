@@ -154,10 +154,10 @@ class Spline1D {
     }
     _a[N - 1] = _pos1D[N - 1];
 
-    List<List<double>> A = new List<double>(N - 2);//[N - 2];
+    List<List<double>> A = new List<List<double>>(N - 2);//[N - 2];
     List<double> y = new List<double>(N - 2);
     for (int i = 0; i < N - 2; i++) {
-      A[i][i] = new List<double>(N - 2);
+      A[i] = new List<double>(N - 2);
 
       y[i] = 3 * ((_pos1D[i + 2] - _pos1D[i + 1]) / h[i + 1] - (_pos1D[i + 1] - _pos1D[i]) / h[i]);
 

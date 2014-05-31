@@ -27,10 +27,10 @@ part of graph.util.svg;
  */
 abstract class CSSConstants {
 
-	String CSS_STROKE_PROPERTY = "stroke";
+	static const String CSS_STROKE_PROPERTY = "stroke";
 	
-    String CSS_FILL_PROPERTY = "fill";
+  static const String CSS_FILL_PROPERTY = "fill";
 	
-	String CSS_NONE_VALUE = "none";
+	static const String CSS_NONE_VALUE = "none";
 
 }

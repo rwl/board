@@ -114,7 +114,7 @@ class Perimeter {
         double tx = Math.sqrt(a * a * (1 - (ty * ty) / (b * b)));
 
         if (tx.isNaN) {
-          tx = 0;
+          tx = 0.0;
         }
 
         if (px <= x) {
@@ -129,7 +129,7 @@ class Perimeter {
         double ty = Math.sqrt(b * b * (1 - (tx * tx) / (a * a)));
 
         if (ty.isNaN) {
-          ty = 0;
+          ty = 0.0;
         }
 
         if (py <= y) {
@@ -157,8 +157,8 @@ class Perimeter {
     double dist2 = Math.sqrt(Math.pow((xout2 - px), 2) + Math.pow((yout2 - py), 2));
 
     // Correct solution
-    double xout = 0;
-    double yout = 0;
+    double xout = 0.0;
+    double yout = 0.0;
 
     if (dist1 < dist2) {
       xout = xout1;
@@ -406,22 +406,22 @@ class Perimeter {
             a = new Point2d(x, y);
             b = new Point2d(x, y + h);
           } else if (py < y + h / 4) {
-            a = new Point2d(x - (int)(0.5 * w), y + (int)(0.5 * h));
-            b = new Point2d(x + w, y - (int)(0.25 * h));
+            a = new Point2d(x - (0.5 * w), y + (0.5 * h));
+            b = new Point2d(x + w, y - (0.25 * h));
           } else if (py > y + 3 * h / 4) {
-            a = new Point2d(x - (int)(0.5 * w), y + (int)(0.5 * h));
-            b = new Point2d(x + w, y + (int)(1.25 * h));
+            a = new Point2d(x - (0.5 * w), y + (0.5 * h));
+            b = new Point2d(x + w, y + (1.25 * h));
           }
         } else if (px > cx) {
           if ((py > y + h / 4) && (py < y + 3 * h / 4)) {
             a = new Point2d(x + w, y);
             b = new Point2d(x + w, y + h);
           } else if (py < y + h / 4) {
-            a = new Point2d(x, y - (int)(0.25 * h));
-            b = new Point2d(x + (int)(1.5 * w), y + (int)(0.5 * h));
+            a = new Point2d(x, y - (0.25 * h));
+            b = new Point2d(x + (1.5 * w), y + (0.5 * h));
           } else if (py > y + 3 * h / 4) {
-            a = new Point2d(x + (int)(1.5 * w), y + (int)(0.5 * h));
-            b = new Point2d(x, y + (int)(1.25 * h));
+            a = new Point2d(x + (1.5 * w), y + (0.5 * h));
+            b = new Point2d(x, y + (1.25 * h));
           }
         }
 
@@ -469,22 +469,22 @@ class Perimeter {
             a = new Point2d(x, y);
             b = new Point2d(x + w, y);
           } else if (px < x + w / 4) {
-            a = new Point2d(x - (int)(0.25 * w), y + h);
-            b = new Point2d(x + (int)(0.5 * w), y - (int)(0.5 * h));
+            a = new Point2d(x - (0.25 * w), y + h);
+            b = new Point2d(x + (0.5 * w), y - (0.5 * h));
           } else if (px > x + 3 * w / 4) {
-            a = new Point2d(x + (int)(0.5 * w), y - (int)(0.5 * h));
-            b = new Point2d(x + (int)(1.25 * w), y + h);
+            a = new Point2d(x + (0.5 * w), y - (0.5 * h));
+            b = new Point2d(x + (1.25 * w), y + h);
           }
         } else if (py > cy) {
           if ((px > x + w / 4) && (px < x + 3 * w / 4)) {
             a = new Point2d(x, y + h);
             b = new Point2d(x + w, y + h);
           } else if (px < x + w / 4) {
-            a = new Point2d(x - (int)(0.25 * w), y);
-            b = new Point2d(x + (int)(0.5 * w), y + (int)(1.5 * h));
+            a = new Point2d(x - (0.25 * w), y);
+            b = new Point2d(x + (0.5 * w), y + (1.5 * h));
           } else if (px > x + 3 * w / 4) {
-            a = new Point2d(x + (int)(0.5 * w), y + (int)(1.5 * h));
-            b = new Point2d(x + (int)(1.25 * w), y);
+            a = new Point2d(x + (0.5 * w), y + (1.5 * h));
+            b = new Point2d(x + (1.25 * w), y);
           }
         }
       }
@@ -515,74 +515,74 @@ class Perimeter {
 
         //Special cases where intersects with hexagon corners
         if (alpha == beta) {
-          return new Point2d(x + w, y + (int)(0.25 * h));
+          return new Point2d(x + w, y + (0.25 * h));
         } else if (alpha == pi2) {
-          return new Point2d(x + (int)(0.5 * w), y);
+          return new Point2d(x + (0.5 * w), y);
         } else if (alpha == (pi - beta)) {
-          return new Point2d(x, y + (int)(0.25 * h));
+          return new Point2d(x, y + (0.25 * h));
         } else if (alpha == -beta) {
-          return new Point2d(x + w, y + (int)(0.75 * h));
+          return new Point2d(x + w, y + (0.75 * h));
         } else if (alpha == (-pi2)) {
-          return new Point2d(x + (int)(0.5 * w), y + h);
+          return new Point2d(x + (0.5 * w), y + h);
         } else if (alpha == (-pi + beta)) {
-          return new Point2d(x, y + (int)(0.75 * h));
+          return new Point2d(x, y + (0.75 * h));
         }
 
         if ((alpha < beta) && (alpha > -beta)) {
           a = new Point2d(x + w, y);
           b = new Point2d(x + w, y + h);
         } else if ((alpha > beta) && (alpha < pi2)) {
-          a = new Point2d(x, y - (int)(0.25 * h));
-          b = new Point2d(x + (int)(1.5 * w), y + (int)(0.5 * h));
+          a = new Point2d(x, y - (0.25 * h));
+          b = new Point2d(x + (1.5 * w), y + (0.5 * h));
         } else if ((alpha > pi2) && (alpha < (pi - beta))) {
-          a = new Point2d(x - (int)(0.5 * w), y + (int)(0.5 * h));
-          b = new Point2d(x + w, y - (int)(0.25 * h));
+          a = new Point2d(x - (0.5 * w), y + (0.5 * h));
+          b = new Point2d(x + w, y - (0.25 * h));
         } else if (((alpha > (pi - beta)) && (alpha <= pi)) || ((alpha < (-pi + beta)) && (alpha >= -pi))) {
           a = new Point2d(x, y);
           b = new Point2d(x, y + h);
         } else if ((alpha < -beta) && (alpha > -pi2)) {
-          a = new Point2d(x + (int)(1.5 * w), y + (int)(0.5 * h));
-          b = new Point2d(x, y + (int)(1.25 * h));
+          a = new Point2d(x + (1.5 * w), y + (0.5 * h));
+          b = new Point2d(x, y + (1.25 * h));
         } else if ((alpha < -pi2) && (alpha > (-pi + beta))) {
-          a = new Point2d(x - (int)(0.5 * w), y + (int)(0.5 * h));
-          b = new Point2d(x + w, y + (int)(1.25 * h));
+          a = new Point2d(x - (0.5 * w), y + (0.5 * h));
+          b = new Point2d(x + w, y + (1.25 * h));
         }
       } else {
         double beta = Math.atan2(h / 2, w / 4);
 
         //Special cases where intersects with hexagon corners
         if (alpha == beta) {
-          return new Point2d(x + (int)(0.75 * w), y);
+          return new Point2d(x + (0.75 * w), y);
         } else if (alpha == (pi - beta)) {
-          return new Point2d(x + (int)(0.25 * w), y);
+          return new Point2d(x + (0.25 * w), y);
         } else if ((alpha == pi) || (alpha == -pi)) {
-          return new Point2d(x, y + (int)(0.5 * h));
+          return new Point2d(x, y + (0.5 * h));
         } else if (alpha == 0) {
-          return new Point2d(x + w, y + (int)(0.5 * h));
+          return new Point2d(x + w, y + (0.5 * h));
         } else if (alpha == -beta) {
-          return new Point2d(x + (int)(0.75 * w), y + h);
+          return new Point2d(x + (0.75 * w), y + h);
         } else if (alpha == (-pi + beta)) {
-          return new Point2d(x + (int)(0.25 * w), y + h);
+          return new Point2d(x + (0.25 * w), y + h);
         }
 
         if ((alpha > 0) && (alpha < beta)) {
-          a = new Point2d(x + (int)(0.5 * w), y - (int)(0.5 * h));
-          b = new Point2d(x + (int)(1.25 * w), y + h);
+          a = new Point2d(x + (0.5 * w), y - (0.5 * h));
+          b = new Point2d(x + (1.25 * w), y + h);
         } else if ((alpha > beta) && (alpha < (pi - beta))) {
           a = new Point2d(x, y);
           b = new Point2d(x + w, y);
         } else if ((alpha > (pi - beta)) && (alpha < pi)) {
-          a = new Point2d(x - (int)(0.25 * w), y + h);
-          b = new Point2d(x + (int)(0.5 * w), y - (int)(0.5 * h));
+          a = new Point2d(x - (0.25 * w), y + h);
+          b = new Point2d(x + (0.5 * w), y - (0.5 * h));
         } else if ((alpha < 0) && (alpha > -beta)) {
-          a = new Point2d(x + (int)(0.5 * w), y + (int)(1.5 * h));
-          b = new Point2d(x + (int)(1.25 * w), y);
+          a = new Point2d(x + (0.5 * w), y + (1.5 * h));
+          b = new Point2d(x + (1.25 * w), y);
         } else if ((alpha < -beta) && (alpha > (-pi + beta))) {
           a = new Point2d(x, y + h);
           b = new Point2d(x + w, y + h);
         } else if ((alpha < (-pi + beta)) && (alpha > -pi)) {
-          a = new Point2d(x - (int)(0.25 * w), y);
-          b = new Point2d(x + (int)(0.5 * w), y + (int)(1.5 * h));
+          a = new Point2d(x - (0.25 * w), y);
+          b = new Point2d(x + (0.5 * w), y + (1.5 * h));
         }
       }
 

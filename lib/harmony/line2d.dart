@@ -234,7 +234,7 @@ class Line2D {//implements Shape, Cloneable {
         return _ptSegDist(getX1(), getY1(), getX2(), getY2(), p.getX(), p.getY());
     }
 
-    static double _ptLineDistSq(double x1, double y1, double x2, double y2, double px, double py) {
+    static double pointLineDistSq(double x1, double y1, double x2, double y2, double px, double py) {
         x2 -= x1;
         y2 -= y1;
         px -= x1;
@@ -243,24 +243,24 @@ class Line2D {//implements Shape, Cloneable {
         return s * s / (x2 * x2 + y2 * y2);
     }
 
-    static double _ptLineDist(double x1, double y1, double x2, double y2, double px, double py) {
-        return Math.sqrt(_ptLineDistSq(x1, y1, x2, y2, px, py));
+    static double pointLineDist(double x1, double y1, double x2, double y2, double px, double py) {
+        return Math.sqrt(pointLineDistSq(x1, y1, x2, y2, px, py));
     }
 
     double ptLineDistSq(double px, double py) {
-        return _ptLineDistSq(getX1(), getY1(), getX2(), getY2(), px, py);
+        return pointLineDistSq(getX1(), getY1(), getX2(), getY2(), px, py);
     }
 
     double ptLineDistSqPoint(Point p) {
-        return _ptLineDistSq(getX1(), getY1(), getX2(), getY2(), p.getX(), p.getY());
+        return pointLineDistSq(getX1(), getY1(), getX2(), getY2(), p.getX(), p.getY());
     }
 
     double ptLineDist(double px, double py) {
-        return _ptLineDist(getX1(), getY1(), getX2(), getY2(), px, py);
+        return pointLineDist(getX1(), getY1(), getX2(), getY2(), px, py);
     }
 
     double ptLineDistPoint(Point p) {
-        return _ptLineDist(getX1(), getY1(), getX2(), getY2(), p.getX(), p.getY());
+        return pointLineDist(getX1(), getY1(), getX2(), getY2(), p.getX(), p.getY());
     }
 
     bool intersects(double rx, double ry, double rw, double rh) {

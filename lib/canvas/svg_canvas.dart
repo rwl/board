@@ -102,7 +102,7 @@ class SvgCanvas extends BasicCanvas {
 
     if (gradient == null) {
       gradient = _createGradientElement(start, end, direction);
-      gradient.setAttribute("id", "g" + (_gradients.length + 1));
+      gradient.setAttribute("id", "g${_gradients.length + 1}");
       _getDefsElement().append(gradient);
       _gradients[id] = gradient;
     }
@@ -135,7 +135,7 @@ class SvgCanvas extends BasicCanvas {
       stop2.setAttribute("style", "stop-color:#ffffff;stop-opacity:0.1");
       glassGradient.append(stop2);
 
-      glassGradient.setAttribute("id", "g" + (_gradients.length + 1));
+      glassGradient.setAttribute("id", "g${_gradients.length + 1}");
       _getDefsElement().append(glassGradient);
       _gradients[id] = glassGradient;
     }
@@ -303,7 +303,7 @@ class SvgCanvas extends BasicCanvas {
 
       inner.setAttributeNS(Constants.NS_XLINK, "xlink:href", src);
       img.append(inner);
-      img.setAttribute("id", "i" + (_images.length));
+      img.setAttribute("id", "i${_images.length}");
       _getDefsElement().append(img);
     }
 
@@ -340,10 +340,10 @@ class SvgCanvas extends BasicCanvas {
       elem.setAttribute("preserveAspectRatio", "none");
     }
 
-    double sx = 1;
-    double sy = 1;
-    double dx = 0;
-    double dy = 0;
+    double sx = 1.0;
+    double sy = 1.0;
+    double dx = 0.0;
+    double dy = 0.0;
 
     if (flipH) {
       sx *= -1;
@@ -358,11 +358,11 @@ class SvgCanvas extends BasicCanvas {
     String transform = "";
 
     if (sx != 1 || sy != 1) {
-      transform += "scale(" + sx + " " + sy + ") ";
+      transform += "scale($sx $sy) ";
     }
 
     if (dx != 0 || dy != 0) {
-      transform += "translate(" + dx + " " + dy + ") ";
+      transform += "translate($dx $dy) ";
     }
 
     if (transform.length > 0) {
@@ -420,7 +420,7 @@ class SvgCanvas extends BasicCanvas {
       elem = drawLine(pts, style);
 
       // Applies opacity
-      double opacity = Utils.getFloat(style, Constants.STYLE_OPACITY, 100);
+      double opacity = Utils.getFloat(style, Constants.STYLE_OPACITY, 100.0);
 
       if (opacity != 100) {
         String value = (opacity / 100).toString();
@@ -489,8 +489,8 @@ class SvgCanvas extends BasicCanvas {
     String fillColor = Utils.getString(style, Constants.STYLE_FILLCOLOR, "none");
     String gradientColor = Utils.getString(style, Constants.STYLE_GRADIENTCOLOR, "none");
     String strokeColor = Utils.getString(style, Constants.STYLE_STROKECOLOR, "none");
-    double strokeWidth = (Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1) * _scale) as double;
-    double opacity = Utils.getFloat(style, Constants.STYLE_OPACITY, 100);
+    double strokeWidth = (Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1.0) * _scale) as double;
+    double opacity = Utils.getFloat(style, Constants.STYLE_OPACITY, 100.0);
 
     // Draws the shape
     String shape = Utils.getString(style, Constants.STYLE_SHAPE, "");
@@ -505,7 +505,8 @@ class SvgCanvas extends BasicCanvas {
         bool flipH = Utils.isTrue(style, Constants.STYLE_IMAGE_FLIPH, false);
         bool flipV = Utils.isTrue(style, Constants.STYLE_IMAGE_FLIPV, false);
 
-        elem = _createImageElement(x, y, w, h, img, PRESERVE_IMAGE_ASPECT, flipH, flipV, isEmbedded());
+        elem = _createImageElement(x.toDouble(), y.toDouble(), w.toDouble(), h.toDouble(), img,
+            BasicCanvas.PRESERVE_IMAGE_ASPECT, flipH, flipV, isEmbedded());
       }
     } else if (shape == Constants.SHAPE_LINE) {
       String direction = Utils.getString(style, Constants.STYLE_DIRECTION, Constants.DIRECTION_EAST);
@@ -537,7 +538,7 @@ class SvgCanvas extends BasicCanvas {
       background.setAttribute("ry", (h / 2).toString());
       elem.append(background);
 
-      int inset = (int)((3 + strokeWidth) * _scale);
+      int inset = ((3 + strokeWidth) * _scale) as int;
 
       Element foreground = _document.createElement("ellipse");
       foreground.setAttribute("fill", "none");
@@ -552,7 +553,7 @@ class SvgCanvas extends BasicCanvas {
     } else if (shape == Constants.SHAPE_RHOMBUS) {
       elem = _document.createElement("path");
 
-      String d = "M " + (x + w / 2) + " " + y + " L " + (x + w) + " " + (y + h / 2) + " L " + (x + w / 2) + " " + (y + h) + " L " + x + " " + (y + h / 2);
+      String d = "M ${x + w / 2} $y L ${x + w} ${y + h / 2} L ${x + w / 2} ${y + h} L $x ${y + h / 2}";
 
       elem.setAttribute("d", d + " Z");
     } else if (shape == Constants.SHAPE_TRIANGLE) {
@@ -561,14 +562,14 @@ class SvgCanvas extends BasicCanvas {
       String d = null;
 
       if (direction == Constants.DIRECTION_NORTH) {
-        d = "M " + x + " " + (y + h) + " L " + (x + w / 2) + " " + y + " L " + (x + w) + " " + (y + h);
+        d = "M $x ${y + h} L ${x + w / 2} $y L ${x + w} ${y + h}";
       } else if (direction == Constants.DIRECTION_SOUTH) {
-        d = "M " + x + " " + y + " L " + (x + w / 2) + " " + (y + h) + " L " + (x + w) + " " + y;
+        d = "M $x $y L ${x + w / 2} ${y + h} L ${x + w} $y";
       } else if (direction == Constants.DIRECTION_WEST) {
-        d = "M " + (x + w) + " " + y + " L " + x + " " + (y + h / 2) + " L " + (x + w) + " " + (y + h);
+        d = "M ${x + w} $y L $x ${y + h / 2} L ${x + w} ${y + h}";
       } else // east
       {
-        d = "M " + x + " " + y + " L " + (x + w) + " " + (y + h / 2) + " L " + x + " " + (y + h);
+        d = "M $x $y L ${x + w} ${y + h / 2} L $x ${y + h}";
       }
 
       elem.setAttribute("d", d + " Z");
@@ -578,23 +579,23 @@ class SvgCanvas extends BasicCanvas {
       String d = null;
 
       if (direction == Constants.DIRECTION_NORTH || direction == Constants.DIRECTION_SOUTH) {
-        d = "M " + (x + 0.5 * w) + " " + y + " L " + (x + w) + " " + (y + 0.25 * h) + " L " + (x + w) + " " + (y + 0.75 * h) + " L " + (x + 0.5 * w) + " " + (y + h) + " L " + x + " " + (y + 0.75 * h) + " L " + x + " " + (y + 0.25 * h);
+        d = "M ${x + 0.5 * w} $y L ${x + w} ${y + 0.25 * h} L ${x + w} ${y + 0.75 * h} L ${x + 0.5 * w} ${y + h} L $x ${y + 0.75 * h} L $x ${y + 0.25 * h}";
       } else {
-        d = "M " + (x + 0.25 * w) + " " + y + " L " + (x + 0.75 * w) + " " + y + " L " + (x + w) + " " + (y + 0.5 * h) + " L " + (x + 0.75 * w) + " " + (y + h) + " L " + (x + 0.25 * w) + " " + (y + h) + " L " + x + " " + (y + 0.5 * h);
+        d = "M ${x + 0.25 * w} $y L ${x + 0.75 * w} $y L ${x + w} ${y + 0.5 * h} L ${x + 0.75 * w} ${y + h} L ${x + 0.25 * w} ${y + h} L $x ${y + 0.5 * h}";
       }
 
       elem.setAttribute("d", d + " Z");
     } else if (shape == Constants.SHAPE_CLOUD) {
       elem = _document.createElement("path");
 
-      String d = "M " + (x + 0.25 * w) + " " + (y + 0.25 * h) + " C " + (x + 0.05 * w) + " " + (y + 0.25 * h) + " " + x + " " + (y + 0.5 * h) + " " + (x + 0.16 * w) + " " + (y + 0.55 * h) + " C " + x + " " + (y + 0.66 * h) + " " + (x + 0.18 * w) + " " + (y + 0.9 * h) + " " + (x + 0.31 * w) + " " + (y + 0.8 * h) + " C " + (x + 0.4 * w) + " " + (y + h) + " " + (x + 0.7 * w) + " " + (y + h) + " " + (x + 0.8 * w) + " " + (y + 0.8 * h) + " C " + (x + w) + " " + (y + 0.8 * h) + " " + (x + w) + " " + (y + 0.6 * h) + " " + (x + 0.875 * w) + " " + (y + 0.5 * h) + " C " + (x + w) + " " + (y + 0.3 * h) + " " + (x + 0.8 * w) + " " + (y + 0.1 * h) + " " + (x + 0.625 * w) + " " + (y + 0.2 * h) + " C " + (x + 0.5 * w) + " " + (y + 0.05 * h) + " " + (x + 0.3 * w) + " " + (y + 0.05 * h) + " " + (x + 0.25 * w) + " " + (y + 0.25 * h);
+      String d = "M ${x + 0.25 * w} ${y + 0.25 * h} C ${x + 0.05 * w} ${y + 0.25 * h} $x ${y + 0.5 * h} ${x + 0.16 * w} ${y + 0.55 * h} C $x ${y + 0.66 * h} ${x + 0.18 * w} ${y + 0.9 * h} ${x + 0.31 * w} ${y + 0.8 * h} C ${x + 0.4 * w} ${y + h} ${x + 0.7 * w} ${y + h} ${x + 0.8 * w} ${y + 0.8 * h} C ${x + w} ${y + 0.8 * h} ${x + w} ${y + 0.6 * h} ${x + 0.875 * w} ${y + 0.5 * h} C ${x + w} ${y + 0.3 * h} ${x + 0.8 * w} ${y + 0.1 * h} ${x + 0.625 * w} ${y + 0.2 * h} C ${x + 0.5 * w} ${y + 0.05 * h} ${x + 0.3 * w} ${y + 0.05 * h} ${x + 0.25 * w} ${y + 0.25 * h}";
 
       elem.setAttribute("d", d + " Z");
     } else if (shape == Constants.SHAPE_ACTOR) {
       elem = _document.createElement("path");
       double width3 = w / 3;
 
-      String d = " M " + x + " " + (y + h) + " C " + x + " " + (y + 3 * h / 5) + " " + x + " " + (y + 2 * h / 5) + " " + (x + w / 2) + " " + (y + 2 * h / 5) + " C " + (x + w / 2 - width3) + " " + (y + 2 * h / 5) + " " + (x + w / 2 - width3) + " " + y + " " + (x + w / 2) + " " + y + " C " + (x + w / 2 + width3) + " " + y + " " + (x + w / 2 + width3) + " " + (y + 2 * h / 5) + " " + (x + w / 2) + " " + (y + 2 * h / 5) + " C " + (x + w) + " " + (y + 2 * h / 5) + " " + (x + w) + " " + (y + 3 * h / 5) + " " + (x + w) + " " + (y + h);
+      String d = " M $x ${y + h} C $x ${y + 3 * h / 5} $x ${y + 2 * h / 5} ${x + w / 2} ${y + 2 * h / 5} C ${x + w / 2 - width3} ${y + 2 * h / 5} ${x + w / 2 - width3} $y ${x + w / 2} $y C ${x + w / 2 + width3} $y ${x + w / 2 + width3} ${y + 2 * h / 5} ${x + w / 2} ${y + 2 * h / 5} C ${x + w} ${y + 2 * h / 5} ${x + w} ${y + 3 * h / 5} ${x + w} ${y + h}";
 
       elem.setAttribute("d", d + " Z");
     } else if (shape == Constants.SHAPE_CYLINDER) {
@@ -602,12 +603,12 @@ class SvgCanvas extends BasicCanvas {
       background = _document.createElement("path");
 
       double dy = Math.min(40, math.floor(h / 5));
-      String d = " M " + x + " " + (y + dy) + " C " + x + " " + (y - dy / 3) + " " + (x + w) + " " + (y - dy / 3) + " " + (x + w) + " " + (y + dy) + " L " + (x + w) + " " + (y + h - dy) + " C " + (x + w) + " " + (y + h + dy / 3) + " " + x + " " + (y + h + dy / 3) + " " + x + " " + (y + h - dy);
+      String d = " M $x ${y + dy} C $x ${y - dy / 3} ${x + w} ${y - dy / 3} ${x + w} ${y + dy} L ${x + w} ${y + h - dy} C ${x + w} ${y + h + dy / 3} $x ${y + h + dy / 3} $x ${y + h - dy}";
       background.setAttribute("d", d + " Z");
       elem.append(background);
 
       Element foreground = _document.createElement("path");
-      d = "M " + x + " " + (y + dy) + " C " + x + " " + (y + 2 * dy) + " " + (x + w) + " " + (y + 2 * dy) + " " + (x + w) + " " + (y + dy);
+      d = "M $x ${y + dy} C $x ${y + 2 * dy} ${x + w} ${y + 2 * dy} ${x + w} ${y + dy}";
 
       foreground.setAttribute("d", d);
       foreground.setAttribute("fill", "none");
@@ -642,7 +643,7 @@ class SvgCanvas extends BasicCanvas {
           int imgHeight = (Utils.getInt(style, Constants.STYLE_IMAGE_HEIGHT, Constants.DEFAULT_IMAGESIZE) * _scale) as int;
           int spacing = (Utils.getInt(style, Constants.STYLE_SPACING, 2) * _scale) as int;
 
-          Rect imageBounds = new Rect(x, y, w, h);
+          Rect imageBounds = new Rect(x.toDouble(), y.toDouble(), w.toDouble(), h.toDouble());
 
           if (imgAlign == Constants.ALIGN_CENTER) {
             imageBounds.setX(imageBounds.getX() + (imageBounds.getWidth() - imgWidth) / 2);
@@ -662,8 +663,8 @@ class SvgCanvas extends BasicCanvas {
             imageBounds.setY(imageBounds.getY() + (imageBounds.getHeight() - imgHeight) / 2);
           }
 
-          imageBounds.setWidth(imgWidth);
-          imageBounds.setHeight(imgHeight);
+          imageBounds.setWidth(imgWidth.toDouble());
+          imageBounds.setHeight(imgHeight.toDouble());
 
           elem = _document.createElement("g");
           elem.append(background);
@@ -736,7 +737,7 @@ class SvgCanvas extends BasicCanvas {
         shadowElement.setAttribute("stroke-width", strokeWidth.toString());
 
         if (rotation != 0) {
-          shadowElement.setAttribute("transform", "rotate(" + rotation + "," + cx + "," + cy + ") " + Constants.SVG_SHADOWTRANSFORM);
+          shadowElement.setAttribute("transform", "rotate($rotation,$cx,$cy)" + Constants.SVG_SHADOWTRANSFORM);
         }
 
         if (opacity != 100) {
@@ -750,8 +751,7 @@ class SvgCanvas extends BasicCanvas {
     }
 
     if (rotation != 0) {
-      elem.setAttribute("transform", elem.getAttribute("transform") + " rotate(" + rotation + "," + cx + "," + cy + ")");
-
+      elem.setAttribute("transform", elem.getAttribute("transform") + " rotate($rotation,$cx,$cy)");
     }
 
     if (opacity != 100) {
@@ -783,7 +783,7 @@ class SvgCanvas extends BasicCanvas {
 
     bool rounded = Utils.isTrue(style, Constants.STYLE_ROUNDED, false);
     String strokeColor = Utils.getString(style, Constants.STYLE_STROKECOLOR);
-    double tmpStroke = Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1);
+    double tmpStroke = Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1.0);
     double strokeWidth = (tmpStroke * _scale) as double;
 
     if (strokeColor != null && strokeWidth > 0) {
@@ -795,7 +795,7 @@ class SvgCanvas extends BasicCanvas {
       Point2d offset = null;
 
       if (marker != null) {
-        double size = Utils.getFloat(style, Constants.STYLE_STARTSIZE, Constants.DEFAULT_MARKERSIZE);
+        double size = Utils.getFloat(style, Constants.STYLE_STARTSIZE, Constants.DEFAULT_MARKERSIZE.toDouble());
         offset = drawMarker(group, marker, pt, p0, size, tmpStroke, strokeColor);
       } else {
         double dx = pt.getX() - p0.getX();
@@ -824,7 +824,7 @@ class SvgCanvas extends BasicCanvas {
       Point2d pe = pts[pts.length - 1];
 
       if (marker != null) {
-        double size = Utils.getFloat(style, Constants.STYLE_ENDSIZE, Constants.DEFAULT_MARKERSIZE);
+        double size = Utils.getFloat(style, Constants.STYLE_ENDSIZE, Constants.DEFAULT_MARKERSIZE.toDouble());
         offset = drawMarker(group, marker, pt, pe, size, tmpStroke, strokeColor);
       } else {
         double dx = pt.getX() - p0.getX();
@@ -849,7 +849,7 @@ class SvgCanvas extends BasicCanvas {
       // Draws the line segments
       double arcSize = Constants.LINE_ARCSIZE * _scale;
       pt = p0;
-      String d = "M " + pt.getX() + " " + pt.getY();
+      String d = "M ${pt.getX()} ${pt.getY()}";
 
       for (int i = 1; i < pts.length - 1; i++) {
         Point2d tmp = pts[i];
@@ -866,7 +866,7 @@ class SvgCanvas extends BasicCanvas {
 
           double x1 = tmp.getX() + nx1;
           double y1 = tmp.getY() + ny1;
-          d += " L " + x1 + " " + y1;
+          d += " L $x1 $y1";
 
           // Draws a curve from the last point to the current
           // point with a spacing of size off the current point
@@ -882,16 +882,16 @@ class SvgCanvas extends BasicCanvas {
           double x2 = tmp.getX() + nx2;
           double y2 = tmp.getY() + ny2;
 
-          d += " Q " + tmp.getX() + " " + tmp.getY() + " " + x2 + " " + y2;
+          d += " Q ${tmp.getX()} ${tmp.getY()} $x2 $y2";
           tmp = new Point2d(x2, y2);
         } else {
-          d += " L " + tmp.getX() + " " + tmp.getY();
+          d += " L ${tmp.getX()} ${tmp.getY()}";
         }
 
         pt = tmp;
       }
 
-      d += " L " + pe.getX() + " " + pe.getY();
+      d += " L ${pe.getX()} ${pe.getY()}";
 
       path.setAttribute("d", d);
       path.setAttribute("stroke", strokeColor);
@@ -940,21 +940,21 @@ class SvgCanvas extends BasicCanvas {
     String d = null;
 
     if (type == Constants.ARROW_CLASSIC || type == Constants.ARROW_BLOCK) {
-      d = "M " + pe.getX() + " " + pe.getY() + " L " + (pe.getX() - nx - ny / 2) + " " + (pe.getY() - ny + nx / 2) + ((type != Constants.ARROW_CLASSIC) ? "" : " L " + (pe.getX() - nx * 3 / 4) + " " + (pe.getY() - ny * 3 / 4)) + " L " + (pe.getX() + ny / 2 - nx) + " " + (pe.getY() - ny - nx / 2) + " z";
+      d = "M ${pe.getX()} ${pe.getY()} L ${pe.getX() - nx - ny / 2} ${pe.getY() - ny + nx / 2}" + ((type != Constants.ARROW_CLASSIC) ? "" : " L ${pe.getX() - nx * 3 / 4} ${pe.getY() - ny * 3 / 4}") + " L ${pe.getX() + ny / 2 - nx} ${pe.getY() - ny - nx / 2} z";
     } else if (type == Constants.ARROW_OPEN) {
       nx *= 1.2;
       ny *= 1.2;
 
-      d = "M " + (pe.getX() - nx - ny / 2) + " " + (pe.getY() - ny + nx / 2) + " L " + (pe.getX() - nx / 6) + " " + (pe.getY() - ny / 6) + " L " + (pe.getX() + ny / 2 - nx) + " " + (pe.getY() - ny - nx / 2) + " M " + pe.getX() + " " + pe.getY();
+      d = "M ${pe.getX() - nx - ny / 2} ${pe.getY() - ny + nx / 2} L ${pe.getX() - nx / 6} ${pe.getY() - ny / 6} L ${pe.getX() + ny / 2 - nx} ${pe.getY() - ny - nx / 2} M $pe.getX() $pe.getY()";
       path.setAttribute("fill", "none");
     } else if (type == Constants.ARROW_OVAL) {
       nx *= 1.2;
       ny *= 1.2;
       absSize *= 1.2;
 
-      d = "M " + (pe.getX() - ny / 2) + " " + (pe.getY() + nx / 2) + " a " + (absSize / 2) + " " + (absSize / 2) + " 0  1,1 " + (nx / 8) + " " + (ny / 8) + " z";
+      d = "M ${pe.getX() - ny / 2} ${pe.getY() + nx / 2} a ${absSize / 2} ${absSize / 2} 0  1,1 ${nx / 8} ${ny / 8} z";
     } else if (type == Constants.ARROW_DIAMOND) {
-      d = "M " + (pe.getX() + nx / 2) + " " + (pe.getY() + ny / 2) + " L " + (pe.getX() - ny / 2) + " " + (pe.getY() + nx / 2) + " L " + (pe.getX() - nx / 2) + " " + (pe.getY() - ny / 2) + " L " + (pe.getX() + ny / 2) + " " + (pe.getY() - nx / 2) + " z";
+      d = "M ${pe.getX() + nx / 2} ${pe.getY() + ny / 2} L ${pe.getX() - ny / 2} ${pe.getY() + nx / 2} L ${pe.getX() - nx / 2} ${pe.getY() - ny / 2} L ${pe.getX() + ny / 2} ${pe.getY() - nx / 2} z";
     }
 
     if (d != null) {
@@ -979,13 +979,13 @@ class SvgCanvas extends BasicCanvas {
     Element elem = null;
     String fontColor = Utils.getString(style, Constants.STYLE_FONTCOLOR, "black");
     String fontFamily = Utils.getString(style, Constants.STYLE_FONTFAMILY, Constants.DEFAULT_FONTFAMILIES);
-    int fontSize = (int)(Utils.getInt(style, Constants.STYLE_FONTSIZE, Constants.DEFAULT_FONTSIZE) * _scale);
+    int fontSize = (Utils.getInt(style, Constants.STYLE_FONTSIZE, Constants.DEFAULT_FONTSIZE) * _scale) as int;
 
     if (text != null && text.length > 0) {
-      double strokeWidth = (Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1) * _scale) as double;
+      double strokeWidth = (Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1.0) * _scale) as double;
 
       // Applies the opacity
-      double opacity = Utils.getFloat(style, Constants.STYLE_TEXT_OPACITY, 100);
+      double opacity = Utils.getFloat(style, Constants.STYLE_TEXT_OPACITY, 100.0);
 
       // Draws the label background and border
       String bg = Utils.getString(style, Constants.STYLE_LABEL_BACKGROUNDCOLOR);
@@ -996,7 +996,7 @@ class SvgCanvas extends BasicCanvas {
       if (!Utils.isTrue(style, Constants.STYLE_HORIZONTAL, true)) {
         double cx = x + w / 2;
         double cy = y + h / 2;
-        transform = "rotate(270 " + cx + " " + cy + ")";
+        transform = "rotate(270 $cx $cy)";
       }
 
       if (bg != null || border != null) {

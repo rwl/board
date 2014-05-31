@@ -138,7 +138,7 @@ class Line extends Point2d {
       }
     }
     if (dist < 0) {
-      dist = 0;
+      dist = 0.0;
     }
     return dist;
   }

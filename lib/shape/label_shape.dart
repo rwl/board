@@ -50,7 +50,7 @@ class LabelShape extends ImageShape {
     int imgHeight = (Utils.getInt(style, Constants.STYLE_IMAGE_HEIGHT, Constants.DEFAULT_IMAGESIZE) * scale) as int;
     int spacing = (Utils.getInt(style, Constants.STYLE_SPACING, 2) * scale) as int;
 
-    Rect imageBounds = new Rect(state);
+    Rect imageBounds = new Rect.from(state);
 
     if (imgAlign.equals(Constants.ALIGN_CENTER)) {
       imageBounds.setX(imageBounds.getX() + (imageBounds.getWidth() - imgWidth) / 2);

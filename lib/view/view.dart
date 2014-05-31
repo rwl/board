@@ -14,6 +14,7 @@ import 'dart:collection' show LinkedList, LinkedHashSet, HashSet;
 import 'dart:svg' as svg;
 
 import '../compat/math.dart' as math;
+import '../harmony/harmony.dart' as harmony;
 
 import '../layout/layout.dart' show IGraphLayout;
 

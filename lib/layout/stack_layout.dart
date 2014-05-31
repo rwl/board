@@ -101,7 +101,7 @@ class StackLayout extends GraphLayout {
 
     if (cell is ICell && parent is ICell) {
       int i = 0;
-      double last = 0;
+      double last = 0.0;
       int childCount = model.getChildCount(parent);
       double value = (horizontal) ? x : y;
       CellState pstate = graph.getView().getState(parent);
@@ -158,10 +158,10 @@ class StackLayout extends GraphLayout {
       // of the graph's container will be used.
       if (pgeo == null && model.getParent(parent) == model.getRoot() || parent == graph.getView().getCurrentRoot()) {
         Rect tmp = getContainerSize();
-        pgeo = new Geometry(0, 0, tmp.getWidth(), tmp.getHeight());
+        pgeo = new Geometry(0.0, 0.0, tmp.getWidth(), tmp.getHeight());
       }
 
-      double fillValue = 0;
+      double fillValue = 0.0;
 
       if (pgeo != null) {
         fillValue = (horizontal) ? pgeo.getHeight() : pgeo.getWidth();
@@ -177,7 +177,7 @@ class StackLayout extends GraphLayout {
 
       model.beginUpdate();
       try {
-        double tmp = 0;
+        double tmp = 0.0;
         Geometry last = null;
         int childCount = model.getChildCount(parent);
 
@@ -201,7 +201,7 @@ class StackLayout extends GraphLayout {
                     x0 += tmp + spacing;
                   }
 
-                  tmp = 0;
+                  tmp = 0.0;
                 }
               }
 

@@ -4366,7 +4366,7 @@ class Graph extends EventSource {
     Map<String, Object> style = (state != null) ? state.getStyle() : getCellStyle(swimlane);
 
     if (style != null) {
-      double size = Utils.getDouble(style, Constants.STYLE_STARTSIZE, Constants.DEFAULT_STARTSIZE);
+      double size = Utils.getDouble(style, Constants.STYLE_STARTSIZE, Constants.DEFAULT_STARTSIZE.toDouble());
 
       if (Utils.isTrue(style, Constants.STYLE_HORIZONTAL, true)) {
         result.setHeight(size);

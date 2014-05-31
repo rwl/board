@@ -26,12 +26,12 @@ class Stencil implements IShape {
   /**
 	 * Holds the width of the shape. Default is 100.
 	 */
-  double _w0 = 100;
+  double _w0 = 100.0;
 
   /**
 	 * Holds the height of the shape. Default is 100.
 	 */
-  double _h0 = 100;
+  double _h0 = 100.0;
 
   /**
 	 * Holds the XML node with the stencil description.
@@ -51,12 +51,12 @@ class Stencil implements IShape {
   /**
 	 * Holds the last x-position of the cursor.
 	 */
-  double _lastMoveX = 0;
+  double _lastMoveX = 0.0;
 
   /**
 	 * Holds the last y-position of the cursor.
 	 */
-  double _lastMoveY = 0;
+  double _lastMoveY = 0.0;
 
   /**
 	 * Constructs a new stencil for the given Graph shape description.
@@ -94,16 +94,16 @@ class Stencil implements IShape {
     Map<String, Object> style = state.getStyle();
     GraphicsCanvas2D canvas = _createCanvas(gc);
 
-    double rotation = Utils.getDouble(style, Constants.STYLE_ROTATION, 0);
+    double rotation = Utils.getDouble(style, Constants.STYLE_ROTATION, 0.0);
     String direction = Utils.getString(style, Constants.STYLE_DIRECTION, null);
 
     // Default direction is east (ignored if rotation exists)
     if (direction != null) {
-      if (direction.equals("north")) {
+      if (direction == "north") {
         rotation += 270;
-      } else if (direction.equals("west")) {
+      } else if (direction == "west") {
         rotation += 180;
-      } else if (direction.equals("south")) {
+      } else if (direction == "south") {
         rotation += 90;
       }
     }
@@ -130,26 +130,26 @@ class Stencil implements IShape {
 
     // Note: Overwritten in Stencil.paintShape (can depend on aspect)
     double scale = state.getView().getScale();
-    double sw = Utils.getDouble(style, Constants.STYLE_STROKEWIDTH, 1) * scale;
+    double sw = Utils.getDouble(style, Constants.STYLE_STROKEWIDTH, 1.0) * scale;
     canvas.setStrokeWidth(sw);
 
-    double alpha = Utils.getDouble(style, Constants.STYLE_OPACITY, 100) / 100;
+    double alpha = Utils.getDouble(style, Constants.STYLE_OPACITY, 100.0) / 100;
     String gradientColor = Utils.getString(style, Constants.STYLE_GRADIENTCOLOR, null);
 
     // Converts colors with special keyword none to null
-    if (gradientColor != null && gradientColor.equals(Constants.NONE)) {
+    if (gradientColor != null && gradientColor == Constants.NONE) {
       gradientColor = null;
     }
 
     String fillColor = Utils.getString(style, Constants.STYLE_FILLCOLOR, null);
 
-    if (fillColor != null && fillColor.equals(Constants.NONE)) {
+    if (fillColor != null && fillColor == Constants.NONE) {
       fillColor = null;
     }
 
     String strokeColor = Utils.getString(style, Constants.STYLE_STROKECOLOR, null);
 
-    if (strokeColor != null && strokeColor.equals(Constants.NONE)) {
+    if (strokeColor != null && strokeColor == Constants.NONE) {
       strokeColor = null;
     }
 
@@ -172,8 +172,8 @@ class Stencil implements IShape {
       }
 
       if (fillColor != null) {
-        if (gradientColor != null && !gradientColor.equals("transparent")) {
-          canvas.setGradient(fillColor, gradientColor, state.getX(), state.getY(), state.getWidth(), state.getHeight(), direction, 1, 1);
+        if (gradientColor != null && gradientColor != "transparent") {
+          canvas.setGradient(fillColor, gradientColor, state.getX(), state.getY(), state.getWidth(), state.getHeight(), direction, 1.0, 1.0);
         } else {
           canvas.setFillColor(fillColor);
         }
@@ -195,7 +195,7 @@ class Stencil implements IShape {
     double rad = rotation * Math.PI / 180;
     double cos = Math.cos(-rad);
     double sin = Math.sin(-rad);
-    Point2d offset = Utils.getRotatedPoint(new Point2d(Constants.SHADOW_OFFSETX, Constants.SHADOW_OFFSETY), cos, sin);
+    Point2d offset = Utils.getRotatedPoint(new Point2d(Constants.SHADOW_OFFSETX.toDouble(), Constants.SHADOW_OFFSETY.toDouble()), cos, sin);
 
     if (flipH) {
       offset.setX(offset.getX() * -1);
@@ -228,19 +228,19 @@ class Stencil implements IShape {
       String direction = Utils.getString(state.getStyle(), Constants.STYLE_DIRECTION, null);
       Rect aspect = _computeAspect(state, bounds, direction);
       double minScale = Math.min(aspect.getWidth(), aspect.getHeight());
-      double sw = _strokewidth.equals("inherit") ? Utils.getDouble(state.getStyle(), Constants.STYLE_STROKEWIDTH, 1) * state.getView().getScale() : Double.parseDouble(_strokewidth) * minScale;
+      double sw = _strokewidth == "inherit" ? Utils.getDouble(state.getStyle(), Constants.STYLE_STROKEWIDTH, 1.0) * state.getView().getScale() : double.parse(_strokewidth) * minScale;
       _lastMoveX = 0.0;
       _lastMoveY = 0.0;
       canvas.setStrokeWidth(sw);
 
-      Node tmp = elt.getFirstChild();
+      Node tmp = elt.firstChild;
 
       while (tmp != null) {
-        if (tmp.getNodeType() == Node.ELEMENT_NODE) {
+        if (tmp.nodeType == Node.ELEMENT_NODE) {
           _drawElement(canvas, state, tmp as Element, aspect);
         }
 
-        tmp = tmp.getNextSibling();
+        tmp = tmp.nextNode;
       }
 
       return true;
@@ -260,7 +260,7 @@ class Stencil implements IShape {
     double sx = bounds.getWidth() / _w0;
     double sy = bounds.getHeight() / _h0;
 
-    bool inverse = (direction != null && (direction.equals("north") || direction.equals("south")));
+    bool inverse = (direction != null && (direction == "north" || direction == "south"));
 
     if (inverse) {
       sy = bounds.getWidth() / _h0;
@@ -272,7 +272,7 @@ class Stencil implements IShape {
       y0 -= delta;
     }
 
-    if (_aspect.equals("fixed")) {
+    if (_aspect == "fixed") {
       sy = Math.min(sx, sy);
       sx = sy;
 
@@ -293,7 +293,7 @@ class Stencil implements IShape {
 	 * Drawsthe given element.
 	 */
   void _drawElement(GraphicsCanvas2D canvas, CellState state, Element node, Rect aspect) {
-    String name = node.getNodeName();
+    String name = node.nodeName;
     double x0 = aspect.getX();
     double y0 = aspect.getY();
     double sx = aspect.getWidth();
@@ -301,42 +301,42 @@ class Stencil implements IShape {
     double minScale = Math.min(sx, sy);
 
     // LATER: Move to lookup table
-    if (name.equals("save")) {
+    if (name == "save") {
       canvas.save();
-    } else if (name.equals("restore")) {
+    } else if (name == "restore") {
       canvas.restore();
-    } else if (name.equals("path")) {
+    } else if (name == "path") {
       canvas.begin();
 
       // Renders the elements inside the given path
-      Node childNode = node.getFirstChild();
+      Node childNode = node.firstChild;
 
       while (childNode != null) {
         if (childNode.getNodeType() == Node.ELEMENT_NODE) {
           _drawElement(canvas, state, childNode as Element, aspect);
         }
 
-        childNode = childNode.getNextSibling();
+        childNode = childNode.nextNode;
       }
-    } else if (name.equals("close")) {
+    } else if (name == "close") {
       canvas.close();
-    } else if (name.equals("move")) {
+    } else if (name == "move") {
       _lastMoveX = x0 + _getDouble(node, "x") * sx;
       _lastMoveY = y0 + _getDouble(node, "y") * sy;
       canvas.moveTo(_lastMoveX, _lastMoveY);
-    } else if (name.equals("line")) {
+    } else if (name == "line") {
       _lastMoveX = x0 + _getDouble(node, "x") * sx;
       _lastMoveY = y0 + _getDouble(node, "y") * sy;
       canvas.lineTo(_lastMoveX, _lastMoveY);
-    } else if (name.equals("quad")) {
+    } else if (name == "quad") {
       _lastMoveX = x0 + _getDouble(node, "x2") * sx;
       _lastMoveY = y0 + _getDouble(node, "y2") * sy;
       canvas.quadTo(x0 + _getDouble(node, "x1") * sx, y0 + _getDouble(node, "y1") * sy, _lastMoveX, _lastMoveY);
-    } else if (name.equals("curve")) {
+    } else if (name == "curve") {
       _lastMoveX = x0 + _getDouble(node, "x3") * sx;
       _lastMoveY = y0 + _getDouble(node, "y3") * sy;
       canvas.curveTo(x0 + _getDouble(node, "x1") * sx, y0 + _getDouble(node, "y1") * sy, x0 + _getDouble(node, "x2") * sx, y0 + _getDouble(node, "y2") * sy, _lastMoveX, _lastMoveY);
-    } else if (name.equals("arc")) {
+    } else if (name == "arc") {
       // Arc from stencil is turned into curves in image output
       double r1 = _getDouble(node, "rx") * sx;
       double r2 = _getDouble(node, "ry") * sy;
@@ -354,9 +354,9 @@ class Stencil implements IShape {
         _lastMoveX = curves[i + 4];
         _lastMoveY = curves[i + 5];
       }
-    } else if (name.equals("rect")) {
+    } else if (name == "rect") {
       canvas.rect(x0 + _getDouble(node, "x") * sx, y0 + _getDouble(node, "y") * sy, _getDouble(node, "w") * sx, _getDouble(node, "h") * sy);
-    } else if (name.equals("roundrect")) {
+    } else if (name == "roundrect") {
       double arcsize = _getDouble(node, "arcsize");
 
       if (arcsize == 0) {
@@ -369,18 +369,18 @@ class Stencil implements IShape {
       double r = Math.min(w * factor, h * factor);
 
       canvas.roundrect(x0 + _getDouble(node, "x") * sx, y0 + _getDouble(node, "y") * sy, _getDouble(node, "w") * sx, _getDouble(node, "h") * sy, r, r);
-    } else if (name.equals("ellipse")) {
+    } else if (name == "ellipse") {
       canvas.ellipse(x0 + _getDouble(node, "x") * sx, y0 + _getDouble(node, "y") * sy, _getDouble(node, "w") * sx, _getDouble(node, "h") * sy);
-    } else if (name.equals("image")) {
+    } else if (name == "image") {
       String src = evaluateAttribute(node, "src", state);
 
-      canvas.image(x0 + _getDouble(node, "x") * sx, y0 + _getDouble(node, "y") * sy, _getDouble(node, "w") * sx, _getDouble(node, "h") * sy, src, false, _getString(node, "flipH", "0").equals("1"), _getString(node, "flipV", "0").equals("1"));
-    } else if (name.equals("text")) {
+      canvas.image(x0 + _getDouble(node, "x") * sx, y0 + _getDouble(node, "y") * sy, _getDouble(node, "w") * sx, _getDouble(node, "h") * sy, src, false, _getString(node, "flipH", "0") == "1", _getString(node, "flipV", "0") == "1");
+    } else if (name == "text") {
       String str = evaluateAttribute(node, "str", state);
-      double rotation = _getString(node, "vertical", "0").equals("1") ? -90 : 0;
+      double rotation = _getString(node, "vertical", "0") == "1" ? -90.0 : 0.0;
 
-      canvas.text(x0 + _getDouble(node, "x") * sx, y0 + _getDouble(node, "y") * sy, 0, 0, str, node.getAttribute("align"), node.getAttribute("valign"), false, "", null, false, rotation);
-    } else if (name.equals("include-shape")) {
+      canvas.text(x0 + _getDouble(node, "x") * sx, y0 + _getDouble(node, "y") * sy, 0.0, 0.0, str, node.getAttribute("align"), node.getAttribute("valign"), false, "", null, false, rotation);
+    } else if (name == "include-shape") {
       Stencil stencil = StencilRegistry.getStencil(node.getAttribute("name"));
 
       if (stencil != null) {
@@ -393,17 +393,17 @@ class Stencil implements IShape {
         stencil.drawShape(canvas, state, tmp, true);
         stencil.drawShape(canvas, state, tmp, false);
       }
-    } else if (name.equals("fillstroke")) {
+    } else if (name == "fillstroke") {
       canvas.fillAndStroke();
-    } else if (name.equals("fill")) {
+    } else if (name == "fill") {
       canvas.fill();
-    } else if (name.equals("stroke")) {
+    } else if (name == "stroke") {
       canvas.stroke();
-    } else if (name.equals("strokewidth")) {
+    } else if (name == "strokewidth") {
       canvas.setStrokeWidth(_getDouble(node, "width") * minScale);
-    } else if (name.equals("dashed")) {
+    } else if (name == "dashed") {
       canvas.setDashed(node.getAttribute("dashed") == "1");
-    } else if (name.equals("dashpattern")) {
+    } else if (name == "dashpattern") {
       String value = node.getAttribute("pattern");
 
       if (value != null) {
@@ -412,8 +412,8 @@ class Stencil implements IShape {
 
         for (int i = 0; i < tmp.length; i++) {
           if (tmp[i].length > 0) {
-            pat.append(Double.parseDouble(tmp[i]) * minScale);
-            pat.append(" ");
+            pat.write(double.parse(tmp[i]) * minScale);
+            pat.write(" ");
           }
         }
 
@@ -421,23 +421,23 @@ class Stencil implements IShape {
       }
 
       canvas.setDashPattern(value);
-    } else if (name.equals("strokecolor")) {
+    } else if (name == "strokecolor") {
       canvas.setStrokeColor(node.getAttribute("color"));
-    } else if (name.equals("linecap")) {
+    } else if (name == "linecap") {
       canvas.setLineCap(node.getAttribute("cap"));
-    } else if (name.equals("linejoin")) {
+    } else if (name == "linejoin") {
       canvas.setLineJoin(node.getAttribute("join"));
-    } else if (name.equals("miterlimit")) {
+    } else if (name == "miterlimit") {
       canvas.setMiterLimit(_getDouble(node, "limit"));
-    } else if (name.equals("fillcolor")) {
+    } else if (name == "fillcolor") {
       canvas.setFillColor(node.getAttribute("color"));
-    } else if (name.equals("fontcolor")) {
+    } else if (name == "fontcolor") {
       canvas.setFontColor(node.getAttribute("color"));
-    } else if (name.equals("fontstyle")) {
+    } else if (name == "fontstyle") {
       canvas.setFontStyle(_getInt(node, "style", 0));
-    } else if (name.equals("fontfamily")) {
+    } else if (name == "fontfamily") {
       canvas.setFontFamily(node.getAttribute("family"));
-    } else if (name.equals("fontsize")) {
+    } else if (name == "fontsize") {
       canvas.setFontSize(_getDouble(node, "size") * minScale);
     }
   }
@@ -450,7 +450,7 @@ class Stencil implements IShape {
 
     if (value != null && value.length > 0) {
       try {
-        defaultValue = Math.floor(Float.parseFloat(value)) as int;
+        defaultValue = math.floor(double.parse(value)) as int;
       } on FormatException catch (e) {
         // ignore
       }

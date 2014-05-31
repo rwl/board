@@ -75,7 +75,7 @@ class PartitionLayout extends GraphLayout {
 
     if (cell is ICell && parent is ICell) {
       int i = 0;
-      double last = 0;
+      double last = 0.0;
       int childCount = model.getChildCount(parent);
 
       // Finds index of the closest swimlane
@@ -123,7 +123,7 @@ class PartitionLayout extends GraphLayout {
     // of the graph's container will be used.
     if (pgeo == null && model.getParent(parent) == model.getRoot() || parent == graph.getView().getCurrentRoot()) {
       Rect tmp = getContainerSize();
-      pgeo = new Geometry(0, 0, tmp.getWidth(), tmp.getHeight());
+      pgeo = new Geometry(0.0, 0.0, tmp.getWidth(), tmp.getHeight());
     }
 
     if (pgeo != null) {
@@ -141,8 +141,8 @@ class PartitionLayout extends GraphLayout {
       int n = children.length;
 
       if (n > 0) {
-        double x0 = border;
-        double y0 = border;
+        double x0 = border.toDouble();
+        double y0 = border.toDouble();
         double other = (horizontal) ? pgeo.getHeight() : pgeo.getWidth();
         other -= 2 * border;
 
@@ -152,7 +152,7 @@ class PartitionLayout extends GraphLayout {
         x0 = x0 + size.getWidth();
         y0 = y0 + size.getHeight();
 
-        double tmp = border + (n - 1) * spacing;
+        double tmp = (border + (n - 1) * spacing).toDouble();
         double value = (horizontal) ? ((pgeo.getWidth() - x0 - tmp) / n) : ((pgeo.getHeight() - y0 - tmp) / n);
 
         // Avoids negative values, that is values where the sum of the

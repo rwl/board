@@ -149,7 +149,7 @@ class OrganicLayout extends GraphLayout {
 	 * is not set this value mutiplied by the number of nodes to find
 	 * the total graph area. The graph is assumed square.
 	 */
-  double averageNodeArea = 160000;
+  double averageNodeArea = 160000.0;
 
   /**
 	 * The radius below which fine tuning of the layout should start
@@ -172,7 +172,7 @@ class OrganicLayout extends GraphLayout {
 	 * <code>isOptimizeEdgeDistance</code> must be true for edge to nodes
 	 * distances to be taken into account.
 	 */
-  double edgeDistanceCostFactor = 3000;
+  double edgeDistanceCostFactor = 3000.0;
 
   /**
 	 * Cost factor applied to energy calculations involving edges that cross
@@ -181,7 +181,7 @@ class OrganicLayout extends GraphLayout {
 	 * <code>isOptimizeEdgeCrossing</code> must be true for edge crossings
 	 * to be taken into account.
 	 */
-  double edgeCrossingCostFactor = 6000;
+  double edgeCrossingCostFactor = 6000.0;
 
   /**
 	 * Cost factor applied to energy calculations involving the general node
@@ -191,7 +191,7 @@ class OrganicLayout extends GraphLayout {
 	 * <code>isOptimizeNodeDistribution</code> must be true for this general
 	 * distribution to be applied.
 	 */
-  double nodeDistributionCostFactor = 30000;
+  double nodeDistributionCostFactor = 30000.0;
 
   /**
 	 * Cost factor applied to energy calculations for node promixity to the
@@ -201,7 +201,7 @@ class OrganicLayout extends GraphLayout {
 	 * <code>isOptimizeBorderLine</code> must be true for border
 	 * repulsion to be applied.
 	 */
-  double borderLineCostFactor = 5;
+  double borderLineCostFactor = 5.0;
 
   /**
 	 * Cost factor applied to energy calculations for the edge lengths.
@@ -251,7 +251,7 @@ class OrganicLayout extends GraphLayout {
 	 * prevents from dividing with zero and from creating excessive energy
 	 * values
 	 */
-  double minDistanceLimit = 2;
+  double minDistanceLimit = 2.0;
 
   /**
 	 * cached version of <code>minDistanceLimit</code> squared
@@ -262,7 +262,7 @@ class OrganicLayout extends GraphLayout {
 	 * distance limit beyond which energy costs due to object repulsive is
 	 * not calculated as it would be too insignificant
 	 */
-  double maxDistanceLimit = 100;
+  double maxDistanceLimit = 100.0;
 
   /**
 	 * cached version of <code>maxDistanceLimit</code> squared
@@ -351,7 +351,7 @@ class OrganicLayout extends GraphLayout {
   /**
 	 * Constructor for OrganicLayout.
 	 */
-  OrganicLayout(Graph graph, [Rectangle2D bounds = null]) : super(graph) {
+  OrganicLayout(Graph graph, [harmony.Rectangle bounds = null]) : super(graph) {
     if (bounds != null) {
       boundsX = bounds.getX();
       boundsY = bounds.getY();
@@ -451,8 +451,8 @@ class OrganicLayout extends GraphLayout {
         boundsX = centreX - squareLength / 2.0;
         boundsY = centreY - squareLength / 2.0;
       } else {
-        boundsX = 0;
-        boundsY = 0;
+        boundsX = 0.0;
+        boundsY = 0.0;
       }
       boundsWidth = squareLength;
       boundsHeight = squareLength;
@@ -550,12 +550,12 @@ class OrganicLayout extends GraphLayout {
     }
 
     // Obtain the final positions
-    List<List<double>> result = new List<double>(v.length);//[2];
+    List<List<double>> result = new List<List<double>>(v.length);//[2];
     for (int i = 0; i < v.length; i++) {
       vertices[i] = v[i].cell;
       bounds = getVertexBounds(vertices[i]);
 
-      result[i][0] = [v[i].x - bounds.getWidth() / 2, v[i].y - bounds.getHeight() / 2];
+      result[i] = [v[i].x - bounds.getWidth() / 2, v[i].y - bounds.getHeight() / 2];
     }
 
     model.beginUpdate();

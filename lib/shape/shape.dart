@@ -1,8 +1,10 @@
 library graph.shape;
 
+import 'dart:html';
 import 'dart:math' as Math;
 
 import '../harmony/harmony.dart' as harmony;
+import '../compat/math.dart' as math;
 
 import '../canvas/canvas.dart' show Graphics2DCanvas;
 

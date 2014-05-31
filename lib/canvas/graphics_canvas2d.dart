@@ -114,7 +114,7 @@ class GraphicsCanvas2D implements ICanvas2D {
   /**
 	 * Stroke caching.
 	 */
-  /*transient*/ double _lastStrokeWidth = 0;
+  /*transient*/ double _lastStrokeWidth = 0.0;
 
   /**
 	 * Stroke caching.
@@ -129,7 +129,7 @@ class GraphicsCanvas2D implements ICanvas2D {
   /**
 	 * Stroke caching.
 	 */
-  /*transient*/ double _lastMiterLimit = 0;
+  /*transient*/ double _lastMiterLimit = 0.0;
 
   /**
 	 * Stroke caching.
@@ -455,13 +455,13 @@ class GraphicsCanvas2D implements ICanvas2D {
     harmony.Color c1 = _parseColor(color1);
 
     if (alpha1 != 1) {
-      c1 = new harmony.Color(c1.getRed(), c1.getGreen(), c1.getBlue(), (int)(alpha1 * 255));
+      c1 = new harmony.Color(c1.getRed(), c1.getGreen(), c1.getBlue(), (alpha1 * 255) as int);
     }
 
     harmony.Color c2 = _parseColor(color2);
 
     if (alpha2 != 1) {
-      c2 = new harmony.Color(c2.getRed(), c2.getGreen(), c2.getBlue(), (int)(alpha2 * 255));
+      c2 = new harmony.Color(c2.getRed(), c2.getGreen(), c2.getBlue(), (alpha2 * 255) as int);
     }
 
     _state.gradientPaint = new GradientPaint(x1, y1, c1, x2, y2, c2, true);
@@ -565,8 +565,8 @@ class GraphicsCanvas2D implements ICanvas2D {
       int sh = math.round(size.height * s) as int;
       x += (w - sw) / 2;
       y += (h - sh) / 2;
-      w = sw;
-      h = sh;
+      w = sw.toDouble();
+      h = sh.toDouble();
     } else {
       w = math.round(w);
       h = math.round(h);
@@ -637,10 +637,10 @@ class GraphicsCanvas2D implements ICanvas2D {
     StringBuffer css = new StringBuffer();
     css.write("display:inline;");
     css.write("font-family:" + _state.fontFamily + ";");
-    css.write("font-size:" + math.round(_state.fontSize) + " pt;");
+    css.write("font-size:${math.round(_state.fontSize)} pt;");
     css.write("color:" + _state.fontColorValue + ";");
     // KNOWN: Line-height ignored in JLabel
-    css.write("line-height:" + ((Constants.ABSOLUTE_LINE_HEIGHT) ? math.round(_state.fontSize * Constants.LINE_HEIGHT) + " pt" : Constants.LINE_HEIGHT));
+    css.write("line-height:" + ((Constants.ABSOLUTE_LINE_HEIGHT) ? "${math.round(_state.fontSize * Constants.LINE_HEIGHT)} pt" : Constants.LINE_HEIGHT).toString());
 
     bool setWidth = false;
 
@@ -720,14 +720,14 @@ class GraphicsCanvas2D implements ICanvas2D {
 	 * 
 	 */
   Point2D _getMargin(String align, String valign) {
-    double dx = 0;
-    double dy = 0;
+    double dx = 0.0;
+    double dy = 0.0;
 
     if (align != null) {
       if (align == Constants.ALIGN_CENTER) {
         dx = -0.5;
       } else if (align == Constants.ALIGN_RIGHT) {
-        dx = -1;
+        dx = -1.0;
       }
     }
 
@@ -735,7 +735,7 @@ class GraphicsCanvas2D implements ICanvas2D {
       if (valign == Constants.ALIGN_MIDDLE) {
         dy = -0.5;
       } else if (valign == Constants.ALIGN_BOTTOM) {
-        dy = -1;
+        dy = -1.0;
       }
     }
 
@@ -793,19 +793,19 @@ class GraphicsCanvas2D implements ICanvas2D {
       if (clip && w > 0 && h > 0) {
         prefWidth = Math.min(pref.width, w as int);
         prefHeight = Math.min(prefHeight, h as int);
-        h = prefHeight;
+        h = prefHeight.toDouble();
       } else if (!clip && wrap && w > 0 && h > 0) {
         prefWidth = Math.min(pref.width, w as int);
-        w = prefWidth;
-        h = prefHeight;
+        w = prefWidth.toDouble();
+        h = prefHeight.toDouble();
         prefHeight = Math.max(prefHeight, h as int);
       } else if (!clip && !wrap) {
         if (w > 0 && w < prefWidth) {
-          w = prefWidth;
+          w = prefWidth.toDouble();
         }
 
         if (h > 0 && h < prefHeight) {
-          h = prefHeight;
+          h = prefHeight.toDouble();
         }
       }
 
@@ -814,11 +814,11 @@ class GraphicsCanvas2D implements ICanvas2D {
       y += margin.getY() * prefHeight;
 
       if (w == 0) {
-        w = prefWidth;
+        w = prefWidth.toDouble();
       }
 
       if (h == 0) {
-        h = prefHeight;
+        h = prefHeight.toDouble();
       }
 
       _rendererPane.paintComponent(_state.g, textRenderer, _rendererPane, math.round(x) as int, math.round(y) as int, math.round(w) as int, math.round(h) as int, true);
@@ -901,13 +901,13 @@ class GraphicsCanvas2D implements ICanvas2D {
       y += fm.getHeight() - fm.getDescent() - (margin.getY() + 0.5);
 
       for (int i = 0; i < lines.length; i++) {
-        double dx = 0;
+        double dx = 0.0;
 
         if (align != null) {
           if (align == Constants.ALIGN_CENTER) {
             dx = (textWidth - stringWidths[i]) / 2;
           } else if (align == Constants.ALIGN_RIGHT) {
-            dx = textWidth - stringWidths[i];
+            dx = (textWidth - stringWidths[i]).toDouble();
           }
         }
 
@@ -1259,37 +1259,37 @@ class _CanvasState {//implements Cloneable {
   /**
    * 
    */
-  double alpha = 1;
+  double alpha = 1.0;
 
   /**
    * 
    */
-  double scale = 1;
+  double scale = 1.0;
 
   /**
    * 
    */
-  double dx = 0;
+  double dx = 0.0;
 
   /**
    * 
    */
-  double dy = 0;
+  double dy = 0.0;
 
   /**
    * 
    */
-  double theta = 0;
+  double theta = 0.0;
 
   /**
    * 
    */
-  double rotationCx = 0;
+  double rotationCx = 0.0;
 
   /**
    * 
    */
-  double rotationCy = 0;
+  double rotationCy = 0.0;
 
   /**
    * 
@@ -1304,7 +1304,7 @@ class _CanvasState {//implements Cloneable {
   /**
    * 
    */
-  double miterLimit = 10;
+  double miterLimit = 10.0;
 
   /**
    * 
@@ -1314,7 +1314,7 @@ class _CanvasState {//implements Cloneable {
   /**
    * 
    */
-  double fontSize = Constants.DEFAULT_FONTSIZE;
+  double fontSize = Constants.DEFAULT_FONTSIZE.toDouble();
 
   /**
    * 
@@ -1364,7 +1364,7 @@ class _CanvasState {//implements Cloneable {
   /**
    * 
    */
-  double strokeWidth = 1;
+  double strokeWidth = 1.0;
 
   /**
    * 
@@ -1419,17 +1419,17 @@ class _CanvasState {//implements Cloneable {
   /**
    * 
    */
-  double shadowAlpha = 1;
+  double shadowAlpha = 1.0;
 
   /**
    * 
    */
-  double shadowOffsetX = Constants.SHADOW_OFFSETX;
+  double shadowOffsetX = Constants.SHADOW_OFFSETX.toDouble();
 
   /**
    * 
    */
-  double shadowOffsetY = Constants.SHADOW_OFFSETY;
+  double shadowOffsetY = Constants.SHADOW_OFFSETY.toDouble();
 
   /**
    * Stores the actual state.

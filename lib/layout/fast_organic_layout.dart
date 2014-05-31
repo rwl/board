@@ -349,8 +349,8 @@ class FastOrganicLayout extends GraphLayout {
     model.beginUpdate();
     try {
       for (int i = 0; i < n; i++) {
-        dispX[i] = 0;
-        dispY[i] = 0;
+        dispX[i] = 0.0;
+        dispY[i] = 0.0;
         isMoveable[i] = isVertexMovable(vertexArray[i]);
 
         // Get lists of neighbours to all vertices, translate the cells
@@ -396,7 +396,7 @@ class FastOrganicLayout extends GraphLayout {
       }
 
       // Main iteration loop
-      for (iteration = 0; iteration < maxIterations; iteration++) {
+      for (iteration = 0.0; iteration < maxIterations; iteration++) {
         if (!allowedToRun) {
           return;
         }
@@ -479,8 +479,8 @@ class FastOrganicLayout extends GraphLayout {
         double newYDisp = dispY[index] / deltaLength * Math.min(deltaLength, temperature);
 
         // reset displacements
-        dispX[index] = 0;
-        dispY[index] = 0;
+        dispX[index] = 0.0;
+        dispY[index] = 0.0;
 
         // Update the cached cell locations
         cellLocation[index][0] += newXDisp;
@@ -551,11 +551,11 @@ class FastOrganicLayout extends GraphLayout {
           double yDelta = cellLocation[i][1] - cellLocation[j][1];
 
           if (xDelta == 0) {
-            xDelta = 0.01 + Math.Random.nextDouble();
+            xDelta = 0.01 + math.random();
           }
 
           if (yDelta == 0) {
-            yDelta = 0.01 + Math.Random.nextDouble();
+            yDelta = 0.01 + math.random();
           }
 
           // Distance between nodes
