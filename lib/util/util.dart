@@ -10,7 +10,7 @@ library graph.util;
  */
 
 import 'dart:html';
-import 'dart:collection' show HashMap, SplayTreeSet, binarySearch, LinkedList;
+import 'dart:collection' show HashMap, SplayTreeSet, binarySearch, LinkedList, Queue;
 //import 'dart:collection.algorithms' show binarySearch;
 import 'dart:svg' as svg;
 import 'dart:math' as Math;
@@ -362,23 +362,23 @@ class Utils {
 
     List<String> lines = text.split("\n");
 
-    Rectangle2D boundingBox = null;
+    awt.Rectangle boundingBox = null;
 
     if (lines.length == 0) {
       boundingBox = font.getStringBounds("", frc);
     } else {
       for (int i = 0; i < lines.length; i++) {
-        Rectangle2D bounds = font.getStringBounds(lines[i], frc);
+        awt.Rectangle bounds = font.getStringBounds(lines[i], frc);
 
         if (boundingBox == null) {
           boundingBox = bounds;
         } else {
-          boundingBox.setFrame(0, 0, Math.max(boundingBox.getWidth(), bounds.getWidth()), boundingBox.getHeight() + lineHeight);
+          boundingBox.setFrame(0.0, 0.0, Math.max(boundingBox.getWidth(), bounds.getWidth()), boundingBox.getHeight() + lineHeight);
         }
       }
     }
 
-    return new Rect(boundingBox);
+    return new Rect.rectangle(boundingBox);
   }
 
   /**
@@ -398,7 +398,7 @@ class Utils {
     for (int i = 0; i < lines.length; i++) {
       int lineWidth = 0; // the display width of the current line
       int charCount = 0; // keeps count of current position in the line
-      StringBuilder currentLine = new StringBuilder();
+      StringBuffer currentLine = new StringBuffer();
 
       // Split the words of the current line by spaces and tabs
       // The words are trimmed of tabs, space and newlines, therefore
@@ -408,14 +408,14 @@ class Utils {
       // This is because if a word is split during the process
       // the remainder of the word is added to the front of the
       // stack and processed next
-      Stack<String> wordStack = new Stack<String>();
+      Queue<String> wordStack = new Queue<String>();
 
       for (int j = words.length - 1; j >= 0; j--) {
-        wordStack.push(words[j]);
+        wordStack.add(words[j]);
       }
 
-      while (!wordStack.isEmpty()) {
-        String word = wordStack.pop();
+      while (wordStack.length > 0) {
+        String word = wordStack.removeLast();
 
         // Work out what whitespace exists before this word.
         // and add the width of the whitespace to the calculation
@@ -429,7 +429,7 @@ class Utils {
           int letterIndex = lines[i].indexOf(firstWordLetter, charCount);
           String whitespace = lines[i].substring(charCount, letterIndex);
           whitespaceCount = whitespace.length;
-          word = whitespace.concat(word);
+          word = whitespace + word;
         }
 
         double wordLength;
@@ -454,8 +454,8 @@ class Utils {
             // counter, create a new line and put the current word
             // back on the stack for processing in the next round
             result.add(currentLine.toString());
-            currentLine = new StringBuilder();
-            wordStack.push(word.trim());
+            currentLine = new StringBuffer();
+            wordStack.add(word.trim());
             lineWidth = 0;
           } else if (Constants.SPLIT_WORDS) {
             // There are no words on the current line and the
@@ -474,12 +474,12 @@ class Utils {
                 // since we can't split it...
                 j = j > 1 ? j - 1 : j;
                 String chars = word.substring(0, j);
-                currentLine = currentLine.append(chars);
+                /*currentLine = */currentLine.write(chars);
                 // Return the unprocessed part of the word
                 // to the stack
-                wordStack.push(word.substring(j, word.length));
+                wordStack.add(word.substring(j, word.length));
                 result.add(currentLine.toString());
-                currentLine = new StringBuilder();
+                currentLine = new StringBuffer();
                 lineWidth = 0;
                 // Increment char counter allowing for white
                 // space in the original word
@@ -492,7 +492,7 @@ class Utils {
             // we are not splitting.
             word = word.trim();
             result.add(word);
-            currentLine = new StringBuilder();
+            currentLine = new StringBuffer();
             lineWidth = 0;
             // Increment char counter allowing for white
             // space in the original word
@@ -504,9 +504,9 @@ class Utils {
           // preceeding whitespace if it is the first word in the
           // line.
           if (lineWidth > 0) {
-            currentLine = currentLine.append(word);
+            /*currentLine = */currentLine.write(word);
           } else {
-            currentLine = currentLine.append(word.trim());
+            /*currentLine = */currentLine.write(word.trim());
           }
 
           lineWidth += wordLength;
@@ -813,7 +813,7 @@ class Utils {
     if (defaultValue == null) {
       defaultValue = Constants.DIRECTION_MASK_ALL;
     }
-    Object value = terminal.getStyle().get(Constants.STYLE_PORT_CONSTRAINT);
+    Object value = terminal.getStyle()[Constants.STYLE_PORT_CONSTRAINT];
 
     if (value == null) {
       return defaultValue;
@@ -2131,29 +2131,29 @@ class Utils {
 
     if (node != null) {
       if (node.nodeType == Node.TEXT_NODE) {
-        result.write(node.getNodeValue());
+        result.write(node.nodeValue);
       } else {
-        result.write(indent + "<" + node.getNodeName());
-        NamedNodeMap attrs = node.getAttributes();
+        result.write(indent + "<" + node.nodeName);
+        /*NamedNodeMap*/Map<String, String> attrs = node.attributes;
 
         if (attrs != null) {
-          for (int i = 0; i < attrs.getLength(); i++) {
-            String value = attrs.item(i).getNodeValue();
+          for (int i = 0; i < attrs.length; i++) {
+            String value = attrs[i].nodeValue;
             value = Utils.htmlEntities(value);
             result.write(" " + attrs.item(i).getNodeName() + "=\"" + value + "\"");
           }
         }
-        Node tmp = node.getFirstChild();
+        Node tmp = node.firstChild;
 
         if (tmp != null) {
           result.write(">\n");
 
           while (tmp != null) {
             result.write(getPrettyXml(tmp, tab, indent + tab));
-            tmp = tmp.getNextSibling();
+            tmp = tmp.nextNode;
           }
 
-          result.write(indent + "</" + node.getNodeName() + ">\n");
+          result.write(indent + "</" + node.nodeName + ">\n");
         } else {
           result.write("/>\n");
         }

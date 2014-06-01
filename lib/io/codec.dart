@@ -284,8 +284,8 @@ class Codec {
           (obj as Element).attributes.remove("as");
         }
       } on Exception catch (e) {
-        System.err.println("Cannot decode " + node.nodeName + ": " + e.getMessage());
-        e.printStackTrace();
+        window.console.log("Cannot decode " + node.nodeName + ": " + e.message);
+        //e.printStackTrace();
       }
     }
 

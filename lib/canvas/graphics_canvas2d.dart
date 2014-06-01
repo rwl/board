@@ -1256,179 +1256,74 @@ class GraphicsCanvas2D implements ICanvas2D {
  * 
  */
 class _CanvasState {//implements Cloneable {
-  /**
-   * 
-   */
   double alpha = 1.0;
 
-  /**
-   * 
-   */
   double scale = 1.0;
 
-  /**
-   * 
-   */
   double dx = 0.0;
 
-  /**
-   * 
-   */
   double dy = 0.0;
 
-  /**
-   * 
-   */
   double theta = 0.0;
 
-  /**
-   * 
-   */
   double rotationCx = 0.0;
 
-  /**
-   * 
-   */
   double rotationCy = 0.0;
 
-  /**
-   * 
-   */
   bool flipV = false;
 
-  /**
-   * 
-   */
   bool flipH = false;
 
-  /**
-   * 
-   */
   double miterLimit = 10.0;
 
-  /**
-   * 
-   */
   int fontStyle = 0;
 
-  /**
-   * 
-   */
   double fontSize = Constants.DEFAULT_FONTSIZE.toDouble();
 
-  /**
-   * 
-   */
   String fontFamily = Constants.DEFAULT_FONTFAMILIES;
 
-  /**
-   * 
-   */
   String fontColorValue = "#000000";
 
-  /**
-   * 
-   */
   awt.Color fontColor;
 
-  /**
-   * 
-   */
   String fontBackgroundColorValue;
 
-  /**
-   * 
-   */
   awt.Color fontBackgroundColor;
 
-  /**
-   * 
-   */
   String fontBorderColorValue;
 
-  /**
-   * 
-   */
   awt.Color fontBorderColor;
 
-  /**
-   * 
-   */
   String lineCap = "flat";
 
-  /**
-   * 
-   */
   String lineJoin = "miter";
 
-  /**
-   * 
-   */
   double strokeWidth = 1.0;
 
-  /**
-   * 
-   */
   String strokeColorValue;
 
-  /**
-   * 
-   */
   awt.Color strokeColor;
 
-  /**
-   * 
-   */
   String fillColorValue;
 
-  /**
-   * 
-   */
   awt.Color fillColor;
 
-  /**
-   * 
-   */
   Paint gradientPaint;
 
-  /**
-   * 
-   */
   bool dashed = false;
 
-  /**
-   * 
-   */
   List<double> dashPattern = [3.0, 3.0];
 
-  /**
-   * 
-   */
   bool shadow = false;
 
-  /**
-   * 
-   */
   String shadowColorValue = Constants.W3C_SHADOWCOLOR;
 
-  /**
-   * 
-   */
   awt.Color shadowColor;
 
-  /**
-   * 
-   */
   double shadowAlpha = 1.0;
 
-  /**
-   * 
-   */
   double shadowOffsetX = Constants.SHADOW_OFFSETX.toDouble();
 
-  /**
-   * 
-   */
   double shadowOffsetY = Constants.SHADOW_OFFSETY.toDouble();
 
   /**
