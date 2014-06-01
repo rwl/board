@@ -12,7 +12,7 @@ class DoubleRectangleShape extends RectangleShape {
 
     int inset = math.round((Utils.getFloat(state.getStyle(), Constants.STYLE_STROKEWIDTH, 1) + 3) * canvas.getScale()) as int;
 
-    harmony.Rectangle rect = state.getRectangle();
+    awt.Rectangle rect = state.getRectangle();
     int x = rect.x + inset;
     int y = rect.y + inset;
     int w = rect.width - 2 * inset;

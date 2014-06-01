@@ -50,7 +50,7 @@
  */
 part of graph.util.png;
 
-//import java.awt.harmony.Rectangle;
+//import java.awt.awt.Rectangle;
 //import java.awt.image.ColorModel;
 //import java.awt.image.IndexColorModel;
 //import java.awt.image.Raster;
@@ -579,7 +579,7 @@ class PngImageEncoder
 		// you get back here appears larger than it should.
 		// This solves that problem by bounding the raster to the
 		// image's bounds...
-		Raster ras = image.getData(new harmony.Rectangle(image.getMinX(), image
+		Raster ras = image.getData(new awt.Rectangle(image.getMinX(), image
 				.getMinY(), image.getWidth(), image.getHeight()));
 		// System.out.println("Image: [" +
 		//                    image.getMinY()  + ", " +

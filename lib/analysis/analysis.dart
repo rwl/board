@@ -5,13 +5,12 @@ library graph.analysis;
  * shortest path and minimum spanning tree.
  */
 
+import 'dart:html' show window;
 import 'dart:collection' show HashSet, LinkedList, Queue;
 import 'dart:math' as Math;
 import 'dart:collection' show HashMap;
 
-import '../compat/math.dart' as math;
-
-import '../graph.dart';
+import '../util/java/math.dart' as math;
 
 import '../cost_function/cost_function.dart' show CostFunction, DoubleValCostFunction;
 import '../generator_function/generator_function.dart' show GeneratorFunction, GeneratorRandomFunction;
@@ -29,7 +28,6 @@ part 'graph_properties.dart';
 part 'graph_structure.dart';
 part 'graph_type.dart';
 part 'cost_function.dart';
-part 'structural_exception.dart';
 part 'traversal.dart';
 part 'union_find.dart';
 

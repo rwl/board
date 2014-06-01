@@ -6,7 +6,7 @@ part of graph.swing.handler;
 //import java.awt.Color;
 //import java.awt.Graphics;
 //import java.awt.Point;
-//import java.awt.harmony.Rectangle;
+//import java.awt.awt.Rectangle;
 //import java.awt.event.KeyAdapter;
 //import java.awt.event.KeyEvent;
 //import java.awt.event.MouseEvent;
@@ -43,12 +43,12 @@ class Rubberband implements MouseListener, MouseMotionListener {
   /**
 	 * Holds the point where the selection has started.
 	 */
-  /*transient*/ harmony.Point _first;
+  /*transient*/ awt.Point _first;
 
   /**
 	 * Holds the current rubberband bounds.
 	 */
-  /*transient*/ harmony.Rectangle _bounds;
+  /*transient*/ awt.Rectangle _bounds;
 
   /**
 	 * Constructs a new rubberband selection for the given graph component.
@@ -124,9 +124,9 @@ class Rubberband implements MouseListener, MouseMotionListener {
   /**
 	 * Starts the rubberband selection at the given point.
 	 */
-  void start(harmony.Point point) {
+  void start(awt.Point point) {
     _first = point;
-    _bounds = new harmony.Rectangle(_first);
+    _bounds = new awt.Rectangle(_first);
   }
 
   /**
@@ -146,7 +146,7 @@ class Rubberband implements MouseListener, MouseMotionListener {
 	 * @param rect
 	 * @param e
 	 */
-  List<Object> select(harmony.Rectangle rect, MouseEvent e) {
+  List<Object> select(awt.Rectangle rect, MouseEvent e) {
     return _graphComponent.selectRegion(rect, e);
   }
 
@@ -155,7 +155,7 @@ class Rubberband implements MouseListener, MouseMotionListener {
 	 */
   void paintRubberband(Graphics g) {
     if (_first != null && _bounds != null && _graphComponent.isSignificant(_bounds.width, _bounds.height)) {
-      harmony.Rectangle rect = new harmony.Rectangle(_bounds);
+      awt.Rectangle rect = new awt.Rectangle(_bounds);
       g.setColor(_fillColor);
       Utils.fillClippedRect(g, rect.x, rect.y, rect.width, rect.height);
       g.setColor(_borderColor);
@@ -180,38 +180,38 @@ class Rubberband implements MouseListener, MouseMotionListener {
 	 */
   void mouseDragged(MouseEvent e) {
     if (!e.isConsumed() && _first != null) {
-      harmony.Rectangle oldBounds = new harmony.Rectangle(_bounds);
-      _bounds = new harmony.Rectangle(_first);
+      awt.Rectangle oldBounds = new awt.Rectangle(_bounds);
+      _bounds = new awt.Rectangle(_first);
       _bounds.add(e.getPoint());
 
       if (_graphComponent.isSignificant(_bounds.width, _bounds.height)) {
         GraphControl control = _graphComponent.getGraphControl();
 
         // Repaints exact difference between old and new bounds
-        harmony.Rectangle union = new harmony.Rectangle(oldBounds);
+        awt.Rectangle union = new awt.Rectangle(oldBounds);
         union.add(_bounds);
 
         if (_bounds.x != oldBounds.x) {
           int maxleft = Math.max(_bounds.x, oldBounds.x);
-          harmony.Rectangle tmp = new harmony.Rectangle(union.x - 1, union.y, maxleft - union.x + 2, union.height);
+          awt.Rectangle tmp = new awt.Rectangle(union.x - 1, union.y, maxleft - union.x + 2, union.height);
           control.repaint(tmp);
         }
 
         if (_bounds.x + _bounds.width != oldBounds.x + oldBounds.width) {
           int minright = Math.min(_bounds.x + _bounds.width, oldBounds.x + oldBounds.width);
-          harmony.Rectangle tmp = new harmony.Rectangle(minright - 1, union.y, union.x + union.width - minright + 1, union.height);
+          awt.Rectangle tmp = new awt.Rectangle(minright - 1, union.y, union.x + union.width - minright + 1, union.height);
           control.repaint(tmp);
         }
 
         if (_bounds.y != oldBounds.y) {
           int maxtop = Math.max(_bounds.y, oldBounds.y);
-          harmony.Rectangle tmp = new harmony.Rectangle(union.x, union.y - 1, union.width, maxtop - union.y + 2);
+          awt.Rectangle tmp = new awt.Rectangle(union.x, union.y - 1, union.width, maxtop - union.y + 2);
           control.repaint(tmp);
         }
 
         if (_bounds.y + _bounds.height != oldBounds.y + oldBounds.height) {
           int minbottom = Math.min(_bounds.y + _bounds.height, oldBounds.y + oldBounds.height);
-          harmony.Rectangle tmp = new harmony.Rectangle(union.x, minbottom - 1, union.width, union.y + union.height - minbottom + 1);
+          awt.Rectangle tmp = new awt.Rectangle(union.x, minbottom - 1, union.width, union.y + union.height - minbottom + 1);
           control.repaint(tmp);
         }
 
@@ -228,7 +228,7 @@ class Rubberband implements MouseListener, MouseMotionListener {
 	 * 
 	 */
   void mouseReleased(MouseEvent e) {
-    harmony.Rectangle rect = _bounds;
+    awt.Rectangle rect = _bounds;
     reset();
 
     if (!e.isConsumed() && rect != null && _graphComponent.isSignificant(rect.width, rect.height)) {

@@ -22,7 +22,7 @@ part of graph.harmony;
 //import java.awt.geom.Dimension2D;
 //import java.io.Serializable;
 
-//import org.apache.harmony.misc.HashCode;
+//import org.apache.awt.misc.HashCode;
 
 
 class Dimension {//extends Dimension2D implements Serializable {

@@ -96,7 +96,7 @@ class StylesheetCodec extends ObjectCodec {
   /**
 	 * Decodes the given Stylesheet.
 	 */
-  Object decode(Codec dec, Node node, Object into) {
+  Object decode(Codec dec, Node node, [Object into=null]) {
     Object obj = null;
 
     if (node is Element) {

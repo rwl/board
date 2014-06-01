@@ -10,7 +10,7 @@ class CylinderShape extends BasicShape {
 	 * Draws a cylinder for the given parameters.
 	 */
   void paintShape(Graphics2DCanvas canvas, CellState state) {
-    harmony.Rectangle rect = state.getRectangle();
+    awt.Rectangle rect = state.getRectangle();
     int x = rect.x;
     int y = rect.y;
     int w = rect.width;
@@ -21,8 +21,8 @@ class CylinderShape extends BasicShape {
 
     // Paints the background
     if (_configureGraphics(canvas, state, true)) {
-      Area area = new Area(new harmony.Rectangle(x, y + h4 / 2, r, h - h4));
-      area.add(new Area(new harmony.Rectangle(x, y + h4 / 2, r, h - h4)));
+      Area area = new Area(new awt.Rectangle(x, y + h4 / 2, r, h - h4));
+      area.add(new Area(new awt.Rectangle(x, y + h4 / 2, r, h - h4)));
       area.add(new Area(new Ellipse2D.Float(x, y, r, h4)));
       area.add(new Area(new Ellipse2D.Float(x, y + h - h4, r, h4)));
 

@@ -10,8 +10,8 @@ import 'dart:html';
 import 'package:image/image.dart' as image;
 //import 'package:color/color.dart' as color;
 
-import '../compat/math.dart' as math;
-import '../harmony/harmony.dart' as harmony;
+import '../util/java/math.dart' as math;
+import '../harmony/awt.dart' as harmony;
 
 import '../canvas/canvas.dart' show ICanvas2D, Graphics2DCanvas, ICanvas, ImageCanvas;
 import '../reader/reader.dart' show IElementHandler;

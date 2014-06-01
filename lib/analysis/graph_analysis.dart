@@ -104,8 +104,8 @@ class GraphAnalysis {
     // with the from element at prio 0.
     GraphView view = graph.getView();
     FibonacciHeap q = _createPriorityQueue();
-    Hashtable<Object, Object> pred = new Hashtable<Object, Object>();
-    q.decreaseKey(q.getNode(from, true), 0); // Inserts automatically
+    Map<Object, Object> pred = new Map<Object, Object>();
+    q.decreaseKey(q.getNode(from, true), 0.0); // Inserts automatically
 
     // The main loop of the dijkstra algorithm is based on the pqueue being
     // updated with the actual shortest distance to the source vertex.
@@ -205,7 +205,7 @@ class GraphAnalysis {
     // cell in tha graph traversal. The pqueue is initialized
     // with the from element at prio 0.
     FibonacciHeap q = _createPriorityQueue();
-    Hashtable<Object, Object> pred = new Hashtable<Object, Object>();
+    Map<Object, Object> pred = new Map<Object, Object>();
     Object u = v[0];
     q.decreaseKey(q.getNode(u, true), 0.0);
 
@@ -348,7 +348,7 @@ class GraphAnalysis {
   List<CellState> sort(List<CellState> states, final ICostFunction cf) {
     List<CellState> result = new List<CellState>.from(states);
 
-    Collections.sort(result, (CellState o1, CellState o2) {
+    result.sort((CellState o1, CellState o2) {
       double d1 = cf.getCost(o1);
       double d2 = cf.getCost(o2);
 
@@ -370,7 +370,7 @@ class GraphAnalysis {
 	 * @return Returns the sum of all cell cost
 	 */
   double sum(List<CellState> states, ICostFunction cf) {
-    double sum = 0;
+    double sum = 0.0;
 
     for (int i = 0; i < states.length; i++) {
       sum += cf.getCost(states[i]);

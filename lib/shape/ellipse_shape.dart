@@ -10,7 +10,7 @@ class EllipseShape extends BasicShape {
 	 * 
 	 */
   Shape createShape(Graphics2DCanvas canvas, CellState state) {
-    harmony.Rectangle temp = state.getRectangle();
+    awt.Rectangle temp = state.getRectangle();
 
     return new Ellipse2D.Float(temp.x, temp.y, temp.width, temp.height);
   }

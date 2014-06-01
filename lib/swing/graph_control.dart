@@ -20,7 +20,7 @@ class GraphControlMouseAdapter extends MouseAdapter {
 
   void mouseReleased(MouseEvent e) {
     if (this.graphControl.translate.x != 0 || this.graphControl.translate.y != 0) {
-      this.graphControl.translate = new harmony.Point(0, 0);
+      this.graphControl.translate = new awt.Point(0, 0);
       this.graphControl.repaint();
     }
   }
@@ -48,7 +48,7 @@ class GraphControl extends JComponent {
 	 * mouse drags and must be reset after any interactive repaints. Default
 	 * is (0,0). This should not be null.
 	 */
-  harmony.Point translate = new harmony.Point(0, 0);
+  awt.Point translate = new awt.Point(0, 0);
 
   /**
 	 * @param graphComponent TODO
@@ -61,14 +61,14 @@ class GraphControl extends JComponent {
   /**
 	 * Returns the translate.
 	 */
-  harmony.Point getTranslate() {
+  awt.Point getTranslate() {
     return translate;
   }
 
   /**
 	 * Sets the translate.
 	 */
-  void setTranslate(harmony.Point value) {
+  void setTranslate(awt.Point value) {
     translate = value;
   }
 
@@ -83,7 +83,7 @@ class GraphControl extends JComponent {
 	 * Overrides parent method to add extend flag for making the control
 	 * larger during previews.
 	 */
-  void scrollRectToVisible(harmony.Rectangle aRect, bool extend) {
+  void scrollRectToVisible(awt.Rectangle aRect, bool extend) {
     super.scrollRectToVisible(aRect);
 
     if (extend) {
@@ -96,12 +96,12 @@ class GraphControl extends JComponent {
 	 * extension below the origin (into negative space) the translate will
 	 * temporaly be used and reset with the next mouse released event.
 	 */
-  void extendComponent(harmony.Rectangle rect) {
+  void extendComponent(awt.Rectangle rect) {
     int right = rect.x + rect.width;
     int bottom = rect.y + rect.height;
 
-    harmony.Dimension d = new harmony.Dimension(getPreferredSize());
-    harmony.Dimension sp = this.graphComponent._getScaledPreferredSizeForGraph();
+    awt.Dimension d = new awt.Dimension(getPreferredSize());
+    awt.Dimension sp = this.graphComponent._getScaledPreferredSizeForGraph();
     Rect min = this.graphComponent._graph.getMinimumGraphSize();
     double scale = this.graphComponent._graph.getView().getScale();
     bool update = false;
@@ -174,17 +174,17 @@ class GraphControl extends JComponent {
 	 */
   void updatePreferredSize() {
     double scale = this.graphComponent._graph.getView().getScale();
-    harmony.Dimension d = null;
+    awt.Dimension d = null;
 
     if (this.graphComponent._preferPageSize || this.graphComponent._pageVisible) {
-      harmony.Dimension page = this.graphComponent._getPreferredSizeForPage();
+      awt.Dimension page = this.graphComponent._getPreferredSizeForPage();
 
       if (!this.graphComponent._preferPageSize) {
         page.width += 2 * this.graphComponent.getHorizontalPageBorder();
         page.height += 2 * this.graphComponent.getVerticalPageBorder();
       }
 
-      d = new harmony.Dimension((int)(page.width * scale), (int)(page.height * scale));
+      d = new awt.Dimension((int)(page.width * scale), (int)(page.height * scale));
     } else {
       d = this.graphComponent._getScaledPreferredSizeForGraph();
     }
@@ -257,7 +257,7 @@ class GraphControl extends JComponent {
   void drawGraph(Graphics2D g, bool drawLabels) {
     Graphics2D previousGraphics = this.graphComponent._canvas.getGraphics();
     bool previousDrawLabels = this.graphComponent._canvas.isDrawLabels();
-    harmony.Point previousTranslate = this.graphComponent._canvas.getTranslate();
+    awt.Point previousTranslate = this.graphComponent._canvas.getTranslate();
     double previousScale = this.graphComponent._canvas.getScale();
 
     try {
@@ -287,7 +287,7 @@ class GraphControl extends JComponent {
 	 * 
 	 */
   bool hitClip(Graphics2DCanvas canvas, CellState state) {
-    harmony.Rectangle rect = getExtendedCellBounds(state);
+    awt.Rectangle rect = getExtendedCellBounds(state);
 
     return (rect == null || canvas.getGraphics().hitClip(rect.x, rect.y, rect.width, rect.height));
   }
@@ -296,8 +296,8 @@ class GraphControl extends JComponent {
 	 * @param state the cached state of the cell whose extended bounds are to be calculated
 	 * @return the bounds of the cell, including the label and shadow and allowing for rotation
 	 */
-  harmony.Rectangle getExtendedCellBounds(CellState state) {
-    harmony.Rectangle rect = null;
+  awt.Rectangle getExtendedCellBounds(CellState state) {
+    awt.Rectangle rect = null;
 
     // Takes rotation into account
     double rotation = Utils.getDouble(state.getStyle(), Constants.STYLE_ROTATION);
@@ -393,7 +393,7 @@ class GraphControl extends JComponent {
         ImageIcon icon = this.graphComponent.getFoldingIcon(state);
 
         if (icon != null) {
-          harmony.Rectangle bounds = this.graphComponent.getFoldingIconBounds(state, icon);
+          awt.Rectangle bounds = this.graphComponent.getFoldingIconBounds(state, icon);
           g2.drawImage(icon.getImage(), bounds.x, bounds.y, bounds.width, bounds.height, this);
         }
       }

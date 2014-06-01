@@ -8,10 +8,10 @@ part of graph.swing.handler;
 //import java.awt.Graphics;
 //import java.awt.Graphics2D;
 //import java.awt.Point;
-//import java.awt.harmony.Rectangle;
+//import java.awt.awt.Rectangle;
 //import java.awt.Stroke;
 //import java.awt.event.MouseEvent;
-//import java.awt.geom.harmony.Line2D;
+//import java.awt.geom.awt.Line2D;
 //import java.util.ArrayList;
 //import java.util.Arrays;
 //import java.util.List;
@@ -130,9 +130,9 @@ class EdgeHandler extends CellHandler {
   /**
 	 * 
 	 */
-  List<harmony.Rectangle> _createHandles() {
+  List<awt.Rectangle> _createHandles() {
     _p = _createPoints(_state);
-    List<harmony.Rectangle> h = new List<harmony.Rectangle>(_p.length + 1);
+    List<awt.Rectangle> h = new List<awt.Rectangle>(_p.length + 1);
 
     for (int i = 0; i < h.length - 1; i++) {
       h[i] = _createHandle(_p[i]);
@@ -183,7 +183,7 @@ class EdgeHandler extends CellHandler {
   /**
 	 * 
 	 */
-  //	harmony.Rectangle _createHandle(harmony.Point center)
+  //	awt.Rectangle _createHandle(awt.Point center)
   //	{
   //		return _createHandle(center, Constants.HANDLE_SIZE);
   //	}
@@ -191,15 +191,15 @@ class EdgeHandler extends CellHandler {
   /**
 	 * 
 	 */
-  harmony.Rectangle _createHandle(harmony.Point center, [int size = Constants.HANDLE_SIZE]) {
-    return new harmony.Rectangle(center.x - size / 2, center.y - size / 2, size, size);
+  awt.Rectangle _createHandle(awt.Point center, [int size = Constants.HANDLE_SIZE]) {
+    return new awt.Rectangle(center.x - size / 2, center.y - size / 2, size, size);
   }
 
   /**
 	 * 
 	 */
   PoList<int> _createPoints(CellState s) {
-    List<harmony.Point> pts = new List<harmony.Point>(s.getAbsolutePointCount());
+    List<awt.Point> pts = new List<awt.Point>(s.getAbsolutePointCount());
 
     for (int i = 0; i < pts.length; i++) {
       pts[i] = s.getAbsolutePoint(i).getPoint();
@@ -241,8 +241,8 @@ class EdgeHandler extends CellHandler {
 						g.setColor(Color.BLACK);
 					}
 
-					harmony.Point origin = getLocation();
-					harmony.Point last = _p[0];
+					awt.Point origin = getLocation();
+					awt.Point last = _p[0];
 
 					for (int i = 1; i < _p.length; i++)
 					{
@@ -292,13 +292,13 @@ class EdgeHandler extends CellHandler {
 	 * 
 	 * @return Returns the bounds of the preview.
 	 */
-  harmony.Rectangle _getPreviewBounds() {
-    harmony.Rectangle bounds = null;
+  awt.Rectangle _getPreviewBounds() {
+    awt.Rectangle bounds = null;
 
     if (isLabel(_index)) {
       bounds = _state.getLabelBounds().getRectangle();
     } else {
-      bounds = new harmony.Rectangle(_p[0]);
+      bounds = new awt.Rectangle(_p[0]);
 
       for (int i = 0; i < _p.length; i++) {
         bounds.add(_p[i]);
@@ -363,7 +363,7 @@ class EdgeHandler extends CellHandler {
           }
         }
 
-        harmony.Rectangle rect = _getPreviewBounds();
+        awt.Rectangle rect = _getPreviewBounds();
         rect.translate(math.round(pt.getX() - _first.x) as int, math.round(pt.getY() - _first.y) as int);
         _preview.setBounds(rect);
       } else {
@@ -663,13 +663,13 @@ class EdgeHandler extends CellHandler {
     g2.setStroke(getSelectionStroke());
     g.setColor(getSelectionColor());
 
-    harmony.Point last = _state.getAbsolutePoint(0).getPoint();
+    awt.Point last = _state.getAbsolutePoint(0).getPoint();
 
     for (int i = 1; i < _state.getAbsolutePointCount(); i++) {
-      harmony.Point current = _state.getAbsolutePoint(i).getPoint();
-      harmony.Line2D line = new harmony.Line2D.Float(last.x, last.y, current.x, current.y);
+      awt.Point current = _state.getAbsolutePoint(i).getPoint();
+      awt.Line2D line = new awt.Line2D.Float(last.x, last.y, current.x, current.y);
 
-      harmony.Rectangle bounds = g2.getStroke().createStrokedShape(line).getBounds();
+      awt.Rectangle bounds = g2.getStroke().createStrokedShape(line).getBounds();
 
       if (g.hitClip(bounds.x, bounds.y, bounds.width, bounds.height)) {
         g2.draw(line);

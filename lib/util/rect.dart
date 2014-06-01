@@ -3,7 +3,7 @@
  */
 part of graph.util;
 
-//import java.awt.harmony.Rectangle;
+//import java.awt.awt.Rectangle;
 //import java.awt.geom.Rectangle2D;
 
 /**
@@ -32,9 +32,9 @@ class Rect extends Point2d {
   /**
 	 * Constructs a copy of the given rectangle.
 	 * 
-	 * @param rect harmony.Rectangle to construct a copy of.
+	 * @param rect awt.Rectangle to construct a copy of.
 	 */
-  factory Rect.rectangle(harmony.Rectangle rect)
+  factory Rect.rectangle(awt.Rectangle rect)
 	{
 		new Rect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 	}
@@ -42,7 +42,7 @@ class Rect extends Point2d {
   /**
 	 * Constructs a copy of the given rectangle.
 	 * 
-	 * @param rect harmony.Rectangle to construct a copy of.
+	 * @param rect awt.Rectangle to construct a copy of.
 	 */
   factory Rect.from(Rect rect) {
     new Rect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
@@ -220,13 +220,13 @@ class Rect extends Point2d {
 	 * 
 	 * @return Returns a new rectangle for the bounds.
 	 */
-  harmony.Rectangle getRectangle() {
+  awt.Rectangle getRectangle() {
     int ix = math.round(_x) as int;
     int iy = math.round(_y) as int;
     int iw = math.round(_width - ix + _x) as int;
     int ih = math.round(_height - iy + _y) as int;
 
-    return new harmony.Rectangle(ix, iy, iw, ih);
+    return new awt.Rectangle(ix, iy, iw, ih);
   }
 
   /**

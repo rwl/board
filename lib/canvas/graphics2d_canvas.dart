@@ -209,8 +209,8 @@ class Graphics2DCanvas extends BasicCanvas {
       _g = createTemporaryGraphics(style, opacity, null);
 
       // Draws the label background and border
-      harmony.Color bg = Utils.getColor(style, Constants.STYLE_LABEL_BACKGROUNDCOLOR);
-      harmony.Color border = Utils.getColor(style, Constants.STYLE_LABEL_BORDERCOLOR);
+      awt.Color bg = Utils.getColor(style, Constants.STYLE_LABEL_BACKGROUNDCOLOR);
+      awt.Color border = Utils.getColor(style, Constants.STYLE_LABEL_BORDERCOLOR);
       paintRectangle(state.getLabelBounds().getRectangle(), bg, border);
 
       // Paints the label and restores the graphics object
@@ -225,7 +225,7 @@ class Graphics2DCanvas extends BasicCanvas {
   /**
 	 * 
 	 */
-  //	void drawImage(harmony.Rectangle bounds, String imageUrl)
+  //	void drawImage(awt.Rectangle bounds, String imageUrl)
   //	{
   //		drawImage(bounds, imageUrl, PRESERVE_IMAGE_ASPECT, false, false);
   //	}
@@ -233,7 +233,7 @@ class Graphics2DCanvas extends BasicCanvas {
   /**
 	 * 
 	 */
-  void drawImage(harmony.Rectangle bounds, String imageUrl, [bool preserveAspect = null, bool flipH = false, bool flipV = false]) {
+  void drawImage(awt.Rectangle bounds, String imageUrl, [bool preserveAspect = null, bool flipH = false, bool flipV = false]) {
     if (imageUrl != null && bounds.getWidth() > 0 && bounds.getHeight() > 0) {
       Image img = loadImage(imageUrl);
 
@@ -241,7 +241,7 @@ class Graphics2DCanvas extends BasicCanvas {
         int w, h;
         int x = bounds.x;
         int y = bounds.y;
-        harmony.Dimension size = _getImageSize(img);
+        awt.Dimension size = _getImageSize(img);
 
         if (preserveAspect == null) {
           preserveAspect = Graphics2DCanvas.PRESERVE_IMAGE_ASPECT;
@@ -304,8 +304,8 @@ class Graphics2DCanvas extends BasicCanvas {
   /**
 	 * Returns the size for the given image.
 	 */
-  harmony.Dimension _getImageSize(Image image) {
-    return new harmony.Dimension(image.getWidth(null), image.getHeight(null));
+  awt.Dimension _getImageSize(Image image) {
+    return new awt.Dimension(image.getWidth(null), image.getHeight(null));
   }
 
   /**
@@ -377,7 +377,7 @@ class Graphics2DCanvas extends BasicCanvas {
   /**
 	 *
 	 */
-  void paintRectangle(harmony.Rectangle bounds, harmony.Color background, harmony.Color border) {
+  void paintRectangle(awt.Rectangle bounds, awt.Color background, awt.Color border) {
     if (background != null) {
       _g.setColor(background);
       fillShape(bounds);
@@ -407,7 +407,7 @@ class Graphics2DCanvas extends BasicCanvas {
     if (shadow) {
       // Saves the state and configures the graphics object
       Paint p = _g.getPaint();
-      harmony.Color previousColor = _g.getColor();
+      awt.Color previousColor = _g.getColor();
       _g.setColor(SwingConstants.SHADOW_COLOR);
       _g.translate(shadowOffsetX, shadowOffsetY);
 
@@ -447,11 +447,11 @@ class Graphics2DCanvas extends BasicCanvas {
 	 * 
 	 */
   Paint createFillPaint(Rect bounds, Map<String, Object> style) {
-    harmony.Color fillColor = Utils.getColor(style, Constants.STYLE_FILLCOLOR);
+    awt.Color fillColor = Utils.getColor(style, Constants.STYLE_FILLCOLOR);
     Paint fillPaint = null;
 
     if (fillColor != null) {
-      harmony.Color gradientColor = Utils.getColor(style, Constants.STYLE_GRADIENTCOLOR);
+      awt.Color gradientColor = Utils.getColor(style, Constants.STYLE_GRADIENTCOLOR);
 
       if (gradientColor != null) {
         String gradientDirection = Utils.getString(style, Constants.STYLE_GRADIENT_DIRECTION);

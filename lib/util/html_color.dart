@@ -15,14 +15,14 @@ class HtmlColor {
   /**
 	 * HTML color lookup table. Supports the 147 CSS color names.
 	 */
-  static HashMap<String, harmony.Color> _htmlColors = new HashMap<String, harmony.Color>();
+  static HashMap<String, awt.Color> _htmlColors = new HashMap<String, awt.Color>();
 
   static final RegExp _rgbRegex = new RegExp(r"rgba?\\([^)]*\\)", caseSensitive: false);
 
   /**
 	 * 
 	 */
-  static String hexString(harmony.Color color) {
+  static String hexString(awt.Color color) {
     int r = color.getRed();
     int g = color.getGreen();
     int b = color.getBlue();

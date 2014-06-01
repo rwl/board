@@ -27,7 +27,7 @@ abstract class BasicCanvas implements ICanvas {
   /**
 	 * Specifies the current translation. Default is (0,0).
 	 */
-  harmony.Point _translate = new harmony.Point();
+  awt.Point _translate = new awt.Point();
 
   /**
 	 * Specifies the current scale. Default is 1.
@@ -48,13 +48,13 @@ abstract class BasicCanvas implements ICanvas {
 	 * Sets the current translate.
 	 */
   void setTranslate(int dx, int dy) {
-    _translate = new harmony.Point(dx, dy);
+    _translate = new awt.Point(dx, dy);
   }
 
   /**
 	 * Returns the current translate.
 	 */
-  harmony.Point getTranslate() {
+  awt.Point getTranslate() {
     return _translate;
   }
 

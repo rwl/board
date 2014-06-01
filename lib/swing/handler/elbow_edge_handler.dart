@@ -4,7 +4,7 @@
 part of graph.swing.handler;
 
 //import java.awt.Point;
-//import java.awt.harmony.Rectangle;
+//import java.awt.awt.Rectangle;
 //import java.awt.event.MouseEvent;
 //import java.util.List;
 
@@ -52,9 +52,9 @@ class ElbowEdgeHandler extends EdgeHandler {
   /**
 	 * 
 	 */
-  List<harmony.Rectangle> _createHandles() {
+  List<awt.Rectangle> _createHandles() {
     _p = _createPoints(_state);
-    List<harmony.Rectangle> h = new List<harmony.Rectangle>(4);
+    List<awt.Rectangle> h = new List<awt.Rectangle>(4);
 
     Point2d p0 = _state.getAbsolutePoint(0);
     Point2d pe = _state.getAbsolutePoint(_state.getAbsolutePointCount() - 1);
@@ -65,10 +65,10 @@ class ElbowEdgeHandler extends EdgeHandler {
     // Creates the middle green edge handle
     Geometry geometry = _graphComponent.getGraph().getModel().getGeometry(_state.getCell());
     List<Point2d> points = geometry.getPoints();
-    harmony.Point pt = null;
+    awt.Point pt = null;
 
     if (points == null || points.isEmpty()) {
-      pt = new harmony.Point((int)(math.round(p0.getX()) + math.round((pe.getX() - p0.getX()) / 2)), (int)(math.round(p0.getY()) + math.round((pe.getY() - p0.getY()) / 2)));
+      pt = new awt.Point((int)(math.round(p0.getX()) + math.round((pe.getX() - p0.getX()) / 2)), (int)(math.round(p0.getY()) + math.round((pe.getY() - p0.getY()) / 2)));
     } else {
       GraphView view = _graphComponent.getGraph().getView();
       pt = view.transformControlPoint(_state, points.get(0)).getPoint();

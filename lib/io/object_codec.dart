@@ -751,7 +751,7 @@ class ObjectCodec {
           method.invoke(obj, [value]);
         }
       } on Exception catch (e2) {
-        System.err.println("setFieldValue: " + e2 + " on " + obj.getClass().getSimpleName() + "." + field.getName() + " (" + field.getType().getSimpleName() + ") = " + value + " (" + value.getClass().getSimpleName() + ")");
+        System.err.println("setFieldValue: $e2 on ${obj.getClass().getSimpleName()}.${field.getName()} (${field.getType().getSimpleName()}) = $value (${value.getClass().getSimpleName()})");
       }
     }
   }

@@ -69,12 +69,12 @@ class GraphOutline extends JComponent {
   /**
 	 * 
 	 */
-  harmony.Rectangle _finderBounds = new harmony.Rectangle();
+  awt.Rectangle _finderBounds = new awt.Rectangle();
 
   /**
 	 * 
 	 */
-  harmony.Point _zoomHandleLocation = null;
+  awt.Point _zoomHandleLocation = null;
 
   /**
 	 * 
@@ -128,7 +128,7 @@ class GraphOutline extends JComponent {
   /**
 	 * 
 	 */
-  harmony.Point _translate = new harmony.Point();
+  awt.Point _translate = new awt.Point();
 
   /**
 	 * 
@@ -394,10 +394,10 @@ class GraphOutline extends JComponent {
 	 * 
 	 * @param clip
 	 */
-  void repaintTripleBuffer(harmony.Rectangle clip) {
+  void repaintTripleBuffer(awt.Rectangle clip) {
     if (_tripleBuffered && _tripleBufferGraphics != null) {
       if (clip == null) {
-        clip = new harmony.Rectangle(_tripleBuffer.getWidth(), _tripleBuffer.getHeight());
+        clip = new awt.Rectangle(_tripleBuffer.getWidth(), _tripleBuffer.getHeight());
       }
 
       // Clears and repaints the dirty rectangle using the
@@ -416,22 +416,22 @@ class GraphOutline extends JComponent {
 	 * 
 	 */
   void updateFinder(bool repaint) {
-    harmony.Rectangle rect = _graphComponent.getViewport().getViewRect();
+    awt.Rectangle rect = _graphComponent.getViewport().getViewRect();
 
     int x = math.round(rect.x * _scale) as int;
     int y = math.round(rect.y * _scale) as int;
     int w = (math.round((rect.x + rect.width) * _scale) as int) - x;
     int h = (math.round((rect.y + rect.height) * _scale) as int) - y;
 
-    updateFinderBounds(new harmony.Rectangle(x + _translate.x, y + _translate.y, w + 1, h + 1), repaint);
+    updateFinderBounds(new awt.Rectangle(x + _translate.x, y + _translate.y, w + 1, h + 1), repaint);
   }
 
   /**
 	 * 
 	 */
-  void updateFinderBounds(harmony.Rectangle bounds, bool repaint) {
+  void updateFinderBounds(awt.Rectangle bounds, bool repaint) {
     if (bounds != null && !bounds.equals(_finderBounds)) {
-      harmony.Rectangle old = new harmony.Rectangle(_finderBounds);
+      awt.Rectangle old = new awt.Rectangle(_finderBounds);
       _finderBounds = bounds;
 
       // LATER: Fix repaint region to be smaller
@@ -508,7 +508,7 @@ class GraphOutline extends JComponent {
           }
 
           g.setColor(bg);
-          harmony.Dimension size = _graphComponent.getGraphControl().getSize();
+          awt.Dimension size = _graphComponent.getGraphControl().getSize();
 
           // Paints the background of the drawing surface
           Utils.fillClippedRect(g, 0, 0, size.width, size.height);
@@ -537,7 +537,7 @@ class GraphOutline extends JComponent {
       AffineTransform tx = g2.getTransform();
 
       try {
-        harmony.Point tr = _graphComponent.getGraphControl().getTranslate();
+        awt.Point tr = _graphComponent.getGraphControl().getTranslate();
         g2.translate(_translate.x + tr.getX() * _scale, _translate.y + tr.getY() * _scale);
         g2.scale(_scale, _scale);
 
@@ -581,8 +581,8 @@ class GraphOutline extends JComponent {
     int dy = 0;
 
     if (this._graphComponent != null) {
-      harmony.Dimension graphSize = _graphComponent.getGraphControl().getSize();
-      harmony.Dimension outlineSize = getSize();
+      awt.Dimension graphSize = _graphComponent.getGraphControl().getSize();
+      awt.Dimension outlineSize = getSize();
 
       int gw = graphSize.getWidth() as int;
       int gh = graphSize.getHeight() as int;

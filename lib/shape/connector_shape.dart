@@ -15,13 +15,13 @@ class ConnectorShape extends BasicShape {
 	 */
   void paintShape(Graphics2DCanvas canvas, CellState state) {
     if (state.getAbsolutePointCount() > 1 && _configureGraphics(canvas, state, false)) {
-      List<Point2d> pts = new List<Point2d>(state.getAbsolutePoints());
+      List<Point2d> pts = new List<Point2d>.from(state.getAbsolutePoints());
       Map<String, Object> style = state.getStyle();
 
       // Paints the markers and updates the points
       // Switch off any dash pattern for markers
       bool dashed = Utils.isTrue(style, Constants.STYLE_DASHED);
-      Object dashedValue = style.get(Constants.STYLE_DASHED);
+      Object dashedValue = style[Constants.STYLE_DASHED];
 
       if (dashed) {
         style.remove(Constants.STYLE_DASHED);
@@ -33,7 +33,7 @@ class ConnectorShape extends BasicShape {
 
       if (dashed) {
         // Replace the dash pattern
-        style.put(Constants.STYLE_DASHED, dashedValue);
+        style[Constants.STYLE_DASHED] = dashedValue;
         canvas.getGraphics().setStroke(canvas.createStroke(style));
       }
 
@@ -47,7 +47,7 @@ class ConnectorShape extends BasicShape {
   void _paintPolyline(Graphics2DCanvas canvas, List<Point2d> points, Map<String, Object> style) {
     bool rounded = isRounded(style) && canvas.getScale() > Constants.MIN_SCALE_FOR_ROUNDED_LINES;
 
-    canvas.paintPolyline(points.toArray(new List<Point2d>(points.length)), rounded);
+    canvas.paintPolyline(points, rounded);
   }
 
   /**
@@ -62,10 +62,10 @@ class ConnectorShape extends BasicShape {
 	 */
   void _translatePoint(List<Point2d> points, int index, Point2d offset) {
     if (offset != null) {
-      Point2d pt = points.get(index).clone() as Point2d;
+      Point2d pt = points[index].clone() as Point2d;
       pt.setX(pt.getX() + offset.getX());
       pt.setY(pt.getY() + offset.getY());
-      points.set(index, pt);
+      points[index] = pt;
     }
   }
 
@@ -76,10 +76,10 @@ class ConnectorShape extends BasicShape {
 	 */
   Point2d paintMarker(Graphics2DCanvas canvas, CellState state, bool source) {
     Map<String, Object> style = state.getStyle();
-    float strokeWidth = (float)(Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1) * canvas.getScale());
+    double strokeWidth = (Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1.0) * canvas.getScale());
     String type = Utils.getString(style, (source) ? Constants.STYLE_STARTARROW : Constants.STYLE_ENDARROW, "");
-    float size = (Utils.getFloat(style, (source) ? Constants.STYLE_STARTSIZE : Constants.STYLE_ENDSIZE, Constants.DEFAULT_MARKERSIZE));
-    Color color = Utils.getColor(style, Constants.STYLE_STROKECOLOR);
+    double size = (Utils.getFloat(style, (source) ? Constants.STYLE_STARTSIZE : Constants.STYLE_ENDSIZE, Constants.DEFAULT_MARKERSIZE.toDouble()));
+    awt.Color color = Utils.getColor(style, Constants.STYLE_STROKECOLOR);
     canvas.getGraphics().setColor(color);
 
     double absSize = size * canvas.getScale();
@@ -141,13 +141,13 @@ class ConnectorShape extends BasicShape {
 	 */
   Line _getMarkerVector(List<Point2d> points, bool source, double markerSize) {
     int n = points.length;
-    Point2d p0 = (source) ? points.get(1) : points.get(n - 2);
-    Point2d pe = (source) ? points.get(0) : points.get(n - 1);
+    Point2d p0 = (source) ? points[1] : points[n - 2];
+    Point2d pe = (source) ? points[0] : points[n - 1];
     int count = 1;
 
     // Uses next non-overlapping point
     while (count < n - 1 && math.round(p0.getX() - pe.getX()) == 0 && math.round(p0.getY() - pe.getY()) == 0) {
-      p0 = (source) ? points.get(1 + count) : points.get(n - 2 - count);
+      p0 = (source) ? points[1 + count] : points[n - 2 - count];
       count++;
     }
 

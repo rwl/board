@@ -16,7 +16,7 @@ class DefaultTextShape implements ITextShape {
 	 * 
 	 */
   void paintShape(Graphics2DCanvas canvas, String text, CellState state, Map<String, Object> style) {
-    harmony.Rectangle rect = state.getLabelBounds().getRectangle();
+    awt.Rectangle rect = state.getLabelBounds().getRectangle();
     Graphics2D g = canvas.getGraphics();
 
     if (g.getClipBounds() == null || g.getClipBounds().intersects(rect)) {

@@ -179,7 +179,7 @@ abstract class ICell {
    * @param child Cell to be appended to the child array.
    * @return Returns the new child.
    */
-  ICell insert(ICell child);
+//  ICell insert(ICell child);
 
   /**
    * Inserts the specified child into the child array at the specified index
@@ -190,7 +190,7 @@ abstract class ICell {
    * be inserted into the child array.
    * @return Returns the new child.
    */
-  ICell insertAt(ICell child, int index);
+  ICell insert(ICell child, [int index=null]);
 
   /**
    * Removes the child at the specified index from the child array and

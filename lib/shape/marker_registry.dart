@@ -3,7 +3,7 @@ part of graph.shape;
 //import java.awt.Polygon;
 //import java.awt.Shape;
 //import java.awt.geom.Ellipse2D;
-//import java.awt.geom.harmony.Line2D;
+//import java.awt.geom.awt.Line2D;
 //import java.util.Hashtable;
 //import java.util.Map;
 
@@ -38,8 +38,8 @@ class MarkerRegistry {
     registerMarker(Constants.ARROW_BLOCK, tmp);
 
     registerMarker(Constants.ARROW_OPEN, (Graphics2DCanvas canvas, CellState state, String type, Point2d pe, double nx, double ny, double size, bool source) {
-      canvas.getGraphics().draw(new harmony.Line2D.Float(math.round(pe.getX() - nx - ny / 2) as int, math.round(pe.getY() - ny + nx / 2) as int, math.round(pe.getX() - nx / 6) as int, math.round(pe.getY() - ny / 6) as int));
-      canvas.getGraphics().draw(new harmony.Line2D.Float(math.round(pe.getX() - nx / 6) as int, math.round(pe.getY() - ny / 6) as int, math.round(pe.getX() + ny / 2 - nx) as int, math.round(pe.getY() - ny - nx / 2) as int));
+      canvas.getGraphics().draw(new awt.Line2D.Float(math.round(pe.getX() - nx - ny / 2) as int, math.round(pe.getY() - ny + nx / 2) as int, math.round(pe.getX() - nx / 6) as int, math.round(pe.getY() - ny / 6) as int));
+      canvas.getGraphics().draw(new awt.Line2D.Float(math.round(pe.getX() - nx / 6) as int, math.round(pe.getY() - ny / 6) as int, math.round(pe.getX() + ny / 2 - nx) as int, math.round(pe.getY() - ny - nx / 2) as int));
 
       return new Point2d(-nx / 2, -ny / 2);
     });

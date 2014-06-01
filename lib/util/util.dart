@@ -18,8 +18,8 @@ import 'dart:math' as Math;
 import 'package:image/image.dart' as image;
 //import 'package:color/color.dart' as color;
 
-import '../compat/math.dart' as math;
-import '../harmony/harmony.dart' as harmony;
+import '../util/java/math.dart' as math;
+import './awt/awt.dart' as awt;
 
 import '../canvas/canvas.dart' show Graphics2DCanvas;
 import '../canvas/canvas.dart' show HtmlCanvas;
@@ -46,10 +46,10 @@ import '../view/view.dart' show CellState;
 //import java.awt.FontMetrics;
 //import java.awt.Graphics;
 //import java.awt.Graphics2D;
-//import java.awt.harmony.Rectangle;
+//import java.awt.awt.Rectangle;
 //import java.awt.RenderingHints;
 //import java.awt.font.FontRenderContext;
-//import java.awt.geom.harmony.Line2D;
+//import java.awt.geom.awt.Line2D;
 //import java.awt.geom.Rectangle2D;
 //import java.awt.image.BufferedImage;
 //import java.awt.image.ImageObserver;
@@ -532,7 +532,7 @@ class Utils {
     if (textRenderer != null) {
       // First run measures size with no wrapping
       textRenderer.setText(createHtmlDocument(style, markup));
-      harmony.Dimension size = textRenderer.getPreferredSize();
+      awt.Dimension size = textRenderer.getPreferredSize();
 
       // Second run measures size with wrapping if required.
       // Note that this is only required because max-width
@@ -540,7 +540,7 @@ class Utils {
       // inner HTML element (or is this possible?).
       if (wrapWidth > 0) {
         textRenderer.setText(createHtmlDocument(style, markup, 1.0, math.ceil(wrapWidth - Constants.LABEL_INSET * scale) as int));
-        harmony.Dimension size2 = textRenderer.getPreferredSize();
+        awt.Dimension size2 = textRenderer.getPreferredSize();
 
         // Uses wrapped text size if any text was actually wrapped
         if (size2.width < size.width) {
@@ -679,7 +679,7 @@ class Utils {
       p3 = getRotatedPoint(p3, cos, sin, cx);
       p4 = getRotatedPoint(p4, cos, sin, cx);
 
-      harmony.Rectangle tmp = new harmony.Rectangle(p1.getX() as int, p1.getY() as int, 0, 0);
+      awt.Rectangle tmp = new awt.Rectangle(p1.getX() as int, p1.getY() as int, 0, 0);
       tmp.addPoint(p2.getPoint());
       tmp.addPoint(p3.getPoint());
       tmp.addPoint(p4.getPoint());
@@ -752,7 +752,7 @@ class Utils {
 
       for (int i = 1; i < state.getAbsolutePointCount(); i++) {
         Point2d current = state.getAbsolutePoint(i);
-        double dist = new harmony.Line2D(last._x, last._y, current._x, current._y).ptSegDistSq(x, y);
+        double dist = new awt.Line2D(last._x, last._y, current._x, current._y).ptSegDistSq(x, y);
 
         if (dist < min) {
           min = dist;
@@ -852,7 +852,7 @@ class Utils {
 	 * Draws the image inside the clip bounds to the given graphics object.
 	 */
   static void drawImageClip(Graphics g, BufferedImage image, ImageObserver observer) {
-    harmony.Rectangle clip = g.getClipBounds();
+    awt.Rectangle clip = g.getClipBounds();
 
     if (clip != null) {
       int w = image.getWidth();
@@ -877,7 +877,7 @@ class Utils {
 	 * 
 	 */
   static void fillClippedRect(Graphics g, int x, int y, int width, int height) {
-    harmony.Rectangle bg = new harmony.Rectangle(x, y, width, height);
+    awt.Rectangle bg = new awt.Rectangle(x, y, width, height);
 
     try {
       if (g.getClipBounds() != null) {
@@ -1167,7 +1167,7 @@ class Utils {
         h = Math.min(h, max);
       }
 
-      harmony.Rectangle rect = new harmony.Rectangle(math.round(cx - w / 2), math.round(cy - h / 2), w, h);
+      awt.Rectangle rect = new awt.Rectangle(math.round(cx - w / 2), math.round(cy - h / 2), w, h);
 
       return rect.contains(x, y);
     }
@@ -1435,7 +1435,7 @@ class Utils {
 	 *            Default value to return if the key is undefined.
 	 * @return Returns the color value for key in dict.
 	 */
-  static harmony.Color getColor(Map<String, Object> dict, String key, [harmony.Color defaultValue = null]) {
+  static awt.Color getColor(Map<String, Object> dict, String key, [awt.Color defaultValue = null]) {
     Object value = dict[key];
 
     if (value == null) {
@@ -1470,7 +1470,7 @@ class Utils {
   /**
 	 * 
 	 */
-  static String hexString(harmony.Color color) {
+  static String hexString(awt.Color color) {
     return HtmlColor.hexString(color);
   }
 
@@ -1488,7 +1488,7 @@ class Utils {
 	 *                if the specified string cannot be interpreted as a
 	 *                hexidecimal integer
 	 */
-  static harmony.Color parseColor(String colorString) /*throws NumberFormatException*/
+  static awt.Color parseColor(String colorString) /*throws NumberFormatException*/
   {
     return HtmlColor.parseColor(colorString);
   }
@@ -1500,7 +1500,7 @@ class Utils {
 	 *            Color to return the hex string for.
 	 * @return Returns a hex string for the given color.
 	 */
-  static String getHexColorString(harmony.Color color) {
+  static String getHexColorString(awt.Color color) {
     return HtmlColor.getHexColorString(color);
   }
 
@@ -1645,7 +1645,7 @@ class Utils {
 	 * Clears the given area of the specified graphics object with the given
 	 * color or makes the region transparent.
 	 */
-  static void clearRect(Graphics2D g, harmony.Rectangle rect, harmony.Color background) {
+  static void clearRect(Graphics2D g, awt.Rectangle rect, awt.Color background) {
     if (background != null) {
       g.setColor(background);
       g.fillRect(rect.x, rect.y, rect.width, rect.height);
@@ -1670,7 +1670,7 @@ class Utils {
       // Clears background
       if (background != null) {
         Graphics2D g2 = result.createGraphics();
-        clearRect(g2, new harmony.Rectangle(w, h), background);
+        clearRect(g2, new awt.Rectangle(w, h), background);
         g2.dispose();
       }
     }
@@ -1764,15 +1764,16 @@ class Utils {
 
       if (opacity < 100) {
         // Adds all rules (first for IE)
-        s += "filter:alpha(opacity=" + opacity + ");";
-        s += "opacity:" + (opacity / 100) + ";";
+        s += "filter:alpha(opacity=$opacity);";
+        s += "opacity:${opacity / 100};";
       }
 
       td.setAttribute("style", s);
       List<String> lines = text.split("\n");
 
       for (int i = 0; i < lines.length; i++) {
-        td.append(document.createTextNode(lines[i]));
+//        td.append(document.createTextNode(lines[i]));
+        td.appendText(lines[i]);
         td.append(document.createElement("br"));
       }
 

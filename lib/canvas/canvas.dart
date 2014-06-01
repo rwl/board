@@ -15,8 +15,8 @@ import 'dart:math' as Math;
 //import 'package:color/color.dart' as color;
 import 'package:image/image.dart' as image;
 
-import '../compat/math.dart' as math;
-import '../harmony/harmony.dart' as harmony;
+import '../util/java/math.dart' as math;
+import '../util/awt/awt.dart' as awt;
 
 //import '../shape/shape.dart' show ActorShape;
 //import '../shape/shape.dart' show ArrowShape;
@@ -74,7 +74,7 @@ abstract class ICanvas {
 	 * 
 	 * @return Returns the current translation.
 	 */
-  harmony.Point getTranslate();
+  awt.Point getTranslate();
 
   /**
 	 * Sets the scale for the following drawing requests.

@@ -84,7 +84,7 @@ class HtmlCanvas extends BasicCanvas {
       int w = state.getWidth() as int;
       int h = state.getHeight() as int;
 
-      if (!Utils.getString(style, Constants.STYLE_SHAPE, "") == Constants.SHAPE_SWIMLANE) {
+      if (Utils.getString(style, Constants.STYLE_SHAPE, "") != Constants.SHAPE_SWIMLANE) {
         drawShape(x, y, w, h, style);
       } else {
         int start = math.round(Utils.getInt(style, Constants.STYLE_STARTSIZE, Constants.DEFAULT_STARTSIZE) * _scale) as int;

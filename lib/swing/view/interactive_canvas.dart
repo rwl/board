@@ -5,7 +5,7 @@ part of graph.swing.view;
 
 //import java.awt.Dimension;
 //import java.awt.Image;
-//import java.awt.harmony.Rectangle;
+//import java.awt.awt.Rectangle;
 //import java.awt.Shape;
 //import java.awt.image.ImageObserver;
 
@@ -53,21 +53,21 @@ class InteractiveCanvas extends Graphics2DCanvas {
   /**
 	 * Returns the size for the given image.
 	 */
-  harmony.Dimension _getImageSize(Image image) {
-    return new harmony.Dimension(image.getWidth(_imageObserver), image.getHeight(_imageObserver));
+  awt.Dimension _getImageSize(Image image) {
+    return new awt.Dimension(image.getWidth(_imageObserver), image.getHeight(_imageObserver));
   }
 
   /**
 	 * 
 	 */
-  bool contains(GraphComponent graphComponent, harmony.Rectangle rect, CellState state) {
+  bool contains(GraphComponent graphComponent, awt.Rectangle rect, CellState state) {
     return state != null && state.getX() >= rect.x && state.getY() >= rect.y && state.getX() + state.getWidth() <= rect.x + rect.width && state.getY() + state.getHeight() <= rect.y + rect.height;
   }
 
   /**
 	 * 
 	 */
-  bool intersects(GraphComponent graphComponent, harmony.Rectangle rect, CellState state) {
+  bool intersects(GraphComponent graphComponent, awt.Rectangle rect, CellState state) {
     if (state != null) {
       // Checks if the label intersects
       if (state.getLabelBounds() != null && state.getLabelBounds().getRectangle().intersects(rect)) {
@@ -78,7 +78,7 @@ class InteractiveCanvas extends Graphics2DCanvas {
 
       // Checks if the segments of the edge intersect
       if (pointCount > 0) {
-        rect = rect.clone() as harmony.Rectangle;
+        rect = rect.clone() as awt.Rectangle;
         int tolerance = graphComponent.getTolerance();
         rect.grow(tolerance, tolerance);
 
@@ -126,7 +126,7 @@ class InteractiveCanvas extends Graphics2DCanvas {
   bool hitSwimlaneContent(GraphComponent graphComponent, CellState swimlane, int x, int y) {
     if (swimlane != null) {
       int start = Math.max(2, math.round(Utils.getInt(swimlane.getStyle(), Constants.STYLE_STARTSIZE, Constants.DEFAULT_STARTSIZE) * graphComponent.getGraph().getView().getScale())) as int;
-      harmony.Rectangle rect = swimlane.getRectangle();
+      awt.Rectangle rect = swimlane.getRectangle();
 
       if (Utils.isTrue(swimlane.getStyle(), Constants.STYLE_HORIZONTAL, true)) {
         rect.y += start;

@@ -291,7 +291,7 @@ class GraphicsCanvas2D implements ICanvas2D {
 	 */
   void setStrokeColor(String value) {
     // Lazy and cached instantiation strategy for all stroke properties
-    if (_state.strokeColorValue == null || !_state.strokeColorValue == value) {
+    if (_state.strokeColorValue == null || _state.strokeColorValue != value) {
       _state.strokeColorValue = value;
       _state.strokeColor = null;
     }
@@ -452,16 +452,16 @@ class GraphicsCanvas2D implements ICanvas2D {
       x1 = (x1 + w) as double;
     }
 
-    harmony.Color c1 = _parseColor(color1);
+    awt.Color c1 = _parseColor(color1);
 
     if (alpha1 != 1) {
-      c1 = new harmony.Color(c1.getRed(), c1.getGreen(), c1.getBlue(), (alpha1 * 255) as int);
+      c1 = new awt.Color(c1.getRed(), c1.getGreen(), c1.getBlue(), (alpha1 * 255) as int);
     }
 
-    harmony.Color c2 = _parseColor(color2);
+    awt.Color c2 = _parseColor(color2);
 
     if (alpha2 != 1) {
-      c2 = new harmony.Color(c2.getRed(), c2.getGreen(), c2.getBlue(), (alpha2 * 255) as int);
+      c2 = new awt.Color(c2.getRed(), c2.getGreen(), c2.getBlue(), (alpha2 * 255) as int);
     }
 
     _state.gradientPaint = new GradientPaint(x1, y1, c1, x2, y2, c2, true);
@@ -473,8 +473,8 @@ class GraphicsCanvas2D implements ICanvas2D {
   /**
 	 * Helper method that uses {@link Utils#parseColor(String)}.
 	 */
-  harmony.Color _parseColor(String hex) {
-    harmony.Color result = _colorCache[hex];
+  awt.Color _parseColor(String hex) {
+    awt.Color result = _colorCache[hex];
 
     if (result == null) {
       result = Utils.parseColor(hex);
@@ -525,7 +525,7 @@ class GraphicsCanvas2D implements ICanvas2D {
       Image img = _loadImage(src);
 
       if (img != null) {
-        harmony.Rectangle bounds = _getImageBounds(img, x, y, w, h, aspect);
+        awt.Rectangle bounds = _getImageBounds(img, x, y, w, h, aspect);
         img = _scaleImage(img, bounds.width, bounds.height);
 
         if (img != null) {
@@ -552,14 +552,14 @@ class GraphicsCanvas2D implements ICanvas2D {
   /**
 	 * 
 	 */
-  /*final*/ harmony.Rectangle _getImageBounds(Image img, double x, double y, double w, double h, bool aspect) {
+  /*final*/ awt.Rectangle _getImageBounds(Image img, double x, double y, double w, double h, bool aspect) {
     x = (_state.dx + x) * _state.scale;
     y = (_state.dy + y) * _state.scale;
     w *= _state.scale;
     h *= _state.scale;
 
     if (aspect) {
-      harmony.Dimension size = _getImageSize(img);
+      awt.Dimension size = _getImageSize(img);
       double s = Math.min(w / size.width, h / size.height);
       int sw = math.round(size.width * s) as int;
       int sh = math.round(size.height * s) as int;
@@ -572,21 +572,21 @@ class GraphicsCanvas2D implements ICanvas2D {
       h = math.round(h);
     }
 
-    return new harmony.Rectangle(x as int, y as int, w as int, h as int);
+    return new awt.Rectangle(x as int, y as int, w as int, h as int);
   }
 
   /**
 	 * Returns the size for the given image.
 	 */
-  harmony.Dimension _getImageSize(Image image) {
-    return new harmony.Dimension(image.getWidth(null), image.getHeight(null));
+  awt.Dimension _getImageSize(Image image) {
+    return new awt.Dimension(image.getWidth(null), image.getHeight(null));
   }
 
   /**
 	 * Uses {@link #IMAGE_SCALING} to scale the given image.
 	 */
   Image _scaleImage(Image img, int w, int h) {
-    harmony.Dimension size = _getImageSize(img);
+    awt.Dimension size = _getImageSize(img);
 
     if (w == size.width && h == size.height) {
       return img;
@@ -679,7 +679,7 @@ class GraphicsCanvas2D implements ICanvas2D {
       setWidth = true;
     } else if (overflow != null) {
       if (overflow == "fill") {
-        css.write("height:" + math.round(h) + "pt;");
+        css.write("height:${math.round(h)}pt;");
         setWidth = true;
       } else if (overflow == "width") {
         setWidth = true;
@@ -772,7 +772,7 @@ class GraphicsCanvas2D implements ICanvas2D {
 
       str = _createHtmlDocument(str, align, valign, (widthFill || fill) ? math.round(w) as int : 0, (fill) ? math.round(h) as int : 0, wrap, overflow, clip);
       textRenderer.setText(str);
-      harmony.Dimension pref = textRenderer.getPreferredSize();
+      awt.Dimension pref = textRenderer.getPreferredSize();
       int prefWidth = pref.width;
       int prefHeight = pref.height;
 
@@ -1329,7 +1329,7 @@ class _CanvasState {//implements Cloneable {
   /**
    * 
    */
-  harmony.Color fontColor;
+  awt.Color fontColor;
 
   /**
    * 
@@ -1339,7 +1339,7 @@ class _CanvasState {//implements Cloneable {
   /**
    * 
    */
-  harmony.Color fontBackgroundColor;
+  awt.Color fontBackgroundColor;
 
   /**
    * 
@@ -1349,7 +1349,7 @@ class _CanvasState {//implements Cloneable {
   /**
    * 
    */
-  harmony.Color fontBorderColor;
+  awt.Color fontBorderColor;
 
   /**
    * 
@@ -1374,7 +1374,7 @@ class _CanvasState {//implements Cloneable {
   /**
    * 
    */
-  harmony.Color strokeColor;
+  awt.Color strokeColor;
 
   /**
    * 
@@ -1384,7 +1384,7 @@ class _CanvasState {//implements Cloneable {
   /**
    * 
    */
-  harmony.Color fillColor;
+  awt.Color fillColor;
 
   /**
    * 
@@ -1414,7 +1414,7 @@ class _CanvasState {//implements Cloneable {
   /**
    * 
    */
-  harmony.Color shadowColor;
+  awt.Color shadowColor;
 
   /**
    * 

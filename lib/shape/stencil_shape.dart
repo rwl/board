@@ -10,7 +10,7 @@ part of graph.shape;
 //import java.awt.geom.AffineTransform;
 //import java.awt.geom.Ellipse2D;
 //import java.awt.geom.GeneralPath;
-//import java.awt.geom.harmony.Line2D;
+//import java.awt.geom.awt.Line2D;
 //import java.awt.geom.Rectangle2D;
 //import java.awt.geom.RoundRectangle2D;
 //import java.util.Hashtable;
@@ -39,7 +39,7 @@ class StencilShape extends BasicShape {
 
   _svgShape _rootShape;
 
-  harmony.Rectangle _boundingBox;
+  awt.Rectangle _boundingBox;
 
   String _name;
 
@@ -123,8 +123,8 @@ class StencilShape extends BasicShape {
 
     bool fill = false;
     bool stroke = true;
-    harmony.Color fillColor = null;
-    harmony.Color strokeColor = null;
+    awt.Color fillColor = null;
+    awt.Color strokeColor = null;
 
     Map<String, Object> style = shape.style;
 
@@ -209,8 +209,8 @@ class StencilShape extends BasicShape {
 	 *            the y co-ordinate scale
 	 */
   void _transformShape(Shape shape, double transX, double transY, double widthRatio, double heightRatio) {
-    if (shape is harmony.Rectangle) {
-      harmony.Rectangle rect = shape as harmony.Rectangle;
+    if (shape is awt.Rectangle) {
+      awt.Rectangle rect = shape as awt.Rectangle;
       if (transX != 0 || transY != 0) {
         rect.setFrame(rect.getX() + transX, rect.getY() + transY, rect.getWidth(), rect.getHeight());
       }
@@ -218,8 +218,8 @@ class StencilShape extends BasicShape {
       if (widthRatio != 1 || heightRatio != 1) {
         rect.setFrame(rect.getX() * widthRatio, rect.getY() * heightRatio, rect.getWidth() * widthRatio, rect.getHeight() * heightRatio);
       }
-    } else if (shape is harmony.Line2D) {
-      harmony.Line2D line = shape as harmony.Line2D;
+    } else if (shape is awt.Line2D) {
+      awt.Line2D line = shape as awt.Line2D;
       if (transX != 0 || transY != 0) {
         line.setLine(line.getX1() + transX, line.getY1() + transY, line.getX2() + transX, line.getY2() + transY);
       }
@@ -378,7 +378,7 @@ class StencilShape extends BasicShape {
 
             rectShape = new _svgShape(new RoundRectangle2D.Double(x, y, width, height, rx, ry), styleMap);
           } else {
-            rectShape = new _svgShape(new harmony.Rectangle(x, y, width, height), styleMap);
+            rectShape = new _svgShape(new awt.Rectangle(x, y, width, height), styleMap);
           }
         } on Exception catch (e) {
           // TODO log something useful
@@ -409,7 +409,7 @@ class StencilShape extends BasicShape {
           y2 = double.parse(y2String);
         }
 
-        _svgShape lineShape = new _svgShape(new harmony.Line2D(x1, y1, x2, y2), styleMap);
+        _svgShape lineShape = new _svgShape(new awt.Line2D(x1, y1, x2, y2), styleMap);
         return lineShape;
       } else if (_isPolyline(root.nodeName) || _isPolygon(root.nodeName)) {
         String pointsString = element.getAttribute("points");
@@ -591,11 +591,11 @@ class StencilShape extends BasicShape {
     this._iconPath = iconPath;
   }
 
-  harmony.Rectangle getBoundingBox() {
+  awt.Rectangle getBoundingBox() {
     return _boundingBox;
   }
 
-  void setBoundingBox(harmony.Rectangle boundingBox) {
+  void setBoundingBox(awt.Rectangle boundingBox) {
     this._boundingBox = boundingBox;
   }
 }

@@ -7,7 +7,7 @@ part of graph.swing.handler;
 //import java.awt.Cursor;
 //import java.awt.Graphics;
 //import java.awt.Point;
-//import java.awt.harmony.Rectangle;
+//import java.awt.awt.Rectangle;
 //import java.awt.event.MouseEvent;
 //import java.beans.PropertyChangeEvent;
 //import java.beans.PropertyChangeListener;
@@ -94,7 +94,7 @@ class ConnectionHandler extends MouseAdapter {
   /**
 	 * 
 	 */
-  /*transient*/ harmony.Point _first;
+  /*transient*/ awt.Point _first;
 
   /**
 	 * 
@@ -104,7 +104,7 @@ class ConnectionHandler extends MouseAdapter {
   /**
 	 * 
 	 */
-  /*transient*/ harmony.Rectangle _bounds;
+  /*transient*/ awt.Rectangle _bounds;
 
   /**
 	 * 
@@ -530,7 +530,7 @@ class ConnectionHandler extends MouseAdapter {
         }
       }
 
-      setBounds(new harmony.Rectangle(x, y, imgWidth, imgHeight));
+      setBounds(new awt.Rectangle(x, y, imgWidth, imgHeight));
     } else {
       setBounds(null);
     }
@@ -643,9 +643,9 @@ class ConnectionHandler extends MouseAdapter {
   /**
 	 * 
 	 */
-  void setBounds(harmony.Rectangle value) {
+  void setBounds(awt.Rectangle value) {
     if ((_bounds == null && value != null) || (_bounds != null && value == null) || (_bounds != null && value != null && !_bounds.equals(value))) {
-      harmony.Rectangle tmp = _bounds;
+      awt.Rectangle tmp = _bounds;
 
       if (tmp != null) {
         if (value != null) {

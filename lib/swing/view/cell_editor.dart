@@ -6,7 +6,7 @@ part of graph.swing.view;
 //import java.awt.BorderLayout;
 //import java.awt.Color;
 //import java.awt.Component;
-//import java.awt.harmony.Rectangle;
+//import java.awt.awt.Rectangle;
 //import java.awt.event.ActionEvent;
 //import java.util.EventObject;
 
@@ -316,9 +316,9 @@ class CellEditor implements ICellEditor {
   /**
 	 * Returns the bounds to be used for the editor.
 	 */
-  harmony.Rectangle getEditorBounds(CellState state, double scale) {
+  awt.Rectangle getEditorBounds(CellState state, double scale) {
     IGraphModel model = state.getView().getGraph().getModel();
-    harmony.Rectangle bounds = null;
+    awt.Rectangle bounds = null;
 
     if (_useLabelBounds(state)) {
       bounds = state.getLabelBounds().getRectangle();

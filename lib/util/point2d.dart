@@ -114,8 +114,8 @@ class Point2d // implements Serializable, Cloneable
 	 * 
 	 * @return Returns a new point for the location.
 	 */
-  harmony.Point getPoint() {
-    return new harmony.Point(_x.round() as int, _y.round() as int);
+  awt.Point getPoint() {
+    return new awt.Point(_x.round() as int, _y.round() as int);
   }
 
   /**

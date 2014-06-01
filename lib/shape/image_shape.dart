@@ -27,7 +27,7 @@ class ImageShape extends RectangleShape {
   /**
 	 * 
 	 */
-  harmony.Rectangle getImageBounds(Graphics2DCanvas canvas, CellState state) {
+  awt.Rectangle getImageBounds(Graphics2DCanvas canvas, CellState state) {
     return state.getRectangle();
   }
 

@@ -21,7 +21,7 @@ class DistanceCostFunction implements ICostFunction {
 
       for (int i = 1; i < pointCount; i++) {
         Point2d point = state.getAbsolutePoint(i);
-        cost += point.getPoint().distance(last.getPoint());
+        cost += point.getPoint().distanceFrom(last.getPoint());
         last = point;
       }
     }

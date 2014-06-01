@@ -13,7 +13,7 @@ part of graph.shape;
 //import java.awt.font.FontRenderContext;
 //import java.awt.font.GlyphVector;
 //import java.awt.geom.AffineTransform;
-//import java.awt.geom.harmony.Line2D;
+//import java.awt.geom.awt.Line2D;
 //import java.text.Bidi;
 //import java.text.BreakIterator;
 //import java.util.ArrayList;
@@ -137,7 +137,7 @@ class CurveLabelShape implements ITextShape {
 	 * 
 	 */
   void paintShape(Graphics2DCanvas canvas, String text, CellState state, Map<String, Object> style) {
-    harmony.Rectangle rect = state.getLabelBounds().getRectangle();
+    awt.Rectangle rect = state.getLabelBounds().getRectangle();
     Graphics2D g = canvas.getGraphics();
 
     if (_labelGlyphs == null) {
@@ -424,7 +424,7 @@ class CurveLabelShape implements ITextShape {
 
       if (currentCurveDelta > curveDeltaSignificant) {
         // Work out which direction the curve is going in
-        int ccw = harmony.Line2D.relativeCCW(0, 0, x, y, end2X, end2Y);
+        int ccw = awt.Line2D.relativeCCW(0, 0, x, y, end2X, end2Y);
 
         if (ccw == 1) {
           // Text is on inside of curve
@@ -486,7 +486,7 @@ class CurveLabelShape implements ITextShape {
 	 * @param rect the rectangle to detect for a hit
 	 * @return whether or not the rectangle hits this curve
 	 */
-  bool intersectsRect(harmony.Rectangle rect) {
+  bool intersectsRect(awt.Rectangle rect) {
     // To save CPU, we can test if the rectangle intersects the entire
     // bounds of this label
     if ((_labelBounds != null && (!_labelBounds.getRectangle().intersects(rect))) || _labelGlyphs == null) {

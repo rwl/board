@@ -15,7 +15,7 @@ class RectangleShape extends BasicShape {
     Map<String, Object> style = state.getStyle();
 
     if (Utils.isTrue(style, Constants.STYLE_ROUNDED, false)) {
-      harmony.Rectangle tmp = state.getRectangle();
+      awt.Rectangle tmp = state.getRectangle();
 
       int x = tmp.x;
       int y = tmp.y;
@@ -45,7 +45,7 @@ class RectangleShape extends BasicShape {
         }
       }
     } else {
-      harmony.Rectangle rect = state.getRectangle();
+      awt.Rectangle rect = state.getRectangle();
 
       // Paints the background
       if (_configureGraphics(canvas, state, true)) {

@@ -7,7 +7,7 @@ library graph.layout;
 import 'dart:collection' show HashSet;
 import 'dart:math' as Math;
 
-import '../compat/math.dart' as math;
+import '../util/java/math.dart' as math;
 
 import '../model/model.dart' show IGraphModel, GraphModel, Geometry, CellPath, ICell;
 import '../util/util.dart' show Point2d, Rect, Utils, Constants;

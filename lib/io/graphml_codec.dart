@@ -222,7 +222,7 @@ class GraphMlCodec {
       } else if (x == 0 && y == 0.5) {
         port = "West";
       } else {
-        port = "" + x + "," + y;
+        port = "$x,$y";
       }
     }
     return port;

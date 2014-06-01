@@ -378,7 +378,7 @@ class CellStatePreview {
       }
 
       Graphics2D previousGraphics = canvas.getGraphics();
-      harmony.Point previousTranslate = canvas.getTranslate();
+      awt.Point previousTranslate = canvas.getTranslate();
       double previousScale = canvas.getScale();
 
       try {

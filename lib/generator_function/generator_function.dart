@@ -2,7 +2,7 @@ library graph.generatorfunction;
 
 import 'dart:math' as Math;
 
-import '../compat/math.dart' as math;
+import '../util/java/math.dart' as math;
 
 import '../analysis/analysis.dart' show ICostFunction;
 import '../view/view.dart' show CellState;

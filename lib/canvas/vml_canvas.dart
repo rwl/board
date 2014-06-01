@@ -94,7 +94,7 @@ class VmlCanvas extends BasicCanvas {
 
           String startWidth = "medium";
           String startLength = "medium";
-          double startSize = Utils.getFloat(style, Constants.STYLE_STARTSIZE, Constants.DEFAULT_MARKERSIZE) * _scale;
+          double startSize = Utils.getFloat(style, Constants.STYLE_STARTSIZE, Constants.DEFAULT_MARKERSIZE.toDouble()) * _scale;
 
           if (startSize < 6) {
             startWidth = "narrow";
@@ -113,7 +113,7 @@ class VmlCanvas extends BasicCanvas {
 
           String endWidth = "medium";
           String endLength = "medium";
-          double endSize = Utils.getFloat(style, Constants.STYLE_ENDSIZE, Constants.DEFAULT_MARKERSIZE) * _scale;
+          double endSize = Utils.getFloat(style, Constants.STYLE_ENDSIZE, Constants.DEFAULT_MARKERSIZE.toDouble()) * _scale;
 
           if (endSize < 6) {
             endWidth = "narrow";
@@ -200,7 +200,7 @@ class VmlCanvas extends BasicCanvas {
   Element drawShape(int x, int y, int w, int h, Map<String, Object> style) {
     String fillColor = Utils.getString(style, Constants.STYLE_FILLCOLOR);
     String strokeColor = Utils.getString(style, Constants.STYLE_STROKECOLOR);
-    double strokeWidth = (Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1) * _scale) as double;
+    double strokeWidth = (Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1.0) * _scale);
 
     // Draws the shape
     String shape = Utils.getString(style, Constants.STYLE_SHAPE);
@@ -235,76 +235,76 @@ class VmlCanvas extends BasicCanvas {
       elem.setAttribute("coordsize", "$w $h");
       int inset = ((3 + strokeWidth) * _scale) as int;
 
-      String points = "ar 0 0 " + w + " " + h + " 0 " + (h / 2) + " " + (w / 2) + " " + (h / 2) + " e ar " + inset + " " + inset + " " + (w - inset) + " " + (h - inset) + " 0 " + (h / 2) + " " + (w / 2) + " " + (h / 2);
+      String points = "ar 0 0 $w $h 0 ${h / 2} ${w / 2} ${h / 2} e ar ${inset} ${inset} ${w - inset} ${h - inset} 0 ${h / 2} ${w / 2} ${h / 2}";
 
       elem.setAttribute("path", points + " x e");
     } else if (shape == Constants.SHAPE_RHOMBUS) {
       elem = _document.createElement("v:shape");
-      elem.setAttribute("coordsize", w + " " + h);
+      elem.setAttribute("coordsize", "$w $h");
 
-      String points = "m " + (w / 2) + " 0 l " + w + " " + (h / 2) + " l " + (w / 2) + " " + h + " l 0 " + (h / 2);
+      String points = "m ${w / 2} 0 l $w ${h / 2} l ${w / 2} $h l 0 ${h / 2}";
 
       elem.setAttribute("path", points + " x e");
     } else if (shape == Constants.SHAPE_TRIANGLE) {
       elem = _document.createElement("v:shape");
-      elem.setAttribute("coordsize", w + " " + h);
+      elem.setAttribute("coordsize", "$w $h");
 
       String direction = Utils.getString(style, Constants.STYLE_DIRECTION, "");
       String points = null;
 
       if (direction == Constants.DIRECTION_NORTH) {
-        points = "m 0 " + h + " l " + (w / 2) + " 0 " + " l " + w + " " + h;
+        points = "m 0 $h l ${w / 2} 0 l $w $h";
       } else if (direction == Constants.DIRECTION_SOUTH) {
-        points = "m 0 0 l " + (w / 2) + " " + h + " l " + w + " 0";
+        points = "m 0 0 l ${w / 2} $h l $w 0";
       } else if (direction == Constants.DIRECTION_WEST) {
-        points = "m " + w + " 0 l " + w + " " + (h / 2) + " l " + w + " " + h;
+        points = "m $w 0 l $w ${h / 2} l $w $h";
       } else // east
       {
-        points = "m 0 0 l " + w + " " + (h / 2) + " l 0 " + h;
+        points = "m 0 0 l $w ${h / 2} l 0 $h";
       }
 
       elem.setAttribute("path", points + " x e");
     } else if (shape == Constants.SHAPE_HEXAGON) {
       elem = _document.createElement("v:shape");
-      elem.setAttribute("coordsize", w + " " + h);
+      elem.setAttribute("coordsize", "$w $h");
 
       String direction = Utils.getString(style, Constants.STYLE_DIRECTION, "");
       String points = null;
 
       if (direction == Constants.DIRECTION_NORTH || direction == Constants.DIRECTION_SOUTH) {
-        points = "m " + (int)(0.5 * w) + " 0 l " + w + " " + (int)(0.25 * h) + " l " + w + " " + (int)(0.75 * h) + " l " + (int)(0.5 * w) + " " + h + " l 0 " + (int)(0.75 * h) + " l 0 " + (int)(0.25 * h);
+        points = "m ${(0.5 * w) as int} 0 l $w ${(0.25 * h) as int} l $w ${(0.75 * h) as int} l ${(0.5 * w) as int} $h l 0 ${(0.75 * h) as int} l 0 ${(0.25 * h) as int}";
       } else {
-        points = "m " + (int)(0.25 * w) + " 0 l " + (int)(0.75 * w) + " 0 l " + w + " " + (int)(0.5 * h) + " l " + (int)(0.75 * w) + " " + h + " l " + (int)(0.25 * w) + " " + h + " l 0 " + (int)(0.5 * h);
+        points = "m ${(0.25 * w) as int} 0 l ${(0.75 * w) as int} 0 l $w ${(0.5 * h) as int} l ${(0.75 * w) as int} $h l ${(0.25 * w) as int} $h l 0 ${(0.5 * h) as int}";
       }
 
       elem.setAttribute("path", points + " x e");
     } else if (shape == Constants.SHAPE_CLOUD) {
       elem = _document.createElement("v:shape");
-      elem.setAttribute("coordsize", w + " " + h);
+      elem.setAttribute("coordsize", "$w $h");
 
-      String points = "m " + (int)(0.25 * w) + " " + (int)(0.25 * h) + " c " + (int)(0.05 * w) + " " + (int)(0.25 * h) + " 0 " + (int)(0.5 * h) + " " + (int)(0.16 * w) + " " + (int)(0.55 * h) + " c 0 " + (int)(0.66 * h) + " " + (int)(0.18 * w) + " " + (int)(0.9 * h) + " " + (int)(0.31 * w) + " " + (int)(0.8 * h) + " c " + (int)(0.4 * w) + " " + (h) + " " + (int)(0.7 * w) + " " + (h) + " " + (int)(0.8 * w) + " " + (int)(0.8 * h) + " c " + (w) + " " + (int)(0.8 * h) + " " + (w) + " " + (int)(0.6 * h) + " " + (int)(0.875 * w) + " " + (int)(0.5 * h) + " c " + (w) + " " + (int)(0.3 * h) + " " + (int)(0.8 * w) + " " + (int)(0.1 * h) + " " + (int)(0.625 * w) + " " + (int)(0.2 * h) + " c " + (int)(0.5 * w) + " " + (int)(0.05 * h) + " " + (int)(0.3 * w) + " " + (int)(0.05 * h) + " " + (int)(0.25 * w) + " " + (int)(0.25 * h);
+      String points = "m ${(0.25 * w) as int} ${(0.25 * h) as int} c ${(0.05 * w) as int} ${(0.25 * h) as int} 0 ${(0.5 * h) as int} ${(0.16 * w) as int} ${(0.55 * h) as int} c 0 ${(0.66 * h) as int} ${(0.18 * w) as int} ${(0.9 * h) as int} ${(0.31 * w) as int} ${(0.8 * h) as int} c ${(0.4 * w) as int} $h ${(0.7 * w) as int} $h ${(0.8 * w) as int} ${(0.8 * h) as int} c $w ${(0.8 * h) as int} $w ${(0.6 * h) as int} ${(0.875 * w) as int} ${(0.5 * h) as int} c $w ${(0.3 * h) as int} ${(0.8 * w) as int} ${(0.1 * h) as int} ${(0.625 * w) as int} ${(0.2 * h) as int} c ${(0.5 * w) as int} ${(0.05 * h) as int} ${(0.3 * w) as int} ${(0.05 * h) as int} ${(0.25 * w) as int} ${(0.25 * h) as int}";
 
       elem.setAttribute("path", points + " x e");
     } else if (shape == Constants.SHAPE_ACTOR) {
       elem = _document.createElement("v:shape");
-      elem.setAttribute("coordsize", w + " " + h);
+      elem.setAttribute("coordsize", "$w $h");
 
       double width3 = w / 3;
-      String points = "m 0 " + (h) + " C 0 " + (3 * h / 5) + " 0 " + (2 * h / 5) + " " + (w / 2) + " " + (2 * h / 5) + " c " + (int)(w / 2 - width3) + " " + (2 * h / 5) + " " + (int)(w / 2 - width3) + " 0 " + (w / 2) + " 0 c " + (int)(w / 2 + width3) + " 0 " + (int)(w / 2 + width3) + " " + (2 * h / 5) + " " + (w / 2) + " " + (2 * h / 5) + " c " + (w) + " " + (2 * h / 5) + " " + (w) + " " + (3 * h / 5) + " " + (w) + " " + (h);
+      String points = "m 0 $h C 0 ${3 * h / 5} 0 ${2 * h / 5} ${w / 2} ${2 * h / 5} c ${(w / 2 - width3) as int} ${2 * h / 5} ${(w / 2 - width3) as int} 0 ${w / 2} 0 c ${(w / 2 + width3) as int} 0 ${(w / 2 + width3) as int} ${2 * h / 5} ${w / 2} ${2 * h / 5} c $w ${2 * h / 5} $w ${3 * h / 5} $w $h";
 
       elem.setAttribute("path", points + " x e");
     } else if (shape == Constants.SHAPE_CYLINDER) {
       elem = _document.createElement("v:shape");
-      elem.setAttribute("coordsize", w + " " + h);
+      elem.setAttribute("coordsize", "$w $h");
 
       double dy = Math.min(40, math.floor(h / 5));
-      String points = "m 0 " + (int)(dy) + " C 0 " + (int)(dy / 3) + " " + (w) + " " + (int)(dy / 3) + " " + (w) + " " + (int)(dy) + " L " + (w) + " " + (int)(h - dy) + " C " + (w) + " " + (int)(h + dy / 3) + " 0 " + (int)(h + dy / 3) + " 0 " + (int)(h - dy) + " x e" + " m 0 " + (int)(dy) + " C 0 " + (int)(2 * dy) + " " + (w) + " " + (int)(2 * dy) + " " + (w) + " " + (int)(dy);
+      String points = "m 0 ${dy as int} C 0 ${(dy / 3) as int} $w ${(dy / 3) as int} $w ${dy as int} L $w ${(h - dy) as int} C $w ${(h + dy / 3) as int} 0 ${(h + dy / 3) as int} 0 ${(h - dy) as int} x e m 0 ${dy as int} C 0 ${(2 * dy) as int} $w ${(2 * dy) as int} $w ${dy as int}";
 
       elem.setAttribute("path", points + " e");
     } else {
       if (Utils.isTrue(style, Constants.STYLE_ROUNDED, false)) {
         elem = _document.createElement("v:roundrect");
-        elem.setAttribute("arcsize", (Constants.RECTANGLE_ROUNDING_FACTOR * 100) + "%");
+        elem.setAttribute("arcsize", "${Constants.RECTANGLE_ROUNDING_FACTOR * 100}%");
       } else {
         elem = _document.createElement("v:rect");
       }
@@ -316,7 +316,7 @@ class VmlCanvas extends BasicCanvas {
     double rotation = Utils.getDouble(style, Constants.STYLE_ROTATION);
 
     if (rotation != 0) {
-      s += "rotation:" + rotation + ";";
+      s += "rotation:${rotation};";
     }
 
     elem.setAttribute("style", s);
@@ -329,7 +329,7 @@ class VmlCanvas extends BasicCanvas {
       elem.append(shadow);
     }
 
-    double opacity = Utils.getFloat(style, Constants.STYLE_OPACITY, 100);
+    double opacity = Utils.getFloat(style, Constants.STYLE_OPACITY, 100.0);
 
     // Applies opacity to fill
     if (fillColor != null) {
@@ -374,21 +374,21 @@ class VmlCanvas extends BasicCanvas {
 	 */
   Element drawLine(List<Point2d> pts, Map<String, Object> style) {
     String strokeColor = Utils.getString(style, Constants.STYLE_STROKECOLOR);
-    double strokeWidth = (Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1) * _scale) as double;
+    double strokeWidth = (Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1.0) * _scale);
 
     Element elem = _document.createElement("v:shape");
 
     if (strokeColor != null && strokeWidth > 0) {
       Point2d pt = pts[0];
-      harmony.Rectangle r = new harmony.Rectangle(pt.getPoint());
+      awt.Rectangle r = new awt.Rectangle.point(pt.getPoint());
 
-      StringBuilder buf = new StringBuilder("m " + math.round(pt.getX()) + " " + math.round(pt.getY()));
+      StringBuffer buf = new StringBuffer("m ${math.round(pt.getX())} ${math.round(pt.getY())}");
 
       for (int i = 1; i < pts.length; i++) {
         pt = pts[i];
-        buf.append(" l " + math.round(pt.getX()) + " " + math.round(pt.getY()));
+        buf.write(" l ${math.round(pt.getX())} ${math.round(pt.getY())}");
 
-        r = r.union(new harmony.Rectangle(pt.getPoint()));
+        r = r.union(new awt.Rectangle.point(pt.getPoint()));
       }
 
       String d = buf.toString();

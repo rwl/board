@@ -10,7 +10,7 @@ class ActorShape extends BasicShape {
 	 * 
 	 */
   Shape createShape(Graphics2DCanvas canvas, CellState state) {
-    harmony.Rectangle temp = state.getRectangle();
+    awt.Rectangle temp = state.getRectangle();
     int x = temp.x;
     int y = temp.y;
     int w = temp.width;

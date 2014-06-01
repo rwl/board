@@ -41,7 +41,7 @@ class LabelShape extends ImageShape {
   /**
 	 * 
 	 */
-  harmony.Rectangle getImageBounds(Graphics2DCanvas canvas, CellState state) {
+  awt.Rectangle getImageBounds(Graphics2DCanvas canvas, CellState state) {
     Map<String, Object> style = state.getStyle();
     double scale = canvas.getScale();
     String imgAlign = Utils.getString(style, Constants.STYLE_IMAGE_ALIGN, Constants.ALIGN_LEFT);

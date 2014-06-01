@@ -8,13 +8,13 @@ library graph.view;
  * class.
  */
 
-import 'dart:html';
+import 'dart:html' show Element, Node;
 import 'dart:math' as Math;
 import 'dart:collection' show LinkedList, LinkedHashSet, HashSet;
 import 'dart:svg' as svg;
 
-import '../compat/math.dart' as math;
-import '../harmony/harmony.dart' as harmony;
+import '../util/java/math.dart' as math;
+import '../util/awt/awt.dart' as awt;
 
 import '../layout/layout.dart' show IGraphLayout;
 

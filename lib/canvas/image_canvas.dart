@@ -35,7 +35,7 @@ class ImageCanvas implements ICanvas {
   /**
 	 * 
 	 */
-  ImageCanvas(Graphics2DCanvas canvas, int width, int height, harmony.Color background, bool antiAlias) {
+  ImageCanvas(Graphics2DCanvas canvas, int width, int height, awt.Color background, bool antiAlias) {
     this._canvas = canvas;
     _previousGraphics = canvas.getGraphics();
     _image = Utils.createBufferedImage(width, height, background);
@@ -85,7 +85,7 @@ class ImageCanvas implements ICanvas {
   /**
 	 * 
 	 */
-  harmony.Point getTranslate() {
+  awt.Point getTranslate() {
     return _canvas.getTranslate();
   }
 

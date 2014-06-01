@@ -87,7 +87,8 @@ class Traversal {
   static void bfs(AnalysisGraph aGraph, Object startVertex, ICellVisitor visitor) {
     if (aGraph != null && startVertex != null && visitor != null) {
       Set<Object> queued = new HashSet<Object>();
-      LinkedList<List<Object>> queue = new LinkedList<List<Object>>();
+//      LinkedList<List<Object>> queue = new LinkedList<List<Object>>();
+      Queue<List<Object>> queue = new Queue<List<Object>>();
       List<Object> q = [startVertex, null];
       queue.add(q);
       queued.add(startVertex);
@@ -167,12 +168,12 @@ class Traversal {
     List<Object> vertexListStatic = new List<Object>();
 
     for (int i = 0; i < vertexCount; i++) {
-      distances[i] = 1 << 32;
+      distances[i] = (1 << 32).toDouble();
       vertexList.add(vertexes[i] as Object);
       vertexListStatic.add(vertexes[i] as Object);
     }
 
-    distances[vertexListStatic.indexOf(startVertex)] = 0;
+    distances[vertexListStatic.indexOf(startVertex)] = 0.0;
     CostFunction costFunction = aGraph.getGenerator().getCostFunction();
     GraphView view = aGraph.getGraph().getView();
 

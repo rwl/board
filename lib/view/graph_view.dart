@@ -3,7 +3,7 @@
  */
 part of graph.view;
 
-//import java.awt.geom.harmony.Line2D;
+//import java.awt.geom.awt.Line2D;
 //import java.util.ArrayList;
 //import java.util.Hashtable;
 //import java.util.List;
@@ -1315,7 +1315,7 @@ class GraphView extends EventSource {
         // Works which line segment the point of the label is closest to
         Point2d p0 = edgeState.getAbsolutePoint(0);
         Point2d pe = edgeState.getAbsolutePoint(1);
-        harmony.Line2D line = new harmony.Line2D.between(p0.getPoint(), pe.getPoint());
+        awt.Line2D line = new awt.Line2D.between(p0.getPoint(), pe.getPoint());
         double minDist = line.ptSegDistSq(x, y);
 
         int index = 0;
@@ -1326,7 +1326,7 @@ class GraphView extends EventSource {
           tmp += segments[i - 2];
           pe = edgeState.getAbsolutePoint(i);
 
-          line = new harmony.Line2D.between(p0.getPoint(), pe.getPoint());
+          line = new awt.Line2D.between(p0.getPoint(), pe.getPoint());
           double dist = line.ptSegDistSq(x, y);
 
           if (dist < minDist) {
@@ -1374,8 +1374,8 @@ class GraphView extends EventSource {
           projlen = seg;
         }
 
-        double yDistance = harmony.Line2D.pointLineDist(p0.getX(), p0.getY(), pe.getX(), pe.getY(), x, y);
-        int direction = harmony.Line2D.relativeCCW(p0.getX(), p0.getY(), pe.getX(), pe.getY(), x, y);
+        double yDistance = awt.Line2D.pointLineDist(p0.getX(), p0.getY(), pe.getX(), pe.getY(), x, y);
+        int direction = awt.Line2D.relativeCCW(p0.getX(), p0.getY(), pe.getX(), pe.getY(), x, y);
 
         if (direction == -1) {
           yDistance = -yDistance;

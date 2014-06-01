@@ -4,7 +4,7 @@
 part of graph.util;
 
 //import java.awt.Font;
-//import java.awt.harmony.Rectangle;
+//import java.awt.awt.Rectangle;
 
 //import javax.swing.JLabel;
 //import javax.swing.SwingConstants;
@@ -84,7 +84,7 @@ class LightweightLabel //extends JLabel
 	 * Overridden for performance reasons.
 	 * 
 	 */
-  //	void repaint(harmony.Rectangle r)
+  //	void repaint(awt.Rectangle r)
   //	{
   //	}
 

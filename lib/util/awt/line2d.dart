@@ -23,7 +23,7 @@ part of graph.harmony;
 //import java.awt.Shape;
 //import java.util.NoSuchElementException;
 //
-//import org.apache.harmony.awt.internal.nls.Messages;
+//import org.apache.awt.awt.internal.nls.Messages;
 
 class Line2D {//implements Shape, Cloneable {
 

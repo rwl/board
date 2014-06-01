@@ -7,7 +7,7 @@ part of graph.swing.handler;
 //import java.awt.Graphics;
 //import java.awt.Graphics2D;
 //import java.awt.Point;
-//import java.awt.harmony.Rectangle;
+//import java.awt.awt.Rectangle;
 //import java.awt.event.MouseEvent;
 
 /**
@@ -129,7 +129,7 @@ class ConnectPreview extends EventSource {
 
     // Repaints the dirty region
     // TODO: Cache the new dirty region for next repaint
-    harmony.Rectangle tmp = _getDirtyRect(dirty);
+    awt.Rectangle tmp = _getDirtyRect(dirty);
 
     if (tmp != null) {
       _graphComponent.getGraphControl().repaint(tmp);
@@ -141,7 +141,7 @@ class ConnectPreview extends EventSource {
   /**
 	 * 
 	 */
-  //	harmony.Rectangle _getDirtyRect()
+  //	awt.Rectangle _getDirtyRect()
   //	{
   //		return _getDirtyRect(null);
   //	}
@@ -149,7 +149,7 @@ class ConnectPreview extends EventSource {
   /**
 	 * 
 	 */
-  harmony.Rectangle _getDirtyRect([Rect dirty = null]) {
+  awt.Rectangle _getDirtyRect([Rect dirty = null]) {
     if (_previewState != null) {
       Rect tmp = _graphComponent.getGraph().getPaintBounds([_previewState.getCell()]);
 
@@ -207,7 +207,7 @@ class ConnectPreview extends EventSource {
       }
 
       Graphics2D previousGraphics = canvas.getGraphics();
-      harmony.Point previousTranslate = canvas.getTranslate();
+      awt.Point previousTranslate = canvas.getTranslate();
       double previousScale = canvas.getScale();
 
       try {
@@ -270,7 +270,7 @@ class ConnectPreview extends EventSource {
 
         // Clears the state before the model commits
         if (_previewState != null) {
-          harmony.Rectangle dirty = _getDirtyRect();
+          awt.Rectangle dirty = _getDirtyRect();
           graph.getView().clear(cell, false, true);
           _previewState = null;
 

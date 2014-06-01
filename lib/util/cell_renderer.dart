@@ -5,7 +5,7 @@ part of graph.util;
 
 //import java.awt.Color;
 //import java.awt.Point;
-//import java.awt.harmony.Rectangle;
+//import java.awt.awt.Rectangle;
 //import java.awt.image.BufferedImage;
 
 //import org.w3c.dom.Document;
@@ -61,12 +61,12 @@ class CellRenderer {
       }
 
       if (clip != null && clip.getWidth() > 0 && clip.getHeight() > 0) {
-        harmony.Rectangle rect = clip.getRectangle();
+        awt.Rectangle rect = clip.getRectangle();
         canvas = factory(rect.width + 1, rect.height + 1);
 
         if (canvas != null) {
           double previousScale = canvas.getScale();
-          harmony.Point previousTranslate = canvas.getTranslate();
+          awt.Point previousTranslate = canvas.getTranslate();
 
           try {
             canvas.setTranslate(-rect.x, -rect.y);
@@ -103,7 +103,7 @@ class CellRenderer {
   /**
 	 * 
 	 */
-  static image.Image createBufferedImage(Graph graph, List<Object> cells, double scale, final harmony.Color background, final bool antiAlias, Rect clip, [/*final*/ Graphics2DCanvas graphicsCanvas = null]) {
+  static image.Image createBufferedImage(Graph graph, List<Object> cells, double scale, final awt.Color background, final bool antiAlias, Rect clip, [/*final*/ Graphics2DCanvas graphicsCanvas = null]) {
     if (graphicsCanvas == null) {
       graphicsCanvas = new Graphics2DCanvas();
     }
@@ -117,7 +117,7 @@ class CellRenderer {
   /**
 	 * 
 	 */
-  static Document createHtmlDocument(Graph graph, List<Object> cells, double scale, harmony.Color background, Rect clip) {
+  static Document createHtmlDocument(Graph graph, List<Object> cells, double scale, awt.Color background, Rect clip) {
     HtmlCanvas canvas = drawCells(graph, cells, scale, clip, (int width, int height) {
       return new HtmlCanvas(DomUtils.createHtmlDocument());
     }) as HtmlCanvas;
@@ -128,7 +128,7 @@ class CellRenderer {
   /**
 	 * 
 	 */
-  static Document createSvgDocument(Graph graph, List<Object> cells, double scale, harmony.Color background, Rect clip) {
+  static Document createSvgDocument(Graph graph, List<Object> cells, double scale, awt.Color background, Rect clip) {
     SvgCanvas canvas = drawCells(graph, cells, scale, clip, (int width, int height) {
       return new SvgCanvas(DomUtils.createSvgDocument(width, height));
     }) as SvgCanvas;
@@ -139,7 +139,7 @@ class CellRenderer {
   /**
 	 * 
 	 */
-  static Document createVmlDocument(Graph graph, List<Object> cells, double scale, harmony.Color background, Rect clip) {
+  static Document createVmlDocument(Graph graph, List<Object> cells, double scale, awt.Color background, Rect clip) {
     VmlCanvas canvas = drawCells(graph, cells, scale, clip, (int width, int height) {
       return new VmlCanvas(DomUtils.createVmlDocument());
     }) as VmlCanvas;
