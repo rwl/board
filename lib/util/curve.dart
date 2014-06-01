@@ -308,7 +308,7 @@ class Curve {
     List<Point2d> pointsCurve = getCurvePoints(Curve.CORE_CURVE);
 
     if (pointsCurve != null && pointsCurve.length > 1) {
-      Rect r = new Rect.from(rect);
+      Rect r = new Rect.rectangle(rect);
       // First check for any of the curve points lying within the
       // rectangle, then for any of the curve segments intersecting
       // with the rectangle sides
@@ -1002,7 +1002,7 @@ class Curve {
         } else if (constantTranslation) {
           pointsChanged = false;
           // Translate all stored points by the translation amounts
-          List<List<Point2d>> curves = _points.values;
+          Iterable<List<Point2d>> curves = _points.values;
 
           // Update all geometry information held by the curve
           // That is, all the curve points, the guide points

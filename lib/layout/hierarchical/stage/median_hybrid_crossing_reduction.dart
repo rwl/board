@@ -186,8 +186,8 @@ class MedianHybridCrossingReduction implements HierarchicalLayoutStage /*, JGrap
     while (iter.moveNext()) {
       GraphAbstractHierarchyCell cell = iter.current();
       int rankPosition = cell.getGeneralPurposeVariable(i);
-      Collection<GraphAbstractHierarchyCell> connectedCells = cell.getPreviousLayerConnectedCells(i);
-      Iterator<GraphAbstractHierarchyCell> iter2 = connectedCells.iterator();
+      Iterable<GraphAbstractHierarchyCell> connectedCells = cell.getPreviousLayerConnectedCells(i);
+      Iterator<GraphAbstractHierarchyCell> iter2 = connectedCells.iterator;
 
       while (iter2.moveNext()) {
         GraphAbstractHierarchyCell connectedCell = iter2.current();
@@ -418,7 +418,7 @@ class MedianHybridCrossingReduction implements HierarchicalLayoutStage /*, JGrap
       // sweeps
       // todo reimplement some kind of nudging depending on sweep
       //nudge = !downwardSweep;
-      Collection<GraphAbstractHierarchyCell> nextLevelConnectedCells;
+      Iterable<GraphAbstractHierarchyCell> nextLevelConnectedCells;
 
       if (downwardSweep) {
         nextLevelConnectedCells = cell.getNextLayerConnectedCells(rankValue);
@@ -470,7 +470,7 @@ class MedianHybridCrossingReduction implements HierarchicalLayoutStage /*, JGrap
 	 *            the rank that the connected cell lie upon
 	 * @return the median rank ordering value of the connected cells
 	 */
-  double _medianValue(Collection<GraphAbstractHierarchyCell> connectedCells, int rankValue) {
+  double _medianValue(Iterable<GraphAbstractHierarchyCell> connectedCells, int rankValue) {
     List<double> medianValues = new List<double>(connectedCells.length);
     int arrayCount = 0;
     Iterator<GraphAbstractHierarchyCell> iter = connectedCells.iterator();

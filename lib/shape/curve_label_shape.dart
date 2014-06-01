@@ -146,14 +146,14 @@ class CurveLabelShape implements ITextShape {
 
     if (_labelGlyphs != null && (g.getClipBounds() == null || g.getClipBounds().intersects(rect))) {
       // Creates a temporary graphics instance for drawing this shape
-      float opacity = Utils.getFloat(style, Constants.STYLE_OPACITY, 100);
+      float opacity = Utils.getFloat(style, Constants.STYLE_OPACITY, 100.0);
       Graphics2D previousGraphics = g;
       g = canvas.createTemporaryGraphics(style, opacity, state);
 
       Font font = Utils.getFont(style, canvas.getScale());
       g.setFont(font);
 
-      Color fontColor = Utils.getColor(style, Constants.STYLE_FONTCOLOR, Color.black);
+      awt.Color fontColor = Utils.getColor(style, Constants.STYLE_FONTCOLOR, awt.Color.black);
       g.setColor(fontColor);
 
       g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
@@ -424,7 +424,7 @@ class CurveLabelShape implements ITextShape {
 
       if (currentCurveDelta > curveDeltaSignificant) {
         // Work out which direction the curve is going in
-        int ccw = awt.Line2D.relativeCCW(0, 0, x, y, end2X, end2Y);
+        int ccw = awt.Line2D.relativeCCW(0.0, 0.0, x, y, end2X, end2Y);
 
         if (ccw == 1) {
           // Text is on inside of curve
@@ -462,7 +462,7 @@ class CurveLabelShape implements ITextShape {
       // Return a small rectangle in the center of the label curve
       // Null label bounds causes NPE when editing
       Line labelCenter = _curve.getCurveParallel(Curve.LABEL_CURVE, 0.5);
-      overallLabelBounds = new Rect(labelCenter.getX(), labelCenter.getY(), 1, 1);
+      overallLabelBounds = new Rect(labelCenter.getX(), labelCenter.getY(), 1.0, 1.0);
     }
 
     this._labelBounds = overallLabelBounds;

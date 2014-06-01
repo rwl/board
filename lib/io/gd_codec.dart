@@ -52,77 +52,72 @@ class GdCodec {
       while (line != null) {
         switch (state) {
           case GDParseState.START:
-            {
-              if (!line.startsWith("#")) {
-                state = GDParseState.NUM_NODES;
-              } else {
-                break;
-              }
+            if (!line.startsWith("#")) {
+              state = GDParseState.NUM_NODES;
+            } else {
+              break;
             }
+            continue;
+            
           case GDParseState.NUM_NODES:
-            {
-              if (!line.startsWith("#")) {
-                int numVertices = int.parse(line);
+            if (!line.startsWith("#")) {
+              int numVertices = int.parse(line);
 
-                for (int i = 0; i < numVertices; i++) {
-                  String label = i.toString();
-                  Object vertex = graph.insertVertex(parent, label, label, 0, 0, 10, 10);
+              for (int i = 0; i < numVertices; i++) {
+                String label = i.toString();
+                Object vertex = graph.insertVertex(parent, label, label, 0.0, 0.0, 10.0, 10.0);
 
-                  _cellsMap[label] = vertex;
-                }
-              } else {
-                state = GDParseState.PARSING_EDGES;
+                _cellsMap[label] = vertex;
               }
-
-              break;
+            } else {
+              state = GDParseState.PARSING_EDGES;
             }
+            break;
+            
           case GDParseState.PARSING_NODES:
-            {
-              if (line.startsWith("# Edges")) {
-                state = GDParseState.PARSING_EDGES;
-              } else if (line != "") {
-                List<String> items = line.split(",");
-                if (items.length != 5) {
-                  throw new Exception("Error in parsing");
-                } else {
-                  double x = double.parse(items[1]);
-                  double y = double.parse(items[2]);
-                  double width = double.parse(items[3]);
-                  double height = double.parse(items[4]);
+            if (line.startsWith("# Edges")) {
+              state = GDParseState.PARSING_EDGES;
+            } else if (line != "") {
+              List<String> items = line.split(",");
+              if (items.length != 5) {
+                throw new Exception("Error in parsing");
+              } else {
+                double x = double.parse(items[1]);
+                double y = double.parse(items[2]);
+                double width = double.parse(items[3]);
+                double height = double.parse(items[4]);
 
 
-                  //Set the node name as label.
-                  String label = items[0];
+                //Set the node name as label.
+                String label = items[0];
 
-                  //Insert a new vertex in the graph
-                  Object vertex = graph.insertVertex(parent, label, label, x - width / 2.0, y - height / 2.0, width, height);
+                //Insert a new vertex in the graph
+                Object vertex = graph.insertVertex(parent, label, label, x - width / 2.0, y - height / 2.0, width, height);
 
-                  _cellsMap[label] = vertex;
-                }
+                _cellsMap[label] = vertex;
               }
-              break;
             }
+            break;
+
           case GDParseState.PARSING_EDGES:
-            {
-              if (line != "") {
-                List<String> items = line.split(" ");
-                if (items.length != 2) {
-                  throw new Exception("Error in parsing");
-                } else {
-                  Object source = _cellsMap[items[0]];
-                  Object target = _cellsMap[items[1]];
+            if (line != "") {
+              List<String> items = line.split(" ");
+              if (items.length != 2) {
+                throw new Exception("Error in parsing");
+              } else {
+                Object source = _cellsMap[items[0]];
+                Object target = _cellsMap[items[1]];
 
-                  graph.insertEdge(parent, null, "", source, target);
-                }
+                graph.insertEdge(parent, null, "", source, target);
               }
-              break;
             }
+            break;
         }
 
         line = br.readLine();
       }
     } on Exception catch (e) {
-      e.printStackTrace();
+      //e.printStackTrace();
     } finally {
       graph.getModel().endUpdate();
     }

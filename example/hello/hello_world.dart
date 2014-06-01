@@ -17,10 +17,10 @@ main()  {
   graph.getModel().beginUpdate();
   try
   {
-      Object v1 = graph.insertVertex(parent, null, "Hello", 20, 20, 80,
-              30);
-      Object v2 = graph.insertVertex(parent, null, "World!", 240, 150,
-              80, 30);
+      Object v1 = graph.insertVertex(parent, null, "Hello", 20.0, 20.0, 80.0,
+              30.0);
+      Object v2 = graph.insertVertex(parent, null, "World!", 240.0, 150.0,
+              80.0, 30.0);
       graph.insertEdge(parent, null, "Edge", v1, v2);
   }
   finally

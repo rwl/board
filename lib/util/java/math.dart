@@ -2,7 +2,7 @@ library graph.math;
 
 import 'dart:math';
 
-double abs(double x) {
+num abs(num x) {
   return x.abs();
 }
 

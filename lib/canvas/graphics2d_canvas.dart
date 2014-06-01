@@ -181,7 +181,7 @@ class Graphics2DCanvas extends BasicCanvas {
 
     if (_g != null && shape != null) {
       // Creates a temporary graphics instance for drawing this shape
-      double opacity = Utils.getFloat(style, Constants.STYLE_OPACITY, 100);
+      double opacity = Utils.getFloat(style, Constants.STYLE_OPACITY, 100.0);
       Graphics2D previousGraphics = _g;
       _g = createTemporaryGraphics(style, opacity, state);
 
@@ -204,7 +204,7 @@ class Graphics2DCanvas extends BasicCanvas {
 
     if (_g != null && shape != null && _drawLabels && text != null && text.length > 0) {
       // Creates a temporary graphics instance for drawing this shape
-      double opacity = Utils.getFloat(style, Constants.STYLE_TEXT_OPACITY, 100);
+      double opacity = Utils.getFloat(style, Constants.STYLE_TEXT_OPACITY, 100.0);
       Graphics2D previousGraphics = _g;
       _g = createTemporaryGraphics(style, opacity, null);
 
@@ -427,7 +427,7 @@ class Graphics2DCanvas extends BasicCanvas {
 	 * 
 	 */
   Stroke createStroke(Map<String, Object> style) {
-    double width = Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1) * _scale;
+    double width = Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1.0) * _scale;
     bool dashed = Utils.isTrue(style, Constants.STYLE_DASHED);
     if (dashed) {
       List<double> dashPattern = Utils.getFloatArray(style, Constants.STYLE_DASH_PATTERN, Constants.DEFAULT_DASHED_PATTERN, " ");
@@ -489,7 +489,7 @@ class Graphics2DCanvas extends BasicCanvas {
 
     // Applies the rotation on the graphics object
     if (bounds != null) {
-      double rotation = Utils.getDouble(style, Constants.STYLE_ROTATION, 0);
+      double rotation = Utils.getDouble(style, Constants.STYLE_ROTATION, 0.0);
 
       if (rotation != 0) {
         temporaryGraphics.rotate(math.toRadians(rotation), bounds.getCenterX(), bounds.getCenterY());

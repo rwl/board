@@ -54,10 +54,10 @@ class HtmlTextShape implements ITextShape {
   String _createHtmlDocument(Map<String, Object> style, String text, int w, int h) {
     String overflow = Utils.getString(style, Constants.STYLE_OVERFLOW, "");
 
-    if (overflow.equals("fill")) {
-      return Utils.createHtmlDocument(style, text, 1, w, null, "height:" + h + "pt;");
-    } else if (overflow.equals("width")) {
-      return Utils.createHtmlDocument(style, text, 1, w);
+    if (overflow == "fill") {
+      return Utils.createHtmlDocument(style, text, 1.0, w, null, "height:${h}pt;");
+    } else if (overflow == "width") {
+      return Utils.createHtmlDocument(style, text, 1.0, w);
     } else {
       return Utils.createHtmlDocument(style, text);
     }

@@ -1657,7 +1657,7 @@ class GraphComponent extends JScrollPane implements Printable {
 	 * 
 	 * @return Returns the children inside the given rectangle.
 	 */
-  List<Object> getCells(awt.Rectangle rect, [Object parent = null]) {
+  Iterable<Object> getCells(awt.Rectangle rect, [Object parent = null]) {
     Collection<Object> result = new List<Object>();
 
     if (rect.width > 0 || rect.height > 0) {

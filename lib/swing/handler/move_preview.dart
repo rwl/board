@@ -198,7 +198,7 @@ class MovePreview extends EventSource {
 	 */
   List<CellState> _getPreviewStates() {
     Graph graph = _graphComponent.getGraph();
-    Collection<CellState> result = new LinkedList<CellState>();
+    Iterable<CellState> result = new LinkedList<CellState>();
 
     for (Object cell in _movingCells) {
       CellState cellState = graph.getView().getState(cell);

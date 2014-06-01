@@ -23,7 +23,7 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell {
   /**
 	 * Shared empty connection map to return instead of null in applyMap.
 	 */
-  static Collection<GraphHierarchyEdge> emptyConnectionMap = new List<GraphHierarchyEdge>(0);
+  static Iterable<GraphHierarchyEdge> emptyConnectionMap = new List<GraphHierarchyEdge>(0);
 
   /**
 	 * The graph cell this object represents.
@@ -33,12 +33,12 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell {
   /**
 	 * Collection of hierarchy edges that have this node as a target
 	 */
-  Collection<GraphHierarchyEdge> connectsAsTarget = emptyConnectionMap;
+  Iterable<GraphHierarchyEdge> connectsAsTarget = emptyConnectionMap;
 
   /**
 	 * Collection of hierarchy edges that have this node as a source
 	 */
-  Collection<GraphHierarchyEdge> connectsAsSource = emptyConnectionMap;
+  Iterable<GraphHierarchyEdge> connectsAsSource = emptyConnectionMap;
 
   /**
 	 * Assigns a unique hashcode for each node. Used by the model dfs instead

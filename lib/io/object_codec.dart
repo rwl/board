@@ -187,7 +187,7 @@ class ObjectCodec {
       // as attributes in this case. This is
       // required because in JavaScript, the
       // map and array object are the same.
-      if (obj is Collection) {
+      if (obj is Iterable) {
         node = node.firstChild;
 
         // Skips text nodes
@@ -362,8 +362,8 @@ class ObjectCodec {
       (obj as Map).forEach((Object k, Object v) {
         _encodeValue(enc, obj, k.toString(), v, node);
       });
-    } else if (obj is Collection) {
-      Iterator /*<?>*/ it = (obj as Collection/*<?>*/).iterator();
+    } else if (obj is Iterable) {
+      Iterator /*<?>*/ it = (obj as Iterable/*<?>*/).iterator;
 
       while (it.moveNext()) {
         Object value = it.current();
@@ -743,8 +743,8 @@ class ObjectCodec {
           value = _convertValueFromXml(type, value);
 
           // Converts collection to a typed array before setting
-          if (type.isArray() && value is Collection) {
-            Collection /*<?>*/ coll = value as Collection/*<?>*/;
+          if (type.isArray() && value is Iterable) {
+            Iterable /*<?>*/ coll = value as Iterable/*<?>*/;
             value = coll.toArray(Array.newInstance(type.getComponentType(), coll.length) as List<Object>);
           }
 
@@ -965,8 +965,13 @@ class ObjectCodec {
     if (template != null && template.getClass().isArray()) {
       template = null;
     } // Collections are cleared
-    else if (template is Collection) {
-      (template as Collection/*<?>*/).clear();
+    //else if (template is Iterable) {
+    //  (template as Iterable/*<?>*/).clear();
+    //}
+    else if (template is List) {
+      (template as List).clear();
+    } else if (template is Set) {
+      (template as Set).clear();
     }
 
     return template;
@@ -988,8 +993,11 @@ class ObjectCodec {
         _setFieldValue(obj, fieldname, value);
       } // Arrays are treated as collections and
       // converted in setFieldValue
-      else if (obj is Collection) {
-        (obj as Collection).add(value);
+      else if (obj is List) {
+        (obj as List).add(value);
+      }
+      else if (obj is Set) {
+        (obj as Set).add(value);
       }
     }
   }

@@ -4,6 +4,7 @@ library graph.sharing;
  * This package contains all classes required for concurrent diagram editing
  * by multiple clients.
  */
+import 'dart:html' show Node;
 
 import '../sharing/sharing.dart' show DiagramChangeListener;
 

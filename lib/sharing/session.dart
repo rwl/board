@@ -17,7 +17,7 @@ class Session implements DiagramChangeListener {
   /**
 	 * Default timeout is 10000 ms.
 	 */
-  static int DEFAULT_TIMEOUT = 10000;
+  static const int DEFAULT_TIMEOUT = 10000;
 
   /**
 	 * Holds the session ID.
@@ -37,7 +37,7 @@ class Session implements DiagramChangeListener {
   /**
 	 * Holds the last active time millis.
 	 */
-  long _lastTimeMillis = 0;
+  int _lastTimeMillis = 0;
 
   /**
 	 * Constructs a new session with the given ID.
@@ -50,7 +50,7 @@ class Session implements DiagramChangeListener {
     this._diagram = diagram;
     this._diagram.addDiagramChangeListener(this);
 
-    _lastTimeMillis = System.currentTimeMillis();
+    _lastTimeMillis = new DateTime.now().millisecondsSinceEpoch;
   }
 
   /**
@@ -86,13 +86,13 @@ class Session implements DiagramChangeListener {
     String ns = Utils.getMd5Hash(_id);
 
     StringBuffer result = new StringBuffer("<message namespace=\"" + ns + "\">");
-    result.append("<state>");
-    result.append(_diagram.getState());
-    result.append("</state>");
-    result.append("<delta>");
-    result.append(_diagram.getDelta());
-    result.append("</delta>");
-    result.append("</message>");
+    result.write("<state>");
+    result.write(_diagram.getState());
+    result.write("</state>");
+    result.write("<delta>");
+    result.write(_diagram.getDelta());
+    result.write("</delta>");
+    result.write("</message>");
 
     return result.toString();
   }
@@ -104,14 +104,14 @@ class Session implements DiagramChangeListener {
 	 */
   void receive(Node message) {
     //System.out.println(getId() + ": " + Utils.getPrettyXml(message));
-    Node child = message.getFirstChild();
+    Node child = message.firstChild;
 
     while (child != null) {
-      if (child.getNodeName().equals("delta")) {
+      if (child.nodeName == "delta") {
         _diagram.processDelta(this, child);
       }
 
-      child = child.getNextSibling();
+      child = child.nextNode;
     }
     /*System.out.println(Utils.getPrettyXml(new Codec()
 				.encode(((SharedGraphModel) diagram).getModel())));*/
@@ -137,9 +137,9 @@ class Session implements DiagramChangeListener {
 	 * @param timeout Time in milliseconds to wait for changes.
 	 * @return Returns a string representing the changes to the shared diagram.
 	 */
-  String poll([long timeout = DEFAULT_TIMEOUT]) //throws InterruptedException
+  String poll([int timeout = DEFAULT_TIMEOUT]) //throws InterruptedException
   {
-    _lastTimeMillis = System.currentTimeMillis();
+    _lastTimeMillis = new DateTime.now().millisecondsSinceEpoch;
     StringBuffer result = new StringBuffer("<message>");
 
     /*synchronized (this)
@@ -161,7 +161,7 @@ class Session implements DiagramChangeListener {
 			notify();
 		}*/
 
-    result.append("</message>");
+    result.write("</message>");
 
     return result.toString();
   }
@@ -183,8 +183,8 @@ class Session implements DiagramChangeListener {
   /**
 	 * Returns the number of milliseconds this session has been inactive.
 	 */
-  long inactiveTimeMillis() {
-    return System.currentTimeMillis() - _lastTimeMillis;
+  int inactiveTimeMillis() {
+    return new DateTime.now().millisecondsSinceEpoch - _lastTimeMillis;
   }
 
   /**

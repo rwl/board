@@ -26,7 +26,7 @@ abstract class GraphViewReader extends DefaultHandler {
 	 * Holds the global scale of the graph. This is set just before
 	 * createCanvas is called.
 	 */
-  double _scale = 1;
+  double _scale = 1.0;
 
   /**
 	 * Specifies if labels should be rendered as HTML markup.
@@ -94,7 +94,7 @@ abstract class GraphViewReader extends DefaultHandler {
 	 */
   void parseElement(String tagName, Map<String, Object> attrs) {
     if (_canvas == null && tagName.toLowerCase() == "graph") {
-      _scale = Utils.getDouble(attrs, "scale", 1);
+      _scale = Utils.getDouble(attrs, "scale", 1.0);
       _canvas = createCanvas(attrs);
 
       if (_canvas != null) {

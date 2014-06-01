@@ -61,28 +61,28 @@ class GraphViewImageReader extends GraphViewReader {
   /**
 	 * Constructs a new reader with the given background color.
 	 */
-  GraphViewImageReader([awt.Color background=null]) {
-    this(background, 0);
-  }
+//  GraphViewImageReader([awt.Color background=null]) {
+//    this(background, 0);
+//  }
 
   /**
 	 * Constructs a new reader with a transparent background.
 	 */
-  GraphViewImageReader(awt.Color background, int border) {
-    this(background, border, true);
-  }
+//  GraphViewImageReader(awt.Color background, int border) {
+//    this(background, border, true);
+//  }
 
   /**
 	 * Constructs a new reader with a transparent background.
 	 */
-  GraphViewImageReader(awt.Color background, int border, bool antiAlias) {
-    this(background, border, antiAlias, true);
-  }
+//  GraphViewImageReader(awt.Color background, int border, bool antiAlias) {
+//    this(background, border, antiAlias, true);
+//  }
 
   /**
 	 * Constructs a new reader with a transparent background.
 	 */
-  GraphViewImageReader(awt.Color background, int border, bool antiAlias, bool cropping) {
+  GraphViewImageReader([awt.Color background=null, int border=0, bool antiAlias=true, bool cropping=true]) {
     setBackground(background);
     setBorder(border);
     setAntiAlias(antiAlias);

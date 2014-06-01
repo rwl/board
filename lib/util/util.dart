@@ -10,10 +10,11 @@ library graph.util;
  */
 
 import 'dart:html';
-import 'dart:collection' show HashMap, SplayTreeSet, binarySearch;
+import 'dart:collection' show HashMap, SplayTreeSet, binarySearch, LinkedList;
 //import 'dart:collection.algorithms' show binarySearch;
 import 'dart:svg' as svg;
 import 'dart:math' as Math;
+import 'package:unicode_helper/unicode_helper.dart' as unicode;
 
 import 'package:image/image.dart' as image;
 //import 'package:color/color.dart' as color;
@@ -548,7 +549,7 @@ class Utils {
         }
       }
 
-      return new Rect(0, 0, size.width * scale, size.height * scale);
+      return new Rect(0.0, 0.0, size.width * scale, size.height * scale);
     } else {
       return getSizeForString(markup, getFont(style), scale);
     }
@@ -684,7 +685,7 @@ class Utils {
       tmp.addPoint(p3.getPoint());
       tmp.addPoint(p4.getPoint());
 
-      result = new Rect(tmp);
+      result = new Rect.rectangle(tmp);
     } else if (rect != null) {
       result = rect.clone() as Rect;
     }
@@ -706,20 +707,20 @@ class Utils {
     int result = 0;
 
     while (result >= 0) {
-      result = text.indexOf(inputChar, fromIndex);
+      result = text.indexOf(new String.fromCharCode(inputChar), fromIndex);
 
       if (result == 0) {
         return result;
       } else if (result > 0) {
         // Check there is a whitespace or symbol before the hit character
-        if (Character.isLetter(text.codePointAt(result - 1))) {
+        if (unicode.isLetter(text.codeUnitAt(result - 1))) {
           // The pre-increment is used in if and else branches.
           if (++fromIndex >= text.length) {
             return -1;
           } else {
             // Test again from next candidate character
             // This isn't the first letter of this word
-            result = text.indexOf(inputChar, fromIndex);
+            result = text.indexOf(new String.fromCharCode(inputChar), fromIndex);
           }
         } else {
           return result;
@@ -967,7 +968,7 @@ class Utils {
   /**
 	 * Sorts the given cells according to the order in the cell hierarchy.
 	 */
-  static List<Object> sortCells(Set<Object> cells, final bool ascending) {
+  static Iterable<Object> sortCells(Iterable<Object> cells, final bool ascending) {
     Set<Object> result = new SplayTreeSet<Object>((Object o1, Object o2) {
       int comp = CellPath.compare(CellPath.create(o1 as ICell), CellPath.create(o2 as ICell));
 
@@ -1532,7 +1533,7 @@ class Utils {
     String tmp = reader.readLine();
 
     while (tmp != null) {
-      result.append(tmp + "\n");
+      result.write(tmp + "\n");
       tmp = reader.readLine();
     }
 
@@ -1550,13 +1551,13 @@ class Utils {
 	 *            Name of the file to be written.
 	 * @throws IOException
 	 */
-  static void writeFile(String contents, String filename) /*throws IOException*/
+  /*static void writeFile(String contents, String filename) //throws IOException
   {
     FileWriter fw = new FileWriter(filename);
     fw.write(contents);
     fw.flush();
     fw.close();
-  }
+  }*/
 
   /**
 	 * Returns the Md5 hash for the given text.
@@ -1931,8 +1932,9 @@ class Utils {
 	 * @return Returns a new DOM document.
 	 */
   static HtmlDocument createHtmlDocumentObject(Map<String, Object> style, double scale) {
+    throw new Exception();
     // Applies the font settings
-    HtmlDocument document = new HtmlDocument();
+    HtmlDocument document = null;//new HtmlDocument();
 
     StringBuffer rule = new StringBuffer("body {");
     rule.write("font-family:" + getString(style, Constants.STYLE_FONTFAMILY, Constants.DEFAULT_FONTFAMILIES) + ";");

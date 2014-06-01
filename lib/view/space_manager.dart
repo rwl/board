@@ -224,22 +224,22 @@ class SpaceManager extends EventSource {
           if (isShiftRightwards()) {
             if (state.getX() >= right) {
               geo = geo.clone() as Geometry;
-              geo.translate(-dx, 0);
+              geo.translate(-dx, 0.0);
             } else {
               double tmpDx = Math.max(0, state.getX() - x0);
               geo = geo.clone() as Geometry;
-              geo.translate(-fx * tmpDx, 0);
+              geo.translate(-fx * tmpDx, 0.0);
             }
           }
 
           if (isShiftDownwards()) {
             if (state.getY() >= bottom) {
               geo = geo.clone() as Geometry;
-              geo.translate(0, -dy);
+              geo.translate(0.0, -dy);
             } else {
               double tmpDy = Math.max(0, state.getY() - y0);
               geo = geo.clone() as Geometry;
-              geo.translate(0, -fy * tmpDy);
+              geo.translate(0.0, -fy * tmpDy);
             }
 
             if (geo != model.getGeometry(cell)) {

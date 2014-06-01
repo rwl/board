@@ -605,7 +605,7 @@ class GraphicsCanvas2D implements ICanvas2D {
       g2 = g2.create() as Graphics2D;
 
       if (flipV && flipH) {
-        g2.rotate(math.toRadians(180), x + w / 2, y + h / 2);
+        g2.rotate(math.toRadians(180.0), x + w / 2, y + h / 2);
       } else {
         int sx = 1;
         int sy = 1;
@@ -685,7 +685,7 @@ class GraphicsCanvas2D implements ICanvas2D {
         setWidth = true;
 
         if (h > 0) {
-          css.write("height:" + math.round(h) + "pt;");
+          css.write("height:${math.round(h)}pt;");
         }
       }
     }
@@ -702,7 +702,7 @@ class GraphicsCanvas2D implements ICanvas2D {
     }
 
     if (setWidth && w > 0) {
-      css.write("width:" + math.round(w) + "pt;");
+      css.write("width:${math.round(w)}pt;");
     }
 
     return "<html><div style=\"" + css.toString() + "\">" + text + "</div></html>";

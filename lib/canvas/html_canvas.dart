@@ -139,7 +139,7 @@ class HtmlCanvas extends BasicCanvas {
   Element drawShape(int x, int y, int w, int h, Map<String, Object> style) {
     String fillColor = Utils.getString(style, Constants.STYLE_FILLCOLOR);
     String strokeColor = Utils.getString(style, Constants.STYLE_STROKECOLOR);
-    double strokeWidth = (Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1) * _scale) as double;
+    double strokeWidth = (Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1.0) * _scale) as double;
 
     // Draws the shape
     String shape = Utils.getString(style, Constants.STYLE_SHAPE);

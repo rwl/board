@@ -263,9 +263,9 @@ class StyleUtils {
   static String setStyleFlag(String style, String key, int flag, bool value) {
     if (style == null || style.length == 0) {
       if (value == null || value == true) {
-        style = key + "=" + flag;
+        style = "$key=$flag";
       } else {
-        style = key + "=0";
+        style = "$key=0";
       }
     } else {
       int index = style.indexOf(key + "=");
@@ -274,7 +274,7 @@ class StyleUtils {
         String sep = (style.endsWith(";")) ? "" : ";";
 
         if (value == null || value == true) {
-          style = style + sep + key + "=" + flag;
+          style = style + sep + key + "=$flag";
         } else {
           style = style + sep + key + "=0";
         }
@@ -297,7 +297,7 @@ class StyleUtils {
           result = int.parse(tmp) & ~flag;
         }
 
-        style = style.substring(0, index) + key + "=" + result + ((cont >= 0) ? style.substring(cont) : "");
+        style = style.substring(0, index) + key + "=$result" + ((cont >= 0) ? style.substring(cont) : "");
       }
     }
 

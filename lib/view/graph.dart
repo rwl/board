@@ -853,7 +853,7 @@ class Graph extends EventSource {
           _view.setEventsEnabled(false);
 
           try {
-            _view.scaleAndTranslate(1, 0, 0);
+            _view.scaleAndTranslate(1.0, 0.0, 0.0);
           } finally {
             _view.setEventsEnabled(true);
           }
@@ -1893,7 +1893,7 @@ class Graph extends EventSource {
     List<Object> clones = null;
 
     if (cells != null) {
-      Set<Object> tmp = new LinkedHashSet<Object>.from(cells);
+      Iterable<Object> tmp = new LinkedHashSet<Object>.from(cells);
 
       if (tmp.length > 0) {
         double scale = _view.getScale();
@@ -2267,7 +2267,7 @@ class Graph extends EventSource {
       try {
         CellState parentState = (absolute) ? _view.getState(parent) : null;
         Point2d o1 = (parentState != null) ? parentState.getOrigin() : null;
-        Point2d zero = new Point2d(0, 0);
+        Point2d zero = new Point2d(0.0, 0.0);
 
         for (int i = 0; i < cells.length; i++) {
           if (cells[i] == null) {
@@ -2402,7 +2402,7 @@ class Graph extends EventSource {
       try {
         for (int i = 0; i < cells.length; i++) {
           // Disconnects edges which are not in cells
-          Set<Object> cellSet = new HashSet<Object>();
+          /*Collection*/Set<Object> cellSet = new HashSet<Object>();
           cellSet.addAll(cells);
           List<Object> edges = getConnections(cells[i]);
 
@@ -5952,7 +5952,7 @@ class Graph extends EventSource {
 	 * @return Returns the cells at the opposite ends of the given edges.
 	 */
   List<Object> getOpposites(List<Object> edges, Object terminal, [bool sources = true, bool targets = true]) {
-    Set<Object> terminals = new LinkedHashSet<Object>();
+    /*Collection*/Set<Object> terminals = new LinkedHashSet<Object>();
 
     if (edges != null) {
       for (int i = 0; i < edges.length; i++) {
@@ -5974,7 +5974,7 @@ class Graph extends EventSource {
       }
     }
 
-    return terminals.toArray();
+    return new List<Object>.from(terminals);
   }
 
   /**
@@ -6204,7 +6204,7 @@ class Graph extends EventSource {
       if (!visited.contains(vertex)) {
         visited.add(vertex);
 
-        if (visitor.visit(vertex, edge)) {
+        if (visitor(vertex, edge)) {
           int edgeCount = _model.getEdgeCount(vertex);
 
           if (edgeCount > 0) {
@@ -6292,21 +6292,22 @@ class Graph extends EventSource {
   /**
 	 * 
 	 */
-  void setSelectionCells(List<Object> cells) {
-    _selectionModel.setCells(cells);
-  }
+//  void setSelectionCells(List<Object> cells) {
+//    _selectionModel.setCells(cells);
+//  }
 
   /**
 	 * 
 	 * @param cells
 	 */
-  //	void setSelectionCells(Collection<Object> cells)
-  //	{
-  //		if (cells != null)
-  //		{
-  //			setSelectionCells(cells.toArray());
-  //		}
-  //	}
+	void setSelectionCells(Iterable<Object> cells)
+	{
+		if (cells != null)
+		{
+			//setSelectionCells(cells.toArray());
+		  _selectionModel.setCells(new List<Object>.from(cells));
+		}
+	}
 
   /**
 	 * 
@@ -6471,7 +6472,7 @@ class Graph extends EventSource {
       parent = getDefaultParent();
     }
 
-    List<Object> cells = GraphModel.filterDescendants(getModel(), (Object cell) {
+    Iterable<Object> cells = GraphModel.filterDescendants(getModel(), (Object cell) {
       return _view.getState(cell) != null && _model.getChildCount(cell) == 0 &&
         ((_model.isVertex(cell) && vertices) || (_model.isEdge(cell) && edges));
     });
@@ -6626,7 +6627,7 @@ class Graph extends EventSource {
           xlink.setAttribute("xlink:href", link.toString());
 
           elem.getParentNode().replaceChild(xlink, elem);
-          xlink.appendChild(elem);
+          xlink.append(elem);
 
           if (title != null) {
             xlink.setAttribute("xlink:title", title);
@@ -6638,8 +6639,8 @@ class Graph extends EventSource {
           a.setAttribute("href", link.toString());
           a.setAttribute("style", "text-decoration:none;");
 
-          elem.getParentNode().replaceChild(a, elem);
-          a.appendChild(elem);
+          elem.parentNode.replaceChild(a, elem);
+          a.append(elem);
 
           if (title != null) {
             a.setAttribute("title", title);

@@ -321,7 +321,7 @@ class GraphStructure {
     }
 
     List<List<Object>> componentList = new List<List<Object>>();
-    List<Object> unvisitedVertexList = new List<Object>(vertices);
+    List<Object> unvisitedVertexList = new List<Object>.from(vertices);
     bool oldDirectedness = GraphProperties.isDirected(aGraph.getProperties(), GraphProperties.DEFAULT_DIRECTED);
     GraphProperties.setDirected(aGraph.getProperties(), false);
 

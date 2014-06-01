@@ -49,7 +49,7 @@ class Multiplicity {
 	 * this rule applies. The strings are used in Cell.is on the opposite
 	 * terminal to check if the rule applies to the connection.
 	 */
-  List<String> _validNeighbors;
+  Iterable<String> _validNeighbors;
 
   /**
 	 * bool indicating if the list of validNeighbors are those that are allowed
@@ -73,7 +73,8 @@ class Multiplicity {
   /**
 	 * 
 	 */
-  Multiplicity(bool source, String type, String attr, String value, int min, String max, List<String> validNeighbors, String countError, String typeError, bool validNeighborsAllowed) {
+  Multiplicity(bool source, String type, String attr, String value, int min, String max, Iterable<String> validNeighbors,
+      String countError, String typeError, bool validNeighborsAllowed) {
     this._source = source;
     this._type = type;
     this._attr = attr;

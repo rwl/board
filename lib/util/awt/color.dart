@@ -20,9 +20,11 @@ part of graph.harmony;
  */
 class Color {
 
+  static final Color black = new Color(0, 0, 0);
+
   /**
-     * integer RGB value
-     */
+   * Integer RGB value.
+   */
   int value;
 
   Color(int r, int g, int b, [int a = 0xFF000000]) {
@@ -30,6 +32,16 @@ class Color {
       throw new ArgumentError("parameter outside of expected range");
     }
     value = b | (g << 8) | (r << 16) | (a << 24);
+  }
+
+  factory Color.rgb(int rgb) {
+    final color = new Color(0, 0, 0);
+    color.value = rgb | 0xFF000000;
+    return color;
+  }
+
+  factory Color.double(double r, double g, double b, double a) {
+    return new Color((r * 255 + 0.5) as int, (g * 255 + 0.5) as int, (b * 255 + 0.5) as int, (a * 255 + 0.5) as int);
   }
 
   int getRed() {

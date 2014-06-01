@@ -213,7 +213,7 @@ class CellState extends Rect {
 	 * @return the Point2d at the given index
 	 */
   Point2d getAbsolutePoint(int index) {
-    return _absolutePoints.get(index);
+    return _absolutePoints[index];
   }
 
   /**
@@ -222,7 +222,7 @@ class CellState extends Rect {
 	 * @return the Point2d at the given index
 	 */
   Point2d setAbsolutePoint(int index, Point2d point) {
-    return _absolutePoints.set(index, point);
+    return _absolutePoints[index] = point;
   }
 
   /**
@@ -377,7 +377,7 @@ class CellState extends Rect {
 	 * @return Returns the rectangle that defines the perimeter.
 	 */
   Rect getPerimeterBounds([double border=0.0]) {
-    Rect bounds = new Rect.from(getRectangle());
+    Rect bounds = new Rect.rectangle(getRectangle());
 
     if (border != 0) {
       bounds.grow(border);
@@ -412,7 +412,7 @@ class CellState extends Rect {
       } else if (_absolutePoints.length == 1) {
         _absolutePoints.add(point);
       } else {
-        _absolutePoints.set(_absolutePoints.length - 1, point);
+        _absolutePoints[_absolutePoints.length - 1] = point;
       }
     }
   }
@@ -492,10 +492,10 @@ class CellState extends Rect {
     clone._terminalDistance = _terminalDistance;
     clone._segments = _segments;
     clone._length = _length;
-    clone._x = _x;
-    clone._y = _y;
-    clone._width = _width;
-    clone._height = _height;
+    clone.x = this.x;
+    clone.y = this.y;
+    clone.width = this.width;
+    clone.height = this.height;
 
     return clone;
   }

@@ -128,7 +128,7 @@ class GraphSelectionModel extends EventSource {
   /**
 	 * Returns the selection cells.
 	 */
-  List<Object> getCells() {
+  Set<Object> getCells() {
     return _cells;
   }
 
@@ -198,7 +198,7 @@ class GraphSelectionModel extends EventSource {
 	 */
   void addCells(List<Object> cells) {
     if (cells != null) {
-      Set<Object> remove = null;
+      Iterable<Object> remove = null;
 
       if (_singleSelection) {
         remove = this._cells;
@@ -246,7 +246,7 @@ class GraphSelectionModel extends EventSource {
   /**
 	 * 
 	 */
-  void _changeSelection(Set<Object> added, Set<Object> removed) {
+  void _changeSelection(Iterable<Object> added, Iterable<Object> removed) {
     if ((added != null && added.length > 0) || (removed != null && removed.length > 0)) {
       SelectionChange change = new SelectionChange(this, added, removed);
       change.execute();
@@ -297,10 +297,10 @@ class SelectionChange implements UndoableChange {
    * @param added
    * @param removed
    */
-  SelectionChange(GraphSelectionModel model, List<Object> added, List<Object> removed) {
+  SelectionChange(GraphSelectionModel model, Iterable<Object> added, Iterable<Object> removed) {
     this.model = model;
-    this.added = (added != null) ? new List<Object>(added) : null;
-    this.removed = (removed != null) ? new List<Object>(removed) : null;
+    this.added = (added != null) ? new List<Object>.from(added) : null;
+    this.removed = (removed != null) ? new List<Object>.from(removed) : null;
   }
 
   /**
@@ -323,7 +323,7 @@ class SelectionChange implements UndoableChange {
       }
     }
 
-    List<Object> tmp = added;
+    Iterable<Object> tmp = added;
     added = removed;
     removed = tmp;
     model.fireEvent(new EventObj(Event.CHANGE, ["added", added, "removed", removed]));

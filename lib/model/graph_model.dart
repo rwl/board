@@ -1394,7 +1394,7 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
 	 * Returns a all descendants of the given cell and the cell itself
 	 * as a collection.
 	 */
-  static List<Object> getDescendants(IGraphModel model, Object parent) {
+  static Iterable<Object> getDescendants(IGraphModel model, Object parent) {
     return filterDescendants(model, null, parent);
   }
 
@@ -1410,7 +1410,7 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
   /**
 	 * Creates a collection of cells using the visitor pattern.
 	 */
-  static List<Object> filterDescendants(IGraphModel model, Filter filter, [Object parent = null]) {
+  static Iterable<Object> filterDescendants(IGraphModel model, Filter filter, [Object parent = null]) {
     if (parent == null) {
       parent = model.getRoot();
     }

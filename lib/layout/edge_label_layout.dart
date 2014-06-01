@@ -104,7 +104,7 @@ class EdgeLabelLayout extends GraphLayout {
           g.getOffset().setX(g.getOffset().getX() + dx);
           g.getOffset().setY(g.getOffset().getY() + dy);
         } else {
-          g.setOffset(new Point2d(dx, dy));
+          g.setOffset(new Point2d(dx.toDouble(), dy.toDouble()));
         }
 
         model.setGeometry(edge.getCell(), g);

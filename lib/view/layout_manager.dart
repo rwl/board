@@ -163,25 +163,29 @@ class LayoutManager extends EventSource {
 	 * 
 	 */
   void _beforeUndo(UndoableEdit edit) {
-    Set<Object> cells = _getCellsForChanges(edit.getChanges());
+    Iterable<Object> cells = _getCellsForChanges(edit.getChanges());
     IGraphModel model = getGraph().getModel();
 
     if (isBubbling()) {
       List<Object> tmp = GraphModel.getParents(model, cells);
 
       while (tmp.length > 0) {
-        cells.addAll(tmp);
+        if (cells is List) {
+          (cells as List).addAll(tmp);
+        } else if (cells is Set) {
+          (cells as Set).addAll(tmp);
+        }
         tmp = GraphModel.getParents(model, tmp);
       }
     }
 
-    _layoutCells(Utils.sortCells(cells, false).toArray());
+    _layoutCells(new List<Object>.from(Utils.sortCells(cells, false)));
   }
 
   /**
 	 * 
 	 */
-  Set<Object> _getCellsForChanges(List<UndoableChange> changes) {
+  Iterable<Object> _getCellsForChanges(List<UndoableChange> changes) {
     Set<Object> result = new HashSet<Object>();
     Iterator<UndoableChange> it = changes.iterator;
 
@@ -201,7 +205,7 @@ class LayoutManager extends EventSource {
   /**
 	 * 
 	 */
-  Set<Object> _getCellsForChange(UndoableChange change) {
+  Iterable<Object> _getCellsForChange(UndoableChange change) {
     IGraphModel model = getGraph().getModel();
     Set<Object> result = new HashSet<Object>();
 

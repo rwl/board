@@ -24,15 +24,17 @@ class LabelShape extends ImageShape {
 	 */
   static void drawGlassEffect(Graphics2DCanvas canvas, CellState state) {
     double size = 0.4;
-    canvas.getGraphics().setPaint(new GradientPaint(state.getX() as float, state.getY() as float, new Color(1, 1, 1, 0.9), (state.getX()) as float, (state.getY() + state.getHeight() * size) as float, new Color(1, 1, 1, 0.3)));
+    canvas.getGraphics().setPaint(new GradientPaint(state.getX() as double, state.getY() as double,
+        new Color(1, 1, 1, 0.9), (state.getX()) as double, (state.getY() + state.getHeight() * size) as double, new Color(1, 1, 1, 0.3)));
 
-    float sw = (Utils.getFloat(state.getStyle(), Constants.STYLE_STROKEWIDTH, 1) * canvas.getScale() / 2) as float;
+    double sw = (Utils.getFloat(state.getStyle(), Constants.STYLE_STROKEWIDTH, 1.0) * canvas.getScale() / 2) as double;
 
     GeneralPath path = new GeneralPath();
-    path.moveTo(state.getX() - sw as float, state.getY() - sw as float);
-    path.lineTo(state.getX() - sw as float, (state.getY() + state.getHeight() * size) as float);
-    path.quadTo((state.getX() + state.getWidth() * 0.5) as float, (state.getY() + state.getHeight() * 0.7) as float, (state.getX() + state.getWidth() + sw) as float, (state.getY() + state.getHeight() * size) as float);
-    path.lineTo((state.getX() + state.getWidth() + sw) as float, state.getY() - sw as float);
+    path.moveTo(state.getX() - sw as double, state.getY() - sw as double);
+    path.lineTo(state.getX() - sw as double, (state.getY() + state.getHeight() * size) as double);
+    path.quadTo((state.getX() + state.getWidth() * 0.5) as double, (state.getY() + state.getHeight() * 0.7) as double,
+        (state.getX() + state.getWidth() + sw) as double, (state.getY() + state.getHeight() * size) as double);
+    path.lineTo((state.getX() + state.getWidth() + sw) as double, state.getY() - sw as double);
     path.closePath();
 
     canvas.getGraphics().fill(path);
@@ -70,8 +72,8 @@ class LabelShape extends ImageShape {
       imageBounds.setY(imageBounds.getY() + (imageBounds.getHeight() - imgHeight) / 2);
     }
 
-    imageBounds.setWidth(imgWidth);
-    imageBounds.setHeight(imgHeight);
+    imageBounds.setWidth(imgWidth.toDouble());
+    imageBounds.setHeight(imgHeight.toDouble());
 
     return imageBounds.getRectangle();
   }

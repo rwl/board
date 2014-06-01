@@ -100,22 +100,22 @@ class Resources {
       String index = null;
 
       for (int i = 0; i < value.length; i++) {
-        char c = value.charAt(i);
+        String c = value[i];
 
         if (c == '{') {
           index = "";
         } else if (index != null && c == '}') {
-          int tmp = int.parseInt(index) - 1;
+          int tmp = int.parse(index) - 1;
 
           if (tmp >= 0 && tmp < params.length) {
-            result.append(params[tmp]);
+            result.write(params[tmp]);
           }
 
           index = null;
         } else if (index != null) {
           index += c;
         } else {
-          result.append(c);
+          result.write(c);
         }
       }
 

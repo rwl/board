@@ -408,7 +408,7 @@ class OrganicLayout extends GraphLayout {
     v = new List<CellWrapper>(vertices.length);
     for (int i = 0; i < vertices.length; i++) {
       v[i] = new CellWrapper(vertices[i]);
-      vertexMap[vertices[i]] = new int(i);
+      vertexMap[vertices[i]] = i;
       bounds = getVertexBounds(vertices[i]);
 
       if (totalBounds == null) {
@@ -1055,7 +1055,7 @@ class OrganicLayout extends GraphLayout {
     for (int i = 0; i < e.length; i++) {
       if (e[i].source != cellIndex && e[i].target != cellIndex) {
         // Add non-connected edges
-        relevantEdgeList.add(new int(i));
+        relevantEdgeList.add(i);
       }
     }
 
@@ -1085,7 +1085,7 @@ class OrganicLayout extends GraphLayout {
     for (int i = 0; i < e.length; i++) {
       if (e[i].source == cellIndex || e[i].target == cellIndex) {
         // Add connected edges to list by their index number
-        connectedEdgeList.add(new int(i));
+        connectedEdgeList.add(i);
       }
     }
 

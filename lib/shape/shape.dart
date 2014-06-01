@@ -44,7 +44,6 @@ part 'ellipse_shape.dart';
 part 'hexagon_shape.dart';
 part 'html_text_shape.dart';
 part 'image_shape.dart';
-part 'marker.dart';
 part 'text_shape.dart';
 part 'label_shape.dart';
 part 'line_shape.dart';
@@ -57,10 +56,14 @@ part 'stencil_shape.dart';
 part 'swimlane_shape.dart';
 part 'triangle_shape.dart';
 
-abstract class IShape {
-  /**
-	 * 
-	 */
-  void paintShape(Graphics2DCanvas canvas, CellState state);
+//typedef void IShape(Graphics2DCanvas canvas, CellState state);
 
+typedef Point2d IMarker(Graphics2DCanvas canvas, CellState state, String type, Point2d pe, double nx, double ny, double size, bool source);
+
+abstract class IShape {
+  void paintShape(Graphics2DCanvas canvas, CellState state);
 }
+
+//abstract class IMarker {
+//  Point2d paintMarker(Graphics2DCanvas canvas, CellState state, String type, Point2d pe, double nx, double ny, double size, bool source);
+//}

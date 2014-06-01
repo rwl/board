@@ -312,7 +312,7 @@ class Stencil implements IShape {
       Node childNode = node.firstChild;
 
       while (childNode != null) {
-        if (childNode.getNodeType() == Node.ELEMENT_NODE) {
+        if (childNode.nodeType == Node.ELEMENT_NODE) {
           _drawElement(canvas, state, childNode as Element, aspect);
         }
 
@@ -475,7 +475,7 @@ class Stencil implements IShape {
 
     if (value != null && value.length > 0) {
       try {
-        defaultValue = Double.parseDouble(value);
+        defaultValue = double.parse(value);
       } on FormatException catch (e) {
         // ignore
       }

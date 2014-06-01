@@ -35,9 +35,7 @@ class SharedGraphModel extends SharedState {
 	 */
   SharedGraphModel(GraphModel model) : super(null) // Overrides getState
   {
-    _codec = (String id) {
-      return _model.getCell(id);
-    };
+    _codec = new SharedGraphModelCodec(this);
     this._model = model;
   }
 
@@ -91,7 +89,7 @@ class SharedGraphModel extends SharedState {
       // LATER: Remove changes property (deprecated)
       _model.fireEvent(new EventObj(Event.CHANGE, ["edit", edit, "changes", changes]));
       _model.fireEvent(new EventObj(Event.UNDO, ["edit", edit]));
-      fireEvent(new EventObj(Event.FIRED, "edit", edit));
+      fireEvent(new EventObj(Event.FIRED, ["edit", edit]));
     }
 
     return super._processEdit(node);
@@ -182,4 +180,16 @@ class SharedGraphModel extends SharedState {
     }
   }
 
+}
+
+class SharedGraphModelCodec extends Codec {
+
+  SharedGraphModel _sharedGraphModel;
+
+  SharedGraphModelCodec(this._sharedGraphModel);
+
+  Object lookup(String id)
+  {
+    return _sharedGraphModel._model.getCell(id);
+  }
 }

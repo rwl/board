@@ -11,10 +11,10 @@ import 'package:image/image.dart' as image;
 //import 'package:color/color.dart' as color;
 
 import '../util/java/math.dart' as math;
-import '../harmony/awt.dart' as harmony;
+import '../util/awt/awt.dart' as awt;
 
 import '../canvas/canvas.dart' show ICanvas2D, Graphics2DCanvas, ICanvas, ImageCanvas;
-import '../reader/reader.dart' show IElementHandler;
+//import '../reader/reader.dart' show IElementHandler;
 import '../view/view.dart' show CellState;
 import '../util/util.dart' show Rect, Utils, Point2d;
 

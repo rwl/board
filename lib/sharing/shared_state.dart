@@ -13,6 +13,9 @@ part of graph.sharing;
  * Defines the requirements for an object that listens to changes on the
  * shared diagram.
  */
+abstract class DiagramChangeListener {
+  void diagramChanged(Object sender, String edits);
+}
 
 /**
  * Fires when the shared diagram was changed.
@@ -20,7 +23,7 @@ part of graph.sharing;
  * @param sender Session where the change was received from.
  * @param edits String that represents the edits.
  */
-typedef void DiagramChangeListener(Object sender, String edits);
+//typedef void DiagramChangeListener(Object sender, String edits);
 
 /**
  * Implements a diagram that may be shared among multiple sessions. This
@@ -111,7 +114,7 @@ class SharedState extends EventSource {
 	 */
   /*synchronized*/ void addDelta(String xml) {
     // TODO: Clear delta if xml contains RootChange
-    _delta.append(xml);
+    _delta.write(xml);
   }
 
   /**
@@ -156,7 +159,7 @@ class SharedState extends EventSource {
       Iterator<DiagramChangeListener> it = _diagramChangeListeners.iterator;
 
       while (it.moveNext()) {
-        DiagramChangeListener listener = it.current();
+        DiagramChangeListener listener = it.current;
         listener.diagramChanged(sender, edits);
       }
     }

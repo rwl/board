@@ -19,7 +19,8 @@ class DomUtils {
 	 * @return Returns a new DOM document.
 	 */
   static Document createDocument() {
-    Document result = new Document();
+    throw new Exception();
+    Document result = null;//new Document();
 
     /*try {
       DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();

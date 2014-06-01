@@ -117,12 +117,12 @@ class GraphHierarchyModel {
     // Go through edges set their sink values. Also check the
     // ordering if and invert edges if necessary
     for (int i = 0; i < vertices.length; i++) {
-      Collection<GraphHierarchyEdge> edges = internalVertices[i].connectsAsSource;
+      Iterable<GraphHierarchyEdge> edges = internalVertices[i].connectsAsSource;
       Iterator<GraphHierarchyEdge> iter = edges.iterator();
 
       while (iter.moveNext()) {
         GraphHierarchyEdge internalEdge = iter.current();
-        Collection<Object> realEdges = internalEdge.edges;
+        Iterable<Object> realEdges = internalEdge.edges;
         Iterator<Object> iter2 = realEdges.iterator();
 
         // Only need to process the first real edge, since
@@ -249,7 +249,7 @@ class GraphHierarchyModel {
 	 * Starting at the sinks is basically a longest path layering algorithm.
 	 */
   void initialRank() {
-    Collection<GraphHierarchyNode> internalNodes = _vertexMapper.values();
+    Iterable<GraphHierarchyNode> internalNodes = _vertexMapper.values();
     LinkedList<GraphHierarchyNode> startNodes = new LinkedList<GraphHierarchyNode>();
 
     if (roots != null) {
@@ -276,8 +276,8 @@ class GraphHierarchyModel {
 
     while (!startNodes.isEmpty()) {
       GraphHierarchyNode internalNode = startNodes.getFirst();
-      Collection<GraphHierarchyEdge> layerDeterminingEdges;
-      Collection<GraphHierarchyEdge> edgesToBeMarked;
+      Iterable<GraphHierarchyEdge> layerDeterminingEdges;
+      Iterable<GraphHierarchyEdge> edgesToBeMarked;
 
       layerDeterminingEdges = internalNode.connectsAsTarget;
       edgesToBeMarked = internalNode.connectsAsSource;

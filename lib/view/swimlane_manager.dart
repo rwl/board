@@ -240,7 +240,7 @@ class SwimlaneManager extends EventSource {
             Geometry geo = model.getGeometry(cells[i]);
 
             if (geo != null) {
-              Rect size = new Rect(0, 0, geo.getWidth(), geo.getHeight());
+              Rect size = new Rect(0.0, 0.0, geo.getWidth(), geo.getHeight());
               Object top = cells[i];
               Object current = top;
 

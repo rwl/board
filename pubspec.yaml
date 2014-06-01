@@ -6,6 +6,7 @@ homepage: https://github.com/rwl/dgraph.dart
 dependencies:
   image: any
   intl: any
+  unicode_helper: any
 dev_dependencies:
   browser: any
   unittest: any

@@ -478,7 +478,7 @@ class CoordinateAssignment implements HierarchicalLayoutStage {
       weightedValues[i].cell = currentCell;
       weightedValues[i].rankIndex = i;
       cellMap.put(currentCell, weightedValues[i]);
-      Collection<GraphAbstractHierarchyCell> nextLayerConnectedCells = null;
+      Iterable<GraphAbstractHierarchyCell> nextLayerConnectedCells = null;
 
       if (nextRankValue < rankValue) {
         nextLayerConnectedCells = currentCell.getPreviousLayerConnectedCells(rankValue);
@@ -592,7 +592,7 @@ class CoordinateAssignment implements HierarchicalLayoutStage {
 	 *            the cells the specified cell is connected to
 	 * @return the total weighted of the edges between these cells
 	 */
-  int _calculatedWeightedValue(GraphAbstractHierarchyCell currentCell, Collection<GraphAbstractHierarchyCell> collection) {
+  int _calculatedWeightedValue(GraphAbstractHierarchyCell currentCell, Iterable<GraphAbstractHierarchyCell> collection) {
     int totalWeight = 0;
     Iterator<GraphAbstractHierarchyCell> iter = collection.iterator();
 
@@ -1137,7 +1137,7 @@ class CoordinateAssignment implements HierarchicalLayoutStage {
               // Calculate width requirements for all connected edges
               for (int j = 0; j < sortedCells.length; j++) {
                 GraphAbstractHierarchyCell innerCell = sortedCells[j].cell;
-                Collection<GraphHierarchyEdge> connections;
+                Iterable<GraphHierarchyEdge> connections;
 
                 if (innerCell.isVertex()) {
                   // Get the connecting edge
