@@ -31,9 +31,7 @@ class GraphGenerator {
   }
 
   /**
-	 * @param aGraph 
-	 * @param numVertexes 
-	 * @return a null graph
+	 * Returns a null graph.
 	 */
   void getNullGraph(AnalysisGraph aGraph, int numVertices) {
     if (numVertices < 0) {
@@ -120,7 +118,10 @@ class GraphGenerator {
   }
 
   /**
-	 * Sets the physical spacing between vertices in a grid graph. This works for now only for a graph generated with mxGraphCreator.getGridGraph() only after creating the graph
+	 * Sets the physical spacing between vertices in a grid graph. This works
+	 * for now only for a graph generated with mxGraphCreator.getGridGraph()
+	 * only after creating the graph.
+	 * 
 	 * @param aGraph
 	 * @param xSpacing - horizontal spacing between vertices
 	 * @param ySpacing - vertical spacing between vertices
@@ -152,7 +153,8 @@ class GraphGenerator {
 	 * @param aGraph
 	 * @param numVerticesGroup1 number of vertices in group 1
 	 * @param numVerticesGroup2 number of vertices in group 2
-	 * @return a bipartite graph with group 1 containing <b>numVerticesGroup1</b> vertices and group 2 containing <b>numVerticesGroup2</b>
+	 * @return a bipartite graph with group 1 containing <b>numVerticesGroup1</b>
+	 * vertices and group 2 containing <b>numVerticesGroup2</b>
 	 */
   void getBipartiteGraph(AnalysisGraph aGraph, int numVerticesGroup1, int numVerticesGroup2) {
     if (numVerticesGroup1 < 0 || numVerticesGroup2 < 0) {
@@ -186,8 +188,10 @@ class GraphGenerator {
   }
 
   /**
-	 * Sets the physical spacing between vertices in a bipartite graph. This works for now only for a graph generated with mxGraphCreator.getBipartiteGraph() 
-	 * only after creating the graph
+	 * Sets the physical spacing between vertices in a bipartite graph. This
+	 * works for now only for a graph generated with
+	 * GraphCreator.getBipartiteGraph() only after creating the graph.
+	 * 
 	 * @param aGraph
 	 * @param numVerticesGroup1 - number of vertices in group 1
 	 * @param numVerticesGroup2 - number of vertices in group 2

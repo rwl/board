@@ -2140,7 +2140,7 @@ class Utils {
           for (int i = 0; i < attrs.length; i++) {
             String value = attrs[i].nodeValue;
             value = Utils.htmlEntities(value);
-            result.write(" " + attrs.item(i).getNodeName() + "=\"" + value + "\"");
+            result.write(" " + attrs[i].nodeName + "=\"" + value + "\"");
           }
         }
         Node tmp = node.firstChild;

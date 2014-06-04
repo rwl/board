@@ -18,7 +18,7 @@ class HexagonShape extends BasicShape {
     String direction = Utils.getString(state.getStyle(), Constants.STYLE_DIRECTION, Constants.DIRECTION_EAST);
     Polygon hexagon = new Polygon();
 
-    if (direction.equals(Constants.DIRECTION_NORTH) || direction.equals(Constants.DIRECTION_SOUTH)) {
+    if (direction == Constants.DIRECTION_NORTH || direction == Constants.DIRECTION_SOUTH) {
       hexagon.addPoint(x + (0.5 * w) as int, y);
       hexagon.addPoint(x + w, y + (0.25 * h) as int);
       hexagon.addPoint(x + w, y + (0.75 * h) as int);

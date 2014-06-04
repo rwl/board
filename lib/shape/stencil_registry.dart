@@ -13,14 +13,14 @@ class StencilRegistry {
 	 * Adds the given stencil.
 	 */
   static void addStencil(String name, Stencil stencil) {
-    _stencils.put(name, stencil);
+    _stencils[name] = stencil;
   }
 
   /**
 	 * Returns the stencil for the given name.
 	 */
   static Stencil getStencil(String name) {
-    return _stencils.get(name);
+    return _stencils[name];
   }
 
 }

@@ -41,15 +41,16 @@ class GdCodec {
 	 * @param graph Graph where the parsed graph is included.
 	 */
   static void decode(String input, Graph graph) {
-    BufferedReader br = new BufferedReader(new StringReader(input));
+    //BufferedReader br = new BufferedReader(new StringReader(input));
     GDParseState state = GDParseState.START;
     Object parent = graph.getDefaultParent();
 
     graph.getModel().beginUpdate();
 
     try {
-      String line = br.readLine().trim();
-      while (line != null) {
+      //String line = br.readLine().trim();
+      //while (line != null) {
+      for (String line in input.split("\n")) {
         switch (state) {
           case GDParseState.START:
             if (!line.startsWith("#")) {
@@ -114,10 +115,10 @@ class GdCodec {
             break;
         }
 
-        line = br.readLine();
+        //line = br.readLine();
       }
-    } on Exception catch (e) {
-      //e.printStackTrace();
+    } on Exception catch (e, st) {
+      print(st);
     } finally {
       graph.getModel().endUpdate();
     }

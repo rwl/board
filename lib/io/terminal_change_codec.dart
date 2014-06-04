@@ -13,18 +13,7 @@ part of graph.io;
  * and the CodecRegistry.
  */
 class TerminalChangeCodec extends ObjectCodec {
-//  static const _DEFAULT_EXCLUDE = ["model", "previous"];
-//  static const _DEFAULT_IDREFS = ["cell", "terminal"];
-
-  /**
-	 * Constructs a new model codec.
-	 */
-  //	TerminalChangeCodec()
-  //	{
-  //		this(new TerminalChange(), new List<String> { "model", "previous" },
-  //				new List<String> { "cell", "terminal" }, null);
-  //	}
-
+  
   /**
 	 * Constructs a new model codec for the given arguments.
 	 */
@@ -42,10 +31,7 @@ class TerminalChangeCodec extends ObjectCodec {
     _init(exclude, idrefs, mapping);
   }
 
-  /* (non-Javadoc)
-	 * @see graph.io.ObjectCodec#afterDecode(graph.io.Codec, org.w3c.dom.Node, java.lang.Object)
-	 */
-  //	@Override
+  //@Override
   Object afterDecode(Codec dec, Node node, Object obj) {
     if (obj is TerminalChange) {
       TerminalChange change = obj as TerminalChange;

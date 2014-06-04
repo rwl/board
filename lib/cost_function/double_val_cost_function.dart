@@ -1,13 +1,16 @@
 /**
  * Copyright (c) 2012, JGraph Ltd
- * Returns the value of a cell, which is assumed a Double
+ * Returns the value of a cell, which is assumed a double.
  */
 part of graph.costfunction;
 
 /**
- * A cost function that assumes that edge value is of type "double" or "String" and returns that value. Default edge weight is 1.0 (if no double value can be retrieved)
+ * A cost function that assumes that edge value is of type "double" or
+ * "String" and returns that value. Default edge weight is 1.0 (if no
+ * double value can be retrieved)
  */
 class DoubleValCostFunction extends CostFunction {
+  
   double getCost(CellState state) {
     //assumed future parameters
     if (state == null || state.getView() == null || state.getView().getGraph() == null) {
@@ -29,4 +32,5 @@ class DoubleValCostFunction extends CostFunction {
 
     return edgeWeight;
   }
+  
 }

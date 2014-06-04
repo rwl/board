@@ -14,16 +14,10 @@ class FibonacciHeap {
   /**
 	 * Maps from elements to nodes
 	 */
-  Map<Object, _FibonacciHeapNode> _nodes = new Hashtable<Object, _FibonacciHeapNode>();
+  Map<Object, _FibonacciHeapNode> _nodes = new Map<Object, _FibonacciHeapNode>();
 
-  /**
-	 * 
-	 */
   _FibonacciHeapNode _min;
 
-  /**
-	 * 
-	 */
   int _size;
 
   /**
@@ -468,38 +462,38 @@ class _FibonacciHeapNode {
   Object _userObject;
 
   /**
-   * first child node
+   * First child node
    */
   _FibonacciHeapNode _child;
 
   /**
-   * left sibling node
+   * Left sibling node
    */
   _FibonacciHeapNode _left;
 
   /**
-   * parent node
+   * Parent node
    */
   _FibonacciHeapNode _parent;
 
   /**
-   * right sibling node
+   * Right sibling node
    */
   _FibonacciHeapNode _right;
 
   /**
-   * true if this node has had a child removed since this node was added
+   * True if this node has had a child removed since this node was added
    * to its parent
    */
   bool _mark;
 
   /**
-   * key value for this node
+   * Key value for this node
    */
   double _key;
 
   /**
-   * number of children of this node (does not count grandchildren)
+   * Number of children of this node (does not count grandchildren)
    */
   int _degree;
 

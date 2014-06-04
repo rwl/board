@@ -14,7 +14,7 @@ import '../util/java/math.dart' as math;
 
 import '../cost_function/cost_function.dart' show CostFunction, DoubleValCostFunction;
 import '../generator_function/generator_function.dart' show GeneratorFunction, GeneratorRandomFunction;
-import '../model/model.dart' show IGraphModel, Geometry, Cell;
+import '../model/model.dart' show IGraphModel, GraphModel, Geometry, Cell;
 import '../view/view.dart' show Graph, GraphView, CellState, ICellVisitor;
 import '../util/util.dart' show Point2d, Utils;
 
@@ -32,13 +32,13 @@ part 'traversal.dart';
 part 'union_find.dart';
 
 
+/**
+ * A custom exception for irregular graph structure for certain algorithms.
+ */
 class StructuralException extends Error {
-  /**
-   * A custom exception for irregular graph structure for certain algorithms
-   */
-  //	static final long serialVersionUID = -468633497832330356L;
 
   String message;
 
   StructuralException(this.message);
+  
 }

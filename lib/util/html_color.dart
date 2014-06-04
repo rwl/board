@@ -57,12 +57,12 @@ class HtmlColor {
 	 */
   static awt.Color parseColor(String str) //throws NumberFormatException
   {
-    if (str == null || str.equals(Constants.NONE)) {
+    if (str == null || str == Constants.NONE) {
       return null;
     } else if (_rgbRegex.matcher(str).matches()) {
       return _parseRgb(str);
     } else if (!str.startsWith("#")) {
-      Color result = _htmlColors.get(str);
+      awt.Color result = _htmlColors[str];
 
       // LATER: Return the result even if it's null to avoid invalid color codes
       if (result != null) {

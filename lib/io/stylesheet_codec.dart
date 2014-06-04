@@ -18,22 +18,6 @@ part of graph.io;
 class StylesheetCodec extends ObjectCodec {
 
   /**
-	 * Constructs a new model codec.
-	 */
-  //	StylesheetCodec()
-  //	{
-  //		this(new Stylesheet());
-  //	}
-
-  /**
-	 * Constructs a new stylesheet codec for the given template.
-	 */
-  //	StylesheetCodec(Object template)
-  //	{
-  //		this(template, null, null, null);
-  //	}
-
-  /**
 	 * Constructs a new model codec for the given arguments.
 	 */
   StylesheetCodec([Object template=null, List<String> exclude = null, List<String> idrefs = null,
@@ -50,7 +34,7 @@ class StylesheetCodec extends ObjectCodec {
     Element node = enc._document.createElement(getName());
 
     if (obj is Stylesheet) {
-      Stylesheet stylesheet = obj as Stylesheet;
+      Stylesheet stylesheet = obj;
 //      Iterator<Map.Entry<String, Map<String, Object>>> it = stylesheet.getStyles().entrySet().iterator();
 
 //      while (it.moveNext()) {
@@ -119,10 +103,10 @@ class StylesheetCodec extends ObjectCodec {
 
       while (node != null) {
         if (!processInclude(dec, node, obj) && node.nodeName == "add" && node is Element) {
-          String as = (node as Element).getAttribute("as");
+          String as = node.getAttribute("as");
 
           if (as != null && as.length > 0) {
-            String extend = (node as Element).getAttribute("extend");
+            String extend = node.getAttribute("extend");
             Map<String, Object> style = (extend != null) ? (obj as Stylesheet).getStyles()[extend] : null;
 
             if (style == null) {

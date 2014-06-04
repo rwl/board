@@ -23,8 +23,7 @@ class GraphStructure {
   static String basicArrowStyleString = "endArrow=block;";
 
   /**
-	 * @param aGraph
-	 * @return true if the graph is connected
+	 * Returns true if the graph is connected
 	 */
   static bool isConnected(AnalysisGraph aGraph) {
     List<Object> vertices = aGraph.getChildVertices(aGraph.getGraph().getDefaultParent());
@@ -82,9 +81,7 @@ class GraphStructure {
   }
 
   /**
-	 * @param aGraph
-	 * @param _parent
-	 * @return true if the graph contains cycles regardless of edge direction
+	 * Returns true if the graph contains cycles regardless of edge direction.
 	 */
   static bool isCyclicUndirected(AnalysisGraph aGraph) {
     Graph graph = aGraph.getGraph();
@@ -122,8 +119,8 @@ class GraphStructure {
 
   /**
 	 * A helper function for getting a leaf vertex (degree <= 1), not taking into account edge direction - for internal use
-	 * @param aGraph
-	 * @return the first undirected leaf that could be found in the graph, null if none
+	 * 
+	 * Returns the first undirected leaf that could be found in the graph, null if none
 	 */
   static Object getUndirectedLeaf(AnalysisGraph aGraph) {
     Object parent = aGraph.getGraph().getDefaultParent();
@@ -144,8 +141,7 @@ class GraphStructure {
   }
 
   /**
-	 * @param aGraph
-	 * @return true if the graph is simple (no self loops and no multiple edges)
+	 * Returns true if the graph is simple (no self loops and no multiple edges)
 	 */
   static bool isSimple(AnalysisGraph aGraph) {
     Object parent = aGraph.getGraph().getDefaultParent();
@@ -178,8 +174,7 @@ class GraphStructure {
   }
 
   /**
-	 * @param aGraph
-	 * @return true if the graph has the structure of a tree, regardless of edge direction
+	 * Returns true if the graph has the structure of a tree, regardless of edge direction
 	 */
   static bool isTree(AnalysisGraph aGraph) {
     if (isConnected(aGraph) && !isCyclicUndirected(aGraph) && isSimple(aGraph)) {
@@ -225,10 +220,7 @@ class GraphStructure {
   }
 
   /**
-	 * @param _graph
-	 * @param sourceVertex
-	 * @param targetVertex
-	 * @return Returns true if the two vertices are connected directly by an edge. If directed, the result is true if they are connected by an edge that points from source to target, if false direction isn't takein into account, just connectivity.
+	 * Returns true if the two vertices are connected directly by an edge. If directed, the result is true if they are connected by an edge that points from source to target, if false direction isn't takein into account, just connectivity.
 	 */
   static bool areConnected(AnalysisGraph aGraph, Object sourceVertex, Object targetVertex) {
     List<Object> currEdges = aGraph.getEdges(sourceVertex, aGraph.getGraph().getDefaultParent(), true, true, false, true);
@@ -237,7 +229,6 @@ class GraphStructure {
   }
 
   /**
-	 * @param _graph
 	 * Make a graph simple (remove parallel edges and self loops)
 	 */
   static void makeSimple(AnalysisGraph aGraph) {
@@ -281,7 +272,6 @@ class GraphStructure {
 
   /**
 	 * Makes the graph connected
-	 * @param aGraph
 	 */
   static void makeConnected(AnalysisGraph aGraph) {
     // an early check, to avoid running getGraphComponents() needlessly, which is CPU intensive
@@ -308,8 +298,7 @@ class GraphStructure {
   }
 
   /**
-	 * @param aGraph
-	 * @return Object[components][vertices] 
+	 * Returns List[components][vertices] 
 	 */
   static List<List<Object>> getGraphComponents(AnalysisGraph aGraph) {
     Object parent = aGraph.getGraph().getDefaultParent();
@@ -363,7 +352,7 @@ class GraphStructure {
       result[i] = componentList[i];
     }
 
-    return result as List<List<Object>>;
+    return result;// as List<List<Object>>;
   }
 
   /**
@@ -413,10 +402,7 @@ class GraphStructure {
   }
 
   /**
-	 * @param aGraph
-	 * @param vertexOne
-	 * @param vertexTwo
-	 * @return an edge that directly connects <b>vertexOne</b> and <b>vertexTwo</b> regardless of direction, null if they are not connected directly
+	 * Returns an edge that directly connects <b>vertexOne</b> and <b>vertexTwo</b> regardless of direction, null if they are not connected directly
 	 */
   static Object getConnectingEdge(AnalysisGraph aGraph, Object vertexOne, Object vertexTwo) {
     IGraphModel model = aGraph.getGraph().getModel();
@@ -441,8 +427,7 @@ class GraphStructure {
   }
 
   /**
-	 * @param _graph
-	 * @return Returns true if the graph has at least one cycle, taking edge direction into account
+	 * Returns true if the graph has at least one cycle, taking edge direction into account.
 	 */
   static bool isCyclicDirected(AnalysisGraph aGraph) {
     Graph graph = aGraph.getGraph();
@@ -477,10 +462,7 @@ class GraphStructure {
   }
 
   /**
-	 * @param _graph
-	 * @param parent
-	 * @param properties
-	 * @return A helper function for <b>isDirectedCyclic</b> and it isn't for general use. It returns a node that hasn't incoming or outgoing edges. It could be considered a "leaf" in a directed graph, but this definition isn't formal.
+	 * A helper function for <b>isDirectedCyclic</b> and it isn't for general use. It returns a node that hasn't incoming or outgoing edges. It could be considered a "leaf" in a directed graph, but this definition isn't formal.
 	 */
   static Object getDirectedLeaf(AnalysisGraph aGraph, Object parent) {
     List<Object> vertices = aGraph.getChildVertices(parent);
@@ -502,7 +484,6 @@ class GraphStructure {
 
   /**
 	 * Makes the complement of <b>aGraph</b>
-	 * @param aGraph
 	 */
   static void complementaryGraph(AnalysisGraph aGraph) {
     List<List<Cell>> oldConnections = new List<List<Cell>>();
@@ -656,9 +637,7 @@ class GraphStructure {
   }
 
   /**
-	 * @param aGraph
-	 * @param vertex
-	 * @return indegree of <b>vertex</b>
+	 * Returns indegree of <b>vertex</b>.
 	 */
   static int indegree(AnalysisGraph aGraph, Object vertex) {
     if (vertex == null) {
@@ -673,9 +652,7 @@ class GraphStructure {
   }
 
   /**
-	 * @param aGraph
-	 * @param vertex
-	 * @return outdegree of <b>vertex</b>
+	 * Returns outdegree of <b>vertex</b>.
 	 */
   static int outdegree(AnalysisGraph aGraph, Object vertex) {
     if (GraphProperties.isDirected(aGraph.getProperties(), GraphProperties.DEFAULT_DIRECTED)) {
@@ -686,9 +663,7 @@ class GraphStructure {
   }
 
   /**
-	 * @param aGraph
-	 * @param vertex
-	 * @return true if <b>vertex</b> is a cut vertex
+	 * Returns true if <b>vertex</b> is a cut vertex.
 	 */
   static bool isCutVertex(AnalysisGraph aGraph, Object vertex) {
     Graph graph = aGraph.getGraph();
@@ -719,8 +694,7 @@ class GraphStructure {
   }
 
   /**
-	 * @param aGraph
-	 * @return all cut vertices of <b>aGraph</b>
+	 * Returns all cut vertices of <b>aGraph</b>.
 	 */
   static List<Object> getCutVertices(AnalysisGraph aGraph) {
     List<Object> cutVertexList = new List<Object>();
@@ -737,9 +711,7 @@ class GraphStructure {
   }
 
   /**
-	 * @param aGraph
-	 * @param edge
-	 * @return true if <b>edge</b> is a cut edge of <b>aGraph</b> 
+	 * Return true if <b>edge</b> is a cut edge of <b>aGraph</b>. 
 	 */
   static bool isCutEdge(AnalysisGraph aGraph, Object edge) {
     Graph graph = aGraph.getGraph();
@@ -789,8 +761,7 @@ class GraphStructure {
   }
 
   /**
-	 * @param aGraph
-	 * @return all cut edges of <b>aGraph</b>
+	 * Returns all cut edges of <b>aGraph</b>.
 	 */
   static List<Object> getCutEdges(AnalysisGraph aGraph) {
     List<Object> cutEdgeList = new List<Object>();
@@ -861,8 +832,7 @@ class GraphStructure {
   }
 
   /**
-	 * @param aGraph
-	 * @return true if <b>aGraph</b> is biconnected
+	 * Returns true if <b>aGraph</b> is biconnected.
 	 */
   static bool isBiconnected(AnalysisGraph aGraph) {
     int edgeCount = aGraph.getChildEdges(aGraph.getGraph().getDefaultParent()).length;

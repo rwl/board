@@ -16,20 +16,6 @@ part of graph.io;
 class ModelCodec extends ObjectCodec {
 
   /**
-	 * Constructs a new model codec.
-	 */
-//  ModelCodec() {
-//    this(new GraphModel());
-//  }
-
-  /**
-	 * Constructs a new model codec for the given template.
-	 */
-//  ModelCodec(Object template) {
-//    this(template, null, null, null);
-//  }
-
-  /**
 	 * Constructs a new model codec for the given arguments.
 	 */
   ModelCodec([Object template=null, List<String> exclude=null, List<String> idrefs=null,
@@ -47,7 +33,7 @@ class ModelCodec extends ObjectCodec {
   void _encodeObject(Codec enc, Object obj, Node node) {
     if (obj is GraphModel) {
       Node rootNode = enc._document.createElement("root");
-      GraphModel model = obj as GraphModel;
+      GraphModel model = obj;
       enc.encodeCell(model.getRoot() as ICell, rootNode, true);
       node.append(rootNode);
     }
@@ -59,11 +45,11 @@ class ModelCodec extends ObjectCodec {
 	 */
   Node beforeDecode(Codec dec, Node node, Object into) {
     if (node is Element) {
-      Element elt = node as Element;
+      Element elt = node;
       GraphModel model = null;
 
       if (into is GraphModel) {
-        model = into as GraphModel;
+        model = into;
       } else {
         model = new GraphModel();
       }

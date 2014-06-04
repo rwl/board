@@ -131,11 +131,11 @@ class Resources {
 	 * for <code>key</code>.
 	 */
   static String _getResource(String key) {
-    Iterator<ResourceBundle> it = _bundles.iterator();
+    Iterator<ResourceBundle> it = _bundles.iterator;
 
     while (it.moveNext()) {
       try {
-        return it.next().getString(key);
+        return it.current.getString(key);
       } on MissingResourceException catch (mrex) {
         // continue
       }

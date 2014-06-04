@@ -42,7 +42,7 @@ abstract class BasicCanvas implements ICanvas {
   /**
 	 * Cache for images.
 	 */
-  Hashtable<String, BufferedImage> _imageCache = new Hashtable<String, BufferedImage>();
+  Map<String, image.Image> _imageCache = new Map<String, image.Image>();
 
   /**
 	 * Sets the current translate.
@@ -105,14 +105,14 @@ abstract class BasicCanvas implements ICanvas {
 	 * been loaded before than an instance of the same instance is
 	 * returned as in the previous call.
 	 */
-  BufferedImage loadImage(String image) {
-    BufferedImage img = _imageCache.get(image);
+  image.Image loadImage(String image) {
+    image.Image img = _imageCache[image];
 
     if (img == null) {
       img = Utils.loadImage(image);
 
       if (img != null) {
-        _imageCache.put(image, img);
+        _imageCache[image] = img;
       }
     }
 

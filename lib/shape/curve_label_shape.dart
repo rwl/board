@@ -207,11 +207,11 @@ class CurveLabelShape implements ITextShape {
 
     // Check that the size of the widths array matches
     // that of the label size
-    if (_labelGlyphs == null || (!label.equals(_lastValue))) {
+    if (_labelGlyphs == null || (label != _lastValue)) {
       _labelGlyphs = new List<LabelGlyphCache>(label.length);
     }
 
-    if (!label.equals(_lastValue) || !font.equals(_lastFont)) {
+    if (label != _lastValue || font != _lastFont) {
       List<char> labelChars = label.toCharArray();
       ArrayList<LabelGlyphCache> glyphList = new List<LabelGlyphCache>();
       bool bidiRequired = Bidi.requiresBidi(labelChars, 0, labelChars.length);

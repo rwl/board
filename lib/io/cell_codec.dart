@@ -51,7 +51,7 @@ class CellCodec extends ObjectCodec {
 	 * Excludes user objects that are XML nodes.
 	 */
   bool isExcluded(Object obj, String attr, Object value, bool write) {
-    return _exclude.contains(attr) || (write && attr == "value" && value is Node && (value as Node).nodeType == Node.ELEMENT_NODE);
+    return _exclude.contains(attr) || (write && attr == "value" && value is Node && value.nodeType == Node.ELEMENT_NODE);
   }
 
   /**
@@ -60,7 +60,7 @@ class CellCodec extends ObjectCodec {
 	 */
   Node afterEncode(Codec enc, Object obj, Node node) {
     if (obj is Cell) {
-      Cell cell = obj as Cell;
+      Cell cell = obj;
 
       if (cell.getValue() is Node) {
         // Wraps the graphical annotation up in the
@@ -92,7 +92,7 @@ class CellCodec extends ObjectCodec {
     Element inner = node as Element;
 
     if (obj is Cell) {
-      Cell cell = obj as Cell;
+      Cell cell = obj;
       String classname = getName();
       String nodeName = node.nodeName;
 

@@ -227,8 +227,8 @@ class GraphMlGraph {
           double x = double.parse(s[0]);
           double y = double.parse(s[1]);
           fromConstraint = new Point2d(x, y);
-        } on Exception catch (e) {
-          e.printStackTrace();
+        } on Exception catch (e, stackTrace) {
+          print(stackTrace);
         }
       }
     }

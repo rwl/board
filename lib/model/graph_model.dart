@@ -495,7 +495,7 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
 
     if (parent != null) {
       if (parent != previous || previous.getIndex(child) != index) {
-        (parent as ICell).insertAt(child, index);
+        (parent as ICell).insert(child, index);
       }
     } else if (previous != null) {
       int oldIndex = previous.getIndex(child);
@@ -1381,7 +1381,7 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
       result = new List<Object>(cells.length);
 
       for (int i = 0; i < cells.length; i++) {
-        if (filter.filter(cells[i])) {
+        if (filter(cells[i])) {
           result.add(cells[i]);
         }
       }
@@ -1416,7 +1416,7 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
     }
     List<Object> result = new List<Object>();
 
-    if (filter == null || filter.filter(parent)) {
+    if (filter == null || filter(parent)) {
       result.add(parent);
     }
 

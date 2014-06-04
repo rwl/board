@@ -21,7 +21,7 @@ class LineShape extends BasicShape {
 
     Point2d p0, pe;
 
-    if (direction.equals(Constants.DIRECTION_EAST) || direction.equals(Constants.DIRECTION_WEST)) {
+    if (direction == Constants.DIRECTION_EAST || direction == Constants.DIRECTION_WEST) {
       double mid = state.getCenterY();
       p0 = new Point2d(state.getX(), mid);
       pe = new Point2d(state.getX() + state.getWidth(), mid);

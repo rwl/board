@@ -52,7 +52,7 @@ class Traversal {
   static void _dfsRec(AnalysisGraph aGraph, Object cell, Object edge, Set<Object> seen, ICellVisitor visitor) {
     if (cell != null) {
       if (!seen.contains(cell)) {
-        visitor.visit(cell, edge);
+        visitor(cell, edge);
         seen.add(cell);
 
         final List<Object> edges = aGraph.getEdges(cell, null, false, true);
@@ -110,7 +110,7 @@ class Traversal {
       Object cell = q[0];
       Object incomingEdge = q[1];
 
-      visitor.visit(cell, incomingEdge);
+      visitor(cell, incomingEdge);
 
       final List<Object> edges = aGraph.getEdges(cell, null, false, false);
 
@@ -169,8 +169,8 @@ class Traversal {
 
     for (int i = 0; i < vertexCount; i++) {
       distances[i] = (1 << 32).toDouble();
-      vertexList.add(vertexes[i] as Object);
-      vertexListStatic.add(vertexes[i] as Object);
+      vertexList.add(vertexes[i]);
+      vertexListStatic.add(vertexes[i]);
     }
 
     distances[vertexListStatic.indexOf(startVertex)] = 0.0;
@@ -253,7 +253,7 @@ class Traversal {
     resultList.insert(resultList.length, [endVertex, null]);
 
     for (int i = 0; i < resultList.length; i++) {
-      visitor.visit(resultList[i][0], resultList[i][1]);
+      visitor(resultList[i][0], resultList[i][1]);
     }
   }
 
@@ -368,7 +368,7 @@ class Traversal {
     }
 
     for (int i = 0; i < dist[0].length; i++) {
-      if ((dist[i][i] as double) < 0) {
+      if (dist[i][i] < 0) {
         throw new StructuralException("The graph has negative cycles");
       }
     }
@@ -477,9 +477,9 @@ class Traversal {
 	 */
   static List<Object> _getWFIPathRec(AnalysisGraph aGraph, List<List<Object>> paths, Object startVertex, Object targetVertex, List<Object> currPath, CostFunction cf, GraphView view) //throws StructuralException
   {
-    double sourceIndexD = cf.getCost(view.getState(startVertex)) as double;
+    double sourceIndexD = cf.getCost(view.getState(startVertex));
     List<Object> parents = paths[sourceIndexD.toInt()];
-    double targetIndexD = cf.getCost(view.getState(targetVertex)) as double;
+    double targetIndexD = cf.getCost(view.getState(targetVertex));
     int tIndex = targetIndexD.toInt();
 
     if (parents[tIndex] != null) {

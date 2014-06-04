@@ -5,6 +5,7 @@ library graph.sharing;
  * by multiple clients.
  */
 import 'dart:html' show Node;
+import 'dart:collection' show Queue;
 
 import '../sharing/sharing.dart' show DiagramChangeListener;
 

@@ -495,7 +495,7 @@ class ObjectCodec {
       } else if (type.equals(short/*.class*/) || type == Short/*.class*/) {
         value = Short.valueOf(tmp);
       } else if (type.equals(int/*.class*/) || type == int/*.class*/) {
-        value = int.valueOf(tmp);
+        value = int.parse(tmp);
       } else if (type.equals(long/*.class*/) || type == Long/*.class*/) {
         value = Long.valueOf(tmp);
       } else if (type.equals(float/*.class*/) || type == Float/*.class*/) {
@@ -872,7 +872,7 @@ class ObjectCodec {
 	 * Decodes all attributes of the given node using decodeAttribute.
 	 */
   void _decodeAttributes(Codec dec, Node node, Object obj) {
-    NamedNodeMap attrs = node.getAttributes();
+    NamedNodeMap attrs = node.attributes;
 
     if (attrs != null) {
       for (int i = 0; i < attrs.getLength(); i++) {
@@ -1018,7 +1018,7 @@ class ObjectCodec {
 
       if (name != null) {
         try {
-          Node xml = Utils.loadDocument(ObjectCodec/*.class*/.getResource(name).toString()).getDocumentElement();
+          Node xml = Utils.loadDocument(ObjectCodec/*.class*/.getResource(name).toString()).documentElement;
 
           if (xml != null) {
             dec.decode(xml, into);

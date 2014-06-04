@@ -19,7 +19,7 @@ class MarkerRegistry {
       poly.addPoint(math.round(pe.getX()) as int, math.round(pe.getY()) as int);
       poly.addPoint(math.round(pe.getX() - nx - ny / 2) as int, math.round(pe.getY() - ny + nx / 2) as int);
 
-      if (type.equals(Constants.ARROW_CLASSIC)) {
+      if (type == Constants.ARROW_CLASSIC) {
         poly.addPoint(math.round(pe.getX() - nx * 3 / 4) as int, math.round(pe.getY() - ny * 3 / 4) as int);
       }
 
@@ -81,14 +81,14 @@ class MarkerRegistry {
 	 * 
 	 */
   static IMarker getMarker(String name) {
-    return _markers.get(name);
+    return _markers[name];
   }
 
   /**
 	 * 
 	 */
   static void registerMarker(String name, IMarker marker) {
-    _markers.put(name, marker);
+    _markers[name] = marker;
   }
 
 }

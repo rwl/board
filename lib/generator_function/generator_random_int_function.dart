@@ -3,9 +3,12 @@ part of graph.generatorfunction;
 /**
  * @author Mate
  * A generator random cost function
- * It will generate random integer edge weights in the range of (<b>minWeight</b>, <b>maxWeight</b>) and rounds the values to <b>roundToDecimals</b>
+ * It will generate random integer edge weights in the range of
+ * (<b>minWeight</b>, <b>maxWeight</b>) and rounds the values to
+ * <b>roundToDecimals</b>
  */
 class GeneratorRandomIntFunction extends GeneratorFunction {
+  
   double _maxWeight = 10.0;
 
   double _minWeight = 0.0;
@@ -39,4 +42,5 @@ class GeneratorRandomIntFunction extends GeneratorFunction {
   double getMinWeight() {
     return _minWeight;
   }
+  
 }

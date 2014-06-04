@@ -502,8 +502,8 @@ class Stencil implements IShape {
 	 */
   void _parseDescription() {
     // LATER: Preprocess nodes for faster painting
-    _fgNode = _desc.getElementsByTagName("foreground").item(0) as Element;
-    _bgNode = _desc.getElementsByTagName("background").item(0) as Element;
+    _fgNode = _desc.querySelectorAll("foreground")[0] as Element;
+    _bgNode = _desc.querySelectorAll("background")[0] as Element;
     _w0 = _getDouble(_desc, "w", _w0);
     _h0 = _getDouble(_desc, "h", _h0);
 

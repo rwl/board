@@ -6639,7 +6639,8 @@ class Graph extends EventSource {
           a.setAttribute("href", link.toString());
           a.setAttribute("style", "text-decoration:none;");
 
-          elem.parentNode.replaceChild(a, elem);
+          //elem.parentNode.replaceChild(a, elem);
+          elem.replaceWith(a);
           a.append(elem);
 
           if (title != null) {

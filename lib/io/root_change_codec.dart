@@ -45,7 +45,7 @@ class RootChangeCodec extends ObjectCodec {
   //	@Override
   Node afterEncode(Codec enc, Object obj, Node node) {
     if (obj is RootChange) {
-      enc.encodeCell((obj as RootChange).getRoot() as ICell, node, true);
+      enc.encodeCell(obj.getRoot() as ICell, node, true);
     }
 
     return node;
@@ -57,7 +57,7 @@ class RootChangeCodec extends ObjectCodec {
 	 */
   Node beforeDecode(Codec dec, Node node, Object into) {
     if (into is RootChange) {
-      RootChange change = into as RootChange;
+      RootChange change = into;
 
       if (node.firstChild != null && node.firstChild.nodeType == Node.ELEMENT_NODE) {
         // Makes sure the original node isn't modified
@@ -94,7 +94,7 @@ class RootChangeCodec extends ObjectCodec {
   //	@Override
   Object afterDecode(Codec dec, Node node, Object obj) {
     if (obj is RootChange) {
-      RootChange change = obj as RootChange;
+      RootChange change = obj;
       change.setPrevious(change.getRoot());
     }
 

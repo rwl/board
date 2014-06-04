@@ -2,6 +2,7 @@ library graph.shape;
 
 import 'dart:html';
 import 'dart:math' as Math;
+import 'dart:collection' show HashMap;
 
 import '../util/awt/awt.dart' as awt;
 import '../util/java/math.dart' as math;

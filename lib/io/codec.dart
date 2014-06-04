@@ -193,11 +193,11 @@ class Codec {
       id = reference(obj);
 
       if (id == null && obj is ICell) {
-        id = (obj as ICell).getId();
+        id = obj.getId();
 
         if (id == null) {
           // Uses an on-the-fly Id
-          id = CellPath.create(obj as ICell);
+          id = CellPath.create(obj);
 
           if (id.length == 0) {
             id = "root";
@@ -237,9 +237,9 @@ class Codec {
         node = enc.encode(this, obj);
       } else {
         if (obj is Node) {
-          node = (obj as Node).clone(true);
+          node = obj.clone(true);
         } else {
-          System.err.println("No codec for " + name);
+          print("No codec for " + name);
         }
       }
     }
@@ -283,9 +283,9 @@ class Codec {
           obj = node.clone(true);
           (obj as Element).attributes.remove("as");
         }
-      } on Exception catch (e) {
-        window.console.log("Cannot decode " + node.nodeName + ": " + e.message);
-        //e.printStackTrace();
+      } on Exception catch (e, st) {
+        print("Cannot decode ${node.nodeName}: $e");
+        print(st);
       }
     }
 

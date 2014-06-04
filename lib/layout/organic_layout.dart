@@ -822,7 +822,7 @@ class OrganicLayout extends GraphLayout {
 	 */
   double getEdgeLength(int i) {
     if (isOptimizeEdgeLength) {
-      double edgeLength = Point2D.distance(v[e[i].source].x, v[e[i].source].y, v[e[i].target].x, v[e[i].target].y);
+      double edgeLength = awt.Point.distance(v[e[i].source].x, v[e[i].source].y, v[e[i].target].x, v[e[i].target].y);
       return (edgeLengthCostFactor * edgeLength * edgeLength);
     } else {
       return 0.0;

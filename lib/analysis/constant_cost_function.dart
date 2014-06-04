@@ -9,22 +9,10 @@ part of graph.analysis;
  */
 class ConstantCostFunction implements ICostFunction {
 
-  /**
-	 * 
-	 */
   double _cost = 0.0;
 
-  /**
-	 * 
-	 * @param cost
-	 */
-  ConstantCostFunction(double cost) {
-    this._cost = cost;
-  }
+  ConstantCostFunction(this._cost);
 
-  /**
-	 *
-	 */
   double getCost(CellState state) {
     return _cost;
   }

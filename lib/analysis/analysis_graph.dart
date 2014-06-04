@@ -93,29 +93,19 @@ class AnalysisGraph {
 	}*/
 
   /**
-	 *
-	 * @param parent
-	 * @return all vertices of the given <b>parent</b>
+	 * Returns all vertices of the given <b>parent</b>
 	 */
   List<Object> getChildVertices(Object parent) {
     return _graph.getChildVertices(parent);
   }
 
   /**
-	 *
-	 * @param parent
-	 * @return all edges of the given <b>parent</b>
+	 * Returns all edges of the given <b>parent</b>
 	 */
   List<Object> getChildEdges(Object parent) {
     return _graph.getChildEdges(parent);
   }
 
-  /**
-	 *
-	 * @param edge
-	 * @param isSource
-	 * @return
-	 */
   Object getTerminal(Object edge, bool isSource) {
     return _graph.getModel().getTerminal(edge, isSource);
   }

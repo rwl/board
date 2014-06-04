@@ -44,7 +44,7 @@ class ChildChangeCodec extends ObjectCodec {
 	 */
   //	@Override
   bool isReference(Object obj, String attr, Object value, bool isWrite) {
-    if (attr == "child" && obj is ChildChange && ((obj as ChildChange).getPrevious() != null || !isWrite)) {
+    if (attr == "child" && obj is ChildChange && (obj.getPrevious() != null || !isWrite)) {
       return true;
     }
 
@@ -57,7 +57,7 @@ class ChildChangeCodec extends ObjectCodec {
   //	@Override
   Node afterEncode(Codec enc, Object obj, Node node) {
     if (obj is ChildChange) {
-      ChildChange change = obj as ChildChange;
+      ChildChange change = obj;
       Object child = change.getChild();
 
       if (isReference(obj, "child", child, true)) {
@@ -82,7 +82,7 @@ class ChildChangeCodec extends ObjectCodec {
 	 */
   Node beforeDecode(Codec dec, Node node, Object into) {
     if (into is ChildChange) {
-      ChildChange change = into as ChildChange;
+      ChildChange change = into;
 
       if (node.firstChild != null && node.firstChild.nodeType == Node.ELEMENT_NODE) {
         // Makes sure the original node isn't modified
@@ -132,7 +132,7 @@ class ChildChangeCodec extends ObjectCodec {
   //	@Override
   Object afterDecode(Codec dec, Node node, Object obj) {
     if (obj is ChildChange) {
-      ChildChange change = obj as ChildChange;
+      ChildChange change = obj;
 
       // Cells are encoded here after a complete transaction so the previous
       // parent must be restored on the cell for the case where the cell was

@@ -25,7 +25,7 @@ class LabelShape extends ImageShape {
   static void drawGlassEffect(Graphics2DCanvas canvas, CellState state) {
     double size = 0.4;
     canvas.getGraphics().setPaint(new GradientPaint(state.getX() as double, state.getY() as double,
-        new Color(1, 1, 1, 0.9), (state.getX()) as double, (state.getY() + state.getHeight() * size) as double, new Color(1, 1, 1, 0.3)));
+        new awt.Color(1, 1, 1, 0.9), (state.getX()) as double, (state.getY() + state.getHeight() * size) as double, new awt.Color(1, 1, 1, 0.3)));
 
     double sw = (Utils.getFloat(state.getStyle(), Constants.STYLE_STROKEWIDTH, 1.0) * canvas.getScale() / 2) as double;
 
@@ -54,18 +54,18 @@ class LabelShape extends ImageShape {
 
     Rect imageBounds = new Rect.from(state);
 
-    if (imgAlign.equals(Constants.ALIGN_CENTER)) {
+    if (imgAlign == Constants.ALIGN_CENTER) {
       imageBounds.setX(imageBounds.getX() + (imageBounds.getWidth() - imgWidth) / 2);
-    } else if (imgAlign.equals(Constants.ALIGN_RIGHT)) {
+    } else if (imgAlign == Constants.ALIGN_RIGHT) {
       imageBounds.setX(imageBounds.getX() + imageBounds.getWidth() - imgWidth - spacing - 2);
     } else // LEFT
     {
       imageBounds.setX(imageBounds.getX() + spacing + 4);
     }
 
-    if (imgValign.equals(Constants.ALIGN_TOP)) {
+    if (imgValign == Constants.ALIGN_TOP) {
       imageBounds.setY(imageBounds.getY() + spacing);
-    } else if (imgValign.equals(Constants.ALIGN_BOTTOM)) {
+    } else if (imgValign == Constants.ALIGN_BOTTOM) {
       imageBounds.setY(imageBounds.getY() + imageBounds.getHeight() - imgHeight - spacing);
     } else // MIDDLE
     {
@@ -81,14 +81,14 @@ class LabelShape extends ImageShape {
   /**
 	 * 
 	 */
-  Color getFillColor(Graphics2DCanvas canvas, CellState state) {
+  awt.Color getFillColor(Graphics2DCanvas canvas, CellState state) {
     return Utils.getColor(state.getStyle(), Constants.STYLE_FILLCOLOR);
   }
 
   /**
 	 * 
 	 */
-  Color getStrokeColor(Graphics2DCanvas canvas, CellState state) {
+  awt.Color getStrokeColor(Graphics2DCanvas canvas, CellState state) {
     return Utils.getColor(state.getStyle(), Constants.STYLE_STROKECOLOR);
   }
 

@@ -80,7 +80,7 @@ class SharedGraphModel extends SharedState {
 	 * 
 	 */
   String _processEdit(Node node) {
-    List<AtomicGraphModelChange> changes = _decodeChanges(node.getFirstChild());
+    List<AtomicGraphModelChange> changes = _decodeChanges(node.firstChild);
 
     if (changes.length > 0) {
       UndoableEdit edit = _createUndoableEdit(changes);
@@ -101,17 +101,7 @@ class SharedGraphModel extends SharedState {
 	 */
   UndoableEdit _createUndoableEdit(List<AtomicGraphModelChange> changes) {
     throw new Exception();
-    /*UndoableEdit edit = new UndoableEdit(this, _significantRemoteChanges)
-		{
-			public void dispatch()
-			{
-				// LATER: Remove changes property (deprecated)
-				((GraphModel) _source).fireEvent(new EventObj(
-						Event.CHANGE, "edit", this, "changes", _changes));
-				((GraphModel) _source).fireEvent(new EventObj(
-						Event.NOTIFY, "edit", this, "changes", _changes));
-			}
-		};*/
+    UndoableEdit edit = new SharedGraphModelUndoableEdit(this, _significantRemoteChanges);
 
     for (int i = 0; i < changes.length; i++) {
       edit.add(changes[i]);
@@ -126,19 +116,20 @@ class SharedGraphModel extends SharedState {
 	 */
   List<AtomicGraphModelChange> _decodeChanges(Node node) {
     // Updates the document in the existing codec
-    _codec.setDocument(node.getOwnerDocument());
+    _codec.setDocument(node.ownerDocument);
 
-    LinkedList<AtomicGraphModelChange> changes = new LinkedList<AtomicGraphModelChange>();
+    //LinkedList<AtomicGraphModelChange> changes = new LinkedList<AtomicGraphModelChange>();
+    Queue<AtomicGraphModelChange> changes = new Queue<AtomicGraphModelChange>();
 
     while (node != null) {
       Object change;
 
-      if (node.getNodeName().equals("RootChange")) {
+      if (node.nodeName == "RootChange") {
         // Handles the special case were no ids should be
         // resolved in the existing model. This change will
         // replace all registered ids and cells from the
         // model and insert a new cell hierarchy instead.
-        Codec tmp = new Codec(node.getOwnerDocument());
+        Codec tmp = new Codec(node.ownerDocument);
         change = tmp.decode(node);
       } else {
         change = _codec.decode(node);
@@ -153,17 +144,17 @@ class SharedGraphModel extends SharedState {
         // Workaround for references not being resolved if cells have
         // been removed from the model prior to being referenced. This
         // adds removed cells in the codec object lookup table.
-        if (ac is ChildChange && (ac as ChildChange).getParent() == null) {
-          cellRemoved((ac as ChildChange).getChild());
+        if (ac is ChildChange && ac.getParent() == null) {
+          cellRemoved(ac.getChild());
         }
 
         changes.add(ac);
       }
 
-      node = node.getNextSibling();
+      node = node.nextNode;
     }
 
-    return changes.toArray(new List<AtomicGraphModelChange>(changes.length));
+    return new List<AtomicGraphModelChange>.from(changes);
   }
 
   /**
@@ -191,5 +182,19 @@ class SharedGraphModelCodec extends Codec {
   Object lookup(String id)
   {
     return _sharedGraphModel._model.getCell(id);
+  }
+}
+
+class SharedGraphModelUndoableEdit extends UndoableEdit {
+  
+  SharedGraphModelUndoableEdit(Object source, bool significant) : super(source, significant);
+  
+  void dispatch()
+  {
+    // LATER: Remove changes property (deprecated)
+    (source as GraphModel).fireEvent(new EventObj(
+        Event.CHANGE, ["edit", this, "changes", changes]));
+    (source as GraphModel).fireEvent(new EventObj(
+        Event.NOTIFY, ["edit", this, "changes", changes]));
   }
 }

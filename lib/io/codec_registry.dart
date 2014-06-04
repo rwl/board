@@ -63,11 +63,11 @@ class CodecRegistry {
   static ObjectCodec register(ObjectCodec codec) {
     if (codec != null) {
       String name = codec.getName();
-      _codecs.put(name, codec);
+      _codecs[name] = codec;
 
       String classname = getName(codec.getTemplate());
 
-      if (!classname.equals(name)) {
+      if (classname != name) {
         addAlias(classname, name);
       }
     }
@@ -79,7 +79,7 @@ class CodecRegistry {
 	 * Adds an alias for mapping a classname to a codecname.
 	 */
   static void addAlias(String classname, String codecname) {
-    _aliases.put(classname, codecname);
+    _aliases[classname] = codecname;
   }
 
   /**
@@ -89,13 +89,13 @@ class CodecRegistry {
 	 * @param name Java class name.
 	 */
   static ObjectCodec getCodec(String name) {
-    String tmp = _aliases.get(name);
+    String tmp = _aliases[name];
 
     if (tmp != null) {
       name = tmp;
     }
 
-    ObjectCodec codec = _codecs.get(name);
+    ObjectCodec codec = _codecs[name];
 
     // Registers a new default codec for the given name
     // if no codec has been previously defined.
@@ -163,7 +163,7 @@ class CodecRegistry {
 	 * @param name
 	 * @return Returns the class for the given name.
 	 */
-  static Class /*<?>*/ getClassForName(String name) {
+  static ClassMirror /*<?>*/ getClassForName(String name) {
     try {
       return Class.forName(name);
     } on Exception catch (e) {

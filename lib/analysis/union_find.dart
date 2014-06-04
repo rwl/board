@@ -21,7 +21,7 @@ class UnionFind {
   /**
 	 * Maps from elements to nodes
 	 */
-  Map<Object, _UnionFindNode> _nodes = new Hashtable<Object, _UnionFindNode>();
+  Map<Object, _UnionFindNode> _nodes = new Map<Object, _UnionFindNode>();
 
   /**
 	 * Constructs a union find structure and initializes it with the specified
@@ -114,7 +114,7 @@ class _UnionFindNode {
   }
 
   /**
-   * @return Returns the parent node
+   * Returns the parent node.
    */
   _UnionFindNode getParent() {
     return parent;
@@ -128,7 +128,7 @@ class _UnionFindNode {
   }
 
   /**
-   * @return Returns the size.
+   * Returns the size.
    */
   int getSize() {
     return size;

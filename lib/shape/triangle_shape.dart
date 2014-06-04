@@ -18,15 +18,15 @@ class TriangleShape extends BasicShape {
     String direction = Utils.getString(state.getStyle(), Constants.STYLE_DIRECTION, Constants.DIRECTION_EAST);
     Polygon triangle = new Polygon();
 
-    if (direction.equals(Constants.DIRECTION_NORTH)) {
+    if (direction == Constants.DIRECTION_NORTH) {
       triangle.addPoint(x, y + h);
       triangle.addPoint(x + w / 2, y);
       triangle.addPoint(x + w, y + h);
-    } else if (direction.equals(Constants.DIRECTION_SOUTH)) {
+    } else if (direction == Constants.DIRECTION_SOUTH) {
       triangle.addPoint(x, y);
       triangle.addPoint(x + w / 2, y + h);
       triangle.addPoint(x + w, y);
-    } else if (direction.equals(Constants.DIRECTION_WEST)) {
+    } else if (direction == Constants.DIRECTION_WEST) {
       triangle.addPoint(x + w, y);
       triangle.addPoint(x, y + h / 2);
       triangle.addPoint(x + w, y + h);
