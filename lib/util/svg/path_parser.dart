@@ -31,37 +31,37 @@ class PathParser extends NumberParser
 {
 
 	/**
-	 * The path handler used to report parse events.
-	 */
+   * The path handler used to report parse events.
+   */
 	PathHandler pathHandler;
 
 	/**
-	 * Creates a new PathParser.
-	 */
+   * Creates a new PathParser.
+   */
 	PathParser(PathHandler handler)
 	{
 		pathHandler = handler;
 	}
 
 	/**
-	 * Allows an application to register a path handler.
-	 *
-	 * <p>If the application does not register a handler, all
-	 * events reported by the parser will be silently ignored.
-	 *
-	 * <p>Applications may register a new or different handler in the
-	 * middle of a parse, and the parser must begin using the new
-	 * handler immediately.</p>
-	 * @param handler The transform list handler.
-	 */
+   * Allows an application to register a path handler.
+   *
+   * <p>If the application does not register a handler, all
+   * events reported by the parser will be silently ignored.
+   *
+   * <p>Applications may register a new or different handler in the
+   * middle of a parse, and the parser must begin using the new
+   * handler immediately.</p>
+   * @param handler The transform list handler.
+   */
 	void setPathHandler(PathHandler handler)
 	{
 		pathHandler = handler;
 	}
 
 	/**
-	 * Returns the path handler in use.
-	 */
+   * Returns the path handler in use.
+   */
 	PathHandler getPathHandler()
 	{
 		return pathHandler;
@@ -168,8 +168,8 @@ class PathParser extends NumberParser
 	}
 
 	/**
-	 * Parses a 'm' command.
-	 */
+   * Parses a 'm' command.
+   */
 	void parsem() //throws ParseException, IOException
 	{
 		current = reader.read();
@@ -185,8 +185,8 @@ class PathParser extends NumberParser
 	}
 
 	/**
-	 * Parses a 'M' command.
-	 */
+   * Parses a 'M' command.
+   */
 	void parseM() //throws ParseException, IOException
 	{
 		current = reader.read();
@@ -202,8 +202,8 @@ class PathParser extends NumberParser
 	}
 
 	/**
-	 * Parses a 'l' command.
-	 */
+   * Parses a 'l' command.
+   */
 	void parsel() //throws ParseException, IOException
 	{
 		current = reader.read();
@@ -247,8 +247,8 @@ class PathParser extends NumberParser
 	}
 
 	/**
-	 * Parses a 'L' command.
-	 */
+   * Parses a 'L' command.
+   */
 	void parseL() //throws ParseException, IOException
 	{
 		current = reader.read();
@@ -292,8 +292,8 @@ class PathParser extends NumberParser
 	}
 
 	/**
-	 * Parses a 'h' command.
-	 */
+   * Parses a 'h' command.
+   */
 	void parseh() //throws ParseException, IOException
 	{
 		current = reader.read();
@@ -330,8 +330,8 @@ class PathParser extends NumberParser
 	}
 
 	/**
-	 * Parses a 'H' command.
-	 */
+   * Parses a 'H' command.
+   */
 	void parseH() //throws ParseException, IOException
 	{
 		current = reader.read();
@@ -369,8 +369,8 @@ class PathParser extends NumberParser
 	}
 
 	/**
-	 * Parses a 'v' command.
-	 */
+   * Parses a 'v' command.
+   */
 	void parsev() //throws ParseException, IOException
 	{
 		current = reader.read();
@@ -409,8 +409,8 @@ class PathParser extends NumberParser
 	}
 
 	/**
-	 * Parses a 'V' command.
-	 */
+   * Parses a 'V' command.
+   */
 	void parseV() //throws ParseException, IOException
 	{
 		current = reader.read();
@@ -449,8 +449,8 @@ class PathParser extends NumberParser
 	}
 
 	/**
-	 * Parses a 'c' command.
-	 */
+   * Parses a 'c' command.
+   */
 	void parsec() //throws ParseException, IOException
 	{
 		current = reader.read();
@@ -500,8 +500,8 @@ class PathParser extends NumberParser
 	}
 
 	/**
-	 * Parses a 'C' command.
-	 */
+   * Parses a 'C' command.
+   */
 	void parseC() //throws ParseException, IOException
 	{
 		current = reader.read();
@@ -551,8 +551,8 @@ class PathParser extends NumberParser
 	}
 
 	/**
-	 * Parses a 'q' command.
-	 */
+   * Parses a 'q' command.
+   */
 	void parseq() //throws ParseException, IOException
 	{
 		current = reader.read();
@@ -598,8 +598,8 @@ class PathParser extends NumberParser
 	}
 
 	/**
-	 * Parses a 'Q' command.
-	 */
+   * Parses a 'Q' command.
+   */
 	void parseQ() //throws ParseException, IOException
 	{
 		current = reader.read();
@@ -645,8 +645,8 @@ class PathParser extends NumberParser
 	}
 
 	/**
-	 * Parses a 's' command.
-	 */
+   * Parses a 's' command.
+   */
 	void parses() //throws ParseException, IOException
 	{
 		current = reader.read();
@@ -692,8 +692,8 @@ class PathParser extends NumberParser
 	}
 
 	/**
-	 * Parses a 'S' command.
-	 */
+   * Parses a 'S' command.
+   */
 	void parseS() //throws ParseException, IOException
 	{
 		current = reader.read();
@@ -739,8 +739,8 @@ class PathParser extends NumberParser
 	}
 
 	/**
-	 * Parses a 't' command.
-	 */
+   * Parses a 't' command.
+   */
 	void parset() //throws ParseException, IOException
 	{
 		current = reader.read();
@@ -782,8 +782,8 @@ class PathParser extends NumberParser
 	}
 
 	/**
-	 * Parses a 'T' command.
-	 */
+   * Parses a 'T' command.
+   */
 	void parseT() //throws ParseException, IOException
 	{
 		current = reader.read();
@@ -825,8 +825,8 @@ class PathParser extends NumberParser
 	}
 
 	/**
-	 * Parses a 'a' command.
-	 */
+   * Parses a 'a' command.
+   */
 	void parsea() //throws ParseException, IOException
 	{
 		current = reader.read();
@@ -909,8 +909,8 @@ class PathParser extends NumberParser
 	}
 
 	/**
-	 * Parses a 'A' command.
-	 */
+   * Parses a 'A' command.
+   */
 	void parseA() //throws ParseException, IOException
 	{
 		current = reader.read();
@@ -992,8 +992,8 @@ class PathParser extends NumberParser
 	}
 
 	/**
-	 * Skips a sub-path.
-	 */
+   * Skips a sub-path.
+   */
 	void skipSubPath() //throws ParseException, IOException
 	{
 		for (;;)
@@ -1018,9 +1018,9 @@ class PathParser extends NumberParser
 	}
 
 	/**
-	 * Skips the whitespaces and an optional comma.
-	 * @return true if comma was skipped.
-	 */
+   * Skips the whitespaces and an optional comma.
+   * @return true if comma was skipped.
+   */
 	bool skipCommaSpaces2() //throws IOException
 	{
 		wsp1: for (;;)

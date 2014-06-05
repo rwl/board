@@ -26,112 +26,112 @@ part of graph.swing.handler;
 class ConnectionHandler extends MouseAdapter {
 
   /**
-	 * 
-	 */
+   * 
+   */
   //	static final long serialVersionUID = -2543899557644889853L;
 
   /**
-	 * 
-	 */
+   * 
+   */
   static Cursor CONNECT_CURSOR = new Cursor(Cursor.HAND_CURSOR);
 
   /**
-	 * 
-	 */
+   * 
+   */
   GraphComponent _graphComponent;
 
   /**
-	 * Holds the event source.
-	 */
+   * Holds the event source.
+   */
   EventSource _eventSource = new EventSource(this);
 
   /**
-	 * 
-	 */
+   * 
+   */
   ConnectPreview _connectPreview;
 
   /**
-	 * Specifies the icon to be used for creating new connections. If this is
-	 * specified then it is used instead of the handle. Default is null.
-	 */
+   * Specifies the icon to be used for creating new connections. If this is
+   * specified then it is used instead of the handle. Default is null.
+   */
   ImageIcon _connectIcon = null;
 
   /**
-	 * Specifies the size of the handle to be used for creating new
-	 * connections. Default is Constants.CONNECT_HANDLE_SIZE. 
-	 */
+   * Specifies the size of the handle to be used for creating new
+   * connections. Default is Constants.CONNECT_HANDLE_SIZE. 
+   */
   int _handleSize = Constants.CONNECT_HANDLE_SIZE;
 
   /**
-	 * Specifies if a handle should be used for creating new connections. This
-	 * is only used if no connectIcon is specified. If this is false, then the
-	 * source cell will be highlighted when the mouse is over the hotspot given
-	 * in the marker. Default is Constants.CONNECT_HANDLE_ENABLED.
-	 */
+   * Specifies if a handle should be used for creating new connections. This
+   * is only used if no connectIcon is specified. If this is false, then the
+   * source cell will be highlighted when the mouse is over the hotspot given
+   * in the marker. Default is Constants.CONNECT_HANDLE_ENABLED.
+   */
   bool _handleEnabled = Constants.CONNECT_HANDLE_ENABLED;
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool _select = true;
 
   /**
-	 * Specifies if the source should be cloned and used as a target if no
-	 * target was selected. Default is false.
-	 */
+   * Specifies if the source should be cloned and used as a target if no
+   * target was selected. Default is false.
+   */
   bool _createTarget = false;
 
   /**
-	 * Appearance and event handling order wrt subhandles.
-	 */
+   * Appearance and event handling order wrt subhandles.
+   */
   bool _keepOnTop = true;
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool _enabled = true;
 
   /**
-	 * 
-	 */
+   * 
+   */
   /*transient*/ awt.Point _first;
 
   /**
-	 * 
-	 */
+   * 
+   */
   /*transient*/ bool _active = false;
 
   /**
-	 * 
-	 */
+   * 
+   */
   /*transient*/ awt.Rectangle _bounds;
 
   /**
-	 * 
-	 */
+   * 
+   */
   /*transient*/ CellState _source;
 
   /**
-	 * 
-	 */
+   * 
+   */
   /*transient*/ CellMarker _marker;
 
   /**
-	 * 
-	 */
+   * 
+   */
   /*transient*/ String _error;
 
   /**
-	 * 
-	 */
+   * 
+   */
   /*transient*/ IEventListener _resetHandler = (Object source, EventObj evt) {
     reset();
   };
 
   /**
-	 * 
-	 * @param graphComponent
-	 */
+   * 
+   * @param graphComponent
+   */
   ConnectionHandler(GraphComponent graphComponent) {
     this._graphComponent = graphComponent;
 
@@ -234,8 +234,8 @@ class ConnectionHandler extends MouseAdapter {
   }
 
   /**
-	 * Installs the listeners to update the handles after any changes.
-	 */
+   * Installs the listeners to update the handles after any changes.
+   */
   void _addGraphListeners(Graph graph) {
     // LATER: Install change listener for graph model, view
     if (graph != null) {
@@ -249,8 +249,8 @@ class ConnectionHandler extends MouseAdapter {
   }
 
   /**
-	 * Removes all installed listeners.
-	 */
+   * Removes all installed listeners.
+   */
   void _removeGraphListeners(Graph graph) {
     if (graph != null) {
       GraphView view = graph.getView();
@@ -263,163 +263,163 @@ class ConnectionHandler extends MouseAdapter {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   ConnectPreview _createConnectPreview() {
     return new ConnectPreview(_graphComponent);
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   ConnectPreview getConnectPreview() {
     return _connectPreview;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void setConnectPreview(ConnectPreview value) {
     _connectPreview = value;
   }
 
   /**
-	 * Returns true if the source terminal has been clicked and a new
-	 * connection is currently being previewed.
-	 */
+   * Returns true if the source terminal has been clicked and a new
+   * connection is currently being previewed.
+   */
   bool isConnecting() {
     return _connectPreview.isActive();
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool isActive() {
     return _active;
   }
 
   /**
-	 * Returns true if no connectIcon is specified and handleEnabled is false.
-	 */
+   * Returns true if no connectIcon is specified and handleEnabled is false.
+   */
   bool isHighlighting() {
     return _connectIcon == null && !_handleEnabled;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool isEnabled() {
     return _enabled;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void setEnabled(bool value) {
     _enabled = value;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool isKeepOnTop() {
     return _keepOnTop;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void setKeepOnTop(bool value) {
     _keepOnTop = value;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void setConnectIcon(ImageIcon value) {
     _connectIcon = value;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   ImageIcon getConnecIcon() {
     return _connectIcon;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void setHandleEnabled(bool value) {
     _handleEnabled = value;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool isHandleEnabled() {
     return _handleEnabled;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void setHandleSize(int value) {
     _handleSize = value;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   int getHandleSize() {
     return _handleSize;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   CellMarker getMarker() {
     return _marker;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void setMarker(CellMarker value) {
     _marker = value;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void setCreateTarget(bool value) {
     _createTarget = value;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool isCreateTarget() {
     return _createTarget;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void setSelect(bool value) {
     _select = value;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool isSelect() {
     return _select;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void reset() {
     _connectPreview.stop(false);
     setBounds(null);
@@ -431,8 +431,8 @@ class ConnectionHandler extends MouseAdapter {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   Object createTargetVertex(MouseEvent e, Object source) {
     Graph graph = _graphComponent.getGraph();
     Object clone = graph.cloneCells([source])[0];
@@ -449,25 +449,25 @@ class ConnectionHandler extends MouseAdapter {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool isValidSource(Object cell) {
     return _graphComponent.getGraph().isValidSource(cell);
   }
 
   /**
-	 * Returns true. The call to Graph.isValidTarget is implicit by calling
-	 * Graph.getEdgeValidationError in validateConnection. This is an
-	 * additional hook for disabling certain targets in this specific handler.
-	 */
+   * Returns true. The call to Graph.isValidTarget is implicit by calling
+   * Graph.getEdgeValidationError in validateConnection. This is an
+   * additional hook for disabling certain targets in this specific handler.
+   */
   bool isValidTarget(Object cell) {
     return true;
   }
 
   /**
-	 * Returns the error message or an empty string if the connection for the
-	 * given source target pair is not valid. Otherwise it returns null.
-	 */
+   * Returns the error message or an empty string if the connection for the
+   * given source target pair is not valid. Otherwise it returns null.
+   */
   String validateConnection(Object source, Object target) {
     if (target == null && _createTarget) {
       return null;
@@ -481,8 +481,8 @@ class ConnectionHandler extends MouseAdapter {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void mousePressed(MouseEvent e) {
     if (!_graphComponent.isForceMarqueeEvent(e) && !_graphComponent.isPanningEvent(e) && !e.isPopupTrigger() && _graphComponent.isEnabled() && isEnabled() && !e.isConsumed() && ((isHighlighting() && _marker.hasValidState()) || (!isHighlighting() && _bounds != null && _bounds.contains(e.getPoint())))) {
       start(e, _marker.getValidState());
@@ -491,16 +491,16 @@ class ConnectionHandler extends MouseAdapter {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void start(MouseEvent e, CellState state) {
     _first = e.getPoint();
     _connectPreview.start(e, state, "");
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void mouseMoved(MouseEvent e) {
     mouseDragged(e);
 
@@ -542,8 +542,8 @@ class ConnectionHandler extends MouseAdapter {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void mouseDragged(MouseEvent e) {
     if (!e.isConsumed() && _graphComponent.isEnabled() && isEnabled()) {
       // Activates the handler
@@ -572,8 +572,8 @@ class ConnectionHandler extends MouseAdapter {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void mouseReleased(MouseEvent e) {
     if (isActive()) {
       if (_error != null) {
@@ -641,8 +641,8 @@ class ConnectionHandler extends MouseAdapter {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void setBounds(awt.Rectangle value) {
     if ((_bounds == null && value != null) || (_bounds != null && value == null) || (_bounds != null && value != null && !_bounds.equals(value))) {
       awt.Rectangle tmp = _bounds;
@@ -664,30 +664,30 @@ class ConnectionHandler extends MouseAdapter {
   }
 
   /**
-	 * Adds the given event listener.
-	 */
+   * Adds the given event listener.
+   */
   void addListener(String eventName, IEventListener listener) {
     _eventSource.addListener(eventName, listener);
   }
 
   /**
-	 * Removes the given event listener.
-	 */
+   * Removes the given event listener.
+   */
   //	void removeListener(IEventListener listener)
   //	{
   //		_eventSource.removeListener(listener);
   //	}
 
   /**
-	 * Removes the given event listener for the specified event name.
-	 */
+   * Removes the given event listener for the specified event name.
+   */
   void removeListener(IEventListener listener, [String eventName = null]) {
     _eventSource.removeListener(listener, eventName);
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void paint(Graphics g) {
     if (_bounds != null) {
       if (_connectIcon != null) {

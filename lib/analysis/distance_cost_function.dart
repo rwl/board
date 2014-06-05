@@ -9,9 +9,9 @@ part of graph.analysis;
 class DistanceCostFunction implements ICostFunction {
 
   /**
-	 * Returns the Euclidean length of the edge defined by the absolute
-	 * points in the given state or 0 if no points are defined.
-	 */
+   * Returns the Euclidean length of the edge defined by the absolute
+   * points in the given state or 0 if no points are defined.
+   */
   double getCost(CellState state) {
     double cost = 0.0;
     int pointCount = state.getAbsolutePointCount();

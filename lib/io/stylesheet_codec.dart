@@ -3,9 +3,6 @@
  */
 part of graph.io;
 
-//import java.util.Hashtable;
-//import java.util.Iterator;
-//import java.util.Map;
 
 //import org.w3c.dom.Element;
 //import org.w3c.dom.Node;
@@ -18,8 +15,8 @@ part of graph.io;
 class StylesheetCodec extends ObjectCodec {
 
   /**
-	 * Constructs a new model codec for the given arguments.
-	 */
+   * Constructs a new model codec for the given arguments.
+   */
   StylesheetCodec([Object template=null, List<String> exclude = null, List<String> idrefs = null,
       Map<String, String> mapping = null]) : super(template, exclude, idrefs, mapping) {
     if (template == null) {
@@ -28,8 +25,8 @@ class StylesheetCodec extends ObjectCodec {
   }
 
   /**
-	 * Encodes the given Stylesheet.
-	 */
+   * Encodes the given Stylesheet.
+   */
   Node encode(Codec enc, Object obj) {
     Element node = enc._document.createElement(getName());
 
@@ -67,8 +64,8 @@ class StylesheetCodec extends ObjectCodec {
   }
 
   /**
-	 * Returns the string for encoding the given value.
-	 */
+   * Returns the string for encoding the given value.
+   */
   String _getStringValue(Object v) {
     if (v is bool) {
       return v ? "1" : "0";
@@ -78,8 +75,8 @@ class StylesheetCodec extends ObjectCodec {
   }
 
   /**
-	 * Decodes the given Stylesheet.
-	 */
+   * Decodes the given Stylesheet.
+   */
   Object decode(Codec dec, Node node, [Object into=null]) {
     Object obj = null;
 

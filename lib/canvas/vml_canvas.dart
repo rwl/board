@@ -4,9 +4,6 @@
 part of graph.canvas;
 
 //import java.awt.Rectangle;
-//import java.util.Hashtable;
-//import java.util.List;
-//import java.util.Map;
 
 //import org.w3c.dom.Document;
 //import org.w3c.dom.Element;
@@ -18,44 +15,44 @@ part of graph.canvas;
 class VmlCanvas extends BasicCanvas {
 
   /**
-	 * Holds the HTML document that represents the canvas.
-	 */
+   * Holds the HTML document that represents the canvas.
+   */
   Document _document;
 
   /**
-	 * Constructs a new VML canvas for the specified dimension and scale.
-	 */
+   * Constructs a new VML canvas for the specified dimension and scale.
+   */
 //  VmlCanvas() {
 //    this(null);
 //  }
 
   /**
-	 * Constructs a new VML canvas for the specified bounds, scale and
-	 * background color.
-	 */
+   * Constructs a new VML canvas for the specified bounds, scale and
+   * background color.
+   */
   VmlCanvas([Document document=null]) {
     setDocument(document);
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void setDocument(Document document) {
     this._document = document;
   }
 
   /**
-	 * Returns a reference to the document that represents the canvas.
-	 * 
-	 * @return Returns the document.
-	 */
+   * Returns a reference to the document that represents the canvas.
+   * 
+   * @return Returns the document.
+   */
   Document getDocument() {
     return _document;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void appendVmlElement(Element node) {
     if (_document != null) {
       Node body = _document.documentElement.firstChild.nextNode;
@@ -67,9 +64,9 @@ class VmlCanvas extends BasicCanvas {
 
   }
 
-  /* (non-Javadoc)
-	 * @see graph.canvas.ICanvas#drawCell()
-	 */
+  /**
+   * @see graph.canvas.ICanvas#drawCell()
+   */
   Object drawCell(CellState state) {
     Map<String, Object> style = state.getStyle();
     Element elem = null;
@@ -169,9 +166,9 @@ class VmlCanvas extends BasicCanvas {
   }
 
   /*
-	 * (non-Javadoc)
-	 * @see graph.canvas.ICanvas#drawLabel()
-	 */
+   * (non-Javadoc)
+   * @see graph.canvas.ICanvas#drawLabel()
+   */
   Object drawLabel(String label, CellState state, bool html) {
     Rect bounds = state.getLabelBounds();
 
@@ -189,14 +186,14 @@ class VmlCanvas extends BasicCanvas {
   }
 
   /**
-	 * Draws the shape specified with the STYLE_SHAPE key in the given style.
-	 * 
-	 * @param x X-coordinate of the shape.
-	 * @param y Y-coordinate of the shape.
-	 * @param w Width of the shape.
-	 * @param h Height of the shape.
-	 * @param style Style of the the shape.
-	 */
+   * Draws the shape specified with the STYLE_SHAPE key in the given style.
+   * 
+   * @param x X-coordinate of the shape.
+   * @param y Y-coordinate of the shape.
+   * @param w Width of the shape.
+   * @param h Height of the shape.
+   * @param style Style of the the shape.
+   */
   Element drawShape(int x, int y, int w, int h, Map<String, Object> style) {
     String fillColor = Utils.getString(style, Constants.STYLE_FILLCOLOR);
     String strokeColor = Utils.getString(style, Constants.STYLE_STROKECOLOR);
@@ -366,12 +363,12 @@ class VmlCanvas extends BasicCanvas {
   }
 
   /**
-	 * Draws the given lines as segments between all points of the given list
-	 * of mxPoints.
-	 * 
-	 * @param pts List of points that define the line.
-	 * @param style Style to be used for painting the line.
-	 */
+   * Draws the given lines as segments between all points of the given list
+   * of mxPoints.
+   * 
+   * @param pts List of points that define the line.
+   * @param style Style to be used for painting the line.
+   */
   Element drawLine(List<Point2d> pts, Map<String, Object> style) {
     String strokeColor = Utils.getString(style, Constants.STYLE_STROKECOLOR);
     double strokeWidth = (Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1.0) * _scale);
@@ -410,15 +407,15 @@ class VmlCanvas extends BasicCanvas {
   }
 
   /**
-	 * Draws the specified text either using drawHtmlString or using drawString.
-	 * 
-	 * @param text Text to be painted.
-	 * @param x X-coordinate of the text.
-	 * @param y Y-coordinate of the text.
-	 * @param w Width of the text.
-	 * @param h Height of the text.
-	 * @param style Style to be used for painting the text.
-	 */
+   * Draws the specified text either using drawHtmlString or using drawString.
+   * 
+   * @param text Text to be painted.
+   * @param x X-coordinate of the text.
+   * @param y Y-coordinate of the text.
+   * @param w Width of the text.
+   * @param h Height of the text.
+   * @param style Style to be used for painting the text.
+   */
   Element drawText(String text, int x, int y, int w, int h, Map<String, Object> style) {
     Element table = Utils.createTable(_document, text, x, y, w, h, _scale, style);
     appendVmlElement(table);

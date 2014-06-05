@@ -30,34 +30,34 @@ class StringNormalizingReader extends NormalizingReader
 {
 
 	/**
-	 * The characters.
-	 */
+   * The characters.
+   */
 	String string;
 
 	/**
-	 * The length of the string.
-	 */
+   * The length of the string.
+   */
 	int length;
 
 	/**
-	 * The index of the next character.
-	 */
+   * The index of the next character.
+   */
 	int next;
 
 	/**
-	 * The current line in the stream.
-	 */
+   * The current line in the stream.
+   */
 	int line = 1;
 
 	/**
-	 * The current column in the stream.
-	 */
+   * The current column in the stream.
+   */
 	int column;
 
 	/**
-	 * Creates a new StringNormalizingReader.
-	 * @param s The string to read.
-	 */
+   * Creates a new StringNormalizingReader.
+   * @param s The string to read.
+   */
 	StringNormalizingReader(String s)
 	{
 		string = s;
@@ -65,10 +65,10 @@ class StringNormalizingReader extends NormalizingReader
 	}
 
 	/**
-	 * Read a single character.  This method will block until a
-	 * character is available, an I/O error occurs, or the end of the
-	 * stream is reached.
-	 */
+   * Read a single character.  This method will block until a
+   * character is available, an I/O error occurs, or the end of the
+   * stream is reached.
+   */
 	int read() //throws IOException
 	{
 		int result = (length == next) ? -1 : string.charAt(next++);
@@ -95,24 +95,24 @@ class StringNormalizingReader extends NormalizingReader
 	}
 
 	/**
-	 * Returns the current line in the stream.
-	 */
+   * Returns the current line in the stream.
+   */
 	int getLine()
 	{
 		return line;
 	}
 
 	/**
-	 * Returns the current column in the stream.
-	 */
+   * Returns the current column in the stream.
+   */
 	int getColumn()
 	{
 		return column;
 	}
 
 	/**
-	 * Close the stream.
-	 */
+   * Close the stream.
+   */
 	void close() //throws IOException
 	{
 		string = null;

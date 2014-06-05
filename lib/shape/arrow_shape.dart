@@ -6,8 +6,8 @@ part of graph.shape;
 class ArrowShape extends BasicShape {
 
   /**
-	 *
-	 */
+   *
+   */
   Shape createShape(Graphics2DCanvas canvas, CellState state) {
     double scale = canvas.getScale();
     Point2d p0 = state.getAbsolutePoint(0);

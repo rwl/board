@@ -3,7 +3,6 @@
  */
 part of graph.io.graphml;
 
-//import java.util.HashMap;
 //import org.w3c.dom.Document;
 //import org.w3c.dom.Element;
 //import org.w3c.dom.NodeList;
@@ -15,26 +14,26 @@ part of graph.io.graphml;
  */
 class GraphMlKeyManager {
   /**
-	 * Map with the key elements of the document.<br/>
-	 * The key is the key's ID.
-	 */
+   * Map with the key elements of the document.<br/>
+   * The key is the key's ID.
+   */
   HashMap<String, GraphMlKey> _keyMap = new HashMap<String, GraphMlKey>();
 
   static GraphMlKeyManager _keyManager = null;
 
   /**
-	 * Singleton pattern requires private constructor.
-	 */
+   * Singleton pattern requires private constructor.
+   */
   GraphMlKeyManager() {
   }
 
   /**
-	 * Returns the instance of mxGmlKeyManager.
-	 * If no instance has been created until the moment, a new instance is
-	 * returned.
-	 * This method don't load the map.
-	 * @return An instance of mxGmlKeyManager.
-	 */
+   * Returns the instance of mxGmlKeyManager.
+   * If no instance has been created until the moment, a new instance is
+   * returned.
+   * This method don't load the map.
+   * @return An instance of mxGmlKeyManager.
+   */
   static GraphMlKeyManager getInstance() {
     if (_keyManager == null) {
       _keyManager = new GraphMlKeyManager();
@@ -43,10 +42,10 @@ class GraphMlKeyManager {
   }
 
   /**
-	 * Load the map with the key elements in the document.<br/>
-	 * The keys are wrapped for instances of mxGmlKey.
-	 * @param doc Document with the keys.
-	 */
+   * Load the map with the key elements in the document.<br/>
+   * The keys are wrapped for instances of mxGmlKey.
+   * @param doc Document with the keys.
+   */
   void initialise(Document doc) {
     NodeList gmlKeys = doc.getElementsByTagName(GraphMlConstants.KEY);
 

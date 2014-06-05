@@ -4,19 +4,6 @@
 
 part of graph.layout.hierarchical.stage;
 
-//import java.util.ArrayList;
-//import java.util.Arrays;
-//import java.util.Collection;
-//import java.util.HashMap;
-//import java.util.HashSet;
-//import java.util.Hashtable;
-//import java.util.Iterator;
-//import java.util.LinkedList;
-//import java.util.List;
-//import java.util.Map;
-//import java.util.Set;
-//import java.util.logging.Level;
-//import java.util.logging.Logger;
 
 //import javax.swing.SwingConstants;
 
@@ -40,165 +27,165 @@ class HierarchicalEdgeStyle {
 class CoordinateAssignment implements HierarchicalLayoutStage {
 
   /**
-	 * Reference to the enclosing layout algorithm
-	 */
+   * Reference to the enclosing layout algorithm
+   */
   HierarchicalLayout _layout;
 
   /**
-	 * The minimum buffer between cells on the same rank
-	 */
+   * The minimum buffer between cells on the same rank
+   */
   double _intraCellSpacing = 30.0;
 
   /**
-	 * The minimum distance between cells on adjacent ranks
-	 */
+   * The minimum distance between cells on adjacent ranks
+   */
   double _interRankCellSpacing = 30.0;
 
   /**
-	 * The distance between each parallel edge on each ranks for long edges
-	 */
+   * The distance between each parallel edge on each ranks for long edges
+   */
   double _parallelEdgeSpacing = 4.0;
 
   /**
-	 * The buffer on either side of a vertex where edges must not connect.
-	 */
+   * The buffer on either side of a vertex where edges must not connect.
+   */
   double _vertexConnectionBuffer = 0.0;
 
   /**
-	 * The number of heuristic iterations to run
-	 */
+   * The number of heuristic iterations to run
+   */
   int _maxIterations = 8;
 
   /**
-	 * The preferred horizontal distance between edges exiting a vertex
-	 */
+   * The preferred horizontal distance between edges exiting a vertex
+   */
   int _prefHozEdgeSep = 5;
 
   /**
-	 * The preferred vertical offset between edges exiting a vertex
-	 */
+   * The preferred vertical offset between edges exiting a vertex
+   */
   int _prefVertEdgeOff = 2;
 
   /**
-	 * The minimum distance for an edge jetty from a vertex
-	 */
+   * The minimum distance for an edge jetty from a vertex
+   */
   int _minEdgeJetty = 12;
 
   /**
-	 * The size of the vertical buffer in the center of inter-rank channels
-	 * where edge control points should not be placed
-	 */
+   * The size of the vertical buffer in the center of inter-rank channels
+   * where edge control points should not be placed
+   */
   int _channelBuffer = 4;
 
   /**
-	 * Map of internal edges and (x,y) pair of positions of the start and end jetty
-	 * for that edge where it connects to the source and target vertices.
-	 * Note this should technically be a WeakHashMap, but since JS does not
-	 * have an equivalent, housekeeping must be performed before using.
-	 * i.e. check all edges are still in the model and clear the values.
-	 * Note that the y co-ord is the offset of the jetty, not the
-	 * absolute point
-	 */
+   * Map of internal edges and (x,y) pair of positions of the start and end jetty
+   * for that edge where it connects to the source and target vertices.
+   * Note this should technically be a WeakHashMap, but since JS does not
+   * have an equivalent, housekeeping must be performed before using.
+   * i.e. check all edges are still in the model and clear the values.
+   * Note that the y co-ord is the offset of the jetty, not the
+   * absolute point
+   */
   Map<GraphHierarchyEdge, List<double>> _jettyPositions = new HashMap<GraphHierarchyEdge, List<double>>();
 
   /**
-	 * The position of the root ( start ) node(s) relative to the rest of the
-	 * laid out graph
-	 */
+   * The position of the root ( start ) node(s) relative to the rest of the
+   * laid out graph
+   */
   int _orientation = SwingConstants.NORTH;
 
   /**
-	 * The minimum x position node placement starts at
-	 */
+   * The minimum x position node placement starts at
+   */
   double _initialX;
 
   /**
-	 * The maximum x value this positioning lays up to
-	 */
+   * The maximum x value this positioning lays up to
+   */
   double _limitX;
 
   /**
-	 * The sum of x-displacements for the current iteration
-	 */
+   * The sum of x-displacements for the current iteration
+   */
   double _currentXDelta;
 
   /**
-	 * The rank that has the widest x position
-	 */
+   * The rank that has the widest x position
+   */
   int _widestRank;
 
   /**
-	 * Internal cache of top-most values of Y for each rank
-	 */
+   * Internal cache of top-most values of Y for each rank
+   */
   List<double> _rankTopY;
 
   /**
-	 * Internal cache of bottom-most value of Y for each rank
-	 */
+   * Internal cache of bottom-most value of Y for each rank
+   */
   List<double> _rankBottomY;
 
   /**
-	 * The X-coordinate of the edge of the widest rank
-	 */
+   * The X-coordinate of the edge of the widest rank
+   */
   double _widestRankValue;
 
   /**
-	 * The width of all the ranks
-	 */
+   * The width of all the ranks
+   */
   List<double> _rankWidths;
 
   /**
-	 * The Y-coordinate of all the ranks
-	 */
+   * The Y-coordinate of all the ranks
+   */
   List<double> _rankY;
 
   /**
-	 * Whether or not to perform local optimisations and iterate multiple times
-	 * through the algorithm
-	 */
+   * Whether or not to perform local optimisations and iterate multiple times
+   * through the algorithm
+   */
   bool _fineTuning = true;
 
   /**
-	 * Specifies if the STYLE_NOEDGESTYLE flag should be set on edges that are
-	 * modified by the result. Default is true.
-	 */
+   * Specifies if the STYLE_NOEDGESTYLE flag should be set on edges that are
+   * modified by the result. Default is true.
+   */
   bool _disableEdgeStyle = true;
 
   /**
-	 * The style to apply between cell layers to edge segments
-	 */
+   * The style to apply between cell layers to edge segments
+   */
   HierarchicalEdgeStyle _edgeStyle = HierarchicalEdgeStyle.POLYLINE;
 
   /**
-	 * A store of connections to the layer above for speed
-	 */
+   * A store of connections to the layer above for speed
+   */
   List<List<GraphAbstractHierarchyCell>> _nextLayerConnectedCache;
 
   /**
-	 * Padding added to resized parents
-	 */
+   * Padding added to resized parents
+   */
   int _groupPadding = 10;
 
   /**
-	 * A store of connections to the layer below for speed
-	 */
+   * A store of connections to the layer below for speed
+   */
   List<List<GraphAbstractHierarchyCell>> _previousLayerConnectedCache;
 
   /** The logger for this class */
   static Logger _logger = Logger.getLogger("com.jgraph.layout.hierarchical.JGraphCoordinateAssignment");
 
   /**
-	 * Creates a coordinate assignment.
-	 * 
-	 * @param intraCellSpacing
-	 *            the minimum buffer between cells on the same rank
-	 * @param interRankCellSpacing
-	 *            the minimum distance between cells on adjacent ranks
-	 * @param orientation
-	 *            the position of the root node(s) relative to the graph
-	 * @param initialX
-	 *            the leftmost coordinate node placement starts at
-	 */
+   * Creates a coordinate assignment.
+   * 
+   * @param intraCellSpacing
+   *            the minimum buffer between cells on the same rank
+   * @param interRankCellSpacing
+   *            the minimum distance between cells on adjacent ranks
+   * @param orientation
+   *            the position of the root node(s) relative to the graph
+   * @param initialX
+   *            the leftmost coordinate node placement starts at
+   */
   CoordinateAssignment(HierarchicalLayout layout, double intraCellSpacing, double interRankCellSpacing, int orientation, double initialX, double parallelEdgeSpacing) {
     this._layout = layout;
     this._intraCellSpacing = intraCellSpacing;
@@ -210,8 +197,8 @@ class CoordinateAssignment implements HierarchicalLayoutStage {
   }
 
   /**
-	 * Utility method to display the x co-ords
-	 */
+   * Utility method to display the x co-ords
+   */
   void printStatus() {
     GraphHierarchyModel model = _layout.getModel();
 
@@ -233,8 +220,8 @@ class CoordinateAssignment implements HierarchicalLayoutStage {
   }
 
   /**
-	 * A basic horizontal coordinate assignment algorithm
-	 */
+   * A basic horizontal coordinate assignment algorithm
+   */
   void execute(Object parent) {
     GraphHierarchyModel model = _layout.getModel();
     _currentXDelta = 0.0;
@@ -293,11 +280,11 @@ class CoordinateAssignment implements HierarchicalLayoutStage {
   }
 
   /**
-	 * Performs one median positioning sweep in both directions
-	 * 
-	 * @param model
-	 *            an internal model of the hierarchical layout
-	 */
+   * Performs one median positioning sweep in both directions
+   * 
+   * @param model
+   *            an internal model of the hierarchical layout
+   */
   void _minNode(GraphHierarchyModel model) {
     // Queue all nodes
     LinkedList<_WeightedCellSorter> nodeList = new LinkedList<_WeightedCellSorter>();
@@ -430,13 +417,13 @@ class CoordinateAssignment implements HierarchicalLayoutStage {
   }
 
   /**
-	 * Performs one median positioning sweep in one direction
-	 * 
-	 * @param i
-	 *            the iteration of the whole process
-	 * @param model
-	 *            an internal model of the hierarchical layout
-	 */
+   * Performs one median positioning sweep in one direction
+   * 
+   * @param i
+   *            the iteration of the whole process
+   * @param model
+   *            an internal model of the hierarchical layout
+   */
   void _medianPos(int i, GraphHierarchyModel model) {
     // Reverse sweep direction each time through this method
     bool downwardSweep = (i % 2 == 0);
@@ -453,16 +440,16 @@ class CoordinateAssignment implements HierarchicalLayoutStage {
   }
 
   /**
-	 * Performs median minimisation over one rank.
-	 * 
-	 * @param rankValue
-	 *            the layer number of this rank
-	 * @param model
-	 *            an internal model of the hierarchical layout
-	 * @param nextRankValue
-	 *            the layer number whose connected cels are to be laid out
-	 *            relative to
-	 */
+   * Performs median minimisation over one rank.
+   * 
+   * @param rankValue
+   *            the layer number of this rank
+   * @param model
+   *            an internal model of the hierarchical layout
+   * @param nextRankValue
+   *            the layer number whose connected cels are to be laid out
+   *            relative to
+   */
   void _rankMedianPosition(int rankValue, GraphHierarchyModel model, int nextRankValue) {
     GraphHierarchyRank rankSet = model.ranks.get(new int(rankValue));
     List<Object> rank = rankSet.toArray();
@@ -583,15 +570,15 @@ class CoordinateAssignment implements HierarchicalLayoutStage {
   }
 
   /**
-	 * Calculates the priority the specified cell has based on the type of its
-	 * cell and the cells it is connected to on the next layer
-	 * 
-	 * @param currentCell
-	 *            the cell whose weight is to be calculated
-	 * @param collection
-	 *            the cells the specified cell is connected to
-	 * @return the total weighted of the edges between these cells
-	 */
+   * Calculates the priority the specified cell has based on the type of its
+   * cell and the cells it is connected to on the next layer
+   * 
+   * @param currentCell
+   *            the cell whose weight is to be calculated
+   * @param collection
+   *            the cells the specified cell is connected to
+   * @return the total weighted of the edges between these cells
+   */
   int _calculatedWeightedValue(GraphAbstractHierarchyCell currentCell, Iterable<GraphAbstractHierarchyCell> collection) {
     int totalWeight = 0;
     Iterator<GraphAbstractHierarchyCell> iter = collection.iterator();
@@ -612,15 +599,15 @@ class CoordinateAssignment implements HierarchicalLayoutStage {
   }
 
   /**
-	 * Calculates the median position of the connected cell on the specified
-	 * rank
-	 * 
-	 * @param connectedCells
-	 *            the cells the candidate connects to on this level
-	 * @param rankValue
-	 *            the layer number of this rank
-	 * @return the median rank order ( not x position ) of the connected cells
-	 */
+   * Calculates the median position of the connected cell on the specified
+   * rank
+   * 
+   * @param connectedCells
+   *            the cells the candidate connects to on this level
+   * @param rankValue
+   *            the layer number of this rank
+   * @return the median rank order ( not x position ) of the connected cells
+   */
   int _medianXValue(List<Object> connectedCells, int rankValue) {
     if (connectedCells.length == 0) {
       return 0;
@@ -647,15 +634,15 @@ class CoordinateAssignment implements HierarchicalLayoutStage {
   }
 
   /**
-	 * Sets up the layout in an initial positioning. The ranks are all centered
-	 * as much as possible along the middle vertex in each rank. The other cells
-	 * are then placed as close as possible on either side.
-	 * 
-	 * @param facade
-	 *            the facade describing the input graph
-	 * @param model
-	 *            an internal model of the hierarchical layout
-	 */
+   * Sets up the layout in an initial positioning. The ranks are all centered
+   * as much as possible along the middle vertex in each rank. The other cells
+   * are then placed as close as possible on either side.
+   * 
+   * @param facade
+   *            the facade describing the input graph
+   * @param model
+   *            an internal model of the hierarchical layout
+   */
   void _initialCoords(Graph facade, GraphHierarchyModel model) {
     _calculateWidestRank(facade, model);
 
@@ -674,18 +661,18 @@ class CoordinateAssignment implements HierarchicalLayoutStage {
   }
 
   /**
-	 * Sets up the layout in an initial positioning. All the first cells in each
-	 * rank are moved to the left and the rest of the rank inserted as close
-	 * together as their size and buffering permits. This method works on just
-	 * the specified rank.
-	 * 
-	 * @param rankValue
-	 *            the current rank being processed
-	 * @param graph
-	 *            the facade describing the input graph
-	 * @param model
-	 *            an internal model of the hierarchical layout
-	 */
+   * Sets up the layout in an initial positioning. All the first cells in each
+   * rank are moved to the left and the rest of the rank inserted as close
+   * together as their size and buffering permits. This method works on just
+   * the specified rank.
+   * 
+   * @param rankValue
+   *            the current rank being processed
+   * @param graph
+   *            the facade describing the input graph
+   * @param model
+   *            an internal model of the hierarchical layout
+   */
   void _rankCoordinates(int rankValue, Graph graph, GraphHierarchyModel model) {
     GraphHierarchyRank rank = model.ranks.get(new int(rankValue));
     double maxY = 0.0;
@@ -742,14 +729,14 @@ class CoordinateAssignment implements HierarchicalLayoutStage {
   }
 
   /**
-	 * Calculates the width rank in the hierarchy. Also set the y value of each
-	 * rank whilst performing the calculation
-	 * 
-	 * @param graph
-	 *            the facade describing the input graph
-	 * @param model
-	 *            an internal model of the hierarchical layout
-	 */
+   * Calculates the width rank in the hierarchy. Also set the y value of each
+   * rank whilst performing the calculation
+   * 
+   * @param graph
+   *            the facade describing the input graph
+   * @param model
+   *            an internal model of the hierarchical layout
+   */
   void _calculateWidestRank(Graph graph, GraphHierarchyModel model) {
     // Starting y co-ordinate
     double y = -_interRankCellSpacing;
@@ -845,11 +832,11 @@ class CoordinateAssignment implements HierarchicalLayoutStage {
   }
 
   /**
-	 * Straightens out chains of virtual nodes where possible
-	 * 
-	 * @param model
-	 *            an internal model of the hierarchical layout
-	 */
+   * Straightens out chains of virtual nodes where possible
+   * 
+   * @param model
+   *            an internal model of the hierarchical layout
+   */
   void _minPath(GraphHierarchyModel model) {
     // Work down and up each edge with at least 2 control points
     // trying to straighten each one out. If the same number of
@@ -955,14 +942,14 @@ class CoordinateAssignment implements HierarchicalLayoutStage {
   }
 
   /**
-	 * Determines whether or not a node may be moved to the specified x 
-	 * position on the specified rank
-	 * @param model the layout model
-	 * @param cell the cell being analysed
-	 * @param rank the layer of the cell
-	 * @param position the x position being sought
-	 * @return whether or not the virtual node can be moved to this position
-	 */
+   * Determines whether or not a node may be moved to the specified x 
+   * position on the specified rank
+   * @param model the layout model
+   * @param cell the cell being analysed
+   * @param rank the layer of the cell
+   * @param position the x position being sought
+   * @return whether or not the virtual node can be moved to this position
+   */
   bool _repositionValid(GraphHierarchyModel model, GraphAbstractHierarchyCell cell, int rank, double position) {
     GraphHierarchyRank rankSet = model.ranks.get(new int(rank));
     List<GraphAbstractHierarchyCell> rankArray = rankSet.toArray(new List<GraphAbstractHierarchyCell>(rankSet.length));
@@ -1019,14 +1006,14 @@ class CoordinateAssignment implements HierarchicalLayoutStage {
   }
 
   /**
-	 * Sets the cell locations in the facade to those stored after this layout
-	 * processing step has completed.
-	 * 
-	 * @param graph
-	 *            the facade describing the input graph
-	 * @param model
-	 *            an internal model of the hierarchical layout
-	 */
+   * Sets the cell locations in the facade to those stored after this layout
+   * processing step has completed.
+   * 
+   * @param graph
+   *            the facade describing the input graph
+   * @param model
+   *            an internal model of the hierarchical layout
+   */
   void _setCellLocations(Graph graph, GraphHierarchyModel model) {
     _rankTopY = new List<double>(model.ranks.length);
     _rankBottomY = new List<double>(model.ranks.length);
@@ -1073,20 +1060,20 @@ class CoordinateAssignment implements HierarchicalLayoutStage {
   }
 
   /**
-	 * Adjust parent cells whose child geometries have changed. The default 
-	 * implementation adjusts the group to just fit around the children with 
-	 * a padding.
-	 */
+   * Adjust parent cells whose child geometries have changed. The default 
+   * implementation adjusts the group to just fit around the children with 
+   * a padding.
+   */
   void _adjustParents(Set<Object> parentsChanged) {
     _layout.arrangeGroups(Utils.sortCells(parentsChanged, true).toArray(), _groupPadding);
   }
 
   /**
-	 * Separates the x position of edges as they connect to vertices
-	 * 
-	 * @param model
-	 *            an internal model of the hierarchical layout
-	 */
+   * Separates the x position of edges as they connect to vertices
+   * 
+   * @param model
+   *            an internal model of the hierarchical layout
+   */
   void _localEdgeProcessing(GraphHierarchyModel model) {
     // Check the map of jetty positions doesn't contain
     // any deleted edges. We can't use a WeakHashMap because
@@ -1215,9 +1202,9 @@ class CoordinateAssignment implements HierarchicalLayoutStage {
   }
 
   /**
-	 * Fixes the control points 
-	 * @param cell
-	 */
+   * Fixes the control points 
+   * @param cell
+   */
   void _setEdgePosition(GraphAbstractHierarchyCell cell) {
     GraphHierarchyEdge edge = cell as GraphHierarchyEdge;
 
@@ -1373,9 +1360,9 @@ class CoordinateAssignment implements HierarchicalLayoutStage {
   }
 
   /**
-	 * Fixes the position of the specified vertex
-	 * @param cell the vertex to position
-	 */
+   * Fixes the position of the specified vertex
+   * @param cell the vertex to position
+   */
   void _setVertexLocation(GraphAbstractHierarchyCell cell) {
     GraphHierarchyNode node = cell as GraphHierarchyNode;
     Object realCell = node.cell;
@@ -1400,98 +1387,98 @@ class CoordinateAssignment implements HierarchicalLayoutStage {
   }
 
   /**
-	 * Hook to add additional processing
-	 * 
-	 * @param edge
-	 *            The hierarchical model edge
-	 * @param realEdge
-	 *            The real edge in the graph
-	 */
+   * Hook to add additional processing
+   * 
+   * @param edge
+   *            The hierarchical model edge
+   * @param realEdge
+   *            The real edge in the graph
+   */
   void _processReversedEdge(GraphHierarchyEdge edge, Object realEdge) {
     // Added as hook for customer
   }
 
   /**
-	 * @return Returns the interRankCellSpacing.
-	 */
+   * @return Returns the interRankCellSpacing.
+   */
   double getInterRankCellSpacing() {
     return _interRankCellSpacing;
   }
 
   /**
-	 * @param interRankCellSpacing
-	 *            The interRankCellSpacing to set.
-	 */
+   * @param interRankCellSpacing
+   *            The interRankCellSpacing to set.
+   */
   void setInterRankCellSpacing(double interRankCellSpacing) {
     this._interRankCellSpacing = interRankCellSpacing;
   }
 
   /**
-	 * @return Returns the intraCellSpacing.
-	 */
+   * @return Returns the intraCellSpacing.
+   */
   double getIntraCellSpacing() {
     return _intraCellSpacing;
   }
 
   /**
-	 * @param intraCellSpacing
-	 *            The intraCellSpacing to set.
-	 */
+   * @param intraCellSpacing
+   *            The intraCellSpacing to set.
+   */
   void setIntraCellSpacing(double intraCellSpacing) {
     this._intraCellSpacing = intraCellSpacing;
   }
 
   /**
-	 * @return Returns the orientation.
-	 */
+   * @return Returns the orientation.
+   */
   int getOrientation() {
     return _orientation;
   }
 
   /**
-	 * @param orientation
-	 *            The orientation to set.
-	 */
+   * @param orientation
+   *            The orientation to set.
+   */
   void setOrientation(int orientation) {
     this._orientation = orientation;
   }
 
   /**
-	 * @return Returns the limitX.
-	 */
+   * @return Returns the limitX.
+   */
   double getLimitX() {
     return _limitX;
   }
 
   /**
-	 * @param limitX
-	 *            The limitX to set.
-	 */
+   * @param limitX
+   *            The limitX to set.
+   */
   void setLimitX(double limitX) {
     this._limitX = limitX;
   }
 
   /**
-	 * @return Returns the fineTuning.
-	 */
+   * @return Returns the fineTuning.
+   */
   bool isFineTuning() {
     return _fineTuning;
   }
 
   /**
-	 * @param fineTuning
-	 *            The fineTuning to set.
-	 */
+   * @param fineTuning
+   *            The fineTuning to set.
+   */
   void setFineTuning(bool fineTuning) {
     this._fineTuning = fineTuning;
   }
 
   /**
-	 * Sets the logging level of this class
-	 * 
-	 * @param level
-	 *            the logging level to set
-	 */
+   * Sets the logging level of this class
+   * 
+   * @param level
+   *            the logging level to set
+   */
   void setLoggerLevel(Level level) {
     try {
       _logger.setLevel(level);

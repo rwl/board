@@ -14,322 +14,322 @@ part of graph.swing.util;
 class GraphActions {
 
   /**
-	 * 
-	 */
+   * 
+   */
   static final Action deleteAction = new DeleteAction("delete");
 
   /**
-	 * 
-	 */
+   * 
+   */
   static final Action editAction = new EditAction("edit");
 
   /**
-	 * 
-	 */
+   * 
+   */
   static final Action groupAction = new GroupAction("group");
 
   /**
-	 * 
-	 */
+   * 
+   */
   static final Action ungroupAction = new UngroupAction("ungroup");
 
   /**
-	 * 
-	 */
+   * 
+   */
   static final Action removeFromParentAction = new RemoveFromParentAction("removeFromParent");
 
   /**
-	 * 
-	 */
+   * 
+   */
   static final Action updateGroupBoundsAction = new UpdateGroupBoundsAction("updateGroupBounds");
 
   /**
-	 * 
-	 */
+   * 
+   */
   static final Action selectAllAction = new SelectAction("selectAll");
 
   /**
-	 * 
-	 */
+   * 
+   */
   static final Action selectVerticesAction = new SelectAction("vertices");
 
   /**
-	 * 
-	 */
+   * 
+   */
   static final Action selectEdgesAction = new SelectAction("edges");
 
   /**
-	 * 
-	 */
+   * 
+   */
   static final Action selectNoneAction = new SelectAction("selectNone");
 
   /**
-	 *
-	 */
+   *
+   */
   static final Action selectNextAction = new SelectAction("selectNext");
 
   /**
-	 * 
-	 */
+   * 
+   */
   static final Action selectPreviousAction = new SelectAction("selectPrevious");
 
   /**
-	 * 
-	 */
+   * 
+   */
   static final Action selectParentAction = new SelectAction("selectParent");
 
   /**
-	 * 
-	 */
+   * 
+   */
   static final Action selectChildAction = new SelectAction("selectChild");
 
   /**
-	 * 
-	 */
+   * 
+   */
   static final Action collapseAction = new FoldAction("collapse");
 
   /**
-	 * 
-	 */
+   * 
+   */
   static final Action expandAction = new FoldAction("expand");
 
   /**
-	 * 
-	 */
+   * 
+   */
   static final Action enterGroupAction = new DrillAction("enterGroup");
 
   /**
-	 * 
-	 */
+   * 
+   */
   static final Action exitGroupAction = new DrillAction("exitGroup");
 
   /**
-	 * 
-	 */
+   * 
+   */
   static final Action homeAction = new DrillAction("home");
 
   /**
-	 * 
-	 */
+   * 
+   */
   static final Action zoomActualAction = new ZoomAction("actual");
 
   /**
-	 * 
-	 */
+   * 
+   */
   static final Action zoomInAction = new ZoomAction("zoomIn");
 
   /**
-	 * 
-	 */
+   * 
+   */
   static final Action zoomOutAction = new ZoomAction("zoomOut");
 
   /**
-	 * 
-	 */
+   * 
+   */
   static final Action toBackAction = new LayerAction("toBack");
 
   /**
-	 * 
-	 */
+   * 
+   */
   static final Action toFrontAction = new LayerAction("toFront");
 
   /**
-	 * 
-	 * @return the delete action
-	 */
+   * 
+   * @return the delete action
+   */
   static Action getDeleteAction() {
     return deleteAction;
   }
 
   /**
-	 * 
-	 * @return the edit action
-	 */
+   * 
+   * @return the edit action
+   */
   static Action getEditAction() {
     return editAction;
   }
 
   /**
-	 * 
-	 * @return the edit action
-	 */
+   * 
+   * @return the edit action
+   */
   static Action getGroupAction() {
     return groupAction;
   }
 
   /**
-	 * 
-	 * @return the edit action
-	 */
+   * 
+   * @return the edit action
+   */
   static Action getUngroupAction() {
     return ungroupAction;
   }
 
   /**
-	 * 
-	 * @return the edit action
-	 */
+   * 
+   * @return the edit action
+   */
   static Action getRemoveFromParentAction() {
     return removeFromParentAction;
   }
 
   /**
-	 * 
-	 * @return the edit action
-	 */
+   * 
+   * @return the edit action
+   */
   static Action getUpdateGroupBoundsAction() {
     return updateGroupBoundsAction;
   }
 
   /**
-	 * 
-	 * @return the select all action
-	 */
+   * 
+   * @return the select all action
+   */
   static Action getSelectAllAction() {
     return selectAllAction;
   }
 
   /**
-	 * 
-	 * @return the select vertices action
-	 */
+   * 
+   * @return the select vertices action
+   */
   static Action getSelectVerticesAction() {
     return selectVerticesAction;
   }
 
   /**
-	 * 
-	 * @return the select edges action
-	 */
+   * 
+   * @return the select edges action
+   */
   static Action getSelectEdgesAction() {
     return selectEdgesAction;
   }
 
   /**
-	 * 
-	 * @return the select none action
-	 */
+   * 
+   * @return the select none action
+   */
   static Action getSelectNoneAction() {
     return selectNoneAction;
   }
 
   /**
-	 * 
-	 * @return the select next action
-	 */
+   * 
+   * @return the select next action
+   */
   static Action getSelectNextAction() {
     return selectNextAction;
   }
 
   /**
-	 * 
-	 * @return the select previous action
-	 */
+   * 
+   * @return the select previous action
+   */
   static Action getSelectPreviousAction() {
     return selectPreviousAction;
   }
 
   /**
-	 * 
-	 * @return the select parent action
-	 */
+   * 
+   * @return the select parent action
+   */
   static Action getSelectParentAction() {
     return selectParentAction;
   }
 
   /**
-	 * 
-	 * @return the select child action
-	 */
+   * 
+   * @return the select child action
+   */
   static Action getSelectChildAction() {
     return selectChildAction;
   }
 
   /**
-	 * 
-	 * @return the go into action
-	 */
+   * 
+   * @return the go into action
+   */
   static Action getEnterGroupAction() {
     return enterGroupAction;
   }
 
   /**
-	 * 
-	 * @return the go up action
-	 */
+   * 
+   * @return the go up action
+   */
   static Action getExitGroupAction() {
     return exitGroupAction;
   }
 
   /**
-	 * 
-	 * @return the home action
-	 */
+   * 
+   * @return the home action
+   */
   static Action getHomeAction() {
     return homeAction;
   }
 
   /**
-	 * 
-	 * @return the collapse action
-	 */
+   * 
+   * @return the collapse action
+   */
   static Action getCollapseAction() {
     return collapseAction;
   }
 
   /**
-	 * 
-	 * @return the expand action
-	 */
+   * 
+   * @return the expand action
+   */
   static Action getExpandAction() {
     return expandAction;
   }
 
   /**
-	 * 
-	 * @return the zoom actual action
-	 */
+   * 
+   * @return the zoom actual action
+   */
   static Action getZoomActualAction() {
     return zoomActualAction;
   }
 
   /**
-	 * 
-	 * @return the zoom in action
-	 */
+   * 
+   * @return the zoom in action
+   */
   static Action getZoomInAction() {
     return zoomInAction;
   }
 
   /**
-	 * 
-	 * @return the zoom out action
-	 */
+   * 
+   * @return the zoom out action
+   */
   static Action getZoomOutAction() {
     return zoomOutAction;
   }
 
   /**
-	 * 
-	 * @return the action that moves cell(s) to the backmost layer
-	 */
+   * 
+   * @return the action that moves cell(s) to the backmost layer
+   */
   static Action getToBackAction() {
     return toBackAction;
   }
 
   /**
-	 * 
-	 * @return the action that moves cell(s) to the frontmost layer
-	 */
+   * 
+   * @return the action that moves cell(s) to the frontmost layer
+   */
   static Action getToFrontAction() {
     return toFrontAction;
   }
 
   /**
-	 * 
-	 * @param e
-	 * @return Returns the graph for the given action event.
-	 */
+   * 
+   * @param e
+   * @return Returns the graph for the given action event.
+   */
   static /*final*/ Graph getGraph(ActionEvent e) {
     Object source = e.getSource();
 

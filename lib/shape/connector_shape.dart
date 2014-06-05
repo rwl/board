@@ -4,15 +4,12 @@
 part of graph.shape;
 
 //import java.awt.Color;
-//import java.util.ArrayList;
-//import java.util.List;
-//import java.util.Map;
 
 class ConnectorShape extends BasicShape {
 
   /**
-	 * 
-	 */
+   * 
+   */
   void paintShape(Graphics2DCanvas canvas, CellState state) {
     if (state.getAbsolutePointCount() > 1 && _configureGraphics(canvas, state, false)) {
       List<Point2d> pts = new List<Point2d>.from(state.getAbsolutePoints());
@@ -42,8 +39,8 @@ class ConnectorShape extends BasicShape {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void _paintPolyline(Graphics2DCanvas canvas, List<Point2d> points, Map<String, Object> style) {
     bool rounded = isRounded(style) && canvas.getScale() > Constants.MIN_SCALE_FOR_ROUNDED_LINES;
 
@@ -51,15 +48,15 @@ class ConnectorShape extends BasicShape {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool isRounded(Map<String, Object> style) {
     return Utils.isTrue(style, Constants.STYLE_ROUNDED, false);
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void _translatePoint(List<Point2d> points, int index, Point2d offset) {
     if (offset != null) {
       Point2d pt = points[index].clone() as Point2d;
@@ -70,10 +67,10 @@ class ConnectorShape extends BasicShape {
   }
 
   /**
-	 * Draws the marker for the given edge.
-	 * 
-	 * @return the offset of the marker from the end of the line
-	 */
+   * Draws the marker for the given edge.
+   * 
+   * @return the offset of the marker from the end of the line
+   */
   Point2d paintMarker(Graphics2DCanvas canvas, CellState state, bool source) {
     Map<String, Object> style = state.getStyle();
     double strokeWidth = (Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1.0) * canvas.getScale());
@@ -131,14 +128,14 @@ class ConnectorShape extends BasicShape {
   }
 
   /**
-	 * Hook to override creation of the vector that the marker is drawn along
-	 * since it may not be the same as the vector between any two control
-	 * points
-	 * @param points the guide points of the connector
-	 * @param source whether the marker is at the source end
-	 * @param markerSize the scaled maximum length of the marker
-	 * @return a line describing the vector the marker should be drawn along
-	 */
+   * Hook to override creation of the vector that the marker is drawn along
+   * since it may not be the same as the vector between any two control
+   * points
+   * @param points the guide points of the connector
+   * @param source whether the marker is at the source end
+   * @param markerSize the scaled maximum length of the marker
+   * @return a line describing the vector the marker should be drawn along
+   */
   Line _getMarkerVector(List<Point2d> points, bool source, double markerSize) {
     int n = points.length;
     Point2d p0 = (source) ? points[1] : points[n - 2];

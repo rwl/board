@@ -30,8 +30,8 @@ public abstract class NumberParser extends AbstractParser
 {
 
 	/**
-	 * Parses the content of the buffer and converts it to a float.
-	 */
+   * Parses the content of the buffer and converts it to a float.
+   */
 	float parseFloat() //throws ParseException, IOException
 	{
 		int mant = 0;
@@ -327,8 +327,8 @@ public abstract class NumberParser extends AbstractParser
 	}
 
 	/**
-	 * Computes a float from mantissa and exponent.
-	 */
+   * Computes a float from mantissa and exponent.
+   */
 	static float buildFloat(int mant, int exp)
 	{
 		if (exp < -125 || mant == 0)
@@ -356,8 +356,8 @@ public abstract class NumberParser extends AbstractParser
 	}
 
 	/**
-	 * Array of powers of ten. Using double instead of float gives a tiny bit more precision.
-	 */
+   * Array of powers of ten. Using double instead of float gives a tiny bit more precision.
+   */
 	static final List<double> pow10 = new double[128];
 
 	static

@@ -3,10 +3,6 @@
  */
 part of graph.layout;
 
-//import java.util.HashSet;
-//import java.util.List;
-//import java.util.Map;
-//import java.util.Set;
 
 /**
  * Defines the requirements for an object that implements a graph layout.
@@ -40,24 +36,24 @@ abstract class IGraphLayout {
 abstract class GraphLayout implements IGraphLayout {
 
   /**
-	 * Holds the enclosing graph.
-	 */
+   * Holds the enclosing graph.
+   */
   Graph graph;
 
   /**
-	 * The parent cell of the layout, if any
-	 */
+   * The parent cell of the layout, if any
+   */
   Object parent;
 
   /**
-	 * bool indicating if the bounding box of the label should be used if
-	 * its available. Default is true.
-	 */
+   * bool indicating if the bounding box of the label should be used if
+   * its available. Default is true.
+   */
   bool useBoundingBox = true;
 
   /**
-	 * Constructs a new fast organic layout for the specified graph.
-	 */
+   * Constructs a new fast organic layout for the specified graph.
+   */
   GraphLayout(Graph graph) {
     this.graph = graph;
   }
@@ -66,47 +62,47 @@ abstract class GraphLayout implements IGraphLayout {
     this.parent = parent;
   }
 
-  /* (non-Javadoc)
-	 * @see graph.layout.IGraphLayout#move(java.lang.Object, double, double)
-	 */
+  /**
+   * @see graph.layout.IGraphLayout#move(java.lang.Object, double, double)
+   */
   void moveCell(Object cell, double x, double y) {
     // TODO: Map the position to a child index for
     // the cell to be placed closest to the position
   }
 
   /**
-	 * Returns the associated graph.
-	 */
+   * Returns the associated graph.
+   */
   Graph getGraph() {
     return graph;
   }
 
   /**
-	 * Returns the constraint for the given key and cell. This implementation
-	 * always returns the value for the given key in the style of the given
-	 * cell.
-	 * 
-	 * @param key Key of the constraint to be returned.
-	 * @param cell Cell whose constraint should be returned.
-	 */
+   * Returns the constraint for the given key and cell. This implementation
+   * always returns the value for the given key in the style of the given
+   * cell.
+   * 
+   * @param key Key of the constraint to be returned.
+   * @param cell Cell whose constraint should be returned.
+   */
   //	Object getConstraint(Object key, Object cell)
   //	{
   //		return getConstraint(key, cell, null, false);
   //	}
 
   /**
-	 * Returns the constraint for the given key and cell. The optional edge and
-	 * source arguments are used to return inbound and outgoing routing-
-	 * constraints for the given edge and vertex. This implementation always
-	 * returns the value for the given key in the style of the given cell.
-	 * 
-	 * @param key Key of the constraint to be returned.
-	 * @param cell Cell whose constraint should be returned.
-	 * @param edge Optional cell that represents the connection whose constraint
-	 * should be returned. Default is null.
-	 * @param source Optional bool that specifies if the connection is incoming
-	 * or outgoing. Default is false.
-	 */
+   * Returns the constraint for the given key and cell. The optional edge and
+   * source arguments are used to return inbound and outgoing routing-
+   * constraints for the given edge and vertex. This implementation always
+   * returns the value for the given key in the style of the given cell.
+   * 
+   * @param key Key of the constraint to be returned.
+   * @param cell Cell whose constraint should be returned.
+   * @param edge Optional cell that represents the connection whose constraint
+   * should be returned. Default is null.
+   * @param source Optional bool that specifies if the connection is incoming
+   * or outgoing. Default is false.
+   */
   Object getConstraint(Object key, Object cell, [Object edge = null, bool source = false]) {
     CellState state = graph.getView().getState(cell);
     Map<String, Object> style = (state != null) ? state.getStyle() : graph.getCellStyle(cell);
@@ -115,45 +111,45 @@ abstract class GraphLayout implements IGraphLayout {
   }
 
   /**
-	 * @return the useBoundingBox
-	 */
+   * @return the useBoundingBox
+   */
   bool isUseBoundingBox() {
     return useBoundingBox;
   }
 
   /**
-	 * @param useBoundingBox the useBoundingBox to set
-	 */
+   * @param useBoundingBox the useBoundingBox to set
+   */
   void setUseBoundingBox(bool useBoundingBox) {
     this.useBoundingBox = useBoundingBox;
   }
 
   /**
-	 * Returns true if the given vertex may be moved by the layout.
-	 * 
-	 * @param vertex Object that represents the vertex to be tested.
-	 * @return Returns true if the vertex can be moved.
-	 */
+   * Returns true if the given vertex may be moved by the layout.
+   * 
+   * @param vertex Object that represents the vertex to be tested.
+   * @return Returns true if the vertex can be moved.
+   */
   bool isVertexMovable(Object vertex) {
     return graph.isCellMovable(vertex);
   }
 
   /**
-	 * Returns true if the given vertex has no connected edges.
-	 * 
-	 * @param vertex Object that represents the vertex to be tested.
-	 * @return Returns true if the vertex should be ignored.
-	 */
+   * Returns true if the given vertex has no connected edges.
+   * 
+   * @param vertex Object that represents the vertex to be tested.
+   * @return Returns true if the vertex should be ignored.
+   */
   bool isVertexIgnored(Object vertex) {
     return !graph.getModel().isVertex(vertex) || !graph.isCellVisible(vertex);
   }
 
   /**
-	 * Returns true if the given edge has no source or target terminal.
-	 * 
-	 * @param edge Object that represents the edge to be tested.
-	 * @return Returns true if the edge should be ignored.
-	 */
+   * Returns true if the given edge has no source or target terminal.
+   * 
+   * @param edge Object that represents the edge to be tested.
+   * @return Returns true if the edge should be ignored.
+   */
   bool isEdgeIgnored(Object edge) {
     IGraphModel model = graph.getModel();
 
@@ -161,15 +157,15 @@ abstract class GraphLayout implements IGraphLayout {
   }
 
   /**
-	 * Disables or enables the edge style of the given edge.
-	 */
+   * Disables or enables the edge style of the given edge.
+   */
   void setEdgeStyleEnabled(Object edge, bool value) {
     graph.setCellStyles(Constants.STYLE_NOEDGESTYLE, (value) ? "0" : "1", [edge]);
   }
 
   /**
-	 * Disables or enables orthogonal end segments of the given edge
-	 */
+   * Disables or enables orthogonal end segments of the given edge
+   */
   void setOrthogonalEdge(Object edge, bool value) {
     graph.setCellStyles(Constants.STYLE_ORTHOGONAL, (value) ? "1" : "0", [edge]);
   }
@@ -198,10 +194,10 @@ abstract class GraphLayout implements IGraphLayout {
   }
 
   /**
-	 * Sets the control points of the given edge to the given
-	 * list of mxPoints. Set the points to null to remove all
-	 * existing points for an edge.
-	 */
+   * Sets the control points of the given edge to the given
+   * list of mxPoints. Set the points to null to remove all
+   * existing points for an edge.
+   */
   void setEdgePoints(Object edge, List<Point2d> points) {
     IGraphModel model = graph.getModel();
     Geometry geometry = model.getGeometry(edge);
@@ -230,9 +226,9 @@ abstract class GraphLayout implements IGraphLayout {
   }
 
   /**
-	 * Returns an <Rect> that defines the bounds of the given cell
-	 * or the bounding box if <useBoundingBox> is true.
-	 */
+   * Returns an <Rect> that defines the bounds of the given cell
+   * or the bounding box if <useBoundingBox> is true.
+   */
   Rect getVertexBounds(Object vertex) {
     Rect geo = graph.getModel().getGeometry(vertex);
 
@@ -269,18 +265,18 @@ abstract class GraphLayout implements IGraphLayout {
   }
 
   /**
-	 * Sets the new position of the given cell taking into account the size of
-	 * the bounding box if <useBoundingBox> is true. The change is only carried
-	 * out if the new location is not equal to the existing location, otherwise
-	 * the geometry is not replaced with an updated instance. The new or old
-	 * bounds are returned (including overlapping labels).
-	 * 
-	 * Parameters:
-	 * 
-	 * cell - <Cell> whose geometry is to be set.
-	 * x - int that defines the x-coordinate of the new location.
-	 * y - int that defines the y-coordinate of the new location.
-	 */
+   * Sets the new position of the given cell taking into account the size of
+   * the bounding box if <useBoundingBox> is true. The change is only carried
+   * out if the new location is not equal to the existing location, otherwise
+   * the geometry is not replaced with an updated instance. The new or old
+   * bounds are returned (including overlapping labels).
+   * 
+   * Parameters:
+   * 
+   * cell - <Cell> whose geometry is to be set.
+   * x - int that defines the x-coordinate of the new location.
+   * y - int that defines the y-coordinate of the new location.
+   */
   Rect setVertexLocation(Object vertex, double x, double y) {
     IGraphModel model = graph.getModel();
     Geometry geometry = model.getGeometry(vertex);
@@ -334,14 +330,14 @@ abstract class GraphLayout implements IGraphLayout {
   }
 
   /**
-	 * Updates the bounds of the given groups to include all children. Call
-	 * this with the groups in parent to child order, top-most group first, eg.
-	 * 
-	 * arrangeGroups(graph, Utils.sortCells(Arrays.asList(
-	 *   new List<Object> { v1, v3 }), true).toArray(), 10);
-	 * @param groups the groups to adjust
-	 * @param border the border applied to the adjusted groups
-	 */
+   * Updates the bounds of the given groups to include all children. Call
+   * this with the groups in parent to child order, top-most group first, eg.
+   * 
+   * arrangeGroups(graph, Utils.sortCells(Arrays.asList(
+   *   new List<Object> { v1, v3 }), true).toArray(), 10);
+   * @param groups the groups to adjust
+   * @param border the border applied to the adjusted groups
+   */
   void arrangeGroups(List<Object> groups, int border) {
     graph.getModel().beginUpdate();
     try {

@@ -27,117 +27,117 @@ part of graph.swing;
 class GraphOutline extends JComponent {
 
   /**
-	 * 
-	 */
+   * 
+   */
   //	static final long serialVersionUID = -2521103946905154267L;
 
   /**
-	 * 
-	 */
+   * 
+   */
   static Color DEFAULT_ZOOMHANDLE_FILL = new Color(0, 255, 255);
 
   /**
-	 * 
-	 */
+   * 
+   */
   GraphComponent _graphComponent;
 
   /**
-	 * TODO: Not yet implemented.
-	 */
+   * TODO: Not yet implemented.
+   */
   BufferedImage _tripleBuffer;
 
   /**
-	 * Holds the graphics of the triple buffer.
-	 */
+   * Holds the graphics of the triple buffer.
+   */
   Graphics2D _tripleBufferGraphics;
 
   /**
-	 * True if the triple buffer needs a full repaint.
-	 */
+   * True if the triple buffer needs a full repaint.
+   */
   bool _repaintBuffer = false;
 
   /**
-	 * Clip of the triple buffer to be repainted.
-	 */
+   * Clip of the triple buffer to be repainted.
+   */
   Rect _repaintClip = null;
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool _tripleBuffered = true;
 
   /**
-	 * 
-	 */
+   * 
+   */
   awt.Rectangle _finderBounds = new awt.Rectangle();
 
   /**
-	 * 
-	 */
+   * 
+   */
   awt.Point _zoomHandleLocation = null;
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool _finderVisible = true;
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool _zoomHandleVisible = true;
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool _useScaledInstance = false;
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool _antiAlias = false;
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool _drawLabels = false;
 
   /**
-	 * Specifies if the outline should be zoomed to the page if the graph
-	 * component is in page layout mode. Default is true.
-	 */
+   * Specifies if the outline should be zoomed to the page if the graph
+   * component is in page layout mode. Default is true.
+   */
   bool _fitPage = true;
 
   /**
-	 * Not yet implemented.
-	 * 
-	 * Border to add around the page bounds if wholePage is true.
-	 * Default is 4.
-	 */
+   * Not yet implemented.
+   * 
+   * Border to add around the page bounds if wholePage is true.
+   * Default is 4.
+   */
   int _outlineBorder = 10;
 
   /**
-	 * 
-	 */
+   * 
+   */
   MouseTracker _tracker = new MouseTracker(this);
 
   /**
-	 * 
-	 */
+   * 
+   */
   double _scale = 1;
 
   /**
-	 * 
-	 */
+   * 
+   */
   awt.Point _translate = new awt.Point();
 
   /**
-	 * 
-	 */
+   * 
+   */
   /*transient*/ bool _zoomGesture = false;
 
   /**
-	 * 
-	 */
+   * 
+   */
   IEventListener _repaintHandler = (Object source, EventObj evt) {
     updateScaleAndTranslate();
     Rect dirty = evt.getProperty("region") as Rect;
@@ -166,18 +166,18 @@ class GraphOutline extends JComponent {
   };
 
   /**
-	 * 
-	 */
+   * 
+   */
   ComponentListener _componentHandler = ResizedComponentAdapter(this);
 
   /**
-	 * 
-	 */
+   * 
+   */
   AdjustmentListener _adjustmentHandler = new AdjustmentValueListener(this);
 
   /**
-	 * 
-	 */
+   * 
+   */
   GraphOutline(GraphComponent graphComponent) {
     addComponentListener(_componentHandler);
     addMouseMotionListener(_tracker);
@@ -188,10 +188,10 @@ class GraphOutline extends JComponent {
   }
 
   /**
-	 * Fires a property change event for <code>tripleBuffered</code>.
-	 * 
-	 * @param tripleBuffered the tripleBuffered to set
-	 */
+   * Fires a property change event for <code>tripleBuffered</code>.
+   * 
+   * @param tripleBuffered the tripleBuffered to set
+   */
   void setTripleBuffered(bool tripleBuffered) {
     bool oldValue = this._tripleBuffered;
     this._tripleBuffered = tripleBuffered;
@@ -204,17 +204,17 @@ class GraphOutline extends JComponent {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool isTripleBuffered() {
     return _tripleBuffered;
   }
 
   /**
-	 * Fires a property change event for <code>drawLabels</code>.
-	 * 
-	 * @param drawLabels the drawLabels to set
-	 */
+   * Fires a property change event for <code>drawLabels</code>.
+   * 
+   * @param drawLabels the drawLabels to set
+   */
   void setDrawLabels(bool drawLabels) {
     bool oldValue = this._drawLabels;
     this._drawLabels = drawLabels;
@@ -224,17 +224,17 @@ class GraphOutline extends JComponent {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool isDrawLabels() {
     return _drawLabels;
   }
 
   /**
-	 * Fires a property change event for <code>antiAlias</code>.
-	 * 
-	 * @param antiAlias the antiAlias to set
-	 */
+   * Fires a property change event for <code>antiAlias</code>.
+   * 
+   * @param antiAlias the antiAlias to set
+   */
   void setAntiAlias(bool antiAlias) {
     bool oldValue = this._antiAlias;
     this._antiAlias = antiAlias;
@@ -244,15 +244,15 @@ class GraphOutline extends JComponent {
   }
 
   /**
-	 * @return the antiAlias
-	 */
+   * @return the antiAlias
+   */
   bool isAntiAlias() {
     return _antiAlias;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void setVisible(bool visible) {
     super.setVisible(visible);
 
@@ -263,24 +263,24 @@ class GraphOutline extends JComponent {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void setFinderVisible(bool visible) {
     _finderVisible = visible;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void setZoomHandleVisible(bool visible) {
     _zoomHandleVisible = visible;
   }
 
   /**
-	 * Fires a property change event for <code>fitPage</code>.
-	 * 
-	 * @param fitPage the fitPage to set
-	 */
+   * Fires a property change event for <code>fitPage</code>.
+   * 
+   * @param fitPage the fitPage to set
+   */
   void setFitPage(bool fitPage) {
     bool oldValue = this._fitPage;
     this._fitPage = fitPage;
@@ -294,24 +294,24 @@ class GraphOutline extends JComponent {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool isFitPage() {
     return _fitPage;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   GraphComponent getGraphComponent() {
     return _graphComponent;
   }
 
   /**
-	 * Fires a property change event for <code>graphComponent</code>.
-	 * 
-	 * @param graphComponent the graphComponent to set
-	 */
+   * Fires a property change event for <code>graphComponent</code>.
+   * 
+   * @param graphComponent the graphComponent to set
+   */
   void setGraphComponent(GraphComponent graphComponent) {
     GraphComponent oldValue = this._graphComponent;
 
@@ -340,11 +340,11 @@ class GraphOutline extends JComponent {
   }
 
   /**
-	 * Checks if the triple buffer exists and creates a new one if
-	 * it does not. Also compares the size of the buffer with the
-	 * size of the graph and drops the buffer if it has a
-	 * different size.
-	 */
+   * Checks if the triple buffer exists and creates a new one if
+   * it does not. Also compares the size of the buffer with the
+   * size of the graph and drops the buffer if it has a
+   * different size.
+   */
   void checkTripleBuffer() {
     if (_tripleBuffer != null) {
       if (_tripleBuffer.getWidth() != getWidth() || _tripleBuffer.getHeight() != getHeight()) {
@@ -359,12 +359,12 @@ class GraphOutline extends JComponent {
   }
 
   /**
-	 * Creates the tripleBufferGraphics and tripleBuffer for the given
-	 * dimension and draws the complete graph onto the triplebuffer.
-	 * 
-	 * @param width
-	 * @param height
-	 */
+   * Creates the tripleBufferGraphics and tripleBuffer for the given
+   * dimension and draws the complete graph onto the triplebuffer.
+   * 
+   * @param width
+   * @param height
+   */
   void _createTripleBuffer(int width, int height) {
     try {
       _tripleBuffer = Utils.createBufferedImage(width, height, null);
@@ -378,8 +378,8 @@ class GraphOutline extends JComponent {
   }
 
   /**
-	 * Destroys the tripleBuffer and tripleBufferGraphics objects.
-	 */
+   * Destroys the tripleBuffer and tripleBufferGraphics objects.
+   */
   void destroyTripleBuffer() {
     if (_tripleBuffer != null) {
       _tripleBuffer = null;
@@ -389,11 +389,11 @@ class GraphOutline extends JComponent {
   }
 
   /**
-	 * Clears and repaints the triple buffer at the given rectangle or repaints
-	 * the complete buffer if no rectangle is specified.
-	 * 
-	 * @param clip
-	 */
+   * Clears and repaints the triple buffer at the given rectangle or repaints
+   * the complete buffer if no rectangle is specified.
+   * 
+   * @param clip
+   */
   void repaintTripleBuffer(awt.Rectangle clip) {
     if (_tripleBuffered && _tripleBufferGraphics != null) {
       if (clip == null) {
@@ -413,8 +413,8 @@ class GraphOutline extends JComponent {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void updateFinder(bool repaint) {
     awt.Rectangle rect = _graphComponent.getViewport().getViewRect();
 
@@ -427,8 +427,8 @@ class GraphOutline extends JComponent {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void updateFinderBounds(awt.Rectangle bounds, bool repaint) {
     if (bounds != null && !bounds.equals(_finderBounds)) {
       awt.Rectangle old = new awt.Rectangle(_finderBounds);
@@ -444,8 +444,8 @@ class GraphOutline extends JComponent {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void paintComponent(Graphics g) {
     super.paintComponent(g);
     _paintBackground(g);
@@ -484,8 +484,8 @@ class GraphOutline extends JComponent {
   }
 
   /**
-	 * Paints the background.
-	 */
+   * Paints the background.
+   */
   void _paintBackground(Graphics g) {
     if (_graphComponent != null) {
       Graphics2D g2 = g as Graphics2D;
@@ -529,8 +529,8 @@ class GraphOutline extends JComponent {
   }
 
   /**
-	 * Paints the graph outline.
-	 */
+   * Paints the graph outline.
+   */
   void paintGraph(Graphics g) {
     if (_graphComponent != null) {
       Graphics2D g2 = g as Graphics2D;
@@ -550,9 +550,9 @@ class GraphOutline extends JComponent {
   }
 
   /**
-	 * Paints the foreground. Foreground is dynamic and should never be made
-	 * part of the triple buffer. It is painted on top of the buffer.
-	 */
+   * Paints the foreground. Foreground is dynamic and should never be made
+   * part of the triple buffer. It is painted on top of the buffer.
+   */
   void _paintForeground(Graphics g) {
     if (_graphComponent != null) {
       Graphics2D g2 = g as Graphics2D;
@@ -573,8 +573,8 @@ class GraphOutline extends JComponent {
   }
 
   /**
-	 * Returns true if the scale or translate has changed.
-	 */
+   * Returns true if the scale or translate has changed.
+   */
   bool updateScaleAndTranslate() {
     double newScale = 1;
     int dx = 0;

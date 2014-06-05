@@ -3,8 +3,6 @@
  */
 part of graph.util;
 
-//import java.util.ArrayList;
-//import java.util.List;
 
 /**
  * Defines the requirements for an undoable change.
@@ -24,60 +22,60 @@ abstract class UndoableChange {
 class UndoableEdit {
 
   /**
-	 * Holds the source of the undoable edit.
-	 */
+   * Holds the source of the undoable edit.
+   */
   Object _source;
 
   /**
-	 * Holds the list of changes that make up this undoable edit.
-	 */
+   * Holds the list of changes that make up this undoable edit.
+   */
   List<UndoableChange> _changes = new List<UndoableChange>();
 
   /**
-	 * Specifies this undoable edit is significant. Default is true.
-	 */
+   * Specifies this undoable edit is significant. Default is true.
+   */
   bool _significant = true;
 
   /**
-	 * Specifies the state of the undoable edit.
-	 */
+   * Specifies the state of the undoable edit.
+   */
   bool _undone, _redone;
 
   /**
-	 * Constructs a new undoable edit for the given source.
-	 */
+   * Constructs a new undoable edit for the given source.
+   */
   //	UndoableEdit(Object source)
   //	{
   //		this(source, true);
   //	}
 
   /**
-	 * Constructs a new undoable edit for the given source.
-	 */
+   * Constructs a new undoable edit for the given source.
+   */
   UndoableEdit(Object source, [bool significant = true]) {
     this._source = source;
     this._significant = significant;
   }
 
   /**
-	 * Hook to notify any listeners of the changes after an undo or redo
-	 * has been carried out. This implementation is empty.
-	 */
+   * Hook to notify any listeners of the changes after an undo or redo
+   * has been carried out. This implementation is empty.
+   */
   void dispatch() {
     // empty
   }
 
   /**
-	 * Hook to free resources after the edit has been removed from the command
-	 * history. This implementation is empty.
-	 */
+   * Hook to free resources after the edit has been removed from the command
+   * history. This implementation is empty.
+   */
   void die() {
     // empty
   }
 
   /**
-	 * @return the source
-	 */
+   * @return the source
+   */
   Object getSource() {
     return _source;
   }
@@ -85,8 +83,8 @@ class UndoableEdit {
   Object get source => _source;
 
   /**
-	 * @return the changes
-	 */
+   * @return the changes
+   */
   List<UndoableChange> getChanges() {
     return _changes;
   }
@@ -94,44 +92,44 @@ class UndoableEdit {
   List<UndoableChange> get changes => _changes;
 
   /**
-	 * @return the significant
-	 */
+   * @return the significant
+   */
   bool isSignificant() {
     return _significant;
   }
 
   /**
-	 * @return the undone
-	 */
+   * @return the undone
+   */
   bool isUndone() {
     return _undone;
   }
 
   /**
-	 * @return the redone
-	 */
+   * @return the redone
+   */
   bool isRedone() {
     return _redone;
   }
 
   /**
-	 * Returns true if the this edit contains no changes.
-	 */
+   * Returns true if the this edit contains no changes.
+   */
   bool isEmpty() {
     return _changes.length == 0;
   }
 
   /**
-	 * Adds the specified change to this edit. The change is an object that is
-	 * expected to either have an undo and redo, or an execute function.
-	 */
+   * Adds the specified change to this edit. The change is an object that is
+   * expected to either have an undo and redo, or an execute function.
+   */
   void add(UndoableChange change) {
     _changes.add(change);
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void undo() {
     if (!_undone) {
       int count = _changes.length;
@@ -149,8 +147,8 @@ class UndoableEdit {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void redo() {
     if (!_redone) {
       int count = _changes.length;

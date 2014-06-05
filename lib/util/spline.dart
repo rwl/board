@@ -3,14 +3,13 @@
  */
 part of graph.util;
 
-//import java.util.List;
 
 class Spline {
   /** 
-	 *	Array representing the relative proportion of the total distance
-	 *	of each point in the line ( i.e. first point is 0.0, end point is
-	 *	1.0, a point halfway on line is 0.5 ).
-	 */
+   *	Array representing the relative proportion of the total distance
+   *	of each point in the line ( i.e. first point is 0.0, end point is
+   *	1.0, a point halfway on line is 0.5 ).
+   */
   List<double> _t;
 
   Spline1D _splineX;
@@ -18,8 +17,8 @@ class Spline {
   Spline1D _splineY;
 
   /**
-	 * Total length tracing the points on the spline
-	 */
+   * Total length tracing the points on the spline
+   */
   double _length;
 
   Spline(List<Point2d> points) {
@@ -38,10 +37,10 @@ class Spline {
   }
 
   /**
-	 * Creates a new Spline.
-	 * @param x
-	 * @param y
-	 */
+   * Creates a new Spline.
+   * @param x
+   * @param y
+   */
   void Spline2D(List<double> x, List<double> y) {
     _init(x, y);
   }
@@ -93,8 +92,8 @@ class Spline {
   }
 
   /**
-	 * @param t 0 <= t <= 1
-	 */
+   * @param t 0 <= t <= 1
+   */
   Point2d getPoint(double t) {
     Point2d result = new Point2d(_splineX.getValue(t), _splineY.getValue(t));
 
@@ -102,8 +101,8 @@ class Spline {
   }
 
   /**
-	 * Used to check the correctness of this spline
-	 */
+   * Used to check the correctness of this spline
+   */
   bool checkValues() {
     return (_splineX._len.length > 1 && _splineY._len.length > 1);
   }

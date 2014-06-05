@@ -1,78 +1,76 @@
 part of graph.view;
 
-//import java.util.Collection;
-//import java.util.Iterator;
 
 //import org.w3c.dom.Element;
 
 class Multiplicity {
 
   /**
-	 * Defines the type of the source or target terminal. The type is a string
-	 * passed to Utils.isNode together with the source or target vertex
-	 * value as the first argument.
-	 */
+   * Defines the type of the source or target terminal. The type is a string
+   * passed to Utils.isNode together with the source or target vertex
+   * value as the first argument.
+   */
   String _type;
 
   /**
-	 * Optional string that specifies the attributename to be passed to
-	 * Cell.is to check if the rule applies to a cell.
-	 */
+   * Optional string that specifies the attributename to be passed to
+   * Cell.is to check if the rule applies to a cell.
+   */
   String _attr;
 
   /**
-	 * Optional string that specifies the value of the attribute to be passed
-	 * to Cell.is to check if the rule applies to a cell.
-	 */
+   * Optional string that specifies the value of the attribute to be passed
+   * to Cell.is to check if the rule applies to a cell.
+   */
   String _value;
 
   /**
-	 * bool that specifies if the rule is applied to the source or target
-	 * terminal of an edge.
-	 */
+   * bool that specifies if the rule is applied to the source or target
+   * terminal of an edge.
+   */
   bool _source;
 
   /**
-	 * Defines the minimum number of connections for which this rule applies.
-	 * Default is 0.
-	 */
+   * Defines the minimum number of connections for which this rule applies.
+   * Default is 0.
+   */
   int _min = 0;
 
   /**
-	 * Defines the maximum number of connections for which this rule applies.
-	 * A value of 'n' means unlimited times. Default is 'n'. 
-	 */
+   * Defines the maximum number of connections for which this rule applies.
+   * A value of 'n' means unlimited times. Default is 'n'. 
+   */
   String _max = "n";
 
   /**
-	 * Holds an array of strings that specify the type of neighbor for which
-	 * this rule applies. The strings are used in Cell.is on the opposite
-	 * terminal to check if the rule applies to the connection.
-	 */
+   * Holds an array of strings that specify the type of neighbor for which
+   * this rule applies. The strings are used in Cell.is on the opposite
+   * terminal to check if the rule applies to the connection.
+   */
   Iterable<String> _validNeighbors;
 
   /**
-	 * bool indicating if the list of validNeighbors are those that are allowed
-	 * for this rule or those that are not allowed for this rule.
-	 */
+   * bool indicating if the list of validNeighbors are those that are allowed
+   * for this rule or those that are not allowed for this rule.
+   */
   bool _validNeighborsAllowed = true;
 
   /**
-	 * Holds the localized error message to be displayed if the number of
-	 * connections for which the rule applies is smaller than min or greater
-	 * than max.
-	 */
+   * Holds the localized error message to be displayed if the number of
+   * connections for which the rule applies is smaller than min or greater
+   * than max.
+   */
   String _countError;
 
   /**
-	 * Holds the localized error message to be displayed if the type of the
-	 * neighbor for a connection does not match the rule.
-	 */
+   * Holds the localized error message to be displayed if the type of the
+   * neighbor for a connection does not match the rule.
+   */
   String _typeError;
 
   /**
-	 * 
-	 */
+   * 
+   */
   Multiplicity(bool source, String type, String attr, String value, int min, String max, Iterable<String> validNeighbors,
       String countError, String typeError, bool validNeighborsAllowed) {
     this._source = source;
@@ -88,20 +86,20 @@ class Multiplicity {
   }
 
   /**
-	 * Function: check
-	 * 
-	 * Checks the multiplicity for the given arguments and returns the error
-	 * for the given connection or null if the multiplicity does not apply.
-	 *  
-	 * Parameters:
-	 * 
-	 * graph - Reference to the enclosing graph instance.
-	 * edge - Cell that represents the edge to validate.
-	 * source - Cell that represents the source terminal.
-	 * target - Cell that represents the target terminal.
-	 * sourceOut - Number of outgoing edges from the source terminal.
-	 * targetIn - Number of incoming edges for the target terminal.
-	 */
+   * Function: check
+   * 
+   * Checks the multiplicity for the given arguments and returns the error
+   * for the given connection or null if the multiplicity does not apply.
+   *  
+   * Parameters:
+   * 
+   * graph - Reference to the enclosing graph instance.
+   * edge - Cell that represents the edge to validate.
+   * source - Cell that represents the source terminal.
+   * target - Cell that represents the target terminal.
+   * sourceOut - Number of outgoing edges from the source terminal.
+   * targetIn - Number of incoming edges for the target terminal.
+   */
   String check(Graph graph, Object edge, Object source, Object target, int sourceOut, int targetIn) {
     StringBuffer error = new StringBuffer();
 
@@ -127,8 +125,8 @@ class Multiplicity {
   }
 
   /**
-	 * Checks the type of the given value.
-	 */
+   * Checks the type of the given value.
+   */
   bool checkNeighbors(Graph graph, Object edge, Object source, Object target) {
     IGraphModel model = graph.getModel();
     Object sourceValue = model.getValue(source);
@@ -152,8 +150,8 @@ class Multiplicity {
   }
 
   /**
-	 * Checks the type of the given value.
-	 */
+   * Checks the type of the given value.
+   */
   bool checkTerminal(Graph graph, Object terminal, Object edge) {
     Object userObject = graph.getModel().getValue(terminal);
 
@@ -161,16 +159,16 @@ class Multiplicity {
   }
 
   /**
-	 * Checks the type of the given value.
-	 */
+   * Checks the type of the given value.
+   */
   //	bool checkType(Graph graph, Object value, String type)
   //	{
   //		return checkType(graph, value, type, null, null);
   //	}
 
   /**
-	 * Checks the type of the given value.
-	 */
+   * Checks the type of the given value.
+   */
   bool checkType(Graph graph, Object value, String type, [String attr = null, String attrValue = null]) {
     if (value != null) {
       if (value is Element) {
@@ -184,15 +182,15 @@ class Multiplicity {
   }
 
   /**
-	 * Returns true if max is "n" (unlimited).
-	 */
+   * Returns true if max is "n" (unlimited).
+   */
   bool isUnlimited() {
     return _max == null || _max == "n";
   }
 
   /**
-	 * Returns the numeric value of max.
-	 */
+   * Returns the numeric value of max.
+   */
   int getMaxValue() {
     try {
       return int.parse(_max);

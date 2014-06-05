@@ -6,7 +6,6 @@ part of graph.swing.handler;
 //import java.awt.Point;
 //import java.awt.awt.Rectangle;
 //import java.awt.event.MouseEvent;
-//import java.util.List;
 
 /**
  * @author Administrator
@@ -15,16 +14,16 @@ part of graph.swing.handler;
 class ElbowEdgeHandler extends EdgeHandler {
 
   /**
-	 * 
-	 * @param graphComponent
-	 * @param state
-	 */
+   * 
+   * @param graphComponent
+   * @param state
+   */
   ElbowEdgeHandler(GraphComponent graphComponent, CellState state) : super(graphComponent, state);
 
   /**
-	 * Hook for subclassers to return tooltip texts for certain points on the
-	 * handle.
-	 */
+   * Hook for subclassers to return tooltip texts for certain points on the
+   * handle.
+   */
   String getToolTipText(MouseEvent e) {
     int index = getIndexAt(e.getX(), e.getY());
 
@@ -36,22 +35,22 @@ class ElbowEdgeHandler extends EdgeHandler {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool _isFlipEvent(MouseEvent e) {
     return e.getClickCount() == 2 && _index == 1;
   }
 
   /**
-	 * Returns true if the given index is the index of the last handle.
-	 */
+   * Returns true if the given index is the index of the last handle.
+   */
   bool isLabel(int index) {
     return index == 3;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   List<awt.Rectangle> _createHandles() {
     _p = _createPoints(_state);
     List<awt.Rectangle> h = new List<awt.Rectangle>(4);

@@ -11,6 +11,7 @@ import '../util/java/math.dart' as math;
 
 import '../model/model.dart' show IGraphModel, GraphModel, Geometry, CellPath, ICell;
 import '../util/util.dart' show Point2d, Rect, Utils, Constants;
+import '../util/awt/awt.dart' as awt;
 import '../view/view.dart' show CellState, Graph, GraphView, ICellVisitor;
 
 part 'compact_tree_layout.dart';

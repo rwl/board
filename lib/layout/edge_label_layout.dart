@@ -1,21 +1,19 @@
 part of graph.layout;
 
 //import java.awt.Rectangle;
-//import java.util.ArrayList;
-//import java.util.List;
 
 class EdgeLabelLayout extends GraphLayout {
 
   /**
-	 * Constructs a new stack layout layout for the specified graph,
-	 * spacing, orientation and offset.
-	 */
+   * Constructs a new stack layout layout for the specified graph,
+   * spacing, orientation and offset.
+   */
   EdgeLabelLayout(Graph graph) : super(graph);
 
   /*
-	 * (non-Javadoc)
-	 * @see graph.layout.IGraphLayout#execute(java.lang.Object)
-	 */
+   * (non-Javadoc)
+   * @see graph.layout.IGraphLayout#execute(java.lang.Object)
+   */
   void execute(Object parent) {
     GraphView view = graph.getView();
     IGraphModel model = graph.getModel();
@@ -42,8 +40,8 @@ class EdgeLabelLayout extends GraphLayout {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void placeLabels(List<Object> v, List<Object> e) {
     IGraphModel model = graph.getModel();
 
@@ -71,8 +69,8 @@ class EdgeLabelLayout extends GraphLayout {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void avoid(CellState edge, CellState vertex) {
     IGraphModel model = graph.getModel();
     awt.Rectangle labRect = edge.getLabelBounds().getRectangle();

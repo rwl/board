@@ -3,7 +3,6 @@
  */
 part of graph.io;
 
-//import java.util.Map;
 
 //import org.w3c.dom.Element;
 //import org.w3c.dom.Node;
@@ -16,8 +15,8 @@ part of graph.io;
 class ModelCodec extends ObjectCodec {
 
   /**
-	 * Constructs a new model codec for the given arguments.
-	 */
+   * Constructs a new model codec for the given arguments.
+   */
   ModelCodec([Object template=null, List<String> exclude=null, List<String> idrefs=null,
       Map<String, String> mapping=null]) : super(template, exclude, idrefs, mapping) {
     if (template == null) {
@@ -26,10 +25,10 @@ class ModelCodec extends ObjectCodec {
   }
 
   /**
-	 * Encodes the given GraphModel by writing a (flat) XML sequence
-	 * of cell nodes as produced by the CellCodec. The sequence is
-	 * wrapped-up in a node with the name root.
-	 */
+   * Encodes the given GraphModel by writing a (flat) XML sequence
+   * of cell nodes as produced by the CellCodec. The sequence is
+   * wrapped-up in a node with the name root.
+   */
   void _encodeObject(Codec enc, Object obj, Node node) {
     if (obj is GraphModel) {
       Node rootNode = enc._document.createElement("root");
@@ -40,9 +39,9 @@ class ModelCodec extends ObjectCodec {
   }
 
   /**
-	 * Reads the cells into the graph model. All cells are children of the root
-	 * element in the node.
-	 */
+   * Reads the cells into the graph model. All cells are children of the root
+   * element in the node.
+   */
   Node beforeDecode(Codec dec, Node node, Object into) {
     if (node is Element) {
       Element elt = node;

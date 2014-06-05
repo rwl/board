@@ -13,26 +13,26 @@ class Palette extends PngEncodeParam
 	bool backgroundSet = false;
 
 	/**
-	 * Suppresses the 'bKGD' chunk from being output.
-	 */
+   * Suppresses the 'bKGD' chunk from being output.
+   */
 	void unsetBackground()
 	{
 		backgroundSet = false;
 	}
 
 	/**
-	 * Returns true if a 'bKGD' chunk will be output.
-	 */
+   * Returns true if a 'bKGD' chunk will be output.
+   */
 	bool isBackgroundSet()
 	{
 		return backgroundSet;
 	}
 
 	/**
-	 * Sets the desired bit depth for a palette image.  The bit
-	 * depth must be one of 1, 2, 4, or 8, or else an
-	 * <code>ArgumentError</code> will be thrown.
-	 */
+   * Sets the desired bit depth for a palette image.  The bit
+   * depth must be one of 1, 2, 4, or 8, or else an
+   * <code>ArgumentError</code> will be thrown.
+   */
 	void setBitDepth(int bitDepth)
 	{
 		if (bitDepth != 1 && bitDepth != 2 && bitDepth != 4
@@ -51,16 +51,16 @@ class Palette extends PngEncodeParam
 	bool paletteSet = false;
 
 	/**
-	 * Sets the RGB palette of the image to be encoded.
-	 * The <code>rgb</code> parameter contains alternating
-	 * R, G, B values for each color index used in the image.
-	 * The number of elements must be a multiple of 3 between
-	 * 3 and 3*256.
-	 *
-	 * <p> The 'PLTE' chunk will encode this information.
-	 *
-	 * @param rgb An array of <code>int</code>s.
-	 */
+   * Sets the RGB palette of the image to be encoded.
+   * The <code>rgb</code> parameter contains alternating
+   * R, G, B values for each color index used in the image.
+   * The number of elements must be a multiple of 3 between
+   * 3 and 3*256.
+   *
+   * <p> The 'PLTE' chunk will encode this information.
+   *
+   * @param rgb An array of <code>int</code>s.
+   */
 	void setPalette(List<int> rgb)
 	{
 		if (rgb.length < 1 * 3 || rgb.length > 256 * 3)
@@ -77,15 +77,15 @@ class Palette extends PngEncodeParam
 	}
 
 	/**
-	 * Returns the current RGB palette.
-	 *
-	 * <p> If the palette has not previously been set, or has been
-	 * unset, an <code>IllegalStateException</code> will be thrown.
-	 *
-	 * @throws IllegalStateException if the palette is not set.
-	 *
-	 * @return An array of <code>int</code>s.
-	 */
+   * Returns the current RGB palette.
+   *
+   * <p> If the palette has not previously been set, or has been
+   * unset, an <code>IllegalStateException</code> will be thrown.
+   *
+   * @throws IllegalStateException if the palette is not set.
+   *
+   * @return An array of <code>int</code>s.
+   */
 	List<int> getPalette()
 	{
 		if (!paletteSet)
@@ -96,8 +96,8 @@ class Palette extends PngEncodeParam
 	}
 
 	/**
-	 * Suppresses the 'PLTE' chunk from being output.
-	 */
+   * Suppresses the 'PLTE' chunk from being output.
+   */
 	void unsetPalette()
 	{
 		palette = null;
@@ -105,8 +105,8 @@ class Palette extends PngEncodeParam
 	}
 
 	/**
-	 * Returns true if a 'PLTE' chunk will be output.
-	 */
+   * Returns true if a 'PLTE' chunk will be output.
+   */
 	bool isPaletteSet()
 	{
 		return paletteSet;
@@ -117,10 +117,10 @@ class Palette extends PngEncodeParam
 	int backgroundPaletteIndex;
 
 	/**
-	 * Sets the palette index of the suggested background color.
-	 *
-	 * <p> The 'bKGD' chunk will encode this information.
-	 */
+   * Sets the palette index of the suggested background color.
+   *
+   * <p> The 'bKGD' chunk will encode this information.
+   */
 	void setBackgroundPaletteIndex(int index)
 	{
 		backgroundPaletteIndex = index;
@@ -128,14 +128,14 @@ class Palette extends PngEncodeParam
 	}
 
 	/**
-	 * Returns the palette index of the suggested background color.
-	 *
-	 * <p> If the background palette index has not previously been
-	 * set, or has been unset, an
-	 * <code>IllegalStateException</code> will be thrown.
-	 *
-	 * @throws IllegalStateException if the palette index is not set.
-	 */
+   * Returns the palette index of the suggested background color.
+   *
+   * <p> If the background palette index has not previously been
+   * set, or has been unset, an
+   * <code>IllegalStateException</code> will be thrown.
+   *
+   * @throws IllegalStateException if the palette index is not set.
+   */
 	int getBackgroundPaletteIndex()
 	{
 		if (!backgroundSet)
@@ -150,12 +150,12 @@ class Palette extends PngEncodeParam
 	List<int> transparency;
 
 	/**
-	 * Sets the alpha values associated with each palette entry.
-	 * The <code>alpha</code> parameter should have as many entries
-	 * as there are RGB triples in the palette.
-	 *
-	 * <p> The 'tRNS' chunk will encode this information.
-	 */
+   * Sets the alpha values associated with each palette entry.
+   * The <code>alpha</code> parameter should have as many entries
+   * as there are RGB triples in the palette.
+   *
+   * <p> The 'tRNS' chunk will encode this information.
+   */
 	void setPaletteTransparency(List<byte> alpha)
 	{
 		transparency = new int[alpha.length];
@@ -167,15 +167,15 @@ class Palette extends PngEncodeParam
 	}
 
 	/**
-	 * Returns the alpha values associated with each palette entry.
-	 *
-	 * <p> If the palette transparency has not previously been
-	 * set, or has been unset, an
-	 * <code>IllegalStateException</code> will be thrown.
-	 *
-	 * @throws IllegalStateException if the palette transparency is
-	 *        not set.
-	 */
+   * Returns the alpha values associated with each palette entry.
+   *
+   * <p> If the palette transparency has not previously been
+   * set, or has been unset, an
+   * <code>IllegalStateException</code> will be thrown.
+   *
+   * @throws IllegalStateException if the palette transparency is
+   *        not set.
+   */
 	List<byte> getPaletteTransparency()
 	{
 		if (!transparencySet)

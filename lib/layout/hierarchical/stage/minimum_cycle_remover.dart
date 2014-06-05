@@ -10,10 +10,6 @@
  */
 part of graph.layout.hierarchical.stage;
 
-//import java.util.HashSet;
-//import java.util.Iterator;
-//import java.util.List;
-//import java.util.Set;
 
 /**
  * An implementation of the first stage of the Sugiyama layout. Straightforward
@@ -22,20 +18,20 @@ part of graph.layout.hierarchical.stage;
 class MinimumCycleRemover implements HierarchicalLayoutStage {
 
   /**
-	 * Reference to the enclosing layout algorithm
-	 */
+   * Reference to the enclosing layout algorithm
+   */
   HierarchicalLayout _layout;
 
   /**
-	 * Constructor that has the roots specified
-	 */
+   * Constructor that has the roots specified
+   */
   MinimumCycleRemover(HierarchicalLayout layout) {
     this._layout = layout;
   }
 
   /**
-	 * Produces the layer assignmment using the graph information specified
-	 */
+   * Produces the layer assignmment using the graph information specified
+   */
   void execute(Object parent) {
     GraphHierarchyModel model = _layout.getModel();
     final Set<GraphHierarchyNode> seenNodes = new HashSet<GraphHierarchyNode>();

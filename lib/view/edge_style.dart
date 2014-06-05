@@ -3,7 +3,6 @@
  */
 part of graph.view;
 
-//import java.util.List;
 
 /**
  * Implements an edge style function. At the time the function is called, the result
@@ -33,9 +32,9 @@ typedef void EdgeStyleFunction(CellState state, CellState source, CellState targ
 class EdgeStyle {
 
   /**
-	 * Provides an entity relation style for edges (as used in database
-	 * schema diagrams).
-	 */
+   * Provides an entity relation style for edges (as used in database
+   * schema diagrams).
+   */
   static EdgeStyleFunction EntityRelation = (CellState state, CellState source, CellState target, List<Point2d> points, List<Point2d> result) {
     GraphView view = state.getView();
     IGraphModel model = view.getGraph().getModel();
@@ -120,8 +119,8 @@ class EdgeStyle {
   };
 
   /**
-	 * Provides a self-reference, aka. loop.
-	 */
+   * Provides a self-reference, aka. loop.
+   */
   static EdgeStyleFunction Loop = (CellState state, CellState source, CellState target, List<Point2d> points, List<Point2d> result) {
     if (source != null) {
       GraphView view = state.getView();
@@ -181,10 +180,10 @@ class EdgeStyle {
   };
 
   /**
-	 * Uses either SideToSide or TopToBottom depending on the horizontal
-	 * flag in the cell style. SideToSide is used if horizontal is true or
-	 * unspecified.
-	 */
+   * Uses either SideToSide or TopToBottom depending on the horizontal
+   * flag in the cell style. SideToSide is used if horizontal is true or
+   * unspecified.
+   */
   static EdgeStyleFunction ElbowConnector = (CellState state, CellState source, CellState target, List<Point2d> points, List<Point2d> result) {
     Point2d pt = (points != null && points.length > 0) ? points[0] : null;
 
@@ -226,8 +225,8 @@ class EdgeStyle {
   };
 
   /**
-	 * Provides a vertical elbow edge.
-	 */
+   * Provides a vertical elbow edge.
+   */
   static EdgeStyleFunction SideToSide = (CellState state, CellState source, CellState target, List<Point2d> points, List<Point2d> result) {
     GraphView view = state.getView();
     Point2d pt = ((points != null && points.length > 0) ? points[0] : null);
@@ -293,8 +292,8 @@ class EdgeStyle {
   };
 
   /**
-	 * Provides a horizontal elbow edge.
-	 */
+   * Provides a horizontal elbow edge.
+   */
   static EdgeStyleFunction TopToBottom = (CellState state, CellState source, CellState target, List<Point2d> points, List<Point2d> result) {
     GraphView view = state.getView();
     Point2d pt = ((points != null && points.length > 0) ? points[0] : null);
@@ -359,9 +358,9 @@ class EdgeStyle {
   };
 
   /**
-	 * Implements an orthogonal edge style. Use <mxEdgeSegmentHandler>
-	 * as an interactive handler for this style.
-	 */
+   * Implements an orthogonal edge style. Use <mxEdgeSegmentHandler>
+   * as an interactive handler for this style.
+   */
   static EdgeStyleFunction SegmentConnector = (CellState state, CellState source, CellState target, List<Point2d> hints, List<Point2d> result) {
     // Creates array of all way- and terminalpoints
     List<Point2d> pts = state._absolutePoints;
@@ -488,14 +487,14 @@ class EdgeStyle {
   static List<List<double>> wayPoints1 = new List<List<double>>(128);//[2];
 
   /**
-	 * The default routing patterns for orthogonal connections
-	 */
+   * The default routing patterns for orthogonal connections
+   */
   static List<List<List<int>>> routePatterns = [[[513, 2308, 2081, 2562], [513, 1090, 514, 2184, 2114, 2561], [513, 1090, 514, 2564, 2184, 2562], [513, 2308, 2561, 1090, 514, 2568, 2308]], [[514, 1057, 513, 2308, 2081, 2562], [514, 2184, 2114, 2561], [514, 2184, 2562, 1057, 513, 2564, 2184], [514, 1057, 513, 2568, 2308, 2561]], [[1090, 514, 1057, 513, 2308, 2081, 2562], [2114, 2561], [1090, 2562, 1057, 513, 2564, 2184], [1090, 514, 1057, 513, 2308, 2561, 2568]], [[2081, 2562], [1057, 513, 1090, 514, 2184, 2114, 2561], [1057, 513, 1090, 514, 2184, 2562, 2564], [1057, 2561, 1090, 514, 2568, 2308]]];
 
   /**
-	 * Overriden routing patterns for orthogonal connections
-	 * where the vertices have 
-	 */
+   * Overriden routing patterns for orthogonal connections
+   * where the vertices have 
+   */
   static List<List<List<int>>> inlineRoutePatterns = [[null, [2114, 2568], null, null], [null, [514, 2081, 2114, 2568], null, null], [null, [2114, 2561], null, null], [[2081, 2562], [1057, 2114, 2568], [2184, 2562], null]];
 
   static List<double> vertexSeperations = new List<double>(5);
@@ -533,9 +532,9 @@ class EdgeStyle {
   static double hozBendProportion = 0.5;
 
   /**
-	 * An orthogonal connector that avoids connecting vertices and 
-	 * respects port constraints
-	 */
+   * An orthogonal connector that avoids connecting vertices and 
+   * respects port constraints
+   */
   static EdgeStyleFunction OrthConnector = (CellState state, CellState source, CellState target, List<Point2d> points, List<Point2d> result) {
     Graph graph = state._view._graph;
     bool sourceEdge = source == null ? false : graph.getModel().isEdge(source._cell);

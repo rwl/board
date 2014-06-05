@@ -16,8 +16,8 @@ part of graph.swing.util;
 
 class SwingConstants {
   /**
-	 * Contains an empty image of size 1, 1.
-	 */
+   * Contains an empty image of size 1, 1.
+   */
   static BufferedImage EMPTY_IMAGE;
 
   static init() {
@@ -31,63 +31,63 @@ class SwingConstants {
   }
 
   /**
-	 * Defines the color to be used for shadows. Default is gray.
-	 */
+   * Defines the color to be used for shadows. Default is gray.
+   */
   static Color SHADOW_COLOR;
 
   /**
-	 * Specifies the default valid color. Default is green.
-	 */
+   * Specifies the default valid color. Default is green.
+   */
   static Color DEFAULT_VALID_COLOR;
 
   /**
-	 * Specifies the default invalid color. Default is red.
-	 */
+   * Specifies the default invalid color. Default is red.
+   */
   static Color DEFAULT_INVALID_COLOR;
 
   /**
-	 * Defines the rubberband border color. 
-	 */
+   * Defines the rubberband border color. 
+   */
   static Color RUBBERBAND_BORDERCOLOR;
 
   /**
-	 * Defines the rubberband fill color with an alpha of 80.
-	 */
+   * Defines the rubberband fill color with an alpha of 80.
+   */
   static Color RUBBERBAND_FILLCOLOR;
 
   /**
-	 * Defines the handle border color. Default is black.
-	 */
+   * Defines the handle border color. Default is black.
+   */
   static Color HANDLE_BORDERCOLOR;
 
   /**
-	 * Defines the handle fill color. Default is green.
-	 */
+   * Defines the handle fill color. Default is green.
+   */
   static Color HANDLE_FILLCOLOR;
 
   /**
-	 * Defines the label handle fill color. Default is yellow.
-	 */
+   * Defines the label handle fill color. Default is yellow.
+   */
   static Color LABEL_HANDLE_FILLCOLOR;
 
   /**
-	 * Defines the connect handle fill color. Default is blue.
-	 */
+   * Defines the connect handle fill color. Default is blue.
+   */
   static Color CONNECT_HANDLE_FILLCOLOR;
 
   /**
-	 * Defines the handle fill color for locked handles. Default is red.
-	 */
+   * Defines the handle fill color for locked handles. Default is red.
+   */
   static Color LOCKED_HANDLE_FILLCOLOR;
 
   /**
-	 * Defines the selection color for edges. Default is green.
-	 */
+   * Defines the selection color for edges. Default is green.
+   */
   static Color EDGE_SELECTION_COLOR;
 
   /**
-	 * Defines the selection color for vertices. Default is green.
-	 */
+   * Defines the selection color for vertices. Default is green.
+   */
   static Color VERTEX_SELECTION_COLOR;
 
   static init2() {
@@ -123,33 +123,33 @@ class SwingConstants {
   }
 
   /**
-	 * Defines the stroke used for painting selected edges. Default is a dashed
-	 * line.
-	 */
+   * Defines the stroke used for painting selected edges. Default is a dashed
+   * line.
+   */
   static Stroke EDGE_SELECTION_STROKE = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0, [3.0, 3.0], 0.0);
 
   /**
-	 * Defines the stroke used for painting the border of selected vertices.
-	 * Default is a dashed line.
-	 */
+   * Defines the stroke used for painting the border of selected vertices.
+   * Default is a dashed line.
+   */
   static Stroke VERTEX_SELECTION_STROKE = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0, [3.0, 3.0], 0.0);
 
   /**
-	 * Defines the stroke used for painting the preview for new and existing edges
-	 * that are being changed. Default is a dashed line.
-	 */
+   * Defines the stroke used for painting the preview for new and existing edges
+   * that are being changed. Default is a dashed line.
+   */
   static Stroke PREVIEW_STROKE = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0, [3.0, 3.0], 0.0);
 
   /**
-	 * Defines the border used for painting the preview when vertices are being
-	 * resized, or cells and labels are being moved.
-	 */
+   * Defines the border used for painting the preview when vertices are being
+   * resized, or cells and labels are being moved.
+   */
   /*static Border PREVIEW_BORDER = new LineBorder(
 			SwingConstants.HANDLE_BORDERCOLOR)
 	{
 		/**
-		 * 
-		 */
+	   * 
+	   */
 		private static final long serialVersionUID = 1348016511717964310L;
 
 		public void paintBorder(Component c, Graphics g, int x, int y,

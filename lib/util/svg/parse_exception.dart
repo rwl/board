@@ -34,26 +34,26 @@ class ParseException extends RuntimeException
 {
 
 	/**
-	 * @serial The embedded exception if tunnelling, or null.
-	 */
+   * @serial The embedded exception if tunnelling, or null.
+   */
 	Exception exception;
 
 	/**
-	 * @serial The line number.
-	 */
+   * @serial The line number.
+   */
 	int lineNumber;
 
 	/**
-	 * @serial The column number.
-	 */
+   * @serial The column number.
+   */
 	int columnNumber;
 
 	/**
-	 * Creates a new ParseException.
-	 * @param message The error or warning message.
-	 * @param line The line of the last parsed character.
-	 * @param column The column of the last parsed character.
-	 */
+   * Creates a new ParseException.
+   * @param message The error or warning message.
+   * @param line The line of the last parsed character.
+   * @param column The column of the last parsed character.
+   */
 	ParseException(String message, int line, int column)
 	{
 		super(message);
@@ -63,13 +63,13 @@ class ParseException extends RuntimeException
 	}
 
 	/**
-	 * Creates a new ParseException wrapping an existing exception.
-	 *
-	 * <p>The existing exception will be embedded in the new
-	 * one, and its message will become the default message for
-	 * the ParseException.
-	 * @param e The exception to be wrapped in a ParseException.
-	 */
+   * Creates a new ParseException wrapping an existing exception.
+   *
+   * <p>The existing exception will be embedded in the new
+   * one, and its message will become the default message for
+   * the ParseException.
+   * @param e The exception to be wrapped in a ParseException.
+   */
 	ParseException(Exception e)
 	{
 		exception = e;
@@ -78,13 +78,13 @@ class ParseException extends RuntimeException
 	}
 
 	/**
-	 * Creates a new ParseException from an existing exception.
-	 *
-	 * <p>The existing exception will be embedded in the new
-	 * one, but the new exception will have its own message.
-	 * @param message The detail message.
-	 * @param e The exception to be wrapped in a SAXException.
-	 */
+   * Creates a new ParseException from an existing exception.
+   *
+   * <p>The existing exception will be embedded in the new
+   * one, but the new exception will have its own message.
+   * @param message The detail message.
+   * @param e The exception to be wrapped in a SAXException.
+   */
 	ParseException(String message, Exception e)
 	{
 		super(message);
@@ -92,13 +92,13 @@ class ParseException extends RuntimeException
 	}
 
 	/**
-	 * Return a detail message for this exception.
-	 *
-	 * <p>If there is a embedded exception, and if the ParseException
-	 * has no detail message of its own, this method will return
-	 * the detail message from the embedded exception.
-	 * @return The error or warning message.
-	 */
+   * Return a detail message for this exception.
+   *
+   * <p>If there is a embedded exception, and if the ParseException
+   * has no detail message of its own, this method will return
+   * the detail message from the embedded exception.
+   * @return The error or warning message.
+   */
 	String getMessage()
 	{
 		String message = super.getMessage();
@@ -114,25 +114,25 @@ class ParseException extends RuntimeException
 	}
 
 	/**
-	 * Return the embedded exception, if any.
-	 * @return The embedded exception, or null if there is none.
-	 */
+   * Return the embedded exception, if any.
+   * @return The embedded exception, or null if there is none.
+   */
 	Exception getException()
 	{
 		return exception;
 	}
 
 	/**
-	 * Returns the line of the last parsed character.
-	 */
+   * Returns the line of the last parsed character.
+   */
 	int getLineNumber()
 	{
 		return lineNumber;
 	}
 
 	/**
-	 * Returns the column of the last parsed character.
-	 */
+   * Returns the column of the last parsed character.
+   */
 	int getColumnNumber()
 	{
 		return columnNumber;

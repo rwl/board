@@ -3,10 +3,6 @@
  */
 part of graph.reader;
 
-//import java.util.ArrayList;
-//import java.util.Hashtable;
-//import java.util.List;
-//import java.util.Map;
 
 //import org.xml.sax.Attributes;
 //import org.xml.sax.SAXException;
@@ -18,55 +14,55 @@ part of graph.reader;
 abstract class GraphViewReader extends DefaultHandler {
 
   /**
-	 * Holds the canvas to be used for rendering the graph.
-	 */
+   * Holds the canvas to be used for rendering the graph.
+   */
   ICanvas _canvas;
 
   /**
-	 * Holds the global scale of the graph. This is set just before
-	 * createCanvas is called.
-	 */
+   * Holds the global scale of the graph. This is set just before
+   * createCanvas is called.
+   */
   double _scale = 1.0;
 
   /**
-	 * Specifies if labels should be rendered as HTML markup.
-	 */
+   * Specifies if labels should be rendered as HTML markup.
+   */
   bool _htmlLabels = false;
 
   /**
-	 * Sets the htmlLabels switch.
-	 */
+   * Sets the htmlLabels switch.
+   */
   void setHtmlLabels(bool value) {
     _htmlLabels = value;
   }
 
   /**
-	 * Returns the htmlLabels switch.
-	 */
+   * Returns the htmlLabels switch.
+   */
   bool isHtmlLabels() {
     return _htmlLabels;
   }
 
   /**
-	 * Returns the canvas to be used for rendering.
-	 * 
-	 * @param attrs Specifies the attributes of the new canvas.
-	 * @return Returns a new canvas.
-	 */
+   * Returns the canvas to be used for rendering.
+   * 
+   * @param attrs Specifies the attributes of the new canvas.
+   * @return Returns a new canvas.
+   */
   ICanvas createCanvas(Map<String, Object> attrs);
 
   /**
-	 * Returns the canvas that is used for rendering the graph.
-	 * 
-	 * @return Returns the canvas.
-	 */
+   * Returns the canvas that is used for rendering the graph.
+   * 
+   * @return Returns the canvas.
+   */
   ICanvas getCanvas() {
     return _canvas;
   }
 
-  /* (non-Javadoc)
-	 * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
-	 */
+  /**
+   * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
+   */
   void startElement(String uri, String localName, String qName, Attributes atts) //throws SAXException
   {
     String tagName = qName.toUpperCase();
@@ -87,11 +83,11 @@ abstract class GraphViewReader extends DefaultHandler {
   }
 
   /**
-	 * Parses the given element and paints it onto the canvas.
-	 * 
-	 * @param tagName Name of the node to be parsed.
-	 * @param attrs Attributes of the node to be parsed.
-	 */
+   * Parses the given element and paints it onto the canvas.
+   * 
+   * @param tagName Name of the node to be parsed.
+   * @param attrs Attributes of the node to be parsed.
+   */
   void parseElement(String tagName, Map<String, Object> attrs) {
     if (_canvas == null && tagName.toLowerCase() == "graph") {
       _scale = Utils.getDouble(attrs, "scale", 1.0);
@@ -116,10 +112,10 @@ abstract class GraphViewReader extends DefaultHandler {
   }
 
   /**
-	 * Parses the bounds, absolute points and label information from the style
-	 * of the state into its respective fields and returns the label of the
-	 * cell.
-	 */
+   * Parses the bounds, absolute points and label information from the style
+   * of the state into its respective fields and returns the label of the
+   * cell.
+   */
   String parseState(CellState state, bool edge) {
     Map<String, Object> style = state.getStyle();
 
@@ -149,11 +145,11 @@ abstract class GraphViewReader extends DefaultHandler {
   }
 
   /**
-	 * Parses the list of points into an object-oriented representation.
-	 * 
-	 * @param pts String containing a list of points.
-	 * @return Returns the points as a list of mxPoints.
-	 */
+   * Parses the list of points into an object-oriented representation.
+   * 
+   * @param pts String containing a list of points.
+   * @return Returns the points as a list of mxPoints.
+   */
   static List<Point2d> parsePoints(String pts) {
     List<Point2d> result = new List<Point2d>();
 

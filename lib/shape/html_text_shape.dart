@@ -5,7 +5,6 @@ part of graph.shape;
 
 //import java.awt.Graphics2D;
 //import java.awt.Rectangle;
-//import java.util.Map;
 
 //import javax.swing.CellRendererPane;
 
@@ -29,28 +28,28 @@ part of graph.shape;
 class HtmlTextShape implements ITextShape {
 
   /**
-	 * Specifies if linefeeds should be replaced with breaks in HTML markup.
-	 * Default is true.
-	 */
+   * Specifies if linefeeds should be replaced with breaks in HTML markup.
+   * Default is true.
+   */
   bool _replaceHtmlLinefeeds = true;
 
   /**
-	 * Returns replaceHtmlLinefeeds
-	 */
+   * Returns replaceHtmlLinefeeds
+   */
   bool isReplaceHtmlLinefeeds() {
     return _replaceHtmlLinefeeds;
   }
 
   /**
-	 * Returns replaceHtmlLinefeeds
-	 */
+   * Returns replaceHtmlLinefeeds
+   */
   void setReplaceHtmlLinefeeds(bool value) {
     _replaceHtmlLinefeeds = value;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   String _createHtmlDocument(Map<String, Object> style, String text, int w, int h) {
     String overflow = Utils.getString(style, Constants.STYLE_OVERFLOW, "");
 
@@ -64,8 +63,8 @@ class HtmlTextShape implements ITextShape {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void paintShape(Graphics2DCanvas canvas, String text, CellState state, Map<String, Object> style) {
     LightweightLabel textRenderer = LightweightLabel.getSharedInstance();
     CellRendererPane rendererPane = canvas.getRendererPane();

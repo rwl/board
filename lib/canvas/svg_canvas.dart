@@ -9,9 +9,6 @@ part of graph.canvas;
 //import java.io.IOException;
 //import java.io.InputStream;
 //import java.net.URL;
-//import java.util.Hashtable;
-//import java.util.List;
-//import java.util.Map;
 
 //import org.w3c.dom.Document;
 //import org.w3c.dom.Element;
@@ -24,50 +21,50 @@ part of graph.canvas;
 class SvgCanvas extends BasicCanvas {
 
   /**
-	 * Holds the HTML document that represents the canvas.
-	 */
+   * Holds the HTML document that represents the canvas.
+   */
   Document _document;
 
   /**
-	 * Used internally for looking up elements. Workaround for getElementById
-	 * not working.
-	 */
+   * Used internally for looking up elements. Workaround for getElementById
+   * not working.
+   */
   Map<String, Element> _gradients = new Map<String, Element>();
 
   /**
-	 * Used internally for looking up images.
-	 */
+   * Used internally for looking up images.
+   */
   Map<String, Element> _images = new Map<String, Element>();
 
   /**
-	 * 
-	 */
+   * 
+   */
   Element _defs = null;
 
   /**
-	 * Specifies if images should be embedded as base64 encoded strings.
-	 * Default is false.
-	 */
+   * Specifies if images should be embedded as base64 encoded strings.
+   * Default is false.
+   */
   bool _embedded = false;
 
   /**
-	 * Constructs a new SVG canvas for the specified dimension and scale.
-	 */
+   * Constructs a new SVG canvas for the specified dimension and scale.
+   */
 //  SvgCanvas() {
 //    this(null);
 //  }
 
   /**
-	 * Constructs a new SVG canvas for the specified bounds, scale and
-	 * background color.
-	 */
+   * Constructs a new SVG canvas for the specified bounds, scale and
+   * background color.
+   */
   SvgCanvas([Document document=null]) {
     setDocument(document);
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void appendSvgElement(Element node) {
     if (_document != null) {
       _document.documentElement.append(node);
@@ -75,8 +72,8 @@ class SvgCanvas extends BasicCanvas {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   Element _getDefsElement() {
     if (_defs == null) {
       _defs = _document.createElement("defs");
@@ -94,8 +91,8 @@ class SvgCanvas extends BasicCanvas {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   Element getGradientElement(String start, String end, String direction) {
     String id = getGradientId(start, end, direction);
     Element gradient = _gradients[id];
@@ -111,8 +108,8 @@ class SvgCanvas extends BasicCanvas {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   Element getGlassGradientElement() {
     String id = "mx-glass-gradient";
 
@@ -144,8 +141,8 @@ class SvgCanvas extends BasicCanvas {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   Element _createGradientElement(String start, String end, String direction) {
     Element gradient = _document.createElement("linearGradient");
     gradient.setAttribute("x1", "0%");
@@ -177,8 +174,8 @@ class SvgCanvas extends BasicCanvas {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   String getGradientId(String start, String end, String direction) {
     // Removes illegal characters from gradient ID
     if (start.startsWith("#")) {
@@ -216,15 +213,15 @@ class SvgCanvas extends BasicCanvas {
   }
 
   /**
-	 * Returns true if the given string ends with .png, .jpg or .gif.
-	 */
+   * Returns true if the given string ends with .png, .jpg or .gif.
+   */
   bool _isImageResource(String src) {
     return src != null && (src.toLowerCase().endsWith(".png") || src.toLowerCase().endsWith(".jpg") || src.toLowerCase().endsWith(".gif"));
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   InputStream _getResource(String src) {
     InputStream stream = null;
 
@@ -238,9 +235,9 @@ class SvgCanvas extends BasicCanvas {
   }
 
   /**
-	 * @throws IOException 
-	 * 
-	 */
+   * @throws IOException 
+   * 
+   */
   String _createDataUrl(String src) //throws IOException
   {
     String result = null;
@@ -272,8 +269,8 @@ class SvgCanvas extends BasicCanvas {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   Element _getEmbeddedImageElement(String src) {
     Element img = _images[src];
 
@@ -311,8 +308,8 @@ class SvgCanvas extends BasicCanvas {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   Element _createImageElement(double x, double y, double w, double h, String src, bool aspect, bool flipH, bool flipV, bool embedded) {
     Element elem = null;
 
@@ -373,39 +370,39 @@ class SvgCanvas extends BasicCanvas {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void setDocument(Document document) {
     this._document = document;
   }
 
   /**
-	 * Returns a reference to the document that represents the canvas.
-	 * 
-	 * @return Returns the document.
-	 */
+   * Returns a reference to the document that represents the canvas.
+   * 
+   * @return Returns the document.
+   */
   Document getDocument() {
     return _document;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void setEmbedded(bool value) {
     _embedded = value;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool isEmbedded() {
     return _embedded;
   }
 
   /*
-	 * (non-Javadoc)
-	 * @see graph.canvas.ICanvas#drawCell()
-	 */
+   * (non-Javadoc)
+   * @see graph.canvas.ICanvas#drawCell()
+   */
   Object drawCell(CellState state) {
     Map<String, Object> style = state.getStyle();
     Element elem = null;
@@ -457,9 +454,9 @@ class SvgCanvas extends BasicCanvas {
   }
 
   /*
-	 * (non-Javadoc)
-	 * @see graph.canvas.ICanvas#drawLabel()
-	 */
+   * (non-Javadoc)
+   * @see graph.canvas.ICanvas#drawLabel()
+   */
   Object drawLabel(String label, CellState state, bool html) {
     Rect bounds = state.getLabelBounds();
 
@@ -477,14 +474,14 @@ class SvgCanvas extends BasicCanvas {
   }
 
   /**
-	 * Draws the shape specified with the STYLE_SHAPE key in the given style.
-	 * 
-	 * @param x X-coordinate of the shape.
-	 * @param y Y-coordinate of the shape.
-	 * @param w Width of the shape.
-	 * @param h Height of the shape.
-	 * @param style Style of the the shape.
-	 */
+   * Draws the shape specified with the STYLE_SHAPE key in the given style.
+   * 
+   * @param x X-coordinate of the shape.
+   * @param y Y-coordinate of the shape.
+   * @param w Width of the shape.
+   * @param h Height of the shape.
+   * @param style Style of the the shape.
+   */
   Element drawShape(int x, int y, int w, int h, Map<String, Object> style) {
     String fillColor = Utils.getString(style, Constants.STYLE_FILLCOLOR, "none");
     String gradientColor = Utils.getString(style, Constants.STYLE_GRADIENTCOLOR, "none");
@@ -771,12 +768,12 @@ class SvgCanvas extends BasicCanvas {
   }
 
   /**
-	 * Draws the given lines as segments between all points of the given list
-	 * of mxPoints.
-	 * 
-	 * @param pts List of points that define the line.
-	 * @param style Style to be used for painting the line.
-	 */
+   * Draws the given lines as segments between all points of the given list
+   * of mxPoints.
+   * 
+   * @param pts List of points that define the line.
+   * @param style Style to be used for painting the line.
+   */
   Element drawLine(List<Point2d> pts, Map<String, Object> style) {
     Element group = _document.createElement("g");
     Element path = _document.createElement("path");
@@ -911,8 +908,8 @@ class SvgCanvas extends BasicCanvas {
   }
 
   /**
-	 * Draws the specified marker as a child path in the given parent.
-	 */
+   * Draws the specified marker as a child path in the given parent.
+   */
   Point2d drawMarker(Element parent, Object type, Point2d p0, Point2d pe, double size, double strokeWidth, String color) {
     Point2d offset = null;
 
@@ -966,15 +963,15 @@ class SvgCanvas extends BasicCanvas {
   }
 
   /**
-	 * Draws the specified text either using drawHtmlString or using drawString.
-	 * 
-	 * @param text Text to be painted.
-	 * @param x X-coordinate of the text.
-	 * @param y Y-coordinate of the text.
-	 * @param w Width of the text.
-	 * @param h Height of the text.
-	 * @param style Style to be used for painting the text.
-	 */
+   * Draws the specified text either using drawHtmlString or using drawString.
+   * 
+   * @param text Text to be painted.
+   * @param x X-coordinate of the text.
+   * @param y Y-coordinate of the text.
+   * @param w Width of the text.
+   * @param h Height of the text.
+   * @param style Style to be used for painting the text.
+   */
   Object drawText(String text, int x, int y, int w, int h, Map<String, Object> style) {
     Element elem = null;
     String fontColor = Utils.getString(style, Constants.STYLE_FONTCOLOR, "black");

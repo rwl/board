@@ -10,10 +10,6 @@
  */
 part of graph.layout.hierarchical.model;
 
-//import java.util.ArrayList;
-//import java.util.Collection;
-//import java.util.Iterator;
-//import java.util.List;
 
 /**
  * An abstraction of an internal node in the hierarchy layout
@@ -21,52 +17,52 @@ part of graph.layout.hierarchical.model;
 class GraphHierarchyNode extends GraphAbstractHierarchyCell {
 
   /**
-	 * Shared empty connection map to return instead of null in applyMap.
-	 */
+   * Shared empty connection map to return instead of null in applyMap.
+   */
   static Iterable<GraphHierarchyEdge> emptyConnectionMap = new List<GraphHierarchyEdge>(0);
 
   /**
-	 * The graph cell this object represents.
-	 */
+   * The graph cell this object represents.
+   */
   Object cell = null;
 
   /**
-	 * Collection of hierarchy edges that have this node as a target
-	 */
+   * Collection of hierarchy edges that have this node as a target
+   */
   Iterable<GraphHierarchyEdge> connectsAsTarget = emptyConnectionMap;
 
   /**
-	 * Collection of hierarchy edges that have this node as a source
-	 */
+   * Collection of hierarchy edges that have this node as a source
+   */
   Iterable<GraphHierarchyEdge> connectsAsSource = emptyConnectionMap;
 
   /**
-	 * Assigns a unique hashcode for each node. Used by the model dfs instead
-	 * of copying HashSets
-	 */
+   * Assigns a unique hashcode for each node. Used by the model dfs instead
+   * of copying HashSets
+   */
   List<int> hashCode;
 
   /**
-	 * Constructs an internal node to represent the specified real graph cell
-	 * @param cell the real graph cell this node represents
-	 */
+   * Constructs an internal node to represent the specified real graph cell
+   * @param cell the real graph cell this node represents
+   */
   GraphHierarchyNode(Object cell) {
     this.cell = cell;
   }
 
   /**
-	 * Returns the integer value of the layer that this node resides in
-	 * @return the integer value of the layer that this node resides in
-	 */
+   * Returns the integer value of the layer that this node resides in
+   * @return the integer value of the layer that this node resides in
+   */
   int getRankValue() {
     return maxRank;
   }
 
   /**
-	 * Returns the cells this cell connects to on the next layer up
-	 * @param layer the layer this cell is on
-	 * @return the cells this cell connects to on the next layer up
-	 */
+   * Returns the cells this cell connects to on the next layer up
+   * @param layer the layer this cell is on
+   * @return the cells this cell connects to on the next layer up
+   */
   //	@SuppressWarnings("unchecked")
   List<GraphAbstractHierarchyCell> getNextLayerConnectedCells(int layer) {
     if (_nextLayerConnectedCells == null) {
@@ -92,10 +88,10 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell {
   }
 
   /**
-	 * Returns the cells this cell connects to on the next layer down
-	 * @param layer the layer this cell is on
-	 * @return the cells this cell connects to on the next layer down
-	 */
+   * Returns the cells this cell connects to on the next layer down
+   * @param layer the layer this cell is on
+   * @return the cells this cell connects to on the next layer down
+   */
   //	@SuppressWarnings("unchecked")
   List<GraphAbstractHierarchyCell> getPreviousLayerConnectedCells(int layer) {
     if (_previousLayerConnectedCells == null) {
@@ -120,40 +116,40 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell {
   }
 
   /**
-	 * 
-	 * @return whether or not this cell is an edge
-	 */
+   * 
+   * @return whether or not this cell is an edge
+   */
   bool isEdge() {
     return false;
   }
 
   /**
-	 * 
-	 * @return whether or not this cell is a node
-	 */
+   * 
+   * @return whether or not this cell is a node
+   */
   bool isVertex() {
     return true;
   }
 
   /**
-	 * Gets the value of temp for the specified layer
-	 * 
-	 * @param layer
-	 *            the layer relating to a specific entry into temp
-	 * @return the value for that layer
-	 */
+   * Gets the value of temp for the specified layer
+   * 
+   * @param layer
+   *            the layer relating to a specific entry into temp
+   * @return the value for that layer
+   */
   int getGeneralPurposeVariable(int layer) {
     return temp[0];
   }
 
   /**
-	 * Set the value of temp for the specified layer
-	 * 
-	 * @param layer
-	 *            the layer relating to a specific entry into temp
-	 * @param value
-	 *            the value for that layer
-	 */
+   * Set the value of temp for the specified layer
+   * 
+   * @param layer
+   *            the layer relating to a specific entry into temp
+   * @param value
+   *            the value for that layer
+   */
   void setGeneralPurposeVariable(int layer, int value) {
     temp[0] = value;
   }

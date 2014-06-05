@@ -1,7 +1,5 @@
 part of graph.reader;
 
-//import java.util.Hashtable;
-//import java.util.Map;
 
 //import org.w3c.dom.Element;
 //import org.w3c.dom.Node;
@@ -53,26 +51,26 @@ typedef void IElementHandler(Element elt);
  */
 class DomOutputParser {
   /**
-	 * 
-	 */
+   * 
+   */
   ICanvas2D _canvas;
 
   /**
-	 * 
-	 */
+   * 
+   */
   /*transient*/ Map<String, IElementHandler> _handlers = new Map<String, IElementHandler>();
 
   /**
-	 * 
-	 */
+   * 
+   */
   DomOutputParser(ICanvas2D canvas) {
     this._canvas = canvas;
     _initHandlers();
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void read(Node node) {
     while (node != null) {
       if (node is Element) {
@@ -89,8 +87,8 @@ class DomOutputParser {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void _initHandlers() {
     _handlers["save"] = (Element elt) {
       _canvas.save();
@@ -250,8 +248,8 @@ class DomOutputParser {
   }
 
   /**
-	 * Returns the given attribute value or an empty string.
-	 */
+   * Returns the given attribute value or an empty string.
+   */
   String _getValue(Element elt, String name, String defaultValue) {
     String value = elt.getAttribute(name);
 

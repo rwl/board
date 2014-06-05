@@ -8,11 +8,9 @@ import 'dart:html' show Element, Node;
 import 'dart:math' as Math;
 import 'dart:collection' show HashSet;
 
-import '../compat/exception.dart';
+import '../util/java/exception.dart';
 
-import '../model/model.dart' show AtomicGraphModelChange;
-
-import '../util/util.dart' show Event, EventObj, EventSource, Point2d, UndoableEdit, UndoableChange, Rect;
+import '../util/util.dart' show IEventListener, Event, EventObj, EventSource, Point2d, UndoableEdit, UndoableChange, Rect;
 
 part 'cell.dart';
 part 'cell_path.dart';

@@ -13,25 +13,25 @@ class RGB extends PngEncodeParam
 	bool backgroundSet = false;
 
 	/**
-	 * Suppresses the 'bKGD' chunk from being output.
-	 */
+   * Suppresses the 'bKGD' chunk from being output.
+   */
 	void unsetBackground()
 	{
 		backgroundSet = false;
 	}
 
 	/**
-	 * Returns true if a 'bKGD' chunk will be output.
-	 */
+   * Returns true if a 'bKGD' chunk will be output.
+   */
 	bool isBackgroundSet()
 	{
 		return backgroundSet;
 	}
 
 	/**
-	 * Sets the desired bit depth for an RGB image.  The bit
-	 * depth must be 8 or 16.
-	 */
+   * Sets the desired bit depth for an RGB image.  The bit
+   * depth must be 8 or 16.
+   */
 	void setBitDepth(int bitDepth)
 	{
 		if (bitDepth != 8 && bitDepth != 16)
@@ -47,11 +47,11 @@ class RGB extends PngEncodeParam
 	List<int> backgroundRGB;
 
 	/**
-	 * Sets the RGB value of the suggested background color.
-	 * The <code>rgb</code> parameter should have 3 entries.
-	 *
-	 * <p> The 'bKGD' chunk will encode this information.
-	 */
+   * Sets the RGB value of the suggested background color.
+   * The <code>rgb</code> parameter should have 3 entries.
+   *
+   * <p> The 'bKGD' chunk will encode this information.
+   */
 	void setBackgroundRGB(List<int> rgb)
 	{
 		if (rgb.length != 3)
@@ -63,13 +63,13 @@ class RGB extends PngEncodeParam
 	}
 
 	/**
-	 * Returns the RGB value of the suggested background color.
-	 *
-	 * <p> If the background color has not previously been set, or has been
-	 * unset, an <code>IllegalStateException</code> will be thrown.
-	 *
-	 * @throws IllegalStateException if the background color is not set.
-	 */
+   * Returns the RGB value of the suggested background color.
+   *
+   * <p> If the background color has not previously been set, or has been
+   * unset, an <code>IllegalStateException</code> will be thrown.
+   *
+   * @throws IllegalStateException if the background color is not set.
+   */
 	List<int> getBackgroundRGB()
 	{
 		if (!backgroundSet)
@@ -84,13 +84,13 @@ class RGB extends PngEncodeParam
 	List<int> transparency;
 
 	/**
-	 * Sets the RGB value to be used to denote transparency.
-	 *
-	 * <p> Setting this attribute will cause the alpha channel
-	 * of the input image to be ignored.
-	 *
-	 * <p> The 'tRNS' chunk will encode this information.
-	 */
+   * Sets the RGB value to be used to denote transparency.
+   *
+   * <p> Setting this attribute will cause the alpha channel
+   * of the input image to be ignored.
+   *
+   * <p> The 'tRNS' chunk will encode this information.
+   */
 	void setTransparentRGB(List<int> transparentRGB)
 	{
 		transparency = (transparentRGB.clone());
@@ -98,14 +98,14 @@ class RGB extends PngEncodeParam
 	}
 
 	/**
-	 * Returns the RGB value to be used to denote transparency.
-	 *
-	 * <p> If the transparent color has not previously been set,
-	 * or has been unset, an <code>IllegalStateException</code>
-	 * will be thrown.
-	 *
-	 * @throws IllegalStateException if the transparent color is not set.
-	 */
+   * Returns the RGB value to be used to denote transparency.
+   *
+   * <p> If the transparent color has not previously been set,
+   * or has been unset, an <code>IllegalStateException</code>
+   * will be thrown.
+   *
+   * @throws IllegalStateException if the transparent color is not set.
+   */
 	List<int> getTransparentRGB()
 	{
 		if (!transparencySet)

@@ -11,13 +11,6 @@
 
 part of graph.layout.hierarchical.stage;
 
-//import java.util.ArrayList;
-//import java.util.Arrays;
-//import java.util.Collection;
-//import java.util.Iterator;
-//import java.util.LinkedHashMap;
-//import java.util.List;
-//import java.util.Map;
 
 /**
  * Performs a vertex ordering within ranks as described by Gansner et al 1993
@@ -25,25 +18,25 @@ part of graph.layout.hierarchical.stage;
 class MedianHybridCrossingReduction implements HierarchicalLayoutStage /*, JGraphLayout.Stoppable*/
 {
   /**
-	 * Reference to the enclosing layout algorithm
-	 */
+   * Reference to the enclosing layout algorithm
+   */
   HierarchicalLayout _layout;
 
   /**
-	 * The maximum number of iterations to perform whilst reducing edge
-	 * crossings
-	 */
+   * The maximum number of iterations to perform whilst reducing edge
+   * crossings
+   */
   int _maxIterations = 24;
 
   /**
-	 * Stores each rank as a collection of cells in the best order found for
-	 * each layer so far
-	 */
+   * Stores each rank as a collection of cells in the best order found for
+   * each layer so far
+   */
   List<List<GraphAbstractHierarchyCell>> _nestedBestRanks = null;
 
   /**
-	 * The total number of crossings found in the best configuration so far
-	 */
+   * The total number of crossings found in the best configuration so far
+   */
   int _currentBestCrossings = 0;
 
   int _iterationsWithoutImprovement = 0;
@@ -51,16 +44,16 @@ class MedianHybridCrossingReduction implements HierarchicalLayoutStage /*, JGrap
   int _maxNoImprovementIterations = 2;
 
   /**
-	 * Constructor that has the roots specified
-	 */
+   * Constructor that has the roots specified
+   */
   MedianHybridCrossingReduction(HierarchicalLayout layout) {
     this._layout = layout;
   }
 
   /**
-	 * Performs a vertex ordering within ranks as described by Gansner et al
-	 * 1993
-	 */
+   * Performs a vertex ordering within ranks as described by Gansner et al
+   * 1993
+   */
   void execute(Object parent) {
     GraphHierarchyModel model = _layout.getModel();
 
@@ -137,13 +130,13 @@ class MedianHybridCrossingReduction implements HierarchicalLayoutStage /*, JGrap
   }
 
   /**
-	 * Calculates the total number of edge crossing in the current graph
-	 * 
-	 * @param model
-	 *            the internal model describing the hierarchy
-	 * @return the current number of edge crossings in the hierarchy graph model
-	 *         in the current candidate layout
-	 */
+   * Calculates the total number of edge crossing in the current graph
+   * 
+   * @param model
+   *            the internal model describing the hierarchy
+   * @return the current number of edge crossings in the hierarchy graph model
+   *         in the current candidate layout
+   */
   int _calculateCrossings(GraphHierarchyModel model) {
     // The intra-rank order of cells are stored within the temp variables
     // on cells
@@ -158,15 +151,15 @@ class MedianHybridCrossingReduction implements HierarchicalLayoutStage /*, JGrap
   }
 
   /**
-	 * Calculates the number of edges crossings between the specified rank and
-	 * the rank below it
-	 * 
-	 * @param i
-	 *            the topmost rank of the pair ( higher rank value )
-	 * @param model
-	 *            the internal hierarchy model of the graph
-	 * @return the number of edges crossings with the rank beneath
-	 */
+   * Calculates the number of edges crossings between the specified rank and
+   * the rank below it
+   * 
+   * @param i
+   *            the topmost rank of the pair ( higher rank value )
+   * @param model
+   *            the internal hierarchy model of the graph
+   * @return the number of edges crossings with the rank beneath
+   */
   int _calculateRankCrossing(int i, GraphHierarchyModel model) {
     int totalCrossings = 0;
     GraphHierarchyRank rank = model.ranks.get(new int(i));
@@ -228,14 +221,14 @@ class MedianHybridCrossingReduction implements HierarchicalLayoutStage /*, JGrap
   }
 
   /**
-	 * Takes each possible adjacent cell pair on each rank and checks if
-	 * swapping them around reduces the number of crossing
-	 * 
-	 * @param mainLoopIteration
-	 *            the iteration number of the main loop
-	 * @param model
-	 *            the internal model describing the hierarchy
-	 */
+   * Takes each possible adjacent cell pair on each rank and checks if
+   * swapping them around reduces the number of crossing
+   * 
+   * @param mainLoopIteration
+   *            the iteration number of the main loop
+   * @param model
+   *            the internal model describing the hierarchy
+   */
   void _transpose(int mainLoopIteration, GraphHierarchyModel model) {
     bool improved = true;
 
@@ -372,14 +365,14 @@ class MedianHybridCrossingReduction implements HierarchicalLayoutStage /*, JGrap
   }
 
   /**
-	 * Sweeps up or down the layout attempting to minimise the median placement
-	 * of connected cells on adjacent ranks
-	 * 
-	 * @param iteration
-	 *            the iteration number of the main loop
-	 * @param model
-	 *            the internal model describing the hierarchy
-	 */
+   * Sweeps up or down the layout attempting to minimise the median placement
+   * of connected cells on adjacent ranks
+   * 
+   * @param iteration
+   *            the iteration number of the main loop
+   * @param model
+   *            the internal model describing the hierarchy
+   */
   void _weightedMedian(int iteration, GraphHierarchyModel model) {
     // Reverse sweep direction each time through this method
     bool downwardSweep = (iteration % 2 == 0);
@@ -396,14 +389,14 @@ class MedianHybridCrossingReduction implements HierarchicalLayoutStage /*, JGrap
   }
 
   /**
-	 * Attempts to minimise the median placement of connected cells on this rank
-	 * and one of the adjacent ranks
-	 * 
-	 * @param rankValue
-	 *            the layer number of this rank
-	 * @param downwardSweep
-	 *            whether or not this is a downward sweep through the graph
-	 */
+   * Attempts to minimise the median placement of connected cells on this rank
+   * and one of the adjacent ranks
+   * 
+   * @param rankValue
+   *            the layer number of this rank
+   * @param downwardSweep
+   *            whether or not this is a downward sweep through the graph
+   */
   void _medianRank(int rankValue, bool downwardSweep) {
     int numCellsForRank = _nestedBestRanks[rankValue].length;
     ArrayList<_MedianCellSorter> medianValues = new List<_MedianCellSorter>(numCellsForRank);
@@ -460,16 +453,16 @@ class MedianHybridCrossingReduction implements HierarchicalLayoutStage /*, JGrap
   }
 
   /**
-	 * Calculates the median rank order positioning for the specified cell using
-	 * the connected cells on the specified rank
-	 * 
-	 * @param connectedCells
-	 *            the cells on the specified rank connected to the specified
-	 *            cell
-	 * @param rankValue
-	 *            the rank that the connected cell lie upon
-	 * @return the median rank ordering value of the connected cells
-	 */
+   * Calculates the median rank order positioning for the specified cell using
+   * the connected cells on the specified rank
+   * 
+   * @param connectedCells
+   *            the cells on the specified rank connected to the specified
+   *            cell
+   * @param rankValue
+   *            the rank that the connected cell lie upon
+   * @return the median rank ordering value of the connected cells
+   */
   double _medianValue(Iterable<GraphAbstractHierarchyCell> connectedCells, int rankValue) {
     List<double> medianValues = new List<double>(connectedCells.length);
     int arrayCount = 0;

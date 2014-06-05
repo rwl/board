@@ -3,78 +3,78 @@ part of graph.layout;
 class StackLayout extends GraphLayout {
 
   /**
-	 * Specifies the orientation of the layout. Default is true.
-	 */
+   * Specifies the orientation of the layout. Default is true.
+   */
   bool horizontal;
 
   /**
-	 * Specifies the spacing between the cells. Default is 0.
-	 */
+   * Specifies the spacing between the cells. Default is 0.
+   */
   int spacing;
 
   /**
-	 * Specifies the horizontal origin of the layout. Default is 0.
-	 */
+   * Specifies the horizontal origin of the layout. Default is 0.
+   */
   int x0;
 
   /**
-	 * Specifies the vertical origin of the layout. Default is 0.
-	 */
+   * Specifies the vertical origin of the layout. Default is 0.
+   */
   int y0;
 
   /**
-	 * Border to be added if fill is true. Default is 0.
-	 */
+   * Border to be added if fill is true. Default is 0.
+   */
   int border;
 
   /**
-	 * bool indicating if dimension should be changed to fill out the parent
-	 * cell. Default is false.
-	 */
+   * bool indicating if dimension should be changed to fill out the parent
+   * cell. Default is false.
+   */
   bool fill = false;
 
   /**
-	 * If the parent should be resized to match the width/height of the
-	 * stack. Default is false.
-	 */
+   * If the parent should be resized to match the width/height of the
+   * stack. Default is false.
+   */
   bool resizeParent = false;
 
   /**
-	 * Value at which a new column or row should be created. Default is 0.
-	 */
+   * Value at which a new column or row should be created. Default is 0.
+   */
   int wrap = 0;
 
   /**
-	 * Constructs a new stack layout layout for the specified graph,
-	 * spacing, orientation and offset.
-	 */
+   * Constructs a new stack layout layout for the specified graph,
+   * spacing, orientation and offset.
+   */
   //	StackLayout(Graph graph)
   //	{
   //		this(graph, true);
   //	}
 
   /**
-	 * Constructs a new stack layout layout for the specified graph,
-	 * spacing, orientation and offset.
-	 */
+   * Constructs a new stack layout layout for the specified graph,
+   * spacing, orientation and offset.
+   */
   //	StackLayout(Graph graph, bool horizontal)
   //	{
   //		this(graph, horizontal, 0);
   //	}
 
   /**
-	 * Constructs a new stack layout layout for the specified graph,
-	 * spacing, orientation and offset.
-	 */
+   * Constructs a new stack layout layout for the specified graph,
+   * spacing, orientation and offset.
+   */
   //	StackLayout(Graph graph, bool horizontal, int spacing)
   //	{
   //		this(graph, horizontal, spacing, 0, 0, 0);
   //	}
 
   /**
-	 * Constructs a new stack layout layout for the specified graph,
-	 * spacing, orientation and offset.
-	 */
+   * Constructs a new stack layout layout for the specified graph,
+   * spacing, orientation and offset.
+   */
   StackLayout(Graph graph, [bool horizontal = true, int spacing = 0, int x0 = 0, int y0 = 0, int border = 0]) : super(graph) {
     this.horizontal = horizontal;
     this.spacing = spacing;
@@ -84,16 +84,16 @@ class StackLayout extends GraphLayout {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool isHorizontal() {
     return horizontal;
   }
 
   /*
-	 * (non-Javadoc)
-	 * @see graph.layout.GraphLayout#move(java.lang.Object, double, double)
-	 */
+   * (non-Javadoc)
+   * @see graph.layout.GraphLayout#move(java.lang.Object, double, double)
+   */
   void moveCell(Object cell, double x, double y) {
     IGraphModel model = graph.getModel();
     Object parent = model.getParent(cell);
@@ -129,7 +129,7 @@ class StackLayout extends GraphLayout {
       }
 
       // Changes child order in parent
-      int idx = (parent as ICell).getIndex(cell as ICell);
+      int idx = parent.getIndex(cell);
       idx = Math.max(0, i - ((i > idx) ? 1 : 0));
 
       model.add(parent, cell, idx);
@@ -137,16 +137,16 @@ class StackLayout extends GraphLayout {
   }
 
   /**
-	 * Hook for subclassers to return the container size.
-	 */
+   * Hook for subclassers to return the container size.
+   */
   Rect getContainerSize() {
     return new Rect();
   }
 
   /*
-	 * (non-Javadoc)
-	 * @see graph.layout.IGraphLayout#execute(java.lang.Object)
-	 */
+   * (non-Javadoc)
+   * @see graph.layout.IGraphLayout#execute(java.lang.Object)
+   */
   void execute(Object parent) {
     if (parent != null) {
       bool horizontal = isHorizontal();

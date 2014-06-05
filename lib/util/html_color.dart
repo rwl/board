@@ -4,8 +4,6 @@
 part of graph.util;
 
 //import java.awt.Color;
-//import java.util.HashMap;
-//import java.util.regex.Pattern;
 
 /**
  * Contains various helper methods for use with Graph.
@@ -13,15 +11,15 @@ part of graph.util;
 class HtmlColor {
 
   /**
-	 * HTML color lookup table. Supports the 147 CSS color names.
-	 */
+   * HTML color lookup table. Supports the 147 CSS color names.
+   */
   static HashMap<String, awt.Color> _htmlColors = new HashMap<String, awt.Color>();
 
   static final RegExp _rgbRegex = new RegExp(r"rgba?\\([^)]*\\)", caseSensitive: false);
 
   /**
-	 * 
-	 */
+   * 
+   */
   static String hexString(awt.Color color) {
     int r = color.getRed();
     int g = color.getGreen();
@@ -31,30 +29,30 @@ class HtmlColor {
   }
 
   /**
-	 * Returns a hex representation for the given color.
-	 * 
-	 * @param color
-	 *            Color to return the hex string for.
-	 * @return Returns a hex string for the given color.
-	 */
+   * Returns a hex representation for the given color.
+   * 
+   * @param color
+   *            Color to return the hex string for.
+   * @return Returns a hex string for the given color.
+   */
   static String getHexColorString(awt.Color color) {
     return int.toHexString((color.getRGB() & 0x00FFFFFF) | (color.getAlpha() << 24));
   }
 
   /**
-	 * Convert a string representing a 24/32bit hex color value into a Color
-	 * object. All 147 CSS color names and none are also supported. None returns
-	 * null.
-	 * Examples of possible hex color values are: #C3D9FF, #6482B9 and #774400,
-	 * but note that you do not include the "#" in the string passed in
-	 * 
-	 * @param str
-	 *            the 24/32bit hex string value (ARGB)
-	 * @return java.awt.Color (24bit RGB on JDK 1.1, 24/32bit ARGB on JDK1.2)
-	 * @exception FormatException
-	 *                if the specified string cannot be interpreted as a
-	 *                hexidecimal integer
-	 */
+   * Convert a string representing a 24/32bit hex color value into a Color
+   * object. All 147 CSS color names and none are also supported. None returns
+   * null.
+   * Examples of possible hex color values are: #C3D9FF, #6482B9 and #774400,
+   * but note that you do not include the "#" in the string passed in
+   * 
+   * @param str
+   *            the 24/32bit hex string value (ARGB)
+   * @return java.awt.Color (24bit RGB on JDK 1.1, 24/32bit ARGB on JDK1.2)
+   * @exception FormatException
+   *                if the specified string cannot be interpreted as a
+   *                hexidecimal integer
+   */
   static awt.Color parseColor(String str) //throws NumberFormatException
   {
     if (str == null || str == Constants.NONE) {
@@ -125,8 +123,8 @@ class HtmlColor {
   }
 
   /**
-	 * Initializes HTML color table.
-	 */
+   * Initializes HTML color table.
+   */
   init() {
     _htmlColors["aliceblue"] = parseColor("#F0F8FF");
     _htmlColors["antiquewhite"] = parseColor("#FAEBD7");

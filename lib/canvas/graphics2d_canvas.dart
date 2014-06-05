@@ -16,8 +16,6 @@ part of graph.canvas;
 //import java.awt.Stroke;
 //import java.awt.geom.AffineTransform;
 //import java.awt.geom.GeneralPath;
-//import java.util.HashMap;
-//import java.util.Map;
 
 //import javax.swing.CellRendererPane;
 
@@ -26,34 +24,34 @@ part of graph.canvas;
  */
 class Graphics2DCanvas extends BasicCanvas {
   /**
-	 * 
-	 */
+   * 
+   */
   static final String TEXT_SHAPE_DEFAULT = "default";
 
   /**
-	 * 
-	 */
+   * 
+   */
   static final String TEXT_SHAPE_HTML = "html";
 
   /**
-	 * Specifies the image scaling quality. Default is Image.SCALE_SMOOTH.
-	 */
+   * Specifies the image scaling quality. Default is Image.SCALE_SMOOTH.
+   */
   static int IMAGE_SCALING = Image.SCALE_SMOOTH;
 
   /**
-	 * Maps from names to mxIVertexShape instances.
-	 */
+   * Maps from names to mxIVertexShape instances.
+   */
   static Map<String, IShape> _shapes = new HashMap<String, IShape>();
 
   /**
-	 * Maps from names to ITextShape instances. There are currently three different
-	 * hardcoded text shapes available here: default, html and wrapped.
-	 */
+   * Maps from names to ITextShape instances. There are currently three different
+   * hardcoded text shapes available here: default, html and wrapped.
+   */
   static Map<String, ITextShape> _textShapes = new HashMap<String, ITextShape>();
 
   /**
-	 * Static initializer.
-	 */
+   * Static initializer.
+   */
   static init() {
     putShape(Constants.SHAPE_ACTOR, new ActorShape());
     putShape(Constants.SHAPE_ARROW, new ArrowShape());
@@ -77,25 +75,25 @@ class Graphics2DCanvas extends BasicCanvas {
   }
 
   /**
-	 * Optional renderer pane to be used for HTML label rendering.
-	 */
+   * Optional renderer pane to be used for HTML label rendering.
+   */
   CellRendererPane _rendererPane;
 
   /**
-	 * Global graphics handle to the image.
-	 */
+   * Global graphics handle to the image.
+   */
   Graphics2D _g;
 
   /**
-	 * Constructs a new graphics canvas with an empty graphics object.
-	 */
+   * Constructs a new graphics canvas with an empty graphics object.
+   */
 //  Graphics2DCanvas() {
 //    this(null);
 //  }
 
   /**
-	 * Constructs a new graphics canvas for the given graphics object.
-	 */
+   * Constructs a new graphics canvas for the given graphics object.
+   */
   Graphics2DCanvas([Graphics2D g=null]) {
     this._g = g;
 
@@ -108,15 +106,15 @@ class Graphics2DCanvas extends BasicCanvas {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   static void putShape(String name, IShape shape) {
     _shapes[name] = shape;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   IShape getShape(Map<String, Object> style) {
     String name = Utils.getString(style, Constants.STYLE_SHAPE, null);
     IShape shape = _shapes[name];
@@ -129,15 +127,15 @@ class Graphics2DCanvas extends BasicCanvas {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   static void putTextShape(String name, ITextShape shape) {
     _textShapes[name] = shape;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   ITextShape getTextShape(Map<String, Object> style, bool html) {
     String name;
 
@@ -151,30 +149,30 @@ class Graphics2DCanvas extends BasicCanvas {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   CellRendererPane getRendererPane() {
     return _rendererPane;
   }
 
   /**
-	 * Returns the graphics object for this canvas.
-	 */
+   * Returns the graphics object for this canvas.
+   */
   Graphics2D getGraphics() {
     return _g;
   }
 
   /**
-	 * Sets the graphics object for this canvas.
-	 */
+   * Sets the graphics object for this canvas.
+   */
   void setGraphics(Graphics2D g) {
     this._g = g;
   }
 
   /*
-	 * (non-Javadoc)
-	 * @see graph.canvas.ICanvas#drawCell()
-	 */
+   * (non-Javadoc)
+   * @see graph.canvas.ICanvas#drawCell()
+   */
   Object drawCell(CellState state) {
     Map<String, Object> style = state.getStyle();
     IShape shape = getShape(style);
@@ -195,9 +193,9 @@ class Graphics2DCanvas extends BasicCanvas {
   }
 
   /*
-	 * (non-Javadoc)
-	 * @see graph.canvas.ICanvas#drawLabel()
-	 */
+   * (non-Javadoc)
+   * @see graph.canvas.ICanvas#drawLabel()
+   */
   Object drawLabel(String text, CellState state, bool html) {
     Map<String, Object> style = state.getStyle();
     ITextShape shape = getTextShape(style, html);
@@ -223,16 +221,16 @@ class Graphics2DCanvas extends BasicCanvas {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   //	void drawImage(awt.Rectangle bounds, String imageUrl)
   //	{
   //		drawImage(bounds, imageUrl, PRESERVE_IMAGE_ASPECT, false, false);
   //	}
 
   /**
-	 * 
-	 */
+   * 
+   */
   void drawImage(awt.Rectangle bounds, String imageUrl, [bool preserveAspect = null, bool flipH = false, bool flipV = false]) {
     if (imageUrl != null && bounds.getWidth() > 0 && bounds.getHeight() > 0) {
       Image img = loadImage(imageUrl);
@@ -295,22 +293,22 @@ class Graphics2DCanvas extends BasicCanvas {
   }
 
   /**
-	 * Implements the actual graphics call.
-	 */
+   * Implements the actual graphics call.
+   */
   void _drawImageImpl(Image image, int x, int y) {
     _g.drawImage(image, x, y, null);
   }
 
   /**
-	 * Returns the size for the given image.
-	 */
+   * Returns the size for the given image.
+   */
   awt.Dimension _getImageSize(Image image) {
     return new awt.Dimension(image.getWidth(null), image.getHeight(null));
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void paintPolyline(List<Point2d> points, bool rounded) {
     if (points != null && points.length > 1) {
       Point2d pt = points[0];
@@ -375,8 +373,8 @@ class Graphics2DCanvas extends BasicCanvas {
   }
 
   /**
-	 *
-	 */
+   *
+   */
   void paintRectangle(awt.Rectangle bounds, awt.Color background, awt.Color border) {
     if (background != null) {
       _g.setColor(background);
@@ -390,16 +388,16 @@ class Graphics2DCanvas extends BasicCanvas {
   }
 
   /**
-	 *
-	 */
+   *
+   */
   //	void fillShape(Shape shape)
   //	{
   //		fillShape(shape, false);
   //	}
 
   /**
-	 *
-	 */
+   *
+   */
   void fillShape(Shape shape, [bool shadow = false]) {
     int shadowOffsetX = (shadow) ? Constants.SHADOW_OFFSETX : 0;
     int shadowOffsetY = (shadow) ? Constants.SHADOW_OFFSETY : 0;
@@ -424,8 +422,8 @@ class Graphics2DCanvas extends BasicCanvas {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   Stroke createStroke(Map<String, Object> style) {
     double width = Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1.0) * _scale;
     bool dashed = Utils.isTrue(style, Constants.STYLE_DASHED);
@@ -444,8 +442,8 @@ class Graphics2DCanvas extends BasicCanvas {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   Paint createFillPaint(Rect bounds, Map<String, Object> style) {
     awt.Color fillColor = Utils.getColor(style, Constants.STYLE_FILLCOLOR);
     Paint fillPaint = null;
@@ -479,8 +477,8 @@ class Graphics2DCanvas extends BasicCanvas {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   Graphics2D createTemporaryGraphics(Map<String, Object> style, double opacity, Rect bounds) {
     Graphics2D temporaryGraphics = _g.create() as Graphics2D;
 

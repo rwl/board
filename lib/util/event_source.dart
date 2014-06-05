@@ -3,8 +3,6 @@
  */
 part of graph.util;
 
-//import java.util.ArrayList;
-//import java.util.List;
 
 /**
  * Defines the requirements for an object that listens to an event source.
@@ -29,40 +27,40 @@ typedef IEventListener(Object sender, EventObj evt);
 class EventSource {
 
   /**
-	 * Holds the event names and associated listeners in an array. The array
-	 * contains the event name followed by the respective listener for each
-	 * registered listener.
-	 */
+   * Holds the event names and associated listeners in an array. The array
+   * contains the event name followed by the respective listener for each
+   * registered listener.
+   */
   /*transient*/ List<Object> _eventListeners = null;
 
   /**
-	 * Holds the source object for this event source.
-	 */
+   * Holds the source object for this event source.
+   */
   Object _eventSource;
 
   /**
-	 * Specifies if events can be fired. Default is true.
-	 */
+   * Specifies if events can be fired. Default is true.
+   */
   bool _eventsEnabled = true;
 
   /**
-	 * Constructs a new event source using this as the source object.
-	 */
+   * Constructs a new event source using this as the source object.
+   */
   //	EventSource()
   //	{
   //		this(null);
   //	}
 
   /**
-	 * Constructs a new event source for the given source object.
-	 */
+   * Constructs a new event source for the given source object.
+   */
   EventSource([Object source = null]) {
     setEventSource(source);
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   Object getEventSource() {
     return _eventSource;
   }
@@ -70,8 +68,8 @@ class EventSource {
   Object get eventSource => _eventSource;
 
   /**
-	 * 
-	 */
+   * 
+   */
   void setEventSource(Object value) {
     this._eventSource = value;
   }
@@ -81,23 +79,23 @@ class EventSource {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool isEventsEnabled() {
     return _eventsEnabled;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void setEventsEnabled(bool eventsEnabled) {
     this._eventsEnabled = eventsEnabled;
   }
 
   /**
-	 * Binds the specified function to the given event name. If no event name
-	 * is given, then the listener is registered for all events.
-	 */
+   * Binds the specified function to the given event name. If no event name
+   * is given, then the listener is registered for all events.
+   */
   void addListener(String eventName, IEventListener listener) {
     if (_eventListeners == null) {
       _eventListeners = new List<Object>();
@@ -108,20 +106,20 @@ class EventSource {
   }
 
   /**
-	 * Function: removeListener
-	 *
-	 * Removes all occurances of the given listener from the list of listeners.
-	 */
+   * Function: removeListener
+   *
+   * Removes all occurances of the given listener from the list of listeners.
+   */
   //	void removeListener(IEventListener listener)
   //	{
   //		removeListener(listener, null);
   //	}
 
   /**
-	 * Function: removeListener
-	 *
-	 * Removes all occurances of the given listener from the list of listeners.
-	 */
+   * Function: removeListener
+   *
+   * Removes all occurances of the given listener from the list of listeners.
+   */
   void removeListener(IEventListener listener, [String eventName = null]) {
     if (_eventListeners != null) {
       for (int i = _eventListeners.length - 2; i > -1; i -= 2) {
@@ -134,19 +132,19 @@ class EventSource {
   }
 
   /**
-	 * Dispatches the given event name with this object as the event source.
-	 * <code>fireEvent(new EventObj("eventName", key1, val1, .., keyN, valN))</code>
-	 * 
-	 */
+   * Dispatches the given event name with this object as the event source.
+   * <code>fireEvent(new EventObj("eventName", key1, val1, .., keyN, valN))</code>
+   * 
+   */
   //	void fireEvent(EventObj evt)
   //	{
   //		fireEvent(evt, null);
   //	}
 
   /**
-	 * Dispatches the given event name, passing all arguments after the given
-	 * name to the registered listeners for the event.
-	 */
+   * Dispatches the given event name, passing all arguments after the given
+   * name to the registered listeners for the event.
+   */
   void fireEvent(EventObj evt, [Object sender = null]) {
     if (_eventListeners != null && _eventListeners != 0 && isEventsEnabled()) {
       if (sender == null) {

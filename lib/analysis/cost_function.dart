@@ -13,11 +13,11 @@ part of graph.analysis;
 abstract class ICostFunction {
 
   /**
-	 * Evaluates the cost of the given cell state.
-	 * 
-	 * @param state The cell state to be evaluated
-	 * @return Returns the cost to traverse the given cell state.
-	 */
+   * Evaluates the cost of the given cell state.
+   * 
+   * @param state The cell state to be evaluated
+   * @return Returns the cost to traverse the given cell state.
+   */
   double getCost(CellState state);
 
 }

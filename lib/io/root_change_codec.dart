@@ -3,7 +3,6 @@
  */
 part of graph.io;
 
-//import java.util.Map;
 
 //import org.w3c.dom.Node;
 
@@ -17,8 +16,8 @@ class RootChangeCodec extends ObjectCodec {
 //  static const List<String> _DEFAULT_EXCLUDE = ["model", "previous", "root"];
 
   /**
-	 * Constructs a new model codec.
-	 */
+   * Constructs a new model codec.
+   */
   //	RootChangeCodec()
   //	{
   //		this(new RootChange(), ,
@@ -26,8 +25,8 @@ class RootChangeCodec extends ObjectCodec {
   //	}
 
   /**
-	 * Constructs a new model codec for the given arguments.
-	 */
+   * Constructs a new model codec for the given arguments.
+   */
   RootChangeCodec([Object template=null, List<String> exclude = null, List<String> idrefs = null,
                    Map<String, String> mapping = null]) : super(template, exclude, idrefs, mapping) {
     if (template == null) {
@@ -39,9 +38,9 @@ class RootChangeCodec extends ObjectCodec {
     _init(exclude, idrefs, mapping);
   }
 
-  /* (non-Javadoc)
-	 * @see graph.io.ObjectCodec#afterEncode(graph.io.Codec, java.lang.Object, org.w3c.dom.Node)
-	 */
+  /**
+   * @see graph.io.ObjectCodec#afterEncode(graph.io.Codec, java.lang.Object, org.w3c.dom.Node)
+   */
   //	@Override
   Node afterEncode(Codec enc, Object obj, Node node) {
     if (obj is RootChange) {
@@ -52,9 +51,9 @@ class RootChangeCodec extends ObjectCodec {
   }
 
   /**
-	 * Reads the cells into the graph model. All cells are children of the root
-	 * element in the node.
-	 */
+   * Reads the cells into the graph model. All cells are children of the root
+   * element in the node.
+   */
   Node beforeDecode(Codec dec, Node node, Object into) {
     if (into is RootChange) {
       RootChange change = into;
@@ -88,9 +87,9 @@ class RootChangeCodec extends ObjectCodec {
     return node;
   }
 
-  /* (non-Javadoc)
-	 * @see graph.io.ObjectCodec#afterDecode(graph.io.Codec, org.w3c.dom.Node, java.lang.Object)
-	 */
+  /**
+   * @see graph.io.ObjectCodec#afterDecode(graph.io.Codec, org.w3c.dom.Node, java.lang.Object)
+   */
   //	@Override
   Object afterDecode(Codec dec, Node node, Object obj) {
     if (obj is RootChange) {

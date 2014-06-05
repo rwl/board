@@ -1,7 +1,5 @@
 part of graph.reader;
 
-//import java.util.Hashtable;
-//import java.util.Map;
 
 //import org.xml.sax.Attributes;
 //import org.xml.sax.SAXException;
@@ -18,40 +16,40 @@ part of graph.reader;
  */
 class SaxOutputHandler extends DefaultHandler {
   /**
-	 * 
-	 */
+   * 
+   */
   ICanvas2D _canvas;
 
   /**
-	 * 
-	 */
+   * 
+   */
   /*transient*/ Map<String, IElementHandler> _handlers = new Map<String, IElementHandler>();
 
   /**
-	 * 
-	 */
+   * 
+   */
   SaxOutputHandler(ICanvas2D canvas) {
     setCanvas(canvas);
     _initHandlers();
   }
 
   /**
-	 * Sets the canvas for rendering.
-	 */
+   * Sets the canvas for rendering.
+   */
   void setCanvas(ICanvas2D value) {
     _canvas = value;
   }
 
   /**
-	 * Returns the canvas for rendering.
-	 */
+   * Returns the canvas for rendering.
+   */
   ICanvas2D getCanvas() {
     return _canvas;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void startElement(String uri, String localName, String qName, Attributes atts) //throws SAXException
   {
     IElementHandler handler = _handlers[qName.toLowerCase()];
@@ -62,8 +60,8 @@ class SaxOutputHandler extends DefaultHandler {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void _initHandlers() {
     _handlers["save"] = (Attributes atts) {
       _canvas.save();
@@ -223,8 +221,8 @@ class SaxOutputHandler extends DefaultHandler {
   }
 
   /**
-	 * Returns the given attribute value or an empty string.
-	 */
+   * Returns the given attribute value or an empty string.
+   */
   String _getValue(Attributes atts, String name, String defaultValue) {
     String value = atts.getValue(name);
 

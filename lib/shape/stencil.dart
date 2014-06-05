@@ -3,7 +3,6 @@
  */
 part of graph.shape;
 
-//import java.util.Map;
 
 //import org.w3c.dom.Element;
 //import org.w3c.dom.Node;
@@ -14,82 +13,82 @@ part of graph.shape;
  */
 class Stencil implements IShape {
   /**
-	 * Holds the top-level node of the stencil definition.
-	 */
+   * Holds the top-level node of the stencil definition.
+   */
   Element _desc;
 
   /**
-	 * Holds the aspect of the shape. Default is "auto".
-	 */
+   * Holds the aspect of the shape. Default is "auto".
+   */
   String _aspect = null;
 
   /**
-	 * Holds the width of the shape. Default is 100.
-	 */
+   * Holds the width of the shape. Default is 100.
+   */
   double _w0 = 100.0;
 
   /**
-	 * Holds the height of the shape. Default is 100.
-	 */
+   * Holds the height of the shape. Default is 100.
+   */
   double _h0 = 100.0;
 
   /**
-	 * Holds the XML node with the stencil description.
-	 */
+   * Holds the XML node with the stencil description.
+   */
   Element _bgNode = null;
 
   /**
-	 * Holds the XML node with the stencil description.
-	 */
+   * Holds the XML node with the stencil description.
+   */
   Element _fgNode = null;
 
   /**
-	 * Holds the strokewidth direction from the description.
-	 */
+   * Holds the strokewidth direction from the description.
+   */
   String _strokewidth = null;
 
   /**
-	 * Holds the last x-position of the cursor.
-	 */
+   * Holds the last x-position of the cursor.
+   */
   double _lastMoveX = 0.0;
 
   /**
-	 * Holds the last y-position of the cursor.
-	 */
+   * Holds the last y-position of the cursor.
+   */
   double _lastMoveY = 0.0;
 
   /**
-	 * Constructs a new stencil for the given Graph shape description.
-	 */
+   * Constructs a new stencil for the given Graph shape description.
+   */
   Stencil(Element description) {
     setDescription(description);
   }
 
   /**
-	 * Returns the description.
-	 */
+   * Returns the description.
+   */
   Element getDescription() {
     return _desc;
   }
 
   /**
-	 * Sets the description.
-	 */
+   * Sets the description.
+   */
   void setDescription(Element value) {
     _desc = value;
     _parseDescription();
   }
 
   /**
-	 * Creates the canvas for rendering the stencil.
-	 */
+   * Creates the canvas for rendering the stencil.
+   */
   GraphicsCanvas2D _createCanvas(Graphics2DCanvas gc) {
     return new GraphicsCanvas2D(gc.getGraphics());
   }
 
   /**
-	 * Paints the stencil for the given state.
-	 */
+   * Paints the stencil for the given state.
+   */
   void paintShape(Graphics2DCanvas gc, CellState state) {
     Map<String, Object> style = state.getStyle();
     GraphicsCanvas2D canvas = _createCanvas(gc);
@@ -186,8 +185,8 @@ class Stencil implements IShape {
   }
 
   /**
-	 * Draws the shadow.
-	 */
+   * Draws the shadow.
+   */
   void _drawShadow(GraphicsCanvas2D canvas, CellState state, double rotation, bool flipH, bool flipV, Rect bounds, double alpha, bool filled) {
     // Requires background in generic shape for shadow, looks like only one
     // fillAndStroke is allowed per current path, try working around that
@@ -219,8 +218,8 @@ class Stencil implements IShape {
   }
 
   /**
-	 * Draws this stencil inside the given bounds.
-	 */
+   * Draws this stencil inside the given bounds.
+   */
   bool drawShape(GraphicsCanvas2D canvas, CellState state, Rect bounds, bool background) {
     Element elt = (background) ? _bgNode : _fgNode;
 
@@ -250,10 +249,10 @@ class Stencil implements IShape {
   }
 
   /**
-	 * Returns a rectangle that contains the offset in x and y and the horizontal
-	 * and vertical scale in width and height used to draw this shape inside the
-	 * given rectangle.
-	 */
+   * Returns a rectangle that contains the offset in x and y and the horizontal
+   * and vertical scale in width and height used to draw this shape inside the
+   * given rectangle.
+   */
   Rect _computeAspect(CellState state, Rect bounds, String direction) {
     double x0 = bounds.getX();
     double y0 = bounds.getY();
@@ -290,8 +289,8 @@ class Stencil implements IShape {
   }
 
   /**
-	 * Drawsthe given element.
-	 */
+   * Drawsthe given element.
+   */
   void _drawElement(GraphicsCanvas2D canvas, CellState state, Element node, Rect aspect) {
     String name = node.nodeName;
     double x0 = aspect.getX();
@@ -443,8 +442,8 @@ class Stencil implements IShape {
   }
 
   /**
-	 * Returns the given attribute or the default value.
-	 */
+   * Returns the given attribute or the default value.
+   */
   int _getInt(Element elt, String attribute, int defaultValue) {
     String value = elt.getAttribute(attribute);
 
@@ -460,16 +459,16 @@ class Stencil implements IShape {
   }
 
   /**
-	 * Returns the given attribute or 0.
-	 */
+   * Returns the given attribute or 0.
+   */
   //	double _getDouble(Element elt, String attribute)
   //	{
   //		return _getDouble(elt, attribute, 0);
   //	}
 
   /**
-	 * Returns the given attribute or the default value.
-	 */
+   * Returns the given attribute or the default value.
+   */
   double _getDouble(Element elt, String attribute, [double defaultValue = 0.0]) {
     String value = elt.getAttribute(attribute);
 
@@ -485,8 +484,8 @@ class Stencil implements IShape {
   }
 
   /**
-	 * Returns the given attribute or the default value.
-	 */
+   * Returns the given attribute or the default value.
+   */
   String _getString(Element elt, String attribute, String defaultValue) {
     String value = elt.getAttribute(attribute);
 
@@ -498,8 +497,8 @@ class Stencil implements IShape {
   }
 
   /**
-	 * Parses the description of this shape.
-	 */
+   * Parses the description of this shape.
+   */
   void _parseDescription() {
     // LATER: Preprocess nodes for faster painting
     _fgNode = _desc.querySelectorAll("foreground")[0] as Element;
@@ -520,11 +519,11 @@ class Stencil implements IShape {
   }
 
   /**
-	 * Gets the attribute for the given name from the given node. If the attribute
-	 * does not exist then the text content of the node is evaluated and if it is
-	 * a function it is invoked with <state> as the only argument and the return
-	 * value is used as the attribute value to be returned.
-	 */
+   * Gets the attribute for the given name from the given node. If the attribute
+   * does not exist then the text content of the node is evaluated and if it is
+   * a function it is invoked with <state> as the only argument and the return
+   * value is used as the attribute value to be returned.
+   */
   String evaluateAttribute(Element elt, String attribute, CellState state) {
     String result = elt.getAttribute(attribute);
 

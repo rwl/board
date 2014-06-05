@@ -30,25 +30,25 @@ part of graph.util.svg;
 class AWTPolylineProducer implements PointsHandler, ShapeProducer
 {
 	/**
-	 * The current path.
-	 */
+   * The current path.
+   */
 	GeneralPath path;
 
 	/**
-	 * Is the current path a new one?
-	 */
+   * Is the current path a new one?
+   */
 	bool newPath;
 
 	/**
-	 * The winding rule to use to construct the path.
-	 */
+   * The winding rule to use to construct the path.
+   */
 	int windingRule;
 
 	/**
-	 * Utility method for creating an ExtendedGeneralPath.
-	 * @param text The text representation of the path specification.
-	 * @param wr The winding rule to use for creating the path.
-	 */
+   * Utility method for creating an ExtendedGeneralPath.
+   * @param text The text representation of the path specification.
+   * @param wr The winding rule to use for creating the path.
+   */
 	static Shape createShape(String text, int wr) //throws ParseException
 	{
 		AWTPolylineProducer ph = new AWTPolylineProducer();
@@ -61,34 +61,34 @@ class AWTPolylineProducer implements PointsHandler, ShapeProducer
 	}
 
 	/**
-	 * Sets the winding rule used to construct the path.
-	 */
+   * Sets the winding rule used to construct the path.
+   */
 	void setWindingRule(int i)
 	{
 		windingRule = i;
 	}
 
 	/**
-	 * Returns the current winding rule.
-	 */
+   * Returns the current winding rule.
+   */
 	int getWindingRule()
 	{
 		return windingRule;
 	}
 
 	/**
-	 * Returns the Shape object initialized during the last parsing.
-	 * @return the shape or null if this handler has not been used by
-	 *         a parser.
-	 */
+   * Returns the Shape object initialized during the last parsing.
+   * @return the shape or null if this handler has not been used by
+   *         a parser.
+   */
 	Shape getShape()
 	{
 		return path;
 	}
 
 	/**
-	 * Implements {@link PointsHandler#startPoints()}.
-	 */
+   * Implements {@link PointsHandler#startPoints()}.
+   */
 	void startPoints() //throws ParseException
 	{
 		path = new GeneralPath(windingRule);
@@ -96,8 +96,8 @@ class AWTPolylineProducer implements PointsHandler, ShapeProducer
 	}
 
 	/**
-	 * Implements {@link PointsHandler#point(float,float)}.
-	 */
+   * Implements {@link PointsHandler#point(float,float)}.
+   */
 	void point(float x, float y) //throws ParseException
 	{
 		if (newPath)
@@ -112,8 +112,8 @@ class AWTPolylineProducer implements PointsHandler, ShapeProducer
 	}
 
 	/**
-	 * Implements {@link PointsHandler#endPoints()}.
-	 */
+   * Implements {@link PointsHandler#endPoints()}.
+   */
 	void endPoints() //throws ParseException
 	{
 	}

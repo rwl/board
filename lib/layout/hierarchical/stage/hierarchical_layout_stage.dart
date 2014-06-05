@@ -18,10 +18,10 @@ part of graph.layout.hierarchical.stage;
 abstract class HierarchicalLayoutStage {
 
   /**
-	 * Takes the graph detail and configuration information within the facade
-	 * and creates the resulting laid out graph within that facade for further
-	 * use.
-	 */
+   * Takes the graph detail and configuration information within the facade
+   * and creates the resulting laid out graph within that facade for further
+   * use.
+   */
   void execute(Object parent);
 
 }

@@ -3,7 +3,6 @@
  */
 part of graph.analysis;
 
-//import java.util.ArrayList;
 
 /**
  * @author Mate
@@ -31,8 +30,8 @@ class GraphGenerator {
   }
 
   /**
-	 * Returns a null graph.
-	 */
+   * Returns a null graph.
+   */
   void getNullGraph(AnalysisGraph aGraph, int numVertices) {
     if (numVertices < 0) {
       throw new ArgumentError();
@@ -46,10 +45,10 @@ class GraphGenerator {
   }
 
   /**
-	 * @param aGraph
-	 * @param numVertices number of vertices
-	 * @return A complete graph that has <b>numVertices</b> number of vertices
-	 */
+   * @param aGraph
+   * @param numVertices number of vertices
+   * @return A complete graph that has <b>numVertices</b> number of vertices
+   */
   void getCompleteGraph(AnalysisGraph aGraph, int numVertices) {
     if (numVertices < 0) {
       throw new ArgumentError();
@@ -77,11 +76,11 @@ class GraphGenerator {
   }
 
   /**
-	 * @param aGraph
-	 * @param numRows - number of rows in the grid graph
-	 * @param numColumns - number of columns in the grid graph
-	 * @return Returns a <b>numColumns</b> x <b>numRows</b> grid graph
-	 */
+   * @param aGraph
+   * @param numRows - number of rows in the grid graph
+   * @param numColumns - number of columns in the grid graph
+   * @return Returns a <b>numColumns</b> x <b>numRows</b> grid graph
+   */
   void getGridGraph(AnalysisGraph aGraph, int numColumns, int numRows) {
     if (numColumns < 0 || numRows < 0) {
       throw new ArgumentError();
@@ -118,16 +117,16 @@ class GraphGenerator {
   }
 
   /**
-	 * Sets the physical spacing between vertices in a grid graph. This works
-	 * for now only for a graph generated with mxGraphCreator.getGridGraph()
-	 * only after creating the graph.
-	 * 
-	 * @param aGraph
-	 * @param xSpacing - horizontal spacing between vertices
-	 * @param ySpacing - vertical spacing between vertices
-	 * @param numRows - number of rows in the grid graph
-	 * @param numColumns - number of columns in the grid graph
-	 */
+   * Sets the physical spacing between vertices in a grid graph. This works
+   * for now only for a graph generated with mxGraphCreator.getGridGraph()
+   * only after creating the graph.
+   * 
+   * @param aGraph
+   * @param xSpacing - horizontal spacing between vertices
+   * @param ySpacing - vertical spacing between vertices
+   * @param numRows - number of rows in the grid graph
+   * @param numColumns - number of columns in the grid graph
+   */
   void setGridGraphSpacing(AnalysisGraph aGraph, double xSpacing, double ySpacing, int numColumns, int numRows) {
     Graph graph = aGraph.getGraph();
 
@@ -150,12 +149,12 @@ class GraphGenerator {
   }
 
   /**
-	 * @param aGraph
-	 * @param numVerticesGroup1 number of vertices in group 1
-	 * @param numVerticesGroup2 number of vertices in group 2
-	 * @return a bipartite graph with group 1 containing <b>numVerticesGroup1</b>
-	 * vertices and group 2 containing <b>numVerticesGroup2</b>
-	 */
+   * @param aGraph
+   * @param numVerticesGroup1 number of vertices in group 1
+   * @param numVerticesGroup2 number of vertices in group 2
+   * @return a bipartite graph with group 1 containing <b>numVerticesGroup1</b>
+   * vertices and group 2 containing <b>numVerticesGroup2</b>
+   */
   void getBipartiteGraph(AnalysisGraph aGraph, int numVerticesGroup1, int numVerticesGroup2) {
     if (numVerticesGroup1 < 0 || numVerticesGroup2 < 0) {
       throw new ArgumentError();
@@ -188,16 +187,16 @@ class GraphGenerator {
   }
 
   /**
-	 * Sets the physical spacing between vertices in a bipartite graph. This
-	 * works for now only for a graph generated with
-	 * GraphCreator.getBipartiteGraph() only after creating the graph.
-	 * 
-	 * @param aGraph
-	 * @param numVerticesGroup1 - number of vertices in group 1
-	 * @param numVerticesGroup2 - number of vertices in group 2
-	 * @param vertexSpacing - vertical spacing between vertices in the same group
-	 * @param groupSpacing - spacing between groups
-	 */
+   * Sets the physical spacing between vertices in a bipartite graph. This
+   * works for now only for a graph generated with
+   * GraphCreator.getBipartiteGraph() only after creating the graph.
+   * 
+   * @param aGraph
+   * @param numVerticesGroup1 - number of vertices in group 1
+   * @param numVerticesGroup2 - number of vertices in group 2
+   * @param vertexSpacing - vertical spacing between vertices in the same group
+   * @param groupSpacing - spacing between groups
+   */
   void setBipartiteGraphSpacing(AnalysisGraph aGraph, int numVerticesGroup1, int numVerticesGroup2, double vertexSpacing, double groupSpacing) {
     if (numVerticesGroup1 < 0 || numVerticesGroup2 < 0) {
       throw new ArgumentError();
@@ -237,11 +236,11 @@ class GraphGenerator {
   }
 
   /**
-	 * @param aGraph
-	 * @param numVerticesGroup1 number of vertices in group 1
-	 * @param numVerticesGroup2 number of vertices in group 2
-	 * @return a bipartite graph with group 1 containing <b>numVerticesGroup1</b> vertices and group 2 containing <b>numVerticesGroup2</b>
-	 */
+   * @param aGraph
+   * @param numVerticesGroup1 number of vertices in group 1
+   * @param numVerticesGroup2 number of vertices in group 2
+   * @return a bipartite graph with group 1 containing <b>numVerticesGroup1</b> vertices and group 2 containing <b>numVerticesGroup2</b>
+   */
   void getCompleteBipartiteGraph(AnalysisGraph aGraph, int numVerticesGroup1, int numVerticesGroup2) {
     if (numVerticesGroup1 < 0 || numVerticesGroup2 < 0) {
       throw new ArgumentError();
@@ -266,12 +265,12 @@ class GraphGenerator {
   }
 
   /**
-	 * @param aGraph
-	 * @param xDim
-	 * @param yDim
-	 * @return a knight graph of size <b>xDim</b> x <b>yDim</b>
-	 * Note that the minimum size is 3x3
-	 */
+   * @param aGraph
+   * @param xDim
+   * @param yDim
+   * @return a knight graph of size <b>xDim</b> x <b>yDim</b>
+   * Note that the minimum size is 3x3
+   */
   void getKnightGraph(AnalysisGraph aGraph, int xDim, int yDim) {
     if (xDim < 3 || yDim < 3) {
       throw new ArgumentError();
@@ -305,14 +304,14 @@ class GraphGenerator {
   }
 
   /**
-	 * @param aGraph
-	 * @param xDim x dimension of chess-board, size starts from 1
-	 * @param yDim y dimension of chess-board, size starts from 1
-	 * @param xCoord x coordinate on the chess-board, coordinate starts from 1
-	 * @param yCoord y coordinate on the chess-board, coordinate starts from 1
-	 * @return a list of ALL vertexes which would be valid moves from the current position, regardless if they were visited or not
-	 * Note that both dimensions and both coordinates must be positive
-	 */
+   * @param aGraph
+   * @param xDim x dimension of chess-board, size starts from 1
+   * @param yDim y dimension of chess-board, size starts from 1
+   * @param xCoord x coordinate on the chess-board, coordinate starts from 1
+   * @param yCoord y coordinate on the chess-board, coordinate starts from 1
+   * @return a list of ALL vertexes which would be valid moves from the current position, regardless if they were visited or not
+   * Note that both dimensions and both coordinates must be positive
+   */
   List<Object> getKnightMoveVertexes(AnalysisGraph aGraph, int xDim, int yDim, int xCoord, int yCoord) {
     if (xCoord > xDim || yCoord > yDim || xDim < 1 || yDim < 1 || xCoord < 1 || yCoord < 1) {
       throw new ArgumentError();
@@ -409,13 +408,13 @@ class GraphGenerator {
   }
 
   /**
-	 * use this only with the grid graph, and various chess-board graphs, because of vertex ordering
-	 * @param xDim x dimension of chess-board, size starts from 1
-	 * @param yDim y dimension of chess-board, size starts from 1
-	 * @param value value of the vertex that needs coordinates returned
-	 * @return int[x,y] where x and y are the coordinates in the grid or chess-board
-	 * Note that both dimensions must be positive
-	 */
+   * use this only with the grid graph, and various chess-board graphs, because of vertex ordering
+   * @param xDim x dimension of chess-board, size starts from 1
+   * @param yDim y dimension of chess-board, size starts from 1
+   * @param value value of the vertex that needs coordinates returned
+   * @return int[x,y] where x and y are the coordinates in the grid or chess-board
+   * Note that both dimensions must be positive
+   */
   List<int> getVertexGridCoords(int xDim, int yDim, int value) {
     if (value > ((yDim * xDim) - 1) || xDim < 0 || yDim < 0 || value < 0) {
       throw new ArgumentError();
@@ -432,15 +431,15 @@ class GraphGenerator {
   }
 
   /**
-	 * use this only with the grid graph and various chess-board graphs, because of vertex ordering
-	 * @param vertices
-	 * @param xDim x dimension of chess-board, size starts from 1
-	 * @param yDim y dimension of chess-board, size starts from 1
-	 * @param xCoord x coordinate on the chess-board, coordinate starts from 1
-	 * @param yCoord y coordinate on the chess-board, coordinate starts from 1
-	 * @return vertex on the desired coordinates.
-	 * Note that both dimensions and both coordinates must be positive
-	 */
+   * use this only with the grid graph and various chess-board graphs, because of vertex ordering
+   * @param vertices
+   * @param xDim x dimension of chess-board, size starts from 1
+   * @param yDim y dimension of chess-board, size starts from 1
+   * @param xCoord x coordinate on the chess-board, coordinate starts from 1
+   * @param yCoord y coordinate on the chess-board, coordinate starts from 1
+   * @return vertex on the desired coordinates.
+   * Note that both dimensions and both coordinates must be positive
+   */
   Object _getVertexFromGrid(List<Object> vertices, int xDim, int yDim, int xCoord, int yCoord) {
     if (xCoord > xDim || yCoord > yDim || xDim < 1 || yDim < 1 || xCoord < 1 || yCoord < 1) {
       throw new ArgumentError();
@@ -452,12 +451,12 @@ class GraphGenerator {
   }
 
   /**
-	 * @param xDim
-	 * @param yDim
-	 * @param weights
-	 * Return a king graph of size <b>xDim</b> x <b>yDim</b>
-	 * Note that the minimum size is 4x4
-	 */
+   * @param xDim
+   * @param yDim
+   * @param weights
+   * Return a king graph of size <b>xDim</b> x <b>yDim</b>
+   * Note that the minimum size is 4x4
+   */
   void getKingGraph(AnalysisGraph aGraph, int xDim, int yDim) {
     if (xDim < 2 || yDim < 2) {
       throw new ArgumentError();
@@ -491,14 +490,14 @@ class GraphGenerator {
   }
 
   /**
-	 * @param aGraph
-	 * @param xDim x dimension of the chessboard
-	 * @param yDim y dimension of the chessboard
-	 * @param xCoord the current x position of the king
-	 * @param yCoord the current y position of the king
-	 * @return list of all possible moves of a king from the specified position
-	 * Note that both dimensions and both coordinates must be positive
-	 */
+   * @param aGraph
+   * @param xDim x dimension of the chessboard
+   * @param yDim y dimension of the chessboard
+   * @param xCoord the current x position of the king
+   * @param yCoord the current y position of the king
+   * @return list of all possible moves of a king from the specified position
+   * Note that both dimensions and both coordinates must be positive
+   */
   List<Object> getKingMoveVertexes(AnalysisGraph aGraph, int xDim, int yDim, int xCoord, int yCoord) {
     if (xDim < 0 || yDim < 0 || xCoord < 0 || yCoord < 0) {
       throw new ArgumentError();
@@ -588,9 +587,9 @@ class GraphGenerator {
   }
 
   /**
-	 * @param aGraph
-	 * Returns a Petersen graph
-	 */
+   * @param aGraph
+   * Returns a Petersen graph
+   */
   void getPetersenGraph(AnalysisGraph aGraph) {
     Graph graph = aGraph.getGraph();
     Object parent = graph.getDefaultParent();
@@ -618,10 +617,10 @@ class GraphGenerator {
   }
 
   /**
-	 * @param aGraph
-	 * @param numVertices
-	 * Returns a path graph
-	 */
+   * @param aGraph
+   * @param numVertices
+   * Returns a path graph
+   */
   void getPathGraph(AnalysisGraph aGraph, int numVertices) {
     if (numVertices < 0) {
       throw new ArgumentError();
@@ -641,11 +640,11 @@ class GraphGenerator {
   }
 
   /**
-	 * Sets the physical spacing between vertices in a path graph. This works for now only for a graph generated with mxGraphCreator.getPathGraph() 
-	 * only after creating the graph
-	 * @param aGraph
-	 * @param spacing
-	 */
+   * Sets the physical spacing between vertices in a path graph. This works for now only for a graph generated with mxGraphCreator.getPathGraph() 
+   * only after creating the graph
+   * @param aGraph
+   * @param spacing
+   */
   void setPathGraphSpacing(AnalysisGraph aGraph, double spacing) {
     if (spacing < 0) {
       throw new ArgumentError();
@@ -666,11 +665,11 @@ class GraphGenerator {
   }
 
   /**
-	 * @param aGraph
-	 * @param numVertices
-	 * Returns a star graph
-	 * Note that minimum vertex number is 4
-	 */
+   * @param aGraph
+   * @param numVertices
+   * Returns a star graph
+   * Note that minimum vertex number is 4
+   */
   void getStarGraph(AnalysisGraph aGraph, int numVertices) {
     if (numVertices < 4) {
       throw new ArgumentError();
@@ -692,10 +691,10 @@ class GraphGenerator {
   }
 
   /**
-	 * Sets the physical size of a star graph. This works for now only for a graph generated with mxGraphCreator.getStarGraph() and getWheelGraph()
-	 * @param aGraph
-	 * @param graphSize
-	 */
+   * Sets the physical size of a star graph. This works for now only for a graph generated with mxGraphCreator.getStarGraph() and getWheelGraph()
+   * @param aGraph
+   * @param graphSize
+   */
   void setStarGraphLayout(AnalysisGraph aGraph, double graphSize) {
     if (graphSize < 4) {
       throw new ArgumentError();
@@ -733,10 +732,10 @@ class GraphGenerator {
   }
 
   /**
-	 * @param aGraph
-	 * @param numVertices
-	 * Returns a wheel graph. Note that numVertices has to be at least 4.
-	 */
+   * @param aGraph
+   * @param numVertices
+   * Returns a wheel graph. Note that numVertices has to be at least 4.
+   */
   void getWheelGraph(AnalysisGraph aGraph, int numVertices) {
     if (numVertices < 4) {
       throw new ArgumentError();
@@ -764,11 +763,11 @@ class GraphGenerator {
   }
 
   /**
-	 * @param aGraph
-	 * @param numBranches number of branches (minimum >= 2)
-	 * @param branchSize number of vertices in a single branch (minimum >= 2)
-	 * Returns a friendship windmill graph (aka Dutch windmill)
-	 */
+   * @param aGraph
+   * @param numBranches number of branches (minimum >= 2)
+   * @param branchSize number of vertices in a single branch (minimum >= 2)
+   * Returns a friendship windmill graph (aka Dutch windmill)
+   */
   void getFriendshipWindmillGraph(AnalysisGraph aGraph, int numBranches, int branchSize) {
     if (numBranches < 2 || branchSize < 2) {
       throw new ArgumentError();
@@ -805,11 +804,11 @@ class GraphGenerator {
   }
 
   /**
-	 * @param aGraph
-	 * @param numBranches - number of branches (minimum >= 2)
-	 * @param branchSize - number of vertices in a single branch (minimum >= 2)
-	 * Returns a windmill graph
-	 */
+   * @param aGraph
+   * @param numBranches - number of branches (minimum >= 2)
+   * @param branchSize - number of vertices in a single branch (minimum >= 2)
+   * Returns a windmill graph
+   */
   void getWindmillGraph(AnalysisGraph aGraph, int numBranches, int branchSize) {
     if (numBranches < 2 || branchSize < 2) {
       throw new ArgumentError();
@@ -853,12 +852,12 @@ class GraphGenerator {
 
   //NOTE the inside code is delicate, so please change it only if you know what you're doing
   /**
-	 * Sets the layout of a windmill graph. Use this method only for graphs generated with GraphGenerator.getWindmillGraph() and getFriendshitWindmillGraph() 
-	 * @param aGraph
-	 * @param numBranches
-	 * @param numVerticesInBranch
-	 * @param graphSize
-	 */
+   * Sets the layout of a windmill graph. Use this method only for graphs generated with GraphGenerator.getWindmillGraph() and getFriendshitWindmillGraph() 
+   * @param aGraph
+   * @param numBranches
+   * @param numVerticesInBranch
+   * @param graphSize
+   */
   void setWindmillGraphLayout(AnalysisGraph aGraph, int numBranches, int numVerticesInBranch, double graphSize) {
     if (graphSize < 0 || numBranches < 2 || numVerticesInBranch < 1) {
       throw new ArgumentError();
@@ -925,12 +924,12 @@ class GraphGenerator {
   }
 
   /**
-	 * A helper function that calculates the ring size for a windmill graph, based on the index of a vertex in a brach and branch size. - for internal use
-	 * @param currVertex - starting from 1
-	 * @param branchSize - starting from 1
-	 * @param fullSize
-	 * @return ring size
-	 */
+   * A helper function that calculates the ring size for a windmill graph, based on the index of a vertex in a brach and branch size. - for internal use
+   * @param currVertex - starting from 1
+   * @param branchSize - starting from 1
+   * @param fullSize
+   * @return ring size
+   */
   double _getRingSize(int currIndex, int branchSize, double fullSize) {
     if (currIndex < 1 || currIndex > branchSize || branchSize < 1 || fullSize < 0) {
       throw new ArgumentError();
@@ -952,14 +951,14 @@ class GraphGenerator {
   }
 
   /**
-	 * Generates a random graph
-	 * @param aGraph
-	 * @param numNodes number of vertexes
-	 * @param numEdges number of edges (may be inaccurate if <b>forceConnected</b> is set to true
-	 * @param allowSelfLoops if true, there will be a chance that self loops will be generated too
-	 * @param allowMultipleEdges if true, there will be a chance that multiple edges will be generated (multiple edges between the same two vertices)
-	 * @param forceConnected if true the resulting graph will be always connected, but this may alter <b>numEdges</b>
-	 */
+   * Generates a random graph
+   * @param aGraph
+   * @param numNodes number of vertexes
+   * @param numEdges number of edges (may be inaccurate if <b>forceConnected</b> is set to true
+   * @param allowSelfLoops if true, there will be a chance that self loops will be generated too
+   * @param allowMultipleEdges if true, there will be a chance that multiple edges will be generated (multiple edges between the same two vertices)
+   * @param forceConnected if true the resulting graph will be always connected, but this may alter <b>numEdges</b>
+   */
   void getSimpleRandomGraph(AnalysisGraph aGraph, int numNodes, int numEdges, bool allowSelfLoops, bool allowMultipleEdges, bool forceConnected) {
     Graph graph = aGraph.getGraph();
     Object parent = graph.getDefaultParent();
@@ -995,10 +994,10 @@ class GraphGenerator {
   }
 
   /**
-	 * Generates a random tree graph
-	 * @param aGraph
-	 * @param vertexCount
-	 */
+   * Generates a random tree graph
+   * @param aGraph
+   * @param vertexCount
+   */
   void getSimpleRandomTree(AnalysisGraph aGraph, int vertexCount) {
     int edgeCount = math.round(vertexCount * 2.0) as int;
     this.getSimpleRandomGraph(aGraph, vertexCount, edgeCount, false, false, true);
@@ -1020,10 +1019,10 @@ class GraphGenerator {
   }
 
   /**
-	 * Creates a new edge value based on graph properties in AnalysisGraph. Used mostly when creating new edges during graph generation.
-	 * @param aGraph
-	 * @return
-	 */
+   * Creates a new edge value based on graph properties in AnalysisGraph. Used mostly when creating new edges during graph generation.
+   * @param aGraph
+   * @return
+   */
   double getNewEdgeValue(AnalysisGraph aGraph) {
     if (getGeneratorFunction() != null) {
       Graph graph = aGraph.getGraph();
@@ -1034,12 +1033,12 @@ class GraphGenerator {
   }
 
   /**
-	 * @param graph
-	 * @param weighted if true, the edges will be weighted, otherwise all will have default value (1.0)
-	 * @param minWeight minimum edge weight if weighted
-	 * @param maxWeight maximum edge weight if weighted
-	 * @return a generator function
-	 */
+   * @param graph
+   * @param weighted if true, the edges will be weighted, otherwise all will have default value (1.0)
+   * @param minWeight minimum edge weight if weighted
+   * @param maxWeight maximum edge weight if weighted
+   * @return a generator function
+   */
   /*static GeneratorFunction getGeneratorFunction(Graph graph, bool weighted, double minWeight, double maxWeight) {
     if (weighted) {
       return new GeneratorRandomFunction(minWeight, maxWeight, 2);
@@ -1053,10 +1052,10 @@ class GraphGenerator {
   }
 
   /**
-	 * @param minValue
-	 * @param maxValue
-	 * @return a random integer in the interval [minValue, maxValue]
-	 */
+   * @param minValue
+   * @param maxValue
+   * @return a random integer in the interval [minValue, maxValue]
+   */
   int getRandomInt(int minValue, int maxValue) {
     if (minValue == maxValue) return minValue;
     if (minValue > maxValue) {
@@ -1071,15 +1070,15 @@ class GraphGenerator {
   }
 
   /**
-	 * @param _graph
-	 * @param forceConnected if true, an unconnected graph is made connected
-	 * @param forceSimple if true, a non-simple graph is made simple
-	 * Calculates one spanning tree of graph, which doesn't have to be but can be minimal
-	 * (this is faster than minimal spanning tree, so if you need any spanning tree, use this one)
-	 * Self loops and multiple edges are automatically removed!
-	 * Also, unconnected graphs are made connected!
-	 * @throws StructuralException the graph has to be simple (no self-loops and no multiple edges) 
-	 */
+   * @param _graph
+   * @param forceConnected if true, an unconnected graph is made connected
+   * @param forceSimple if true, a non-simple graph is made simple
+   * Calculates one spanning tree of graph, which doesn't have to be but can be minimal
+   * (this is faster than minimal spanning tree, so if you need any spanning tree, use this one)
+   * Self loops and multiple edges are automatically removed!
+   * Also, unconnected graphs are made connected!
+   * @throws StructuralException the graph has to be simple (no self-loops and no multiple edges) 
+   */
   void oneSpanningTree(AnalysisGraph aGraph, bool forceConnected, bool forceSimple) //throws StructuralException
   {
     Graph graph = aGraph.getGraph();
@@ -1118,13 +1117,13 @@ class GraphGenerator {
 
   //TODO make a double check to avoid unnecessary cases of throwing an exception (if the algorithm can't work out a solution, try a mirrored strategy)
   /**
-	 * @param aGraph
-	 * @param xDim x dimension of the chessboard
-	 * @param yDim y dimension of the chessboard
-	 * @param startVertexValue vertex where the tour will start
-	 * @throws StructuralException not all size combinations are allowed, see wikipedia for a more detailed explanation
-	 * Returns a Knight's Tour graph
-	 */
+   * @param aGraph
+   * @param xDim x dimension of the chessboard
+   * @param yDim y dimension of the chessboard
+   * @param startVertexValue vertex where the tour will start
+   * @throws StructuralException not all size combinations are allowed, see wikipedia for a more detailed explanation
+   * Returns a Knight's Tour graph
+   */
   void getKnightTour(AnalysisGraph aGraph, int xDim, int yDim, int startVertexValue) //throws StructuralException
   {
     if (xDim < 5 || yDim < 5) {
@@ -1177,15 +1176,15 @@ class GraphGenerator {
   }
 
   /**
-	 * Helper function for Knights Tour - for internal use
-	 * @param aGraph
-	 * @param xDim
-	 * @param yDim
-	 * @param xCoord
-	 * @param yCoord
-	 * @param resultPath
-	 * @return
-	 */
+   * Helper function for Knights Tour - for internal use
+   * @param aGraph
+   * @param xDim
+   * @param yDim
+   * @param xCoord
+   * @param yCoord
+   * @param resultPath
+   * @return
+   */
   Object _getNextKnightMove(AnalysisGraph aGraph, int xDim, int yDim, int xCoord, int yCoord, List<Object> resultPath) {
     List<Object> possibleMoves = getKnightMoveVertexes(aGraph, xDim, yDim, xCoord, yCoord);
     //get the position with minimum possible moves
@@ -1211,14 +1210,14 @@ class GraphGenerator {
   }
 
   /**
-	 * Helper function for Knights Tour - for internal use
-	 * @param aGraph
-	 * @param xDim
-	 * @param yDim
-	 * @param xCoord
-	 * @param yCoord
-	 * @return
-	 */
+   * Helper function for Knights Tour - for internal use
+   * @param aGraph
+   * @param xDim
+   * @param yDim
+   * @param xCoord
+   * @param yCoord
+   * @return
+   */
   int _getPossibleKnightMoveCount(AnalysisGraph aGraph, int xDim, int yDim, int xCoord, int yCoord) {
     //check all possible 8 locations
 
@@ -1309,12 +1308,12 @@ class GraphGenerator {
   }
 
   /**
-	 * Helper function for Knights Tour - for internal use
-	 * @param xDim
-	 * @param yDim
-	 * @param currValue
-	 * @return
-	 */
+   * Helper function for Knights Tour - for internal use
+   * @param xDim
+   * @param yDim
+   * @param currValue
+   * @return
+   */
   double _getDistanceFromGridCenter(int xDim, int yDim, int currValue) {
     double centerX = (xDim + 1) / 2.0;
     double centerY = (yDim + 1) / 2.0;

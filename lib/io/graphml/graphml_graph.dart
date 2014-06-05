@@ -3,9 +3,6 @@
  */
 part of graph.io.graphml;
 
-//import java.util.ArrayList;
-//import java.util.HashMap;
-//import java.util.List;
 
 //import org.w3c.dom.Document;
 //import org.w3c.dom.Element;
@@ -15,8 +12,8 @@ part of graph.io.graphml;
  */
 class GraphMlGraph {
   /**
-	 * Map with the vertex cells added in the addNode method.
-	 */
+   * Map with the vertex cells added in the addNode method.
+   */
   static HashMap<String, Object> _cellsMap = new HashMap<String, Object>();
 
   String _id = "";
@@ -28,22 +25,22 @@ class GraphMlGraph {
   List<GraphMlEdge> _edges = new List<GraphMlEdge>();
 
   /**
-	 * Constructs a graph with id and edge default direction.
-	 * @param id Graph's ID
-	 * @param edgedefault Edge Default direction.("directed" or "undirected")
-	 */
+   * Constructs a graph with id and edge default direction.
+   * @param id Graph's ID
+   * @param edgedefault Edge Default direction.("directed" or "undirected")
+   */
   GraphMlGraph([this._id="", this._edgedefault=""]);
 
   /**
-	 * Constructs an empty graph.
-	 */
+   * Constructs an empty graph.
+   */
 //  GraphMlGraph() {
 //  }
 
   /**
-	 * Constructs a graph from a xml graph element.
-	 * @param graphElement Xml graph element.
-	 */
+   * Constructs a graph from a xml graph element.
+   * @param graphElement Xml graph element.
+   */
   factory GraphMlGraph.from(Element graphElement) {
     final id = graphElement.getAttribute(GraphMlConstants.ID);
     final edgedefault = graphElement.getAttribute(GraphMlConstants.EDGE_DEFAULT);
@@ -78,10 +75,10 @@ class GraphMlGraph {
   }
 
   /**
-	 * Adds the elements represented for this graph model into the given graph.
-	 * @param graph Graph where the elements will be located
-	 * @param parent Parent of the cells to be added.
-	 */
+   * Adds the elements represented for this graph model into the given graph.
+   * @param graph Graph where the elements will be located
+   * @param parent Parent of the cells to be added.
+   */
   void addGraph(Graph graph, Object parent) {
     List<GraphMlNode> nodeList = getNodes();
 
@@ -96,10 +93,10 @@ class GraphMlGraph {
   }
 
   /**
-	 * Checks if the node has data elements inside.
-	 * @param node Gml node element.
-	 * @return Returns <code>true</code> if the node has data elements inside.
-	 */
+   * Checks if the node has data elements inside.
+   * @param node Gml node element.
+   * @return Returns <code>true</code> if the node has data elements inside.
+   */
   static bool hasData(GraphMlNode node) {
     bool ret = false;
     if (node.getNodeDataMap() == null) {
@@ -111,11 +108,11 @@ class GraphMlGraph {
   }
 
   /**
-	 * Returns the data element inside the node that references to the key element
-	 * with name = KEY_NODE_NAME.
-	 * @param node Gml Node element.
-	 * @return The required data. null if not found.
-	 */
+   * Returns the data element inside the node that references to the key element
+   * with name = KEY_NODE_NAME.
+   * @param node Gml Node element.
+   * @return The required data. null if not found.
+   */
   static GraphMlData dataNodeKey(GraphMlNode node) {
     String keyId = "";
     HashMap<String, GraphMlKey> keyMap = GraphMlKeyManager.getInstance().getKeyMap();
@@ -134,11 +131,11 @@ class GraphMlGraph {
   }
 
   /**
-	 * Returns the data element inside the edge that references to the key element
-	 * with name = KEY_EDGE_NAME.
-	 * @param edge Gml Edge element.
-	 * @return The required data. null if not found.
-	 */
+   * Returns the data element inside the edge that references to the key element
+   * with name = KEY_EDGE_NAME.
+   * @param edge Gml Edge element.
+   * @return The required data. null if not found.
+   */
   static GraphMlData dataEdgeKey(GraphMlEdge edge) {
     String keyId = "";
     HashMap<String, GraphMlKey> keyMap = GraphMlKeyManager.getInstance().getKeyMap();
@@ -156,12 +153,12 @@ class GraphMlGraph {
   }
 
   /**
-	 * Adds the vertex represented for the gml node into the graph with the given parent.
-	 * @param graph Graph where the vertex will be added.
-	 * @param parent Parent's cell.
-	 * @param node Gml Node
-	 * @return The inserted Vertex cell.
-	 */
+   * Adds the vertex represented for the gml node into the graph with the given parent.
+   * @param graph Graph where the vertex will be added.
+   * @param parent Parent's cell.
+   * @param node Gml Node
+   * @return The inserted Vertex cell.
+   */
   Cell _addNode(Graph graph, Object parent, GraphMlNode node) {
     Cell v1;
     String id = node.getNodeId();
@@ -190,13 +187,13 @@ class GraphMlGraph {
   }
 
   /**
-	 * Returns the point represented for the port name.
-	 * The specials names North, NorthWest, NorthEast, East, West, South, SouthEast and SouthWest.
-	 * are accepted. Else, the values acepted follow the pattern "double,double".
-	 * where double must be in the range 0..1
-	 * @param source Port Name.
-	 * @return point that represent the port value.
-	 */
+   * Returns the point represented for the port name.
+   * The specials names North, NorthWest, NorthEast, East, West, South, SouthEast and SouthWest.
+   * are accepted. Else, the values acepted follow the pattern "double,double".
+   * where double must be in the range 0..1
+   * @param source Port Name.
+   * @return point that represent the port value.
+   */
   static Point2d _portValue(String source) {
     Point2d fromConstraint = null;
 
@@ -236,12 +233,12 @@ class GraphMlGraph {
   }
 
   /**
-	 * Adds the edge represented for the gml edge into the graph with the given parent.
-	 * @param graph Graph where the vertex will be added.
-	 * @param parent Parent's cell.
-	 * @param edge Gml Edge
-	 * @return The inserted edge cell.
-	 */
+   * Adds the edge represented for the gml edge into the graph with the given parent.
+   * @param graph Graph where the vertex will be added.
+   * @param parent Parent's cell.
+   * @param edge Gml Edge
+   * @return The inserted edge cell.
+   */
   static Cell _addEdge(Graph graph, Object parent, GraphMlEdge edge) {
     //Get source and target vertex
     Point2d fromConstraint = null;
@@ -308,18 +305,18 @@ class GraphMlGraph {
   }
 
   /**
-	 * Checks if the graph has child nodes or edges.
-	 * @return Returns <code>true</code> if the graph hasn't child nodes or edges.
-	 */
+   * Checks if the graph has child nodes or edges.
+   * @return Returns <code>true</code> if the graph hasn't child nodes or edges.
+   */
   bool isEmpty() {
     return _nodes.length == 0 && _edges.length == 0;
   }
 
   /**
-	 * Generates a Key Element from this class.
-	 * @param document Document where the key Element will be inserted.
-	 * @return Returns the generated Elements.
-	 */
+   * Generates a Key Element from this class.
+   * @param document Document where the key Element will be inserted.
+   * @return Returns the generated Elements.
+   */
   Element generateElement(Document document) {
     Element graph = document.createElement(GraphMlConstants.GRAPH);
 

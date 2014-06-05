@@ -3,8 +3,6 @@
  */
 part of graph.io.graphml;
 
-//import java.util.HashMap;
-//import java.util.List;
 //import org.w3c.dom.Document;
 //import org.w3c.dom.Element;
 
@@ -17,15 +15,15 @@ class GraphMlPort {
   HashMap<String, GraphMlData> _portDataMap = new HashMap<String, GraphMlData>();
 
   /**
-	 * Construct a Port with name.
-	 * @param name Port Name
-	 */
+   * Construct a Port with name.
+   * @param name Port Name
+   */
   GraphMlPort(this._name);
 
   /**
-	 * Construct a Port from a xml port Element.
-	 * @param portElement Xml port Element.
-	 */
+   * Construct a Port from a xml port Element.
+   * @param portElement Xml port Element.
+   */
   factory GraphMlPort.from(Element portElement) {
     final name = portElement.getAttribute(GraphMlConstants.PORT_NAME);
     final port = new GraphMlPort(name);
@@ -58,10 +56,10 @@ class GraphMlPort {
   }
 
   /**
-	 * Generates a Key Element from this class.
-	 * @param document Document where the key Element will be inserted.
-	 * @return Returns the generated Elements.
-	 */
+   * Generates a Key Element from this class.
+   * @param document Document where the key Element will be inserted.
+   * @return Returns the generated Elements.
+   */
   Element generateElement(Document document) {
     Element node = document.createElement(GraphMlConstants.PORT);
 

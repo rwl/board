@@ -6,13 +6,12 @@ part of graph.shape;
 //import java.awt.Color;
 //import java.awt.Paint;
 //import java.awt.Shape;
-//import java.util.Map;
 
 class BasicShape implements IShape {
 
   /**
-	 * 
-	 */
+   * 
+   */
   void paintShape(Graphics2DCanvas canvas, CellState state) {
     Shape shape = createShape(canvas, state);
 
@@ -30,20 +29,20 @@ class BasicShape implements IShape {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   Shape createShape(Graphics2DCanvas canvas, CellState state) {
     return null;
   }
 
   /**
-	 * Configures the graphics object ready to paint.
-	 * @param canvas the canvas to be painted to
-	 * @param state the state of cell to be painted
-	 * @param background whether or not this is the background stage of 
-	 * 			the shape paint
-	 * @return whether or not the shape is ready to be drawn
-	 */
+   * Configures the graphics object ready to paint.
+   * @param canvas the canvas to be painted to
+   * @param state the state of cell to be painted
+   * @param background whether or not this is the background stage of 
+   * 			the shape paint
+   * @return whether or not the shape is ready to be drawn
+   */
   bool _configureGraphics(Graphics2DCanvas canvas, CellState state, bool background) {
     Map<String, Object> style = state.getStyle();
 
@@ -72,36 +71,36 @@ class BasicShape implements IShape {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   Rect _getGradientBounds(Graphics2DCanvas canvas, CellState state) {
     return state;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool hasGradient(Graphics2DCanvas canvas, CellState state) {
     return true;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool hasShadow(Graphics2DCanvas canvas, CellState state) {
     return Utils.isTrue(state.getStyle(), Constants.STYLE_SHADOW, false);
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   Color getFillColor(Graphics2DCanvas canvas, CellState state) {
     return Utils.getColor(state.getStyle(), Constants.STYLE_FILLCOLOR);
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   Color getStrokeColor(Graphics2DCanvas canvas, CellState state) {
     return Utils.getColor(state.getStyle(), Constants.STYLE_STROKECOLOR);
   }

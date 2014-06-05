@@ -29,19 +29,19 @@ part of graph.util.svg;
 abstract class ShapeProducer
 {
 	/**
-	 * Returns the Shape object initialized during the last parsing.
-	 * @return the shape or null if this handler has not been used to
-	 *         parse a path.
-	 */
+   * Returns the Shape object initialized during the last parsing.
+   * @return the shape or null if this handler has not been used to
+   *         parse a path.
+   */
 	Shape getShape();
 
 	/**
-	 * Sets the winding rule used to construct the path.
-	 */
+   * Sets the winding rule used to construct the path.
+   */
 	void setWindingRule(int i);
 
 	/**
-	 * Returns the current winding rule.
-	 */
+   * Returns the current winding rule.
+   */
 	int getWindingRule();
 }

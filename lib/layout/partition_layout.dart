@@ -1,64 +1,62 @@
 part of graph.layout;
 
-//import java.util.ArrayList;
-//import java.util.List;
 
 class PartitionLayout extends GraphLayout {
 
   /**
-	 * bool indicating the direction in which the space is partitioned.
-	 * Default is true.
-	 */
+   * bool indicating the direction in which the space is partitioned.
+   * Default is true.
+   */
   bool horizontal;
 
   /**
-	 * int that specifies the absolute spacing in pixels between the
-	 * children. Default is 0.
-	 */
+   * int that specifies the absolute spacing in pixels between the
+   * children. Default is 0.
+   */
   int spacing;
 
   /**
-	 * int that specifies the absolute inset in pixels for the parent that
-	 * contains the children. Default is 0.
-	 */
+   * int that specifies the absolute inset in pixels for the parent that
+   * contains the children. Default is 0.
+   */
   int border;
 
   /**
-	 * bool that specifies if vertices should be resized. Default is true.
-	 */
+   * bool that specifies if vertices should be resized. Default is true.
+   */
   bool resizeVertices = true;
 
   /**
-	 * Constructs a new stack layout layout for the specified graph,
-	 * spacing, orientation and offset.
-	 */
+   * Constructs a new stack layout layout for the specified graph,
+   * spacing, orientation and offset.
+   */
   //	PartitionLayout(Graph graph)
   //	{
   //		this(graph, true);
   //	}
 
   /**
-	 * Constructs a new stack layout layout for the specified graph,
-	 * spacing, orientation and offset.
-	 */
+   * Constructs a new stack layout layout for the specified graph,
+   * spacing, orientation and offset.
+   */
   //	PartitionLayout(Graph graph, bool horizontal)
   //	{
   //		this(graph, horizontal, 0);
   //	}
 
   /**
-	 * Constructs a new stack layout layout for the specified graph,
-	 * spacing, orientation and offset.
-	 */
+   * Constructs a new stack layout layout for the specified graph,
+   * spacing, orientation and offset.
+   */
   //	PartitionLayout(Graph graph, bool horizontal, int spacing)
   //	{
   //		this(graph, horizontal, spacing, 0);
   //	}
 
   /**
-	 * Constructs a new stack layout layout for the specified graph,
-	 * spacing, orientation and offset.
-	 */
+   * Constructs a new stack layout layout for the specified graph,
+   * spacing, orientation and offset.
+   */
   PartitionLayout(Graph graph, [bool horizontal = true, int spacing = 0, int border = 0]) : super(graph) {
     this.horizontal = horizontal;
     this.spacing = spacing;
@@ -66,9 +64,9 @@ class PartitionLayout extends GraphLayout {
   }
 
   /*
-	 * (non-Javadoc)
-	 * @see graph.layout.GraphLayout#move(java.lang.Object, double, double)
-	 */
+   * (non-Javadoc)
+   * @see graph.layout.GraphLayout#move(java.lang.Object, double, double)
+   */
   void moveCell(Object cell, double x, double y) {
     IGraphModel model = graph.getModel();
     Object parent = model.getParent(cell);
@@ -96,7 +94,7 @@ class PartitionLayout extends GraphLayout {
       }
 
       // Changes child order in parent
-      int idx = (parent as ICell).getIndex(cell as ICell);
+      int idx = parent.getIndex(cell);
       idx = Math.max(0, i - ((i > idx) ? 1 : 0));
 
       model.add(parent, cell, idx);
@@ -104,16 +102,16 @@ class PartitionLayout extends GraphLayout {
   }
 
   /**
-	 * Hook for subclassers to return the container size.
-	 */
+   * Hook for subclassers to return the container size.
+   */
   Rect getContainerSize() {
     return new Rect();
   }
 
   /*
-	 * (non-Javadoc)
-	 * @see graph.layout.IGraphLayout#execute(java.lang.Object)
-	 */
+   * (non-Javadoc)
+   * @see graph.layout.IGraphLayout#execute(java.lang.Object)
+   */
   void execute(Object parent) {
     IGraphModel model = graph.getModel();
     Geometry pgeo = model.getGeometry(parent);

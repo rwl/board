@@ -3,8 +3,6 @@
  */
 part of graph.analysis;
 
-//import java.util.Hashtable;
-//import java.util.Map;
 
 /**
  * Implements a union find structure that uses union by rank and path
@@ -19,16 +17,16 @@ part of graph.analysis;
 class UnionFind {
 
   /**
-	 * Maps from elements to nodes
-	 */
+   * Maps from elements to nodes
+   */
   Map<Object, _UnionFindNode> _nodes = new Map<Object, _UnionFindNode>();
 
   /**
-	 * Constructs a union find structure and initializes it with the specified
-	 * elements.
-	 * 
-	 * @param elements
-	 */
+   * Constructs a union find structure and initializes it with the specified
+   * elements.
+   * 
+   * @param elements
+   */
   UnionFind(List<Object> elements) {
     for (int i = 0; i < elements.length; i++) {
       _nodes[elements[i]] = new _UnionFindNode();
@@ -36,16 +34,16 @@ class UnionFind {
   }
 
   /**
-	 * Returns the node that represents element.
-	 */
+   * Returns the node that represents element.
+   */
   _UnionFindNode getNode(Object element) {
     return _nodes[element];
   }
 
   /**
-	 * Returns the set that contains <code>node</code>. This implementation
-	 * provides path compression by halving.
-	 */
+   * Returns the set that contains <code>node</code>. This implementation
+   * provides path compression by halving.
+   */
   _UnionFindNode find(_UnionFindNode unionFindNode) {
     while (unionFindNode.getParent().getParent() != unionFindNode.getParent()) {
       _UnionFindNode t = unionFindNode.getParent().getParent();
@@ -57,9 +55,9 @@ class UnionFind {
   }
 
   /**
-	 * Unifies the sets <code>a</code> and <code>b</code> in constant time
-	 * using a union by rank on the tree size.
-	 */
+   * Unifies the sets <code>a</code> and <code>b</code> in constant time
+   * using a union by rank on the tree size.
+   */
   void union(_UnionFindNode a, _UnionFindNode b) {
     _UnionFindNode set1 = find(a);
     _UnionFindNode set2 = find(b);
@@ -77,15 +75,15 @@ class UnionFind {
   }
 
   /**
-	 * Returns true if element a and element b are not in the same set. This
-	 * uses getNode and then find to determine the elements set.
-	 * 
-	 * @param a The first element to compare.
-	 * @param b The second element to compare.
-	 * @return Returns true if a and b are in the same set.
-	 * 
-	 * @see #getNode(Object)
-	 */
+   * Returns true if element a and element b are not in the same set. This
+   * uses getNode and then find to determine the elements set.
+   * 
+   * @param a The first element to compare.
+   * @param b The second element to compare.
+   * @return Returns true if a and b are in the same set.
+   * 
+   * @see #getNode(Object)
+   */
   bool differ(Object a, Object b) {
     _UnionFindNode set1 = find(getNode(a));
     _UnionFindNode set2 = find(getNode(b));

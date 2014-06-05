@@ -3,7 +3,6 @@
  */
 part of graph.view;
 
-//import java.util.Map;
 
 /**
  * Manager for swimlanes and nested swimlanes that sets the size of newly added
@@ -14,47 +13,47 @@ part of graph.view;
 class SwimlaneManager extends EventSource {
 
   /**
-	 * Defines the type of the source or target terminal. The type is a string
-	 * passed to Cell.is to check if the rule applies to a cell.
-	 */
+   * Defines the type of the source or target terminal. The type is a string
+   * passed to Cell.is to check if the rule applies to a cell.
+   */
   Graph _graph;
 
   /**
-	 * Optional string that specifies the value of the attribute to be passed
-	 * to Cell.is to check if the rule applies to a cell.
-	 */
+   * Optional string that specifies the value of the attribute to be passed
+   * to Cell.is to check if the rule applies to a cell.
+   */
   bool _enabled;
 
   /**
-	 * Optional string that specifies the attributename to be passed to
-	 * Cell.is to check if the rule applies to a cell.
-	 */
+   * Optional string that specifies the attributename to be passed to
+   * Cell.is to check if the rule applies to a cell.
+   */
   bool _horizontal;
 
   /**
-	 * Specifies if newly added cells should be resized to match the size of their
-	 * existing siblings. Default is true.
-	 */
+   * Specifies if newly added cells should be resized to match the size of their
+   * existing siblings. Default is true.
+   */
   bool _addEnabled;
 
   /**
-	 * Specifies if resizing of swimlanes should be handled. Default is true.
-	 */
+   * Specifies if resizing of swimlanes should be handled. Default is true.
+   */
   bool _resizeEnabled;
 
   /**
-	 * 
-	 */
+   * 
+   */
   IEventListener _addHandler;
 
   /**
-	 * 
-	 */
+   * 
+   */
   IEventListener _resizeHandler;
 
   /**
-	 * 
-	 */
+   * 
+   */
   SwimlaneManager(Graph graph) {
     _addHandler = (Object source, EventObj evt) {
       if (isEnabled() && isAddEnabled()) {
@@ -70,71 +69,71 @@ class SwimlaneManager extends EventSource {
   }
 
   /**
-	 * @return the enabled
-	 */
+   * @return the enabled
+   */
   bool isEnabled() {
     return _enabled;
   }
 
   /**
-	 * @param value the enabled to set
-	 */
+   * @param value the enabled to set
+   */
   void setEnabled(bool value) {
     _enabled = value;
   }
 
   /**
-	 * @return the bubbling
-	 */
+   * @return the bubbling
+   */
   bool isHorizontal() {
     return _horizontal;
   }
 
   /**
-	 * @param value the bubbling to set
-	 */
+   * @param value the bubbling to set
+   */
   void setHorizontal(bool value) {
     _horizontal = value;
   }
 
   /**
-	 * @return the addEnabled
-	 */
+   * @return the addEnabled
+   */
   bool isAddEnabled() {
     return _addEnabled;
   }
 
   /**
-	 * @param value the addEnabled to set
-	 */
+   * @param value the addEnabled to set
+   */
   void setAddEnabled(bool value) {
     _addEnabled = value;
   }
 
   /**
-	 * @return the resizeEnabled
-	 */
+   * @return the resizeEnabled
+   */
   bool isResizeEnabled() {
     return _resizeEnabled;
   }
 
   /**
-	 * @param value the resizeEnabled to set
-	 */
+   * @param value the resizeEnabled to set
+   */
   void setResizeEnabled(bool value) {
     _resizeEnabled = value;
   }
 
   /**
-	 * @return the graph
-	 */
+   * @return the graph
+   */
   Graph getGraph() {
     return _graph;
   }
 
   /**
-	 * @param graph the graph to set
-	 */
+   * @param graph the graph to set
+   */
   void setGraph(Graph graph) {
     if (this._graph != null) {
       this._graph.removeListener(_addHandler);
@@ -150,16 +149,16 @@ class SwimlaneManager extends EventSource {
   }
 
   /**
-	 *  Returns true if the given swimlane should be ignored.
-	 */
+   *  Returns true if the given swimlane should be ignored.
+   */
   bool _isSwimlaneIgnored(Object swimlane) {
     return !getGraph().isSwimlane(swimlane);
   }
 
   /**
-	 * Returns true if the given cell is horizontal. If the given cell is not a
-	 * swimlane, then the <horizontal> value is returned.
-	 */
+   * Returns true if the given cell is horizontal. If the given cell is not a
+   * swimlane, then the <horizontal> value is returned.
+   */
   bool _isCellHorizontal(Object cell) {
     if (_graph.isSwimlane(cell)) {
       CellState state = _graph.getView().getState(cell);
@@ -172,9 +171,9 @@ class SwimlaneManager extends EventSource {
   }
 
   /**
-	 * Called if any cells have been added. Calls swimlaneAdded for all swimlanes
-	 * where isSwimlaneIgnored returns false.
-	 */
+   * Called if any cells have been added. Calls swimlaneAdded for all swimlanes
+   * where isSwimlaneIgnored returns false.
+   */
   void _cellsAdded(List<Object> cells) {
     if (cells != null) {
       IGraphModel model = getGraph().getModel();
@@ -193,11 +192,11 @@ class SwimlaneManager extends EventSource {
   }
 
   /**
-	 * Called for each swimlane which has been added. This finds a reference
-	 * sibling swimlane and applies its size to the newly added swimlane. If no
-	 * sibling can be found then the parent swimlane is resized so that the
-	 * new swimlane fits into the parent swimlane.
-	 */
+   * Called for each swimlane which has been added. This finds a reference
+   * sibling swimlane and applies its size to the newly added swimlane. If no
+   * sibling can be found then the parent swimlane is resized so that the
+   * new swimlane fits into the parent swimlane.
+   */
   void _swimlaneAdded(Object swimlane) {
     IGraphModel model = getGraph().getModel();
     Object parent = model.getParent(swimlane);
@@ -225,9 +224,9 @@ class SwimlaneManager extends EventSource {
   }
 
   /**
-	 * Called if any cells have been resizes. Calls swimlaneResized for all
-	 * swimlanes where isSwimlaneIgnored returns false.
-	 */
+   * Called if any cells have been resizes. Calls swimlaneResized for all
+   * swimlanes where isSwimlaneIgnored returns false.
+   */
   void _cellsResized(List<Object> cells) {
     if (cells != null) {
       IGraphModel model = this.getGraph().getModel();
@@ -264,10 +263,10 @@ class SwimlaneManager extends EventSource {
   }
 
   /**
-	 * Sets the width or height of the given swimlane to the given value depending
-	 * on <horizontal>. If <horizontal> is true, then the width is set, otherwise,
-	 * the height is set.
-	 */
+   * Sets the width or height of the given swimlane to the given value depending
+   * on <horizontal>. If <horizontal> is true, then the width is set, otherwise,
+   * the height is set.
+   */
   void _resizeSwimlane(Object swimlane, double w, double h, bool parentHorizontal) {
     IGraphModel model = getGraph().getModel();
 
@@ -310,8 +309,8 @@ class SwimlaneManager extends EventSource {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void destroy() {
     setGraph(null);
   }

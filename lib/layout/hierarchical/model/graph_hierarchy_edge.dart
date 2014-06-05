@@ -10,8 +10,6 @@
  */
 part of graph.layout.hierarchical.model;
 
-//import java.util.ArrayList;
-//import java.util.List;
 
 /**
  * An abstraction of a hierarchical edge for the hierarchy layout
@@ -19,38 +17,38 @@ part of graph.layout.hierarchical.model;
 class GraphHierarchyEdge extends GraphAbstractHierarchyCell {
 
   /**
-	 * The graph edge(s) this object represents. Parallel edges are all grouped
-	 * together within one hierarchy edge.
-	 */
+   * The graph edge(s) this object represents. Parallel edges are all grouped
+   * together within one hierarchy edge.
+   */
   List<Object> edges;
 
   /**
-	 * The node this edge is sourced at
-	 */
+   * The node this edge is sourced at
+   */
   GraphHierarchyNode source;
 
   /**
-	 * The node this edge targets
-	 */
+   * The node this edge targets
+   */
   GraphHierarchyNode target;
 
   /**
-	 * Whether or not the direction of this edge has been reversed
-	 * internally to create a DAG for the hierarchical layout
-	 */
+   * Whether or not the direction of this edge has been reversed
+   * internally to create a DAG for the hierarchical layout
+   */
   bool _isReversed = false;
 
   /**
-	 * Constructs a hierarchy edge
-	 * @param edges a list of real graph edges this abstraction represents
-	 */
+   * Constructs a hierarchy edge
+   * @param edges a list of real graph edges this abstraction represents
+   */
   GraphHierarchyEdge(List<Object> edges) {
     this.edges = edges;
   }
 
   /**
-	 * Inverts the direction of this internal edge(s)
-	 */
+   * Inverts the direction of this internal edge(s)
+   */
   void invert() {
     GraphHierarchyNode temp = source;
     source = target;
@@ -59,24 +57,24 @@ class GraphHierarchyEdge extends GraphAbstractHierarchyCell {
   }
 
   /**
-	 * @return Returns the isReversed.
-	 */
+   * @return Returns the isReversed.
+   */
   bool isReversed() {
     return _isReversed;
   }
 
   /**
-	 * @param isReversed The isReversed to set.
-	 */
+   * @param isReversed The isReversed to set.
+   */
   void setReversed(bool isReversed) {
     this._isReversed = isReversed;
   }
 
   /**
-	 * Returns the cells this cell connects to on the next layer up
-	 * @param layer the layer this cell is on
-	 * @return the cells this cell connects to on the next layer up
-	 */
+   * Returns the cells this cell connects to on the next layer up
+   * @param layer the layer this cell is on
+   * @return the cells this cell connects to on the next layer up
+   */
   //	@SuppressWarnings("unchecked")
   List<GraphAbstractHierarchyCell> getNextLayerConnectedCells(int layer) {
     if (_nextLayerConnectedCells == null) {
@@ -97,10 +95,10 @@ class GraphHierarchyEdge extends GraphAbstractHierarchyCell {
   }
 
   /**
-	 * Returns the cells this cell connects to on the next layer down
-	 * @param layer the layer this cell is on
-	 * @return the cells this cell connects to on the next layer down
-	 */
+   * Returns the cells this cell connects to on the next layer down
+   * @param layer the layer this cell is on
+   * @return the cells this cell connects to on the next layer down
+   */
   //	@SuppressWarnings("unchecked")
   List<GraphAbstractHierarchyCell> getPreviousLayerConnectedCells(int layer) {
     if (_previousLayerConnectedCells == null) {
@@ -121,40 +119,40 @@ class GraphHierarchyEdge extends GraphAbstractHierarchyCell {
   }
 
   /**
-	 * 
-	 * @return whether or not this cell is an edge
-	 */
+   * 
+   * @return whether or not this cell is an edge
+   */
   bool isEdge() {
     return true;
   }
 
   /**
-	 * 
-	 * @return whether or not this cell is a node
-	 */
+   * 
+   * @return whether or not this cell is a node
+   */
   bool isVertex() {
     return false;
   }
 
   /**
-	 * Gets the value of temp for the specified layer
-	 * 
-	 * @param layer
-	 *            the layer relating to a specific entry into temp
-	 * @return the value for that layer
-	 */
+   * Gets the value of temp for the specified layer
+   * 
+   * @param layer
+   *            the layer relating to a specific entry into temp
+   * @return the value for that layer
+   */
   int getGeneralPurposeVariable(int layer) {
     return temp[layer - minRank - 1];
   }
 
   /**
-	 * Set the value of temp for the specified layer
-	 * 
-	 * @param layer
-	 *            the layer relating to a specific entry into temp
-	 * @param value
-	 *            the value for that layer
-	 */
+   * Set the value of temp for the specified layer
+   * 
+   * @param layer
+   *            the layer relating to a specific entry into temp
+   * @param value
+   *            the value for that layer
+   */
   void setGeneralPurposeVariable(int layer, int value) {
     temp[layer - minRank - 1] = value;
   }

@@ -7,13 +7,6 @@ part of graph.io;
 //import java.lang.reflect.Field;
 //import java.lang.reflect.Method;
 //import java.lang.reflect.Modifier;
-//import java.util.Collection;
-//import java.util.HashMap;
-//import java.util.HashSet;
-//import java.util.Hashtable;
-//import java.util.Iterator;
-//import java.util.Map;
-//import java.util.Set;
 
 //import org.w3c.dom.Element;
 //import org.w3c.dom.NamedNodeMap;
@@ -30,65 +23,65 @@ part of graph.io;
 class ObjectCodec {
 
   /**
-	 * Immutable empty set.
-	 */
+   * Immutable empty set.
+   */
   static Set<String> _EMPTY_SET = new HashSet<String>();
 
   /**
-	 * Holds the template object associated with this codec.
-	 */
+   * Holds the template object associated with this codec.
+   */
   Object _template;
 
   /**
-	 * Array containing the variable names that should be ignored by the codec.
-	 */
+   * Array containing the variable names that should be ignored by the codec.
+   */
   Set<String> _exclude;
 
   /**
-	 * Array containing the variable names that should be turned into or
-	 * converted from references. See <Codec.getId> and <Codec.getObject>.
-	 */
+   * Array containing the variable names that should be turned into or
+   * converted from references. See <Codec.getId> and <Codec.getObject>.
+   */
   Set<String> _idrefs;
 
   /**
-	 * Maps from from fieldnames to XML attribute names.
-	 */
+   * Maps from from fieldnames to XML attribute names.
+   */
   Map<String, String> _mapping;
 
   /**
-	 * Maps from from XML attribute names to fieldnames.
-	 */
+   * Maps from from XML attribute names to fieldnames.
+   */
   Map<String, String> _reverse;
 
   /**
-	 * Caches accessors for the given method names.
-	 */
+   * Caches accessors for the given method names.
+   */
   Map<String, MethodMirror> _accessors;
 
   /**
-	 * Caches fields for faster access.
-	 */
+   * Caches fields for faster access.
+   */
   Map<ClassMirror, Map<String, DeclarationMirror>> _fields;
 
   /**
-	 * Constructs a new codec for the specified template object.
-	 */
+   * Constructs a new codec for the specified template object.
+   */
 //  ObjectCodec(Object template) {
 //    this(template, null, null, null);
 //  }
 
   /**
-	 * Constructs a new codec for the specified template object. The variables
-	 * in the optional exclude array are ignored by the codec. Variables in the
-	 * optional idrefs array are turned into references in the XML. The
-	 * optional mapping may be used to map from variable names to XML
-	 * attributes. The argument is created as follows:
-	 * 
-	 * @param template Prototypical instance of the object to be encoded/decoded.
-	 * @param exclude Optional array of fieldnames to be ignored.
-	 * @param idrefs Optional array of fieldnames to be converted to/from references.
-	 * @param mapping Optional mapping from field- to attributenames.
-	 */
+   * Constructs a new codec for the specified template object. The variables
+   * in the optional exclude array are ignored by the codec. Variables in the
+   * optional idrefs array are turned into references in the XML. The
+   * optional mapping may be used to map from variable names to XML
+   * attributes. The argument is created as follows:
+   * 
+   * @param template Prototypical instance of the object to be encoded/decoded.
+   * @param exclude Optional array of fieldnames to be ignored.
+   * @param idrefs Optional array of fieldnames to be converted to/from references.
+   * @param mapping Optional mapping from field- to attributenames.
+   */
   ObjectCodec(this._template, [List<String> exclude=null, List<String> idrefs=null, Map<String, String> mapping=null]) {
     _init(exclude, idrefs, mapping);
   }
@@ -133,43 +126,43 @@ class ObjectCodec {
   }
 
   /**
-	 * Returns the name used for the nodenames and lookup of the codec when
-	 * classes are encoded and nodes are decoded. For classes to work with
-	 * this the codec registry automatically adds an alias for the classname
-	 * if that is different than what this returns. The default implementation
-	 * returns the classname of the template class.
-	 * 
-	 * Here is an example on how to use this for renaming Cell nodes:
-	 * <code>
-	 * CodecRegistry.register(new CellCodec()
-	 * {
-	 *   public String getName()
-	 *   {
-	 *     return "anotherName";
-	 *   }
-	 * });
-	 * </code>
-	 */
+   * Returns the name used for the nodenames and lookup of the codec when
+   * classes are encoded and nodes are decoded. For classes to work with
+   * this the codec registry automatically adds an alias for the classname
+   * if that is different than what this returns. The default implementation
+   * returns the classname of the template class.
+   * 
+   * Here is an example on how to use this for renaming Cell nodes:
+   * <code>
+   * CodecRegistry.register(new CellCodec()
+   * {
+   *   public String getName()
+   *   {
+   *     return "anotherName";
+   *   }
+   * });
+   * </code>
+   */
   String getName() {
     return CodecRegistry.getName(getTemplate());
   }
 
   /**
-	 * Returns the template object associated with this codec.
-	 * 
-	 * @return Returns the template object.
-	 */
+   * Returns the template object associated with this codec.
+   * 
+   * @return Returns the template object.
+   */
   Object getTemplate() {
     return _template;
   }
 
   /**
-	 * Returns a new instance of the template object for representing the given
-	 * node.
-	 * 
-	 * @param node XML node that the object is going to represent.
-	 * @return Returns a new template instance.
-	 */
+   * Returns a new instance of the template object for representing the given
+   * node.
+   * 
+   * @param node XML node that the object is going to represent.
+   * @return Returns a new template instance.
+   */
   Object _cloneTemplate(Node node) {
     Object obj = null;
 
@@ -211,80 +204,80 @@ class ObjectCodec {
   }
 
   /**
-	 * Returns true if the given attribute is to be ignored by the codec. This
-	 * implementation returns true if the given fieldname is in
-	 * {@link #_exclude}.
-	 * 
-	 * @param obj Object instance that contains the field.
-	 * @param attr Fieldname of the field.
-	 * @param value Value of the field.
-	 * @param write bool indicating if the field is being encoded or
-	 * decoded. write is true if the field is being encoded, else it is
-	 * being decoded.
-	 * @return Returns true if the given attribute should be ignored.
-	 */
+   * Returns true if the given attribute is to be ignored by the codec. This
+   * implementation returns true if the given fieldname is in
+   * {@link #_exclude}.
+   * 
+   * @param obj Object instance that contains the field.
+   * @param attr Fieldname of the field.
+   * @param value Value of the field.
+   * @param write bool indicating if the field is being encoded or
+   * decoded. write is true if the field is being encoded, else it is
+   * being decoded.
+   * @return Returns true if the given attribute should be ignored.
+   */
   bool isExcluded(Object obj, String attr, Object value, bool write) {
     return _exclude.contains(attr);
   }
 
   /**
-	 * Returns true if the given fieldname is to be treated as a textual
-	 * reference (ID). This implementation returns true if the given fieldname
-	 * is in {@link #_idrefs}.
-	 * 
-	 * @param obj Object instance that contains the field.
-	 * @param attr Fieldname of the field.
-	 * @param value Value of the field.
-	 * @param isWrite bool indicating if the field is being encoded or
-	 * decoded. isWrite is true if the field is being encoded, else it is being
-	 * decoded.
-	 * @return Returns true if the given attribute should be handled as a
-	 * reference.
-	 */
+   * Returns true if the given fieldname is to be treated as a textual
+   * reference (ID). This implementation returns true if the given fieldname
+   * is in {@link #_idrefs}.
+   * 
+   * @param obj Object instance that contains the field.
+   * @param attr Fieldname of the field.
+   * @param value Value of the field.
+   * @param isWrite bool indicating if the field is being encoded or
+   * decoded. isWrite is true if the field is being encoded, else it is being
+   * decoded.
+   * @return Returns true if the given attribute should be handled as a
+   * reference.
+   */
   bool isReference(Object obj, String attr, Object value, bool isWrite) {
     return _idrefs.contains(attr);
   }
 
   /**
-	 * Encodes the specified object and returns a node representing then given
-	 * object. Calls beforeEncode after creating the node and afterEncode
-	 * with the resulting node after processing.
-	 * 
-	 * Enc is a reference to the calling encoder. It is used to encode complex
-	 * objects and create references.
-	 * 
-	 * This implementation encodes all variables of an object according to the
-	 * following rules:
-	 * 
-	 * <ul>
-	 * <li>If the variable name is in {@link #_exclude} then it is ignored.</li>
-	 * <li>If the variable name is in {@link #_idrefs} then
-	 * {@link Codec#getId(Object)} is used to replace the object with its ID.
-	 * </li>
-	 * <li>The variable name is mapped using {@link #_mapping}.</li>
-	 * <li>If obj is an array and the variable name is numeric (ie. an index) then it
-	 * is not encoded.</li>
-	 * <li>If the value is an object, then the codec is used to create a child
-	 * node with the variable name encoded into the "as" attribute.</li>
-	 * <li>Else, if {@link graph.io.Codec#isEncodeDefaults()} is true or
-	 * the value differs from the template value, then ...
-	 * <ul>
-	 * <li>... if obj is not an array, then the value is mapped to an
-	 * attribute.</li>
-	 * <li>... else if obj is an array, the value is mapped to an add child
-	 * with a value attribute or a text child node, if the value is a function.
-	 * </li>
-	 * </ul>
-	 * </li>
-	 * </ul>
-	 * 
-	 * If no ID exists for a variable in {@link #_idrefs} or if an object cannot be
-	 * encoded, a warning is printed to System.err.
-	 * 
-	 * @param enc Codec that controls the encoding process.
-	 * @param obj Object to be encoded.
-	 * @return Returns the resulting XML node that represents the given object. 
-	 */
+   * Encodes the specified object and returns a node representing then given
+   * object. Calls beforeEncode after creating the node and afterEncode
+   * with the resulting node after processing.
+   * 
+   * Enc is a reference to the calling encoder. It is used to encode complex
+   * objects and create references.
+   * 
+   * This implementation encodes all variables of an object according to the
+   * following rules:
+   * 
+   * <ul>
+   * <li>If the variable name is in {@link #_exclude} then it is ignored.</li>
+   * <li>If the variable name is in {@link #_idrefs} then
+   * {@link Codec#getId(Object)} is used to replace the object with its ID.
+   * </li>
+   * <li>The variable name is mapped using {@link #_mapping}.</li>
+   * <li>If obj is an array and the variable name is numeric (ie. an index) then it
+   * is not encoded.</li>
+   * <li>If the value is an object, then the codec is used to create a child
+   * node with the variable name encoded into the "as" attribute.</li>
+   * <li>Else, if {@link graph.io.Codec#isEncodeDefaults()} is true or
+   * the value differs from the template value, then ...
+   * <ul>
+   * <li>... if obj is not an array, then the value is mapped to an
+   * attribute.</li>
+   * <li>... else if obj is an array, the value is mapped to an add child
+   * with a value attribute or a text child node, if the value is a function.
+   * </li>
+   * </ul>
+   * </li>
+   * </ul>
+   * 
+   * If no ID exists for a variable in {@link #_idrefs} or if an object cannot be
+   * encoded, a warning is printed to System.err.
+   * 
+   * @param enc Codec that controls the encoding process.
+   * @param obj Object to be encoded.
+   * @return Returns the resulting XML node that represents the given object. 
+   */
   Node encode(Codec enc, Object obj) {
     Node node = enc._document.createElement(getName());
 
@@ -295,14 +288,14 @@ class ObjectCodec {
   }
 
   /**
-	 * Encodes the value of each member in then given obj
-	 * into the given node using {@link #_encodeFields(Codec, Object, Node)}
-	 * and {@link #_encodeElements(Codec, Object, Node)}.
-	 * 
-	 * @param enc Codec that controls the encoding process.
-	 * @param obj Object to be encoded.
-	 * @param node XML node that contains the encoded object.
-	 */
+   * Encodes the value of each member in then given obj
+   * into the given node using {@link #_encodeFields(Codec, Object, Node)}
+   * and {@link #_encodeElements(Codec, Object, Node)}.
+   * 
+   * @param enc Codec that controls the encoding process.
+   * @param obj Object to be encoded.
+   * @param node XML node that contains the encoded object.
+   */
   void _encodeObject(Codec enc, Object obj, Node node) {
     Codec.setAttribute(node, "id", enc.getId(obj));
     _encodeFields(enc, obj, node);
@@ -310,12 +303,12 @@ class ObjectCodec {
   }
 
   /**
-	 * Encodes the declared fields of the given object into the given node.
-	 * 
-	 * @param enc Codec that controls the encoding process.
-	 * @param obj Object whose fields should be encoded.
-	 * @param node XML node that contains the encoded object.
-	 */
+   * Encodes the declared fields of the given object into the given node.
+   * 
+   * @param enc Codec that controls the encoding process.
+   * @param obj Object whose fields should be encoded.
+   * @param node XML node that contains the encoded object.
+   */
   void _encodeFields(Codec enc, Object obj, Node node) {
     // LATER: Use PropertyDescriptors in Introspector.getBeanInfo(clazz)
     // see http://forum.jgraph.com/questions/1424
@@ -339,12 +332,12 @@ class ObjectCodec {
   }
 
   /**
-	 * Encodes the child objects of arrays, maps and collections.
-	 * 
-	 * @param enc Codec that controls the encoding process.
-	 * @param obj Object whose child objects should be encoded.
-	 * @param node XML node that contains the encoded object.
-	 */
+   * Encodes the child objects of arrays, maps and collections.
+   * 
+   * @param enc Codec that controls the encoding process.
+   * @param obj Object whose child objects should be encoded.
+   * @param node XML node that contains the encoded object.
+   */
   void _encodeElements(Codec enc, Object obj, Node node) {
     if (obj.getClass().isArray()) {
       List<Object> tmp = obj as List<Object>;
@@ -373,17 +366,17 @@ class ObjectCodec {
   }
 
   /**
-	 * Converts the given value according to the mappings
-	 * and id-refs in this codec and uses
-	 * {@link #_writeAttribute(Codec, Object, String, Object, Node)}
-	 * to write the attribute into the given node.
-	 * 
-	 * @param enc Codec that controls the encoding process.
-	 * @param obj Object whose field is going to be encoded.
-	 * @param fieldname Name if the field to be encoded.
-	 * @param value Value of the property to be encoded.
-	 * @param node XML node that contains the encoded object.
-	 */
+   * Converts the given value according to the mappings
+   * and id-refs in this codec and uses
+   * {@link #_writeAttribute(Codec, Object, String, Object, Node)}
+   * to write the attribute into the given node.
+   * 
+   * @param enc Codec that controls the encoding process.
+   * @param obj Object whose field is going to be encoded.
+   * @param fieldname Name if the field to be encoded.
+   * @param value Value of the property to be encoded.
+   * @param node XML node that contains the encoded object.
+   */
   void _encodeValue(Codec enc, Object obj, String fieldname, Object value, Node node) {
     if (value != null && !isExcluded(obj, fieldname, value, true)) {
       if (isReference(obj, fieldname, value, true)) {
@@ -406,19 +399,19 @@ class ObjectCodec {
   }
 
   /**
-	 * Returns true if the given object is a primitive value.
-	 * 
-	 * @param value Object that should be checked.
-	 * @return Returns true if the given object is a primitive value.
-	 */
+   * Returns true if the given object is a primitive value.
+   * 
+   * @param value Object that should be checked.
+   * @return Returns true if the given object is a primitive value.
+   */
   bool _isPrimitiveValue(Object value) {
     return value is String || value is bool || value is Character || value is Byte || value is Short || value is int || value is Long || value is Float || value is Double || value.getClass().isPrimitive();
   }
 
   /**
-	 * Writes the given value into node using writePrimitiveAttribute
-	 * or writeComplexAttribute depending on the type of the value.
-	 */
+   * Writes the given value into node using writePrimitiveAttribute
+   * or writeComplexAttribute depending on the type of the value.
+   */
   void _writeAttribute(Codec enc, Object obj, String attr, Object value, Node node) {
     value = _convertValueToXml(value);
 
@@ -430,8 +423,8 @@ class ObjectCodec {
   }
 
   /**
-	 * Writes the given value as an attribute of the given node.
-	 */
+   * Writes the given value as an attribute of the given node.
+   */
   void _writePrimitiveAttribute(Codec enc, Object obj, String attr, Object value, Node node) {
     if (attr == null || obj is Map) {
       Node child = enc._document.createElement("add");
@@ -448,8 +441,8 @@ class ObjectCodec {
   }
 
   /**
-	 * Writes the given value as a child node of the given node.
-	 */
+   * Writes the given value as a child node of the given node.
+   */
   void _writeComplexAttribute(Codec enc, Object obj, String attr, Object value, Node node) {
     Node child = enc.encode(value);
 
@@ -465,8 +458,8 @@ class ObjectCodec {
   }
 
   /**
-	 * Converts true to "1" and false to "0". All other values are ignored.
-	 */
+   * Converts true to "1" and false to "0". All other values are ignored.
+   */
   Object _convertValueToXml(Object value) {
     if (value is bool) {
       return value ? "1" : "0";
@@ -476,8 +469,8 @@ class ObjectCodec {
   }
 
   /**
-	 * Converts XML attribute values to object of the given type.
-	 */
+   * Converts XML attribute values to object of the given type.
+   */
   Object _convertValueFromXml(Class /*<?>*/ type, Object value) {
     if (value is String) {
       String tmp = value as String;
@@ -509,9 +502,9 @@ class ObjectCodec {
   }
 
   /**
-	 * Returns the XML node attribute name for the given Java field name. That
-	 * is, it returns the mapping of the field name.
-	 */
+   * Returns the XML node attribute name for the given Java field name. That
+   * is, it returns the mapping of the field name.
+   */
   String _getAttributeName(String fieldname) {
     if (fieldname != null) {
       Object mapped = _mapping[fieldname];
@@ -525,13 +518,13 @@ class ObjectCodec {
   }
 
   /**
-	 * Returns the Java field name for the given XML attribute name. That is, it
-	 * returns the reverse mapping of the attribute name.
-	 * 
-	 * @param attributename
-	 *            The attribute name to be mapped.
-	 * @return String that represents the mapped field name.
-	 */
+   * Returns the Java field name for the given XML attribute name. That is, it
+   * returns the reverse mapping of the attribute name.
+   * 
+   * @param attributename
+   *            The attribute name to be mapped.
+   * @return String that represents the mapped field name.
+   */
   String _getFieldName(String attributename) {
     if (attributename != null) {
       Object mapped = _reverse[attributename];
@@ -545,8 +538,8 @@ class ObjectCodec {
   }
 
   /**
-	 * Returns the field with the specified name.
-	 */
+   * Returns the field with the specified name.
+   */
   DeclarationMirror _getField(Object obj, String fieldname) {
     Class /*<?>*/ type = obj.getClass();
 
@@ -591,8 +584,8 @@ class ObjectCodec {
   }
 
   /**
-	 * Returns the accessor (getter, setter) for the specified field.
-	 */
+   * Returns the accessor (getter, setter) for the specified field.
+   */
   MethodMirror _getAccessor(Object obj, DeclarationMirror field, bool isGetter) {
     String name = field.simpleName;
     name = name.substring(0, 1).toUpperCase() + name.substring(1);
@@ -632,8 +625,8 @@ class ObjectCodec {
   }
 
   /**
-	 * Returns the method with the specified signature.
-	 */
+   * Returns the method with the specified signature.
+   */
   MethodMirror _getMethod(Object obj, String methodname, List<Class> params) {
     Class /*<?>*/ type = obj.getClass();
 
@@ -654,9 +647,9 @@ class ObjectCodec {
   }
 
   /**
-	 * Returns the value of the field with the specified name in the specified
-	 * object instance.
-	 */
+   * Returns the value of the field with the specified name in the specified
+   * object instance.
+   */
   Object _getFieldValue(Object obj, String fieldname) {
     Object value = null;
 
@@ -682,8 +675,8 @@ class ObjectCodec {
   }
 
   /**
-	 * Returns the value of the field using the accessor for the field if one exists.
-	 */
+   * Returns the value of the field using the accessor for the field if one exists.
+   */
   Object _getFieldValueWithAccessor(Object obj, DeclarationMirror field) {
     Object value = null;
 
@@ -703,9 +696,9 @@ class ObjectCodec {
   }
 
   /**
-	 * Sets the value of the field with the specified name
-	 * in the specified object instance.
-	 */
+   * Sets the value of the field with the specified name
+   * in the specified object instance.
+   */
   void _setFieldValue(Object obj, String fieldname, Object value) {
     DeclarationMirror field = null;
 
@@ -731,8 +724,8 @@ class ObjectCodec {
   }
 
   /**
-	 * Sets the value of the given field using the accessor if one exists.
-	 */
+   * Sets the value of the given field using the accessor if one exists.
+   */
   void _setFieldValueWithAccessor(Object obj, DeclarationMirror field, Object value) {
     if (field != null) {
       try {
@@ -757,80 +750,80 @@ class ObjectCodec {
   }
 
   /**
-	 * Hook for subclassers to pre-process the object before encoding. This
-	 * returns the input object. The return value of this function is used in
-	 * encode to perform the default encoding into the given node.
-	 * 
-	 * @param enc Codec that controls the encoding process.
-	 * @param obj Object to be encoded.
-	 * @param node XML node to encode the object into.
-	 * @return Returns the object to be encoded by the default encoding.
-	 */
+   * Hook for subclassers to pre-process the object before encoding. This
+   * returns the input object. The return value of this function is used in
+   * encode to perform the default encoding into the given node.
+   * 
+   * @param enc Codec that controls the encoding process.
+   * @param obj Object to be encoded.
+   * @param node XML node to encode the object into.
+   * @return Returns the object to be encoded by the default encoding.
+   */
   Object beforeEncode(Codec enc, Object obj, Node node) {
     return obj;
   }
 
   /**
-	 * Hook for subclassers to post-process the node for the given object after
-	 * encoding and return the post-processed node. This implementation returns
-	 * the input node. The return value of this method is returned to the
-	 * encoder from <encode>.
-	 * 
-	 * Parameters:
-	 * 
-	 * @param enc Codec that controls the encoding process.
-	 * @param obj Object to be encoded.
-	 * @param node XML node that represents the default encoding.
-	 * @return Returns the resulting node of the encoding.
-	 */
+   * Hook for subclassers to post-process the node for the given object after
+   * encoding and return the post-processed node. This implementation returns
+   * the input node. The return value of this method is returned to the
+   * encoder from <encode>.
+   * 
+   * Parameters:
+   * 
+   * @param enc Codec that controls the encoding process.
+   * @param obj Object to be encoded.
+   * @param node XML node that represents the default encoding.
+   * @return Returns the resulting node of the encoding.
+   */
   Node afterEncode(Codec enc, Object obj, Node node) {
     return node;
   }
 
   /**
-	 * Parses the given node into the object or returns a new object
-	 * representing the given node.
-	 * 
-	 * @param dec Codec that controls the encoding process.
-	 * @param node XML node to be decoded.
-	 * @return Returns the resulting object that represents the given XML node.
-	 */
+   * Parses the given node into the object or returns a new object
+   * representing the given node.
+   * 
+   * @param dec Codec that controls the encoding process.
+   * @param node XML node to be decoded.
+   * @return Returns the resulting object that represents the given XML node.
+   */
 //  Object decode(Codec dec, Node node) {
 //    return decode(dec, node, null);
 //  }
 
   /**
-	 * Parses the given node into the object or returns a new object
-	 * representing the given node.
-	 * 
-	 * Dec is a reference to the calling decoder. It is used to decode complex
-	 * objects and resolve references.
-	 * 
-	 * If a node has an id attribute then the object cache is checked for the
-	 * object. If the object is not yet in the cache then it is constructed
-	 * using the constructor of <template> and cached in <Codec.objects>.
-	 * 
-	 * This implementation decodes all attributes and childs of a node according
-	 * to the following rules:
-	 *  - If the variable name is in <exclude> or if the attribute name is "id"
-	 * or "as" then it is ignored. - If the variable name is in <idrefs> then
-	 * <Codec.getObject> is used to replace the reference with an object. -
-	 * The variable name is mapped using a reverse <mapping>. - If the value has
-	 * a child node, then the codec is used to create a child object with the
-	 * variable name taken from the "as" attribute. - If the object is an array
-	 * and the variable name is empty then the value or child object is appended
-	 * to the array. - If an add child has no value or the object is not an
-	 * array then the child text content is evaluated using <Utils.eval>.
-	 * 
-	 * If no object exists for an ID in <idrefs> a warning is issued in
-	 * System.err.
-	 * 
-	 * @param dec Codec that controls the encoding process.
-	 * @param node XML node to be decoded.
-	 * @param into Optional object to encode the node into.
-	 * @return Returns the resulting object that represents the given XML node
-	 * or the object given to the method as the into parameter.
-	 */
+   * Parses the given node into the object or returns a new object
+   * representing the given node.
+   * 
+   * Dec is a reference to the calling decoder. It is used to decode complex
+   * objects and resolve references.
+   * 
+   * If a node has an id attribute then the object cache is checked for the
+   * object. If the object is not yet in the cache then it is constructed
+   * using the constructor of <template> and cached in <Codec.objects>.
+   * 
+   * This implementation decodes all attributes and childs of a node according
+   * to the following rules:
+   *  - If the variable name is in <exclude> or if the attribute name is "id"
+   * or "as" then it is ignored. - If the variable name is in <idrefs> then
+   * <Codec.getObject> is used to replace the reference with an object. -
+   * The variable name is mapped using a reverse <mapping>. - If the value has
+   * a child node, then the codec is used to create a child object with the
+   * variable name taken from the "as" attribute. - If the object is an array
+   * and the variable name is empty then the value or child object is appended
+   * to the array. - If an add child has no value or the object is not an
+   * array then the child text content is evaluated using <Utils.eval>.
+   * 
+   * If no object exists for an ID in <idrefs> a warning is issued in
+   * System.err.
+   * 
+   * @param dec Codec that controls the encoding process.
+   * @param node XML node to be decoded.
+   * @param into Optional object to encode the node into.
+   * @return Returns the resulting object that represents the given XML node
+   * or the object given to the method as the into parameter.
+   */
   Object decode(Codec dec, Node node, [Object into=null]) {
     Object obj = null;
 
@@ -859,8 +852,8 @@ class ObjectCodec {
   }
 
   /**
-	 * Calls decodeAttributes and decodeChildren for the given node.
-	 */
+   * Calls decodeAttributes and decodeChildren for the given node.
+   */
   void _decodeNode(Codec dec, Node node, Object obj) {
     if (node != null) {
       _decodeAttributes(dec, node, obj);
@@ -869,8 +862,8 @@ class ObjectCodec {
   }
 
   /**
-	 * Decodes all attributes of the given node using decodeAttribute.
-	 */
+   * Decodes all attributes of the given node using decodeAttribute.
+   */
   void _decodeAttributes(Codec dec, Node node, Object obj) {
     NamedNodeMap attrs = node.attributes;
 
@@ -883,8 +876,8 @@ class ObjectCodec {
   }
 
   /**
-	 * Reads the given attribute into the specified object.
-	 */
+   * Reads the given attribute into the specified object.
+   */
   void _decodeAttribute(Codec dec, Node attr, Object obj) {
     String name = attr.nodeName;
 
@@ -910,8 +903,8 @@ class ObjectCodec {
   }
 
   /**
-	 * Decodec all children of the given node using decodeChild.
-	 */
+   * Decodec all children of the given node using decodeChild.
+   */
   void _decodeChildren(Codec dec, Node node, Object obj) {
     Node child = node.firstChild;
 
@@ -925,8 +918,8 @@ class ObjectCodec {
   }
 
   /**
-	 * Reads the specified child into the given object.
-	 */
+   * Reads the specified child into the given object.
+   */
   void _decodeChild(Codec dec, Node child, Object obj) {
     String fieldname = _getFieldName((child as Element).getAttribute("as"));
 
@@ -951,13 +944,13 @@ class ObjectCodec {
   }
 
   /**
-	 * Returns the template instance for the given field. This returns the
-	 * value of the field, null if the value is an array or an empty collection
-	 * if the value is a collection. The value is then used to populate the
-	 * field for a new instance. For strongly typed languages it may be
-	 * required to override this to return the correct collection instance
-	 * based on the encoded child.
-	 */
+   * Returns the template instance for the given field. This returns the
+   * value of the field, null if the value is an array or an empty collection
+   * if the value is a collection. The value is then used to populate the
+   * field for a new instance. For strongly typed languages it may be
+   * required to override this to return the correct collection instance
+   * based on the encoded child.
+   */
   Object _getFieldTemplate(Object obj, String fieldname, Node child) {
     Object template = _getFieldValue(obj, fieldname);
 
@@ -978,13 +971,13 @@ class ObjectCodec {
   }
 
   /**
-	 * Sets the decoded child node as a value of the given object. If the
-	 * object is a map, then the value is added with the given fieldname as a
-	 * key. If the fieldname is not empty, then setFieldValue is called or
-	 * else, if the object is a collection, the value is added to the
-	 * collection. For strongly typed languages it may be required to
-	 * override this with the correct code to add an entry to an object.
-	 */
+   * Sets the decoded child node as a value of the given object. If the
+   * object is a map, then the value is added with the given fieldname as a
+   * key. If the fieldname is not empty, then setFieldValue is called or
+   * else, if the object is a collection, the value is added to the
+   * collection. For strongly typed languages it may be required to
+   * override this with the correct code to add an entry to an object.
+   */
   void _addObjectValue(Object obj, String fieldname, Object value, Object template) {
     if (value != null && value != template) {
       if (fieldname != null && obj is Map) {
@@ -1003,15 +996,15 @@ class ObjectCodec {
   }
 
   /**
-	 * Returns true if the given node is an include directive and executes the
-	 * include by decoding the XML document. Returns false if the given node is
-	 * not an include directive.
-	 * 
-	 * @param dec Codec that controls the encoding/decoding process.
-	 * @param node XML node to be checked.
-	 * @param into Optional object to pass-thru to the codec.
-	 * @return Returns true if the given node was processed as an include.
-	 */
+   * Returns true if the given node is an include directive and executes the
+   * include by decoding the XML document. Returns false if the given node is
+   * not an include directive.
+   * 
+   * @param dec Codec that controls the encoding/decoding process.
+   * @param node XML node to be checked.
+   * @param into Optional object to pass-thru to the codec.
+   * @return Returns true if the given node was processed as an include.
+   */
   bool processInclude(Codec dec, Node node, Object into) {
     if (node.nodeType == Node.ELEMENT_NODE && node.nodeName.toLowerCase() == "include") {
       String name = (node as Element).getAttribute("name");
@@ -1035,35 +1028,35 @@ class ObjectCodec {
   }
 
   /**
-	 * Hook for subclassers to pre-process the node for the specified object
-	 * and return the node to be used for further processing by
-	 * {@link #decode(Codec, Node)}. The object is created based on the
-	 * template in the calling method and is never null.
-	 * 
-	 * This implementation returns the input node. The return value of this
-	 * function is used in {@link #decode(Codec, Node)} to perform the
-	 * default decoding into the given object.
-	 * 
-	 * @param dec Codec that controls the decoding process.
-	 * @param node XML node to be decoded.
-	 * @param obj Object to encode the node into.
-	 * @return Returns the node used for the default decoding.
-	 */
+   * Hook for subclassers to pre-process the node for the specified object
+   * and return the node to be used for further processing by
+   * {@link #decode(Codec, Node)}. The object is created based on the
+   * template in the calling method and is never null.
+   * 
+   * This implementation returns the input node. The return value of this
+   * function is used in {@link #decode(Codec, Node)} to perform the
+   * default decoding into the given object.
+   * 
+   * @param dec Codec that controls the decoding process.
+   * @param node XML node to be decoded.
+   * @param obj Object to encode the node into.
+   * @return Returns the node used for the default decoding.
+   */
   Node beforeDecode(Codec dec, Node node, Object obj) {
     return node;
   }
 
   /**
-	 * Hook for subclassers to post-process the object after decoding. This
-	 * implementation returns the given object without any changes. The return
-	 * value of this method is returned to the decoder from
-	 * {@link #decode(Codec, Node)}.
-	 * 
-	 * @param dec Codec that controls the decoding process.
-	 * @param node XML node to be decoded.
-	 * @param obj Object that represents the default decoding.
-	 * @return Returns the result of the decoding process.
-	 */
+   * Hook for subclassers to post-process the object after decoding. This
+   * implementation returns the given object without any changes. The return
+   * value of this method is returned to the decoder from
+   * {@link #decode(Codec, Node)}.
+   * 
+   * @param dec Codec that controls the decoding process.
+   * @param node XML node to be decoded.
+   * @param obj Object that represents the default decoding.
+   * @return Returns the result of the decoding process.
+   */
   Object afterDecode(Codec dec, Node node, Object obj) {
     return obj;
   }

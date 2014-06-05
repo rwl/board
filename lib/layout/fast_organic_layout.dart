@@ -3,286 +3,283 @@
  */
 part of graph.layout;
 
-//import java.util.ArrayList;
-//import java.util.Hashtable;
-//import java.util.List;
 
 /**
  * Fast organic layout algorithm.
  */
 class FastOrganicLayout extends GraphLayout {
   /**
-	 * Specifies if the top left corner of the input cells should be the origin
-	 * of the layout result. Default is true.
-	 */
+   * Specifies if the top left corner of the input cells should be the origin
+   * of the layout result. Default is true.
+   */
   bool useInputOrigin = true;
 
   /**
-	 * Specifies if all edge points of traversed edges should be removed.
-	 * Default is true.
-	 */
+   * Specifies if all edge points of traversed edges should be removed.
+   * Default is true.
+   */
   bool resetEdges = true;
 
   /**
-	 *  Specifies if the STYLE_NOEDGESTYLE flag should be set on edges that are
-	 * modified by the result. Default is true.
-	 */
+   *  Specifies if the STYLE_NOEDGESTYLE flag should be set on edges that are
+   * modified by the result. Default is true.
+   */
   bool disableEdgeStyle = true;
 
   /**
-	 * The force constant by which the attractive forces are divided and the
-	 * replusive forces are multiple by the square of. The value equates to the
-	 * average radius there is of free space around each node. Default is 50.
-	 */
+   * The force constant by which the attractive forces are divided and the
+   * replusive forces are multiple by the square of. The value equates to the
+   * average radius there is of free space around each node. Default is 50.
+   */
   double forceConstant = 50.0;
 
   /**
-	 * Cache of <forceConstant>^2 for performance.
-	 */
+   * Cache of <forceConstant>^2 for performance.
+   */
   double forceConstantSquared = 0.0;
 
   /**
-	 * Minimal distance limit. Default is 2. Prevents of
-	 * dividing by zero.
-	 */
+   * Minimal distance limit. Default is 2. Prevents of
+   * dividing by zero.
+   */
   double minDistanceLimit = 2.0;
 
   /**
-	 * Cached version of <minDistanceLimit> squared.
-	 */
+   * Cached version of <minDistanceLimit> squared.
+   */
   double minDistanceLimitSquared = 0.0;
 
   /**
-	 * The maximum distance between vertices, beyond which their
-	 * repulsion no longer has an effect
-	 */
+   * The maximum distance between vertices, beyond which their
+   * repulsion no longer has an effect
+   */
   double maxDistanceLimit = 500.0;
 
   /**
-	 * Start value of temperature. Default is 200.
-	 */
+   * Start value of temperature. Default is 200.
+   */
   double initialTemp = 200.0;
 
   /**
-	 * Temperature to limit displacement at later stages of layout.
-	 */
+   * Temperature to limit displacement at later stages of layout.
+   */
   double temperature = 0.0;
 
   /**
-	 * Total number of iterations to run the layout though.
-	 */
+   * Total number of iterations to run the layout though.
+   */
   double maxIterations = 0.0;
 
   /**
-	 * Current iteration count.
-	 */
+   * Current iteration count.
+   */
   double iteration = 0.0;
 
   /**
-	 * An array of all vertices to be laid out.
-	 */
+   * An array of all vertices to be laid out.
+   */
   List<Object> vertexArray;
 
   /**
-	 * An array of locally stored X co-ordinate displacements for the vertices.
-	 */
+   * An array of locally stored X co-ordinate displacements for the vertices.
+   */
   List<double> dispX;
 
   /**
-	 * An array of locally stored Y co-ordinate displacements for the vertices.
-	 */
+   * An array of locally stored Y co-ordinate displacements for the vertices.
+   */
   List<double> dispY;
 
   /**
-	 * An array of locally stored co-ordinate positions for the vertices.
-	 */
+   * An array of locally stored co-ordinate positions for the vertices.
+   */
   List<List<double>> cellLocation;
 
   /**
-	 * The approximate radius of each cell, nodes only.
-	 */
+   * The approximate radius of each cell, nodes only.
+   */
   List<double> radius;
 
   /**
-	 * The approximate radius squared of each cell, nodes only.
-	 */
+   * The approximate radius squared of each cell, nodes only.
+   */
   List<double> radiusSquared;
 
   /**
-	 * Array of booleans representing the movable states of the vertices.
-	 */
+   * Array of booleans representing the movable states of the vertices.
+   */
   List<bool> isMoveable;
 
   /**
-	 * Local copy of cell neighbours.
-	 */
+   * Local copy of cell neighbours.
+   */
   List<List<int>> neighbours;
 
   /**
-	 * bool flag that specifies if the layout is allowed to run. If this is
-	 * set to false, then the layout exits in the following iteration.
-	 */
+   * bool flag that specifies if the layout is allowed to run. If this is
+   * set to false, then the layout exits in the following iteration.
+   */
   bool allowedToRun = true;
 
   /**
-	 * Maps from vertices to indices.
-	 */
+   * Maps from vertices to indices.
+   */
   Map<Object, int> indices = new Map<Object, int>();
 
   /**
-	 * Constructs a new fast organic layout for the specified graph.
-	 */
+   * Constructs a new fast organic layout for the specified graph.
+   */
   FastOrganicLayout(Graph graph) : super(graph);
 
   /**
-	 * Returns a bool indicating if the given <Cell> should be ignored as a
-	 * vertex. This returns true if the cell has no connections.
-	 * 
-	 * @param vertex Object that represents the vertex to be tested.
-	 * @return Returns true if the vertex should be ignored.
-	 */
+   * Returns a bool indicating if the given <Cell> should be ignored as a
+   * vertex. This returns true if the cell has no connections.
+   * 
+   * @param vertex Object that represents the vertex to be tested.
+   * @return Returns true if the vertex should be ignored.
+   */
   bool isVertexIgnored(Object vertex) {
     return super.isVertexIgnored(vertex) || graph.getConnections(vertex).length == 0;
   }
 
   /**
-	 *
-	 */
+   *
+   */
   bool isUseInputOrigin() {
     return useInputOrigin;
   }
 
   /**
-	 * 
-	 * @param value
-	 */
+   * 
+   * @param value
+   */
   void setUseInputOrigin(bool value) {
     useInputOrigin = value;
   }
 
   /**
-	 *
-	 */
+   *
+   */
   bool isResetEdges() {
     return resetEdges;
   }
 
   /**
-	 * 
-	 * @param value
-	 */
+   * 
+   * @param value
+   */
   void setResetEdges(bool value) {
     resetEdges = value;
   }
 
   /**
-	 *
-	 */
+   *
+   */
   bool isDisableEdgeStyle() {
     return disableEdgeStyle;
   }
 
   /**
-	 * 
-	 * @param value
-	 */
+   * 
+   * @param value
+   */
   void setDisableEdgeStyle(bool value) {
     disableEdgeStyle = value;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   double getMaxIterations() {
     return maxIterations;
   }
 
   /**
-	 * 
-	 * @param value
-	 */
+   * 
+   * @param value
+   */
   void setMaxIterations(double value) {
     maxIterations = value;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   double getForceConstant() {
     return forceConstant;
   }
 
   /**
-	 * 
-	 * @param value
-	 */
+   * 
+   * @param value
+   */
   void setForceConstant(double value) {
     forceConstant = value;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   double getMinDistanceLimit() {
     return minDistanceLimit;
   }
 
   /**
-	 * 
-	 * @param value
-	 */
+   * 
+   * @param value
+   */
   void setMinDistanceLimit(double value) {
     minDistanceLimit = value;
   }
 
   /**
-	 * @return the maxDistanceLimit
-	 */
+   * @return the maxDistanceLimit
+   */
   double getMaxDistanceLimit() {
     return maxDistanceLimit;
   }
 
   /**
-	 * @param maxDistanceLimit the maxDistanceLimit to set
-	 */
+   * @param maxDistanceLimit the maxDistanceLimit to set
+   */
   void setMaxDistanceLimit(double maxDistanceLimit) {
     this.maxDistanceLimit = maxDistanceLimit;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   double getInitialTemp() {
     return initialTemp;
   }
 
   /**
-	 * 
-	 * @param value
-	 */
+   * 
+   * @param value
+   */
   void setInitialTemp(double value) {
     initialTemp = value;
   }
 
   /**
-	 * Reduces the temperature of the layout from an initial setting in a linear
-	 * fashion to zero.
-	 */
+   * Reduces the temperature of the layout from an initial setting in a linear
+   * fashion to zero.
+   */
   void reduceTemperature() {
     temperature = initialTemp * (1.0 - iteration / maxIterations);
   }
 
-  /* (non-Javadoc)
-	 * @see graph.layout.IGraphLayout#move(java.lang.Object, double, double)
-	 */
+  /**
+   * @see graph.layout.IGraphLayout#move(java.lang.Object, double, double)
+   */
   void moveCell(Object cell, double x, double y) {
     // TODO: Map the position to a child index for
     // the cell to be placed closest to the position
   }
 
-  /* (non-Javadoc)
-	 * @see graph.layout.IGraphLayout#execute(java.lang.Object)
-	 */
+  /**
+   * @see graph.layout.IGraphLayout#execute(java.lang.Object)
+   */
   void execute(Object parent) {
     IGraphModel model = graph.getModel();
 
@@ -458,10 +455,10 @@ class FastOrganicLayout extends GraphLayout {
   }
 
   /**
-	 * Takes the displacements calculated for each cell and applies them to the
-	 * local cache of cell positions. Limits the displacement to the current
-	 * temperature.
-	 */
+   * Takes the displacements calculated for each cell and applies them to the
+   * local cache of cell positions. Limits the displacement to the current
+   * temperature.
+   */
   void calcPositions() {
     for (int index = 0; index < vertexArray.length; index++) {
       if (isMoveable[index]) {
@@ -490,9 +487,9 @@ class FastOrganicLayout extends GraphLayout {
   }
 
   /**
-	 * Calculates the attractive forces between all laid out nodes linked by
-	 * edges
-	 */
+   * Calculates the attractive forces between all laid out nodes linked by
+   * edges
+   */
   void calcAttraction() {
     // Check the neighbours of each vertex and calculate the attractive
     // force of the edge connecting them
@@ -534,8 +531,8 @@ class FastOrganicLayout extends GraphLayout {
   }
 
   /**
-	 * Calculates the repulsive forces between all laid out nodes
-	 */
+   * Calculates the repulsive forces between all laid out nodes
+   */
   void calcRepulsion() {
     int vertexCount = vertexArray.length;
 

@@ -1,47 +1,46 @@
 part of graph.view;
 
-//import java.util.Hashtable;
 
 class TemporaryCellStates {
   /**
-	 * 
-	 */
+   * 
+   */
   GraphView _view;
 
   /**
-	 * 
-	 */
+   * 
+   */
   Map<Object, CellState> _oldStates;
 
   /**
-	 * 
-	 */
+   * 
+   */
   Rect _oldBounds;
 
   /**
-	 * 
-	 */
+   * 
+   */
   double _oldScale;
 
   /**
-	 * Constructs a new temporary cell states instance.
-	 */
+   * Constructs a new temporary cell states instance.
+   */
   //	TemporaryCellStates(GraphView view)
   //	{
   //		this(view, 1, null);
   //	}
 
   /**
-	 * Constructs a new temporary cell states instance.
-	 */
+   * Constructs a new temporary cell states instance.
+   */
   //	TemporaryCellStates(GraphView view, double scale)
   //	{
   //		this(view, scale, null);
   //	}
 
   /**
-	 * Constructs a new temporary cell states instance.
-	 */
+   * Constructs a new temporary cell states instance.
+   */
   TemporaryCellStates(GraphView view, [double scale = 1.0, List<Object> cells = null]) {
     this._view = view;
 
@@ -78,8 +77,8 @@ class TemporaryCellStates {
   }
 
   /**
-	 * Destroys the cell states and restores the state of the graph view.
-	 */
+   * Destroys the cell states and restores the state of the graph view.
+   */
   void destroy() {
     _view.setScale(_oldScale);
     _view.setStates(_oldStates);

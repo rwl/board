@@ -9,70 +9,70 @@ part of graph.view;
  */
 class ConnectionConstraint {
   /**
-	 * Point that specifies the fixed location of the connection point.
-	 */
+   * Point that specifies the fixed location of the connection point.
+   */
   Point2d _point;
 
   /**
-	 * bool that specifies if the point should be projected onto the perimeter
-	 * of the terminal.
-	 */
+   * bool that specifies if the point should be projected onto the perimeter
+   * of the terminal.
+   */
   bool _perimeter;
 
   /**
-	 * Constructs an empty connection constraint.
-	 */
+   * Constructs an empty connection constraint.
+   */
   //	ConnectionConstraint()
   //	{
   //		this(null);
   //	}
 
   /**
-	 * Constructs a connection constraint for the given point.
-	 */
+   * Constructs a connection constraint for the given point.
+   */
   //	ConnectionConstraint(Point2d point)
   //	{
   //		this(point, true);
   //	}
 
   /**
-	 * Constructs a new connection constraint for the given point and boolean
-	 * arguments.
-	 * 
-	 * @param point Optional Point2d that specifies the fixed location of the point
-	 * in relative coordinates. Default is null.
-	 * @param perimeter Optional bool that specifies if the fixed point should be
-	 * projected onto the perimeter of the terminal. Default is true.
-	 */
+   * Constructs a new connection constraint for the given point and boolean
+   * arguments.
+   * 
+   * @param point Optional Point2d that specifies the fixed location of the point
+   * in relative coordinates. Default is null.
+   * @param perimeter Optional bool that specifies if the fixed point should be
+   * projected onto the perimeter of the terminal. Default is true.
+   */
   ConnectionConstraint([Point2d point = null, bool perimeter = true]) {
     setPoint(point);
     setPerimeter(perimeter);
   }
 
   /**
-	 * Returns the point.
-	 */
+   * Returns the point.
+   */
   Point2d getPoint() {
     return _point;
   }
 
   /**
-	 * Sets the point.
-	 */
+   * Sets the point.
+   */
   void setPoint(Point2d value) {
     _point = value;
   }
 
   /**
-	 * Returns perimeter.
-	 */
+   * Returns perimeter.
+   */
   bool isPerimeter() {
     return _perimeter;
   }
 
   /**
-	 * Sets perimeter.
-	 */
+   * Sets perimeter.
+   */
   void setPerimeter(bool value) {
     _perimeter = value;
   }

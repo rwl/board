@@ -4,27 +4,25 @@
 part of graph.shape;
 
 //import java.awt.RenderingHints;
-//import java.util.List;
-//import java.util.Map;
 
 class CurveShape extends ConnectorShape {
   /**
-	 * Cache of the points between which drawing straight lines views as a
-	 * curve
-	 */
+   * Cache of the points between which drawing straight lines views as a
+   * curve
+   */
   Curve _curve;
 
   /**
-	 * 
-	 */
+   * 
+   */
   //	CurveShape()
   //	{
   //		this(new Curve());
   //	}
 
   /**
-	 * 
-	 */
+   * 
+   */
   CurveShape([Curve curve = null]) {
     if (curve == null) {
       curve = new Curve();
@@ -33,15 +31,15 @@ class CurveShape extends ConnectorShape {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   Curve getCurve() {
     return _curve;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void paintShape(Graphics2DCanvas canvas, CellState state) {
     Object keyStrokeHint = canvas.getGraphics().getRenderingHint(RenderingHints.KEY_STROKE_CONTROL);
     canvas.getGraphics().setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
@@ -52,8 +50,8 @@ class CurveShape extends ConnectorShape {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void _paintPolyline(Graphics2DCanvas canvas, List<Point2d> points, Map<String, Object> style) {
     double scale = canvas.getScale();
     validateCurve(points, scale, style);
@@ -62,9 +60,9 @@ class CurveShape extends ConnectorShape {
   }
 
   /**
-	 * Forces underlying curve to a valid state
-	 * @param points
-	 */
+   * Forces underlying curve to a valid state
+   * @param points
+   */
   void validateCurve(List<Point2d> points, double scale, Map<String, Object> style) {
     if (_curve == null) {
       _curve = new Curve(points);
@@ -76,14 +74,14 @@ class CurveShape extends ConnectorShape {
   }
 
   /**
-	 * Hook to override creation of the vector that the marker is drawn along
-	 * since it may not be the same as the vector between any two control
-	 * points
-	 * @param points the guide points of the connector
-	 * @param source whether the marker is at the source end
-	 * @param markerSize the scaled maximum length of the marker
-	 * @return a line describing the vector the marker should be drawn along
-	 */
+   * Hook to override creation of the vector that the marker is drawn along
+   * since it may not be the same as the vector between any two control
+   * points
+   * @param points the guide points of the connector
+   * @param source whether the marker is at the source end
+   * @param markerSize the scaled maximum length of the marker
+   * @return a line describing the vector the marker should be drawn along
+   */
   Line _getMarkerVector(List<Point2d> points, bool source, double markerSize) {
     double curveLength = _curve.getCurveLength(Curve.CORE_CURVE);
     double markerRatio = markerSize / curveLength;

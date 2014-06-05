@@ -29,10 +29,10 @@ part of graph.util.svg;
 class AWTPolygonProducer extends AWTPolylineProducer
 {
 	/**
-	 * Utility method for creating an ExtendedGeneralPath.
-	 * @param text The text representation of the path specification.
-	 * @param wr The winding rule to use for creating the path.
-	 */
+   * Utility method for creating an ExtendedGeneralPath.
+   * @param text The text representation of the path specification.
+   * @param wr The winding rule to use for creating the path.
+   */
 	static Shape createShape(String text, int wr) //throws ParseException
 	{
 		AWTPolygonProducer ph = new AWTPolygonProducer();
@@ -45,8 +45,8 @@ class AWTPolygonProducer extends AWTPolylineProducer
 	}
 
 	/**
-	 * Implements {@link PointsHandler#endPoints()}.
-	 */
+   * Implements {@link PointsHandler#endPoints()}.
+   */
 	void endPoints() //throws ParseException
 	{
 		path.closePath();

@@ -28,7 +28,7 @@ part of graph.util.svg;
 abstract class ErrorHandler
 {
 	/**
-	 * Called when a parse error occurs.
-	 */
+   * Called when a parse error occurs.
+   */
 	void error(ParseException e) //throws ParseException;
 }

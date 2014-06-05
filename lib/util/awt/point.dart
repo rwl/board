@@ -80,22 +80,22 @@ class Point {
         y += dy;
     }
 
-    static double _distanceSq(double x1, double y1, double x2, double y2) {
+    static double DistanceSq(double x1, double y1, double x2, double y2) {
         x2 -= x1;
         y2 -= y1;
         return x2 * x2 + y2 * y2;
     }
 
     double distanceSq(double px, double py) {
-        return Point._distanceSq(getX(), getY(), px, py);
+        return Point.DistanceSq(getX(), getY(), px, py);
     }
 
     double distanceSqFrom(Point p) {
-        return Point._distanceSq(getX(), getY(), p.getX(), p.getY());
+        return DistanceSq(getX(), getY(), p.getX(), p.getY());
     }
 
-    static double _distance(double x1, double y1, double x2, double y2) {
-        return Math.sqrt(_distanceSq(x1, y1, x2, y2));
+    static double Distance(double x1, double y1, double x2, double y2) {
+        return Math.sqrt(DistanceSq(x1, y1, x2, y2));
     }
 
     double distance(double px, double py) {

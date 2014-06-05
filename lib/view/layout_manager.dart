@@ -1,12 +1,6 @@
 part of graph.view;
 
 //import java.awt.Point;
-//import java.util.Arrays;
-//import java.util.Collection;
-//import java.util.HashSet;
-//import java.util.Iterator;
-//import java.util.List;
-//import java.util.Set;
 
 /**
  * Implements a layout manager that updates the layout for a given transaction.
@@ -36,36 +30,36 @@ part of graph.view;
 class LayoutManager extends EventSource {
 
   /**
-	 * Defines the type of the source or target terminal. The type is a string
-	 * passed to Cell.is to check if the rule applies to a cell.
-	 */
+   * Defines the type of the source or target terminal. The type is a string
+   * passed to Cell.is to check if the rule applies to a cell.
+   */
   Graph _graph;
 
   /**
-	 * Optional string that specifies the value of the attribute to be passed
-	 * to Cell.is to check if the rule applies to a cell. Default is true.
-	 */
+   * Optional string that specifies the value of the attribute to be passed
+   * to Cell.is to check if the rule applies to a cell. Default is true.
+   */
   bool _enabled = true;
 
   /**
-	 * Optional string that specifies the attributename to be passed to
-	 * Cell.is to check if the rule applies to a cell. Default is true.
-	 */
+   * Optional string that specifies the attributename to be passed to
+   * Cell.is to check if the rule applies to a cell. Default is true.
+   */
   bool _bubbling = true;
 
   /**
-	 * 
-	 */
+   * 
+   */
   IEventListener _undoHandler;
 
   /**
-	 * 
-	 */
+   * 
+   */
   IEventListener _moveHandler;
 
   /**
-	 * 
-	 */
+   * 
+   */
   LayoutManager(Graph graph) {
     _undoHandler = (Object source, EventObj evt) {
       if (isEnabled()) {
@@ -81,43 +75,43 @@ class LayoutManager extends EventSource {
   }
 
   /**
-	 * @return the enabled
-	 */
+   * @return the enabled
+   */
   bool isEnabled() {
     return _enabled;
   }
 
   /**
-	 * @param value the enabled to set
-	 */
+   * @param value the enabled to set
+   */
   void setEnabled(bool value) {
     _enabled = value;
   }
 
   /**
-	 * @return the bubbling
-	 */
+   * @return the bubbling
+   */
   bool isBubbling() {
     return _bubbling;
   }
 
   /**
-	 * @param value the bubbling to set
-	 */
+   * @param value the bubbling to set
+   */
   void setBubbling(bool value) {
     _bubbling = value;
   }
 
   /**
-	 * @return the graph
-	 */
+   * @return the graph
+   */
   Graph getGraph() {
     return _graph;
   }
 
   /**
-	 * @param value the graph to set
-	 */
+   * @param value the graph to set
+   */
   void setGraph(Graph value) {
     if (_graph != null) {
       IGraphModel model = _graph.getModel();
@@ -135,15 +129,15 @@ class LayoutManager extends EventSource {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   IGraphLayout _getLayout(Object parent) {
     return null;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void _cellsMoved(List<Object> cells, svg.Point location) {
     if (cells != null && location != null) {
       IGraphModel model = getGraph().getModel();
@@ -160,8 +154,8 @@ class LayoutManager extends EventSource {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void _beforeUndo(UndoableEdit edit) {
     Iterable<Object> cells = _getCellsForChanges(edit.getChanges());
     IGraphModel model = getGraph().getModel();
@@ -183,8 +177,8 @@ class LayoutManager extends EventSource {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   Iterable<Object> _getCellsForChanges(List<UndoableChange> changes) {
     Set<Object> result = new HashSet<Object>();
     Iterator<UndoableChange> it = changes.iterator;
@@ -203,8 +197,8 @@ class LayoutManager extends EventSource {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   Iterable<Object> _getCellsForChange(UndoableChange change) {
     IGraphModel model = getGraph().getModel();
     Set<Object> result = new HashSet<Object>();
@@ -241,8 +235,8 @@ class LayoutManager extends EventSource {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void _layoutCells(List<Object> cells) {
     if (cells.length > 0) {
       // Invokes the layouts while removing duplicates
@@ -264,8 +258,8 @@ class LayoutManager extends EventSource {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void _executeLayout(IGraphLayout layout, Object parent) {
     if (layout != null && parent != null) {
       layout.execute(parent);
@@ -273,8 +267,8 @@ class LayoutManager extends EventSource {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void destroy() {
     setGraph(null);
   }

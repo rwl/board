@@ -3,8 +3,6 @@
  */
 part of graph.model;
 
-//import java.util.StringTokenizer;
-//import java.util.regex.Pattern;
 
 /**
  * Implements a mechanism for temporary cell Ids.
@@ -12,19 +10,19 @@ part of graph.model;
 class CellPath {
 
   /**
-	 * Defines the separator between the path components. Default is
-	 * <code>.</code>.
-	 */
+   * Defines the separator between the path components. Default is
+   * <code>.</code>.
+   */
   static String PATH_SEPARATOR = r"\\.";
 
   /**
-	 * Creates the cell path for the given cell. The cell path is a
-	 * concatenation of the indices of all cells on the (finite) path to
-	 * the root, eg. "0.0.0.1".
-	 * 
-	 * @param cell Cell whose path should be returned.
-	 * @return Returns the string that represents the path.
-	 */
+   * Creates the cell path for the given cell. The cell path is a
+   * concatenation of the indices of all cells on the (finite) path to
+   * the root, eg. "0.0.0.1".
+   * 
+   * @param cell Cell whose path should be returned.
+   * @return Returns the string that represents the path.
+   */
   static String create(ICell cell) {
     String result = "";
 
@@ -44,11 +42,11 @@ class CellPath {
   }
 
   /**
-	 * Returns the path for the parent of the cell represented by the given
-	 * path. Returns null if the given path has no parent.
-	 * 
-	 * @param path Path whose parent path should be returned.
-	 */
+   * Returns the path for the parent of the cell represented by the given
+   * path. Returns null if the given path has no parent.
+   * 
+   * @param path Path whose parent path should be returned.
+   */
   static String getParentPath(String path) {
     if (path != null) {
       int index = path.lastIndexOf(CellPath.PATH_SEPARATOR);
@@ -64,13 +62,13 @@ class CellPath {
   }
 
   /**
-	 * Returns the cell for the specified cell path using the given root as the
-	 * root of the path.
-	 * 
-	 * @param root Root cell of the path to be resolved.
-	 * @param path String that defines the path.
-	 * @return Returns the cell that is defined by the path.
-	 */
+   * Returns the cell for the specified cell path using the given root as the
+   * root of the path.
+   * 
+   * @param root Root cell of the path to be resolved.
+   * @param path String that defines the path.
+   * @return Returns the cell that is defined by the path.
+   */
   static ICell resolve(ICell root, String path) {
     ICell parent = root;
     List<String> tokens = path.split(PATH_SEPARATOR);//Pattern.quote(PATH_SEPARATOR));
@@ -83,9 +81,9 @@ class CellPath {
   }
 
   /**
-	 * Compares the given cell paths and returns -1 if cp1 is smaller, 0 if
-	 * cp1 is equal and 1 if cp1 is greater than cp2.
-	 */
+   * Compares the given cell paths and returns -1 if cp1 is smaller, 0 if
+   * cp1 is equal and 1 if cp1 is greater than cp2.
+   */
   static int compare(String cp1, String cp2) {
 //    StringTokenizer p1 = new StringTokenizer(cp1, CellPath.PATH_SEPARATOR);
 //    StringTokenizer p2 = new StringTokenizer(cp2, CellPath.PATH_SEPARATOR);

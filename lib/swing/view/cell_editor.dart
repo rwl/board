@@ -8,7 +8,6 @@ part of graph.swing.view;
 //import java.awt.Component;
 //import java.awt.awt.Rectangle;
 //import java.awt.event.ActionEvent;
-//import java.util.EventObject;
 
 //import javax.swing.AbstractAction;
 //import javax.swing.BorderFactory;
@@ -46,138 +45,138 @@ abstract class ICellEditor {
 class CellEditor implements ICellEditor {
 
   /**
-	 * 
-	 */
+   * 
+   */
   static final String _CANCEL_EDITING = "cancel-editing";
 
   /**
-	 * 
-	 */
+   * 
+   */
   static final String _INSERT_BREAK = "insert-break";
 
   /**
-	 * 
-	 */
+   * 
+   */
   static final String _SUBMIT_TEXT = "submit-text";
 
   /**
-	 * 
-	 */
+   * 
+   */
   static int DEFAULT_MIN_WIDTH = 100;
 
   /**
-	 * 
-	 */
+   * 
+   */
   static int DEFAULT_MIN_HEIGHT = 60;
 
   /**
-	 * 
-	 */
+   * 
+   */
   static double DEFAULT_MINIMUM_EDITOR_SCALE = 1;
 
   /**
-	 * 
-	 */
+   * 
+   */
   GraphComponent _graphComponent;
 
   /**
-	 * Defines the minimum scale to be used for the editor. Set this to
-	 * 0 if the font size in the editor 
-	 */
+   * Defines the minimum scale to be used for the editor. Set this to
+   * 0 if the font size in the editor 
+   */
   double _minimumEditorScale = DEFAULT_MINIMUM_EDITOR_SCALE;
 
   /**
-	 * 
-	 */
+   * 
+   */
   int _minimumWidth = DEFAULT_MIN_WIDTH;
 
   /**
-	 * 
-	 */
+   * 
+   */
   int _minimumHeight = DEFAULT_MIN_HEIGHT;
 
   /**
-	 * 
-	 */
+   * 
+   */
   /*transient*/ Object _editingCell;
 
   /**
-	 * 
-	 */
+   * 
+   */
   /*transient*/ EventObject _trigger;
 
   /**
-	 * 
-	 */
+   * 
+   */
   /*transient*/ JScrollPane _scrollPane;
 
   /**
-	 * Holds the editor for plain text editing.
-	 */
+   * Holds the editor for plain text editing.
+   */
   /*transient*/ JTextArea _textArea;
 
   /**
-	 * Holds the editor for HTML editing.
-	 */
+   * Holds the editor for HTML editing.
+   */
   /*transient*/ JEditorPane _editorPane;
 
   /**
-	 * Specifies if the text content of the HTML body should be extracted
-	 * before and after editing for HTML markup. Default is true.
-	 */
+   * Specifies if the text content of the HTML body should be extracted
+   * before and after editing for HTML markup. Default is true.
+   */
   bool _extractHtmlBody = true;
 
   /**
-	 * Specifies if linefeeds should be replaced with BREAKS before editing,
-	 * and BREAKS should be replaced with linefeeds after editing. This
-	 * value is ignored if extractHtmlBody is false. Default is true.
-	 */
+   * Specifies if linefeeds should be replaced with BREAKS before editing,
+   * and BREAKS should be replaced with linefeeds after editing. This
+   * value is ignored if extractHtmlBody is false. Default is true.
+   */
   bool _replaceLinefeeds = true;
 
   /**
-	 * Specifies if shift ENTER should submit text if enterStopsCellEditing
-	 * is true. Default is false.
-	 */
+   * Specifies if shift ENTER should submit text if enterStopsCellEditing
+   * is true. Default is false.
+   */
   bool _shiftEnterSubmitsText = false;
 
   /**
-	 * 
-	 */
+   * 
+   */
   /*transient*/ Object editorEnterActionMapKey;
 
   /**
-	 * 
-	 */
+   * 
+   */
   /*transient*/ Object textEnterActionMapKey;
 
   /**
-	 * 
-	 */
+   * 
+   */
   /*transient*/ KeyStroke escapeKeystroke = KeyStroke.getKeyStroke("ESCAPE");
 
   /**
-	 * 
-	 */
+   * 
+   */
   /*transient*/ KeyStroke enterKeystroke = KeyStroke.getKeyStroke("ENTER");
 
   /**
-	 * 
-	 */
+   * 
+   */
   /*transient*/ KeyStroke shiftEnterKeystroke = KeyStroke.getKeyStroke("shift ENTER");
 
   /**
-	 * 
-	 */
+   * 
+   */
   AbstractAction _cancelEditingAction = new CancelEditingAction(this);
 
   /**
-	 * 
-	 */
+   * 
+   */
   AbstractAction _textSubmitAction = new TextSubmitAction(this);
 
   /**
-	 * 
-	 */
+   * 
+   */
   CellEditor(GraphComponent graphComponent) {
     this._graphComponent = graphComponent;
 
@@ -215,51 +214,51 @@ class CellEditor implements ICellEditor {
   }
 
   /**
-	 * Returns replaceHtmlLinefeeds
-	 */
+   * Returns replaceHtmlLinefeeds
+   */
   bool isExtractHtmlBody() {
     return _extractHtmlBody;
   }
 
   /**
-	 * Sets extractHtmlBody
-	 */
+   * Sets extractHtmlBody
+   */
   void setExtractHtmlBody(bool value) {
     _extractHtmlBody = value;
   }
 
   /**
-	 * Returns replaceHtmlLinefeeds
-	 */
+   * Returns replaceHtmlLinefeeds
+   */
   bool isReplaceHtmlLinefeeds() {
     return _replaceLinefeeds;
   }
 
   /**
-	 * Sets replaceHtmlLinefeeds
-	 */
+   * Sets replaceHtmlLinefeeds
+   */
   void setReplaceHtmlLinefeeds(bool value) {
     _replaceLinefeeds = value;
   }
 
   /**
-	 * Returns shiftEnterSubmitsText
-	 */
+   * Returns shiftEnterSubmitsText
+   */
   bool isShiftEnterSubmitsText() {
     return _shiftEnterSubmitsText;
   }
 
   /**
-	 * Sets shiftEnterSubmitsText
-	 */
+   * Sets shiftEnterSubmitsText
+   */
   void setShiftEnterSubmitsText(bool value) {
     _shiftEnterSubmitsText = value;
   }
 
   /**
-	 * Installs the keyListener in the textArea and editorPane
-	 * for handling the enter keystroke and updating the modified state.
-	 */
+   * Installs the keyListener in the textArea and editorPane
+   * for handling the enter keystroke and updating the modified state.
+   */
   void _configureActionMaps() {
     InputMap editorInputMap = _editorPane.getInputMap();
     InputMap textInputMap = _textArea.getInputMap();
@@ -290,8 +289,8 @@ class CellEditor implements ICellEditor {
   }
 
   /**
-	 * Returns the current editor or null if no editing is in progress.
-	 */
+   * Returns the current editor or null if no editing is in progress.
+   */
   Component getEditor() {
     if (_textArea.getParent() != null) {
       return _textArea;
@@ -303,9 +302,9 @@ class CellEditor implements ICellEditor {
   }
 
   /**
-	 * Returns true if the label bounds of the state should be used for the
-	 * editor.
-	 */
+   * Returns true if the label bounds of the state should be used for the
+   * editor.
+   */
   bool _useLabelBounds(CellState state) {
     IGraphModel model = state.getView().getGraph().getModel();
     Geometry geometry = model.getGeometry(state.getCell());
@@ -314,8 +313,8 @@ class CellEditor implements ICellEditor {
   }
 
   /**
-	 * Returns the bounds to be used for the editor.
-	 */
+   * Returns the bounds to be used for the editor.
+   */
   awt.Rectangle getEditorBounds(CellState state, double scale) {
     IGraphModel model = state.getView().getGraph().getModel();
     awt.Rectangle bounds = null;
@@ -352,9 +351,9 @@ class CellEditor implements ICellEditor {
   }
 
   /*
-	 * (non-Javadoc)
-	 * @see graph.swing.view.ICellEditor#startEditing(java.lang.Object, java.util.EventObject)
-	 */
+   * (non-Javadoc)
+   * @see graph.swing.view.ICellEditor#startEditing(java.lang.Object, java.util.EventObject)
+   */
   void startEditing(Object cell, EventObject evt) {
     if (_editingCell != null) {
       stopEditing(true);
@@ -415,16 +414,16 @@ class CellEditor implements ICellEditor {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool _isHideLabel(CellState state) {
     return true;
   }
 
   /*
-	 * (non-Javadoc)
-	 * @see graph.swing.view.ICellEditor#stopEditing(boolean)
-	 */
+   * (non-Javadoc)
+   * @see graph.swing.view.ICellEditor#stopEditing(boolean)
+   */
   void stopEditing(bool cancel) {
     if (_editingCell != null) {
       _scrollPane.transferFocusUpCycle();
@@ -450,15 +449,15 @@ class CellEditor implements ICellEditor {
   }
 
   /**
-	 * Gets the initial editing value for the given cell.
-	 */
+   * Gets the initial editing value for the given cell.
+   */
   String _getInitialValue(CellState state, EventObject trigger) {
     return _graphComponent.getEditingValue(state.getCell(), trigger);
   }
 
   /**
-	 * Returns the current editing value.
-	 */
+   * Returns the current editing value.
+   */
   String getCurrentValue() {
     String result;
 
@@ -476,51 +475,51 @@ class CellEditor implements ICellEditor {
   }
 
   /*
-	 * (non-Javadoc)
-	 * @see graph.swing.view.ICellEditor#getEditingCell()
-	 */
+   * (non-Javadoc)
+   * @see graph.swing.view.ICellEditor#getEditingCell()
+   */
   Object getEditingCell() {
     return _editingCell;
   }
 
   /**
-	 * @return the minimumEditorScale
-	 */
+   * @return the minimumEditorScale
+   */
   double getMinimumEditorScale() {
     return _minimumEditorScale;
   }
 
   /**
-	 * @param minimumEditorScale the minimumEditorScale to set
-	 */
+   * @param minimumEditorScale the minimumEditorScale to set
+   */
   void setMinimumEditorScale(double minimumEditorScale) {
     this._minimumEditorScale = minimumEditorScale;
   }
 
   /**
-	 * @return the minimumWidth
-	 */
+   * @return the minimumWidth
+   */
   int getMinimumWidth() {
     return _minimumWidth;
   }
 
   /**
-	 * @param minimumWidth the minimumWidth to set
-	 */
+   * @param minimumWidth the minimumWidth to set
+   */
   void setMinimumWidth(int minimumWidth) {
     this._minimumWidth = minimumWidth;
   }
 
   /**
-	 * @return the minimumHeight
-	 */
+   * @return the minimumHeight
+   */
   int getMinimumHeight() {
     return _minimumHeight;
   }
 
   /**
-	 * @param minimumHeight the minimumHeight to set
-	 */
+   * @param minimumHeight the minimumHeight to set
+   */
   void setMinimumHeight(int minimumHeight) {
     this._minimumHeight = minimumHeight;
   }

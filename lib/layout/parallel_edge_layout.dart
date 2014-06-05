@@ -1,40 +1,34 @@
 part of graph.layout;
 
-//import java.util.ArrayList;
-//import java.util.Arrays;
-//import java.util.Hashtable;
-//import java.util.Iterator;
-//import java.util.List;
-//import java.util.Map;
 
 class ParallelEdgeLayout extends GraphLayout {
 
   /**
-	 * Specifies the spacing between the edges. Default is 20.
-	 */
+   * Specifies the spacing between the edges. Default is 20.
+   */
   int spacing;
 
   /**
-	 * Constructs a new stack layout layout for the specified graph,
-	 * spacing, orientation and offset.
-	 */
+   * Constructs a new stack layout layout for the specified graph,
+   * spacing, orientation and offset.
+   */
   //	ParallelEdgeLayout(Graph graph)
   //	{
   //		this(graph, 20);
   //	}
 
   /**
-	 * Constructs a new stack layout layout for the specified graph,
-	 * spacing, orientation and offset.
-	 */
+   * Constructs a new stack layout layout for the specified graph,
+   * spacing, orientation and offset.
+   */
   ParallelEdgeLayout(Graph graph, [int spacing = 20]) : super(graph) {
     this.spacing = spacing;
   }
 
   /*
-	 * (non-Javadoc)
-	 * @see graph.layout.IGraphLayout#execute(java.lang.Object)
-	 */
+   * (non-Javadoc)
+   * @see graph.layout.IGraphLayout#execute(java.lang.Object)
+   */
   void execute(Object parent) {
     Map<String, List<Object>> lookup = findParallels(parent);
 
@@ -55,8 +49,8 @@ class ParallelEdgeLayout extends GraphLayout {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   Map<String, List<Object>> findParallels(Object parent) {
     Map<String, List<Object>> lookup = new Map<String, List<Object>>();
     IGraphModel model = graph.getModel();
@@ -82,8 +76,8 @@ class ParallelEdgeLayout extends GraphLayout {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   String getEdgeId(Object edge) {
     GraphView view = graph.getView();
     CellState state = view.getState(edge);
@@ -91,8 +85,8 @@ class ParallelEdgeLayout extends GraphLayout {
     Object trg = (state != null) ? state.getVisibleTerminal(false) : view.getVisibleTerminal(edge, false);
 
     if (src is ICell && trg is ICell) {
-      String srcId = CellPath.create(src as ICell);
-      String trgId = CellPath.create(trg as ICell);
+      String srcId = CellPath.create(src);
+      String trgId = CellPath.create(trg);
 
       return (srcId.compareTo(trgId) > 0) ? trgId + "-" + srcId : srcId + "-" + trgId;
     }
@@ -101,8 +95,8 @@ class ParallelEdgeLayout extends GraphLayout {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void layout(List<Object> parallels) {
     Object edge = parallels[0];
     IGraphModel model = graph.getModel();
@@ -149,8 +143,8 @@ class ParallelEdgeLayout extends GraphLayout {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void route(Object edge, double x, double y) {
     if (graph.isCellMovable(edge)) {
       setEdgePoints(edge, [ new Point2d(x, y) ]);

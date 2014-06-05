@@ -3,18 +3,6 @@
  */
 part of graph.layout.hierarchical.model;
 
-//import java.util.ArrayList;
-//import java.util.Arrays;
-//import java.util.Collection;
-//import java.util.HashSet;
-//import java.util.Hashtable;
-//import java.util.Iterator;
-//import java.util.LinkedHashMap;
-//import java.util.LinkedHashSet;
-//import java.util.LinkedList;
-//import java.util.List;
-//import java.util.Map;
-//import java.util.Set;
 
 /**
  * Defines the interface that visitors use to perform operations upon the
@@ -47,53 +35,53 @@ typedef void CellVisitor(GraphHierarchyNode parent, GraphHierarchyNode cell, Gra
  */
 class GraphHierarchyModel {
   /**
-	 * Stores the largest rank number allocated
-	 */
+   * Stores the largest rank number allocated
+   */
   int maxRank;
 
   /**
-	 * Map from graph vertices to internal model nodes
-	 */
+   * Map from graph vertices to internal model nodes
+   */
   Map<Object, GraphHierarchyNode> _vertexMapper = null;
 
   /**
-	 * Map from graph edges to internal model edges
-	 */
+   * Map from graph edges to internal model edges
+   */
   Map<Object, GraphHierarchyEdge> _edgeMapper = null;
 
   /**
-	 * Mapping from rank number to actual rank
-	 */
+   * Mapping from rank number to actual rank
+   */
   Map<int, GraphHierarchyRank> ranks = null;
 
   /**
-	 * Store of roots of this hierarchy model, these are real graph cells, not
-	 * internal cells
-	 */
+   * Store of roots of this hierarchy model, these are real graph cells, not
+   * internal cells
+   */
   List<Object> roots;
 
   /**
-	 * The parent cell whose children are being laid out
-	 */
+   * The parent cell whose children are being laid out
+   */
   Object parent = null;
 
   /**
-	 * Count of the number of times the ancestor dfs has been used
-	 */
+   * Count of the number of times the ancestor dfs has been used
+   */
   int _dfsCount = 0;
 
   /** High value to start source layering scan rank value from */
   final int _SOURCESCANSTARTRANK = 100000000;
 
   /**
-	 * Creates an internal ordered graph model using the vertices passed in. If
-	 * there are any, leftward edge need to be inverted in the internal model
-	 * 
-	 * @param layout
-	 *            the enclosing layout object
-	 * @param vertices
-	 *            the vertices for this hierarchy
-	 */
+   * Creates an internal ordered graph model using the vertices passed in. If
+   * there are any, leftward edge need to be inverted in the internal model
+   * 
+   * @param layout
+   *            the enclosing layout object
+   * @param vertices
+   *            the vertices for this hierarchy
+   */
   GraphHierarchyModel(HierarchicalLayout layout, List<Object> vertices, List<Object> roots, Object parent) {
     Graph graph = layout.getGraph();
     this.roots = roots;
@@ -157,17 +145,17 @@ class GraphHierarchyModel {
   }
 
   /**
-	 * Creates all edges in the internal model
-	 * 
-	 * @param layout
-	 *            reference to the layout algorithm
-	 * @param vertices
-	 *            the vertices whom are to have an internal representation
-	 *            created
-	 * @param internalVertices
-	 *            the blank internal vertices to have their information filled
-	 *            in using the real vertices
-	 */
+   * Creates all edges in the internal model
+   * 
+   * @param layout
+   *            reference to the layout algorithm
+   * @param vertices
+   *            the vertices whom are to have an internal representation
+   *            created
+   * @param internalVertices
+   *            the blank internal vertices to have their information filled
+   *            in using the real vertices
+   */
   void _createInternalCells(HierarchicalLayout layout, List<Object> vertices, List<GraphHierarchyNode> internalVertices) {
     Graph graph = layout.getGraph();
 
@@ -244,10 +232,10 @@ class GraphHierarchyModel {
   }
 
   /**
-	 * Basic determination of minimum layer ranking by working from from sources
-	 * or sinks and working through each node in the relevant edge direction.
-	 * Starting at the sinks is basically a longest path layering algorithm.
-	 */
+   * Basic determination of minimum layer ranking by working from from sources
+   * or sinks and working through each node in the relevant edge direction.
+   * Starting at the sinks is basically a longest path layering algorithm.
+   */
   void initialRank() {
     Iterable<GraphHierarchyNode> internalNodes = _vertexMapper.values();
     LinkedList<GraphHierarchyNode> startNodes = new LinkedList<GraphHierarchyNode>();
@@ -386,9 +374,9 @@ class GraphHierarchyModel {
   }
 
   /**
-	 * Fixes the layer assignments to the values stored in the nodes. Also needs
-	 * to create dummy nodes for edges that cross layers.
-	 */
+   * Fixes the layer assignments to the values stored in the nodes. Also needs
+   * to create dummy nodes for edges that cross layers.
+   */
   void fixRanks() {
     final List<GraphHierarchyRank> rankList = new List<GraphHierarchyRank>(maxRank + 1);
     ranks = new LinkedHashMap<int, GraphHierarchyRank>(maxRank + 1);
@@ -450,14 +438,14 @@ class GraphHierarchyModel {
   }
 
   /**
-	 * A depth first search through the internal hierarchy model
-	 * 
-	 * @param visitor
-	 *            the visitor pattern to be called for each node
-	 * @param trackAncestors
-	 *            whether or not the search is to keep track all nodes directly
-	 *            above this one in the search path
-	 */
+   * A depth first search through the internal hierarchy model
+   * 
+   * @param visitor
+   *            the visitor pattern to be called for each node
+   * @param trackAncestors
+   *            whether or not the search is to keep track all nodes directly
+   *            above this one in the search path
+   */
   void visit(CellVisitor visitor, List<GraphHierarchyNode> dfsRoots, bool trackAncestors, Set<GraphHierarchyNode> seenNodes) {
     // Run dfs through on all roots
     if (dfsRoots != null) {
@@ -486,23 +474,23 @@ class GraphHierarchyModel {
   }
 
   /**
-	 * Performs a depth first search on the internal hierarchy model
-	 * 
-	 * @param parent
-	 *            the parent internal node of the current internal node
-	 * @param root
-	 *            the current internal node
-	 * @param connectingEdge
-	 *            the internal edge connecting the internal node and the parent
-	 *            internal node, if any
-	 * @param visitor
-	 *            the visitor pattern to be called for each node
-	 * @param seen
-	 *            a set of all nodes seen by this dfs a set of all of the
-	 *            ancestor node of the current node
-	 * @param layer
-	 *            the layer on the dfs tree ( not the same as the model ranks )
-	 */
+   * Performs a depth first search on the internal hierarchy model
+   * 
+   * @param parent
+   *            the parent internal node of the current internal node
+   * @param root
+   *            the current internal node
+   * @param connectingEdge
+   *            the internal edge connecting the internal node and the parent
+   *            internal node, if any
+   * @param visitor
+   *            the visitor pattern to be called for each node
+   * @param seen
+   *            a set of all nodes seen by this dfs a set of all of the
+   *            ancestor node of the current node
+   * @param layer
+   *            the layer on the dfs tree ( not the same as the model ranks )
+   */
   void dfs(GraphHierarchyNode parent, GraphHierarchyNode root, GraphHierarchyEdge connectingEdge, CellVisitor visitor, Set<GraphHierarchyNode> seen, int layer) {
     if (root != null) {
       if (!seen.contains(root)) {
@@ -528,29 +516,29 @@ class GraphHierarchyModel {
   }
 
   /**
-	 * Performs a depth first search on the internal hierarchy model. This dfs
-	 * extends the default version by keeping track of cells ancestors, but it
-	 * should be only used when necessary because of it can be computationally
-	 * intensive for deep searches.
-	 * 
-	 * @param parent
-	 *            the parent internal node of the current internal node
-	 * @param root
-	 *            the current internal node
-	 * @param connectingEdge
-	 *            the internal edge connecting the internal node and the parent
-	 *            internal node, if any
-	 * @param visitor
-	 *            the visitor pattern to be called for each node
-	 * @param seen
-	 *            a set of all nodes seen by this dfs
-	 * @param ancestors
-	 *            the parent hash code
-	 * @param childHash
-	 *            the new hash code for this node
-	 * @param layer
-	 *            the layer on the dfs tree ( not the same as the model ranks )
-	 */
+   * Performs a depth first search on the internal hierarchy model. This dfs
+   * extends the default version by keeping track of cells ancestors, but it
+   * should be only used when necessary because of it can be computationally
+   * intensive for deep searches.
+   * 
+   * @param parent
+   *            the parent internal node of the current internal node
+   * @param root
+   *            the current internal node
+   * @param connectingEdge
+   *            the internal edge connecting the internal node and the parent
+   *            internal node, if any
+   * @param visitor
+   *            the visitor pattern to be called for each node
+   * @param seen
+   *            a set of all nodes seen by this dfs
+   * @param ancestors
+   *            the parent hash code
+   * @param childHash
+   *            the new hash code for this node
+   * @param layer
+   *            the layer on the dfs tree ( not the same as the model ranks )
+   */
   void dfs(GraphHierarchyNode parent, GraphHierarchyNode root, GraphHierarchyEdge connectingEdge, CellVisitor visitor, Set<GraphHierarchyNode> seen, List<int> ancestors, int childHash, int layer) {
     // Explanation of custom hash set. Previously, the ancestors variable
     // was passed through the dfs as a HashSet. The ancestors were copied
@@ -609,8 +597,8 @@ class GraphHierarchyModel {
   }
 
   /**
-	 * @return Returns the vertexMapping.
-	 */
+   * @return Returns the vertexMapping.
+   */
   Map<Object, GraphHierarchyNode> getVertexMapper() {
     if (_vertexMapper == null) {
       _vertexMapper = new Hashtable<Object, GraphHierarchyNode>();
@@ -619,39 +607,39 @@ class GraphHierarchyModel {
   }
 
   /**
-	 * @param vertexMapping
-	 *            The vertexMapping to set.
-	 */
+   * @param vertexMapping
+   *            The vertexMapping to set.
+   */
   void setVertexMapper(Map<Object, GraphHierarchyNode> vertexMapping) {
     this._vertexMapper = vertexMapping;
   }
 
   /**
-	 * @return Returns the edgeMapper.
-	 */
+   * @return Returns the edgeMapper.
+   */
   Map<Object, GraphHierarchyEdge> getEdgeMapper() {
     return _edgeMapper;
   }
 
   /**
-	 * @param edgeMapper
-	 *            The edgeMapper to set.
-	 */
+   * @param edgeMapper
+   *            The edgeMapper to set.
+   */
   void setEdgeMapper(Map<Object, GraphHierarchyEdge> edgeMapper) {
     this._edgeMapper = edgeMapper;
   }
 
   /**
-	 * @return Returns the dfsCount.
-	 */
+   * @return Returns the dfsCount.
+   */
   int getDfsCount() {
     return _dfsCount;
   }
 
   /**
-	 * @param dfsCount
-	 *            The dfsCount to set.
-	 */
+   * @param dfsCount
+   *            The dfsCount to set.
+   */
   void setDfsCount(int dfsCount) {
     this._dfsCount = dfsCount;
   }

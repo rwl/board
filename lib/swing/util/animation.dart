@@ -15,58 +15,58 @@ part of graph.swing.util;
  */
 class Animation extends EventSource {
   /**
-	 * Specifies the default delay for animations in ms. Default is 20.
-	 */
+   * Specifies the default delay for animations in ms. Default is 20.
+   */
   static int DEFAULT_DELAY = 20;
 
   /**
-	 * Default is DEFAULT_DELAY.
-	 */
+   * Default is DEFAULT_DELAY.
+   */
   int _delay;
 
   /**
-	 * Time instance that is used for timing the animation.
-	 */
+   * Time instance that is used for timing the animation.
+   */
   Timer _timer;
 
   /**
-	 * Constructs a new animation instance with the given repaint delay.
-	 */
+   * Constructs a new animation instance with the given repaint delay.
+   */
   Animation() {
     this(DEFAULT_DELAY);
   }
 
   /**
-	 * Constructs a new animation instance with the given repaint delay.
-	 */
+   * Constructs a new animation instance with the given repaint delay.
+   */
   Animation(int delay) {
     this._delay = delay;
   }
 
   /**
-	 * Returns the delay for the animation.
-	 */
+   * Returns the delay for the animation.
+   */
   int getDelay() {
     return _delay;
   }
 
   /**
-	 * Sets the delay for the animation.
-	 */
+   * Sets the delay for the animation.
+   */
   void setDelay(int value) {
     _delay = value;
   }
 
   /**
-	 * Returns true if the animation is running.
-	 */
+   * Returns true if the animation is running.
+   */
   bool isRunning() {
     return _timer != null;
   }
 
   /**
-	 * Starts the animation by repeatedly invoking updateAnimation.
-	 */
+   * Starts the animation by repeatedly invoking updateAnimation.
+   */
   void startAnimation() {
     if (_timer == null) {
       _timer = new Timer(_delay, (ActionEvent e) {
@@ -78,17 +78,17 @@ class Animation extends EventSource {
   }
 
   /**
-	 * Hook for subclassers to implement the animation. Invoke stopAnimation
-	 * when finished, startAnimation to resume. This is called whenever the
-	 * timer fires and fires an Event.EXECUTE event with no properties.
-	 */
+   * Hook for subclassers to implement the animation. Invoke stopAnimation
+   * when finished, startAnimation to resume. This is called whenever the
+   * timer fires and fires an Event.EXECUTE event with no properties.
+   */
   void updateAnimation() {
     fireEvent(new EventObj(Event.EXECUTE));
   }
 
   /**
-	 * Stops the animation by deleting the timer and fires Event.DONE.
-	 */
+   * Stops the animation by deleting the timer and fires Event.DONE.
+   */
   void stopAnimation() {
     if (_timer != null) {
       _timer.stop();

@@ -11,62 +11,62 @@ part of graph.swing.view;
 
 class InteractiveCanvas extends Graphics2DCanvas {
   /**
-	 * 
-	 */
+   * 
+   */
   ImageObserver _imageObserver = null;
 
   /**
-	 * 
-	 */
+   * 
+   */
   InteractiveCanvas() {
     this(null);
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   InteractiveCanvas(ImageObserver imageObserver) {
     setImageObserver(imageObserver);
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void setImageObserver(ImageObserver value) {
     _imageObserver = value;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   ImageObserver getImageObserver() {
     return _imageObserver;
   }
 
   /**
-	 * Overrides graphics call to use image observer.
-	 */
+   * Overrides graphics call to use image observer.
+   */
   void _drawImageImpl(Image image, int x, int y) {
     _g.drawImage(image, x, y, _imageObserver);
   }
 
   /**
-	 * Returns the size for the given image.
-	 */
+   * Returns the size for the given image.
+   */
   awt.Dimension _getImageSize(Image image) {
     return new awt.Dimension(image.getWidth(_imageObserver), image.getHeight(_imageObserver));
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool contains(GraphComponent graphComponent, awt.Rectangle rect, CellState state) {
     return state != null && state.getX() >= rect.x && state.getY() >= rect.y && state.getX() + state.getWidth() <= rect.x + rect.width && state.getY() + state.getHeight() <= rect.y + rect.height;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool intersects(GraphComponent graphComponent, awt.Rectangle rect, CellState state) {
     if (state != null) {
       // Checks if the label intersects
@@ -118,11 +118,11 @@ class InteractiveCanvas extends Graphics2DCanvas {
   }
 
   /**
-	 * Returns true if the given point is inside the content area of the given
-	 * swimlane. (The content area of swimlanes is transparent to events.) This
-	 * implementation does not check if the given state is a swimlane, it is
-	 * assumed that the caller has checked this before using this method.
-	 */
+   * Returns true if the given point is inside the content area of the given
+   * swimlane. (The content area of swimlanes is transparent to events.) This
+   * implementation does not check if the given state is a swimlane, it is
+   * assumed that the caller has checked this before using this method.
+   */
   bool hitSwimlaneContent(GraphComponent graphComponent, CellState swimlane, int x, int y) {
     if (swimlane != null) {
       int start = Math.max(2, math.round(Utils.getInt(swimlane.getStyle(), Constants.STYLE_STARTSIZE, Constants.DEFAULT_STARTSIZE) * graphComponent.getGraph().getView().getScale())) as int;

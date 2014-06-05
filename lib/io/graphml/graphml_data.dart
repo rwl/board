@@ -3,7 +3,6 @@
  */
 part of graph.io.graphml;
 
-//import java.util.List;
 //import org.w3c.dom.Document;
 //import org.w3c.dom.Element;
 //import org.w3c.dom.Node;
@@ -24,20 +23,20 @@ class GraphMlData {
   GraphMlShapeEdge _dataShapeEdge;
 
   /**
-	 * Construct a data with the params values.
-	 * @param dataId Data's ID
-	 * @param dataKey Reference to a Key Element ID
-	 * @param dataValue Value of the data Element
-	 * @param dataShapeEdge JGraph specific edge properties.
-	 * @param dataShapeNode JGraph specific node properties.
-	 */
+   * Construct a data with the params values.
+   * @param dataId Data's ID
+   * @param dataKey Reference to a Key Element ID
+   * @param dataValue Value of the data Element
+   * @param dataShapeEdge JGraph specific edge properties.
+   * @param dataShapeNode JGraph specific node properties.
+   */
   GraphMlData([this._dataId="", this._dataKey="", this._dataValue="",
               this._dataShapeEdge=null, this._dataShapeNode=null]);
 
   /**
-	 * Construct a data from one xml data element.
-	 * @param dataElement Xml Data Element.
-	 */
+   * Construct a data from one xml data element.
+   * @param dataElement Xml Data Element.
+   */
   factory GraphMlData.from(Element dataElement) {
     final data = new GraphMlData();
     data._dataId = dataElement.getAttribute(GraphMlConstants.ID);
@@ -68,8 +67,8 @@ class GraphMlData {
   }
 
   /**
-	 * Construct an empty data.
-	 */
+   * Construct an empty data.
+   */
 //  GraphMlData() {
 //  }
 
@@ -114,10 +113,10 @@ class GraphMlData {
   }
 
   /**
-	 * Generates an Node Data Element from this class.
-	 * @param document Document where the key Element will be inserted.
-	 * @return Returns the generated Elements.
-	 */
+   * Generates an Node Data Element from this class.
+   * @param document Document where the key Element will be inserted.
+   * @return Returns the generated Elements.
+   */
   Element generateNodeElement(Document document) {
     Element data = document.createElement(GraphMlConstants.DATA);
     data.setAttribute(GraphMlConstants.KEY, _dataKey);
@@ -129,10 +128,10 @@ class GraphMlData {
   }
 
   /**
-	 * Generates an Edge Data Element from this class.
-	 * @param document Document where the key Element will be inserted.
-	 * @return Returns the generated Elements.
-	 */
+   * Generates an Edge Data Element from this class.
+   * @param document Document where the key Element will be inserted.
+   * @return Returns the generated Elements.
+   */
   Element generateEdgeElement(Document document) {
     Element data = document.createElement(GraphMlConstants.DATA);
     data.setAttribute(GraphMlConstants.KEY, _dataKey);

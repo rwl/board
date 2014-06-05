@@ -3,11 +3,6 @@
  */
 part of graph.io.graphml;
 
-//import java.util.ArrayList;
-//import java.util.HashMap;
-//import java.util.Iterator;
-//import java.util.List;
-//import java.util.Map;
 //import org.w3c.dom.Element;
 //import org.w3c.dom.Node;
 //import org.w3c.dom.NodeList;
@@ -17,11 +12,11 @@ part of graph.io.graphml;
  */
 class GraphMlUtils {
   /**
-	 * Checks if the NodeList has a Node with name = tag.
-	 * @param nl NodeList
-	 * @param tag Name of the node.
-	 * @return Returns <code>true</code> if the Node List has a Node with name = tag.
-	 */
+   * Checks if the NodeList has a Node with name = tag.
+   * @param nl NodeList
+   * @param tag Name of the node.
+   * @return Returns <code>true</code> if the Node List has a Node with name = tag.
+   */
   static bool nodeListHasTag(NodeList nl, String tag) {
     bool has = false;
 
@@ -37,11 +32,11 @@ class GraphMlUtils {
   }
 
   /**
-	 * Returns the first Element that has name = tag in Node List.
-	 * @param nl NodeList
-	 * @param tag Name of the Element
-	 * @return Element with name = 'tag'.
-	 */
+   * Returns the first Element that has name = tag in Node List.
+   * @param nl NodeList
+   * @param tag Name of the Element
+   * @return Element with name = 'tag'.
+   */
   static Element nodeListTag(NodeList nl, String tag) {
     if (nl != null) {
       int length = nl.length;
@@ -60,11 +55,11 @@ class GraphMlUtils {
   }
 
   /**
-	 * Returns a list with the elements included in the Node List that have name = tag.
-	 * @param nl NodeList
-	 * @param tag name of the Element.
-	 * @return List with the indicated elements.
-	 */
+   * Returns a list with the elements included in the Node List that have name = tag.
+   * @param nl NodeList
+   * @param tag name of the Element.
+   * @return List with the indicated elements.
+   */
   static List<Element> nodeListTags(NodeList nl, String tag) {
     List<Element> ret = new List<Element>();
 
@@ -81,11 +76,11 @@ class GraphMlUtils {
   }
 
   /**
-	 * Checks if the childrens of element has a Node with name = tag.
-	 * @param element Element
-	 * @param tag Name of the node.
-	 * @return Returns <code>true</code> if the childrens of element has a Node with name = tag.
-	 */
+   * Checks if the childrens of element has a Node with name = tag.
+   * @param element Element
+   * @param tag Name of the node.
+   * @return Returns <code>true</code> if the childrens of element has a Node with name = tag.
+   */
   static bool childsHasTag(Element element, String tag) {
     NodeList nl = element.childNodes;
 
@@ -102,11 +97,11 @@ class GraphMlUtils {
   }
 
   /**
-	 * Returns the first Element that has name = tag in the childrens of element.
-	 * @param element Element
-	 * @param tag Name of the Element
-	 * @return Element with name = 'tag'.
-	 */
+   * Returns the first Element that has name = tag in the childrens of element.
+   * @param element Element
+   * @param tag Name of the Element
+   * @return Element with name = 'tag'.
+   */
   static Element childsTag(Element element, String tag) {
     NodeList nl = element.childNodes;
 
@@ -127,12 +122,12 @@ class GraphMlUtils {
   }
 
   /**
-	 * Returns a list with the elements included in the childrens of element
-	 * that have name = tag.
-	 * @param element Element
-	 * @param tag name of the Element.
-	 * @return List with the indicated elements.
-	 */
+   * Returns a list with the elements included in the childrens of element
+   * that have name = tag.
+   * @param element Element
+   * @param tag name of the Element.
+   * @return List with the indicated elements.
+   */
   static List<Element> childsTags(Element element, String tag) {
     NodeList nl = element.childNodes;
 
@@ -151,10 +146,10 @@ class GraphMlUtils {
   }
 
   /**
-	 * Copy a given NodeList into a List<Element>
-	 * @param nodeList Node List.
-	 * @return List with the elements of nodeList.
-	 */
+   * Copy a given NodeList into a List<Element>
+   * @param nodeList Node List.
+   * @return List with the elements of nodeList.
+   */
   static List<Node> copyNodeList(NodeList nodeList) {
     List<Node> copy = new List<Node>();
     int length = nodeList.length;
@@ -167,11 +162,11 @@ class GraphMlUtils {
   }
 
   /**
-	 * Create a style map from a String with style definitions.
-	 * @param style Definition of the style.
-	 * @param asig Asignation simbol used in 'style'.
-	 * @return Map with the style properties.
-	 */
+   * Create a style map from a String with style definitions.
+   * @param style Definition of the style.
+   * @param asig Asignation simbol used in 'style'.
+   * @return Map with the style properties.
+   */
   static HashMap<String, Object> getStyleMap(String style, String asig) {
     HashMap<String, Object> styleMap = new HashMap<String, Object>();
     String key = "";
@@ -199,10 +194,10 @@ class GraphMlUtils {
   }
 
   /**
-	 * Returns the string that represents the content of a given style map.
-	 * @param styleMap Map with the styles values
-	 * @return string that represents the style.
-	 */
+   * Returns the string that represents the content of a given style map.
+   * @param styleMap Map with the styles values
+   * @return string that represents the style.
+   */
   static String getStyleString(Map<String, Object> styleMap, String asig) {
     String style = "";
     Iterator<Object> it = styleMap.values.iterator;

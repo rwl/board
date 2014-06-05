@@ -3,8 +3,6 @@
  */
 part of graph.io;
 
-//import java.util.Iterator;
-//import java.util.Map;
 
 //import org.w3c.dom.Element;
 //import org.w3c.dom.Node;
@@ -17,8 +15,8 @@ part of graph.io;
 class CellCodec extends ObjectCodec {
 
   /**
-	 * Constructs a new cell codec.
-	 */
+   * Constructs a new cell codec.
+   */
   //	CellCodec()
   //	{
   //		this(new Cell(), null, [ "parent", "source", "target" ],
@@ -26,16 +24,16 @@ class CellCodec extends ObjectCodec {
   //	}
 
   /**
-	 * Constructs a new cell codec for the given template.
-	 */
+   * Constructs a new cell codec for the given template.
+   */
   //	CellCodec(Object template)
   //	{
   //		this(template, null, null, null);
   //	}
 
   /**
-	 * Constructs a new cell codec for the given arguments.
-	 */
+   * Constructs a new cell codec for the given arguments.
+   */
   CellCodec([Object template=null, List<String> exclude = null, List<String> idrefs = null,
       Map<String, String> mapping = null]) : super(template) {
     if (template == null) {
@@ -48,16 +46,16 @@ class CellCodec extends ObjectCodec {
   }
 
   /**
-	 * Excludes user objects that are XML nodes.
-	 */
+   * Excludes user objects that are XML nodes.
+   */
   bool isExcluded(Object obj, String attr, Object value, bool write) {
     return _exclude.contains(attr) || (write && attr == "value" && value is Node && value.nodeType == Node.ELEMENT_NODE);
   }
 
   /**
-	 * Encodes an Cell and wraps the XML up inside the
-	 * XML of the user object (inversion).
-	 */
+   * Encodes an Cell and wraps the XML up inside the
+   * XML of the user object (inversion).
+   */
   Node afterEncode(Codec enc, Object obj, Node node) {
     if (obj is Cell) {
       Cell cell = obj;
@@ -85,9 +83,9 @@ class CellCodec extends ObjectCodec {
   }
 
   /**
-	 * Decodes an Cell and uses the enclosing XML node as
-	 * the user object for the cell (inversion).
-	 */
+   * Decodes an Cell and uses the enclosing XML node as
+   * the user object for the cell (inversion).
+   */
   Node beforeDecode(Codec dec, Node node, Object obj) {
     Element inner = node as Element;
 

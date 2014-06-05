@@ -33,13 +33,13 @@ public abstract class NormalizingReader extends Reader
 {
 
 	/**
-	 * Read characters into a portion of an array.
-	 * @param cbuf  Destination buffer
-	 * @param off   Offset at which to start writing characters
-	 * @param len   Maximum number of characters to read
-	 * @return The number of characters read, or -1 if the end of the
-	 * stream has been reached
-	 */
+   * Read characters into a portion of an array.
+   * @param cbuf  Destination buffer
+   * @param off   Offset at which to start writing characters
+   * @param len   Maximum number of characters to read
+   * @return The number of characters read, or -1 if the end of the
+   * stream has been reached
+   */
 	int read(char[] cbuf, int off, int len) //throws IOException
 	{
 		if (len == 0)
@@ -64,13 +64,13 @@ public abstract class NormalizingReader extends Reader
 	}
 
 	/**
-	 * Returns the current line in the stream.
-	 */
+   * Returns the current line in the stream.
+   */
 	abstract int getLine();
 
 	/**
-	 * Returns the current column in the stream.
-	 */
+   * Returns the current column in the stream.
+   */
 	abstract int getColumn();
 
 }

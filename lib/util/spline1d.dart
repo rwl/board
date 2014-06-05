@@ -3,7 +3,6 @@
  */
 part of graph.util;
 
-//import java.util.Arrays;
 
 /**
  * One dimension of a spline curve
@@ -21,23 +20,23 @@ class Spline1D {
   int _storageIndex = 0;
 
   /**
-	 * Creates a new Spline.
-	 * @param controlPointProportions the proportion along the curve, from 0->1
-	 * 			that each control point lies on
-	 * @param positions1D the co-ordinate position in the current dimension that
-	 * 			each control point lies on
-	 */
+   * Creates a new Spline.
+   * @param controlPointProportions the proportion along the curve, from 0->1
+   * 			that each control point lies on
+   * @param positions1D the co-ordinate position in the current dimension that
+   * 			each control point lies on
+   */
   Spline1D(List<double> controlPointProportions, List<double> positions1D) {
     setValues(controlPointProportions, positions1D);
   }
 
   /**
-	 * Set values for this Spline.
-	 * @param controlPointProportions the proportion along the curve, from 0->1
-	 * 			that each control point lies on
-	 * @param positions1D the co-ordinate position in the current dimension that
-	 * 			each control point lies on
-	 */
+   * Set values for this Spline.
+   * @param controlPointProportions the proportion along the curve, from 0->1
+   * 			that each control point lies on
+   * @param positions1D the co-ordinate position in the current dimension that
+   * 			each control point lies on
+   */
   void setValues(List<double> controlPointProportions, List<double> positions1D) {
     this._len = controlPointProportions;
     this._pos1D = positions1D;
@@ -48,10 +47,10 @@ class Spline1D {
   }
 
   /**
-	 * Returns an interpolated value.
-	 * @param x
-	 * @return the interpolated value
-	 */
+   * Returns an interpolated value.
+   * @param x
+   * @return the interpolated value
+   */
   double getValue(double x) {
     if (_len.length == 0) {
       return double.NAN;
@@ -80,12 +79,12 @@ class Spline1D {
   }
 
   /**
-	 * Returns an interpolated value. To be used when a long sequence of values
-	 * are required in order, but ensure checkValues() is called beforehand to
-	 * ensure the boundary checks from getValue() are made
-	 * @param x
-	 * @return the interpolated value
-	 */
+   * Returns an interpolated value. To be used when a long sequence of values
+   * are required in order, but ensure checkValues() is called beforehand to
+   * ensure the boundary checks from getValue() are made
+   * @param x
+   * @return the interpolated value
+   */
   double getFastValue(double x) {
     // Fast check to see if previous index is still valid
     if (_storageIndex > -1 && _storageIndex < _len.length - 1 && x > _len[_storageIndex] && x < _len[_storageIndex + 1]) {
@@ -108,10 +107,10 @@ class Spline1D {
   }
 
   /**
-	 * Returns the first derivation at x.
-	 * @param x
-	 * @return the first derivation at x
-	 */
+   * Returns the first derivation at x.
+   * @param x
+   * @return the first derivation at x
+   */
   double getDx(double x) {
     if (_len.length == 0 || _len.length == 1) {
       return 0;
@@ -126,8 +125,8 @@ class Spline1D {
   }
 
   /**
-	 * Calculates the Spline coefficients.
-	 */
+   * Calculates the Spline coefficients.
+   */
   void _calculateCoefficients() {
     int N = _pos1D.length;
     _a = new List<double>(N);
@@ -186,8 +185,8 @@ class Spline1D {
   }
 
   /**
-	 * Solves Ax=b and stores the solution in b.
-	 */
+   * Solves Ax=b and stores the solution in b.
+   */
   void solve(List<List<double>> A, List<double> b) {
     int n = b.length;
 

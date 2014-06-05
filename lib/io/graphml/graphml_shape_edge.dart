@@ -19,16 +19,16 @@ class GraphMlShapeEdge {
   String _edgeTarget;
 
   /**
-	 * Construct a Shape Edge with text and style.
-	 * @param text
-	 * @param style
-	 */
+   * Construct a Shape Edge with text and style.
+   * @param text
+   * @param style
+   */
   GraphMlShapeEdge([String this._text="", String this._style=""]);
 
   /**
-	 * Constructs a ShapeEdge from a xml shapeEdgeElement.
-	 * @param shapeEdgeElement
-	 */
+   * Constructs a ShapeEdge from a xml shapeEdgeElement.
+   * @param shapeEdgeElement
+   */
   factory GraphMlShapeEdge.from(Element shapeEdgeElement) {
     final edge = new GraphMlShapeEdge();
     
@@ -48,16 +48,16 @@ class GraphMlShapeEdge {
   }
 
   /**
-	 * Construct an empty Shape Edge Element.
-	 */
+   * Construct an empty Shape Edge Element.
+   */
 //  GraphMlShapeEdge() {
 //  }
 
   /**
-	 * Generates a ShapeEdge Element from this class.
-	 * @param document Document where the key Element will be inserted.
-	 * @return Returns the generated Elements.
-	 */
+   * Generates a ShapeEdge Element from this class.
+   * @param document Document where the key Element will be inserted.
+   * @return Returns the generated Elements.
+   */
   Element generateElement(Document document) {
     Element dataEdge = document.createElementNS(GraphMlConstants.JGRAPH_URL, GraphMlConstants.JGRAPH + GraphMlConstants.SHAPEEDGE);
 

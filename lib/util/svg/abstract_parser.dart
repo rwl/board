@@ -19,7 +19,6 @@
 part of graph.util.svg;
 
 //import java.io.IOException;
-//import java.util.MissingResourceException;
 
 /**
  * This class is the superclass of all parsers. It provides localization
@@ -32,53 +31,53 @@ public abstract class AbstractParser implements Parser
 {
 
 	/**
-	 * The default resource bundle base name.
-	 */
+   * The default resource bundle base name.
+   */
 	static final String BUNDLE_CLASSNAME = "org.apache.batik.parser.resources.Messages";
 
 	/**
-	 * The error handler.
-	 */
+   * The error handler.
+   */
 	ErrorHandler errorHandler = new DefaultErrorHandler();
 
 	/**
-	 * The normalizing reader.
-	 */
+   * The normalizing reader.
+   */
 	NormalizingReader reader;
 
 	/**
-	 * The current character.
-	 */
+   * The current character.
+   */
 	int current;
 
 	/**
-	 * Returns the current character value.
-	 */
+   * Returns the current character value.
+   */
 	int getCurrent()
 	{
 		return current;
 	}
 
 	/**
-	 * Allow an application to register an error event handler.
-	 *
-	 * <p>If the application does not register an error event handler,
-	 * all error events reported by the parser will cause an exception
-	 * to be thrown.
-	 *
-	 * <p>Applications may register a new or different handler in the
-	 * middle of a parse, and the parser must begin using the new
-	 * handler immediately.</p>
-	 * @param handler The error handler.
-	 */
+   * Allow an application to register an error event handler.
+   *
+   * <p>If the application does not register an error event handler,
+   * all error events reported by the parser will cause an exception
+   * to be thrown.
+   *
+   * <p>Applications may register a new or different handler in the
+   * middle of a parse, and the parser must begin using the new
+   * handler immediately.</p>
+   * @param handler The error handler.
+   */
 	void setErrorHandler(ErrorHandler handler)
 	{
 		errorHandler = handler;
 	}
 
 	/**
-	 * Parses the given string.
-	 */
+   * Parses the given string.
+   */
 	void parse(String s) //throws ParseException
 	{
 		try
@@ -94,16 +93,16 @@ public abstract class AbstractParser implements Parser
 	}
 
 	/**
-	 * Method responsible for actually parsing data after AbstractParser
-	 * has initialized itself.
-	 */
+   * Method responsible for actually parsing data after AbstractParser
+   * has initialized itself.
+   */
 	abstract void doParse() //throws ParseException, IOException;
 
 	/**
-	 * Signals an error to the error handler.
-	 * @param key The message key in the resource bundle.
-	 * @param args The message arguments.
-	 */
+   * Signals an error to the error handler.
+   * @param key The message key in the resource bundle.
+   * @param args The message arguments.
+   */
 	void reportError(String key, List<Object> args) //throws ParseException
 	{
 		errorHandler.error(new ParseException(createErrorMessage(key, args),
@@ -111,12 +110,12 @@ public abstract class AbstractParser implements Parser
 	}
 
 	/**
-	 * simple api to call often reported error.
-	 * Just a wrapper for reportError().
-	 *
-	 * @param expectedChar what caller expected
-	 * @param currentChar what caller found
-	 */
+   * simple api to call often reported error.
+   * Just a wrapper for reportError().
+   *
+   * @param expectedChar what caller expected
+   * @param currentChar what caller found
+   */
 	void reportCharacterExpectedError(char expectedChar,
 			int currentChar)
 	{
@@ -126,11 +125,11 @@ public abstract class AbstractParser implements Parser
 	}
 
 	/**
-	 * simple api to call often reported error.
-	 * Just a wrapper for reportError().
-	 *
-	 * @param currentChar what the caller found and didnt expect
-	 */
+   * simple api to call often reported error.
+   * Just a wrapper for reportError().
+   *
+   * @param currentChar what the caller found and didnt expect
+   */
 	void reportUnexpectedCharacterError(int currentChar)
 	{
 		reportError("character.unexpected", new List<Object> { new int(
@@ -139,10 +138,10 @@ public abstract class AbstractParser implements Parser
 	}
 
 	/**
-	 * Returns a localized error message.
-	 * @param key The message key in the resource bundle.
-	 * @param args The message arguments.
-	 */
+   * Returns a localized error message.
+   * @param key The message key in the resource bundle.
+   * @param args The message arguments.
+   */
 	String createErrorMessage(String key, List<Object> args)
 	{
 		try
@@ -158,17 +157,17 @@ public abstract class AbstractParser implements Parser
 	}
 
 	/**
-	 * Returns the resource bundle base name.
-	 * @return BUNDLE_CLASSNAME.
-	 */
+   * Returns the resource bundle base name.
+   * @return BUNDLE_CLASSNAME.
+   */
 	String getBundleClassName()
 	{
 		return BUNDLE_CLASSNAME;
 	}
 
 	/**
-	 * Skips the whitespaces in the current reader.
-	 */
+   * Skips the whitespaces in the current reader.
+   */
 	void skipSpaces() //throws IOException
 	{
 		for (;;)
@@ -187,8 +186,8 @@ public abstract class AbstractParser implements Parser
 	}
 
 	/**
-	 * Skips the whitespaces and an optional comma.
-	 */
+   * Skips the whitespaces and an optional comma.
+   */
 	void skipCommaSpaces() //throws IOException
 	{
 		wsp1: for (;;)

@@ -28,8 +28,8 @@ typedef Point2d PerimeterFunction(Rect bounds, CellState vertex, Point2d next, b
 class Perimeter {
 
   /**
-	 * Describes a rectangular perimeter for the given bounds. 
-	 */
+   * Describes a rectangular perimeter for the given bounds. 
+   */
   static PerimeterFunction RectanglePerimeter = (Rect bounds, CellState vertex, Point2d next, bool orthogonal) {
     double cx = bounds.getCenterX();
     double cy = bounds.getCenterY();
@@ -85,8 +85,8 @@ class Perimeter {
   };
 
   /**
-	 * Describes an elliptic perimeter.
-	 */
+   * Describes an elliptic perimeter.
+   */
   static PerimeterFunction EllipsePerimeter = (Rect bounds, CellState vertex, Point2d next, bool orthogonal) {
     double x = bounds.getX();
     double y = bounds.getY();
@@ -172,8 +172,8 @@ class Perimeter {
   };
 
   /**
-	 * Describes a rhombus (aka diamond) perimeter.
-	 */
+   * Describes a rhombus (aka diamond) perimeter.
+   */
   static PerimeterFunction RhombusPerimeter = (Rect bounds, CellState vertex, Point2d next, bool orthogonal) {
     double x = bounds.getX();
     double y = bounds.getY();
@@ -228,9 +228,9 @@ class Perimeter {
   };
 
   /**
-	 * Describes a triangle perimeter. See RectanglePerimeter
-	 * for a description of the parameters.
-	 */
+   * Describes a triangle perimeter. See RectanglePerimeter
+   * for a description of the parameters.
+   */
   static PerimeterFunction TrianglePerimeter = (Rect bounds, CellState vertex, Point2d next, bool orthogonal) {
     Object direction = (vertex != null) ? Utils.getString(vertex._style, Constants.STYLE_DIRECTION, Constants.DIRECTION_EAST) : Constants.DIRECTION_EAST;
     bool vertical = direction == Constants.DIRECTION_NORTH || direction == Constants.DIRECTION_SOUTH;
@@ -330,9 +330,9 @@ class Perimeter {
   };
 
   /**
-	 * Describes a hexagon perimeter. See RectanglePerimeter
-	 * for a description of the parameters.
-	 */
+   * Describes a hexagon perimeter. See RectanglePerimeter
+   * for a description of the parameters.
+   */
   static PerimeterFunction HexagonPerimeter = (Rect bounds, CellState vertex, Point2d next, bool orthogonal) {
     double x = bounds.getX();
     double y = bounds.getY();

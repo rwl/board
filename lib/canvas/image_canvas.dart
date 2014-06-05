@@ -18,23 +18,23 @@ part of graph.canvas;
 class ImageCanvas implements ICanvas {
 
   /**
-	 * 
-	 */
+   * 
+   */
   Graphics2DCanvas _canvas;
 
   /**
-	 * 
-	 */
+   * 
+   */
   Graphics2D _previousGraphics;
 
   /**
-	 * 
-	 */
+   * 
+   */
   image.Image _image;
 
   /**
-	 * 
-	 */
+   * 
+   */
   ImageCanvas(Graphics2DCanvas canvas, int width, int height, awt.Color background, bool antiAlias) {
     this._canvas = canvas;
     _previousGraphics = canvas.getGraphics();
@@ -48,64 +48,64 @@ class ImageCanvas implements ICanvas {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   Graphics2DCanvas getGraphicsCanvas() {
     return _canvas;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   image.Image getImage() {
     return _image;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   Object drawCell(CellState state) {
     return _canvas.drawCell(state);
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   Object drawLabel(String label, CellState state, bool html) {
     return _canvas.drawLabel(label, state, html);
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   double getScale() {
     return _canvas.getScale();
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   awt.Point getTranslate() {
     return _canvas.getTranslate();
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void setScale(double scale) {
     _canvas.setScale(scale);
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void setTranslate(int dx, int dy) {
     _canvas.setTranslate(dx, dy);
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   image.Image destroy() {
     image.Image tmp = _image;
 

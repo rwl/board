@@ -4,13 +4,12 @@ part of graph.shape;
 //import java.awt.GradientPaint;
 //import java.awt.Rectangle;
 //import java.awt.geom.GeneralPath;
-//import java.util.Map;
 
 class LabelShape extends ImageShape {
 
   /**
-	 * 
-	 */
+   * 
+   */
   void paintShape(Graphics2DCanvas canvas, CellState state) {
     super.paintShape(canvas, state);
 
@@ -20,8 +19,8 @@ class LabelShape extends ImageShape {
   }
 
   /**
-	 * Draws the glass effect
-	 */
+   * Draws the glass effect
+   */
   static void drawGlassEffect(Graphics2DCanvas canvas, CellState state) {
     double size = 0.4;
     canvas.getGraphics().setPaint(new GradientPaint(state.getX() as double, state.getY() as double,
@@ -41,8 +40,8 @@ class LabelShape extends ImageShape {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   awt.Rectangle getImageBounds(Graphics2DCanvas canvas, CellState state) {
     Map<String, Object> style = state.getStyle();
     double scale = canvas.getScale();
@@ -79,22 +78,22 @@ class LabelShape extends ImageShape {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   awt.Color getFillColor(Graphics2DCanvas canvas, CellState state) {
     return Utils.getColor(state.getStyle(), Constants.STYLE_FILLCOLOR);
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   awt.Color getStrokeColor(Graphics2DCanvas canvas, CellState state) {
     return Utils.getColor(state.getStyle(), Constants.STYLE_STROKECOLOR);
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool hasGradient(Graphics2DCanvas canvas, CellState state) {
     return true;
   }

@@ -2,78 +2,50 @@ part of graph.model;
 
 class GeometryChange extends AtomicGraphModelChange {
 
-  /**
-	 *
-	 */
   Object cell;
 
-  /**
-	 * 
-	 */
   Geometry geometry, previous;
 
-  /**
-	 * 
-	 */
-  //	GeometryChange()
-  //	{
-  //		this(null, null, null);
-  //	}
-
-  /**
-	 * 
-	 */
-  GeometryChange([GraphModel model = null, Object cell = null, Geometry geometry = null]) : super(model) {
-    this.cell = cell;
-    this.geometry = geometry;
+  GeometryChange([GraphModel model = null, this.cell = null, this.geometry = null]) : super(model) {
     this.previous = this.geometry;
   }
 
-  /**
-	 * 
-	 */
   void setCell(Object value) {
     cell = value;
   }
 
   /**
-	 * @return the cell
-	 */
+   * Returns the cell.
+   */
   Object getCell() {
     return cell;
   }
 
-  /**
-	 *
-	 */
   void setGeometry(Geometry value) {
     geometry = value;
   }
 
   /**
-	 * @return the geometry
-	 */
+   * Returns the geometry.
+   */
   Geometry getGeometry() {
     return geometry;
   }
 
-  /**
-	 *
-	 */
   void setPrevious(Geometry value) {
     previous = value;
   }
 
   /**
-	 * @return the previous
-	 */
+   * Returns the previous.
+   */
   Geometry getPrevious() {
     return previous;
   }
 
   /**
-	 * Changes the root of the model.
-	 */
+   * Changes the root of the model.
+   */
   void execute() {
     geometry = previous;
     previous = (model as GraphModel)._geometryForCellChanged(cell, previous);

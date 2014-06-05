@@ -25,85 +25,85 @@ part of graph.swing.util;
 class GraphTransferable implements Transferable, UIResource, Serializable {
 
   /**
-	 * 
-	 */
+   * 
+   */
   //	static final long serialVersionUID = 5123819419918087664L;
 
   /**
-	 * Global switch to disable image support in transferables. Set this to false as a workaround
-	 * for Data translation failed: not an image format in Java 1.7 on Mac OS X.
-	 */
+   * Global switch to disable image support in transferables. Set this to false as a workaround
+   * for Data translation failed: not an image format in Java 1.7 on Mac OS X.
+   */
   static bool enableImageSupport = true;
 
   /**
-	 * Serialized Data Flavor. Use the following code to switch to local 
-	 * reference flavor:
-	 * <code>
-	 * try
-	 * {
-	 *   GraphTransferable.dataFlavor = new DataFlavor(DataFlavor.javaJVMLocalObjectMimeType
-	 *     + "; class=graph.swing.util.GraphTransferable");
-	 * }
-	 * catch (ClassNotFoundException cnfe)
-	 * {
-	 *   // do nothing
-	 * }
-	 * </code>
-	 * 
-	 * If you get a class not found exception, try the following instead:
-	 * <code>
-	 * GraphTransferable.dataFlavor = new DataFlavor(DataFlavor.javaJVMLocalObjectMimeType
-	 *   + "; class=graph.swing.util.GraphTransferable", null,
-	 *   new graph.swing.util.GraphTransferable(null, null).getClass().getClassLoader());
-	 * </code>
-	 */
+   * Serialized Data Flavor. Use the following code to switch to local 
+   * reference flavor:
+   * <code>
+   * try
+   * {
+   *   GraphTransferable.dataFlavor = new DataFlavor(DataFlavor.javaJVMLocalObjectMimeType
+   *     + "; class=graph.swing.util.GraphTransferable");
+   * }
+   * catch (ClassNotFoundException cnfe)
+   * {
+   *   // do nothing
+   * }
+   * </code>
+   * 
+   * If you get a class not found exception, try the following instead:
+   * <code>
+   * GraphTransferable.dataFlavor = new DataFlavor(DataFlavor.javaJVMLocalObjectMimeType
+   *   + "; class=graph.swing.util.GraphTransferable", null,
+   *   new graph.swing.util.GraphTransferable(null, null).getClass().getClassLoader());
+   * </code>
+   */
   static DataFlavor dataFlavor;
 
   /**
-	 * 
-	 */
+   * 
+   */
   static List<DataFlavor> _htmlFlavors;
 
   /**
-	 * 
-	 */
+   * 
+   */
   static List<DataFlavor> _stringFlavors;
 
   /**
-	 * 
-	 */
+   * 
+   */
   static List<DataFlavor> _plainFlavors;
 
   /**
-	 * 
-	 */
+   * 
+   */
   static List<DataFlavor> _imageFlavors;
 
   /**
-	 * 
-	 */
+   * 
+   */
   List<Object> _cells;
 
   /**
-	 * 
-	 */
+   * 
+   */
   Rect _bounds;
 
   /**
-	 * 
-	 */
+   * 
+   */
   ImageIcon _image;
 
   /**
-	 * 
-	 */
+   * 
+   */
   GraphTransferable(List<Object> cells, Rect bounds) {
     this(cells, bounds, null);
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   GraphTransferable(List<Object> cells, Rect bounds, ImageIcon image) {
     this._cells = cells;
     this._bounds = bounds;
@@ -111,29 +111,29 @@ class GraphTransferable implements Transferable, UIResource, Serializable {
   }
 
   /**
-	 * @return Returns the cells.
-	 */
+   * @return Returns the cells.
+   */
   List<Object> getCells() {
     return _cells;
   }
 
   /**
-	 * Returns the unscaled, untranslated bounding box of the cells.
-	 */
+   * Returns the unscaled, untranslated bounding box of the cells.
+   */
   Rect getBounds() {
     return _bounds;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   ImageIcon getImage() {
     return _image;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   List<DataFlavor> getTransferDataFlavors() {
     List<DataFlavor> richerFlavors = _getRicherFlavors();
 
@@ -178,22 +178,22 @@ class GraphTransferable implements Transferable, UIResource, Serializable {
   }
 
   /**
-	 * Some subclasses will have flavors that are more descriptive than HTML or
-	 * plain text. If this method returns a non-null value, it will be placed at
-	 * the start of the array of supported flavors.
-	 */
+   * Some subclasses will have flavors that are more descriptive than HTML or
+   * plain text. If this method returns a non-null value, it will be placed at
+   * the start of the array of supported flavors.
+   */
   List<DataFlavor> _getRicherFlavors() {
     return [dataFlavor];
   }
 
   /**
-	 * Returns whether or not the specified data flavor is supported for this
-	 * object.
-	 * 
-	 * @param flavor
-	 *            the requested flavor for the data
-	 * @return bool indicating whether or not the data flavor is supported
-	 */
+   * Returns whether or not the specified data flavor is supported for this
+   * object.
+   * 
+   * @param flavor
+   *            the requested flavor for the data
+   * @return bool indicating whether or not the data flavor is supported
+   */
   bool isDataFlavorSupported(DataFlavor flavor) {
     List<DataFlavor> flavors = getTransferDataFlavors();
 
@@ -207,19 +207,19 @@ class GraphTransferable implements Transferable, UIResource, Serializable {
   }
 
   /**
-	 * Returns an object which represents the data to be transferred. The class
-	 * of the object returned is defined by the representation class of the
-	 * flavor.
-	 * 
-	 * @param flavor
-	 *            the requested flavor for the data
-	 * @see DataFlavor#getRepresentationClass
-	 * @exception IOException
-	 *                if the data is no longer available in the requested
-	 *                flavor.
-	 * @exception UnsupportedFlavorException
-	 *                if the requested data flavor is not supported.
-	 */
+   * Returns an object which represents the data to be transferred. The class
+   * of the object returned is defined by the representation class of the
+   * flavor.
+   * 
+   * @param flavor
+   *            the requested flavor for the data
+   * @see DataFlavor#getRepresentationClass
+   * @exception IOException
+   *                if the data is no longer available in the requested
+   *                flavor.
+   * @exception UnsupportedFlavorException
+   *                if the requested data flavor is not supported.
+   */
   Object getTransferData(DataFlavor flavor) //throws UnsupportedFlavorException, IOException
   {
     if (_isRicherFlavor(flavor)) {
@@ -271,11 +271,11 @@ class GraphTransferable implements Transferable, UIResource, Serializable {
   }
 
   /**
-	 * 
-	 * @param flavor
-	 * @return Returns true if the given flavor is a richer flavor of this
-	 * transferable.
-	 */
+   * 
+   * @param flavor
+   * @return Returns true if the given flavor is a richer flavor of this
+   * transferable.
+   */
   bool _isRicherFlavor(DataFlavor flavor) {
     List<DataFlavor> richerFlavors = _getRicherFlavors();
     int nFlavors = (richerFlavors != null) ? richerFlavors.length : 0;
@@ -290,11 +290,11 @@ class GraphTransferable implements Transferable, UIResource, Serializable {
   }
 
   /**
-	 * 
-	 * @param flavor
-	 * @return the richer data flavor of this and the specified
-	 * @throws UnsupportedFlavorException
-	 */
+   * 
+   * @param flavor
+   * @return the richer data flavor of this and the specified
+   * @throws UnsupportedFlavorException
+   */
   Object getRicherData(DataFlavor flavor) //throws UnsupportedFlavorException
   {
     if (flavor.equals(dataFlavor)) {
@@ -305,13 +305,13 @@ class GraphTransferable implements Transferable, UIResource, Serializable {
   }
 
   /**
-	 * Returns whether or not the specified data flavor is an HTML flavor that
-	 * is supported.
-	 * 
-	 * @param flavor
-	 *            the requested flavor for the data
-	 * @return bool indicating whether or not the data flavor is supported
-	 */
+   * Returns whether or not the specified data flavor is an HTML flavor that
+   * is supported.
+   * 
+   * @param flavor
+   *            the requested flavor for the data
+   * @return bool indicating whether or not the data flavor is supported
+   */
   bool _isHtmlFlavor(DataFlavor flavor) {
     List<DataFlavor> flavors = _htmlFlavors;
 
@@ -325,26 +325,26 @@ class GraphTransferable implements Transferable, UIResource, Serializable {
   }
 
   /**
-	 * Whether the HTML flavors are offered. If so, the method getHTMLData
-	 * should be implemented to provide something reasonable.
-	 */
+   * Whether the HTML flavors are offered. If so, the method getHTMLData
+   * should be implemented to provide something reasonable.
+   */
   bool _isHtmlSupported() {
     return false;
   }
 
   /**
-	 * Fetch the data in a text/html format
-	 */
+   * Fetch the data in a text/html format
+   */
   String _getHtmlData() {
     return null;
   }
 
   /**
-	 * 
-	 * @param flavor
-	 * @return Returns true if the given flavor is an image flavor of this
-	 * transferable.
-	 */
+   * 
+   * @param flavor
+   * @return Returns true if the given flavor is an image flavor of this
+   * transferable.
+   */
   bool _isImageFlavor(DataFlavor flavor) {
     int nFlavors = (_imageFlavors != null) ? _imageFlavors.length : 0;
 
@@ -358,20 +358,20 @@ class GraphTransferable implements Transferable, UIResource, Serializable {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool isImageSupported() {
     return enableImageSupport && _image != null;
   }
 
   /**
-	 * Returns whether or not the specified data flavor is an plain flavor that
-	 * is supported.
-	 * 
-	 * @param flavor
-	 *            the requested flavor for the data
-	 * @return bool indicating whether or not the data flavor is supported
-	 */
+   * Returns whether or not the specified data flavor is an plain flavor that
+   * is supported.
+   * 
+   * @param flavor
+   *            the requested flavor for the data
+   * @return bool indicating whether or not the data flavor is supported
+   */
   bool _isPlainFlavor(DataFlavor flavor) {
     List<DataFlavor> flavors = _plainFlavors;
 
@@ -385,28 +385,28 @@ class GraphTransferable implements Transferable, UIResource, Serializable {
   }
 
   /**
-	 * Whether the plain text flavors are offered. If so, the method
-	 * getPlainData should be implemented to provide something reasonable.
-	 */
+   * Whether the plain text flavors are offered. If so, the method
+   * getPlainData should be implemented to provide something reasonable.
+   */
   bool _isPlainSupported() {
     return false;
   }
 
   /**
-	 * Fetch the data in a text/plain format.
-	 */
+   * Fetch the data in a text/plain format.
+   */
   String _getPlainData() {
     return null;
   }
 
   /**
-	 * Returns whether or not the specified data flavor is a String flavor that
-	 * is supported.
-	 * 
-	 * @param flavor
-	 *            the requested flavor for the data
-	 * @return bool indicating whether or not the data flavor is supported
-	 */
+   * Returns whether or not the specified data flavor is a String flavor that
+   * is supported.
+   * 
+   * @param flavor
+   *            the requested flavor for the data
+   * @return bool indicating whether or not the data flavor is supported
+   */
   bool _isStringFlavor(DataFlavor flavor) {
     List<DataFlavor> flavors = _stringFlavors;
 
@@ -420,8 +420,8 @@ class GraphTransferable implements Transferable, UIResource, Serializable {
   }
 
   /**
-	 * Local Machine Reference Data Flavor.
-	 */
+   * Local Machine Reference Data Flavor.
+   */
   static init() {
     try {
       _htmlFlavors = new List<DataFlavor>(3);

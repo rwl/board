@@ -59,20 +59,20 @@ class GraphMlKey {
   keyTypeValues _keyType;
 
   /**
-	 * Construct a key with the given parameters.
-	 * @param keyId Key's ID
-	 * @param keyFor Scope of the key.
-	 * @param keyName Key Name
-	 * @param keyType Type of the values represented for this key.
-	 */
+   * Construct a key with the given parameters.
+   * @param keyId Key's ID
+   * @param keyFor Scope of the key.
+   * @param keyName Key Name
+   * @param keyType Type of the values represented for this key.
+   */
   GraphMlKey(this._keyId, this._keyFor, this._keyName, this._keyType) {
     this._keyDefault = _defaultValue();
   }
 
   /**
-	 * Construct a key from a xml key element.
-	 * @param keyElement Xml key element.
-	 */
+   * Construct a key from a xml key element.
+   * @param keyElement Xml key element.
+   */
   factory GraphMlKey.from(Element keyElement) {
     final keyId = keyElement.getAttribute(GraphMlConstants.ID);
     final keyFor = enumForValue(keyElement.getAttribute(GraphMlConstants.KEY_FOR));
@@ -122,9 +122,9 @@ class GraphMlKey {
   }
 
   /**
-	 * Returns the default value of the keyDefault attribute according
-	 * the keyType.
-	 */
+   * Returns the default value of the keyDefault attribute according
+   * the keyType.
+   */
   String _defaultValue() {
     String val = "";
     switch (this._keyType) {
@@ -163,10 +163,10 @@ class GraphMlKey {
   }
 
   /**
-	 * Generates a Key Element from this class.
-	 * @param document Document where the key Element will be inserted.
-	 * @return Returns the generated Elements.
-	 */
+   * Generates a Key Element from this class.
+   * @param document Document where the key Element will be inserted.
+   * @return Returns the generated Elements.
+   */
   Element generateElement(Document document) {
     Element key = document.createElement(GraphMlConstants.KEY);
 
@@ -191,11 +191,11 @@ class GraphMlKey {
   }
 
   /**
-	 * Converts a String value in its corresponding enum value for the
-	 * keyFor attribute.
-	 * @param value Value in String representation.
-	 * @return Returns the value in its enum representation.
-	 */
+   * Converts a String value in its corresponding enum value for the
+   * keyFor attribute.
+   * @param value Value in String representation.
+   * @return Returns the value in its enum representation.
+   */
   keyForValues enumForValue(String value) {
     keyForValues enumVal = keyForValues.ALL;
 
@@ -219,11 +219,11 @@ class GraphMlKey {
   }
 
   /**
-	 * Converts a enum value in its corresponding String value for the
-	 * keyFor attribute.
-	 * @param value Value in enum representation.
-	 * @return Returns the value in its String representation.
-	 */
+   * Converts a enum value in its corresponding String value for the
+   * keyFor attribute.
+   * @param value Value in enum representation.
+   * @return Returns the value in its String representation.
+   */
   String stringForValue(keyForValues value) {
 
     String val = GraphMlConstants.ALL;
@@ -270,11 +270,11 @@ class GraphMlKey {
   }
 
   /**
-	 * Converts a String value in its corresponding enum value for the
-	 * keyType attribute.
-	 * @param value Value in String representation.
-	 * @return Returns the value in its enum representation.
-	 */
+   * Converts a String value in its corresponding enum value for the
+   * keyType attribute.
+   * @param value Value in String representation.
+   * @return Returns the value in its enum representation.
+   */
   keyTypeValues enumTypeValue(String value) {
     keyTypeValues enumVal = keyTypeValues.STRING;
 
@@ -296,11 +296,11 @@ class GraphMlKey {
   }
 
   /**
-	 * Converts a enum value in its corresponding string value for the
-	 * keyType attribute.
-	 * @param value Value in enum representation.
-	 * @return Returns the value in its String representation.
-	 */
+   * Converts a enum value in its corresponding string value for the
+   * keyType attribute.
+   * @param value Value in enum representation.
+   * @return Returns the value in its String representation.
+   */
   String stringTypeValue(keyTypeValues value) {
     String val = "string";
 

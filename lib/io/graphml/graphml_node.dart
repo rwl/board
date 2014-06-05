@@ -3,9 +3,6 @@
  */
 part of graph.io.graphml;
 
-//import java.util.ArrayList;
-//import java.util.HashMap;
-//import java.util.List;
 //import org.w3c.dom.Document;
 //import org.w3c.dom.Element;
 
@@ -24,16 +21,16 @@ class GraphMlNode {
   HashMap<String, GraphMlPort> _nodePortMap = new HashMap<String, GraphMlPort>();
 
   /**
-	 * Construct a node with Id and one data element
-	 * @param nodeId Node`s ID
-	 * @param nodeData Gml Data.
-	 */
+   * Construct a node with Id and one data element
+   * @param nodeId Node`s ID
+   * @param nodeData Gml Data.
+   */
   GraphMlNode([String this._nodeId=null, GraphMlData this._nodeData=null]);
 
   /**
-	 * Construct a Node from a xml Node Element.
-	 * @param nodeElement Xml Node Element.
-	 */
+   * Construct a Node from a xml Node Element.
+   * @param nodeElement Xml Node Element.
+   */
   factory GraphMlNode.from(Element nodeElement) {
     final node = new GraphMlNode();
     node._nodeId = nodeElement.getAttribute(GraphMlConstants.ID);
@@ -99,10 +96,10 @@ class GraphMlNode {
   }
 
   /**
-	 * Generates a Key Element from this class.
-	 * @param document Document where the key Element will be inserted.
-	 * @return Returns the generated Elements.
-	 */
+   * Generates a Key Element from this class.
+   * @param document Document where the key Element will be inserted.
+   * @return Returns the generated Elements.
+   */
   Element generateElement(Document document) {
     Element node = document.createElement(GraphMlConstants.NODE);
 

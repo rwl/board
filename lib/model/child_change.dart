@@ -2,35 +2,10 @@ part of graph.model;
 
 class ChildChange extends AtomicGraphModelChange {
 
-  /**
-	 *
-	 */
   Object parent, previous, child;
 
-  /**
-	 * 
-	 */
   int index, previousIndex;
 
-  /**
-	 * 
-	 */
-  //	ChildChange()
-  //	{
-  //		this(null, null, null, 0);
-  //	}
-
-  /**
-	 * 
-	 */
-  //	ChildChange(GraphModel model, Object parent, Object child)
-  //	{
-  //		this(model, parent, child, 0);
-  //	}
-
-  /**
-	 * 
-	 */
   ChildChange([GraphModel model = null, Object parent = null, Object child = null, int index = 0]) : super(model) {
     this.parent = parent;
     previous = this.parent;
@@ -39,97 +14,79 @@ class ChildChange extends AtomicGraphModelChange {
     previousIndex = index;
   }
 
-  /**
-	 *
-	 */
   void setParent(Object value) {
     parent = value;
   }
 
   /**
-	 * @return the parent
-	 */
+   * Returns the parent.
+   */
   Object getParent() {
     return parent;
   }
 
-  /**
-	 *
-	 */
   void setPrevious(Object value) {
     previous = value;
   }
 
   /**
-	 * @return the previous
-	 */
+   * Returns the previous.
+   */
   Object getPrevious() {
     return previous;
   }
 
-  /**
-	 *
-	 */
   void setChild(Object value) {
     child = value;
   }
 
   /**
-	 * @return the child
-	 */
+   * Returns the child.
+   */
   Object getChild() {
     return child;
   }
 
-  /**
-	 *
-	 */
   void setIndex(int value) {
     index = value;
   }
 
   /**
-	 * @return the index
-	 */
+   * Returns the index.
+   */
   int getIndex() {
     return index;
   }
 
-  /**
-	 *
-	 */
   void setPreviousIndex(int value) {
     previousIndex = value;
   }
 
   /**
-	 * @return the previousIndex
-	 */
+   * Returns the previousIndex.
+   */
   int getPreviousIndex() {
     return previousIndex;
   }
 
   /**
-	 * Gets the source or target terminal field for the given
-	 * edge even if the edge is not stored as an incoming or
-	 * outgoing edge in the respective terminal.
-	 */
+   * Gets the source or target terminal field for the given
+   * edge even if the edge is not stored as an incoming or
+   * outgoing edge in the respective terminal.
+   */
   Object getTerminal(Object edge, bool source) {
     return model.getTerminal(edge, source);
   }
 
   /**
-	 * Sets the source or target terminal field for the given edge
-	 * without inserting an incoming or outgoing edge in the
-	 * respective terminal.
-	 */
+   * Sets the source or target terminal field for the given edge
+   * without inserting an incoming or outgoing edge in the
+   * respective terminal.
+   */
   void setTerminal(Object edge, Object terminal, bool source) {
     (edge as ICell).setTerminal(terminal as ICell, source);
   }
 
-  /**
-	 * 
-	 */
   void connect(Object cell, bool isConnect) {
     Object source = getTerminal(cell, true);
     Object target = getTerminal(cell, false);
@@ -162,15 +119,15 @@ class ChildChange extends AtomicGraphModelChange {
   }
 
   /**
-	 * Returns the index of the given child inside the given parent.
-	 */
+   * Returns the index of the given child inside the given parent.
+   */
   int getChildIndex(Object parent, Object child) {
     return (parent is ICell && child is ICell) ? (parent as ICell).getIndex(child as ICell) : 0;
   }
 
   /**
-	 * Changes the root of the model.
-	 */
+   * Changes the root of the model.
+   */
   void execute() {
     Object tmp = model.getParent(child);
     int tmp2 = getChildIndex(tmp, child);

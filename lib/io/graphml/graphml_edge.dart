@@ -3,9 +3,6 @@
  */
 part of graph.io.graphml;
 
-//import java.util.HashMap;
-//import java.util.Hashtable;
-//import java.util.List;
 
 //import org.w3c.dom.Document;
 //import org.w3c.dom.Element;
@@ -29,24 +26,24 @@ class GraphMlEdge {
   GraphMlData _edgeData;
 
   /**
-	 * Map with the data. The key is the key attribute
-	 */
+   * Map with the data. The key is the key attribute
+   */
   HashMap<String, GraphMlData> _edgeDataMap = new HashMap<String, GraphMlData>();
 
   /**
-	 * Construct an edge with source and target.
-	 * @param edgeSource Source Node's ID.
-	 * @param edgeTarget Target Node's ID.
-	 */
+   * Construct an edge with source and target.
+   * @param edgeSource Source Node's ID.
+   * @param edgeTarget Target Node's ID.
+   */
   GraphMlEdge(this._edgeSource, this_edgeTarget, this._edgeSourcePort, this._edgeTargetPort) {
     this._edgeId = "";
     this._edgeDirected = "";
   }
 
   /**
-	 * Construct an edge from a xml edge element.
-	 * @param edgeElement Xml edge element.
-	 */
+   * Construct an edge from a xml edge element.
+   * @param edgeElement Xml edge element.
+   */
   factory GraphMlEdge.from(Element edgeElement) {
     final edgeSource = edgeElement.getAttribute(GraphMlConstants.EDGE_SOURCE);
     final edgeSourcePort = edgeElement.getAttribute(GraphMlConstants.EDGE_SOURCE_PORT);
@@ -133,10 +130,10 @@ class GraphMlEdge {
   }
 
   /**
-	 * Generates a Edge Element from this class.
-	 * @param document Document where the key Element will be inserted.
-	 * @return Returns the generated Elements.
-	 */
+   * Generates a Edge Element from this class.
+   * @param document Document where the key Element will be inserted.
+   * @return Returns the generated Elements.
+   */
   Element generateElement(Document document) {
     Element edge = document.createElement(GraphMlConstants.EDGE);
 
@@ -165,9 +162,9 @@ class GraphMlEdge {
   }
 
   /**
-	 * Returns if the edge has end arrow.
-	 * @return style that indicates the end arrow type(CLASSIC or NONE).
-	 */
+   * Returns if the edge has end arrow.
+   * @return style that indicates the end arrow type(CLASSIC or NONE).
+   */
   String getEdgeStyle() {
     String style = "";
     Map<String, Object> styleMap = new Map<String, Object>();

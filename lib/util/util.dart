@@ -64,17 +64,6 @@ import '../view/view.dart' show CellState;
 //import java.net.URL;
 //import java.security.MessageDigest;
 //import java.security.NoSuchAlgorithmException;
-//import java.util.ArrayList;
-//import java.util.Arrays;
-//import java.util.Collection;
-//import java.util.Comparator;
-//import java.util.Formatter;
-//import java.util.Iterator;
-//import java.util.List;
-//import java.util.Map;
-//import java.util.SortedSet;
-//import java.util.Stack;
-//import java.util.TreeSet;
 
 //import javax.imageio.ImageIO;
 //import javax.swing.text.html.HTMLDocument;
@@ -119,18 +108,18 @@ part 'xml_utils.dart';
 class Utils {
 
   /**
-	 * True if the machine is a Mac.
-	 */
+   * True if the machine is a Mac.
+   */
   static bool IS_MAC = false;//System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0;
 
   /**
-	 * True if the machine is running a linux kernel.
-	 */
+   * True if the machine is running a linux kernel.
+   */
   static bool IS_LINUX = false;//System.getProperty("os.name").toLowerCase().indexOf("linux") >= 0;
 
   /**
-	 * Static Graphics used for Font Metrics.
-	 */
+   * Static Graphics used for Font Metrics.
+   */
   static /*transient*/ Graphics _fontGraphics;
 
   // Creates a renderer for HTML markup (only possible in
@@ -149,10 +138,10 @@ class Utils {
 	}*/
 
   /**
-	 * Returns the size for the given label. If isHtml is true then any HTML
-	 * markup in the label is computed as HTML and all newlines inside the HTML
-	 * body are converted into linebreaks.
-	 */
+   * Returns the size for the given label. If isHtml is true then any HTML
+   * markup in the label is computed as HTML and all newlines inside the HTML
+   * body are converted into linebreaks.
+   */
   //	static Rect getLabelSize(String label,
   //			Map<String, Object> style, bool isHtml, double scale)
   //	{
@@ -160,10 +149,10 @@ class Utils {
   //	}
 
   /**
-	 * Returns the size for the given label. If isHtml is true then any HTML
-	 * markup in the label is computed as HTML and all newlines inside the HTML
-	 * body are converted into linebreaks.
-	 */
+   * Returns the size for the given label. If isHtml is true then any HTML
+   * markup in the label is computed as HTML and all newlines inside the HTML
+   * body are converted into linebreaks.
+   */
   static Rect getLabelSize(String label, Map<String, Object> style, bool isHtml, double scale, [double htmlWrapWidth = 0.0]) {
     Rect size;
 
@@ -177,8 +166,8 @@ class Utils {
   }
 
   /**
-	 * Returns the body part of the given HTML markup.
-	 */
+   * Returns the body part of the given HTML markup.
+   */
   static String getBodyMarkup(String markup, bool replaceLinefeeds) {
     String lowerCase = markup.toLowerCase();
     int bodyStart = lowerCase.indexOf("<body>");
@@ -200,8 +189,8 @@ class Utils {
   }
 
   /**
-	 * Returns the paint bounds for the given label.
-	 */
+   * Returns the paint bounds for the given label.
+   */
   //	static Rect getLabelPaintBounds(String label,
   //			Map<String, Object> style, bool isHtml, Point2d offset,
   //			Rect vertexBounds, double scale)
@@ -211,8 +200,8 @@ class Utils {
   //	}
 
   /**
-	 * Returns the paint bounds for the given label.
-	 */
+   * Returns the paint bounds for the given label.
+   */
   static Rect getLabelPaintBounds(String label, Map<String, Object> style, bool isHtml, Point2d offset, Rect vertexBounds, double scale, [bool isEdge = false]) {
     double wrapWidth = 0.0;
 
@@ -257,12 +246,12 @@ class Utils {
   }
 
   /**
-	 * Returns the bounds for a label for the given location and size, taking
-	 * into account the alignment and spacing in the specified style, as well as
-	 * the width and height of the rectangle that contains the label. (For edge
-	 * labels this width and height is 0.) The scale is used to scale the given
-	 * size and the spacings in the specified style.
-	 */
+   * Returns the bounds for a label for the given location and size, taking
+   * into account the alignment and spacing in the specified style, as well as
+   * the width and height of the rectangle that contains the label. (For edge
+   * labels this width and height is 0.) The scale is used to scale the given
+   * size and the spacings in the specified style.
+   */
   static Rect getScaledLabelBounds(double x, double y, Rect size, double outerWidth, double outerHeight, Map<String, Object> style, double scale) {
     double inset = Constants.LABEL_INSET * scale;
 
@@ -322,10 +311,10 @@ class Utils {
   }
 
   /**
-	 * Returns the font metrics of the static font graphics instance
-	 * @param font The font whose metrics are to be returned
-	 * @return the font metrics of the specified font
-	 */
+   * Returns the font metrics of the static font graphics instance
+   * @param font The font whose metrics are to be returned
+   * @return the font metrics of the specified font
+   */
   static FontMetrics getFontMetrics(Font font) {
     if (_fontGraphics != null) {
       return _fontGraphics.getFontMetrics(font);
@@ -335,14 +324,14 @@ class Utils {
   }
 
   /**
-	 * Returns an <Rect> with the size (width and height in pixels) of
-	 * the given string.
-	 * 
-	 * @param text
-	 *            String whose size should be returned.
-	 * @param font
-	 *            Font to be used for the computation.
-	 */
+   * Returns an <Rect> with the size (width and height in pixels) of
+   * the given string.
+   * 
+   * @param text
+   *            String whose size should be returned.
+   * @param font
+   *            Font to be used for the computation.
+   */
   static Rect getSizeForString(String text, Font font, double scale) {
     FontRenderContext frc = new FontRenderContext(null, false, false);
     font = font.deriveFont((font.getSize2D() * scale) as double);
@@ -382,13 +371,13 @@ class Utils {
   }
 
   /**
-	 * Returns the specified text in lines that fit within the specified
-	 * width when the specified font metrics are applied to the text
-	 * @param text the text to wrap
-	 * @param metrics the font metrics to calculate the text size for
-	 * @param width the width that the text must fit within
-	 * @return the input text split in lines that fit the specified width
-	 */
+   * Returns the specified text in lines that fit within the specified
+   * width when the specified font metrics are applied to the text
+   * @param text the text to wrap
+   * @param metrics the font metrics to calculate the text size for
+   * @param width the width that the text must fit within
+   * @return the input text split in lines that fit the specified width
+   */
   static List<String> wordWrap(String text, FontMetrics metrics, double width) {
     List<String> result = new List<String>();
     // First split the processing into lines already delimited by
@@ -521,12 +510,12 @@ class Utils {
   }
 
   /**
-	 * Returns an Rect with the size (width and height in pixels) of the
-	 * given HTML markup.
-	 * 
-	 * @param markup
-	 *            HTML markup whose size should be returned.
-	 */
+   * Returns an Rect with the size (width and height in pixels) of the
+   * given HTML markup.
+   * 
+   * @param markup
+   *            HTML markup whose size should be returned.
+   */
   static Rect getSizeForHtml(String markup, Map<String, Object> style, double scale, double wrapWidth) {
     LightweightLabel textRenderer = LightweightLabel.getSharedInstance();
 
@@ -556,10 +545,10 @@ class Utils {
   }
 
   /**
-	 * Function: arcToCurves
-	 * 
-	 * Converts the given arc to a series of curves.
-	 */
+   * Function: arcToCurves
+   * 
+   * Converts the given arc to a series of curves.
+   */
   static List<double> arcToCurves(double x0, double y0, double r1, double r2, double angle, double largeArcFlag, double sweepFlag, double x, double y) {
     x -= x0;
     y -= y0;
@@ -658,8 +647,8 @@ class Utils {
   }
 
   /**
-	 * Returns the bounding box for the rotated rectangle.
-	 */
+   * Returns the bounding box for the rotated rectangle.
+   */
   static Rect getBoundingBox(Rect rect, double rotation) {
     Rect result = null;
 
@@ -694,15 +683,15 @@ class Utils {
   }
 
   /**
-	 * Find the first character matching the input character in the given
-	 * string where the character has no letter preceding it.
-	 * 
-	 * @param text the string to test for the presence of the input character
-	 * @param inputChar the test character
-	 * @param fromIndex the index position of the string to start from
-	 * @return the position of the first character matching the input character
-	 * 			in the given string where the character has no letter preceding it.
-	 */
+   * Find the first character matching the input character in the given
+   * string where the character has no letter preceding it.
+   * 
+   * @param text the string to test for the presence of the input character
+   * @param inputChar the test character
+   * @param fromIndex the index position of the string to start from
+   * @return the position of the first character matching the input character
+   * 			in the given string where the character has no letter preceding it.
+   */
   static int firstCharAt(String text, int inputChar, int fromIndex) {
     int result = 0;
 
@@ -733,17 +722,17 @@ class Utils {
   }
 
   /**
-	 * Rotates the given point by the given cos and sin.
-	 */
+   * Rotates the given point by the given cos and sin.
+   */
   //	static Point2d getRotatedPoint(Point2d pt, double cos, double sin)
   //	{
   //		return getRotatedPoint(pt, cos, sin, new Point2d());
   //	}
 
   /**
-	 * Finds the index of the nearest segment on the given cell state for the
-	 * specified coordinate pair.
-	 */
+   * Finds the index of the nearest segment on the given cell state for the
+   * specified coordinate pair.
+   */
   static int findNearestSegment(CellState state, double x, double y) {
     int index = -1;
 
@@ -768,8 +757,8 @@ class Utils {
   }
 
   /**
-	 * Rotates the given point by the given cos and sin.
-	 */
+   * Rotates the given point by the given cos and sin.
+   */
   static Point2d getRotatedPoint(Point2d pt, double cos, double sin, [Point2d c = null]) {
     if (c == null) {
       c = new Point2d();
@@ -784,14 +773,14 @@ class Utils {
   }
 
   /**
-	 * Returns an integer mask of the port constraints of the given map
-	 * @param terminal the cached cell state of the cell to determine the
-	 * 			port constraints for
-	 * @param edge the edge connected to the constrained terminal
-	 * @param source whether or not the edge specified is connected to the
-	 * 			terminal specified at its source end
-	 * @return the mask of port constraint directions
-	 */
+   * Returns an integer mask of the port constraints of the given map
+   * @param terminal the cached cell state of the cell to determine the
+   * 			port constraints for
+   * @param edge the edge connected to the constrained terminal
+   * @param source whether or not the edge specified is connected to the
+   * 			terminal specified at its source end
+   * @return the mask of port constraint directions
+   */
   //	static int getPortConstraints(CellState terminal,
   //			CellState edge, bool source)
   //	{
@@ -800,15 +789,15 @@ class Utils {
   //	}
 
   /**
-	 * Returns an integer mask of the port constraints of the given map
-	 * @param terminal the cached cell state of the cell to determine the
-	 * 			port constraints for
-	 * @param edge the edge connected to the constrained terminal
-	 * @param source whether or not the edge specified is connected to the
-	 * 			terminal specified at its source end
-	 * @param defaultValue Default value to return if the key is undefined.
-	 * @return the mask of port constraint directions
-	 */
+   * Returns an integer mask of the port constraints of the given map
+   * @param terminal the cached cell state of the cell to determine the
+   * 			port constraints for
+   * @param edge the edge connected to the constrained terminal
+   * @param source whether or not the edge specified is connected to the
+   * 			terminal specified at its source end
+   * @param defaultValue Default value to return if the key is undefined.
+   * @return the mask of port constraint directions
+   */
   static int getPortConstraints(CellState terminal, CellState edge, bool source, [int defaultValue = null]) {
     if (defaultValue == null) {
       defaultValue = Constants.DIRECTION_MASK_ALL;
@@ -850,8 +839,8 @@ class Utils {
   }
 
   /**
-	 * Draws the image inside the clip bounds to the given graphics object.
-	 */
+   * Draws the image inside the clip bounds to the given graphics object.
+   */
   static void drawImageClip(Graphics g, BufferedImage image, ImageObserver observer) {
     awt.Rectangle clip = g.getClipBounds();
 
@@ -875,8 +864,8 @@ class Utils {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   static void fillClippedRect(Graphics g, int x, int y, int width, int height) {
     awt.Rectangle bg = new awt.Rectangle(x, y, width, height);
 
@@ -892,10 +881,10 @@ class Utils {
   }
 
   /**
-	 * Creates a new list of new points obtained by translating the points in
-	 * the given list by the given vector. Elements that are not mxPoints are
-	 * added to the result as-is.
-	 */
+   * Creates a new list of new points obtained by translating the points in
+   * the given list by the given vector. Elements that are not mxPoints are
+   * added to the result as-is.
+   */
   static List<Point2d> translatePoints(List<Point2d> pts, double dx, double dy) {
     List<Point2d> result = null;
 
@@ -917,26 +906,26 @@ class Utils {
   }
 
   /**
-	 * Returns the intersection of two lines as an Point2d.
-	 * 
-	 * @param x0
-	 *            X-coordinate of the first line's startpoint.
-	 * @param y0
-	 *            Y-coordinate of the first line's startpoint.
-	 * @param x1
-	 *            X-coordinate of the first line's endpoint.
-	 * @param y1
-	 *            Y-coordinate of the first line's endpoint.
-	 * @param x2
-	 *            X-coordinate of the second line's startpoint.
-	 * @param y2
-	 *            Y-coordinate of the second line's startpoint.
-	 * @param x3
-	 *            X-coordinate of the second line's endpoint.
-	 * @param y3
-	 *            Y-coordinate of the second line's endpoint.
-	 * @return Returns the intersection between the two lines.
-	 */
+   * Returns the intersection of two lines as an Point2d.
+   * 
+   * @param x0
+   *            X-coordinate of the first line's startpoint.
+   * @param y0
+   *            Y-coordinate of the first line's startpoint.
+   * @param x1
+   *            X-coordinate of the first line's endpoint.
+   * @param y1
+   *            Y-coordinate of the first line's endpoint.
+   * @param x2
+   *            X-coordinate of the second line's startpoint.
+   * @param y2
+   *            Y-coordinate of the second line's startpoint.
+   * @param x3
+   *            X-coordinate of the second line's endpoint.
+   * @param y3
+   *            Y-coordinate of the second line's endpoint.
+   * @return Returns the intersection between the two lines.
+   */
   static Point2d intersection(double x0, double y0, double x1, double y1, double x2, double y2, double x3, double y3) {
     double denom = ((y3 - y2) * (x1 - x0)) - ((x3 - x2) * (y1 - y0));
     double nume_a = ((x3 - x2) * (y0 - y2)) - ((y3 - y2) * (x0 - x2));
@@ -958,16 +947,16 @@ class Utils {
   }
 
   /**
-	 * Sorts the given cells according to the order in the cell hierarchy.
-	 */
+   * Sorts the given cells according to the order in the cell hierarchy.
+   */
   //	static List<Object> sortCells(List<Object> cells, final bool ascending)
   //	{
   //		return sortCells(Arrays.asList(cells), ascending).toArray();
   //	}
 
   /**
-	 * Sorts the given cells according to the order in the cell hierarchy.
-	 */
+   * Sorts the given cells according to the order in the cell hierarchy.
+   */
   static Iterable<Object> sortCells(Iterable<Object> cells, final bool ascending) {
     Set<Object> result = new SplayTreeSet<Object>((Object o1, Object o2) {
       int comp = CellPath.compare(CellPath.create(o1 as ICell), CellPath.create(o2 as ICell));
@@ -981,16 +970,16 @@ class Utils {
   }
 
   /**
-	 * Returns true if the given array contains the given object.
-	 */
+   * Returns true if the given array contains the given object.
+   */
   static bool contains(List<Object> array, Object obj) {
     return indexOf(array, obj) >= 0;
   }
 
   /**
-	 * Returns the index of the given object in the given array of -1 if the
-	 * object is not contained in the array.
-	 */
+   * Returns the index of the given object in the given array of -1 if the
+   * object is not contained in the array.
+   */
   static int indexOf(List<Object> array, Object obj) {
     if (obj != null && array != null) {
       for (int i = 0; i < array.length; i++) {
@@ -1004,129 +993,129 @@ class Utils {
   }
 
   /**
-	 * Returns the stylename in a style of the form stylename[;key=value] or an
-	 * empty string if the given style does not contain a stylename.
-	 * 
-	 * @param style
-	 *            String of the form stylename[;key=value].
-	 * @return Returns the stylename from the given formatted string.
-	 * @deprecated Use <code>StyleUtils.getStylename(String)</code> (Jan 2012)
-	 */
+   * Returns the stylename in a style of the form stylename[;key=value] or an
+   * empty string if the given style does not contain a stylename.
+   * 
+   * @param style
+   *            String of the form stylename[;key=value].
+   * @return Returns the stylename from the given formatted string.
+   * @deprecated Use <code>StyleUtils.getStylename(String)</code> (Jan 2012)
+   */
   static String getStylename(String style) {
     return StyleUtils.getStylename(style);
   }
 
   /**
-	 * Returns the stylenames in a style of the form stylename[;key=value] or an
-	 * empty array if the given style does not contain any stylenames.
-	 * 
-	 * @param style
-	 *            String of the form stylename[;stylename][;key=value].
-	 * @return Returns the stylename from the given formatted string.
-	 * @deprecated Use <code>StyleUtils.getStylenames(String)</code> (Jan 2012)
-	 */
+   * Returns the stylenames in a style of the form stylename[;key=value] or an
+   * empty array if the given style does not contain any stylenames.
+   * 
+   * @param style
+   *            String of the form stylename[;stylename][;key=value].
+   * @return Returns the stylename from the given formatted string.
+   * @deprecated Use <code>StyleUtils.getStylenames(String)</code> (Jan 2012)
+   */
   static List<String> getStylenames(String style) {
     return StyleUtils.getStylenames(style);
   }
 
   /**
-	 * Returns the index of the given stylename in the given style. This returns
-	 * -1 if the given stylename does not occur (as a stylename) in the given
-	 * style, otherwise it returns the index of the first character.
-	 * @deprecated Use <code>StyleUtils.indexOfStylename(String, String)</code> (Jan 2012)
-	 */
+   * Returns the index of the given stylename in the given style. This returns
+   * -1 if the given stylename does not occur (as a stylename) in the given
+   * style, otherwise it returns the index of the first character.
+   * @deprecated Use <code>StyleUtils.indexOfStylename(String, String)</code> (Jan 2012)
+   */
   static int indexOfStylename(String style, String stylename) {
     return StyleUtils.indexOfStylename(style, stylename);
   }
 
   /**
-	 * Removes all stylenames from the given style and returns the updated
-	 * style.
-	 * @deprecated Use <code>StyleUtils.removeAllStylenames(String)</code> (Jan 2012)
-	 */
+   * Removes all stylenames from the given style and returns the updated
+   * style.
+   * @deprecated Use <code>StyleUtils.removeAllStylenames(String)</code> (Jan 2012)
+   */
   static String removeAllStylenames(String style) {
     return StyleUtils.removeAllStylenames(style);
   }
 
   /**
-	 * Assigns the value for the given key in the styles of the given cells, or
-	 * removes the key from the styles if the value is null.
-	 * 
-	 * @param model
-	 *            Model to execute the transaction in.
-	 * @param cells
-	 *            Array of cells to be updated.
-	 * @param key
-	 *            Key of the style to be changed.
-	 * @param value
-	 *            New value for the given key.
-	 * @deprecated Use <code>StyleUtils.setCellStyles(IGraphModel, List<Object>, String, String)</code> (Jan 2012)
-	 */
+   * Assigns the value for the given key in the styles of the given cells, or
+   * removes the key from the styles if the value is null.
+   * 
+   * @param model
+   *            Model to execute the transaction in.
+   * @param cells
+   *            Array of cells to be updated.
+   * @param key
+   *            Key of the style to be changed.
+   * @param value
+   *            New value for the given key.
+   * @deprecated Use <code>StyleUtils.setCellStyles(IGraphModel, List<Object>, String, String)</code> (Jan 2012)
+   */
   static void setCellStyles(IGraphModel model, List<Object> cells, String key, String value) {
     StyleUtils.setCellStyles(model, cells, key, value);
   }
 
   /**
-	 * Adds or removes the given key, value pair to the style and returns the
-	 * new style. If value is null or zero length then the key is removed from
-	 * the style.
-	 * 
-	 * @param style
-	 *            String of the form <code>stylename[;key=value]</code>.
-	 * @param key
-	 *            Key of the style to be changed.
-	 * @param value
-	 *            New value for the given key.
-	 * @return Returns the new style.
-	 * @deprecated Use <code>StyleUtils.setStyle(String, String, String)</code> (Jan 2012)
-	 */
+   * Adds or removes the given key, value pair to the style and returns the
+   * new style. If value is null or zero length then the key is removed from
+   * the style.
+   * 
+   * @param style
+   *            String of the form <code>stylename[;key=value]</code>.
+   * @param key
+   *            Key of the style to be changed.
+   * @param value
+   *            New value for the given key.
+   * @return Returns the new style.
+   * @deprecated Use <code>StyleUtils.setStyle(String, String, String)</code> (Jan 2012)
+   */
   static String setStyle(String style, String key, String value) {
     return StyleUtils.setStyle(style, key, value);
   }
 
   /**
-	 * Sets or toggles the flag bit for the given key in the cell's styles. If
-	 * value is null then the flag is toggled.
-	 * 
-	 * <code>
-	 * Utils.setCellStyleFlags(graph.getModel(),
-	 * 			cells,
-	 * 			Constants.STYLE_FONTSTYLE,
-	 * 			Constants.FONT_BOLD, null);
-	 * </code>
-	 * 
-	 * Toggles the bold font style.
-	 * 
-	 * @param model
-	 *            Model that contains the cells.
-	 * @param cells
-	 *            Array of cells to change the style for.
-	 * @param key
-	 *            Key of the style to be changed.
-	 * @param flag
-	 *            int for the bit to be changed.
-	 * @param value
-	 *            Optional bool value for the flag.
-	 * @deprecated Use <code>StyleUtils.setCellStyleFlags(IGraphModel, List<Object>,String, int, bool)</code> (Jan 2012)
-	 */
+   * Sets or toggles the flag bit for the given key in the cell's styles. If
+   * value is null then the flag is toggled.
+   * 
+   * <code>
+   * Utils.setCellStyleFlags(graph.getModel(),
+   * 			cells,
+   * 			Constants.STYLE_FONTSTYLE,
+   * 			Constants.FONT_BOLD, null);
+   * </code>
+   * 
+   * Toggles the bold font style.
+   * 
+   * @param model
+   *            Model that contains the cells.
+   * @param cells
+   *            Array of cells to change the style for.
+   * @param key
+   *            Key of the style to be changed.
+   * @param flag
+   *            int for the bit to be changed.
+   * @param value
+   *            Optional bool value for the flag.
+   * @deprecated Use <code>StyleUtils.setCellStyleFlags(IGraphModel, List<Object>,String, int, bool)</code> (Jan 2012)
+   */
   static void setCellStyleFlags(IGraphModel model, List<Object> cells, String key, int flag, bool value) {
     StyleUtils.setCellStyleFlags(model, cells, key, flag, value);
   }
 
   /**
-	 * Sets or removes the given key from the specified style and returns the
-	 * new style. If value is null then the flag is toggled.
-	 * 
-	 * @param style
-	 *            String of the form stylename[;key=value].
-	 * @param key
-	 *            Key of the style to be changed.
-	 * @param flag
-	 *            int for the bit to be changed.
-	 * @param value
-	 *            Optional bool value for the given flag.
-	 * @deprecated Use <code>StyleUtils.setStyleFlag(String, String, int, bool)</code> (Jan 2012)
-	 */
+   * Sets or removes the given key from the specified style and returns the
+   * new style. If value is null then the flag is toggled.
+   * 
+   * @param style
+   *            String of the form stylename[;key=value].
+   * @param key
+   *            Key of the style to be changed.
+   * @param flag
+   *            int for the bit to be changed.
+   * @param value
+   *            Optional bool value for the given flag.
+   * @deprecated Use <code>StyleUtils.setStyleFlag(String, String, int, bool)</code> (Jan 2012)
+   */
   static String setStyleFlag(String style, String key, int flag, bool value) {
     return StyleUtils.setStyleFlag(style, key, flag, value);
   }
@@ -1138,9 +1127,9 @@ class Utils {
   //	}
 
   /**
-	 * Returns true if the given coordinate pair intersects the hotspot of the
-	 * given state.
-	 */
+   * Returns true if the given coordinate pair intersects the hotspot of the
+   * given state.
+   */
   static bool intersectsHotspot(CellState state, int x, int y, double hotspot, [int min = 0, int max = 0]) {
     if (hotspot > 0) {
       int cx = math.round(state.getCenterX()) as int;
@@ -1177,32 +1166,32 @@ class Utils {
   }
 
   /**
-	 * Returns true if the dictionary contains true for the given key or false
-	 * if no value is defined for the key.
-	 * 
-	 * @param dict
-	 *            Dictionary that contains the key, value pairs.
-	 * @param key
-	 *            Key whose value should be returned.
-	 * @return Returns the bool value for key in dict.
-	 */
+   * Returns true if the dictionary contains true for the given key or false
+   * if no value is defined for the key.
+   * 
+   * @param dict
+   *            Dictionary that contains the key, value pairs.
+   * @param key
+   *            Key whose value should be returned.
+   * @return Returns the bool value for key in dict.
+   */
   //	static bool isTrue(Map<String, Object> dict, String key)
   //	{
   //		return isTrue(dict, key, false);
   //	}
 
   /**
-	 * Returns true if the dictionary contains true for the given key or the
-	 * given default value if no value is defined for the key.
-	 * 
-	 * @param dict
-	 *            Dictionary that contains the key, value pairs.
-	 * @param key
-	 *            Key whose value should be returned.
-	 * @param defaultValue
-	 *            Default value to return if the key is undefined.
-	 * @return Returns the bool value for key in dict.
-	 */
+   * Returns true if the dictionary contains true for the given key or the
+   * given default value if no value is defined for the key.
+   * 
+   * @param dict
+   *            Dictionary that contains the key, value pairs.
+   * @param key
+   *            Key whose value should be returned.
+   * @param defaultValue
+   *            Default value to return if the key is undefined.
+   * @return Returns the bool value for key in dict.
+   */
   static bool isTrue(Map<String, Object> dict, String key, [bool defaultValue = false]) {
     Object value = dict[key];
 
@@ -1214,32 +1203,32 @@ class Utils {
   }
 
   /**
-	 * Returns the value for key in dictionary as an int or 0 if no value is
-	 * defined for the key.
-	 * 
-	 * @param dict
-	 *            Dictionary that contains the key, value pairs.
-	 * @param key
-	 *            Key whose value should be returned.
-	 * @return Returns the integer value for key in dict.
-	 */
+   * Returns the value for key in dictionary as an int or 0 if no value is
+   * defined for the key.
+   * 
+   * @param dict
+   *            Dictionary that contains the key, value pairs.
+   * @param key
+   *            Key whose value should be returned.
+   * @return Returns the integer value for key in dict.
+   */
   //	static int getInt(Map<String, Object> dict, String key)
   //	{
   //		return getInt(dict, key, 0);
   //	}
 
   /**
-	 * Returns the value for key in dictionary as an int or the given default
-	 * value if no value is defined for the key.
-	 * 
-	 * @param dict
-	 *            Dictionary that contains the key, value pairs.
-	 * @param key
-	 *            Key whose value should be returned.
-	 * @param defaultValue
-	 *            Default value to return if the key is undefined.
-	 * @return Returns the integer value for key in dict.
-	 */
+   * Returns the value for key in dictionary as an int or the given default
+   * value if no value is defined for the key.
+   * 
+   * @param dict
+   *            Dictionary that contains the key, value pairs.
+   * @param key
+   *            Key whose value should be returned.
+   * @param defaultValue
+   *            Default value to return if the key is undefined.
+   * @return Returns the integer value for key in dict.
+   */
   static int getInt(Map<String, Object> dict, String key, [int defaultValue = 0]) {
     Object value = dict[key];
 
@@ -1252,32 +1241,32 @@ class Utils {
   }
 
   /**
-	 * Returns the value for key in dictionary as a float or 0 if no value is
-	 * defined for the key.
-	 * 
-	 * @param dict
-	 *            Dictionary that contains the key, value pairs.
-	 * @param key
-	 *            Key whose value should be returned.
-	 * @return Returns the float value for key in dict.
-	 */
+   * Returns the value for key in dictionary as a float or 0 if no value is
+   * defined for the key.
+   * 
+   * @param dict
+   *            Dictionary that contains the key, value pairs.
+   * @param key
+   *            Key whose value should be returned.
+   * @return Returns the float value for key in dict.
+   */
   //	static float getFloat(Map<String, Object> dict, String key)
   //	{
   //		return getFloat(dict, key, 0);
   //	}
 
   /**
-	 * Returns the value for key in dictionary as a float or the given default
-	 * value if no value is defined for the key.
-	 * 
-	 * @param dict
-	 *            Dictionary that contains the key, value pairs.
-	 * @param key
-	 *            Key whose value should be returned.
-	 * @param defaultValue
-	 *            Default value to return if the key is undefined.
-	 * @return Returns the float value for key in dict.
-	 */
+   * Returns the value for key in dictionary as a float or the given default
+   * value if no value is defined for the key.
+   * 
+   * @param dict
+   *            Dictionary that contains the key, value pairs.
+   * @param key
+   *            Key whose value should be returned.
+   * @param defaultValue
+   *            Default value to return if the key is undefined.
+   * @return Returns the float value for key in dict.
+   */
   static double getFloat(Map<String, Object> dict, String key, [double defaultValue = 0.0]) {
     Object value = dict[key];
 
@@ -1289,17 +1278,17 @@ class Utils {
   }
 
   /**
-	 * Returns the value for key in dictionary as a float array or the given default
-	 * value if no value is defined for the key.
-	 * 
-	 * @param dict
-	 *            Dictionary that contains the key, value pairs.
-	 * @param key
-	 *            Key whose value should be returned.
-	 * @param defaultValue
-	 *            Default value to return if the key is undefined.
-	 * @return Returns the float array value for key in dict.
-	 */
+   * Returns the value for key in dictionary as a float array or the given default
+   * value if no value is defined for the key.
+   * 
+   * @param dict
+   *            Dictionary that contains the key, value pairs.
+   * @param key
+   *            Key whose value should be returned.
+   * @param defaultValue
+   *            Default value to return if the key is undefined.
+   * @return Returns the float array value for key in dict.
+   */
   //	static List<float> getFloatArray(Map<String, Object> dict, String key,
   //			List<float> defaultValue)
   //	{
@@ -1307,17 +1296,17 @@ class Utils {
   //	}
 
   /**
-	 * Returns the value for key in dictionary as a float array or the given default
-	 * value if no value is defined for the key.
-	 * 
-	 * @param dict
-	 *            Dictionary that contains the key, value pairs.
-	 * @param key
-	 *            Key whose value should be returned.
-	 * @param defaultValue
-	 *            Default value to return if the key is undefined.
-	 * @return Returns the float array value for key in dict.
-	 */
+   * Returns the value for key in dictionary as a float array or the given default
+   * value if no value is defined for the key.
+   * 
+   * @param dict
+   *            Dictionary that contains the key, value pairs.
+   * @param key
+   *            Key whose value should be returned.
+   * @param defaultValue
+   *            Default value to return if the key is undefined.
+   * @return Returns the float array value for key in dict.
+   */
   static List<double> getFloatArray(Map<String, Object> dict, String key, List<double> defaultValue, [String separator = ","]) {
     Object value = dict[key];
 
@@ -1336,32 +1325,32 @@ class Utils {
   }
 
   /**
-	 * Returns the value for key in dictionary as a double or 0 if no value is
-	 * defined for the key.
-	 * 
-	 * @param dict
-	 *            Dictionary that contains the key, value pairs.
-	 * @param key
-	 *            Key whose value should be returned.
-	 * @return Returns the double value for key in dict.
-	 */
+   * Returns the value for key in dictionary as a double or 0 if no value is
+   * defined for the key.
+   * 
+   * @param dict
+   *            Dictionary that contains the key, value pairs.
+   * @param key
+   *            Key whose value should be returned.
+   * @return Returns the double value for key in dict.
+   */
   //	static double getDouble(Map<String, Object> dict, String key)
   //	{
   //		return getDouble(dict, key, 0);
   //	}
 
   /**
-	 * Returns the value for key in dictionary as a double or the given default
-	 * value if no value is defined for the key.
-	 * 
-	 * @param dict
-	 *            Dictionary that contains the key, value pairs.
-	 * @param key
-	 *            Key whose value should be returned.
-	 * @param defaultValue
-	 *            Default value to return if the key is undefined.
-	 * @return Returns the double value for key in dict.
-	 */
+   * Returns the value for key in dictionary as a double or the given default
+   * value if no value is defined for the key.
+   * 
+   * @param dict
+   *            Dictionary that contains the key, value pairs.
+   * @param key
+   *            Key whose value should be returned.
+   * @param defaultValue
+   *            Default value to return if the key is undefined.
+   * @return Returns the double value for key in dict.
+   */
   static double getDouble(Map<String, Object> dict, String key, [double defaultValue = 0.0]) {
     Object value = dict[key];
 
@@ -1373,32 +1362,32 @@ class Utils {
   }
 
   /**
-	 * Returns the value for key in dictionary as a string or null if no value
-	 * is defined for the key.
-	 * 
-	 * @param dict
-	 *            Dictionary that contains the key, value pairs.
-	 * @param key
-	 *            Key whose value should be returned.
-	 * @return Returns the string value for key in dict.
-	 */
+   * Returns the value for key in dictionary as a string or null if no value
+   * is defined for the key.
+   * 
+   * @param dict
+   *            Dictionary that contains the key, value pairs.
+   * @param key
+   *            Key whose value should be returned.
+   * @return Returns the string value for key in dict.
+   */
   //	static String getString(Map<String, Object> dict, String key)
   //	{
   //		return getString(dict, key, null);
   //	}
 
   /**
-	 * Returns the value for key in dictionary as a string or the given default
-	 * value if no value is defined for the key.
-	 * 
-	 * @param dict
-	 *            Dictionary that contains the key, value pairs.
-	 * @param key
-	 *            Key whose value should be returned.
-	 * @param defaultValue
-	 *            Default value to return if the key is undefined.
-	 * @return Returns the string value for key in dict.
-	 */
+   * Returns the value for key in dictionary as a string or the given default
+   * value if no value is defined for the key.
+   * 
+   * @param dict
+   *            Dictionary that contains the key, value pairs.
+   * @param key
+   *            Key whose value should be returned.
+   * @param defaultValue
+   *            Default value to return if the key is undefined.
+   * @return Returns the string value for key in dict.
+   */
   static String getString(Map<String, Object> dict, String key, [String defaultValue = null]) {
     Object value = dict[key];
 
@@ -1410,32 +1399,32 @@ class Utils {
   }
 
   /**
-	 * Returns the value for key in dictionary as a color or null if no value is
-	 * defined for the key.
-	 * 
-	 * @param dict
-	 *            Dictionary that contains the key, value pairs.
-	 * @param key
-	 *            Key whose value should be returned.
-	 * @return Returns the color value for key in dict.
-	 */
+   * Returns the value for key in dictionary as a color or null if no value is
+   * defined for the key.
+   * 
+   * @param dict
+   *            Dictionary that contains the key, value pairs.
+   * @param key
+   *            Key whose value should be returned.
+   * @return Returns the color value for key in dict.
+   */
   //	static Color getColor(Map<String, Object> dict, String key)
   //	{
   //		return getColor(dict, key, null);
   //	}
 
   /**
-	 * Returns the value for key in dictionary as a color or the given default
-	 * value if no value is defined for the key.
-	 * 
-	 * @param dict
-	 *            Dictionary that contains the key, value pairs.
-	 * @param key
-	 *            Key whose value should be returned.
-	 * @param defaultValue
-	 *            Default value to return if the key is undefined.
-	 * @return Returns the color value for key in dict.
-	 */
+   * Returns the value for key in dictionary as a color or the given default
+   * value if no value is defined for the key.
+   * 
+   * @param dict
+   *            Dictionary that contains the key, value pairs.
+   * @param key
+   *            Key whose value should be returned.
+   * @param defaultValue
+   *            Default value to return if the key is undefined.
+   * @return Returns the color value for key in dict.
+   */
   static awt.Color getColor(Map<String, Object> dict, String key, [awt.Color defaultValue = null]) {
     Object value = dict[key];
 
@@ -1447,16 +1436,16 @@ class Utils {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   //	static Font getFont(Map<String, Object> style)
   //	{
   //		return getFont(style, 1);
   //	}
 
   /**
-	 * 
-	 */
+   * 
+   */
   static Font getFont(Map<String, Object> style, [double scale = 1.0]) {
     String fontFamily = getString(style, Constants.STYLE_FONTFAMILY, Constants.DEFAULT_FONTFAMILY);
     int fontSize = getInt(style, Constants.STYLE_FONTSIZE, Constants.DEFAULT_FONTSIZE);
@@ -1469,63 +1458,63 @@ class Utils {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   static String hexString(awt.Color color) {
     return HtmlColor.hexString(color);
   }
 
   /**
-	 * Convert a string representing a 24/32bit hex color value into a Color
-	 * object. The following color names are also supported: white, black, red,
-	 * green, blue, orange, yellow, pink, turquoise, gray and none (null).
-	 * Examples of possible hex color values are: #C3D9FF, #6482B9 and #774400,
-	 * but note that you do not include the "#" in the string passed in
-	 * 
-	 * @param colorString
-	 *            the 24/32bit hex string value (ARGB)
-	 * @return java.awt.Color (24bit RGB on JDK 1.1, 24/32bit ARGB on JDK1.2)
-	 * @exception FormatException
-	 *                if the specified string cannot be interpreted as a
-	 *                hexidecimal integer
-	 */
+   * Convert a string representing a 24/32bit hex color value into a Color
+   * object. The following color names are also supported: white, black, red,
+   * green, blue, orange, yellow, pink, turquoise, gray and none (null).
+   * Examples of possible hex color values are: #C3D9FF, #6482B9 and #774400,
+   * but note that you do not include the "#" in the string passed in
+   * 
+   * @param colorString
+   *            the 24/32bit hex string value (ARGB)
+   * @return java.awt.Color (24bit RGB on JDK 1.1, 24/32bit ARGB on JDK1.2)
+   * @exception FormatException
+   *                if the specified string cannot be interpreted as a
+   *                hexidecimal integer
+   */
   static awt.Color parseColor(String colorString) /*throws NumberFormatException*/
   {
     return HtmlColor.parseColor(colorString);
   }
 
   /**
-	 * Returns a hex representation for the given color.
-	 * 
-	 * @param color
-	 *            Color to return the hex string for.
-	 * @return Returns a hex string for the given color.
-	 */
+   * Returns a hex representation for the given color.
+   * 
+   * @param color
+   *            Color to return the hex string for.
+   * @return Returns a hex string for the given color.
+   */
   static String getHexColorString(awt.Color color) {
     return HtmlColor.getHexColorString(color);
   }
 
   /**
-	 * Reads the given filename into a string.
-	 * 
-	 * @param filename
-	 *            Name of the file to be read.
-	 * @return Returns a string representing the file contents.
-	 * @throws IOException
-	 */
+   * Reads the given filename into a string.
+   * 
+   * @param filename
+   *            Name of the file to be read.
+   * @return Returns a string representing the file contents.
+   * @throws IOException
+   */
   static String readFile(String filename) /*throws IOException*/
   {
     return readInputStream(new FileInputStream(filename));
   }
 
   /**
-	 * Reads the given filename into a string.
-	 * 
-	 * @param filename
-	 *            Name of the file to be read.
-	 * @return Returns a string representing the file contents.
-	 * @throws IOException
-	 */
+   * Reads the given filename into a string.
+   * 
+   * @param filename
+   *            Name of the file to be read.
+   * @return Returns a string representing the file contents.
+   * @throws IOException
+   */
   static String readInputStream(InputStream stream) /*throws IOException*/
   {
     BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
@@ -1543,14 +1532,14 @@ class Utils {
   }
 
   /**
-	 * Writes the given string into the given file.
-	 * 
-	 * @param contents
-	 *            String representing the file contents.
-	 * @param filename
-	 *            Name of the file to be written.
-	 * @throws IOException
-	 */
+   * Writes the given string into the given file.
+   * 
+   * @param contents
+   *            String representing the file contents.
+   * @param filename
+   *            Name of the file to be written.
+   * @throws IOException
+   */
   /*static void writeFile(String contents, String filename) //throws IOException
   {
     FileWriter fw = new FileWriter(filename);
@@ -1560,12 +1549,12 @@ class Utils {
   }*/
 
   /**
-	 * Returns the Md5 hash for the given text.
-	 * 
-	 * @param text
-	 *            String whose Md5 hash should be returned.
-	 * @return Returns the Md5 hash for the given text.
-	 */
+   * Returns the Md5 hash for the given text.
+   * 
+   * @param text
+   *            String whose Md5 hash should be returned.
+   * @return Returns the Md5 hash for the given text.
+   */
   static String getMd5Hash(String text) {
     StringBuffer result = new StringBuffer(32);
     try {
@@ -1586,36 +1575,36 @@ class Utils {
   }
 
   /**
-	 * Returns true if the user object is an XML node with the specified type
-	 * and and the optional attribute has the specified value or is not
-	 * specified.
-	 * 
-	 * @param value
-	 *            Object that should be examined as a node.
-	 * @param nodeName
-	 *            String that specifies the node name.
-	 * @return Returns true if the node name of the user object is equal to the
-	 *         given type.
-	 */
+   * Returns true if the user object is an XML node with the specified type
+   * and and the optional attribute has the specified value or is not
+   * specified.
+   * 
+   * @param value
+   *            Object that should be examined as a node.
+   * @param nodeName
+   *            String that specifies the node name.
+   * @return Returns true if the node name of the user object is equal to the
+   *         given type.
+   */
   //	static bool isNode(Object value, String nodeName)
   //	{
   //		return isNode(value, nodeName, null, null);
   //	}
 
   /**
-	 * Returns true if the given value is an XML node with the node name and if
-	 * the optional attribute has the specified value.
-	 * 
-	 * @param value
-	 *            Object that should be examined as a node.
-	 * @param nodeName
-	 *            String that specifies the node name.
-	 * @param attributeName
-	 *            Optional attribute name to check.
-	 * @param attributeValue
-	 *            Optional attribute value to check.
-	 * @return Returns true if the value matches the given conditions.
-	 */
+   * Returns true if the given value is an XML node with the node name and if
+   * the optional attribute has the specified value.
+   * 
+   * @param value
+   *            Object that should be examined as a node.
+   * @param nodeName
+   *            String that specifies the node name.
+   * @param attributeName
+   *            Optional attribute name to check.
+   * @param attributeValue
+   *            Optional attribute value to check.
+   * @return Returns true if the value matches the given conditions.
+   */
   static bool isNode(Object value, String nodeName, [String attributeName = null, String attributeValue = null]) {
     if (value is Element) {
       Element element = value;// as Element;
@@ -1631,11 +1620,11 @@ class Utils {
   }
 
   /**
-	 * 
-	 * @param g
-	 * @param antiAlias
-	 * @param textAntiAlias
-	 */
+   * 
+   * @param g
+   * @param antiAlias
+   * @param textAntiAlias
+   */
   static void setAntiAlias(Graphics2D g, bool antiAlias, bool textAntiAlias) {
     g.setRenderingHint(RenderingHints.KEY_RENDERING, (antiAlias) ? RenderingHints.VALUE_RENDER_QUALITY : RenderingHints.VALUE_RENDER_SPEED);
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, (antiAlias) ? RenderingHints.VALUE_ANTIALIAS_ON : RenderingHints.VALUE_ANTIALIAS_OFF);
@@ -1643,9 +1632,9 @@ class Utils {
   }
 
   /**
-	 * Clears the given area of the specified graphics object with the given
-	 * color or makes the region transparent.
-	 */
+   * Clears the given area of the specified graphics object with the given
+   * color or makes the region transparent.
+   */
   static void clearRect(Graphics2D g, awt.Rectangle rect, awt.Color background) {
     if (background != null) {
       g.setColor(background);
@@ -1658,9 +1647,9 @@ class Utils {
   }
 
   /**
-	 * Creates a buffered image for the given parameters. If there is not enough
-	 * memory to create the image then a OutOfMemoryError is thrown.
-	 */
+   * Creates a buffered image for the given parameters. If there is not enough
+   * memory to create the image then a OutOfMemoryError is thrown.
+   */
   static BufferedImage createBufferedImage(int w, int h, Color background) {
     BufferedImage result = null;
 
@@ -1680,8 +1669,8 @@ class Utils {
   }
 
   /**
-	 * Loads an image from the local filesystem, a data URI or any other URL.
-	 */
+   * Loads an image from the local filesystem, a data URI or any other URL.
+   */
   static BufferedImage loadImage(String url) {
     BufferedImage img = null;
 
@@ -1719,9 +1708,9 @@ class Utils {
   }
 
   /**
-	 * Creates a table for the given text using the given document to create the
-	 * DOM nodes. Returns the outermost table node.
-	 */
+   * Creates a table for the given text using the given document to create the
+   * DOM nodes. Returns the outermost table node.
+   */
   static Element createTable(Document document, String text, int x, int y, int w, int h, double scale, Map<String, Object> style) {
     // Does not use a textbox as this must go inside another VML shape
     Element table = document.createElement("table");
@@ -1786,45 +1775,45 @@ class Utils {
   }
 
   /**
-	 * Returns a new, empty DOM document.
-	 * 
-	 * @return Returns a new DOM document.
-	 * @deprecated Use <code>DomUtils.createDocument</code> (Jan 2012)
-	 */
+   * Returns a new, empty DOM document.
+   * 
+   * @return Returns a new DOM document.
+   * @deprecated Use <code>DomUtils.createDocument</code> (Jan 2012)
+   */
   static Document createDocument() {
     return DomUtils.createDocument();
   }
 
   /**
-	 * Creates a new SVG document for the given width and height.
-	 * @deprecated Use <code>DomUtils.createSvgDocument(int, int)</code> (Jan 2012)
-	 */
+   * Creates a new SVG document for the given width and height.
+   * @deprecated Use <code>DomUtils.createSvgDocument(int, int)</code> (Jan 2012)
+   */
   static Document createSvgDocument(int width, int height) {
     return DomUtils.createSvgDocument(width, height);
   }
 
   /**
-	 * 
-	 * @deprecated Use <code>DomUtils.createVmlDocument</code> (Jan 2012)
-	 */
+   * 
+   * @deprecated Use <code>DomUtils.createVmlDocument</code> (Jan 2012)
+   */
   static Document createVmlDocument() {
     return DomUtils.createVmlDocument();
   }
 
   /**
-	 * Returns a document with a HTML node containing a HEAD and BODY node.
-	 * @deprecated Use <code>DomUtils.createHtmlDocument</code> (Jan 2012)
-	 */
+   * Returns a document with a HTML node containing a HEAD and BODY node.
+   * @deprecated Use <code>DomUtils.createHtmlDocument</code> (Jan 2012)
+   */
   /*static Document createHtmlDocument()
 	{
 		return DomUtils.createHtmlDocument();
 	}*/
 
   /**
-	 * Returns a new, empty DOM document.
-	 * 
-	 * @return Returns a new DOM document.
-	 */
+   * Returns a new, empty DOM document.
+   * 
+   * @return Returns a new DOM document.
+   */
   //	static String createHtmlDocument(Map<String, Object> style,
   //			String text)
   //	{
@@ -1832,10 +1821,10 @@ class Utils {
   //	}
 
   /**
-	 * Returns a new, empty DOM document.
-	 * 
-	 * @return Returns a new DOM document.
-	 */
+   * Returns a new, empty DOM document.
+   * 
+   * @return Returns a new DOM document.
+   */
   //	static String createHtmlDocument(Map<String, Object> style,
   //			String text, double scale)
   //	{
@@ -1843,10 +1832,10 @@ class Utils {
   //	}
 
   /**
-	 * Returns a new, empty DOM document.
-	 * 
-	 * @return Returns a new DOM document.
-	 */
+   * Returns a new, empty DOM document.
+   * 
+   * @return Returns a new DOM document.
+   */
   //	static String createHtmlDocument(Map<String, Object> style,
   //			String text, double scale, int width)
   //	{
@@ -1854,15 +1843,15 @@ class Utils {
   //	}
 
   /**
-	 * Returns a new, empty DOM document. The head argument can be used to
-	 * provide an optional HEAD section without the HEAD tags as follows:
-	 * 
-	 * <pre>
-	 * Utils.createHtmlDocument(style,  text, 1, 0, "<style type=\"text/css\">.classname { color:red; }</style>")
-	 * </pre>
-	 * 
-	 * @return Returns a new DOM document.
-	 */
+   * Returns a new, empty DOM document. The head argument can be used to
+   * provide an optional HEAD section without the HEAD tags as follows:
+   * 
+   * <pre>
+   * Utils.createHtmlDocument(style,  text, 1, 0, "<style type=\"text/css\">.classname { color:red; }</style>")
+   * </pre>
+   * 
+   * @return Returns a new DOM document.
+   */
   //	static String createHtmlDocument(Map<String, Object> style,
   //			String text, double scale, int width, String head)
   //	{
@@ -1870,15 +1859,15 @@ class Utils {
   //	};
 
   /**
-	 * Returns a new, empty DOM document. The head argument can be used to
-	 * provide an optional HEAD section without the HEAD tags as follows:
-	 * 
-	 * <pre>
-	 * Utils.createHtmlDocument(style,  text, 1, 0, "<style type=\"text/css\">.classname { color:red; }</style>")
-	 * </pre>
-	 * 
-	 * @return Returns a new DOM document.
-	 */
+   * Returns a new, empty DOM document. The head argument can be used to
+   * provide an optional HEAD section without the HEAD tags as follows:
+   * 
+   * <pre>
+   * Utils.createHtmlDocument(style,  text, 1, 0, "<style type=\"text/css\">.classname { color:red; }</style>")
+   * </pre>
+   * 
+   * @return Returns a new DOM document.
+   */
   static String createHtmlDocument(Map<String, Object> style, String text, [double scale = 1.0, int width = 0, String head = null, String bodyCss = null]) {
     StringBuffer css = (bodyCss != null) ? new StringBuffer(bodyCss) : new StringBuffer();
     css.write("font-family:" + getString(style, Constants.STYLE_FONTFAMILY, Constants.DEFAULT_FONTFAMILIES) + ";");
@@ -1927,10 +1916,10 @@ class Utils {
   }
 
   /**
-	 * Returns a new, empty DOM document.
-	 * 
-	 * @return Returns a new DOM document.
-	 */
+   * Returns a new, empty DOM document.
+   * 
+   * @return Returns a new DOM document.
+   */
   static HtmlDocument createHtmlDocumentObject(Map<String, Object> style, double scale) {
     throw new Exception();
     // Applies the font settings
@@ -1975,12 +1964,12 @@ class Utils {
   }
 
   /**
-	 * Returns a new DOM document for the given URI.
-	 * 
-	 * @param uri
-	 *            URI to parse into the document.
-	 * @return Returns a new DOM document for the given URI.
-	 */
+   * Returns a new DOM document for the given URI.
+   * 
+   * @param uri
+   *            URI to parse into the document.
+   * @return Returns a new DOM document for the given URI.
+   */
   static Document loadDocument(String uri) {
     try {
       DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -1994,22 +1983,22 @@ class Utils {
   }
 
   /**
-	 * Returns a new document for the given XML string.
-	 * 
-	 * @param xml
-	 *            String that represents the XML data.
-	 * @return Returns a new XML document.
-	 * @deprecated Use <code>XmlUtils.parseXml</code> (Jan 2012)
-	 */
+   * Returns a new document for the given XML string.
+   * 
+   * @param xml
+   *            String that represents the XML data.
+   * @return Returns a new XML document.
+   * @deprecated Use <code>XmlUtils.parseXml</code> (Jan 2012)
+   */
   static Document parseXml(String xml) {
     return XmlUtils.parseXml(xml);
   }
 
   /**
-	 * Evaluates a Java expression as a class member using CodecRegistry. The
-	 * range of supported expressions is limited to static class members such as
-	 * EdgeStyle.ElbowConnector.
-	 */
+   * Evaluates a Java expression as a class member using CodecRegistry. The
+   * range of supported expressions is limited to static class members such as
+   * EdgeStyle.ElbowConnector.
+   */
   static Object eval(String expression) {
     int dot = expression.lastIndexOf(".");
 
@@ -2035,9 +2024,9 @@ class Utils {
   }
 
   /**
-	 * Returns the first node where attr equals value. This implementation does
-	 * not use XPath.
-	 */
+   * Returns the first node where attr equals value. This implementation does
+   * not use XPath.
+   */
   static Node findNode(Node node, String attr, String value) {
     String tmp = (node is Element) ? (node as Element).getAttribute(attr) : null;
 
@@ -2061,14 +2050,14 @@ class Utils {
   }
 
   /**
-	 * Returns a single node that matches the given XPath expression.
-	 * 
-	 * @param doc
-	 *            Document that contains the nodes.
-	 * @param expression
-	 *            XPath expression to be matched.
-	 * @return Returns a single node matching the given expression.
-	 */
+   * Returns a single node that matches the given XPath expression.
+   * 
+   * @param doc
+   *            Document that contains the nodes.
+   * @param expression
+   *            XPath expression to be matched.
+   * @return Returns a single node matching the given expression.
+   */
   static Node selectSingleNode(Document doc, String expression) {
     try {
       XPath xpath = XPathFactory.newInstance().newXPath();
@@ -2082,50 +2071,50 @@ class Utils {
   }
 
   /**
-	 * Converts the ampersand, quote, prime, less-than and greater-than
-	 * characters to their corresponding HTML entities in the given string.
-	 */
+   * Converts the ampersand, quote, prime, less-than and greater-than
+   * characters to their corresponding HTML entities in the given string.
+   */
   static String htmlEntities(String text) {
     return text.replaceAll("&", "&amp;").replaceAll("\"", "&quot;").replaceAll("'", "&prime;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
   }
 
   /**
-	 * Returns a string that represents the given node.
-	 * 
-	 * @param node
-	 *            Node to return the XML for.
-	 * @return Returns an XML string.
-	 * @deprecated Use <code>XmlUtils.getXml(Node)</code> (Jan 2012)
-	 */
+   * Returns a string that represents the given node.
+   * 
+   * @param node
+   *            Node to return the XML for.
+   * @return Returns an XML string.
+   * @deprecated Use <code>XmlUtils.getXml(Node)</code> (Jan 2012)
+   */
   static String getXml(Node node) {
     return XmlUtils.getXml(node);
   }
 
   /**
-	 * Returns a pretty-printed XML string for the given node.
-	 * 
-	 * @param node
-	 *            Node to return the XML for.
-	 * @return Returns a formatted XML string.
-	 */
+   * Returns a pretty-printed XML string for the given node.
+   * 
+   * @param node
+   *            Node to return the XML for.
+   * @return Returns a formatted XML string.
+   */
   //	static String getPrettyXml(Node node)
   //	{
   //		return getPrettyXml(node, "  ", "");
   //	}
 
   /**
-	 * Returns a pretty-printed XML string for the given node. Note that this
-	 * string should only be used for humans to read (eg. debug output) but not
-	 * for further processing as it does not use built-in mechanisms.
-	 * 
-	 * @param node
-	 *            Node to return the XML for.
-	 * @param tab
-	 *            String to be used for indentation of inner nodes.
-	 * @param indent
-	 *            Current indentation for the node.
-	 * @return Returns a formatted XML string.
-	 */
+   * Returns a pretty-printed XML string for the given node. Note that this
+   * string should only be used for humans to read (eg. debug output) but not
+   * for further processing as it does not use built-in mechanisms.
+   * 
+   * @param node
+   *            Node to return the XML for.
+   * @param tab
+   *            String to be used for indentation of inner nodes.
+   * @param indent
+   *            Current indentation for the node.
+   * @return Returns a formatted XML string.
+   */
   static String getPrettyXml(Node node, [String tab = "  ", String indent = ""]) {
     StringBuffer result = new StringBuffer();
 

@@ -8,7 +8,6 @@ part of graph.reader;
 //import java.awt.image.BufferedImage;
 //import java.io.FileInputStream;
 //import java.io.IOException;
-//import java.util.Map;
 
 //import javax.xml.parsers.ParserConfigurationException;
 //import javax.xml.parsers.SAXParser;
@@ -25,63 +24,63 @@ part of graph.reader;
 class GraphViewImageReader extends GraphViewReader {
 
   /**
-	 * Specifies the background color. Default is null.
-	 */
+   * Specifies the background color. Default is null.
+   */
   awt.Color _background;
 
   /**
-	 * Specifies if the image should be anti-aliased. Default is true.
-	 */
+   * Specifies if the image should be anti-aliased. Default is true.
+   */
   bool _antiAlias;
 
   /**
-	 * Specifies the border which is added to the size of the graph. Default is
-	 * 0.
-	 */
+   * Specifies the border which is added to the size of the graph. Default is
+   * 0.
+   */
   int _border;
 
   /**
-	 * Specifies the border which is added to the size of the graph. Default is
-	 * true.
-	 */
+   * Specifies the border which is added to the size of the graph. Default is
+   * true.
+   */
   bool _cropping;
 
   /**
-	 * Defines the clip to be drawn. Default is null.
-	 */
+   * Defines the clip to be drawn. Default is null.
+   */
   Rect _clip;
 
   /**
-	 * Constructs a new reader with a transparent background.
-	 */
+   * Constructs a new reader with a transparent background.
+   */
 //  GraphViewImageReader() {
 //    this(null);
 //  }
 
   /**
-	 * Constructs a new reader with the given background color.
-	 */
+   * Constructs a new reader with the given background color.
+   */
 //  GraphViewImageReader([awt.Color background=null]) {
 //    this(background, 0);
 //  }
 
   /**
-	 * Constructs a new reader with a transparent background.
-	 */
+   * Constructs a new reader with a transparent background.
+   */
 //  GraphViewImageReader(awt.Color background, int border) {
 //    this(background, border, true);
 //  }
 
   /**
-	 * Constructs a new reader with a transparent background.
-	 */
+   * Constructs a new reader with a transparent background.
+   */
 //  GraphViewImageReader(awt.Color background, int border, bool antiAlias) {
 //    this(background, border, antiAlias, true);
 //  }
 
   /**
-	 * Constructs a new reader with a transparent background.
-	 */
+   * Constructs a new reader with a transparent background.
+   */
   GraphViewImageReader([awt.Color background=null, int border=0, bool antiAlias=true, bool cropping=true]) {
     setBackground(background);
     setBorder(border);
@@ -90,81 +89,81 @@ class GraphViewImageReader extends GraphViewReader {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   awt.Color getBackground() {
     return _background;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void setBackground(awt.Color background) {
     this._background = background;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   int getBorder() {
     return _border;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void setBorder(int border) {
     this._border = border;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool isAntiAlias() {
     return _antiAlias;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void setAntiAlias(bool antiAlias) {
     this._antiAlias = antiAlias;
   }
 
   /**
-	 * Specifies the optional clipping rectangle.
-	 */
+   * Specifies the optional clipping rectangle.
+   */
   bool isCropping() {
     return _cropping;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void setCropping(bool value) {
     this._cropping = value;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   Rect getClip() {
     return _clip;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void setClip(Rect value) {
     this._clip = value;
   }
 
   /*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * graph.reader.GraphViewReader#createCanvas(java.util.Hashtable)
-	 */
+   * (non-Javadoc)
+   * 
+   * @see
+   * graph.reader.GraphViewReader#createCanvas(java.util.Hashtable)
+   */
   ICanvas createCanvas(Map<String, Object> attrs) {
     int width = 0;
     int height = 0;
@@ -200,33 +199,33 @@ class GraphViewImageReader extends GraphViewReader {
   }
 
   /**
-	 * Hook that creates the graphics canvas.
-	 */
+   * Hook that creates the graphics canvas.
+   */
   Graphics2DCanvas _createGraphicsCanvas() {
     return new Graphics2DCanvas();
   }
 
   /**
-	 * Creates the image for the given display XML file. (Note: The XML file is
-	 * an encoded GraphView, not GraphModel.)
-	 * 
-	 * @param filename
-	 *            Filename of the display XML file.
-	 * @return Returns an image representing the display XML file.
-	 */
+   * Creates the image for the given display XML file. (Note: The XML file is
+   * an encoded GraphView, not GraphModel.)
+   * 
+   * @param filename
+   *            Filename of the display XML file.
+   * @return Returns an image representing the display XML file.
+   */
   static image.Image convertFile(String filename, GraphViewImageReader viewReader) //throws ParserConfigurationException, SAXException, IOException
   {
     return convert(new InputSource(new FileInputStream(filename)), viewReader);
   }
 
   /**
-	 * Creates the image for the given display XML input source. (Note: The XML
-	 * is an encoded GraphView, not GraphModel.)
-	 * 
-	 * @param inputSource
-	 *            Input source that contains the display XML.
-	 * @return Returns an image representing the display XML input source.
-	 */
+   * Creates the image for the given display XML input source. (Note: The XML
+   * is an encoded GraphView, not GraphModel.)
+   * 
+   * @param inputSource
+   *            Input source that contains the display XML.
+   * @return Returns an image representing the display XML input source.
+   */
   static image.Image convert(InputSource inputSource, GraphViewImageReader viewReader) //throws ParserConfigurationException, SAXException, IOException
   {
     image.Image result = null;

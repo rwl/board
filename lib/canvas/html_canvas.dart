@@ -3,9 +3,6 @@
  */
 part of graph.canvas;
 
-//import java.util.Hashtable;
-//import java.util.List;
-//import java.util.Map;
 
 //import org.w3c.dom.Document;
 //import org.w3c.dom.Element;
@@ -17,28 +14,28 @@ part of graph.canvas;
 class HtmlCanvas extends BasicCanvas {
 
   /**
-	 * Holds the HTML document that represents the canvas.
-	 */
+   * Holds the HTML document that represents the canvas.
+   */
   Document _document;
 
   /**
-	 * Constructs a new HTML canvas for the specified dimension and scale.
-	 */
+   * Constructs a new HTML canvas for the specified dimension and scale.
+   */
 //  HtmlCanvas() {
 //    this(null);
 //  }
 
   /**
-	 * Constructs a new HTML canvas for the specified bounds, scale and
-	 * background color.
-	 */
+   * Constructs a new HTML canvas for the specified bounds, scale and
+   * background color.
+   */
   HtmlCanvas([Document document=null]) {
     setDocument(document);
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void appendHtmlElement(Element node) {
     if (_document != null) {
       Node body = _document.documentElement.firstChild.nextNode;
@@ -50,25 +47,25 @@ class HtmlCanvas extends BasicCanvas {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void setDocument(Document document) {
     this._document = document;
   }
 
   /**
-	 * Returns a reference to the document that represents the canvas.
-	 * 
-	 * @return Returns the document.
-	 */
+   * Returns a reference to the document that represents the canvas.
+   * 
+   * @return Returns the document.
+   */
   Document getDocument() {
     return _document;
   }
 
   /*
-	 * (non-Javadoc)
-	 * @see graph.canvas.ICanvas#drawCell()
-	 */
+   * (non-Javadoc)
+   * @see graph.canvas.ICanvas#drawCell()
+   */
   Object drawCell(CellState state) {
     Map<String, Object> style = state.getStyle();
 
@@ -108,9 +105,9 @@ class HtmlCanvas extends BasicCanvas {
   }
 
   /*
-	 * (non-Javadoc)
-	 * @see graph.canvas.ICanvas#drawLabel()
-	 */
+   * (non-Javadoc)
+   * @see graph.canvas.ICanvas#drawLabel()
+   */
   Object drawLabel(String label, CellState state, bool html) {
     Rect bounds = state.getLabelBounds();
 
@@ -128,14 +125,14 @@ class HtmlCanvas extends BasicCanvas {
   }
 
   /**
-	 * Draws the shape specified with the STYLE_SHAPE key in the given style.
-	 * 
-	 * @param x X-coordinate of the shape.
-	 * @param y Y-coordinate of the shape.
-	 * @param w Width of the shape.
-	 * @param h Height of the shape.
-	 * @param style Style of the the shape.
-	 */
+   * Draws the shape specified with the STYLE_SHAPE key in the given style.
+   * 
+   * @param x X-coordinate of the shape.
+   * @param y Y-coordinate of the shape.
+   * @param w Width of the shape.
+   * @param h Height of the shape.
+   * @param style Style of the the shape.
+   */
   Element drawShape(int x, int y, int w, int h, Map<String, Object> style) {
     String fillColor = Utils.getString(style, Constants.STYLE_FILLCOLOR);
     String strokeColor = Utils.getString(style, Constants.STYLE_STROKECOLOR);
@@ -188,12 +185,12 @@ class HtmlCanvas extends BasicCanvas {
   }
 
   /**
-	 * Draws the given lines as segments between all points of the given list
-	 * of mxPoints.
-	 * 
-	 * @param pts List of points that define the line.
-	 * @param style Style to be used for painting the line.
-	 */
+   * Draws the given lines as segments between all points of the given list
+   * of mxPoints.
+   * 
+   * @param pts List of points that define the line.
+   * @param style Style to be used for painting the line.
+   */
   void drawLine(List<Point2d> pts, Map<String, Object> style) {
     String strokeColor = Utils.getString(style, Constants.STYLE_STROKECOLOR);
     int strokeWidth = (Utils.getInt(style, Constants.STYLE_STROKEWIDTH, 1) * _scale) as int;
@@ -213,15 +210,15 @@ class HtmlCanvas extends BasicCanvas {
   }
 
   /**
-	 * Draws the specified segment of a line.
-	 * 
-	 * @param x0 X-coordinate of the start point.
-	 * @param y0 Y-coordinate of the start point.
-	 * @param x1 X-coordinate of the end point.
-	 * @param y1 Y-coordinate of the end point.
-	 * @param strokeColor Color of the stroke to be painted.
-	 * @param strokeWidth Width of the stroke to be painted.
-	 */
+   * Draws the specified segment of a line.
+   * 
+   * @param x0 X-coordinate of the start point.
+   * @param y0 Y-coordinate of the start point.
+   * @param x1 X-coordinate of the end point.
+   * @param y1 Y-coordinate of the end point.
+   * @param strokeColor Color of the stroke to be painted.
+   * @param strokeWidth Width of the stroke to be painted.
+   */
   void _drawSegment(int x0, int y0, int x1, int y1, String strokeColor, int strokeWidth) {
     int tmpX = Math.min(x0, x1);
     int tmpY = Math.min(y0, y1);
@@ -249,15 +246,15 @@ class HtmlCanvas extends BasicCanvas {
   }
 
   /**
-	 * Draws the specified text either using drawHtmlString or using drawString.
-	 * 
-	 * @param text Text to be painted.
-	 * @param x X-coordinate of the text.
-	 * @param y Y-coordinate of the text.
-	 * @param w Width of the text.
-	 * @param h Height of the text.
-	 * @param style Style to be used for painting the text.
-	 */
+   * Draws the specified text either using drawHtmlString or using drawString.
+   * 
+   * @param text Text to be painted.
+   * @param x X-coordinate of the text.
+   * @param y Y-coordinate of the text.
+   * @param w Width of the text.
+   * @param h Height of the text.
+   * @param style Style to be used for painting the text.
+   */
   Element drawText(String text, int x, int y, int w, int h, Map<String, Object> style) {
     Element table = Utils.createTable(_document, text, x, y, w, h, _scale, style);
     appendHtmlElement(table);

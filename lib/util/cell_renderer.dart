@@ -19,20 +19,20 @@ typedef ICanvas CanvasFactory(int width, int height);
 
 class CellRenderer {
   /**
-	 * 
-	 */
+   * 
+   */
   factory CellRenderer() {
     // static class
     return null;
   }
 
   /**
-	 * Draws the given cells using a Graphics2D canvas and returns the buffered image
-	 * that represents the cells.
-	 * 
-	 * @param graph Graph to be painted onto the canvas.
-	 * @return Returns the image that represents the canvas.
-	 */
+   * Draws the given cells using a Graphics2D canvas and returns the buffered image
+   * that represents the cells.
+   * 
+   * @param graph Graph to be painted onto the canvas.
+   * @return Returns the image that represents the canvas.
+   */
   static ICanvas drawCells(Graph graph, List<Object> cells, double scale, Rect clip, CanvasFactory factory) {
     ICanvas canvas = null;
 
@@ -90,8 +90,8 @@ class CellRenderer {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   //	static BufferedImage createBufferedImage(Graph graph,
   //			List<Object> cells, double scale, Color background, bool antiAlias,
   //			Rect clip)
@@ -101,8 +101,8 @@ class CellRenderer {
   //	}
 
   /**
-	 * 
-	 */
+   * 
+   */
   static image.Image createBufferedImage(Graph graph, List<Object> cells, double scale, final awt.Color background, final bool antiAlias, Rect clip, [/*final*/ Graphics2DCanvas graphicsCanvas = null]) {
     if (graphicsCanvas == null) {
       graphicsCanvas = new Graphics2DCanvas();
@@ -115,8 +115,8 @@ class CellRenderer {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   static Document createHtmlDocument(Graph graph, List<Object> cells, double scale, awt.Color background, Rect clip) {
     HtmlCanvas canvas = drawCells(graph, cells, scale, clip, (int width, int height) {
       return new HtmlCanvas(DomUtils.createHtmlDocument());
@@ -126,8 +126,8 @@ class CellRenderer {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   static Document createSvgDocument(Graph graph, List<Object> cells, double scale, awt.Color background, Rect clip) {
     SvgCanvas canvas = drawCells(graph, cells, scale, clip, (int width, int height) {
       return new SvgCanvas(DomUtils.createSvgDocument(width, height));
@@ -137,8 +137,8 @@ class CellRenderer {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   static Document createVmlDocument(Graph graph, List<Object> cells, double scale, awt.Color background, Rect clip) {
     VmlCanvas canvas = drawCells(graph, cells, scale, clip, (int width, int height) {
       return new VmlCanvas(DomUtils.createVmlDocument());
@@ -148,15 +148,15 @@ class CellRenderer {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   //	static abstract class CanvasFactory
   //	{
   //
   //		/**
-  //		 * Separates the creation of the canvas from its initialization, when the
-  //		 * size of the required graphics buffer / document / container is known.
-  //		 */
+  //	   * Separates the creation of the canvas from its initialization, when the
+  //	   * size of the required graphics buffer / document / container is known.
+  //	   */
   //		public abstract ICanvas createCanvas(int width, int height);
   //
   //	}

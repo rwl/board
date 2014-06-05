@@ -3,21 +3,19 @@
  */
 part of graph.util;
 
-//import java.util.ArrayList;
-//import java.util.List;
 
 /**
  * Contains various style helper methods for use with Graph.
  */
 class StyleUtils {
   /**
-	 * Returns the stylename in a style of the form stylename[;key=value] or an
-	 * empty string if the given style does not contain a stylename.
-	 * 
-	 * @param style
-	 *            String of the form stylename[;key=value].
-	 * @return Returns the stylename from the given formatted string.
-	 */
+   * Returns the stylename in a style of the form stylename[;key=value] or an
+   * empty string if the given style does not contain a stylename.
+   * 
+   * @param style
+   *            String of the form stylename[;key=value].
+   * @return Returns the stylename from the given formatted string.
+   */
   static String getStylename(String style) {
     if (style != null) {
       List<String> pairs = style.split(";");
@@ -32,13 +30,13 @@ class StyleUtils {
   }
 
   /**
-	 * Returns the stylenames in a style of the form stylename[;key=value] or an
-	 * empty array if the given style does not contain any stylenames.
-	 * 
-	 * @param style
-	 *            String of the form stylename[;stylename][;key=value].
-	 * @return Returns the stylename from the given formatted string.
-	 */
+   * Returns the stylenames in a style of the form stylename[;key=value] or an
+   * empty array if the given style does not contain any stylenames.
+   * 
+   * @param style
+   *            String of the form stylename[;stylename][;key=value].
+   * @return Returns the stylename from the given formatted string.
+   */
   static List<String> getStylenames(String style) {
     List<String> result = new List<String>();
 
@@ -56,10 +54,10 @@ class StyleUtils {
   }
 
   /**
-	 * Returns the index of the given stylename in the given style. This returns
-	 * -1 if the given stylename does not occur (as a stylename) in the given
-	 * style, otherwise it returns the index of the first character.
-	 */
+   * Returns the index of the given stylename in the given style. This returns
+   * -1 if the given stylename does not occur (as a stylename) in the given
+   * style, otherwise it returns the index of the first character.
+   */
   static int indexOfStylename(String style, String stylename) {
     if (style != null && stylename != null) {
       List<String> tokens = style.split(";");
@@ -78,9 +76,9 @@ class StyleUtils {
   }
 
   /**
-	 * Adds the specified stylename to the given style if it does not already
-	 * contain the stylename.
-	 */
+   * Adds the specified stylename to the given style if it does not already
+   * contain the stylename.
+   */
   static String addStylename(String style, String stylename) {
     if (indexOfStylename(style, stylename) < 0) {
       if (style == null) {
@@ -96,9 +94,9 @@ class StyleUtils {
   }
 
   /**
-	 * Removes all occurrences of the specified stylename in the given style and
-	 * returns the updated style. Trailing semicolons are preserved.
-	 */
+   * Removes all occurrences of the specified stylename in the given style and
+   * returns the updated style. Trailing semicolons are preserved.
+   */
   static String removeStylename(String style, String stylename) {
     StringBuffer buffer = new StringBuffer();
 
@@ -116,9 +114,9 @@ class StyleUtils {
   }
 
   /**
-	 * Removes all stylenames from the given style and returns the updated
-	 * style.
-	 */
+   * Removes all stylenames from the given style and returns the updated
+   * style.
+   */
   static String removeAllStylenames(String style) {
     StringBuffer buffer = new StringBuffer();
 
@@ -136,18 +134,18 @@ class StyleUtils {
   }
 
   /**
-	 * Assigns the value for the given key in the styles of the given cells, or
-	 * removes the key from the styles if the value is null.
-	 * 
-	 * @param model
-	 *            Model to execute the transaction in.
-	 * @param cells
-	 *            Array of cells to be updated.
-	 * @param key
-	 *            Key of the style to be changed.
-	 * @param value
-	 *            New value for the given key.
-	 */
+   * Assigns the value for the given key in the styles of the given cells, or
+   * removes the key from the styles if the value is null.
+   * 
+   * @param model
+   *            Model to execute the transaction in.
+   * @param cells
+   *            Array of cells to be updated.
+   * @param key
+   *            Key of the style to be changed.
+   * @param value
+   *            New value for the given key.
+   */
   static void setCellStyles(IGraphModel model, List<Object> cells, String key, String value) {
     if (cells != null && cells.length > 0) {
       model.beginUpdate();
@@ -165,18 +163,18 @@ class StyleUtils {
   }
 
   /**
-	 * Adds or removes the given key, value pair to the style and returns the
-	 * new style. If value is null or zero length then the key is removed from
-	 * the style.
-	 * 
-	 * @param style
-	 *            String of the form <code>stylename[;key=value]</code>.
-	 * @param key
-	 *            Key of the style to be changed.
-	 * @param value
-	 *            New value for the given key.
-	 * @return Returns the new style.
-	 */
+   * Adds or removes the given key, value pair to the style and returns the
+   * new style. If value is null or zero length then the key is removed from
+   * the style.
+   * 
+   * @param style
+   *            String of the form <code>stylename[;key=value]</code>.
+   * @param key
+   *            Key of the style to be changed.
+   * @param value
+   *            New value for the given key.
+   * @return Returns the new style.
+   */
   static String setStyle(String style, String key, String value) {
     bool isValue = value != null && value.length > 0;
 
@@ -208,29 +206,29 @@ class StyleUtils {
   }
 
   /**
-	 * Sets or toggles the flag bit for the given key in the cell's styles. If
-	 * value is null then the flag is toggled.
-	 * 
-	 * <code>
-	 * Utils.setCellStyleFlags(graph.getModel(),
-	 * 			cells,
-	 * 			Constants.STYLE_FONTSTYLE,
-	 * 			Constants.FONT_BOLD, null);
-	 * </code>
-	 * 
-	 * Toggles the bold font style.
-	 * 
-	 * @param model
-	 *            Model that contains the cells.
-	 * @param cells
-	 *            Array of cells to change the style for.
-	 * @param key
-	 *            Key of the style to be changed.
-	 * @param flag
-	 *            int for the bit to be changed.
-	 * @param value
-	 *            Optional bool value for the flag.
-	 */
+   * Sets or toggles the flag bit for the given key in the cell's styles. If
+   * value is null then the flag is toggled.
+   * 
+   * <code>
+   * Utils.setCellStyleFlags(graph.getModel(),
+   * 			cells,
+   * 			Constants.STYLE_FONTSTYLE,
+   * 			Constants.FONT_BOLD, null);
+   * </code>
+   * 
+   * Toggles the bold font style.
+   * 
+   * @param model
+   *            Model that contains the cells.
+   * @param cells
+   *            Array of cells to change the style for.
+   * @param key
+   *            Key of the style to be changed.
+   * @param flag
+   *            int for the bit to be changed.
+   * @param value
+   *            Optional bool value for the flag.
+   */
   static void setCellStyleFlags(IGraphModel model, List<Object> cells, String key, int flag, bool value) {
     if (cells != null && cells.length > 0) {
       model.beginUpdate();
@@ -248,18 +246,18 @@ class StyleUtils {
   }
 
   /**
-	 * Sets or removes the given key from the specified style and returns the
-	 * new style. If value is null then the flag is toggled.
-	 * 
-	 * @param style
-	 *            String of the form stylename[;key=value].
-	 * @param key
-	 *            Key of the style to be changed.
-	 * @param flag
-	 *            int for the bit to be changed.
-	 * @param value
-	 *            Optional bool value for the given flag.
-	 */
+   * Sets or removes the given key from the specified style and returns the
+   * new style. If value is null then the flag is toggled.
+   * 
+   * @param style
+   *            String of the form stylename[;key=value].
+   * @param key
+   *            Key of the style to be changed.
+   * @param flag
+   *            int for the bit to be changed.
+   * @param value
+   *            Optional bool value for the given flag.
+   */
   static String setStyleFlag(String style, String key, int flag, bool value) {
     if (style == null || style.length == 0) {
       if (value == null || value == true) {

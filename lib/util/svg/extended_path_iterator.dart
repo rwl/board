@@ -38,71 +38,71 @@ abstract class ExtendedPathIterator
 {
 
 	/**
-	 * The segment type constant that specifies that the preceding
-	 * subpath should be closed by appending a line segment back to
-	 * the point corresponding to the most recent SEG_MOVETO.
-	 */
+   * The segment type constant that specifies that the preceding
+   * subpath should be closed by appending a line segment back to
+   * the point corresponding to the most recent SEG_MOVETO.
+   */
 	int SEG_CLOSE = PathIterator.SEG_CLOSE;
 
 	/** 
-	 * The segment type constant for a point that specifies the end
-	 * point of a line to be drawn from the most recently specified
-	 * point.  */
+   * The segment type constant for a point that specifies the end
+   * point of a line to be drawn from the most recently specified
+   * point.  */
 	int SEG_MOVETO = PathIterator.SEG_MOVETO;
 
 	/**
-	 * The segment type constant for a point that specifies the end
-	 * point of a line to be drawn from the most recently specified
-	 * point.
-	 */
+   * The segment type constant for a point that specifies the end
+   * point of a line to be drawn from the most recently specified
+   * point.
+   */
 	int SEG_LINETO = PathIterator.SEG_LINETO;
 
 	/**
-	 * The segment type constant for the pair of points that specify a
-	 * quadratic parametric curve to be drawn from the most recently
-	 * specified point. The curve is interpolated by solving the
-	 * parametric control equation in the range (t=[0..1]) using the
-	 * most recently specified (current) point (CP), the first control
-	 * point (P1), and the final interpolated control point (P2). 
-	 */
+   * The segment type constant for the pair of points that specify a
+   * quadratic parametric curve to be drawn from the most recently
+   * specified point. The curve is interpolated by solving the
+   * parametric control equation in the range (t=[0..1]) using the
+   * most recently specified (current) point (CP), the first control
+   * point (P1), and the final interpolated control point (P2). 
+   */
 	int SEG_QUADTO = PathIterator.SEG_QUADTO;
 
 	/**
-	 * The segment type constant for the set of 3 points that specify
-	 * a cubic parametric curve to be drawn from the most recently
-	 * specified point. The curve is interpolated by solving the
-	 * parametric control equation in the range (t=[0..1]) using the
-	 * most recently specified (current) point (CP), the first control
-	 * point (P1), the second control point (P2), and the final
-	 * interpolated control point (P3).
-	 */
+   * The segment type constant for the set of 3 points that specify
+   * a cubic parametric curve to be drawn from the most recently
+   * specified point. The curve is interpolated by solving the
+   * parametric control equation in the range (t=[0..1]) using the
+   * most recently specified (current) point (CP), the first control
+   * point (P1), the second control point (P2), and the final
+   * interpolated control point (P3).
+   */
 	int SEG_CUBICTO = PathIterator.SEG_CUBICTO;
 
 	/** The segment type constant for an elliptical arc.  This consists of
-	 *  Seven values [rx, ry, angle, largeArcFlag, sweepFlag, x, y].
-	 *  rx, ry are the radious of the ellipse.
-	 *  angle is angle of the x axis of the ellipse.
-	 *  largeArcFlag is zero if the smaller of the two arcs are to be used.
-	 *  sweepFlag is zero if the 'left' branch is taken one otherwise.
-	 *  x and y are the destination for the ellipse.  */
+   *  Seven values [rx, ry, angle, largeArcFlag, sweepFlag, x, y].
+   *  rx, ry are the radious of the ellipse.
+   *  angle is angle of the x axis of the ellipse.
+   *  largeArcFlag is zero if the smaller of the two arcs are to be used.
+   *  sweepFlag is zero if the 'left' branch is taken one otherwise.
+   *  x and y are the destination for the ellipse.  */
 	int SEG_ARCTO = 4321;
 
 	/** The winding rule constant for specifying an even-odd rule for
-	 * determining the interior of a path. The even-odd rule specifies
-	 * that a point lies inside the path if a ray drawn in any
-	 * direction from that point to infinity is crossed by path
-	 * segments an odd number of times.  
-	 */
+   * determining the interior of a path. The even-odd rule specifies
+   * that a point lies inside the path if a ray drawn in any
+   * direction from that point to infinity is crossed by path
+   * segments an odd number of times.  
+   */
 	int WIND_EVEN_ODD = PathIterator.WIND_EVEN_ODD;
 
 	/**
-	 * The winding rule constant for specifying a non-zero rule for
-	 * determining the interior of a path. The non-zero rule specifies
-	 * that a point lies inside the path if a ray drawn in any
-	 * direction from that point to infinity is crossed by path
-	 * segments a different number of times in the counter-clockwise
-	 * direction than the clockwise direction.
-	 */
+   * The winding rule constant for specifying a non-zero rule for
+   * determining the interior of a path. The non-zero rule specifies
+   * that a point lies inside the path if a ray drawn in any
+   * direction from that point to infinity is crossed by path
+   * segments a different number of times in the counter-clockwise
+   * direction than the clockwise direction.
+   */
 	int WIND_NON_ZERO = PathIterator.WIND_NON_ZERO;
 
 	int currentSegment();

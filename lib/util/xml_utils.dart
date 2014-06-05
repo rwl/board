@@ -24,12 +24,12 @@ part of graph.util;
  */
 class XmlUtils {
   /**
-	 * Returns a new document for the given XML string.
-	 * 
-	 * @param xml
-	 *            String that represents the XML data.
-	 * @return Returns a new XML document.
-	 */
+   * Returns a new document for the given XML string.
+   * 
+   * @param xml
+   *            String that represents the XML data.
+   * @return Returns a new XML document.
+   */
   static Document parseXml(String xml) {
     try {
       DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -44,12 +44,12 @@ class XmlUtils {
   }
 
   /**
-	 * Returns a string that represents the given node.
-	 * 
-	 * @param node
-	 *            Node to return the XML for.
-	 * @return Returns an XML string.
-	 */
+   * Returns a string that represents the given node.
+   * 
+   * @param node
+   *            Node to return the XML for.
+   * @return Returns an XML string.
+   */
   static String getXml(Node node) {
     try {
       Transformer tf = TransformerFactory.newInstance().newTransformer();

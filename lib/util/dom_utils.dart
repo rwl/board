@@ -14,10 +14,10 @@ part of graph.util;
  */
 class DomUtils {
   /**
-	 * Returns a new, empty DOM document.
-	 * 
-	 * @return Returns a new DOM document.
-	 */
+   * Returns a new, empty DOM document.
+   * 
+   * @return Returns a new DOM document.
+   */
   static Document createDocument() {
     throw new Exception();
     Document result = null;//new Document();
@@ -35,8 +35,8 @@ class DomUtils {
   }
 
   /**
-	 * Creates a new SVG document for the given width and height.
-	 */
+   * Creates a new SVG document for the given width and height.
+   */
   static Document createSvgDocument(int width, int height) {
     Document document = createDocument();
     Element root = document.createElement("svg");
@@ -57,8 +57,8 @@ class DomUtils {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   static Document createVmlDocument() {
     Document document = createDocument();
 
@@ -84,8 +84,8 @@ class DomUtils {
   }
 
   /**
-	 * Returns a document with a HTML node containing a HEAD and BODY node.
-	 */
+   * Returns a document with a HTML node containing a HEAD and BODY node.
+   */
   static Document createHtmlDocument() {
     Document document = createDocument();
 

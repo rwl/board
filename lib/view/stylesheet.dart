@@ -3,8 +3,6 @@
  */
 part of graph.view;
 
-//import java.util.Hashtable;
-//import java.util.Map;
 
 /**
  * Defines the appearance of the cells in a graph. The following example
@@ -20,44 +18,44 @@ part of graph.view;
 class Stylesheet {
 
   /**
-	 * Shared immutable empty hashtable (for undefined cell styles).
-	 */
+   * Shared immutable empty hashtable (for undefined cell styles).
+   */
   static final Map<String, Object> EMPTY_STYLE = new Map<String, Object>();
 
   /**
-	 * Maps from names to styles.
-	 */
+   * Maps from names to styles.
+   */
   Map<String, Map<String, Object>> _styles = new Map<String, Map<String, Object>>();
 
   /**
-	 * Constructs a new stylesheet and assigns default styles.
-	 */
+   * Constructs a new stylesheet and assigns default styles.
+   */
   Stylesheet() {
     setDefaultVertexStyle(_createDefaultVertexStyle());
     setDefaultEdgeStyle(_createDefaultEdgeStyle());
   }
 
   /**
-	 * Returns all styles as map of name, hashtable pairs.
-	 * 
-	 * @return All styles in this stylesheet.
-	 */
+   * Returns all styles as map of name, hashtable pairs.
+   * 
+   * @return All styles in this stylesheet.
+   */
   Map<String, Map<String, Object>> getStyles() {
     return _styles;
   }
 
   /**
-	 * Sets all styles in the stylesheet.
-	 */
+   * Sets all styles in the stylesheet.
+   */
   void setStyles(Map<String, Map<String, Object>> styles) {
     this._styles = styles;
   }
 
   /**
-	 * Creates and returns the default vertex style.
-	 * 
-	 * @return Returns the default vertex style.
-	 */
+   * Creates and returns the default vertex style.
+   * 
+   * @return Returns the default vertex style.
+   */
   Map<String, Object> _createDefaultVertexStyle() {
     Map<String, Object> style = new Map<String, Object>();
 
@@ -73,10 +71,10 @@ class Stylesheet {
   }
 
   /**
-	 * Creates and returns the default edge style.
-	 * 
-	 * @return Returns the default edge style.
-	 */
+   * Creates and returns the default edge style.
+   * 
+   * @return Returns the default edge style.
+   */
   Map<String, Object> _createDefaultEdgeStyle() {
     Map<String, Object> style = new Map<String, Object>();
 
@@ -91,60 +89,60 @@ class Stylesheet {
   }
 
   /**
-	 * Returns the default style for vertices.
-	 * 
-	 * @return Returns the default vertex style.
-	 */
+   * Returns the default style for vertices.
+   * 
+   * @return Returns the default vertex style.
+   */
   Map<String, Object> getDefaultVertexStyle() {
     return _styles["defaultVertex"];
   }
 
   /**
-	 * Sets the default style for vertices.
-	 * 
-	 * @param value Style to be used for vertices.
-	 */
+   * Sets the default style for vertices.
+   * 
+   * @param value Style to be used for vertices.
+   */
   void setDefaultVertexStyle(Map<String, Object> value) {
     putCellStyle("defaultVertex", value);
   }
 
   /**
-	 * Returns the default style for edges.
-	 * 
-	 * @return Returns the default edge style.
-	 */
+   * Returns the default style for edges.
+   * 
+   * @return Returns the default edge style.
+   */
   Map<String, Object> getDefaultEdgeStyle() {
     return _styles["defaultEdge"];
   }
 
   /**
-	 * Sets the default style for edges.
-	 * 
-	 * @param value Style to be used for edges.
-	 */
+   * Sets the default style for edges.
+   * 
+   * @param value Style to be used for edges.
+   */
   void setDefaultEdgeStyle(Map<String, Object> value) {
     putCellStyle("defaultEdge", value);
   }
 
   /**
-	 * Stores the specified style under the given name.
-	 * 
-	 * @param name Name for the style to be stored.
-	 * @param style Key, value pairs that define the style.
-	 */
+   * Stores the specified style under the given name.
+   * 
+   * @param name Name for the style to be stored.
+   * @param style Key, value pairs that define the style.
+   */
   void putCellStyle(String name, Map<String, Object> style) {
     _styles[name] = style;
   }
 
   /**
-	 * Returns the cell style for the specified cell or the given defaultStyle
-	 * if no style can be found for the given stylename.
-	 * 
-	 * @param name String of the form [(stylename|key=value);] that represents the
-	 * style.
-	 * @param defaultStyle Default style to be returned if no style can be found.
-	 * @return Returns the style for the given formatted cell style.
-	 */
+   * Returns the cell style for the specified cell or the given defaultStyle
+   * if no style can be found for the given stylename.
+   * 
+   * @param name String of the form [(stylename|key=value);] that represents the
+   * style.
+   * @param defaultStyle Default style to be returned if no style can be found.
+   * @return Returns the style for the given formatted cell style.
+   */
   Map<String, Object> getCellStyle(String name, Map<String, Object> defaultStyle) {
     Map<String, Object> style = defaultStyle;
 

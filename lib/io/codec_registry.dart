@@ -3,11 +3,6 @@
  */
 part of graph.io;
 
-//import java.util.ArrayList;
-//import java.util.Collection;
-//import java.util.Hashtable;
-//import java.util.List;
-//import java.util.Map;
 
 /**
  * Singleton class that acts as a global registry for codecs. See
@@ -16,19 +11,19 @@ part of graph.io;
 class CodecRegistry {
 
   /**
-	 * Maps from constructor names to codecs.
-	 */
+   * Maps from constructor names to codecs.
+   */
   static Map<String, ObjectCodec> _codecs = new Map<String, ObjectCodec>();
 
   /**
-	 * Maps from classnames to codecnames.
-	 */
+   * Maps from classnames to codecnames.
+   */
   static Map<String, String> _aliases = new Map<String, String>();
 
   /**
-	 * Holds the list of known packages. Packages are used to prefix short
-	 * class names (eg. Cell) in XML markup.
-	 */
+   * Holds the list of known packages. Packages are used to prefix short
+   * class names (eg. Cell) in XML markup.
+   */
   static List<String> _packages = new List<String>();
 
   // Registers the known codecs and package names
@@ -56,10 +51,10 @@ class CodecRegistry {
   }
 
   /**
-	 * Registers a new codec and associates the name of the template constructor
-	 * in the codec with the codec object. Automatically creates an alias if the
-	 * codename and the classname are not equal.
-	 */
+   * Registers a new codec and associates the name of the template constructor
+   * in the codec with the codec object. Automatically creates an alias if the
+   * codename and the classname are not equal.
+   */
   static ObjectCodec register(ObjectCodec codec) {
     if (codec != null) {
       String name = codec.getName();
@@ -76,18 +71,18 @@ class CodecRegistry {
   }
 
   /**
-	 * Adds an alias for mapping a classname to a codecname.
-	 */
+   * Adds an alias for mapping a classname to a codecname.
+   */
   static void addAlias(String classname, String codecname) {
     _aliases[classname] = codecname;
   }
 
   /**
-	 * Returns a codec that handles the given object, which can be an object
-	 * instance or an XML node.
-	 * 
-	 * @param name Java class name.
-	 */
+   * Returns a codec that handles the given object, which can be an object
+   * instance or an XML node.
+   * 
+   * @param name Java class name.
+   */
   static ObjectCodec getCodec(String name) {
     String tmp = _aliases[name];
 
@@ -116,20 +111,20 @@ class CodecRegistry {
   }
 
   /**
-	 * Adds the given package name to the list of known package names.
-	 * 
-	 * @param packagename Name of the package to be added.
-	 */
+   * Adds the given package name to the list of known package names.
+   * 
+   * @param packagename Name of the package to be added.
+   */
   static void addPackage(String packagename) {
     _packages.add(packagename);
   }
 
   /**
-	 * Creates and returns a new instance for the given class name.
-	 * 
-	 * @param name Name of the class to be instantiated.
-	 * @return Returns a new instance of the given class.
-	 */
+   * Creates and returns a new instance for the given class name.
+   * 
+   * @param name Name of the class to be instantiated.
+   * @return Returns a new instance of the given class.
+   */
   /*static Object getInstanceForName(String name)
 	{
 		Class<?> clazz = getClassForName(name);
@@ -158,11 +153,11 @@ class CodecRegistry {
 	}*/
 
   /**
-	 * Returns a class that corresponds to the given name.
-	 * 
-	 * @param name
-	 * @return Returns the class for the given name.
-	 */
+   * Returns a class that corresponds to the given name.
+   * 
+   * @param name
+   * @return Returns the class for the given name.
+   */
   static ClassMirror /*<?>*/ getClassForName(String name) {
     try {
       return Class.forName(name);
@@ -184,16 +179,16 @@ class CodecRegistry {
   }
 
   /**
-	 * Returns the name that identifies the codec associated
-	 * with the given instance..
-	 *
-	 * The I/O system uses unqualified classnames, eg. for a
-	 * <code>graph.model.Cell</code> this returns
-	 * <code>Cell</code>.
-	 * 
-	 * @param instance Instance whose node name should be returned.
-	 * @return Returns a string that identifies the codec.
-	 */
+   * Returns the name that identifies the codec associated
+   * with the given instance..
+   *
+   * The I/O system uses unqualified classnames, eg. for a
+   * <code>graph.model.Cell</code> this returns
+   * <code>Cell</code>.
+   * 
+   * @param instance Instance whose node name should be returned.
+   * @return Returns a string that identifies the codec.
+   */
   /*static String getName(Object instance)
 	{
 		Class<? extends Object> type = instance.getClass();

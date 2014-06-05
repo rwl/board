@@ -3,7 +3,6 @@
  */
 part of graph.io;
 
-//import java.util.Map;
 
 //import org.w3c.dom.Node;
 
@@ -17,8 +16,8 @@ class GenericChangeCodec extends ObjectCodec {
   String _fieldname;
 
   /**
-	 * Constructs a new model codec for the given arguments.
-	 */
+   * Constructs a new model codec for the given arguments.
+   */
   GenericChangeCodec(Object template, String fieldname, [List<String> exclude = null,
       List<String> idrefs = null, Map<String, String> mapping = null]) : super(template) {
     this._fieldname = fieldname;

@@ -5,7 +5,6 @@ part of graph.io;
 
 //import java.io.BufferedReader;
 //import java.io.StringReader;
-//import java.util.HashMap;
 
 /**
  * Represents the different states in the parse of a file.
@@ -31,15 +30,15 @@ class GDParseState {
 class GdCodec {
 
   /**
-	 * Map with the vertex cells added in the addNode method.
-	 */
+   * Map with the vertex cells added in the addNode method.
+   */
   static HashMap<String, Object> _cellsMap = new HashMap<String, Object>();
 
   /**
-	 * Parses simple GD format and populate the specified graph
-	 * @param input GD file to be parsed
-	 * @param graph Graph where the parsed graph is included.
-	 */
+   * Parses simple GD format and populate the specified graph
+   * @param input GD file to be parsed
+   * @param graph Graph where the parsed graph is included.
+   */
   static void decode(String input, Graph graph) {
     //BufferedReader br = new BufferedReader(new StringReader(input));
     GDParseState state = GDParseState.START;
@@ -125,11 +124,11 @@ class GdCodec {
   }
 
   /**
-	 * Generates a GD text output with the cells in the graph.
-	 * The implementation only uses the cells located in the default parent.
-	 * @param graph Graph with the cells.
-	 * @return The GD document generated.
-	 */
+   * Generates a GD text output with the cells in the graph.
+   * The implementation only uses the cells located in the default parent.
+   * @param graph Graph with the cells.
+   * @return The GD document generated.
+   */
   static String encode(Graph graph) {
     StringBuffer builder = new StringBuffer();
 

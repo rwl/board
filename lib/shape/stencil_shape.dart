@@ -13,8 +13,6 @@ part of graph.shape;
 //import java.awt.geom.awt.Line2D;
 //import java.awt.geom.Rectangle2D;
 //import java.awt.geom.RoundRectangle2D;
-//import java.util.Hashtable;
-//import java.util.Map;
 
 //import org.w3c.dom.Document;
 //import org.w3c.dom.Element;
@@ -33,8 +31,8 @@ class StencilShape extends BasicShape {
   GeneralPath _shapePath;
 
   /**
-	 * Reference to the root node of the Dia shape description.
-	 */
+   * Reference to the root node of the Dia shape description.
+   */
   Node _root;
 
   _svgShape _rootShape;
@@ -46,14 +44,14 @@ class StencilShape extends BasicShape {
   String _iconPath;
 
   /**
-	 * Transform cached to save instance created. Used to scale the internal
-	 * path of shapes where possible
-	 */
+   * Transform cached to save instance created. Used to scale the internal
+   * path of shapes where possible
+   */
   AffineTransform _cachedTransform = new AffineTransform();
 
   /**
-	 * Constructs a new stencil for the given Dia shape description.
-	 */
+   * Constructs a new stencil for the given Dia shape description.
+   */
   factory StencilShape.xml(String shapeXml) {
     return new StencilShape(XmlUtils.parseXml(shapeXml));
   }
@@ -92,8 +90,8 @@ class StencilShape extends BasicShape {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   //	@Override
   void paintShape(Graphics2DCanvas canvas, CellState state) {
     double x = state.getX();
@@ -116,8 +114,8 @@ class StencilShape extends BasicShape {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void paintNode(Graphics2DCanvas canvas, CellState state, _svgShape shape, double widthRatio, double heightRatio) {
     Shape associatedShape = shape.shape;
 
@@ -186,28 +184,28 @@ class StencilShape extends BasicShape {
     }
 
     /*
-		 * If root is a group element, then we should add it's styles to the
-		 * children.
-		 */
+	   * If root is a group element, then we should add it's styles to the
+	   * children.
+	   */
     for (_svgShape subShape in shape.subShapes) {
       paintNode(canvas, state, subShape, widthRatio, heightRatio);
     }
   }
 
   /**
-	 * Scales the points composing this shape by the x and y ratios specified
-	 * 
-	 * @param shape
-	 *            the shape to scale
-	 * @param transX
-	 *            the x translation
-	 * @param transY
-	 *            the y translation
-	 * @param widthRatio
-	 *            the x co-ordinate scale
-	 * @param heightRatio
-	 *            the y co-ordinate scale
-	 */
+   * Scales the points composing this shape by the x and y ratios specified
+   * 
+   * @param shape
+   *            the shape to scale
+   * @param transX
+   *            the x translation
+   * @param transY
+   *            the y translation
+   * @param widthRatio
+   *            the x co-ordinate scale
+   * @param heightRatio
+   *            the y co-ordinate scale
+   */
   void _transformShape(Shape shape, double transX, double transY, double widthRatio, double heightRatio) {
     if (shape is awt.Rectangle) {
       awt.Rectangle rect = shape as awt.Rectangle;
@@ -248,14 +246,14 @@ class StencilShape extends BasicShape {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void createShape(Node root, _svgShape shape) {
     Node child = root.firstChild;
     /*
-		 * If root is a group element, then we should add it's styles to the
-		 * childrens...
-		 */
+	   * If root is a group element, then we should add it's styles to the
+	   * childrens...
+	   */
     while (child != null) {
       if (_isGroup(child.nodeName)) {
         String style = (root as Element).getAttribute("style");
@@ -294,14 +292,14 @@ class StencilShape extends BasicShape {
   }
 
   /**
-	 * Forms an internal representation of the specified SVG element and returns
-	 * that representation
-	 * 
-	 * @param root
-	 *            the SVG element to represent
-	 * @return the internal representation of the element, or null if an error
-	 *         occurs
-	 */
+   * Forms an internal representation of the specified SVG element and returns
+   * that representation
+   * 
+   * @param root
+   *            the SVG element to represent
+   * @return the internal representation of the element, or null if an error
+   *         occurs
+   */
   _svgShape createElement(Node root) {
     Element element = null;
 
@@ -494,50 +492,50 @@ class StencilShape extends BasicShape {
   }
 
   /*
-	 *
-	 */
+   *
+   */
   bool _isRectangle(String tag) {
     return tag == "svg:rect" || tag == "rect";
   }
 
   /*
-	 *
-	 */
+   *
+   */
   bool _isPath(String tag) {
     return tag == "svg:path" || tag == "path";
   }
 
   /*
-	 *
-	 */
+   *
+   */
   bool _isEllipse(String tag) {
     return tag == "svg:ellipse" || tag == "ellipse";
   }
 
   /*
-	 *
-	 */
+   *
+   */
   bool _isLine(String tag) {
     return tag == "svg:line" || tag == "line";
   }
 
   /*
-	 *
-	 */
+   *
+   */
   bool _isPolyline(String tag) {
     return tag == "svg:polyline" || tag == "polyline";
   }
 
   /*
-	 *
-	 */
+   *
+   */
   bool _isCircle(String tag) {
     return tag == "svg:circle" || tag == "circle";
   }
 
   /*
-	 *
-	 */
+   *
+   */
   bool _isPolygon(String tag) {
     return tag == "svg:polygon" || tag == "polygon";
   }
@@ -547,13 +545,13 @@ class StencilShape extends BasicShape {
   }
 
   /**
-	 * Returns the stylenames in a style of the form stylename[;key=value] or an
-	 * empty array if the given style does not contain any stylenames.
-	 * 
-	 * @param style
-	 *            String of the form stylename[;stylename][;key=value].
-	 * @return Returns the stylename from the given formatted string.
-	 */
+   * Returns the stylenames in a style of the form stylename[;key=value] or an
+   * empty array if the given style does not contain any stylenames.
+   * 
+   * @param style
+   *            String of the form stylename[;stylename][;key=value].
+   * @return Returns the stylename from the given formatted string.
+   */
   static Map<String, Object> getStylenames(String style) {
     if (style != null && style.length > 0) {
       Map<String, Object> result = new Map<String, Object>();

@@ -3,8 +3,6 @@
  */
 part of graph.analysis;
 
-//import java.util.Hashtable;
-//import java.util.Map;
 
 /**
  * This class implements a priority queue.
@@ -12,8 +10,8 @@ part of graph.analysis;
 class FibonacciHeap {
 
   /**
-	 * Maps from elements to nodes
-	 */
+   * Maps from elements to nodes
+   */
   Map<Object, _FibonacciHeapNode> _nodes = new Map<Object, _FibonacciHeapNode>();
 
   _FibonacciHeapNode _min;
@@ -21,8 +19,8 @@ class FibonacciHeap {
   int _size;
 
   /**
-	 * Returns the node that represents element.
-	 */
+   * Returns the node that represents element.
+   */
   _FibonacciHeapNode getNode(Object element, bool create) {
     _FibonacciHeapNode node = _nodes[element];
 
@@ -35,26 +33,26 @@ class FibonacciHeap {
   }
 
   /**
-	 * Returns true if the queue is empty.
-	 */
+   * Returns true if the queue is empty.
+   */
   bool isEmpty() {
     return _min == null;
   }
 
   /**
-	 * Decreases the key value for a heap node, given the new value to take on.
-	 * The structure of the heap may be changed and will not be consolidated.
-	 * 
-	 * <p>
-	 * Running time: O(1) amortized
-	 * </p>
-	 * 
-	 * @param x Node whose value should be decreased.
-	 * @param k New key value for node x.
-	 * 
-	 * @exception ArgumentError
-	 *                Thrown if k is larger than x.key value.
-	 */
+   * Decreases the key value for a heap node, given the new value to take on.
+   * The structure of the heap may be changed and will not be consolidated.
+   * 
+   * <p>
+   * Running time: O(1) amortized
+   * </p>
+   * 
+   * @param x Node whose value should be decreased.
+   * @param k New key value for node x.
+   * 
+   * @exception ArgumentError
+   *                Thrown if k is larger than x.key value.
+   */
   void decreaseKey(_FibonacciHeapNode x, double k) {
     if (k > x._key) {
       throw new ArgumentError("decreaseKey() got larger key value");
@@ -74,17 +72,17 @@ class FibonacciHeap {
   }
 
   /**
-	 * Deletes a node from the heap given the reference to the node. The trees
-	 * in the heap will be consolidated, if necessary. This operation may fail
-	 * to remove the correct element if there are nodes with key value
-	 * -Infinity.
-	 * 
-	 * <p>
-	 * Running time: O(log n) amortized
-	 * </p>
-	 * 
-	 * @param x The node to remove from the heap.
-	 */
+   * Deletes a node from the heap given the reference to the node. The trees
+   * in the heap will be consolidated, if necessary. This operation may fail
+   * to remove the correct element if there are nodes with key value
+   * -Infinity.
+   * 
+   * <p>
+   * Running time: O(log n) amortized
+   * </p>
+   * 
+   * @param x The node to remove from the heap.
+   */
   void delete(_FibonacciHeapNode x) {
     // make x as small as possible
     decreaseKey(x, double.NEGATIVE_INFINITY);
@@ -94,19 +92,19 @@ class FibonacciHeap {
   }
 
   /**
-	 * Inserts a new data element into the heap. No heap consolidation is
-	 * performed at this time, the new node is simply inserted into the root
-	 * list of this heap.
-	 * 
-	 * <p>
-	 * Running time: O(1) actual
-	 * </p>
-	 * 
-	 * @param node
-	 *            new node to insert into heap
-	 * @param key
-	 *            key value associated with data object
-	 */
+   * Inserts a new data element into the heap. No heap consolidation is
+   * performed at this time, the new node is simply inserted into the root
+   * list of this heap.
+   * 
+   * <p>
+   * Running time: O(1) actual
+   * </p>
+   * 
+   * @param node
+   *            new node to insert into heap
+   * @param key
+   *            key value associated with data object
+   */
   void insert(_FibonacciHeapNode node, double key) {
     node._key = key;
 
@@ -128,30 +126,30 @@ class FibonacciHeap {
   }
 
   /**
-	 * Returns the smallest element in the heap. This smallest element is the
-	 * one with the minimum key value.
-	 * 
-	 * <p>
-	 * Running time: O(1) actual
-	 * </p>
-	 * 
-	 * @return Returns the heap node with the smallest key.
-	 */
+   * Returns the smallest element in the heap. This smallest element is the
+   * one with the minimum key value.
+   * 
+   * <p>
+   * Running time: O(1) actual
+   * </p>
+   * 
+   * @return Returns the heap node with the smallest key.
+   */
   _FibonacciHeapNode min() {
     return _min;
   }
 
   /**
-	 * Removes the smallest element from the heap. This will cause the trees in
-	 * the heap to be consolidated, if necessary.
-	 * Does not remove the data node so that the current key remains stored.
-	 * 
-	 * <p>
-	 * Running time: O(log n) amortized
-	 * </p>
-	 * 
-	 * @return Returns the node with the smallest key.
-	 */
+   * Removes the smallest element from the heap. This will cause the trees in
+   * the heap to be consolidated, if necessary.
+   * Does not remove the data node so that the current key remains stored.
+   * 
+   * <p>
+   * Running time: O(log n) amortized
+   * </p>
+   * 
+   * @return Returns the node with the smallest key.
+   */
   _FibonacciHeapNode removeMin() {
     _FibonacciHeapNode z = _min;
 
@@ -199,31 +197,31 @@ class FibonacciHeap {
   }
 
   /**
-	 * Returns the size of the heap which is measured in the number of elements
-	 * contained in the heap.
-	 * 
-	 * <p>
-	 * Running time: O(1) actual
-	 * </p>
-	 * 
-	 * @return Returns the number of elements in the heap.
-	 */
+   * Returns the size of the heap which is measured in the number of elements
+   * contained in the heap.
+   * 
+   * <p>
+   * Running time: O(1) actual
+   * </p>
+   * 
+   * @return Returns the number of elements in the heap.
+   */
   int size() {
     return _size;
   }
 
   /**
-	 * Joins two Fibonacci heaps into a new one. No heap consolidation is
-	 * performed at this time. The two root lists are simply joined together.
-	 * 
-	 * <p>
-	 * Running time: O(1) actual
-	 * </p>
-	 * 
-	 * @param h1 The first heap.
-	 * @param h2 The second heap.
-	 * @return Returns a new heap containing h1 and h2.
-	 */
+   * Joins two Fibonacci heaps into a new one. No heap consolidation is
+   * performed at this time. The two root lists are simply joined together.
+   * 
+   * <p>
+   * Running time: O(1) actual
+   * </p>
+   * 
+   * @param h1 The first heap.
+   * @param h2 The second heap.
+   * @return Returns a new heap containing h1 and h2.
+   */
   static FibonacciHeap union(FibonacciHeap h1, FibonacciHeap h2) {
     FibonacciHeap h = new FibonacciHeap();
 
@@ -252,15 +250,15 @@ class FibonacciHeap {
   }
 
   /**
-	 * Performs a cascading cut operation. This cuts y from its parent and then
-	 * does the same for its parent, and so on up the tree.
-	 * 
-	 * <p>
-	 * Running time: O(log n); O(1) excluding the recursion
-	 * </p>
-	 * 
-	 * @param y The node to perform cascading cut on.
-	 */
+   * Performs a cascading cut operation. This cuts y from its parent and then
+   * does the same for its parent, and so on up the tree.
+   * 
+   * <p>
+   * Running time: O(log n); O(1) excluding the recursion
+   * </p>
+   * 
+   * @param y The node to perform cascading cut on.
+   */
   void _cascadingCut(_FibonacciHeapNode y) {
     _FibonacciHeapNode z = y._parent;
 
@@ -280,13 +278,13 @@ class FibonacciHeap {
   }
 
   /**
-	 * Consolidates the trees in the heap by joining trees of equal degree until
-	 * there are no more trees of equal degree in the root list.
-	 * 
-	 * <p>
-	 * Running time: O(log n) amortized
-	 * </p>
-	 */
+   * Consolidates the trees in the heap by joining trees of equal degree until
+   * there are no more trees of equal degree in the root list.
+   * 
+   * <p>
+   * Running time: O(log n) amortized
+   * </p>
+   */
   void _consolidate() {
     int arraySize = _size + 1;
     List<_FibonacciHeapNode> array = new List<_FibonacciHeapNode>(arraySize);
@@ -375,16 +373,16 @@ class FibonacciHeap {
   }
 
   /**
-	 * The reverse of the link operation: removes x from the child list of y.
-	 * This method assumes that min is non-null.
-	 * 
-	 * <p>
-	 * Running time: O(1)
-	 * </p>
-	 * 
-	 * @param x The child of y to be removed from y's child list.
-	 * @param y The parent of x about to lose a child.
-	 */
+   * The reverse of the link operation: removes x from the child list of y.
+   * This method assumes that min is non-null.
+   * 
+   * <p>
+   * Running time: O(1)
+   * </p>
+   * 
+   * @param x The child of y to be removed from y's child list.
+   * @param y The parent of x about to lose a child.
+   */
   void _cut(_FibonacciHeapNode x, _FibonacciHeapNode y) {
     // remove x from childlist of y and decrement degree[y]
     x._left._right = x._right;
@@ -414,15 +412,15 @@ class FibonacciHeap {
   }
 
   /**
-	 * Make node y a child of node x.
-	 * 
-	 * <p>
-	 * Running time: O(1) actual
-	 * </p>
-	 * 
-	 * @param y The node to become child.
-	 * @param x The node to become parent.
-	 */
+   * Make node y a child of node x.
+   * 
+   * <p>
+   * Running time: O(1) actual
+   * </p>
+   * 
+   * @param y The node to become child.
+   * @param x The node to become parent.
+   */
   void _link(_FibonacciHeapNode y, _FibonacciHeapNode x) {
     // remove y from root list of heap
     y._left._right = y._right;

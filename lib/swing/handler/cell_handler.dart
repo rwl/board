@@ -19,66 +19,66 @@ part of graph.swing.handler;
  */
 class CellHandler {
   /**
-	 * Reference to the enclosing graph component.
-	 */
+   * Reference to the enclosing graph component.
+   */
   GraphComponent _graphComponent;
 
   /**
-	 * Holds the cell state associated with this handler.
-	 */
+   * Holds the cell state associated with this handler.
+   */
   CellState _state;
 
   /**
-	 * Holds the rectangles that define the handles.
-	 */
+   * Holds the rectangles that define the handles.
+   */
   List<awt.Rectangle> _handles;
 
   /**
-	 * Specifies if the handles should be painted. Default is true.
-	 */
+   * Specifies if the handles should be painted. Default is true.
+   */
   bool _handlesVisible = true;
 
   /**
-	 * Holds the bounding box of the handler.
-	 */
+   * Holds the bounding box of the handler.
+   */
   /*transient*/ awt.Rectangle _bounds;
 
   /**
-	 * Holds the component that is used for preview.
-	 */
+   * Holds the component that is used for preview.
+   */
   /*transient*/ JComponent _preview;
 
   /**
-	 * Holds the start location of the mouse gesture.
-	 */
+   * Holds the start location of the mouse gesture.
+   */
   /*transient*/ awt.Point _first;
 
   /**
-	 * Holds the index of the handle that was clicked.
-	 */
+   * Holds the index of the handle that was clicked.
+   */
   /*transient*/ int _index;
 
   /**
-	 * Constructs a new cell handler for the given cell state.
-	 * 
-	 * @param graphComponent Enclosing graph component.
-	 * @param state Cell state for which the handler is created.
-	 */
+   * Constructs a new cell handler for the given cell state.
+   * 
+   * @param graphComponent Enclosing graph component.
+   * @param state Cell state for which the handler is created.
+   */
   CellHandler(GraphComponent graphComponent, CellState state) {
     this._graphComponent = graphComponent;
     refresh(state);
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool isActive() {
     return _first != null;
   }
 
   /**
-	 * Refreshes the cell handler.
-	 */
+   * Refreshes the cell handler.
+   */
   void refresh(CellState state) {
     this._state = state;
     _handles = _createHandles();
@@ -99,36 +99,36 @@ class CellHandler {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   GraphComponent getGraphComponent() {
     return _graphComponent;
   }
 
   /**
-	 * Returns the cell state that is associated with this handler.
-	 */
+   * Returns the cell state that is associated with this handler.
+   */
   CellState getState() {
     return _state;
   }
 
   /**
-	 * Returns the index of the current handle.
-	 */
+   * Returns the index of the current handle.
+   */
   int getIndex() {
     return _index;
   }
 
   /**
-	 * Returns the bounding box of this handler.
-	 */
+   * Returns the bounding box of this handler.
+   */
   awt.Rectangle getBounds() {
     return _bounds;
   }
 
   /**
-	 * Returns true if the label is movable.
-	 */
+   * Returns true if the label is movable.
+   */
   bool isLabelMovable() {
     Graph graph = _graphComponent.getGraph();
     String label = graph.getLabel(_state.getCell());
@@ -137,55 +137,55 @@ class CellHandler {
   }
 
   /**
-	 * Returns true if the handles should be painted.
-	 */
+   * Returns true if the handles should be painted.
+   */
   bool isHandlesVisible() {
     return _handlesVisible;
   }
 
   /**
-	 * Specifies if the handles should be painted.
-	 */
+   * Specifies if the handles should be painted.
+   */
   void setHandlesVisible(bool handlesVisible) {
     this._handlesVisible = handlesVisible;
   }
 
   /**
-	 * Returns true if the given index is the index of the last handle.
-	 */
+   * Returns true if the given index is the index of the last handle.
+   */
   bool isLabel(int index) {
     return index == _getHandleCount() - 1;
   }
 
   /**
-	 * Creates the rectangles that define the handles.
-	 */
+   * Creates the rectangles that define the handles.
+   */
   List<awt.Rectangle> _createHandles() {
     return null;
   }
 
   /**
-	 * Returns the number of handles in this handler.
-	 */
+   * Returns the number of handles in this handler.
+   */
   int _getHandleCount() {
     return (_handles != null) ? _handles.length : 0;
   }
 
   /**
-	 * Hook for subclassers to return tooltip texts for certain points on the
-	 * handle.
-	 */
+   * Hook for subclassers to return tooltip texts for certain points on the
+   * handle.
+   */
   String getToolTipText(MouseEvent e) {
     return null;
   }
 
   /**
-	 * Returns the index of the handle at the given location.
-	 * 
-	 * @param x X-coordinate of the location.
-	 * @param y Y-coordinate of the location.
-	 * @return Returns the handle index for the given location.
-	 */
+   * Returns the index of the handle at the given location.
+   * 
+   * @param x X-coordinate of the location.
+   * @param y Y-coordinate of the location.
+   * @return Returns the handle index for the given location.
+   */
   int getIndexAt(int x, int y) {
     if (_handles != null && isHandlesVisible()) {
       int tol = _graphComponent.getTolerance();
@@ -202,8 +202,8 @@ class CellHandler {
   }
 
   /**
-	 * Processes the given event.
-	 */
+   * Processes the given event.
+   */
   void mousePressed(MouseEvent e) {
     if (!e.isConsumed()) {
       int tmp = getIndexAt(e.getX(), e.getY());
@@ -217,8 +217,8 @@ class CellHandler {
   }
 
   /**
-	 * Processes the given event.
-	 */
+   * Processes the given event.
+   */
   void mouseMoved(MouseEvent e) {
     if (!e.isConsumed() && _handles != null) {
       int index = getIndexAt(e.getX(), e.getY());
@@ -237,22 +237,22 @@ class CellHandler {
   }
 
   /**
-	 * Processes the given event.
-	 */
+   * Processes the given event.
+   */
   void mouseDragged(MouseEvent e) {
     // empty
   }
 
   /**
-	 * Processes the given event.
-	 */
+   * Processes the given event.
+   */
   void mouseReleased(MouseEvent e) {
     reset();
   }
 
   /**
-	 * Starts handling a gesture at the given handle index.
-	 */
+   * Starts handling a gesture at the given handle index.
+   */
   void start(MouseEvent e, int index) {
     this._index = index;
     _first = e.getPoint();
@@ -264,22 +264,22 @@ class CellHandler {
   }
 
   /**
-	 * Returns true if the given event should be ignored.
-	 */
+   * Returns true if the given event should be ignored.
+   */
   bool _isIgnoredEvent(MouseEvent e) {
     return _graphComponent.isEditEvent(e);
   }
 
   /**
-	 * Creates the preview for this handler.
-	 */
+   * Creates the preview for this handler.
+   */
   JComponent _createPreview() {
     return null;
   }
 
   /**
-	 * Resets the state of the handler and removes the preview.
-	 */
+   * Resets the state of the handler and removes the preview.
+   */
   void reset() {
     if (_preview != null) {
       _preview.setVisible(false);
@@ -291,15 +291,15 @@ class CellHandler {
   }
 
   /**
-	 * Returns the cursor for the given event and handle.
-	 */
+   * Returns the cursor for the given event and handle.
+   */
   Cursor _getCursor(MouseEvent e, int index) {
     return null;
   }
 
   /**
-	 * Paints the visible handles of this handler.
-	 */
+   * Paints the visible handles of this handler.
+   */
   void paint(Graphics g) {
     if (_handles != null && isHandlesVisible()) {
       for (int i = 0; i < _handles.length; i++) {
@@ -315,38 +315,38 @@ class CellHandler {
   }
 
   /**
-	 * Returns the color used to draw the selection border. This implementation
-	 * returns null.
-	 */
+   * Returns the color used to draw the selection border. This implementation
+   * returns null.
+   */
   Color getSelectionColor() {
     return null;
   }
 
   /**
-	 * Returns the stroke used to draw the selection border. This implementation
-	 * returns null.
-	 */
+   * Returns the stroke used to draw the selection border. This implementation
+   * returns null.
+   */
   Stroke getSelectionStroke() {
     return null;
   }
 
   /**
-	 * Returns true if the handle at the specified index is enabled.
-	 */
+   * Returns true if the handle at the specified index is enabled.
+   */
   bool _isHandleEnabled(int index) {
     return true;
   }
 
   /**
-	 * Returns true if the handle at the specified index is visible.
-	 */
+   * Returns true if the handle at the specified index is visible.
+   */
   bool _isHandleVisible(int index) {
     return !isLabel(index) || isLabelMovable();
   }
 
   /**
-	 * Returns the color to be used to fill the handle at the specified index.
-	 */
+   * Returns the color to be used to fill the handle at the specified index.
+   */
   Color _getHandleFillColor(int index) {
     if (isLabel(index)) {
       return SwingConstants.LABEL_HANDLE_FILLCOLOR;
@@ -356,16 +356,16 @@ class CellHandler {
   }
 
   /**
-	 * Returns the border color of the handle at the specified index.
-	 */
+   * Returns the border color of the handle at the specified index.
+   */
   Color _getHandleBorderColor(int index) {
     return SwingConstants.HANDLE_BORDERCOLOR;
   }
 
   /**
-	 * Invoked when the handler is no longer used. This is an empty
-	 * hook for subclassers.
-	 */
+   * Invoked when the handler is no longer used. This is an empty
+   * hook for subclassers.
+   */
   void _destroy() {
     // nop
   }

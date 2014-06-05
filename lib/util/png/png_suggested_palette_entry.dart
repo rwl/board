@@ -47,8 +47,8 @@ class PngSuggestedPaletteEntry implements Serializable
 {
 
 	/**
-	 * 
-	 */
+   * 
+   */
 	static final long serialVersionUID = -8711686482529372447L;
 
 	/** The name of the entry. */

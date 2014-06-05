@@ -3,10 +3,6 @@
  */
 part of graph.analysis;
 
-//import java.util.ArrayList;
-//import java.util.HashMap;
-//import java.util.List;
-//import java.util.Map;
 
 /**
  * Implements a collection of utility methods abstracting the graph structure
@@ -22,24 +18,24 @@ class AnalysisGraph {
   Graph _graph;
 
   /**
-	 * Returns the incoming and/or outgoing edges for the given cell.
-	 * If the optional parent argument is specified, then only edges are returned
-	 * where the opposite is in the given parent cell.
-	 *
-	 * @param cell Cell whose edges should be returned.
-	 * @param parent Optional parent. If specified the opposite end of any edge
-	 * must be a child of that parent in order for the edge to be returned. The
-	 * recurse parameter specifies whether or not it must be the direct child
-	 * or the parent just be an ancestral parent.
-	 * @param incoming Specifies if incoming edges should be included in the
-	 * result.
-	 * @param outgoing Specifies if outgoing edges should be included in the
-	 * result.
-	 * @param includeLoops Specifies if loops should be included in the result.
-	 * @param recurse Specifies if the parent specified only need be an ancestral
-	 * parent, <code>true</code>, or the direct parent, <code>false</code>
-	 * @return Returns the edges connected to the given cell.
-	 */
+   * Returns the incoming and/or outgoing edges for the given cell.
+   * If the optional parent argument is specified, then only edges are returned
+   * where the opposite is in the given parent cell.
+   *
+   * @param cell Cell whose edges should be returned.
+   * @param parent Optional parent. If specified the opposite end of any edge
+   * must be a child of that parent in order for the edge to be returned. The
+   * recurse parameter specifies whether or not it must be the direct child
+   * or the parent just be an ancestral parent.
+   * @param incoming Specifies if incoming edges should be included in the
+   * result.
+   * @param outgoing Specifies if outgoing edges should be included in the
+   * result.
+   * @param includeLoops Specifies if loops should be included in the result.
+   * @param recurse Specifies if the parent specified only need be an ancestral
+   * parent, <code>true</code>, or the direct parent, <code>false</code>
+   * @return Returns the edges connected to the given cell.
+   */
   List<Object> getEdges(Object cell, Object parent, [bool incoming = null, bool outgoing = true, bool includeLoops = null, bool recurse = null]) {
     if (incoming == null) {
       incoming = !GraphProperties.isDirected(_properties, GraphProperties.DEFAULT_DIRECTED);
@@ -66,20 +62,20 @@ class AnalysisGraph {
   }
 
   /**
-	 * Returns the incoming and/or outgoing edges for the given cell.
-	 * If the optional parent argument is specified, then only edges are returned
-	 * where the opposite is in the given parent cell.
-	 *
-	 * @param cell Cell whose edges should be returned.
-	 * @param parent Optional parent. If specified the opposite end of any edge
-	 * must be a child of that parent in order for the edge to be returned. The
-	 * recurse parameter specifies whether or not it must be the direct child
-	 * or the parent just be an ancestral parent.
-	 * @param includeLoops Specifies if loops should be included in the result.
-	 * @param recurse Specifies if the parent specified only need be an ancestral
-	 * parent, <code>true</code>, or the direct parent, <code>false</code>
-	 * @return Returns the edges connected to the given cell.
-	 */
+   * Returns the incoming and/or outgoing edges for the given cell.
+   * If the optional parent argument is specified, then only edges are returned
+   * where the opposite is in the given parent cell.
+   *
+   * @param cell Cell whose edges should be returned.
+   * @param parent Optional parent. If specified the opposite end of any edge
+   * must be a child of that parent in order for the edge to be returned. The
+   * recurse parameter specifies whether or not it must be the direct child
+   * or the parent just be an ancestral parent.
+   * @param includeLoops Specifies if loops should be included in the result.
+   * @param recurse Specifies if the parent specified only need be an ancestral
+   * parent, <code>true</code>, or the direct parent, <code>false</code>
+   * @return Returns the edges connected to the given cell.
+   */
   /*List<Object> getEdges(Object cell, Object parent, bool includeLoops, bool recurse)
 	{
 		if (GraphProperties.isDirected(_properties, GraphProperties.DEFAULT_DIRECTED))
@@ -93,15 +89,15 @@ class AnalysisGraph {
 	}*/
 
   /**
-	 * Returns all vertices of the given <b>parent</b>
-	 */
+   * Returns all vertices of the given <b>parent</b>
+   */
   List<Object> getChildVertices(Object parent) {
     return _graph.getChildVertices(parent);
   }
 
   /**
-	 * Returns all edges of the given <b>parent</b>
-	 */
+   * Returns all edges of the given <b>parent</b>
+   */
   List<Object> getChildEdges(Object parent) {
     return _graph.getChildEdges(parent);
   }
@@ -115,18 +111,18 @@ class AnalysisGraph {
   }
 
   /**
-	 * Returns all distinct opposite cells for the specified terminal
-	 * on the given edges.
-	 *
-	 * @param edges Edges whose opposite terminals should be returned.
-	 * @param terminal Terminal that specifies the end whose opposite should be
-	 * returned.
-	 * @param sources Specifies if source terminals should be included in the
-	 * result.
-	 * @param targets Specifies if target terminals should be included in the
-	 * result.
-	 * @return Returns the cells at the opposite ends of the given edges.
-	 */
+   * Returns all distinct opposite cells for the specified terminal
+   * on the given edges.
+   *
+   * @param edges Edges whose opposite terminals should be returned.
+   * @param terminal Terminal that specifies the end whose opposite should be
+   * returned.
+   * @param sources Specifies if source terminals should be included in the
+   * result.
+   * @param targets Specifies if target terminals should be included in the
+   * result.
+   * @return Returns the cells at the opposite ends of the given edges.
+   */
   List<Object> getOpposites(List<Object> edges, Object terminal, [bool sources = null, bool targets = true]) {
     if (sources == null) {
       sources = !GraphProperties.isDirected(_properties, GraphProperties.DEFAULT_DIRECTED);
@@ -137,14 +133,14 @@ class AnalysisGraph {
   }
 
   /**
-	 * Returns all distinct opposite cells for the specified terminal
-	 * on the given edges.
-	 *
-	 * @param edges Edges whose opposite terminals should be returned.
-	 * @param terminal Terminal that specifies the end whose opposite should be
-	 * returned.
-	 * @return Returns the cells at the opposite ends of the given edges.
-	 */
+   * Returns all distinct opposite cells for the specified terminal
+   * on the given edges.
+   *
+   * @param edges Edges whose opposite terminals should be returned.
+   * @param terminal Terminal that specifies the end whose opposite should be
+   * returned.
+   * @return Returns the cells at the opposite ends of the given edges.
+   */
   /*List<Object> getOpposites(List<Object> edges, Object terminal)
 	{
 		if (GraphProperties.isDirected(_properties, GraphProperties.DEFAULT_DIRECTED))

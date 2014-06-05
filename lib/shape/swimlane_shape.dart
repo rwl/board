@@ -5,8 +5,8 @@ part of graph.shape;
 class SwimlaneShape extends BasicShape {
 
   /**
-	 * 
-	 */
+   * 
+   */
   void paintShape(Graphics2DCanvas canvas, CellState state) {
     int start = math.round(Utils.getInt(state.getStyle(), Constants.STYLE_STARTSIZE, Constants.DEFAULT_STARTSIZE) * canvas.getScale()) as int;
 
@@ -35,8 +35,8 @@ class SwimlaneShape extends BasicShape {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   Rect _getGradientBounds(Graphics2DCanvas canvas, CellState state) {
     int start = math.round(Utils.getInt(state.getStyle(), Constants.STYLE_STARTSIZE, Constants.DEFAULT_STARTSIZE) * canvas.getScale()) as int;
     Rect result = new Rect.from(state);

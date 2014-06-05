@@ -4,13 +4,11 @@ part of graph.shape;
 //import java.awt.Shape;
 //import java.awt.geom.Ellipse2D;
 //import java.awt.geom.awt.Line2D;
-//import java.util.Hashtable;
-//import java.util.Map;
 
 class MarkerRegistry {
   /**
-	 * 
-	 */
+   * 
+   */
   static Map<String, IMarker> _markers = new Hashtable<String, IMarker>();
 
   static init() {
@@ -78,15 +76,15 @@ class MarkerRegistry {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   static IMarker getMarker(String name) {
     return _markers[name];
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   static void registerMarker(String name, IMarker marker) {
     _markers[name] = marker;
   }

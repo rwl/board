@@ -7,9 +7,6 @@ part of graph.util.png;
 //import java.io.ByteArrayInputStream;
 //import java.io.DataInputStream;
 //import java.io.InputStream;
-//import java.util.Hashtable;
-//import java.util.Map;
-//import java.util.zip.InflaterInputStream;
 
 /**
  * Utility class to extract the compression text portion of a PNG
@@ -17,18 +14,18 @@ part of graph.util.png;
 class PngTextDecoder
 {
 	/**
-	 * 
-	 */
+   * 
+   */
 	static final int PNG_CHUNK_ZTXT = 2052348020;
 
 	/**
-	 * 
-	 */
+   * 
+   */
 	static final int PNG_CHUNK_IEND = 1229278788;
 
 	/**
-	 * Decodes the zTXt chunk of the given PNG image stream.
-	 */
+   * Decodes the zTXt chunk of the given PNG image stream.
+   */
 	static Map<String, String> decodeCompressedText(InputStream stream)
 	{
 		Map<String, String> result = new Hashtable<String, String>();

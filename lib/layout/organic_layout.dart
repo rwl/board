@@ -7,12 +7,6 @@ part of graph.layout;
 //import java.awt.geom.awt.Line2D;
 //import java.awt.geom.Point2D;
 //import java.awt.geom.Rectangle2D;
-//import java.util.ArrayList;
-//import java.util.Arrays;
-//import java.util.HashSet;
-//import java.util.Hashtable;
-//import java.util.Iterator;
-//import java.util.Map;
 
 /**
  * An implementation of a simulated annealing layout, based on "Drawing Graphs
@@ -83,274 +77,274 @@ part of graph.layout;
 class OrganicLayout extends GraphLayout {
 
   /**
-	 * Whether or not the distance between edge and nodes will be calculated
-	 * as an energy cost function. This function is CPU intensive and is best
-	 * only used in the fine tuning phase.
-	 */
+   * Whether or not the distance between edge and nodes will be calculated
+   * as an energy cost function. This function is CPU intensive and is best
+   * only used in the fine tuning phase.
+   */
   bool isOptimizeEdgeDistance = true;
 
   /**
-	 * Whether or not edges crosses will be calculated as an energy cost
-	 * function. This function is CPU intensive, though if some iterations
-	 * without it are required, it is best to have a few cycles at the start
-	 * of the algorithm using it, then use it intermittantly through the rest
-	 * of the layout.
-	 */
+   * Whether or not edges crosses will be calculated as an energy cost
+   * function. This function is CPU intensive, though if some iterations
+   * without it are required, it is best to have a few cycles at the start
+   * of the algorithm using it, then use it intermittantly through the rest
+   * of the layout.
+   */
   bool isOptimizeEdgeCrossing = true;
 
   /**
-	 * Whether or not edge lengths will be calculated as an energy cost
-	 * function. This function not CPU intensive.
-	 */
+   * Whether or not edge lengths will be calculated as an energy cost
+   * function. This function not CPU intensive.
+   */
   bool isOptimizeEdgeLength = true;
 
   /**
-	 * Whether or not nodes will contribute an energy cost as they approach
-	 * the bound of the graph. The cost increases to a limit close to the
-	 * border and stays constant outside the bounds of the graph. This function
-	 * is not CPU intensive
-	 */
+   * Whether or not nodes will contribute an energy cost as they approach
+   * the bound of the graph. The cost increases to a limit close to the
+   * border and stays constant outside the bounds of the graph. This function
+   * is not CPU intensive
+   */
   bool isOptimizeBorderLine = true;
 
   /**
-	 * Whether or not node distribute will contribute an energy cost where
-	 * nodes are close together. The function is moderately CPU intensive.
-	 */
+   * Whether or not node distribute will contribute an energy cost where
+   * nodes are close together. The function is moderately CPU intensive.
+   */
   bool isOptimizeNodeDistribution = true;
 
   /**
-	 * when {@link #moveRadius}reaches this value, the algorithm is terminated
-	 */
+   * when {@link #moveRadius}reaches this value, the algorithm is terminated
+   */
   double minMoveRadius = 2.0;
 
   /**
-	 * The current radius around each node where the next position energy
-	 * values will be calculated for a possible move
-	 */
+   * The current radius around each node where the next position energy
+   * values will be calculated for a possible move
+   */
   double moveRadius;
 
   /**
-	 * The initial value of <code>moveRadius</code>. If this is set to zero
-	 * the layout will automatically determine a suitable value.
-	 */
+   * The initial value of <code>moveRadius</code>. If this is set to zero
+   * the layout will automatically determine a suitable value.
+   */
   double initialMoveRadius = 0.0;
 
   /**
-	 * The factor by which the <code>moveRadius</code> is multiplied by after
-	 * every iteration. A value of 0.75 is a good balance between performance
-	 * and aesthetics. Increasing the value provides more chances to find
-	 * minimum energy positions and decreasing it causes the minimum radius
-	 * termination condition to occur more quickly.
-	 */
+   * The factor by which the <code>moveRadius</code> is multiplied by after
+   * every iteration. A value of 0.75 is a good balance between performance
+   * and aesthetics. Increasing the value provides more chances to find
+   * minimum energy positions and decreasing it causes the minimum radius
+   * termination condition to occur more quickly.
+   */
   double radiusScaleFactor = 0.75;
 
   /**
-	 * The average amount of area allocated per node. If <code> bounds</code>
-	 * is not set this value mutiplied by the number of nodes to find
-	 * the total graph area. The graph is assumed square.
-	 */
+   * The average amount of area allocated per node. If <code> bounds</code>
+   * is not set this value mutiplied by the number of nodes to find
+   * the total graph area. The graph is assumed square.
+   */
   double averageNodeArea = 160000.0;
 
   /**
-	 * The radius below which fine tuning of the layout should start
-	 * This involves allowing the distance between nodes and edges to be
-	 * taken into account in the total energy calculation. If this is set to
-	 * zero, the layout will automatically determine a suitable value
-	 */
+   * The radius below which fine tuning of the layout should start
+   * This involves allowing the distance between nodes and edges to be
+   * taken into account in the total energy calculation. If this is set to
+   * zero, the layout will automatically determine a suitable value
+   */
   double fineTuningRadius = 40.0;
 
   /**
-	 * Limit to the number of iterations that may take place. This is only
-	 * reached if one of the termination conditions does not occur first.
-	 */
+   * Limit to the number of iterations that may take place. This is only
+   * reached if one of the termination conditions does not occur first.
+   */
   int maxIterations = 1000;
 
   /**
-	 * Cost factor applied to energy calculations involving the distance
-	 * nodes and edges. Increasing this value tends to cause nodes to move away
-	 * from edges, at the partial cost of other graph aesthetics.
-	 * <code>isOptimizeEdgeDistance</code> must be true for edge to nodes
-	 * distances to be taken into account.
-	 */
+   * Cost factor applied to energy calculations involving the distance
+   * nodes and edges. Increasing this value tends to cause nodes to move away
+   * from edges, at the partial cost of other graph aesthetics.
+   * <code>isOptimizeEdgeDistance</code> must be true for edge to nodes
+   * distances to be taken into account.
+   */
   double edgeDistanceCostFactor = 3000.0;
 
   /**
-	 * Cost factor applied to energy calculations involving edges that cross
-	 * over one another. Increasing this value tends to result in fewer edge
-	 * crossings, at the partial cost of other graph aesthetics.
-	 * <code>isOptimizeEdgeCrossing</code> must be true for edge crossings
-	 * to be taken into account.
-	 */
+   * Cost factor applied to energy calculations involving edges that cross
+   * over one another. Increasing this value tends to result in fewer edge
+   * crossings, at the partial cost of other graph aesthetics.
+   * <code>isOptimizeEdgeCrossing</code> must be true for edge crossings
+   * to be taken into account.
+   */
   double edgeCrossingCostFactor = 6000.0;
 
   /**
-	 * Cost factor applied to energy calculations involving the general node
-	 * distribution of the graph. Increasing this value tends to result in
-	 * a better distribution of nodes across the available space, at the
-	 * partial cost of other graph aesthetics.
-	 * <code>isOptimizeNodeDistribution</code> must be true for this general
-	 * distribution to be applied.
-	 */
+   * Cost factor applied to energy calculations involving the general node
+   * distribution of the graph. Increasing this value tends to result in
+   * a better distribution of nodes across the available space, at the
+   * partial cost of other graph aesthetics.
+   * <code>isOptimizeNodeDistribution</code> must be true for this general
+   * distribution to be applied.
+   */
   double nodeDistributionCostFactor = 30000.0;
 
   /**
-	 * Cost factor applied to energy calculations for node promixity to the
-	 * notional border of the graph. Increasing this value results in
-	 * nodes tending towards the centre of the drawing space, at the
-	 * partial cost of other graph aesthetics.
-	 * <code>isOptimizeBorderLine</code> must be true for border
-	 * repulsion to be applied.
-	 */
+   * Cost factor applied to energy calculations for node promixity to the
+   * notional border of the graph. Increasing this value results in
+   * nodes tending towards the centre of the drawing space, at the
+   * partial cost of other graph aesthetics.
+   * <code>isOptimizeBorderLine</code> must be true for border
+   * repulsion to be applied.
+   */
   double borderLineCostFactor = 5.0;
 
   /**
-	 * Cost factor applied to energy calculations for the edge lengths.
-	 * Increasing this value results in the layout attempting to shorten all
-	 * edges to the minimum edge length, at the partial cost of other graph
-	 * aesthetics.
-	 * <code>isOptimizeEdgeLength</code> must be true for edge length
-	 * shortening to be applied.
-	 */
+   * Cost factor applied to energy calculations for the edge lengths.
+   * Increasing this value results in the layout attempting to shorten all
+   * edges to the minimum edge length, at the partial cost of other graph
+   * aesthetics.
+   * <code>isOptimizeEdgeLength</code> must be true for edge length
+   * shortening to be applied.
+   */
   double edgeLengthCostFactor = 0.02;
 
   /**
-	 * The x coordinate of the final graph
-	 */
+   * The x coordinate of the final graph
+   */
   double boundsX = 0.0;
 
   /**
-	 * The y coordinate of the final graph
-	 */
+   * The y coordinate of the final graph
+   */
   double boundsY = 0.0;
 
   /**
-	 * The width coordinate of the final graph
-	 */
+   * The width coordinate of the final graph
+   */
   double boundsWidth = 0.0;
 
   /**
-	 * The height coordinate of the final graph
-	 */
+   * The height coordinate of the final graph
+   */
   double boundsHeight = 0.0;
 
   /**
-	 * current iteration number of the layout
-	 */
+   * current iteration number of the layout
+   */
   int iteration;
 
   /**
-	 * determines, in how many segments the circle around cells is divided, to
-	 * find a new position for the cell. Doubling this value doubles the CPU
-	 * load. Increasing it beyond 16 might mean a change to the
-	 * <code>performRound</code> method might further improve accuracy for a
-	 * small performance hit. The change is described in the method comment.
-	 */
+   * determines, in how many segments the circle around cells is divided, to
+   * find a new position for the cell. Doubling this value doubles the CPU
+   * load. Increasing it beyond 16 might mean a change to the
+   * <code>performRound</code> method might further improve accuracy for a
+   * small performance hit. The change is described in the method comment.
+   */
   int triesPerCell = 8;
 
   /**
-	 * prevents from dividing with zero and from creating excessive energy
-	 * values
-	 */
+   * prevents from dividing with zero and from creating excessive energy
+   * values
+   */
   double minDistanceLimit = 2.0;
 
   /**
-	 * cached version of <code>minDistanceLimit</code> squared
-	 */
+   * cached version of <code>minDistanceLimit</code> squared
+   */
   double minDistanceLimitSquared;
 
   /**
-	 * distance limit beyond which energy costs due to object repulsive is
-	 * not calculated as it would be too insignificant
-	 */
+   * distance limit beyond which energy costs due to object repulsive is
+   * not calculated as it would be too insignificant
+   */
   double maxDistanceLimit = 100.0;
 
   /**
-	 * cached version of <code>maxDistanceLimit</code> squared
-	 */
+   * cached version of <code>maxDistanceLimit</code> squared
+   */
   double maxDistanceLimitSquared;
 
   /**
-	 * Keeps track of how many consecutive round have passed without any energy
-	 * changes 
-	 */
+   * Keeps track of how many consecutive round have passed without any energy
+   * changes 
+   */
   int unchangedEnergyRoundCount;
 
   /**
-	 * The number of round of no node moves taking placed that the layout
-	 * terminates
-	 */
+   * The number of round of no node moves taking placed that the layout
+   * terminates
+   */
   int unchangedEnergyRoundTermination = 5;
 
   /**
-	 * Whether or not to use approximate node dimensions or not. Set to true
-	 * the radius squared of the smaller dimension is used. Set to false the
-	 * radiusSquared variable of the CellWrapper contains the width squared
-	 * and heightSquared is used in the obvious manner.
-	 */
+   * Whether or not to use approximate node dimensions or not. Set to true
+   * the radius squared of the smaller dimension is used. Set to false the
+   * radiusSquared variable of the CellWrapper contains the width squared
+   * and heightSquared is used in the obvious manner.
+   */
   bool approxNodeDimensions = true;
 
   /**
-	 * Internal models collection of nodes ( vertices ) to be laid out
-	 */
+   * Internal models collection of nodes ( vertices ) to be laid out
+   */
   List<CellWrapper> v;
 
   /**
-	 * Internal models collection of edges to be laid out
-	 */
+   * Internal models collection of edges to be laid out
+   */
   List<CellWrapper> e;
 
   /**
-	 * Array of the x portion of the normalised test vectors that 
-	 * are tested for a lower energy around each vertex. The vector 
-	 * of the combined x and y normals are multipled by the current 
-	 * radius to obtain test points for each vector in the array.
-	 */
+   * Array of the x portion of the normalised test vectors that 
+   * are tested for a lower energy around each vertex. The vector 
+   * of the combined x and y normals are multipled by the current 
+   * radius to obtain test points for each vector in the array.
+   */
   List<double> xNormTry;
 
   /**
-	 * Array of the y portion of the normalised test vectors that 
-	 * are tested for a lower energy around each vertex. The vector 
-	 * of the combined x and y normals are multipled by the current 
-	 * radius to obtain test points for each vector in the array.
-	 */
+   * Array of the y portion of the normalised test vectors that 
+   * are tested for a lower energy around each vertex. The vector 
+   * of the combined x and y normals are multipled by the current 
+   * radius to obtain test points for each vector in the array.
+   */
   List<double> yNormTry;
 
   /**
-	 * Whether or not fine tuning is on. The determines whether or not
-	 * node to edge distances are calculated in the total system energy.
-	 * This cost function , besides detecting line intersection, is a
-	 * performance intensive component of this algorithm and best left
-	 * to optimization phase. <code>isFineTuning</code> is switched to
-	 * <code>true</code> if and when the <code>fineTuningRadius</code>
-	 * radius is reached. Switching this variable to <code>true</code>
-	 * before the algorithm runs mean the node to edge cost function
-	 * is always calculated.
-	 */
+   * Whether or not fine tuning is on. The determines whether or not
+   * node to edge distances are calculated in the total system energy.
+   * This cost function , besides detecting line intersection, is a
+   * performance intensive component of this algorithm and best left
+   * to optimization phase. <code>isFineTuning</code> is switched to
+   * <code>true</code> if and when the <code>fineTuningRadius</code>
+   * radius is reached. Switching this variable to <code>true</code>
+   * before the algorithm runs mean the node to edge cost function
+   * is always calculated.
+   */
   bool isFineTuning = true;
 
   /**
-	 *  Specifies if the STYLE_NOEDGESTYLE flag should be set on edges that are
-	 * modified by the result. Default is true.
-	 */
+   *  Specifies if the STYLE_NOEDGESTYLE flag should be set on edges that are
+   * modified by the result. Default is true.
+   */
   bool disableEdgeStyle = true;
 
   /**
-	 * Specifies if all edge points of traversed edges should be removed.
-	 * Default is true.
-	 */
+   * Specifies if all edge points of traversed edges should be removed.
+   * Default is true.
+   */
   bool resetEdges = false;
 
   /**
-	 * Constructor for OrganicLayout.
-	 */
+   * Constructor for OrganicLayout.
+   */
   //	OrganicLayout(Graph graph)
   //	{
   //		super(graph);
   //	}
 
   /**
-	 * Constructor for OrganicLayout.
-	 */
+   * Constructor for OrganicLayout.
+   */
   OrganicLayout(Graph graph, [awt.Rectangle bounds = null]) : super(graph) {
     if (bounds != null) {
       boundsX = bounds.getX();
@@ -361,18 +355,18 @@ class OrganicLayout extends GraphLayout {
   }
 
   /**
-	 * Returns true if the given vertex has no connected edges.
-	 * 
-	 * @param vertex Object that represents the vertex to be tested.
-	 * @return Returns true if the vertex should be ignored.
-	 */
+   * Returns true if the given vertex has no connected edges.
+   * 
+   * @param vertex Object that represents the vertex to be tested.
+   * @return Returns true if the vertex should be ignored.
+   */
   bool isVertexIgnored(Object vertex) {
     return false;
   }
 
   /**
-	 * Implements <GraphLayout.execute>.
-	 */
+   * Implements <GraphLayout.execute>.
+   */
   void execute(Object parent) {
     IGraphModel model = graph.getModel();
     GraphView view = graph.getView();
@@ -569,22 +563,22 @@ class OrganicLayout extends GraphLayout {
   }
 
   /**
-	 * The main round of the algorithm. Firstly, a permutation of nodes
-	 * is created and worked through in that random order. Then, for each node
-	 * a number of point of a circle of radius <code>moveRadius</code> are
-	 * selected and the total energy of the system calculated if that node
-	 * were moved to that new position. If a lower energy position is found
-	 * this is accepted and the algorithm moves onto the next node. There
-	 * may be a slightly lower energy value yet to be found, but forcing
-	 * the loop to check all possible positions adds nearly the current
-	 * processing time again, and for little benefit. Another possible
-	 * strategy would be to take account of the fact that the energy values
-	 * around the circle decrease for half the loop and increase for the
-	 * other, as a general rule. If part of the decrease were seen, then
-	 * when the energy of a node increased, the previous node position was
-	 * almost always the lowest energy position. This adds about two loop
-	 * iterations to the inner loop and only makes sense with 16 tries or more.
-	 */
+   * The main round of the algorithm. Firstly, a permutation of nodes
+   * is created and worked through in that random order. Then, for each node
+   * a number of point of a circle of radius <code>moveRadius</code> are
+   * selected and the total energy of the system calculated if that node
+   * were moved to that new position. If a lower energy position is found
+   * this is accepted and the algorithm moves onto the next node. There
+   * may be a slightly lower energy value yet to be found, but forcing
+   * the loop to check all possible positions adds nearly the current
+   * processing time again, and for little benefit. Another possible
+   * strategy would be to take account of the fact that the energy values
+   * around the circle decrease for half the loop and increase for the
+   * other, as a general rule. If part of the decrease were seen, then
+   * when the energy of a node increased, the previous node position was
+   * almost always the lowest energy position. This adds about two loop
+   * iterations to the inner loop and only makes sense with 16 tries or more.
+   */
   void performRound() {
     // sequential order cells are computed (every round the same order)
 
@@ -664,31 +658,31 @@ class OrganicLayout extends GraphLayout {
   }
 
   /**
-	 * Calculates the change in energy for the specified node. The new energy is
-	 * calculated from the cost function methods and the old energy values for
-	 * each cost function are passed in as parameters
-	 * 
-	 * @param index
-	 *            The index of the node in the <code>vertices</code> array
-	 * @param oldNodeDistribution
-	 *            The previous node distribution energy cost of this node
-	 * @param oldEdgeDistance
-	 *            The previous edge distance energy cost of this node
-	 * @param oldEdgeCrossing
-	 *            The previous edge crossing energy cost for edges connected to
-	 *            this node
-	 * @param oldBorderLine
-	 *            The previous border line energy cost for this node
-	 * @param oldEdgeLength
-	 *            The previous edge length energy cost for edges connected to
-	 *            this node
-	 * @param oldAdditionalFactorsEnergy
-	 *            The previous energy cost for additional factors from
-	 *            sub-classes
-	 * 
-	 * @return the delta of the new energy cost to the old energy cost
-	 * 
-	 */
+   * Calculates the change in energy for the specified node. The new energy is
+   * calculated from the cost function methods and the old energy values for
+   * each cost function are passed in as parameters
+   * 
+   * @param index
+   *            The index of the node in the <code>vertices</code> array
+   * @param oldNodeDistribution
+   *            The previous node distribution energy cost of this node
+   * @param oldEdgeDistance
+   *            The previous edge distance energy cost of this node
+   * @param oldEdgeCrossing
+   *            The previous edge crossing energy cost for edges connected to
+   *            this node
+   * @param oldBorderLine
+   *            The previous border line energy cost for this node
+   * @param oldEdgeLength
+   *            The previous edge length energy cost for edges connected to
+   *            this node
+   * @param oldAdditionalFactorsEnergy
+   *            The previous energy cost for additional factors from
+   *            sub-classes
+   * 
+   * @return the delta of the new energy cost to the old energy cost
+   * 
+   */
   double calcEnergyDelta(int index, double oldNodeDistribution, double oldEdgeDistance, double oldEdgeCrossing, double oldBorderLine, double oldEdgeLength, double oldAdditionalFactorsEnergy) {
     double energyDelta = 0.0;
     energyDelta += getNodeDistribution(index) * 2.0;
@@ -714,12 +708,12 @@ class OrganicLayout extends GraphLayout {
   }
 
   /**
-	 * Calculates the energy cost of the specified node relative to all other
-	 * nodes. Basically produces a higher energy the closer nodes are together.
-	 * 
-	 * @param i the index of the node in the array <code>v</code>
-	 * @return the total node distribution energy of the specified node 
-	 */
+   * Calculates the energy cost of the specified node relative to all other
+   * nodes. Basically produces a higher energy the closer nodes are together.
+   * 
+   * @param i the index of the node in the array <code>v</code>
+   * @return the total node distribution energy of the specified node 
+   */
   double getNodeDistribution(int i) {
     double energy = 0.0;
 
@@ -769,14 +763,14 @@ class OrganicLayout extends GraphLayout {
   }
 
   /**
-	 * This method calculates the energy of the distance of the specified
-	 * node to the notional border of the graph. The energy increases up to
-	 * a limited maximum close to the border and stays at that maximum
-	 * up to and over the border.
-	 * 
-	 * @param i the index of the node in the array <code>v</code>
-	 * @return the total border line energy of the specified node 
-	 */
+   * This method calculates the energy of the distance of the specified
+   * node to the notional border of the graph. The energy increases up to
+   * a limited maximum close to the border and stays at that maximum
+   * up to and over the border.
+   * 
+   * @param i the index of the node in the array <code>v</code>
+   * @return the total border line energy of the specified node 
+   */
   double getBorderline(int i) {
     double energy = 0.0;
     if (isOptimizeBorderLine) {
@@ -796,14 +790,14 @@ class OrganicLayout extends GraphLayout {
   }
 
   /**
-	 * Obtains the energy cost function for the specified node being moved.
-	 * This involves calling <code>getEdgeLength</code> for all
-	 * edges connected to the specified node
-	 * @param node
-	 * 				the node whose connected edges cost functions are to be
-	 * 				calculated
-	 * @return the total edge length energy of the connected edges 
-	 */
+   * Obtains the energy cost function for the specified node being moved.
+   * This involves calling <code>getEdgeLength</code> for all
+   * edges connected to the specified node
+   * @param node
+   * 				the node whose connected edges cost functions are to be
+   * 				calculated
+   * @return the total edge length energy of the connected edges 
+   */
   double getEdgeLengthAffectedEdges(int node) {
     double energy = 0.0;
     for (int i = 0; i < v[node].connectedEdges.length; i++) {
@@ -813,16 +807,16 @@ class OrganicLayout extends GraphLayout {
   }
 
   /**
-	 * This method calculates the energy due to the length of the specified
-	 * edge. The energy is proportional to the length of the edge, making
-	 * shorter edges preferable in the layout.
-	 * 
-	 * @param i the index of the edge in the array <code>e</code>
-	 * @return the total edge length energy of the specified edge 
-	 */
+   * This method calculates the energy due to the length of the specified
+   * edge. The energy is proportional to the length of the edge, making
+   * shorter edges preferable in the layout.
+   * 
+   * @param i the index of the edge in the array <code>e</code>
+   * @return the total edge length energy of the specified edge 
+   */
   double getEdgeLength(int i) {
     if (isOptimizeEdgeLength) {
-      double edgeLength = awt.Point.distance(v[e[i].source].x, v[e[i].source].y, v[e[i].target].x, v[e[i].target].y);
+      double edgeLength = awt.Point.Distance(v[e[i].source].x, v[e[i].source].y, v[e[i].target].x, v[e[i].target].y);
       return (edgeLengthCostFactor * edgeLength * edgeLength);
     } else {
       return 0.0;
@@ -830,14 +824,14 @@ class OrganicLayout extends GraphLayout {
   }
 
   /**
-	 * Obtains the energy cost function for the specified node being moved.
-	 * This involves calling <code>getEdgeCrossing</code> for all
-	 * edges connected to the specified node
-	 * @param node
-	 * 				the node whose connected edges cost functions are to be
-	 * 				calculated
-	 * @return the total edge crossing energy of the connected edges 
-	 */
+   * Obtains the energy cost function for the specified node being moved.
+   * This involves calling <code>getEdgeCrossing</code> for all
+   * edges connected to the specified node
+   * @param node
+   * 				the node whose connected edges cost functions are to be
+   * 				calculated
+   * @return the total edge crossing energy of the connected edges 
+   */
   double getEdgeCrossingAffectedEdges(int node) {
     double energy = 0.0;
     for (int i = 0; i < v[node].connectedEdges.length; i++) {
@@ -848,13 +842,13 @@ class OrganicLayout extends GraphLayout {
   }
 
   /**
-	 * This method calculates the energy of the distance from the specified
-	 * edge crossing any other edges. Each crossing add a constant factor
-	 * to the total energy
-	 * 
-	 * @param i the index of the edge in the array <code>e</code>
-	 * @return the total edge crossing energy of the specified edge 
-	 */
+   * This method calculates the energy of the distance from the specified
+   * edge crossing any other edges. Each crossing add a constant factor
+   * to the total energy
+   * 
+   * @param i the index of the edge in the array <code>e</code>
+   * @return the total edge crossing energy of the specified edge 
+   */
   double getEdgeCrossing(int i) {
     // TODO Could have a cost function per edge
     int n = 0; // counts energy of edgecrossings through edge i
@@ -931,7 +925,8 @@ class OrganicLayout extends GraphLayout {
             // otherwise. Because of ignoring the zero this code
             // below can behave like only a 1 or -1 will be
             // returned. See Lines2D.linesIntersects().
-            bool intersects = ((awt.Line2D.relativeCCW(iP1X, iP1Y, iP2X, iP2Y, jP1X, jP1Y) != awt.Line2D.relativeCCW(iP1X, iP1Y, iP2X, iP2Y, jP2X, jP2Y)) && (awt.Line2D.relativeCCW(jP1X, jP1Y, jP2X, jP2Y, iP1X, iP1Y) != awt.Line2D.relativeCCW(jP1X, jP1Y, jP2X, jP2Y, iP2X, iP2Y)));
+            bool intersects = ((awt.Line2D.RelativeCCW(iP1X, iP1Y, iP2X, iP2Y, jP1X, jP1Y) != awt.Line2D.RelativeCCW(iP1X, iP1Y, iP2X, iP2Y, jP2X, jP2Y)) &&
+                (awt.Line2D.RelativeCCW(jP1X, jP1Y, jP2X, jP2Y, iP1X, iP1Y) != awt.Line2D.RelativeCCW(jP1X, jP1Y, jP2X, jP2Y, iP2X, iP2Y)));
 
             if (intersects) {
               n++;
@@ -944,14 +939,14 @@ class OrganicLayout extends GraphLayout {
   }
 
   /**
-	 * This method calculates the energy of the distance between Cells and
-	 * Edges. This version of the edge distance cost calculates the energy
-	 * cost from a specified <strong>node</strong>. The distance cost to all
-	 * unconnected edges is calculated and the total returned.
-	 * 
-	 * @param i the index of the node in the array <code>v</code>
-	 * @return the total edge distance energy of the node
-	 */
+   * This method calculates the energy of the distance between Cells and
+   * Edges. This version of the edge distance cost calculates the energy
+   * cost from a specified <strong>node</strong>. The distance cost to all
+   * unconnected edges is calculated and the total returned.
+   * 
+   * @param i the index of the node in the array <code>v</code>
+   * @return the total edge distance energy of the node
+   */
   double getEdgeDistanceFromNode(int i) {
     double energy = 0.0;
     // This function is only performed during fine tuning for performance
@@ -959,7 +954,7 @@ class OrganicLayout extends GraphLayout {
       List<int> edges = v[i].relevantEdges;
       for (int j = 0; j < edges.length; j++) {
         // Note that the distance value is squared
-        double distSquare = awt.Line2D.ptSegDistSq(v[e[edges[j]].source].x, v[e[edges[j]].source].y, v[e[edges[j]].target].x, v[e[edges[j]].target].y, v[i].x, v[i].y);
+        double distSquare = awt.Line2D.PtSegDistSq(v[e[edges[j]].source].x, v[e[edges[j]].source].y, v[e[edges[j]].target].x, v[e[edges[j]].target].y, v[i].x, v[i].y);
 
         distSquare -= v[i].radiusSquared;
 
@@ -980,14 +975,14 @@ class OrganicLayout extends GraphLayout {
   }
 
   /**
-	 * Obtains the energy cost function for the specified node being moved.
-	 * This involves calling <code>getEdgeDistanceFromEdge</code> for all
-	 * edges connected to the specified node
-	 * @param node
-	 * 				the node whose connected edges cost functions are to be
-	 * 				calculated
-	 * @return the total edge distance energy of the connected edges 
-	 */
+   * Obtains the energy cost function for the specified node being moved.
+   * This involves calling <code>getEdgeDistanceFromEdge</code> for all
+   * edges connected to the specified node
+   * @param node
+   * 				the node whose connected edges cost functions are to be
+   * 				calculated
+   * @return the total edge distance energy of the connected edges 
+   */
   double getEdgeDistanceAffectedNodes(int node) {
     double energy = 0.0;
     for (int i = 0; i < (v[node].connectedEdges.length); i++) {
@@ -998,14 +993,14 @@ class OrganicLayout extends GraphLayout {
   }
 
   /**
-	 * This method calculates the energy of the distance between Cells and
-	 * Edges. This version of the edge distance cost calculates the energy
-	 * cost from a specified <strong>edge</strong>. The distance cost to all
-	 * unconnected nodes is calculated and the total returned.
-	 * 
-	 * @param i the index of the edge in the array <code>e</code>
-	 * @return the total edge distance energy of the edge
-	 */
+   * This method calculates the energy of the distance between Cells and
+   * Edges. This version of the edge distance cost calculates the energy
+   * cost from a specified <strong>edge</strong>. The distance cost to all
+   * unconnected nodes is calculated and the total returned.
+   * 
+   * @param i the index of the edge in the array <code>e</code>
+   * @return the total edge distance energy of the edge
+   */
   double getEdgeDistanceFromEdge(int i) {
     double energy = 0.0;
     // This function is only performed during fine tuning for performance
@@ -1013,7 +1008,7 @@ class OrganicLayout extends GraphLayout {
       for (int j = 0; j < v.length; j++) {
         // Don't calculate for connected nodes
         if (e[i].source != j && e[i].target != j) {
-          double distSquare = awt.Line2D.ptSegDistSq(v[e[i].source].x, v[e[i].source].y, v[e[i].target].x, v[e[i].target].y, v[j].x, v[j].y);
+          double distSquare = awt.Line2D.PtSegDistSq(v[e[i].source].x, v[e[i].source].y, v[e[i].target].x, v[e[i].target].y, v[j].x, v[j].y);
 
           distSquare -= v[j].radiusSquared;
 
@@ -1033,22 +1028,22 @@ class OrganicLayout extends GraphLayout {
   }
 
   /**
-	 * Hook method to adding additional energy factors into the layout.
-	 * Calculates the energy just for the specified node.
-	 * @param i the nodes whose energy is being calculated
-	 * @return the energy of this node caused by the additional factors
-	 */
+   * Hook method to adding additional energy factors into the layout.
+   * Calculates the energy just for the specified node.
+   * @param i the nodes whose energy is being calculated
+   * @return the energy of this node caused by the additional factors
+   */
   double getAdditionFactorsEnergy(int i) {
     return 0.0;
   }
 
   /**
-	 * Returns all Edges that are not connected to the specified cell
-	 * 
-	 * @param cellIndex
-	 *            the cell index to which the edges are not connected
-	 * @return Array of all interesting Edges
-	 */
+   * Returns all Edges that are not connected to the specified cell
+   * 
+   * @param cellIndex
+   *            the cell index to which the edges are not connected
+   * @return Array of all interesting Edges
+   */
   List<int> getRelevantEdges(int cellIndex) {
     List<int> relevantEdgeList = new List<int>(e.length);
 
@@ -1073,12 +1068,12 @@ class OrganicLayout extends GraphLayout {
   }
 
   /**
-	 * Returns all Edges that are connected with the specified cell
-	 * 
-	 * @param cellIndex
-	 *            the cell index to which the edges are connected
-	 * @return Array of all connected Edges
-	 */
+   * Returns all Edges that are connected with the specified cell
+   * 
+   * @param cellIndex
+   *            the cell index to which the edges are connected
+   * @return Array of all connected Edges
+   */
   List<int> getConnectedEdges(int cellIndex) {
     List<int> connectedEdgeList = new List<int>(e.length);
 
@@ -1104,350 +1099,350 @@ class OrganicLayout extends GraphLayout {
   }
 
   /**
-	 * Returns <code>Organic</code>, the name of this algorithm.
-	 */
+   * Returns <code>Organic</code>, the name of this algorithm.
+   */
   String toString() {
     return "Organic";
   }
 
   /**
-	 * @return Returns the averageNodeArea.
-	 */
+   * @return Returns the averageNodeArea.
+   */
   double getAverageNodeArea() {
     return averageNodeArea;
   }
 
   /**
-	 * @param averageNodeArea The averageNodeArea to set.
-	 */
+   * @param averageNodeArea The averageNodeArea to set.
+   */
   void setAverageNodeArea(double averageNodeArea) {
     this.averageNodeArea = averageNodeArea;
   }
 
   /**
-	 * @return Returns the borderLineCostFactor.
-	 */
+   * @return Returns the borderLineCostFactor.
+   */
   double getBorderLineCostFactor() {
     return borderLineCostFactor;
   }
 
   /**
-	 * @param borderLineCostFactor The borderLineCostFactor to set.
-	 */
+   * @param borderLineCostFactor The borderLineCostFactor to set.
+   */
   void setBorderLineCostFactor(double borderLineCostFactor) {
     this.borderLineCostFactor = borderLineCostFactor;
   }
 
   /**
-	 * @return Returns the edgeCrossingCostFactor.
-	 */
+   * @return Returns the edgeCrossingCostFactor.
+   */
   double getEdgeCrossingCostFactor() {
     return edgeCrossingCostFactor;
   }
 
   /**
-	 * @param edgeCrossingCostFactor The edgeCrossingCostFactor to set.
-	 */
+   * @param edgeCrossingCostFactor The edgeCrossingCostFactor to set.
+   */
   void setEdgeCrossingCostFactor(double edgeCrossingCostFactor) {
     this.edgeCrossingCostFactor = edgeCrossingCostFactor;
   }
 
   /**
-	 * @return Returns the edgeDistanceCostFactor.
-	 */
+   * @return Returns the edgeDistanceCostFactor.
+   */
   double getEdgeDistanceCostFactor() {
     return edgeDistanceCostFactor;
   }
 
   /**
-	 * @param edgeDistanceCostFactor The edgeDistanceCostFactor to set.
-	 */
+   * @param edgeDistanceCostFactor The edgeDistanceCostFactor to set.
+   */
   void setEdgeDistanceCostFactor(double edgeDistanceCostFactor) {
     this.edgeDistanceCostFactor = edgeDistanceCostFactor;
   }
 
   /**
-	 * @return Returns the edgeLengthCostFactor.
-	 */
+   * @return Returns the edgeLengthCostFactor.
+   */
   double getEdgeLengthCostFactor() {
     return edgeLengthCostFactor;
   }
 
   /**
-	 * @param edgeLengthCostFactor The edgeLengthCostFactor to set.
-	 */
+   * @param edgeLengthCostFactor The edgeLengthCostFactor to set.
+   */
   void setEdgeLengthCostFactor(double edgeLengthCostFactor) {
     this.edgeLengthCostFactor = edgeLengthCostFactor;
   }
 
   /**
-	 * @return Returns the fineTuningRadius.
-	 */
+   * @return Returns the fineTuningRadius.
+   */
   double getFineTuningRadius() {
     return fineTuningRadius;
   }
 
   /**
-	 * @param fineTuningRadius The fineTuningRadius to set.
-	 */
+   * @param fineTuningRadius The fineTuningRadius to set.
+   */
   void setFineTuningRadius(double fineTuningRadius) {
     this.fineTuningRadius = fineTuningRadius;
   }
 
   /**
-	 * @return Returns the initialMoveRadius.
-	 */
+   * @return Returns the initialMoveRadius.
+   */
   double getInitialMoveRadius() {
     return initialMoveRadius;
   }
 
   /**
-	 * @param initialMoveRadius The initialMoveRadius to set.
-	 */
+   * @param initialMoveRadius The initialMoveRadius to set.
+   */
   void setInitialMoveRadius(double initialMoveRadius) {
     this.initialMoveRadius = initialMoveRadius;
   }
 
   /**
-	 * @return Returns the isFineTuning.
-	 */
+   * @return Returns the isFineTuning.
+   */
   //	bool isFineTuning()
   //	{
   //		return isFineTuning;
   //	}
 
   /**
-	 * @param isFineTuning The isFineTuning to set.
-	 */
+   * @param isFineTuning The isFineTuning to set.
+   */
   void setFineTuning(bool isFineTuning) {
     this.isFineTuning = isFineTuning;
   }
 
   /**
-	 * @return Returns the isOptimizeBorderLine.
-	 */
+   * @return Returns the isOptimizeBorderLine.
+   */
   //	bool isOptimizeBorderLine()
   //	{
   //		return isOptimizeBorderLine;
   //	}
 
   /**
-	 * @param isOptimizeBorderLine The isOptimizeBorderLine to set.
-	 */
+   * @param isOptimizeBorderLine The isOptimizeBorderLine to set.
+   */
   void setOptimizeBorderLine(bool isOptimizeBorderLine) {
     this.isOptimizeBorderLine = isOptimizeBorderLine;
   }
 
   /**
-	 * @return Returns the isOptimizeEdgeCrossing.
-	 */
+   * @return Returns the isOptimizeEdgeCrossing.
+   */
   //	bool isOptimizeEdgeCrossing()
   //	{
   //		return isOptimizeEdgeCrossing;
   //	}
 
   /**
-	 * @param isOptimizeEdgeCrossing The isOptimizeEdgeCrossing to set.
-	 */
+   * @param isOptimizeEdgeCrossing The isOptimizeEdgeCrossing to set.
+   */
   void setOptimizeEdgeCrossing(bool isOptimizeEdgeCrossing) {
     this.isOptimizeEdgeCrossing = isOptimizeEdgeCrossing;
   }
 
   /**
-	 * @return Returns the isOptimizeEdgeDistance.
-	 */
+   * @return Returns the isOptimizeEdgeDistance.
+   */
   //	bool isOptimizeEdgeDistance()
   //	{
   //		return isOptimizeEdgeDistance;
   //	}
 
   /**
-	 * @param isOptimizeEdgeDistance The isOptimizeEdgeDistance to set.
-	 */
+   * @param isOptimizeEdgeDistance The isOptimizeEdgeDistance to set.
+   */
   void setOptimizeEdgeDistance(bool isOptimizeEdgeDistance) {
     this.isOptimizeEdgeDistance = isOptimizeEdgeDistance;
   }
 
   /**
-	 * @return Returns the isOptimizeEdgeLength.
-	 */
+   * @return Returns the isOptimizeEdgeLength.
+   */
   //	bool isOptimizeEdgeLength()
   //	{
   //		return isOptimizeEdgeLength;
   //	}
 
   /**
-	 * @param isOptimizeEdgeLength The isOptimizeEdgeLength to set.
-	 */
+   * @param isOptimizeEdgeLength The isOptimizeEdgeLength to set.
+   */
   void setOptimizeEdgeLength(bool isOptimizeEdgeLength) {
     this.isOptimizeEdgeLength = isOptimizeEdgeLength;
   }
 
   /**
-	 * @return Returns the isOptimizeNodeDistribution.
-	 */
+   * @return Returns the isOptimizeNodeDistribution.
+   */
   //	bool isOptimizeNodeDistribution()
   //	{
   //		return isOptimizeNodeDistribution;
   //	}
 
   /**
-	 * @param isOptimizeNodeDistribution The isOptimizeNodeDistribution to set.
-	 */
+   * @param isOptimizeNodeDistribution The isOptimizeNodeDistribution to set.
+   */
   void setOptimizeNodeDistribution(bool isOptimizeNodeDistribution) {
     this.isOptimizeNodeDistribution = isOptimizeNodeDistribution;
   }
 
   /**
-	 * @return Returns the maxIterations.
-	 */
+   * @return Returns the maxIterations.
+   */
   int getMaxIterations() {
     return maxIterations;
   }
 
   /**
-	 * @param maxIterations The maxIterations to set.
-	 */
+   * @param maxIterations The maxIterations to set.
+   */
   void setMaxIterations(int maxIterations) {
     this.maxIterations = maxIterations;
   }
 
   /**
-	 * @return Returns the minDistanceLimit.
-	 */
+   * @return Returns the minDistanceLimit.
+   */
   double getMinDistanceLimit() {
     return minDistanceLimit;
   }
 
   /**
-	 * @param minDistanceLimit The minDistanceLimit to set.
-	 */
+   * @param minDistanceLimit The minDistanceLimit to set.
+   */
   void setMinDistanceLimit(double minDistanceLimit) {
     this.minDistanceLimit = minDistanceLimit;
   }
 
   /**
-	 * @return Returns the minMoveRadius.
-	 */
+   * @return Returns the minMoveRadius.
+   */
   double getMinMoveRadius() {
     return minMoveRadius;
   }
 
   /**
-	 * @param minMoveRadius The minMoveRadius to set.
-	 */
+   * @param minMoveRadius The minMoveRadius to set.
+   */
   void setMinMoveRadius(double minMoveRadius) {
     this.minMoveRadius = minMoveRadius;
   }
 
   /**
-	 * @return Returns the nodeDistributionCostFactor.
-	 */
+   * @return Returns the nodeDistributionCostFactor.
+   */
   double getNodeDistributionCostFactor() {
     return nodeDistributionCostFactor;
   }
 
   /**
-	 * @param nodeDistributionCostFactor The nodeDistributionCostFactor to set.
-	 */
+   * @param nodeDistributionCostFactor The nodeDistributionCostFactor to set.
+   */
   void setNodeDistributionCostFactor(double nodeDistributionCostFactor) {
     this.nodeDistributionCostFactor = nodeDistributionCostFactor;
   }
 
   /**
-	 * @return Returns the radiusScaleFactor.
-	 */
+   * @return Returns the radiusScaleFactor.
+   */
   double getRadiusScaleFactor() {
     return radiusScaleFactor;
   }
 
   /**
-	 * @param radiusScaleFactor The radiusScaleFactor to set.
-	 */
+   * @param radiusScaleFactor The radiusScaleFactor to set.
+   */
   void setRadiusScaleFactor(double radiusScaleFactor) {
     this.radiusScaleFactor = radiusScaleFactor;
   }
 
   /**
-	 * @return Returns the triesPerCell.
-	 */
+   * @return Returns the triesPerCell.
+   */
   int getTriesPerCell() {
     return triesPerCell;
   }
 
   /**
-	 * @param triesPerCell The triesPerCell to set.
-	 */
+   * @param triesPerCell The triesPerCell to set.
+   */
   void setTriesPerCell(int triesPerCell) {
     this.triesPerCell = triesPerCell;
   }
 
   /**
-	 * @return Returns the unchangedEnergyRoundTermination.
-	 */
+   * @return Returns the unchangedEnergyRoundTermination.
+   */
   int getUnchangedEnergyRoundTermination() {
     return unchangedEnergyRoundTermination;
   }
 
   /**
-	 * @param unchangedEnergyRoundTermination The unchangedEnergyRoundTermination to set.
-	 */
+   * @param unchangedEnergyRoundTermination The unchangedEnergyRoundTermination to set.
+   */
   void setUnchangedEnergyRoundTermination(int unchangedEnergyRoundTermination) {
     this.unchangedEnergyRoundTermination = unchangedEnergyRoundTermination;
   }
 
   /**
-	 * @return Returns the maxDistanceLimit.
-	 */
+   * @return Returns the maxDistanceLimit.
+   */
   double getMaxDistanceLimit() {
     return maxDistanceLimit;
   }
 
   /**
-	 * @param maxDistanceLimit The maxDistanceLimit to set.
-	 */
+   * @param maxDistanceLimit The maxDistanceLimit to set.
+   */
   void setMaxDistanceLimit(double maxDistanceLimit) {
     this.maxDistanceLimit = maxDistanceLimit;
   }
 
   /**
-	 * @return the approxNodeDimensions
-	 */
+   * @return the approxNodeDimensions
+   */
   bool isApproxNodeDimensions() {
     return approxNodeDimensions;
   }
 
   /**
-	 * @param approxNodeDimensions the approxNodeDimensions to set
-	 */
+   * @param approxNodeDimensions the approxNodeDimensions to set
+   */
   void setApproxNodeDimensions(bool approxNodeDimensions) {
     this.approxNodeDimensions = approxNodeDimensions;
   }
 
   /**
-	 * @return the disableEdgeStyle
-	 */
+   * @return the disableEdgeStyle
+   */
   bool isDisableEdgeStyle() {
     return disableEdgeStyle;
   }
 
   /**
-	 * @param disableEdgeStyle the disableEdgeStyle to set
-	 */
+   * @param disableEdgeStyle the disableEdgeStyle to set
+   */
   void setDisableEdgeStyle(bool disableEdgeStyle) {
     this.disableEdgeStyle = disableEdgeStyle;
   }
 
   /**
-	 * @return the resetEdges
-	 */
+   * @return the resetEdges
+   */
   bool isResetEdges() {
     return resetEdges;
   }
 
   /**
-	 * @param resetEdges the resetEdges to set
-	 */
+   * @param resetEdges the resetEdges to set
+   */
   void setResetEdges(bool resetEdges) {
     this.resetEdges = resetEdges;
   }

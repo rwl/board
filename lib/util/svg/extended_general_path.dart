@@ -26,7 +26,6 @@ part of graph.util.svg;
 //import java.awt.geom.PathIterator;
 //import java.awt.geom.Point2D;
 //import java.awt.geom.Rectangle2D;
-//import java.util.Arrays;
 
 /**
  * The <code>ExtendedGeneralPath</code> class represents a geometric
@@ -66,29 +65,29 @@ class ExtendedGeneralPath implements Shape, Cloneable
 	}
 
 	/**
-	 * Constructs a new <code>ExtendedGeneralPath</code> with the
-	 * specified winding rule to control operations that require the
-	 * interior of the path to be defined.
-	 */
+   * Constructs a new <code>ExtendedGeneralPath</code> with the
+   * specified winding rule to control operations that require the
+   * interior of the path to be defined.
+   */
 	ExtendedGeneralPath(int rule)
 	{
 		path = new GeneralPath(rule);
 	}
 
 	/**
-	 * Constructs a new <code>ExtendedGeneralPath</code> object with
-	 * the specified winding rule and the specified initial capacity
-	 * to store path coordinates.
-	 */
+   * Constructs a new <code>ExtendedGeneralPath</code> object with
+   * the specified winding rule and the specified initial capacity
+   * to store path coordinates.
+   */
 	ExtendedGeneralPath(int rule, int initialCapacity)
 	{
 		path = new GeneralPath(rule, initialCapacity);
 	}
 
 	/**
-	 * Constructs a new <code>ExtendedGeneralPath</code> object from
-	 * an arbitrary <code>Shape</code> object.
-	 */
+   * Constructs a new <code>ExtendedGeneralPath</code> object from
+   * an arbitrary <code>Shape</code> object.
+   */
 	ExtendedGeneralPath(Shape s)
 	{
 		this();
@@ -96,28 +95,28 @@ class ExtendedGeneralPath implements Shape, Cloneable
 	}
 
 	/**
-	 * Adds an elliptical arc, defined by two radii, an angle from the
-	 * x-axis, a flag to choose the large arc or not, a flag to
-	 * indicate if we increase or decrease the angles and the final
-	 * point of the arc.
-	 *
-	 * @param rx the x radius of the ellipse
-	 * @param ry the y radius of the ellipse
-	 *
-	 * @param angle the angle from the x-axis of the current
-	 * coordinate system to the x-axis of the ellipse in degrees.
-	 *
-	 * @param largeArcFlag the large arc flag. If true the arc
-	 * spanning less than or equal to 180 degrees is chosen, otherwise
-	 * the arc spanning greater than 180 degrees is chosen
-	 *
-	 * @param sweepFlag the sweep flag. If true the line joining
-	 * center to arc sweeps through decreasing angles otherwise it
-	 * sweeps through increasing angles
-	 *
-	 * @param x the absolute x coordinate of the final point of the arc.
-	 * @param y the absolute y coordinate of the final point of the arc.
-	 */
+   * Adds an elliptical arc, defined by two radii, an angle from the
+   * x-axis, a flag to choose the large arc or not, a flag to
+   * indicate if we increase or decrease the angles and the final
+   * point of the arc.
+   *
+   * @param rx the x radius of the ellipse
+   * @param ry the y radius of the ellipse
+   *
+   * @param angle the angle from the x-axis of the current
+   * coordinate system to the x-axis of the ellipse in degrees.
+   *
+   * @param largeArcFlag the large arc flag. If true the arc
+   * spanning less than or equal to 180 degrees is chosen, otherwise
+   * the arc spanning greater than 180 degrees is chosen
+   *
+   * @param sweepFlag the sweep flag. If true the line joining
+   * center to arc sweeps through decreasing angles otherwise it
+   * sweeps through increasing angles
+   *
+   * @param x the absolute x coordinate of the final point of the arc.
+   * @param y the absolute y coordinate of the final point of the arc.
+   */
 	synchronized void arcTo(float rx, float ry, float angle,
 			bool largeArcFlag, bool sweepFlag, float x, float y)
 	{
@@ -163,13 +162,13 @@ class ExtendedGeneralPath implements Shape, Cloneable
 	}
 
 	/**
-	 * This constructs an unrotated Arc2D from the SVG specification of an
-	 * Elliptical arc.  To get the final arc you need to apply a rotation
-	 * transform such as:
-	 *
-	 * AffineTransform.getRotateInstance
-	 *     (angle, arc.getX()+arc.getWidth()/2, arc.getY()+arc.getHeight()/2);
-	 */
+   * This constructs an unrotated Arc2D from the SVG specification of an
+   * Elliptical arc.  To get the final arc you need to apply a rotation
+   * transform such as:
+   *
+   * AffineTransform.getRotateInstance
+   *     (angle, arc.getX()+arc.getWidth()/2, arc.getY()+arc.getHeight()/2);
+   */
 	static Arc2D computeArc(double x0, double y0, double rx, double ry,
 			double angle, bool largeArcFlag, bool sweepFlag, double x,
 			double y)
@@ -272,8 +271,8 @@ class ExtendedGeneralPath implements Shape, Cloneable
 	}
 
 	/**
-	 * Delegates to the enclosed <code>GeneralPath</code>.
-	 */
+   * Delegates to the enclosed <code>GeneralPath</code>.
+   */
 	synchronized void moveTo(float x, float y)
 	{
 		// Don't add moveto to general path unless there is a reason.
@@ -285,8 +284,8 @@ class ExtendedGeneralPath implements Shape, Cloneable
 	}
 
 	/**
-	 * Delegates to the enclosed <code>GeneralPath</code>.
-	 */
+   * Delegates to the enclosed <code>GeneralPath</code>.
+   */
 	synchronized void lineTo(float x, float y)
 	{
 		checkMoveTo(); // check if prev command was moveto
@@ -299,8 +298,8 @@ class ExtendedGeneralPath implements Shape, Cloneable
 	}
 
 	/**
-	 * Delegates to the enclosed <code>GeneralPath</code>.
-	 */
+   * Delegates to the enclosed <code>GeneralPath</code>.
+   */
 	synchronized void quadTo(float x1, float y1, float x2, float y2)
 	{
 		checkMoveTo(); // check if prev command was moveto
@@ -315,8 +314,8 @@ class ExtendedGeneralPath implements Shape, Cloneable
 	}
 
 	/**
-	 * Delegates to the enclosed <code>GeneralPath</code>.
-	 */
+   * Delegates to the enclosed <code>GeneralPath</code>.
+   */
 	synchronized void curveTo(float x1, float y1, float x2, float y2,
 			float x3, float y3)
 	{
@@ -334,8 +333,8 @@ class ExtendedGeneralPath implements Shape, Cloneable
 	}
 
 	/**
-	 * Delegates to the enclosed <code>GeneralPath</code>.
-	 */
+   * Delegates to the enclosed <code>GeneralPath</code>.
+   */
 	synchronized void closePath()
 	{
 		// Don't double close path.
@@ -353,9 +352,9 @@ class ExtendedGeneralPath implements Shape, Cloneable
 	}
 
 	/**
-	 * Checks if previous command was a moveto command,
-	 * skipping a close command (if present).
-	 */
+   * Checks if previous command was a moveto command,
+   * skipping a close command (if present).
+   */
 	void checkMoveTo()
 	{
 		if (numSeg == 0)
@@ -381,16 +380,16 @@ class ExtendedGeneralPath implements Shape, Cloneable
 	}
 
 	/**
-	 * Delegates to the enclosed <code>GeneralPath</code>.
-	 */
+   * Delegates to the enclosed <code>GeneralPath</code>.
+   */
 	void append(Shape s, bool connect)
 	{
 		append(s.getPathIterator(new AffineTransform()), connect);
 	}
 
 	/**
-	 * Delegates to the enclosed <code>GeneralPath</code>.
-	 */
+   * Delegates to the enclosed <code>GeneralPath</code>.
+   */
 	void append(PathIterator pi, bool connect)
 	{
 		List<double> vals = new double[6];
@@ -447,8 +446,8 @@ class ExtendedGeneralPath implements Shape, Cloneable
 	}
 
 	/**
-	 * Delegates to the enclosed <code>GeneralPath</code>.
-	 */
+   * Delegates to the enclosed <code>GeneralPath</code>.
+   */
 	void append(ExtendedPathIterator epi, bool connect)
 	{
 		List<float> vals = new float[7];
@@ -507,24 +506,24 @@ class ExtendedGeneralPath implements Shape, Cloneable
 	}
 
 	/**
-	 * Delegates to the enclosed <code>GeneralPath</code>.
-	 */
+   * Delegates to the enclosed <code>GeneralPath</code>.
+   */
 	synchronized int getWindingRule()
 	{
 		return path.getWindingRule();
 	}
 
 	/**
-	 * Delegates to the enclosed <code>GeneralPath</code>.
-	 */
+   * Delegates to the enclosed <code>GeneralPath</code>.
+   */
 	void setWindingRule(int rule)
 	{
 		path.setWindingRule(rule);
 	}
 
 	/**
-	 * get the current position or <code>null</code>.
-	 */
+   * get the current position or <code>null</code>.
+   */
 	synchronized Point2D getCurrentPoint()
 	{
 		if (numVals == 0)
@@ -533,8 +532,8 @@ class ExtendedGeneralPath implements Shape, Cloneable
 	}
 
 	/**
-	 * Delegates to the enclosed <code>GeneralPath</code>.
-	 */
+   * Delegates to the enclosed <code>GeneralPath</code>.
+   */
 	synchronized void reset()
 	{
 		path.reset();
@@ -546,104 +545,104 @@ class ExtendedGeneralPath implements Shape, Cloneable
 	}
 
 	/**
-	 * Delegates to the enclosed <code>GeneralPath</code>.
-	 */
+   * Delegates to the enclosed <code>GeneralPath</code>.
+   */
 	void transform(AffineTransform at)
 	{
 		path.transform(at);
 	}
 
 	/**
-	 * Delegates to the enclosed <code>GeneralPath</code>.
-	 */
+   * Delegates to the enclosed <code>GeneralPath</code>.
+   */
 	synchronized Shape createTransformedShape(AffineTransform at)
 	{
 		return path.createTransformedShape(at);
 	}
 
 	/**
-	 * Delegates to the enclosed <code>GeneralPath</code>.
-	 */
+   * Delegates to the enclosed <code>GeneralPath</code>.
+   */
 	synchronized awt.Rectangle getBounds()
 	{
 		return path.getBounds();
 	}
 
 	/**
-	 * Delegates to the enclosed <code>GeneralPath</code>.
-	 */
+   * Delegates to the enclosed <code>GeneralPath</code>.
+   */
 	synchronized Rectangle2D getBounds2D()
 	{
 		return path.getBounds2D();
 	}
 
 	/**
-	 * Delegates to the enclosed <code>GeneralPath</code>.
-	 */
+   * Delegates to the enclosed <code>GeneralPath</code>.
+   */
 	bool contains(double x, double y)
 	{
 		return path.contains(x, y);
 	}
 
 	/**
-	 * Delegates to the enclosed <code>GeneralPath</code>.
-	 */
+   * Delegates to the enclosed <code>GeneralPath</code>.
+   */
 	bool contains(Point2D p)
 	{
 		return path.contains(p);
 	}
 
 	/**
-	 * Delegates to the enclosed <code>GeneralPath</code>.
-	 */
+   * Delegates to the enclosed <code>GeneralPath</code>.
+   */
 	bool contains(double x, double y, double w, double h)
 	{
 		return path.contains(x, y, w, h);
 	}
 
 	/**
-	 * Delegates to the enclosed <code>GeneralPath</code>.
-	 */
+   * Delegates to the enclosed <code>GeneralPath</code>.
+   */
 	bool contains(Rectangle2D r)
 	{
 		return path.contains(r);
 	}
 
 	/**
-	 * Delegates to the enclosed <code>GeneralPath</code>.
-	 */
+   * Delegates to the enclosed <code>GeneralPath</code>.
+   */
 	bool intersects(double x, double y, double w, double h)
 	{
 		return path.intersects(x, y, w, h);
 	}
 
 	/**
-	 * Delegates to the enclosed <code>GeneralPath</code>.
-	 */
+   * Delegates to the enclosed <code>GeneralPath</code>.
+   */
 	bool intersects(Rectangle2D r)
 	{
 		return path.intersects(r);
 	}
 
 	/**
-	 * Delegates to the enclosed <code>GeneralPath</code>.
-	 */
+   * Delegates to the enclosed <code>GeneralPath</code>.
+   */
 	PathIterator getPathIterator(AffineTransform at)
 	{
 		return path.getPathIterator(at);
 	}
 
 	/**
-	 * Delegates to the enclosed <code>GeneralPath</code>.
-	 */
+   * Delegates to the enclosed <code>GeneralPath</code>.
+   */
 	PathIterator getPathIterator(AffineTransform at, double flatness)
 	{
 		return path.getPathIterator(at, flatness);
 	}
 
 	/**
-	 * Delegates to the enclosed <code>GeneralPath</code>.
-	 */
+   * Delegates to the enclosed <code>GeneralPath</code>.
+   */
 	ExtendedPathIterator getExtendedPathIterator()
 	{
 		return new EPI();
@@ -762,8 +761,8 @@ class ExtendedGeneralPath implements Shape, Cloneable
 	}
 
 	/**
-	 * Delegates to the enclosed <code>GeneralPath</code>.
-	 */
+   * Delegates to the enclosed <code>GeneralPath</code>.
+   */
 	Object clone()
 	{
 		try
@@ -794,12 +793,12 @@ class ExtendedGeneralPath implements Shape, Cloneable
 	}
 
 	/**
-	 * Make sure, that the requested number of slots in vales[] are available.
-	 * Must be called even for numValues = 0, because it is also
-	 * used for initialization of those arrays.
-	 *
-	 * @param numValues number of requested coordinates
-	 */
+   * Make sure, that the requested number of slots in vales[] are available.
+   * Must be called even for numValues = 0, because it is also
+   * used for initialization of those arrays.
+   *
+   * @param numValues number of requested coordinates
+   */
 	void makeRoom(int numValues)
 	{
 		if (values == null)

@@ -18,39 +18,39 @@ abstract class ICellOverlay {
 class CellOverlay extends JComponent implements ICellOverlay {
 
   /**
-	 * 
-	 */
+   * 
+   */
   //	static final long serialVersionUID = 921991820491141221L;
 
   /**
-	 * 
-	 */
+   * 
+   */
   ImageIcon _imageIcon;
 
   /**
-	 * Holds the horizontal alignment for the overlay.
-	 * Default is ALIGN_RIGHT. For edges, the overlay
-	 * always appears in the center of the edge.
-	 */
+   * Holds the horizontal alignment for the overlay.
+   * Default is ALIGN_RIGHT. For edges, the overlay
+   * always appears in the center of the edge.
+   */
   Object _align = Constants.ALIGN_RIGHT;
 
   /**
-	 * Holds the vertical alignment for the overlay.
-	 * Default is bottom. For edges, the overlay
-	 * always appears in the center of the edge.
-	 */
+   * Holds the vertical alignment for the overlay.
+   * Default is bottom. For edges, the overlay
+   * always appears in the center of the edge.
+   */
   Object _verticalAlign = Constants.ALIGN_BOTTOM;
 
   /**
-	 * Defines the overlapping for the overlay, that is,
-	 * the proportional distance from the origin to the
-	 * point defined by the alignment. Default is 0.5.
-	 */
+   * Defines the overlapping for the overlay, that is,
+   * the proportional distance from the origin to the
+   * point defined by the alignment. Default is 0.5.
+   */
   double _defaultOverlap = 0.5;
 
   /**
-	 * 
-	 */
+   * 
+   */
   CellOverlay(ImageIcon icon, String warning) {
     this._imageIcon = icon;
     setToolTipText(warning);
@@ -58,44 +58,44 @@ class CellOverlay extends JComponent implements ICellOverlay {
   }
 
   /**
-	 * @return the alignment of the overlay, see <code>Constants.ALIGN_*****</code>
-	 */
+   * @return the alignment of the overlay, see <code>Constants.ALIGN_*****</code>
+   */
   Object getAlign() {
     return _align;
   }
 
   /**
-	 * @param value the alignment to set, see <code>Constants.ALIGN_*****</code>
-	 */
+   * @param value the alignment to set, see <code>Constants.ALIGN_*****</code>
+   */
   void setAlign(Object value) {
     _align = value;
   }
 
   /**
-	 * @return the vertical alignment, see <code>Constants.ALIGN_*****</code>
-	 */
+   * @return the vertical alignment, see <code>Constants.ALIGN_*****</code>
+   */
   Object getVerticalAlign() {
     return _verticalAlign;
   }
 
   /**
-	 * @param value the vertical alignment to set, see <code>Constants.ALIGN_*****</code>
-	 */
+   * @param value the vertical alignment to set, see <code>Constants.ALIGN_*****</code>
+   */
   void setVerticalAlign(Object value) {
     _verticalAlign = value;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void paint(Graphics g) {
     g.drawImage(_imageIcon.getImage(), 0, 0, getWidth(), getHeight(), this);
   }
 
   /*
-	 * (non-Javadoc)
-	 * @see graph.swing.util.mxIOverlay#getBounds(graph.view.CellState)
-	 */
+   * (non-Javadoc)
+   * @see graph.swing.util.mxIOverlay#getBounds(graph.view.CellState)
+   */
   Rect getBounds(CellState state) {
     bool isEdge = state.getView().getGraph().getModel().isEdge(state.getCell());
     double s = state.getView().getScale();

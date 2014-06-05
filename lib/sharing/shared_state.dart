@@ -3,9 +3,6 @@
  */
 part of graph.sharing;
 
-//import java.util.ArrayList;
-//import java.util.Iterator;
-//import java.util.List;
 
 //import org.w3c.dom.Node;
 
@@ -34,50 +31,50 @@ abstract class DiagramChangeListener {
 class SharedState extends EventSource {
 
   /**
-	 * Holds a list of diagram change listeners.
-	 */
+   * Holds a list of diagram change listeners.
+   */
   List<DiagramChangeListener> _diagramChangeListeners;
 
   /**
-	 * Holds the initial state of the diagram.
-	 */
+   * Holds the initial state of the diagram.
+   */
   String _state;
 
   /**
-	 * Holds the history of all changes of initial state.
-	 */
+   * Holds the history of all changes of initial state.
+   */
   StringBuffer _delta = new StringBuffer();
 
   /**
-	 * Constructs a new diagram with the given state.
-	 * 
-	 * @param state Initial state of the diagram.
-	 */
+   * Constructs a new diagram with the given state.
+   * 
+   * @param state Initial state of the diagram.
+   */
   SharedState(String state) {
     this._state = state;
   }
 
   /**
-	 * Returns the initial state of the diagram.
-	 */
+   * Returns the initial state of the diagram.
+   */
   String getState() {
     return _state;
   }
 
   /**
-	 * Returns the history of all changes as a string.
-	 */
+   * Returns the history of all changes as a string.
+   */
   /*synchronized*/ String getDelta() {
     return _delta.toString();
   }
 
   /**
-	 * Appends the given string to the history and dispatches the change to all
-	 * sessions that are listening to this shared diagram.
-	 * 
-	 * @param sender Session where the change originated from.
-	 * @param delta XML that represents the change.
-	 */
+   * Appends the given string to the history and dispatches the change to all
+   * sessions that are listening to this shared diagram.
+   * 
+   * @param sender Session where the change originated from.
+   * @param delta XML that represents the change.
+   */
   void processDelta(Object sender, Node delta) {
     StringBuffer edits = new StringBuffer();
 
@@ -103,32 +100,32 @@ class SharedState extends EventSource {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   String _processEdit(Node node) {
     return XmlUtils.getXml(node);
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   /*synchronized*/ void addDelta(String xml) {
     // TODO: Clear delta if xml contains RootChange
     _delta.write(xml);
   }
 
   /**
-	 * Clears the history of all changes.
-	 */
+   * Clears the history of all changes.
+   */
   /*synchronized*/ void resetDelta() {
     _delta = new StringBuffer();
   }
 
   /**
-	 * Adds the given listener to the list of diagram change listeners.
-	 * 
-	 * @param listener Diagram change listener to be added.
-	 */
+   * Adds the given listener to the list of diagram change listeners.
+   * 
+   * @param listener Diagram change listener to be added.
+   */
   void addDiagramChangeListener(DiagramChangeListener listener) {
     if (_diagramChangeListeners == null) {
       _diagramChangeListeners = new List<DiagramChangeListener>();
@@ -138,10 +135,10 @@ class SharedState extends EventSource {
   }
 
   /**
-	 * Removes the given listener from the list of diagram change listeners.
-	 * 
-	 * @param listener Diagram change listener to be removed.
-	 */
+   * Removes the given listener from the list of diagram change listeners.
+   * 
+   * @param listener Diagram change listener to be removed.
+   */
   void removeDiagramChangeListener(DiagramChangeListener listener) {
     if (_diagramChangeListeners != null) {
       _diagramChangeListeners.remove(listener);
@@ -149,11 +146,11 @@ class SharedState extends EventSource {
   }
 
   /**
-	 * Dispatches the given event information to all diagram change listeners.
-	 * 
-	 * @param sender Session where the change was received from.
-	 * @param xml XML string that represents the change.
-	 */
+   * Dispatches the given event information to all diagram change listeners.
+   * 
+   * @param sender Session where the change was received from.
+   * @param xml XML string that represents the change.
+   */
   void dispatchDiagramChangeEvent(Object sender, String edits) {
     if (_diagramChangeListeners != null) {
       Iterator<DiagramChangeListener> it = _diagramChangeListeners.iterator;

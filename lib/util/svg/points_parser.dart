@@ -31,50 +31,50 @@ class PointsParser extends NumberParser
 {
 
 	/**
-	 * The points handler used to report parse events.
-	 */
+   * The points handler used to report parse events.
+   */
 	PointsHandler pointsHandler;
 
 	/**
-	 * Whether the last character was a 'e' or 'E'.
-	 */
+   * Whether the last character was a 'e' or 'E'.
+   */
 	bool eRead;
 
 	/**
-	 * Creates a new PointsParser.
-	 */
+   * Creates a new PointsParser.
+   */
 	PointsParser(PointsHandler handler)
 	{
 		pointsHandler = handler;
 	}
 
 	/**
-	 * Allows an application to register a points handler.
-	 *
-	 * <p>If the application does not register a handler, all
-	 * events reported by the parser will be silently ignored.
-	 *
-	 * <p>Applications may register a new or different handler in the
-	 * middle of a parse, and the parser must begin using the new
-	 * handler immediately.</p>
-	 * @param handler The transform list handler.
-	 */
+   * Allows an application to register a points handler.
+   *
+   * <p>If the application does not register a handler, all
+   * events reported by the parser will be silently ignored.
+   *
+   * <p>Applications may register a new or different handler in the
+   * middle of a parse, and the parser must begin using the new
+   * handler immediately.</p>
+   * @param handler The transform list handler.
+   */
 	void setPointsHandler(PointsHandler handler)
 	{
 		pointsHandler = handler;
 	}
 
 	/**
-	 * Returns the points handler in use.
-	 */
+   * Returns the points handler in use.
+   */
 	PointsHandler getPointsHandler()
 	{
 		return pointsHandler;
 	}
 
 	/**
-	 * Parses the current stream.
-	 */
+   * Parses the current stream.
+   */
 	void doParse() //throws ParseException, IOException
 	{
 		pointsHandler.startPoints();

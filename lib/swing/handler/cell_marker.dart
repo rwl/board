@@ -107,96 +107,96 @@ part of graph.swing.handler;
 class CellMarker extends JComponent {
 
   /**
-	 * 
-	 */
+   * 
+   */
   //	static final long serialVersionUID = 614473367053597572L;
 
   /**
-	 * Specifies if the highlights should appear on top of everything
-	 * else in the overlay pane. Default is false.
-	 */
+   * Specifies if the highlights should appear on top of everything
+   * else in the overlay pane. Default is false.
+   */
   static bool KEEP_ON_TOP = false;
 
   /**
-	 * Specifies the default stroke for the marker.
-	 */
+   * Specifies the default stroke for the marker.
+   */
   static Stroke DEFAULT_STROKE = new BasicStroke(3);
 
   /**
-	 * Holds the event source.
-	 */
+   * Holds the event source.
+   */
   EventSource _eventSource = new EventSource(this);
 
   /**
-	 * Holds the enclosing graph component.
-	 */
+   * Holds the enclosing graph component.
+   */
   GraphComponent _graphComponent;
 
   /**
-	 * Specifies if the marker is enabled. Default is true.
-	 */
+   * Specifies if the marker is enabled. Default is true.
+   */
   bool _enabled = true;
 
   /**
-	 * Specifies the portion of the width and height that should trigger
-	 * a highlight. The area around the center of the cell to be marked is used
-	 * as the hotspot. Possible values are between 0 and 1. Default is
-	 * Constants.DEFAULT_HOTSPOT.
-	 */
+   * Specifies the portion of the width and height that should trigger
+   * a highlight. The area around the center of the cell to be marked is used
+   * as the hotspot. Possible values are between 0 and 1. Default is
+   * Constants.DEFAULT_HOTSPOT.
+   */
   double _hotspot;
 
   /**
-	 * Specifies if the hotspot is enabled. Default is false.
-	 */
+   * Specifies if the hotspot is enabled. Default is false.
+   */
   bool _hotspotEnabled = false;
 
   /**
-	 * Specifies if the the content area of swimlane should be non-transparent
-	 * to mouse events. Default is false.
-	 */
+   * Specifies if the the content area of swimlane should be non-transparent
+   * to mouse events. Default is false.
+   */
   bool _swimlaneContentEnabled = false;
 
   /**
-	 * Specifies the valid- and invalidColor for the marker.
-	 */
+   * Specifies the valid- and invalidColor for the marker.
+   */
   Color _validColor, _invalidColor;
 
   /**
-	 * Holds the current marker color.
-	 */
+   * Holds the current marker color.
+   */
   /*transient*/ Color _currentColor;
 
   /**
-	 * Holds the marked state if it is valid.
-	 */
+   * Holds the marked state if it is valid.
+   */
   /*transient*/ CellState _validState;
 
   /**
-	 * Holds the marked state.
-	 */
+   * Holds the marked state.
+   */
   /*transient*/ CellState _markedState;
 
   /**
-	 * Constructs a new marker for the given graph component.
-	 * 
-	 * @param graphComponent
-	 */
+   * Constructs a new marker for the given graph component.
+   * 
+   * @param graphComponent
+   */
   //	CellMarker(GraphComponent graphComponent)
   //	{
   //		this(graphComponent, );
   //	}
 
   /**
-	 * Constructs a new marker for the given graph component.
-	 */
+   * Constructs a new marker for the given graph component.
+   */
   //	CellMarker(GraphComponent graphComponent, Color validColor)
   //	{
   //		this(graphComponent, validColor, SwingConstants.DEFAULT_INVALID_COLOR);
   //	}
 
   /**
-	 * Constructs a new marker for the given graph component.
-	 */
+   * Constructs a new marker for the given graph component.
+   */
   //	CellMarker(GraphComponent graphComponent, Color validColor,
   //			Color invalidColor)
   //	{
@@ -205,8 +205,8 @@ class CellMarker extends JComponent {
   //	}
 
   /**
-	 * Constructs a new marker for the given graph component.
-	 */
+   * Constructs a new marker for the given graph component.
+   */
   CellMarker(GraphComponent graphComponent, [Color validColor = SwingConstants.DEFAULT_VALID_COLOR, Color invalidColor = SwingConstants.DEFAULT_INVALID_COLOR, double hotspot = Constants.DEFAULT_HOTSPOT]) {
     this._graphComponent = graphComponent;
     this._validColor = validColor;
@@ -215,137 +215,137 @@ class CellMarker extends JComponent {
   }
 
   /**
-	 * Sets the enabled state of the marker.
-	 */
+   * Sets the enabled state of the marker.
+   */
   void setEnabled(bool enabled) {
     this._enabled = enabled;
   }
 
   /**
-	 * Returns true if the marker is enabled, that is, if it processes events
-	 * in process.
-	 */
+   * Returns true if the marker is enabled, that is, if it processes events
+   * in process.
+   */
   bool isEnabled() {
     return _enabled;
   }
 
   /**
-	 * Sets the hotspot.
-	 */
+   * Sets the hotspot.
+   */
   void setHotspot(double hotspot) {
     this._hotspot = hotspot;
   }
 
   /**
-	 * Returns the hotspot.
-	 */
+   * Returns the hotspot.
+   */
   double getHotspot() {
     return _hotspot;
   }
 
   /**
-	 * Specifies whether the hotspot should be used in intersects.
-	 */
+   * Specifies whether the hotspot should be used in intersects.
+   */
   void setHotspotEnabled(bool enabled) {
     this._hotspotEnabled = enabled;
   }
 
   /**
-	 * Returns true if hotspot is used in intersects.
-	 */
+   * Returns true if hotspot is used in intersects.
+   */
   bool isHotspotEnabled() {
     return _hotspotEnabled;
   }
 
   /**
-	 * Sets if the content area of swimlanes should not be transparent to
-	 * events.
-	 */
+   * Sets if the content area of swimlanes should not be transparent to
+   * events.
+   */
   void setSwimlaneContentEnabled(bool swimlaneContentEnabled) {
     this._swimlaneContentEnabled = swimlaneContentEnabled;
   }
 
   /**
-	 * Returns true if the content area of swimlanes is non-transparent to
-	 * events.
-	 */
+   * Returns true if the content area of swimlanes is non-transparent to
+   * events.
+   */
   bool isSwimlaneContentEnabled() {
     return _swimlaneContentEnabled;
   }
 
   /**
-	 * Sets the color used for valid highlights.
-	 */
+   * Sets the color used for valid highlights.
+   */
   void setValidColor(Color value) {
     _validColor = value;
   }
 
   /**
-	 * Returns the color used for valid highlights.
-	 */
+   * Returns the color used for valid highlights.
+   */
   Color getValidColor() {
     return _validColor;
   }
 
   /**
-	 * Sets the color used for invalid highlights.
-	 */
+   * Sets the color used for invalid highlights.
+   */
   void setInvalidColor(Color value) {
     _invalidColor = value;
   }
 
   /**
-	 * Returns the color used for invalid highlights.
-	 */
+   * Returns the color used for invalid highlights.
+   */
   Color getInvalidColor() {
     return _invalidColor;
   }
 
   /**
-	 * Returns true if validState is not null.
-	 */
+   * Returns true if validState is not null.
+   */
   bool hasValidState() {
     return (_validState != null);
   }
 
   /**
-	 * Returns the valid state.
-	 */
+   * Returns the valid state.
+   */
   CellState getValidState() {
     return _validState;
   }
 
   /**
-	 * Sets the current color. 
-	 */
+   * Sets the current color. 
+   */
   void setCurrentColor(Color value) {
     _currentColor = value;
   }
 
   /**
-	 * Returns the current color.
-	 */
+   * Returns the current color.
+   */
   Color getCurrentColor() {
     return _currentColor;
   }
 
   /**
-	 * Sets the marked state. 
-	 */
+   * Sets the marked state. 
+   */
   void setMarkedState(CellState value) {
     _markedState = value;
   }
 
   /**
-	 * Returns the marked state.
-	 */
+   * Returns the marked state.
+   */
   CellState getMarkedState() {
     return _markedState;
   }
 
   /**
-	 * Resets the state of the cell marker.
-	 */
+   * Resets the state of the cell marker.
+   */
   void reset() {
     _validState = null;
 
@@ -356,13 +356,13 @@ class CellMarker extends JComponent {
   }
 
   /**
-	 * Processes the given event and marks the state returned by getStateAt
-	 * with the color returned by getMarkerColor. If the markerColor is not
-	 * null, then the state is stored in markedState. If isValidState returns
-	 * true, then the state is stored in validState regardless of the marker
-	 * color. The state is returned regardless of the marker color and
-	 * valid state. 
-	 */
+   * Processes the given event and marks the state returned by getStateAt
+   * with the color returned by getMarkerColor. If the markerColor is not
+   * null, then the state is stored in markedState. If isValidState returns
+   * true, then the state is stored in validState regardless of the marker
+   * color. The state is returned regardless of the marker color and
+   * valid state. 
+   */
   CellState process(MouseEvent e) {
     CellState state = null;
 
@@ -378,16 +378,16 @@ class CellMarker extends JComponent {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   //	void highlight(CellState state, Color color)
   //	{
   //		highlight(state, color, true);
   //	}
 
   /**
-	 * 
-	 */
+   * 
+   */
   void highlight(CellState state, Color color, [bool valid = true]) {
     if (valid) {
       _validState = state;
@@ -409,8 +409,8 @@ class CellMarker extends JComponent {
   }
 
   /**
-	 * Marks the markedState and fires a Event.MARK event.
-	 */
+   * Marks the markedState and fires a Event.MARK event.
+   */
   void mark() {
     if (_markedState != null) {
       awt.Rectangle bounds = _markedState.getRectangle();
@@ -435,8 +435,8 @@ class CellMarker extends JComponent {
   }
 
   /**
-	 * Hides the marker and fires a Event.MARK event.
-	 */
+   * Hides the marker and fires a Event.MARK event.
+   */
   void unmark() {
     if (getParent() != null) {
       setVisible(false);
@@ -446,26 +446,26 @@ class CellMarker extends JComponent {
   }
 
   /**
-	 * Returns true if the given state is a valid state. If this returns true,
-	 * then the state is stored in validState. The return value of this method
-	 * is used as the argument for getMarkerColor.
-	 */
+   * Returns true if the given state is a valid state. If this returns true,
+   * then the state is stored in validState. The return value of this method
+   * is used as the argument for getMarkerColor.
+   */
   bool _isValidState(CellState state) {
     return true;
   }
 
   /**
-	 * Returns the valid- or invalidColor depending on the value of isValid.
-	 * The given state is ignored by this implementation.
-	 */
+   * Returns the valid- or invalidColor depending on the value of isValid.
+   * The given state is ignored by this implementation.
+   */
   Color _getMarkerColor(MouseEvent e, CellState state, bool isValid) {
     return (isValid) ? _validColor : _invalidColor;
   }
 
   /**
-	 * Uses getCell, getMarkedState and intersects to return the state for
-	 * the given event.
-	 */
+   * Uses getCell, getMarkedState and intersects to return the state for
+   * the given event.
+   */
   CellState _getState(MouseEvent e) {
     Object cell = _getCell(e);
     GraphView view = _graphComponent.getGraph().getView();
@@ -475,25 +475,25 @@ class CellMarker extends JComponent {
   }
 
   /**
-	 * Returns the state at the given location. This uses Graph.getCellAt.
-	 */
+   * Returns the state at the given location. This uses Graph.getCellAt.
+   */
   Object _getCell(MouseEvent e) {
     return _graphComponent.getCellAt(e.getX(), e.getY(), _swimlaneContentEnabled);
   }
 
   /**
-	 * Returns the state to be marked for the given state under the mouse. This
-	 * returns the given state.
-	 */
+   * Returns the state to be marked for the given state under the mouse. This
+   * returns the given state.
+   */
   CellState _getStateToMark(CellState state) {
     return state;
   }
 
   /**
-	 * Returns true if the given mouse event intersects the given state. This
-	 * returns true if the hotspot is 0 or the event is inside the hotspot for
-	 * the given cell state.
-	 */
+   * Returns true if the given mouse event intersects the given state. This
+   * returns true if the hotspot is 0 or the event is inside the hotspot for
+   * the given cell state.
+   */
   bool _intersects(CellState state, MouseEvent e) {
     if (isHotspotEnabled()) {
       return Utils.intersectsHotspot(state, e.getX(), e.getY(), _hotspot, Constants.MIN_HOTSPOT_SIZE, Constants.MAX_HOTSPOT_SIZE);
@@ -503,30 +503,30 @@ class CellMarker extends JComponent {
   }
 
   /**
-	 * Adds the given event listener.
-	 */
+   * Adds the given event listener.
+   */
   void addListener(String eventName, IEventListener listener) {
     _eventSource.addListener(eventName, listener);
   }
 
   /**
-	 * Removes the given event listener.
-	 */
+   * Removes the given event listener.
+   */
   //	void removeListener(IEventListener listener)
   //	{
   //		_eventSource.removeListener(listener);
   //	}
 
   /**
-	 * Removes the given event listener for the specified event name.
-	 */
+   * Removes the given event listener for the specified event name.
+   */
   void removeListener(IEventListener listener, [String eventName = null]) {
     _eventSource.removeListener(listener, eventName);
   }
 
   /**
-	 * Paints the outline of the markedState with the currentColor.
-	 */
+   * Paints the outline of the markedState with the currentColor.
+   */
   void paint(Graphics g) {
     if (_markedState != null && _currentColor != null) {
       (g as Graphics2D).setStroke(DEFAULT_STROKE);

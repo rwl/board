@@ -26,25 +26,25 @@ part of graph.util;
  */
 class Line extends Point2d {
   /**
-	 * 
-	 */
+   * 
+   */
   //	private static final long serialVersionUID = -4730972599169158546L;
 
   /**
-	 * The end point of the line
-	 */
+   * The end point of the line
+   */
   Point2d _endPoint;
 
   /**
-	 * Creates a new line
-	 */
+   * Creates a new line
+   */
   factory Line.between(Point2d startPt, Point2d endPt) {
     return new Line(startPt.getX(), startPt.getY(), endPt);
   }
 
   /**
-	 * Creates a new line
-	 */
+   * Creates a new line
+   */
   Line(double startPtX, double startPtY, Point2d endPt) {
     _x = startPtX;
     _y = startPtY;
@@ -52,26 +52,26 @@ class Line extends Point2d {
   }
 
   /**
-	 * Returns the end point of the line.
-	 * 
-	 * @return Returns the end point of the line.
-	 */
+   * Returns the end point of the line.
+   * 
+   * @return Returns the end point of the line.
+   */
   Point2d getEndPoint() {
     return this._endPoint;
   }
 
   /**
-	 * Sets the end point of the rectangle.
-	 * 
-	 * @param value The new end point of the line
-	 */
+   * Sets the end point of the rectangle.
+   * 
+   * @param value The new end point of the line
+   */
   void setEndPoint(Point2d value) {
     this._endPoint = value;
   }
 
   /**
-	 * Sets the start and end points.
-	 */
+   * Sets the start and end points.
+   */
   void setPoints(Point2d startPt, Point2d endPt) {
     this.setX(startPt.getX());
     this.setY(startPt.getY());
@@ -79,16 +79,16 @@ class Line extends Point2d {
   }
 
   /**
-	 * Returns the square of the shortest distance from a point to this line.
-	 * The line is considered extrapolated infinitely in both directions for 
-	 * the purposes of the calculation.
-	 *
-	 * @param pt the point whose distance is being measured
-	 * @return the square of the distance from the specified point to this line.
+   * Returns the square of the shortest distance from a point to this line.
+   * The line is considered extrapolated infinitely in both directions for 
+   * the purposes of the calculation.
+   *
+   * @param pt the point whose distance is being measured
+   * @return the square of the distance from the specified point to this line.
    *
    * @author Denis M. Kishenko
    * @see Apache Harmony
-	 */
+   */
   double ptLineDistSq(Point2d pt) {
     double x1 = getX(), y1 = getY();
     double x2 = _endPoint.getX(), y2 = _endPoint.getY();
@@ -103,15 +103,15 @@ class Line extends Point2d {
   }
 
   /**
-	 * Returns the square of the shortest distance from a point to this 
-	 * line segment.
-	 *
-	 * @param pt the point whose distance is being measured
-	 * @return the square of the distance from the specified point to this segment.
+   * Returns the square of the shortest distance from a point to this 
+   * line segment.
+   *
+   * @param pt the point whose distance is being measured
+   * @return the square of the distance from the specified point to this segment.
    *
    * @author Denis M. Kishenko
    * @see Apache Harmony
-	 */
+   */
   double ptSegDistSq(Point2d pt) {
     double x1 = getX(), y1 = getY();
     double x2 = _endPoint.getX(), y2 = _endPoint.getY();

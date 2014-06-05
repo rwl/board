@@ -4,16 +4,11 @@
 part of graph.util;
 
 //import java.awt.awt.Rectangle;
-//import java.util.ArrayList;
-//import java.util.Collection;
-//import java.util.Hashtable;
-//import java.util.List;
-//import java.util.Map;
 
 class Curve {
   /**
-	 * A collection of arrays of curve points
-	 */
+   * A collection of arrays of curve points
+   */
   Map<String, List<Point2d>> _points;
 
   // awt.Rectangle just completely enclosing branch and label/
@@ -26,64 +21,64 @@ class Curve {
   double _maxYBounds = 0.0;
 
   /**
-	 * An array of arrays of intervals. These intervals define the distance
-	 * along the edge (0 to 1) that each point lies
-	 */
+   * An array of arrays of intervals. These intervals define the distance
+   * along the edge (0 to 1) that each point lies
+   */
   Map<String, List<double>> _intervals;
 
   /**
-	 * The curve lengths of the curves
-	 */
+   * The curve lengths of the curves
+   */
   Map<String, double> _curveLengths;
 
   /**
-	 * Defines the key for the central curve index
-	 */
+   * Defines the key for the central curve index
+   */
   static String CORE_CURVE = "Center_curve";
 
   /**
-	 * Defines the key for the label curve index
-	 */
+   * Defines the key for the label curve index
+   */
   static String LABEL_CURVE = "Label_curve";
 
   /**
-	 * Indicates that an invalid position on a curve was requested
-	 */
+   * Indicates that an invalid position on a curve was requested
+   */
   static Line INVALID_POSITION = new Line.between(new Point2d(0.0, 0.0), new Point2d(1.0, 0.0));
 
   /**
-	 * Offset of the label curve from the curve the label curve is based on.
-	 * If you wish to set this value, do so directly after creation of the curve.
-	 * The first time the curve is used the label curve will be created with 
-	 * whatever value is contained in this variable. Changes to it after that point 
-	 * will have no effect.
-	 */
+   * Offset of the label curve from the curve the label curve is based on.
+   * If you wish to set this value, do so directly after creation of the curve.
+   * The first time the curve is used the label curve will be created with 
+   * whatever value is contained in this variable. Changes to it after that point 
+   * will have no effect.
+   */
   double _labelBuffer = Constants.DEFAULT_LABEL_BUFFER;
 
   /**
-	 * The points this curve is drawn through. These are typically control
-	 * points and are at distances from each other that straight lines
-	 * between them do not describe a smooth curve. This class takes
-	 * these guiding points and creates a finer set of internal points
-	 * that visually appears to be a curve when linked by straight lines
-	 */
+   * The points this curve is drawn through. These are typically control
+   * points and are at distances from each other that straight lines
+   * between them do not describe a smooth curve. This class takes
+   * these guiding points and creates a finer set of internal points
+   * that visually appears to be a curve when linked by straight lines
+   */
   List<Point2d> guidePoints = new List<Point2d>();
 
   /**
-	 * Whether or not the curve currently holds valid values
-	 */
+   * Whether or not the curve currently holds valid values
+   */
   bool _valid = false;
 
   /**
-	 * 
-	 */
+   * 
+   */
   void setLabelBuffer(double buffer) {
     _labelBuffer = buffer;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   Rect getBounds() {
     if (!_valid) {
       _createCoreCurve();
@@ -92,15 +87,15 @@ class Curve {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   //	Curve()
   //	{
   //	}
 
   /**
-	 * 
-	 */
+   * 
+   */
   Curve([List<Point2d> points = null]) {
     if (points == null) {
       return;
@@ -120,9 +115,9 @@ class Curve {
   }
 
   /**
-	 * Calculates the index of the lower point on the segment
-	 * that contains the point <i>distance</i> along the 
-	 */
+   * Calculates the index of the lower point on the segment
+   * that contains the point <i>distance</i> along the 
+   */
   int _getLowerIndexOfSegment(String index, double distance) {
     List<double> curveIntervals = getIntervals(index);
 
@@ -199,15 +194,15 @@ class Curve {
   }
 
   /**
-	 * Returns a unit vector parallel to the curve at the specified
-	 * distance along the curve. To obtain the angle the vector makes
-	 * with (1,0) perform Math.atan(segVectorY/segVectorX).
-	 * @param index the curve index specifying the curve to analyse
-	 * @param distance the distance from start to end of curve (0.0...1.0)
-	 * @return a unit vector at the specified point on the curve represented
-	 * 		as a line, parallel with the curve. If the distance or curve is
-	 * 		invalid, <code>Curve.INVALID_POSITION</code> is returned
-	 */
+   * Returns a unit vector parallel to the curve at the specified
+   * distance along the curve. To obtain the angle the vector makes
+   * with (1,0) perform Math.atan(segVectorY/segVectorX).
+   * @param index the curve index specifying the curve to analyse
+   * @param distance the distance from start to end of curve (0.0...1.0)
+   * @return a unit vector at the specified point on the curve represented
+   * 		as a line, parallel with the curve. If the distance or curve is
+   * 		invalid, <code>Curve.INVALID_POSITION</code> is returned
+   */
   Line getCurveParallel(String index, double distance) {
     List<Point2d> pointsCurve = getCurvePoints(index);
     List<double> curveIntervals = getIntervals(index);
@@ -236,13 +231,13 @@ class Curve {
   }
 
   /**
-	 * Returns a section of the curve as an array of points
-	 * @param index the curve index specifying the curve to analyse
-	 * @param start the start position of the curve segment (0.0...1.0)
-	 * @param end the end position of the curve segment (0.0...1.0)
-	 * @return a sequence of point representing the curve section or null
-	 * 			if it cannot be calculated
-	 */
+   * Returns a section of the curve as an array of points
+   * @param index the curve index specifying the curve to analyse
+   * @param start the start position of the curve segment (0.0...1.0)
+   * @param end the end position of the curve segment (0.0...1.0)
+   * @return a sequence of point representing the curve section or null
+   * 			if it cannot be calculated
+   */
   List<Point2d> getCurveSection(String index, double start, double end) {
     List<Point2d> pointsCurve = getCurvePoints(index);
     List<double> curveIntervals = getIntervals(index);
@@ -293,11 +288,11 @@ class Curve {
   }
 
   /**
-	 * Returns whether or not the rectangle passed in hits any part of this
-	 * curve.
-	 * @param rect the rectangle to detect for a hit
-	 * @return whether or not the rectangle hits this curve
-	 */
+   * Returns whether or not the rectangle passed in hits any part of this
+   * curve.
+   * @param rect the rectangle to detect for a hit
+   * @return whether or not the rectangle hits this curve
+   */
   bool intersectsRect(awt.Rectangle rect) {
     // To save CPU, we can test if the rectangle intersects the entire
     // bounds of this curve
@@ -329,18 +324,18 @@ class Curve {
   }
 
   /**
-	 * Returns the point at which this curve intersects the boundary of 
-	 * the given rectangle, if it does so. If it does not intersect, 
-	 * null is returned. If it intersects multiple times, the first 
-	 * intersection from the start end of the curve is returned.
-	 * 
-	 * @param index the curve index specifying the curve to analyse
-	 * @param rect the whose boundary is to be tested for intersection
-	 * with this curve
-	 * @return the point at which this curve intersects the boundary of 
-	 * the given rectangle, if it does so. If it does not intersect, 
-	 * null is returned.
-	 */
+   * Returns the point at which this curve intersects the boundary of 
+   * the given rectangle, if it does so. If it does not intersect, 
+   * null is returned. If it intersects multiple times, the first 
+   * intersection from the start end of the curve is returned.
+   * 
+   * @param index the curve index specifying the curve to analyse
+   * @param rect the whose boundary is to be tested for intersection
+   * with this curve
+   * @return the point at which this curve intersects the boundary of 
+   * the given rectangle, if it does so. If it does not intersect, 
+   * null is returned.
+   */
   Point2d intersectsRectPerimeter(String index, Rect rect) {
     Point2d result = null;
     List<Point2d> pointsCurve = getCurvePoints(index);
@@ -357,18 +352,18 @@ class Curve {
   }
 
   /**
-	 * Returns the distance from the start of the curve at which this 
-	 * curve intersects the boundary of the given rectangle, if it does 
-	 * so. If it does not intersect, -1 is returned. 
-	 * If it intersects multiple times, the first intersection from 
-	 * the start end of the curve is returned.
-	 * 
-	 * @param index the curve index specifying the curve to analyse
-	 * @param rect the whose boundary is to be tested for intersection
-	 * with this curve
-	 * @return the distance along the curve from the start at which
-	 * the intersection occurs
-	 */
+   * Returns the distance from the start of the curve at which this 
+   * curve intersects the boundary of the given rectangle, if it does 
+   * so. If it does not intersect, -1 is returned. 
+   * If it intersects multiple times, the first intersection from 
+   * the start end of the curve is returned.
+   * 
+   * @param index the curve index specifying the curve to analyse
+   * @param rect the whose boundary is to be tested for intersection
+   * with this curve
+   * @return the distance along the curve from the start at which
+   * the intersection occurs
+   */
   double intersectsRectPerimeterDist(String index, Rect rect) {
     double result = -1.0;
     List<Point2d> pointsCurve = getCurvePoints(index);
@@ -397,16 +392,16 @@ class Curve {
   }
 
   /**
-	 * Returns a point to move the input rectangle to, in order to
-	 * attempt to place the rectangle away from the curve. NOTE: Curves
-	 * are scaled, the input rectangle should be also.
-	 * @param index  the curve index specifying the curve to analyse
-	 * @param rect the rectangle that is to be moved
-	 * @param buffer the amount by which the rectangle is to be moved,
-	 * 			beyond the dimensions of the rect
-	 * @return the point to move the top left of the input rect to
-	 * 			, otherwise null if no point can be determined
-	 */
+   * Returns a point to move the input rectangle to, in order to
+   * attempt to place the rectangle away from the curve. NOTE: Curves
+   * are scaled, the input rectangle should be also.
+   * @param index  the curve index specifying the curve to analyse
+   * @param rect the rectangle that is to be moved
+   * @param buffer the amount by which the rectangle is to be moved,
+   * 			beyond the dimensions of the rect
+   * @return the point to move the top left of the input rect to
+   * 			, otherwise null if no point can be determined
+   */
   Point2d collisionMove(String index, Rect rect, double buffer) {
     int hitSeg = _intersectRectPerimeterSeg(index, rect);
 
@@ -459,35 +454,35 @@ class Curve {
   }
 
   /**
-	 * Utility method to determine within which segment the specified rectangle
-	 * intersects the specified curve
-	 * 
-	 * @param index the curve index specifying the curve to analyse
-	 * @param rect the whose boundary is to be tested for intersection
-	 * with this curve
-	 * @return the point at which this curve intersects the boundary of 
-	 * the given rectangle, if it does so. If it does not intersect, 
-	 * -1 is returned
-	 */
+   * Utility method to determine within which segment the specified rectangle
+   * intersects the specified curve
+   * 
+   * @param index the curve index specifying the curve to analyse
+   * @param rect the whose boundary is to be tested for intersection
+   * with this curve
+   * @return the point at which this curve intersects the boundary of 
+   * the given rectangle, if it does so. If it does not intersect, 
+   * -1 is returned
+   */
   //	int _intersectRectPerimeterSeg(String index, Rect rect)
   //	{
   //		return _intersectRectPerimeterSeg(index, rect, 1);
   //	}
 
   /**
-	 * Utility method to determine within which segment the specified rectangle
-	 * intersects the specified curve. This method specifies which segment to
-	 * start searching at.
-	 * 
-	 * @param index the curve index specifying the curve to analyse
-	 * @param rect the whose boundary is to be tested for intersection
-	 * with this curve
-	 * @param startSegment the segment to start searching at. To start at the 
-	 * 			beginning of the curve, use 1, not 0.
-	 * @return the point at which this curve intersects the boundary of 
-	 * the given rectangle, if it does so. If it does not intersect, 
-	 * -1 is returned
-	 */
+   * Utility method to determine within which segment the specified rectangle
+   * intersects the specified curve. This method specifies which segment to
+   * start searching at.
+   * 
+   * @param index the curve index specifying the curve to analyse
+   * @param rect the whose boundary is to be tested for intersection
+   * with this curve
+   * @param startSegment the segment to start searching at. To start at the 
+   * 			beginning of the curve, use 1, not 0.
+   * @return the point at which this curve intersects the boundary of 
+   * the given rectangle, if it does so. If it does not intersect, 
+   * -1 is returned
+   */
   int _intersectRectPerimeterSeg(String index, Rect rect, [int startSegment = 1]) {
     List<Point2d> pointsCurve = getCurvePoints(index);
 
@@ -503,18 +498,18 @@ class Curve {
   }
 
   /**
-	 * Returns the point at which this curve segment intersects the boundary 
-	 * of the given rectangle, if it does so. If it does not intersect, 
-	 * null is returned.
-	 * 
-	 * @param curveIndex the curve index specifying the curve to analyse
-	 * @param rect the whose boundary is to be tested for intersection
-	 * with this curve
-	 * @param indexSeg the segments on this curve being checked
-	 * @return the point at which this curve segment  intersects the boundary 
-	 * of the given rectangle, if it does so. If it does not intersect, 
-	 * null is returned.
-	 */
+   * Returns the point at which this curve segment intersects the boundary 
+   * of the given rectangle, if it does so. If it does not intersect, 
+   * null is returned.
+   * 
+   * @param curveIndex the curve index specifying the curve to analyse
+   * @param rect the whose boundary is to be tested for intersection
+   * with this curve
+   * @param indexSeg the segments on this curve being checked
+   * @return the point at which this curve segment  intersects the boundary 
+   * of the given rectangle, if it does so. If it does not intersect, 
+   * null is returned.
+   */
   Point2d _intersectRectPerimeterPoint(String curveIndex, Rect rect, int indexSeg) {
     Point2d result = null;
     List<Point2d> pointsCurve = getCurvePoints(curveIndex);
@@ -532,17 +527,17 @@ class Curve {
   }
 
   /**
-	 * Calculates the position of an absolute in terms relative
-	 * to this curve.
-	 * 
-	 * @param absPoint the point whose relative point is to calculated
-	 * @param index the index of the curve whom the relative position is to be 
-	 * calculated from
-	 * @return an Rect where the x is the distance along the curve 
-	 * (0 to 1), y is the orthogonal offset from the closest segment on the 
-	 * curve and (width, height) is an additional Cartesian offset applied
-	 * after the other calculations
-	 */
+   * Calculates the position of an absolute in terms relative
+   * to this curve.
+   * 
+   * @param absPoint the point whose relative point is to calculated
+   * @param index the index of the curve whom the relative position is to be 
+   * calculated from
+   * @return an Rect where the x is the distance along the curve 
+   * (0 to 1), y is the orthogonal offset from the closest segment on the 
+   * curve and (width, height) is an additional Cartesian offset applied
+   * after the other calculations
+   */
   Rect getRelativeFromAbsPoint(Point2d absPoint, String index) {
     // Work out which segment the absolute point is closest to
     List<Point2d> currentCurve = getCurvePoints(index);
@@ -643,9 +638,9 @@ class Curve {
   }
 
   /**
-	 * Creates the core curve that is based on the guide points passed into
-	 * this class instance
-	 */
+   * Creates the core curve that is based on the guide points passed into
+   * this class instance
+   */
   void _createCoreCurve() {
     // Curve is marked invalid until all of the error situations have
     // been checked
@@ -830,9 +825,9 @@ class Curve {
   }
 
   /** Whether or not the label curve starts from the end target
-	 *  and traces to the start of the branch
-	 * @return whether the label curve is reversed
-	 */
+   *  and traces to the start of the branch
+   * @return whether the label curve is reversed
+   */
   bool isLabelReversed() {
     if (_valid) {
       List<Point2d> centralCurve = getCurvePoints(CORE_CURVE);
@@ -912,8 +907,8 @@ class Curve {
   }
 
   /**
-	 * Returns the curve the label curve is too be based on
-	 */
+   * Returns the curve the label curve is too be based on
+   */
   List<Point2d> _getBaseLabelCurve() {
     return getCurvePoints(CORE_CURVE);
   }
@@ -953,9 +948,9 @@ class Curve {
   }
 
   /**
-	 * Updates the existing curve using the points passed in. 
-	 * @param newPoints the new guide points
-	 */
+   * Updates the existing curve using the points passed in. 
+   * @param newPoints the new guide points
+   */
   void updateCurve(List<Point2d> newPoints) {
     bool pointsChanged = false;
 
@@ -1033,13 +1028,13 @@ class Curve {
   }
 
   /**
-	 * Obtains the points that make up the curve for the specified
-	 * curve index. If that curve, or the core curve that other curves
-	 * are based on have not yet been created, then they are lazily
-	 * created. If creation is impossible, null is returned
-	 * @param index the key specifying the curve
-	 * @return the points making up that curve, or null
-	 */
+   * Obtains the points that make up the curve for the specified
+   * curve index. If that curve, or the core curve that other curves
+   * are based on have not yet been created, then they are lazily
+   * created. If creation is impossible, null is returned
+   * @param index the key specifying the curve
+   * @return the points making up that curve, or null
+   */
   List<Point2d> getCurvePoints(String index) {
     if (_validateCurve()) {
       if (_points[LABEL_CURVE] == null && index == LABEL_CURVE) {
@@ -1077,9 +1072,9 @@ class Curve {
   }
 
   /**
-	 * Method must be called before any attempt to access curve information
-	 * @return whether or not the curve may be used
-	 */
+   * Method must be called before any attempt to access curve information
+   * @return whether or not the curve may be used
+   */
   bool _validateCurve() {
     if (!_valid) {
       _createCoreCurve();
@@ -1089,9 +1084,9 @@ class Curve {
   }
 
   /**
-	 * Updates the total bounds of this curve, increasing any dimensions,
-	 * if necessary, to fit in the specified point
-	 */
+   * Updates the total bounds of this curve, increasing any dimensions,
+   * if necessary, to fit in the specified point
+   */
   void _updateBounds(double pointX, double pointY) {
     _minXBounds = Math.min(_minXBounds, pointX);
     _maxXBounds = Math.max(_maxXBounds, pointX);
@@ -1100,8 +1095,8 @@ class Curve {
   }
 
   /**
-	 * @return the guidePoints
-	 */
+   * @return the guidePoints
+   */
   List<Point2d> getGuidePoints() {
     return guidePoints;
   }

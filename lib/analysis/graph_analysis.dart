@@ -3,12 +3,6 @@
  */
 part of graph.analysis;
 
-//import java.util.ArrayList;
-//import java.util.Arrays;
-//import java.util.Collections;
-//import java.util.Comparator;
-//import java.util.Hashtable;
-//import java.util.List;
 
 /**
  * A singleton class that provides algorithms for graphs. Assume these
@@ -46,50 +40,50 @@ part of graph.analysis;
 class GraphAnalysis {
 
   /**
-	 * Holds the shared instance of this class.
-	 */
+   * Holds the shared instance of this class.
+   */
   static GraphAnalysis _instance = new GraphAnalysis();
 
   /**
-	 *
-	 */
+   *
+   */
   GraphAnalysis() {
     // empty
   }
 
   /**
-	 * @return Returns the sharedInstance.
-	 */
+   * @return Returns the sharedInstance.
+   */
   static GraphAnalysis getInstance() {
     return _instance;
   }
 
   /**
-	 * Sets the shared instance of this class.
-	 * 
-	 * @param instance The instance to set.
-	 */
+   * Sets the shared instance of this class.
+   * 
+   * @param instance The instance to set.
+   */
   static void setInstance(GraphAnalysis instance) {
     GraphAnalysis._instance = instance;
   }
 
   /**
-	 * Returns the shortest path between two cells or their descendants
-	 * represented as an array of edges in order of traversal. <br>
-	 * This implementation is based on the Dijkstra algorithm.
-	 * 
-	 * @param graph The object that defines the graph structure
-	 * @param from The source cell.
-	 * @param to The target cell (aka sink).
-	 * @param cf The cost function that defines the edge length.
-	 * @param steps The maximum number of edges to traverse.
-	 * @param directed If edge directions should be taken into account.
-	 * @return Returns the shortest path as an alternating array of vertices
-	 * and edges, starting with <code>from</code> and ending with
-	 * <code>to</code>.
-	 * 
-	 * @see #_createPriorityQueue()
-	 */
+   * Returns the shortest path between two cells or their descendants
+   * represented as an array of edges in order of traversal. <br>
+   * This implementation is based on the Dijkstra algorithm.
+   * 
+   * @param graph The object that defines the graph structure
+   * @param from The source cell.
+   * @param to The target cell (aka sink).
+   * @param cf The cost function that defines the edge length.
+   * @param steps The maximum number of edges to traverse.
+   * @param directed If edge directions should be taken into account.
+   * @return Returns the shortest path as an alternating array of vertices
+   * and edges, starting with <code>from</code> and ending with
+   * <code>to</code>.
+   * 
+   * @see #_createPriorityQueue()
+   */
   List<Object> getShortestPath(Graph graph, Object from, Object to, ICostFunction cf, int steps, bool directed) {
     // Sets up a pqueue and a hashtable to store the predecessor for each
     // cell in tha graph traversal. The pqueue is initialized
@@ -171,25 +165,25 @@ class GraphAnalysis {
   }
 
   /**
-	 * Returns the minimum spanning tree (MST) for the graph defined by G=(E,V).
-	 * The MST is defined as the set of all vertices with minimal lengths that
-	 * forms no cycles in G.<br>
-	 * This implementation is based on the algorihm by Prim-Jarnik. It uses
-	 * O(|E|+|V|log|V|) time when used with a Fibonacci heap and a graph whith a
-	 * double linked-list datastructure, as is the case with the default
-	 * implementation.
-	 * 
-	 * @param graph
-	 *            the object that describes the graph
-	 * @param v
-	 *            the vertices of the graph
-	 * @param cf
-	 *            the cost function that defines the edge length
-	 * 
-	 * @return Returns the MST as an array of edges
-	 * 
-	 * @see #_createPriorityQueue()
-	 */
+   * Returns the minimum spanning tree (MST) for the graph defined by G=(E,V).
+   * The MST is defined as the set of all vertices with minimal lengths that
+   * forms no cycles in G.<br>
+   * This implementation is based on the algorihm by Prim-Jarnik. It uses
+   * O(|E|+|V|log|V|) time when used with a Fibonacci heap and a graph whith a
+   * double linked-list datastructure, as is the case with the default
+   * implementation.
+   * 
+   * @param graph
+   *            the object that describes the graph
+   * @param v
+   *            the vertices of the graph
+   * @param cf
+   *            the cost function that defines the edge length
+   * 
+   * @return Returns the MST as an array of edges
+   * 
+   * @see #_createPriorityQueue()
+   */
   List<Object> getMinimumSpanningTree(Graph graph, List<Object> v, ICostFunction cf, bool directed) {
     List<Object> mst = new List<Object>(v.length);
 
@@ -250,26 +244,26 @@ class GraphAnalysis {
   }
 
   /**
-	 * Returns the minimum spanning tree (MST) for the graph defined by G=(E,V).
-	 * The MST is defined as the set of all vertices with minimal lenths that
-	 * forms no cycles in G.<br>
-	 * This implementation is based on the algorihm by Kruskal. It uses
-	 * O(|E|log|E|)=O(|E|log|V|) time for sorting the edges, O(|V|) create sets,
-	 * O(|E|) find and O(|V|) union calls on the union find structure, thus
-	 * yielding no more than O(|E|log|V|) steps. For a faster implementatin
-	 * 
-	 * @see #getMinimumSpanningTree(Graph, List<Object>, ICostFunction,
-	 *      boolean)
-	 * 
-	 * @param graph The object that contains the graph.
-	 * @param v The vertices of the graph.
-	 * @param e The edges of the graph.
-	 * @param cf The cost function that defines the edge length.
-	 * 
-	 * @return Returns the MST as an array of edges.
-	 * 
-	 * @see #_createUnionFind(List<Object>)
-	 */
+   * Returns the minimum spanning tree (MST) for the graph defined by G=(E,V).
+   * The MST is defined as the set of all vertices with minimal lenths that
+   * forms no cycles in G.<br>
+   * This implementation is based on the algorihm by Kruskal. It uses
+   * O(|E|log|E|)=O(|E|log|V|) time for sorting the edges, O(|V|) create sets,
+   * O(|E|) find and O(|V|) union calls on the union find structure, thus
+   * yielding no more than O(|E|log|V|) steps. For a faster implementatin
+   * 
+   * @see #getMinimumSpanningTree(Graph, List<Object>, ICostFunction,
+   *      boolean)
+   * 
+   * @param graph The object that contains the graph.
+   * @param v The vertices of the graph.
+   * @param e The edges of the graph.
+   * @param cf The cost function that defines the edge length.
+   * 
+   * @return Returns the MST as an array of edges.
+   * 
+   * @see #_createUnionFind(List<Object>)
+   */
   List<Object> getMinimumSpanningTreeKruskal(Graph graph, List<Object> v, List<Object> e, ICostFunction cf) {
     // Sorts all edges according to their lengths, then creates a union
     // find structure for all vertices. Then walks through all edges by
@@ -300,16 +294,16 @@ class GraphAnalysis {
   }
 
   /**
-	 * Returns a union find structure representing the connection components of
-	 * G=(E,V).
-	 * 
-	 * @param graph The object that contains the graph.
-	 * @param v The vertices of the graph.
-	 * @param e The edges of the graph.
-	 * @return Returns the connection components in G=(E,V)
-	 * 
-	 * @see #_createUnionFind(List<Object>)
-	 */
+   * Returns a union find structure representing the connection components of
+   * G=(E,V).
+   * 
+   * @param graph The object that contains the graph.
+   * @param v The vertices of the graph.
+   * @param e The edges of the graph.
+   * @return Returns the connection components in G=(E,V)
+   * 
+   * @see #_createUnionFind(List<Object>)
+   */
   UnionFind getConnectionComponents(Graph graph, List<Object> v, List<Object> e) {
     GraphView view = graph.getView();
     UnionFind uf = _createUnionFind(v);
@@ -326,17 +320,17 @@ class GraphAnalysis {
   }
 
   /**
-	 * Returns a sorted set for <code>cells</code> with respect to
-	 * <code>cf</code>.
-	 * 
-	 * @param states
-	 *            the cell states to sort
-	 * @param cf
-	 *            the cost function that defines the order
-	 * 
-	 * @return Returns an ordered set of <code>cells</code> wrt.
-	 *         <code>cf</code>
-	 */
+   * Returns a sorted set for <code>cells</code> with respect to
+   * <code>cf</code>.
+   * 
+   * @param states
+   *            the cell states to sort
+   * @param cf
+   *            the cost function that defines the order
+   * 
+   * @return Returns an ordered set of <code>cells</code> wrt.
+   *         <code>cf</code>
+   */
   List<CellState> sort(List<CellState> states, final ICostFunction cf) {
     List<CellState> result = new List<CellState>.from(states);
 
@@ -351,16 +345,16 @@ class GraphAnalysis {
   }
 
   /**
-	 * Returns the sum of all cost for <code>cells</code> with respect to
-	 * <code>cf</code>.
-	 * 
-	 * @param states
-	 *            the cell states to use for the sum
-	 * @param cf
-	 *            the cost function that defines the costs
-	 * 
-	 * @return Returns the sum of all cell cost
-	 */
+   * Returns the sum of all cost for <code>cells</code> with respect to
+   * <code>cf</code>.
+   * 
+   * @param states
+   *            the cell states to use for the sum
+   * @param cf
+   *            the cost function that defines the costs
+   * 
+   * @return Returns the sum of all cell cost
+   */
   double sum(List<CellState> states, ICostFunction cf) {
     double sum = 0.0;
 
@@ -372,20 +366,20 @@ class GraphAnalysis {
   }
 
   /**
-	 * Hook for subclassers to provide a custom union find structure.
-	 * 
-	 * @param v
-	 *            the array of all elements
-	 * 
-	 * @return Returns a union find structure for <code>v</code>
-	 */
+   * Hook for subclassers to provide a custom union find structure.
+   * 
+   * @param v
+   *            the array of all elements
+   * 
+   * @return Returns a union find structure for <code>v</code>
+   */
   UnionFind _createUnionFind(List<Object> v) {
     return new UnionFind(v);
   }
 
   /**
-	 * Hook for subclassers to provide a custom fibonacci heap.
-	 */
+   * Hook for subclassers to provide a custom fibonacci heap.
+   */
   FibonacciHeap _createPriorityQueue() {
     return new FibonacciHeap();
   }

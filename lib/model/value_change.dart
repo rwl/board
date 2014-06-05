@@ -2,22 +2,8 @@ part of graph.model;
 
 class ValueChange extends AtomicGraphModelChange {
 
-  /**
-	 *
-	 */
   Object cell, value, previous;
 
-  /**
-	 * 
-	 */
-  //	ValueChange()
-  //	{
-  //		this(null, null, null);
-  //	}
-
-  /**
-	 * 
-	 */
   ValueChange([GraphModel model = null, Object cell = null,
               Object value = null]) : super(model) {
     this.cell = cell;
@@ -25,51 +11,42 @@ class ValueChange extends AtomicGraphModelChange {
     this.previous = this.value;
   }
 
-  /**
-	 * 
-	 */
   void setCell(Object value) {
     cell = value;
   }
 
   /**
-	 * @return the cell
-	 */
+   * Returns the cell.
+   */
   Object getCell() {
     return cell;
   }
 
-  /**
-	 * 
-	 */
   void setValue(Object value) {
     this.value = value;
   }
 
   /**
-	 * @return the value
-	 */
+   * Returns the value.
+   */
   Object getValue() {
     return value;
   }
 
-  /**
-	 * 
-	 */
   void setPrevious(Object value) {
     previous = value;
   }
 
   /**
-	 * @return the previous
-	 */
+   * Returns the previous.
+   */
   Object getPrevious() {
     return previous;
   }
 
   /**
-	 * Changes the root of the model.
-	 */
+   * Changes the root of the model.
+   */
   void execute() {
     value = previous;
     previous = (model as GraphModel)._valueForCellChanged(cell, previous);

@@ -3,8 +3,6 @@
  */
 part of graph.util;
 
-//import java.util.ArrayList;
-//import java.util.List;
 
 /**
  * Implements an undo history.
@@ -25,46 +23,46 @@ part of graph.util;
 class UndoManager extends EventSource {
 
   /**
-	 * Maximum command history size. 0 means unlimited history. Default is 100.
-	 */
+   * Maximum command history size. 0 means unlimited history. Default is 100.
+   */
   int _size;
 
   /**
-	 * List that contains the steps of the command history.
-	 */
+   * List that contains the steps of the command history.
+   */
   List<UndoableEdit> _history;
 
   /**
-	 * Index of the element to be added next.
-	 */
+   * Index of the element to be added next.
+   */
   int _indexOfNextAdd;
 
   /**
-	 * Constructs a new undo manager with a default history size.
-	 */
+   * Constructs a new undo manager with a default history size.
+   */
   //	UndoManager()
   //	{
   //		this(100);
   //	}
 
   /**
-	 * Constructs a new undo manager for the specified size.
-	 */
+   * Constructs a new undo manager for the specified size.
+   */
   UndoManager([int size = 100]) {
     this._size = size;
     clear();
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool isEmpty() {
     return _history.length == 0;
   }
 
   /**
-	 * Clears the command history.
-	 */
+   * Clears the command history.
+   */
   void clear() {
     _history = new List<UndoableEdit>(_size);
     _indexOfNextAdd = 0;
@@ -72,15 +70,15 @@ class UndoManager extends EventSource {
   }
 
   /**
-	 * Returns true if an undo is possible.
-	 */
+   * Returns true if an undo is possible.
+   */
   bool canUndo() {
     return _indexOfNextAdd > 0;
   }
 
   /**
-	 * Undoes the last change.
-	 */
+   * Undoes the last change.
+   */
   void undo() {
     while (_indexOfNextAdd > 0) {
       UndoableEdit edit = _history[--_indexOfNextAdd];
@@ -94,15 +92,15 @@ class UndoManager extends EventSource {
   }
 
   /**
-	 * Returns true if a redo is possible.
-	 */
+   * Returns true if a redo is possible.
+   */
   bool canRedo() {
     return _indexOfNextAdd < _history.length;
   }
 
   /**
-	 * Redoes the last change.
-	 */
+   * Redoes the last change.
+   */
   void redo() {
     int n = _history.length;
 
@@ -118,8 +116,8 @@ class UndoManager extends EventSource {
   }
 
   /**
-	 * Method to be called to add new undoable edits to the history.
-	 */
+   * Method to be called to add new undoable edits to the history.
+   */
   void undoableEditHappened(UndoableEdit undoableEdit) {
     _trim();
 
@@ -133,9 +131,9 @@ class UndoManager extends EventSource {
   }
 
   /**
-	 * Removes all pending steps after indexOfNextAdd from the history,
-	 * invoking die on each edit. This is called from undoableEditHappened.
-	 */
+   * Removes all pending steps after indexOfNextAdd from the history,
+   * invoking die on each edit. This is called from undoableEditHappened.
+   */
   void _trim() {
     while (_history.length > _indexOfNextAdd) {
       UndoableEdit edit = _history[_indexOfNextAdd];

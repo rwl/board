@@ -12,9 +12,6 @@ part of graph.swing.handler;
 //import java.awt.Stroke;
 //import java.awt.event.MouseEvent;
 //import java.awt.geom.awt.Line2D;
-//import java.util.ArrayList;
-//import java.util.Arrays;
-//import java.util.List;
 
 //import javax.swing.JComponent;
 //import javax.swing.JOptionPane;
@@ -25,111 +22,111 @@ part of graph.swing.handler;
  */
 class EdgeHandler extends CellHandler {
   /**
-	 * 
-	 */
+   * 
+   */
   bool _cloneEnabled = true;
 
   /**
-	 * 
-	 */
+   * 
+   */
   PoList<int> _p;
 
   /**
-	 * 
-	 */
+   * 
+   */
   /*transient*/ String _error;
 
   /**
-	 * Workaround for alt-key-state not correct in mouseReleased.
-	 */
+   * Workaround for alt-key-state not correct in mouseReleased.
+   */
   /*transient*/ bool _gridEnabledEvent = false;
 
   /**
-	 * Workaround for shift-key-state not correct in mouseReleased.
-	 */
+   * Workaround for shift-key-state not correct in mouseReleased.
+   */
   /*transient*/ bool _constrainedEvent = false;
 
   /**
-	 * 
-	 */
+   * 
+   */
   CellMarker _marker;
 
   /**
-	 * 
-	 * @param graphComponent
-	 * @param state
-	 */
+   * 
+   * @param graphComponent
+   * @param state
+   */
   EdgeHandler(GraphComponent graphComponent, CellState state) : super(graphComponent, state) {
     _marker = new EdgeHandlerCellMarker(this, graphComponent);
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void setCloneEnabled(bool cloneEnabled) {
     this._cloneEnabled = cloneEnabled;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool isCloneEnabled() {
     return _cloneEnabled;
   }
 
   /**
-	 * No flip event is ignored.
-	 */
+   * No flip event is ignored.
+   */
   bool _isIgnoredEvent(MouseEvent e) {
     return !_isFlipEvent(e) && super._isIgnoredEvent(e);
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool _isFlipEvent(MouseEvent e) {
     return false;
   }
 
   /**
-	 * Returns the error message or an empty string if the connection for the
-	 * given source target pair is not valid. Otherwise it returns null.
-	 */
+   * Returns the error message or an empty string if the connection for the
+   * given source target pair is not valid. Otherwise it returns null.
+   */
   String validateConnection(Object source, Object target) {
     return _graphComponent.getGraph().getEdgeValidationError(_state.getCell(), source, target);
   }
 
   /**
-	 * Returns true if the current index is 0.
-	 */
+   * Returns true if the current index is 0.
+   */
   bool isSource(int index) {
     return index == 0;
   }
 
   /**
-	 * Returns true if the current index is the last index.
-	 */
+   * Returns true if the current index is the last index.
+   */
   bool isTarget(int index) {
     return index == _getHandleCount() - 2;
   }
 
   /**
-	 * Hides the middle handle if the edge is not bendable.
-	 */
+   * Hides the middle handle if the edge is not bendable.
+   */
   bool _isHandleVisible(int index) {
     return super._isHandleVisible(index) && (isSource(index) || isTarget(index) || _isCellBendable());
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   bool _isCellBendable() {
     return _graphComponent.getGraph().isCellBendable(_state.getCell());
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   List<awt.Rectangle> _createHandles() {
     _p = _createPoints(_state);
     List<awt.Rectangle> h = new List<awt.Rectangle>(_p.length + 1);
@@ -144,8 +141,8 @@ class EdgeHandler extends CellHandler {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   Color _getHandleFillColor(int index) {
     bool source = isSource(index);
 
@@ -164,11 +161,11 @@ class EdgeHandler extends CellHandler {
   }
 
   /**
-	 * 
-	 * @param x
-	 * @param y
-	 * @return Returns the inde of the handle at the given location.
-	 */
+   * 
+   * @param x
+   * @param y
+   * @return Returns the inde of the handle at the given location.
+   */
   int getIndexAt(int x, int y) {
     int index = super.getIndexAt(x, y);
 
@@ -181,23 +178,23 @@ class EdgeHandler extends CellHandler {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   //	awt.Rectangle _createHandle(awt.Point center)
   //	{
   //		return _createHandle(center, Constants.HANDLE_SIZE);
   //	}
 
   /**
-	 * 
-	 */
+   * 
+   */
   awt.Rectangle _createHandle(awt.Point center, [int size = Constants.HANDLE_SIZE]) {
     return new awt.Rectangle(center.x - size / 2, center.y - size / 2, size, size);
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   PoList<int> _createPoints(CellState s) {
     List<awt.Point> pts = new List<awt.Point>(s.getAbsolutePointCount());
 
@@ -209,8 +206,8 @@ class EdgeHandler extends CellHandler {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   JComponent _createPreview() {
     throw new Exception();
     /*JPanel preview = new JPanel()
@@ -265,11 +262,11 @@ class EdgeHandler extends CellHandler {
   }
 
   /**
-	 * 
-	 * @param point
-	 * @param gridEnabled
-	 * @return Returns the scaled, translated and grid-aligned point.
-	 */
+   * 
+   * @param point
+   * @param gridEnabled
+   * @return Returns the scaled, translated and grid-aligned point.
+   */
   Point2d _convertPoint(Point2d point, bool gridEnabled) {
     Graph graph = _graphComponent.getGraph();
     double scale = graph.getView().getScale();
@@ -289,9 +286,9 @@ class EdgeHandler extends CellHandler {
   }
 
   /**
-	 * 
-	 * @return Returns the bounds of the preview.
-	 */
+   * 
+   * @return Returns the bounds of the preview.
+   */
   awt.Rectangle _getPreviewBounds() {
     awt.Rectangle bounds = null;
 
@@ -312,8 +309,8 @@ class EdgeHandler extends CellHandler {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void mousePressed(MouseEvent e) {
     super.mousePressed(e);
 
@@ -331,8 +328,8 @@ class EdgeHandler extends CellHandler {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void mouseDragged(MouseEvent e) {
     if (!e.isConsumed() && _first != null) {
       _gridEnabledEvent = _graphComponent.isGridEnabledEvent(e);
@@ -463,8 +460,8 @@ class EdgeHandler extends CellHandler {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void mouseReleased(MouseEvent e) {
     Graph graph = _graphComponent.getGraph();
 
@@ -516,8 +513,8 @@ class EdgeHandler extends CellHandler {
   }
 
   /**
-	 * Extends the implementation to reset the current error and marker.
-	 */
+   * Extends the implementation to reset the current error and marker.
+   */
   void reset() {
     super.reset();
 
@@ -526,8 +523,8 @@ class EdgeHandler extends CellHandler {
   }
 
   /**
-	 * Moves the edges control point with the given index to the given point.
-	 */
+   * Moves the edges control point with the given index to the given point.
+   */
   void _movePoint(Object edge, int pointIndex, Point2d point) {
     IGraphModel model = _graphComponent.getGraph().getModel();
     Geometry geometry = model.getGeometry(edge);
@@ -565,12 +562,12 @@ class EdgeHandler extends CellHandler {
   }
 
   /**
-	 * Connects the given edge to the given source or target terminal.
-	 * 
-	 * @param edge
-	 * @param terminal
-	 * @param isSource
-	 */
+   * Connects the given edge to the given source or target terminal.
+   * 
+   * @param edge
+   * @param terminal
+   * @param isSource
+   */
   void _connect(Object edge, Object terminal, bool isSource, bool isClone) {
     Graph graph = _graphComponent.getGraph();
     IGraphModel model = graph.getModel();
@@ -598,8 +595,8 @@ class EdgeHandler extends CellHandler {
   }
 
   /**
-	 * Moves the label to the given position.
-	 */
+   * Moves the label to the given position.
+   */
   void _moveLabelTo(CellState edgeState, double x, double y) {
     Graph graph = _graphComponent.getGraph();
     IGraphModel model = graph.getModel();
@@ -625,8 +622,8 @@ class EdgeHandler extends CellHandler {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   Cursor _getCursor(MouseEvent e, int index) {
     Cursor cursor = null;
 
@@ -640,22 +637,22 @@ class EdgeHandler extends CellHandler {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   Color getSelectionColor() {
     return SwingConstants.EDGE_SELECTION_COLOR;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   Stroke getSelectionStroke() {
     return SwingConstants.EDGE_SELECTION_STROKE;
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void paint(Graphics g) {
     Graphics2D g2 = g as Graphics2D;
 

@@ -1,195 +1,190 @@
 part of graph.layout;
 
-//import java.util.ArrayList;
-//import java.util.Arrays;
-//import java.util.HashSet;
-//import java.util.List;
-//import java.util.Set;
 
 class CompactTreeLayout extends GraphLayout {
 
   /**
-	 * Specifies the orientation of the layout. Default is true.
-	 */
+   * Specifies the orientation of the layout. Default is true.
+   */
   bool _horizontal;
 
   /**
-	 * Specifies if edge directions should be inverted. Default is false.
-	 */
+   * Specifies if edge directions should be inverted. Default is false.
+   */
   bool _invert;
 
   /**
-	 * If the parents should be resized to match the width/height of the
-	 * children. Default is true.
-	 */
+   * If the parents should be resized to match the width/height of the
+   * children. Default is true.
+   */
   bool _resizeParent = true;
 
   /**
-	 * Padding added to resized parents
-	 */
+   * Padding added to resized parents
+   */
   int _groupPadding = 10;
 
   /**
-	 * A set of the parents that need updating based on children
-	 * process as part of the layout
-	 */
+   * A set of the parents that need updating based on children
+   * process as part of the layout
+   */
   Set<Object> _parentsChanged = null;
 
   /**
-	 * Specifies if the tree should be moved to the top, left corner
-	 * if it is inside a top-level layer. Default is false.
-	 */
+   * Specifies if the tree should be moved to the top, left corner
+   * if it is inside a top-level layer. Default is false.
+   */
   bool _moveTree = false;
 
   /**
-	 * Specifies if all edge points of traversed edges should be removed.
-	 * Default is true.
-	 */
+   * Specifies if all edge points of traversed edges should be removed.
+   * Default is true.
+   */
   bool _resetEdges = true;
 
   /**
-	 * Holds the levelDistance. Default is 10.
-	 */
+   * Holds the levelDistance. Default is 10.
+   */
   int _levelDistance = 10;
 
   /**
-	 * Holds the nodeDistance. Default is 20.
-	 */
+   * Holds the nodeDistance. Default is 20.
+   */
   int _nodeDistance = 20;
 
   /**
-	 * The preferred horizontal distance between edges exiting a vertex
-	 */
+   * The preferred horizontal distance between edges exiting a vertex
+   */
   int _prefHozEdgeSep = 5;
 
   /**
-	 * The preferred vertical offset between edges exiting a vertex
-	 */
+   * The preferred vertical offset between edges exiting a vertex
+   */
   int _prefVertEdgeOff = 2;
 
   /**
-	 * The minimum distance for an edge jetty from a vertex
-	 */
+   * The minimum distance for an edge jetty from a vertex
+   */
   int _minEdgeJetty = 12;
 
   /**
-	 * The size of the vertical buffer in the center of inter-rank channels
-	 * where edge control points should not be placed
-	 */
+   * The size of the vertical buffer in the center of inter-rank channels
+   * where edge control points should not be placed
+   */
   int _channelBuffer = 4;
 
   /**
-	 * Whether or not to apply the internal tree edge routing
-	 */
+   * Whether or not to apply the internal tree edge routing
+   */
   bool _edgeRouting = true;
 
   /**
-	 * 
-	 * @param graph
-	 */
+   * 
+   * @param graph
+   */
   //	CompactTreeLayout(Graph graph)
   //	{
   //		this(graph, true);
   //	}
 
   /**
-	 * 
-	 * @param graph
-	 * @param horizontal
-	 */
+   * 
+   * @param graph
+   * @param horizontal
+   */
   //	CompactTreeLayout(Graph graph, bool horizontal)
   //	{
   //		this(graph, horizontal, false);
   //	}
 
   /**
-	 * 
-	 * @param graph
-	 * @param horizontal
-	 * @param invert
-	 */
+   * 
+   * @param graph
+   * @param horizontal
+   * @param invert
+   */
   CompactTreeLayout(Graph graph, [bool horizontal = true, bool invert = false]) : super(graph) {
     this._horizontal = horizontal;
     this._invert = invert;
   }
 
   /**
-	 * Returns a bool indicating if the given <Cell> should be ignored as a
-	 * vertex. This returns true if the cell has no connections.
-	 * 
-	 * @param vertex Object that represents the vertex to be tested.
-	 * @return Returns true if the vertex should be ignored.
-	 */
+   * Returns a bool indicating if the given <Cell> should be ignored as a
+   * vertex. This returns true if the cell has no connections.
+   * 
+   * @param vertex Object that represents the vertex to be tested.
+   * @return Returns true if the vertex should be ignored.
+   */
   bool isVertexIgnored(Object vertex) {
     return super.isVertexIgnored(vertex) || graph.getConnections(vertex).length == 0;
   }
 
   /**
-	 * @return the horizontal
-	 */
+   * @return the horizontal
+   */
   bool isHorizontal() {
     return _horizontal;
   }
 
   /**
-	 * @param horizontal the horizontal to set
-	 */
+   * @param horizontal the horizontal to set
+   */
   void setHorizontal(bool horizontal) {
     this._horizontal = horizontal;
   }
 
   /**
-	 * @return the invert
-	 */
+   * @return the invert
+   */
   bool isInvert() {
     return _invert;
   }
 
   /**
-	 * @param invert the invert to set
-	 */
+   * @param invert the invert to set
+   */
   void setInvert(bool invert) {
     this._invert = invert;
   }
 
   /**
-	 * @return the resizeParent
-	 */
+   * @return the resizeParent
+   */
   bool isResizeParent() {
     return _resizeParent;
   }
 
   /**
-	 * @param resizeParent the resizeParent to set
-	 */
+   * @param resizeParent the resizeParent to set
+   */
   void setResizeParent(bool resizeParent) {
     this._resizeParent = resizeParent;
   }
 
   /**
-	 * @return the moveTree
-	 */
+   * @return the moveTree
+   */
   bool isMoveTree() {
     return _moveTree;
   }
 
   /**
-	 * @param moveTree the moveTree to set
-	 */
+   * @param moveTree the moveTree to set
+   */
   void setMoveTree(bool moveTree) {
     this._moveTree = moveTree;
   }
 
   /**
-	 * @return the resetEdges
-	 */
+   * @return the resetEdges
+   */
   bool isResetEdges() {
     return _resetEdges;
   }
 
   /**
-	 * @param resetEdges the resetEdges to set
-	 */
+   * @param resetEdges the resetEdges to set
+   */
   void setResetEdges(bool resetEdges) {
     this._resetEdges = resetEdges;
   }
@@ -203,29 +198,29 @@ class CompactTreeLayout extends GraphLayout {
   }
 
   /**
-	 * @return the levelDistance
-	 */
+   * @return the levelDistance
+   */
   int getLevelDistance() {
     return _levelDistance;
   }
 
   /**
-	 * @param levelDistance the levelDistance to set
-	 */
+   * @param levelDistance the levelDistance to set
+   */
   void setLevelDistance(int levelDistance) {
     this._levelDistance = levelDistance;
   }
 
   /**
-	 * @return the nodeDistance
-	 */
+   * @return the nodeDistance
+   */
   int getNodeDistance() {
     return _nodeDistance;
   }
 
   /**
-	 * @param nodeDistance the nodeDistance to set
-	 */
+   * @param nodeDistance the nodeDistance to set
+   */
   void setNodeDistance(int nodeDistance) {
     this._nodeDistance = nodeDistance;
   }
@@ -239,9 +234,9 @@ class CompactTreeLayout extends GraphLayout {
   }
 
   /*
-	 * (non-Javadoc)
-	 * @see graph.layout.IGraphLayout#execute(java.lang.Object)
-	 */
+   * (non-Javadoc)
+   * @see graph.layout.IGraphLayout#execute(java.lang.Object)
+   */
   //	void execute(Object parent)
   //	{
   //		super.execute(parent);
@@ -249,12 +244,12 @@ class CompactTreeLayout extends GraphLayout {
   //	}
 
   /**
-	 * Implements <GraphLayout.execute>.
-	 * 
-	 * If the parent has any connected edges, then it is used as the root of
-	 * the tree. Else, <Graph.findTreeRoots> will be used to find a suitable
-	 * root node within the set of children of the given parent.
-	 */
+   * Implements <GraphLayout.execute>.
+   * 
+   * If the parent has any connected edges, then it is used as the root of
+   * the tree. Else, <Graph.findTreeRoots> will be used to find a suitable
+   * root node within the set of children of the given parent.
+   */
   void execute(Object parent, [Object root = null]) {
     IGraphModel model = graph.getModel();
 
@@ -346,17 +341,17 @@ class CompactTreeLayout extends GraphLayout {
   }
 
   /**
-	 * Returns all visible children in the given parent which do not have
-	 * incoming edges. If the result is empty then the children with the
-	 * maximum difference between incoming and outgoing edges are returned.
-	 * This takes into account edges that are being promoted to the given
-	 * root due to invisible children or collapsed cells.
-	 * 
-	 * @param parent Cell whose children should be checked.
-	 * @param invert Specifies if outgoing or incoming edges should be counted
-	 * for a tree root. If false then outgoing edges will be counted.
-	 * @return List of tree roots in parent.
-	 */
+   * Returns all visible children in the given parent which do not have
+   * incoming edges. If the result is empty then the children with the
+   * maximum difference between incoming and outgoing edges are returned.
+   * This takes into account edges that are being promoted to the given
+   * root due to invisible children or collapsed cells.
+   * 
+   * @param parent Cell whose children should be checked.
+   * @param invert Specifies if outgoing or incoming edges should be counted
+   * for a tree root. If false then outgoing edges will be counted.
+   * @return List of tree roots in parent.
+   */
   List<Object> findTreeRoots(Object parent, bool invert) {
     List<Object> roots = new List<Object>();
 
@@ -406,8 +401,8 @@ class CompactTreeLayout extends GraphLayout {
   }
 
   /**
-	 * Moves the specified node and all of its children by the given amount.
-	 */
+   * Moves the specified node and all of its children by the given amount.
+   */
   void _moveNode(_TreeNode node, double dx, double dy) {
     node.x += dx;
     node.y += dy;
@@ -422,10 +417,10 @@ class CompactTreeLayout extends GraphLayout {
   }
 
   /**
-	 * Does a depth first search starting at the specified cell.
-	 * Makes sure the specified parent is never left by the
-	 * algorithm.
-	 */
+   * Does a depth first search starting at the specified cell.
+   * Makes sure the specified parent is never left by the
+   * algorithm.
+   */
   _TreeNode _dfs(Object cell, Object parent, Set<Object> visited) {
     if (visited == null) {
       visited = new HashSet<Object>();
@@ -478,9 +473,9 @@ class CompactTreeLayout extends GraphLayout {
   }
 
   /**
-	 * Starts the actual compact tree layout algorithm
-	 * at the given node.
-	 */
+   * Starts the actual compact tree layout algorithm
+   * at the given node.
+   */
   void _layout(_TreeNode node) {
     if (node != null) {
       _TreeNode child = node.child;
@@ -499,8 +494,8 @@ class CompactTreeLayout extends GraphLayout {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   Rect _horizontalLayout(_TreeNode node, double x0, double y0, Rect bounds) {
     node.x += x0 + node.offsetX;
     node.y += y0 + node.offsetY;
@@ -523,8 +518,8 @@ class CompactTreeLayout extends GraphLayout {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   Rect _verticalLayout(_TreeNode node, Object parent, double x0, double y0, Rect bounds) {
     node.x += x0 + node.offsetY;
     node.y += y0 + node.offsetX;
@@ -547,8 +542,8 @@ class CompactTreeLayout extends GraphLayout {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void _attachParent(_TreeNode node, double height) {
     double x = (_nodeDistance + _levelDistance).toDouble();
     double y2 = (height - node.width) / 2 - _nodeDistance;
@@ -562,8 +557,8 @@ class CompactTreeLayout extends GraphLayout {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   void _layoutLeaf(_TreeNode node) {
     double dist = (2 * _nodeDistance).toDouble();
 
@@ -574,8 +569,8 @@ class CompactTreeLayout extends GraphLayout {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   double _join(_TreeNode node) {
     double dist = 2.0 * _nodeDistance;
 
@@ -598,8 +593,8 @@ class CompactTreeLayout extends GraphLayout {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   double _merge(_Polygon p1, _Polygon p2) {
     double x = 0.0;
     double y = 0.0;
@@ -642,8 +637,8 @@ class CompactTreeLayout extends GraphLayout {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   double _offset(double p1, double p2, double a1, double a2, double b1, double b2) {
     double d = 0.0;
 
@@ -681,8 +676,8 @@ class CompactTreeLayout extends GraphLayout {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   _Polyline _bridge(_Polyline line1, double x1, double y1, _Polyline line2, double x2, double y2) {
     double dx = x2 + line2.dx - x1;
     double dy = 0.0;
@@ -702,8 +697,8 @@ class CompactTreeLayout extends GraphLayout {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   _TreeNode _createNode(Object cell) {
     _TreeNode node = new _TreeNode(cell);
 
@@ -723,11 +718,11 @@ class CompactTreeLayout extends GraphLayout {
   }
 
   /**
-	 * 
-	 * @param node
-	 * @param bounds
-	 * @return
-	 */
+   * 
+   * @param node
+   * @param bounds
+   * @return
+   */
   Rect _apply(_TreeNode node, Rect bounds) {
     IGraphModel model = graph.getModel();
     Object cell = node.cell;
@@ -753,24 +748,24 @@ class CompactTreeLayout extends GraphLayout {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   _Polyline _createLine(double dx, double dy, _Polyline next) {
     return new _Polyline(dx, dy, next);
   }
 
   /**
-	 * Adjust parent cells whose child geometries have changed. The default 
-	 * implementation adjusts the group to just fit around the children with 
-	 * a padding.
-	 */
+   * Adjust parent cells whose child geometries have changed. The default 
+   * implementation adjusts the group to just fit around the children with 
+   * a padding.
+   */
   void _adjustParents() {
     arrangeGroups(Utils.sortCells(this._parentsChanged, true), _groupPadding);
   }
 
   /**
-	 * Moves the specified node and all of its children by the given amount.
-	 */
+   * Moves the specified node and all of its children by the given amount.
+   */
   void _localEdgeProcessing(_TreeNode node) {
     _processNodeOutgoing(node);
     _TreeNode child = node.child;
@@ -782,11 +777,11 @@ class CompactTreeLayout extends GraphLayout {
   }
 
   /**
-	 * Separates the x position of edges as they connect to vertices
-	 * 
-	 * @param node
-	 *            the root node of the tree
-	 */
+   * Separates the x position of edges as they connect to vertices
+   * 
+   * @param node
+   *            the root node of the tree
+   */
   void _processNodeOutgoing(_TreeNode node) {
     IGraphModel model = graph.getModel();
 

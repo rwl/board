@@ -3,14 +3,6 @@
  */
 part of graph.analysis;
 
-//import java.util.ArrayList;
-//import java.util.Arrays;
-//import java.util.HashMap;
-//import java.util.HashSet;
-//import java.util.LinkedList;
-//import java.util.List;
-//import java.util.Map;
-//import java.util.Set;
 
 /**
  * Implements a collection of utility methods for traversing the
@@ -19,36 +11,36 @@ part of graph.analysis;
 class Traversal {
 
   /**
-	 * Implements a recursive depth first search starting from the specified
-	 * cell. Process on the cell is performing by the visitor class passed in.
-	 * The visitor has access to the current cell and the edge traversed to
-	 * find this cell. Every cell is processed once only.
-	 * <pre>
-	 * Traversal.bfs(analysisGraph, startVertex, new ICellVisitor()
-	 * {
-	 * 	public bool visit(Object vertex, Object edge)
-	 * 	{
-	 * 		// perform your processing on each cell here
-	 *		return false;
-	 *	}
-	 * });
-	 * </pre>
-	 * @param aGraph the graph 
-	 * @param startVertex
-	 * @param visitor
-	 */
+   * Implements a recursive depth first search starting from the specified
+   * cell. Process on the cell is performing by the visitor class passed in.
+   * The visitor has access to the current cell and the edge traversed to
+   * find this cell. Every cell is processed once only.
+   * <pre>
+   * Traversal.bfs(analysisGraph, startVertex, new ICellVisitor()
+   * {
+   * 	public bool visit(Object vertex, Object edge)
+   * 	{
+   * 		// perform your processing on each cell here
+   *		return false;
+   *	}
+   * });
+   * </pre>
+   * @param aGraph the graph 
+   * @param startVertex
+   * @param visitor
+   */
   static void dfs(AnalysisGraph aGraph, Object startVertex, ICellVisitor visitor) {
     _dfsRec(aGraph, startVertex, null, new HashSet<Object>(), visitor);
   }
 
   /**
-	 * Core recursive DFS - for internal use
-	 * @param aGraph
-	 * @param cell
-	 * @param edge
-	 * @param seen
-	 * @param visitor
-	 */
+   * Core recursive DFS - for internal use
+   * @param aGraph
+   * @param cell
+   * @param edge
+   * @param seen
+   * @param visitor
+   */
   static void _dfsRec(AnalysisGraph aGraph, Object cell, Object edge, Set<Object> seen, ICellVisitor visitor) {
     if (cell != null) {
       if (!seen.contains(cell)) {
@@ -66,24 +58,24 @@ class Traversal {
   }
 
   /**
-	 * Implements a recursive breadth first search starting from the specified
-	 * cell. Process on the cell is performing by the visitor class passed in.
-	 * The visitor has access to the current cell and the edge traversed to
-	 * find this cell. Every cell is processed once only.
-	 * <pre>
-	 * Traversal.bfs(analysisGraph, startVertex, new ICellVisitor()
-	 * {
-	 * 	public bool visit(Object vertex, Object edge)
-	 * 	{
-	 * 		// perform your processing on each cell here
-	 *		return false;
-	 *	}
-	 * });
-	 * </pre>
-	 * @param aGraph the graph 
-	 * @param startVertex
-	 * @param visitor
-	 */
+   * Implements a recursive breadth first search starting from the specified
+   * cell. Process on the cell is performing by the visitor class passed in.
+   * The visitor has access to the current cell and the edge traversed to
+   * find this cell. Every cell is processed once only.
+   * <pre>
+   * Traversal.bfs(analysisGraph, startVertex, new ICellVisitor()
+   * {
+   * 	public bool visit(Object vertex, Object edge)
+   * 	{
+   * 		// perform your processing on each cell here
+   *		return false;
+   *	}
+   * });
+   * </pre>
+   * @param aGraph the graph 
+   * @param startVertex
+   * @param visitor
+   */
   static void bfs(AnalysisGraph aGraph, Object startVertex, ICellVisitor visitor) {
     if (aGraph != null && startVertex != null && visitor != null) {
       Set<Object> queued = new HashSet<Object>();
@@ -98,12 +90,12 @@ class Traversal {
   }
 
   /**
-	 * Core recursive BFS - for internal use
-	 * @param aGraph
-	 * @param queued
-	 * @param queue
-	 * @param visitor
-	 */
+   * Core recursive BFS - for internal use
+   * @param aGraph
+   * @param queued
+   * @param queue
+   * @param visitor
+   */
   static void _bfsRec(AnalysisGraph aGraph, Set<Object> queued, Queue<List<Object>> queue, ICellVisitor visitor) {
     if (queue.length > 0) {
       List<Object> q = queue.removeFirst();
@@ -130,27 +122,27 @@ class Traversal {
   }
 
   /**
-	 * Implements the Dijkstra's shortest path from startVertex to endVertex.
-	 * Process on the cell is performing by the visitor class passed in.
-	 * The visitor has access to the current cell and the edge traversed to
-	 * find this cell. Every cell is processed once only.
-	 * <pre>
-	 * Traversal.dijkstra(analysisGraph, startVertex, endVertex, new ICellVisitor()
-	 * {
-	 * 	public bool visit(Object vertex, Object edge)
-	 * 	{
-	 * 		// perform your processing on each cell here
-	 *		return false;
-	 *	}
-	 * });
-	 * </pre>
-	 * 
-	 * @param aGraph
-	 * @param startVertex
-	 * @param endVertex
-	 * @param visitor
-	 * @throws StructuralException - The current Dijkstra algorithm only works for connected graphs
-	 */
+   * Implements the Dijkstra's shortest path from startVertex to endVertex.
+   * Process on the cell is performing by the visitor class passed in.
+   * The visitor has access to the current cell and the edge traversed to
+   * find this cell. Every cell is processed once only.
+   * <pre>
+   * Traversal.dijkstra(analysisGraph, startVertex, endVertex, new ICellVisitor()
+   * {
+   * 	public bool visit(Object vertex, Object edge)
+   * 	{
+   * 		// perform your processing on each cell here
+   *		return false;
+   *	}
+   * });
+   * </pre>
+   * 
+   * @param aGraph
+   * @param startVertex
+   * @param endVertex
+   * @param visitor
+   * @throws StructuralException - The current Dijkstra algorithm only works for connected graphs
+   */
   static void dijkstra(AnalysisGraph aGraph, Object startVertex, Object endVertex, ICellVisitor visitor) //throws StructuralException
   {
     if (!GraphStructure.isConnected(aGraph)) {
@@ -258,13 +250,13 @@ class Traversal {
   }
 
   /**
-	 * Implements the Bellman-Ford shortest path from startVertex to all vertices.
-	 * 
-	 * @param aGraph
-	 * @param startVertex
-	 * @return a List where List(0) is the distance map and List(1) is the parent map. See the example in GraphConfigDialog.java
-	 * @throws StructuralException - The Bellman-Ford algorithm only works for graphs without negative cycles
-	 */
+   * Implements the Bellman-Ford shortest path from startVertex to all vertices.
+   * 
+   * @param aGraph
+   * @param startVertex
+   * @return a List where List(0) is the distance map and List(1) is the parent map. See the example in GraphConfigDialog.java
+   * @throws StructuralException - The Bellman-Ford algorithm only works for graphs without negative cycles
+   */
   static List<Map<Object, Object>> bellmanFord(AnalysisGraph aGraph, Object startVertex) //throws StructuralException
   {
     Graph graph = aGraph.getGraph();
@@ -331,12 +323,12 @@ class Traversal {
   }
 
   /**
-	 * Implements the Floyd-Roy-Warshall (aka WFI) shortest path algorithm between all vertices.
-	 * 
-	 * @param aGraph
-	 * @return an ArrayList where ArrayList(0) is the distance map and List(1) is the path map. See the example in GraphConfigDialog.java
-	 * @throws StructuralException - The Floyd-Roy-Warshall algorithm only works for graphs without negative cycles
-	 */
+   * Implements the Floyd-Roy-Warshall (aka WFI) shortest path algorithm between all vertices.
+   * 
+   * @param aGraph
+   * @return an ArrayList where ArrayList(0) is the distance map and List(1) is the path map. See the example in GraphConfigDialog.java
+   * @throws StructuralException - The Floyd-Roy-Warshall algorithm only works for graphs without negative cycles
+   */
   static List<List<List<Object>>> floydRoyWarshall(AnalysisGraph aGraph) //throws StructuralException
   {
 
@@ -380,13 +372,13 @@ class Traversal {
   }
 
   /**
-	 * A helper function for the Floyd-Roy-Warshall algorithm - for internal use
-	 * @param aGraph
-	 * @param nodes
-	 * @param edges
-	 * @param indexMap
-	 * @return
-	 */
+   * A helper function for the Floyd-Roy-Warshall algorithm - for internal use
+   * @param aGraph
+   * @param nodes
+   * @param edges
+   * @param indexMap
+   * @return
+   */
   static List<List<double>> _initializeWeight(AnalysisGraph aGraph, List<Object> nodes, List<Object> edges, Map<Object, int> indexMap) {
     List<List<double>> weight = new List<List<double>>(nodes.length);//][nodes.length];
 //    for (int k = 0; k < nodes.length; k++) {
@@ -420,14 +412,14 @@ class Traversal {
   }
 
   /**
-	 * This method helps the user to get the desired data from the result of the Floyd-Roy-Warshall algorithm. 
-	 * @param aGraph
-	 * @param FWIresult - the result of the Floyd-Roy-Warhall algorithm
-	 * @param startVertex
-	 * @param targetVertex
-	 * @return returns the shortest path from <b>startVertex</b> to <b>endVertex</b>
-	 * @throws StructuralException - The Floyd-Roy-Warshall algorithm only works for graphs without negative cycles
-	 */
+   * This method helps the user to get the desired data from the result of the Floyd-Roy-Warshall algorithm. 
+   * @param aGraph
+   * @param FWIresult - the result of the Floyd-Roy-Warhall algorithm
+   * @param startVertex
+   * @param targetVertex
+   * @return returns the shortest path from <b>startVertex</b> to <b>endVertex</b>
+   * @throws StructuralException - The Floyd-Roy-Warshall algorithm only works for graphs without negative cycles
+   */
   static List<Object> getWFIPath(AnalysisGraph aGraph, List<List<List<Object>>> FWIresult, Object startVertex, Object targetVertex) //throws StructuralException
   {
     List<List<Object>> dist = FWIresult[0];
@@ -464,17 +456,17 @@ class Traversal {
   }
 
   /**
-	 * Helper method for getWFIPath - for internal use
-	 * @param aGraph
-	 * @param paths
-	 * @param startVertex
-	 * @param targetVertex
-	 * @param currPath
-	 * @param cf
-	 * @param view
-	 * @return
-	 * @throws StructuralException
-	 */
+   * Helper method for getWFIPath - for internal use
+   * @param aGraph
+   * @param paths
+   * @param startVertex
+   * @param targetVertex
+   * @param currPath
+   * @param cf
+   * @param view
+   * @return
+   * @throws StructuralException
+   */
   static List<Object> _getWFIPathRec(AnalysisGraph aGraph, List<List<Object>> paths, Object startVertex, Object targetVertex, List<Object> currPath, CostFunction cf, GraphView view) //throws StructuralException
   {
     double sourceIndexD = cf.getCost(view.getState(startVertex));

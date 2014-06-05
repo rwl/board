@@ -4,7 +4,7 @@
 library graph.layout.orthogonal;
 
 import '../../layout/layout.dart' show GraphLayout;
-import '../../layout/orthogonal/model/model.dart' show OrthogonalModel;
+import 'model.dart' show OrthogonalModel;
 import '../../view/view.dart' show Graph;
 
 /**

@@ -20,25 +20,25 @@ class GraphMlShapeNode {
   String _dataStyle = "";
 
   /**
-	 * Construct a shape Node with the given parameters
-	 * @param dataHeight Node's Height
-	 * @param dataWidth Node's Width
-	 * @param dataX Node's X coordinate.
-	 * @param dataY Node's Y coordinate.
-	 * @param dataStyle Node's style.
-	 */
+   * Construct a shape Node with the given parameters
+   * @param dataHeight Node's Height
+   * @param dataWidth Node's Width
+   * @param dataX Node's X coordinate.
+   * @param dataY Node's Y coordinate.
+   * @param dataStyle Node's style.
+   */
   GraphMlShapeNode([this._dataHeight="", this._dataWidth="", this._dataX="", this._dataY="", this._dataStyle=""]);
 
   /**
-	 * Construct an empty shape Node
-	 */
+   * Construct an empty shape Node
+   */
 //  GraphMlShapeNode() {
 //  }
 
   /**
-	 * Construct a Shape Node from a xml Shape Node Element.
-	 * @param shapeNodeElement Xml Shape Node Element.
-	 */
+   * Construct a Shape Node from a xml Shape Node Element.
+   * @param shapeNodeElement Xml Shape Node Element.
+   */
   factory GraphMlShapeNode.from(Element shapeNodeElement) {
     final node = new GraphMlShapeNode();
     
@@ -64,10 +64,10 @@ class GraphMlShapeNode {
   }
 
   /**
-	 * Generates a Shape Node Element from this class.
-	 * @param document Document where the key Element will be inserted.
-	 * @return Returns the generated Elements.
-	 */
+   * Generates a Shape Node Element from this class.
+   * @param document Document where the key Element will be inserted.
+   * @return Returns the generated Elements.
+   */
   Element generateElement(Document document) {
     Element dataShape = document.createElementNS(GraphMlConstants.JGRAPH_URL, GraphMlConstants.JGRAPH + GraphMlConstants.SHAPENODE);
 

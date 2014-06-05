@@ -8,13 +8,12 @@ part of graph.shape;
 //import java.awt.FontMetrics;
 //import java.awt.Graphics2D;
 //import java.awt.Rectangle;
-//import java.util.Map;
 
 class DefaultTextShape implements ITextShape {
 
   /**
-	 * 
-	 */
+   * 
+   */
   void paintShape(Graphics2DCanvas canvas, String text, CellState state, Map<String, Object> style) {
     awt.Rectangle rect = state.getLabelBounds().getRectangle();
     Graphics2D g = canvas.getGraphics();
@@ -98,13 +97,13 @@ class DefaultTextShape implements ITextShape {
   }
 
   /**
-	 * Hook to add functionality after a line has been drawn
-	 * @param text the entire label text
-	 * @param line the line at the specified location
-	 * @param fm the text font metrics
-	 * @param canvas the canvas object currently being painted to
-	 * @param x the x co-ord of the baseline of the text line
-	 * @param y the y co-ord of the baseline of the text line
-	 */
+   * Hook to add functionality after a line has been drawn
+   * @param text the entire label text
+   * @param line the line at the specified location
+   * @param fm the text font metrics
+   * @param canvas the canvas object currently being painted to
+   * @param x the x co-ord of the baseline of the text line
+   * @param y the y co-ord of the baseline of the text line
+   */
   void _postProcessLine(String text, String line, FontMetrics fm, Graphics2DCanvas canvas, int x, int y) {}
 }

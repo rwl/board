@@ -3,8 +3,6 @@
  */
 part of graph.util;
 
-//import java.util.Hashtable;
-//import java.util.Map;
 
 /**
  * Maps from keys to base64 encoded images or file locations. All values must
@@ -44,27 +42,27 @@ part of graph.util;
 class ImageBundle {
 
   /**
-	 * Maps from keys to images.
-	 */
+   * Maps from keys to images.
+   */
   Map<String, String> _images = new Map<String, String>();
 
   /**
-	 * Returns the images.
-	 */
+   * Returns the images.
+   */
   Map<String, String> getImages() {
     return _images;
   }
 
   /**
-	 * Adds the specified entry to the map.
-	 */
+   * Adds the specified entry to the map.
+   */
   void putImage(String key, String value) {
     _images[key] = value;
   }
 
   /**
-	 * Returns the value for the given key.
-	 */
+   * Returns the value for the given key.
+   */
   String getImage(String key) {
     if (key != null) {
       return _images[key];

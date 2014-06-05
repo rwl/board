@@ -15,36 +15,36 @@ part of graph.sharing;
  */
 class Session implements DiagramChangeListener {
   /**
-	 * Default timeout is 10000 ms.
-	 */
+   * Default timeout is 10000 ms.
+   */
   static const int DEFAULT_TIMEOUT = 10000;
 
   /**
-	 * Holds the session ID.
-	 */
+   * Holds the session ID.
+   */
   String _id;
 
   /**
-	 * Reference to the shared diagram.
-	 */
+   * Reference to the shared diagram.
+   */
   SharedState _diagram;
 
   /**
-	 * Holds the send buffer for this session.
-	 */
+   * Holds the send buffer for this session.
+   */
   StringBuffer _buffer = new StringBuffer();
 
   /**
-	 * Holds the last active time millis.
-	 */
+   * Holds the last active time millis.
+   */
   int _lastTimeMillis = 0;
 
   /**
-	 * Constructs a new session with the given ID.
-	 * 
-	 * @param id Specifies the session ID to be used.
-	 * @param diagram Reference to the shared diagram.
-	 */
+   * Constructs a new session with the given ID.
+   * 
+   * @param id Specifies the session ID to be used.
+   * @param diagram Reference to the shared diagram.
+   */
   Session(String id, SharedState diagram) {
     this._id = id;
     this._diagram = diagram;
@@ -54,18 +54,18 @@ class Session implements DiagramChangeListener {
   }
 
   /**
-	 * Returns the session ID.
-	 */
+   * Returns the session ID.
+   */
   String getId() {
     return _id;
   }
 
   /**
-	 * Initializes the session buffer and returns a string that represents the
-	 * state of the session.
-	 *
-	 * @return Returns the initial state of the session.
-	 */
+   * Initializes the session buffer and returns a string that represents the
+   * state of the session.
+   *
+   * @return Returns the initial state of the session.
+   */
   /*synchronized*/ String init() {
     /*synchronized (this)
 		{
@@ -77,11 +77,11 @@ class Session implements DiagramChangeListener {
   }
 
   /**
-	 * Returns an XML string that represents the current state of the session
-	 * and the shared diagram. A globally unique ID is used as the session's
-	 * namespace, which is used on the client side to prefix IDs of newly
-	 * created cells.
-	 */
+   * Returns an XML string that represents the current state of the session
+   * and the shared diagram. A globally unique ID is used as the session's
+   * namespace, which is used on the client side to prefix IDs of newly
+   * created cells.
+   */
   String getInitialMessage() {
     String ns = Utils.getMd5Hash(_id);
 
@@ -98,10 +98,10 @@ class Session implements DiagramChangeListener {
   }
 
   /**
-	 * Posts the change represented by the given XML string to the shared diagram.
-	 * 
-	 * @param message XML that represents the change.
-	 */
+   * Posts the change represented by the given XML string to the shared diagram.
+   * 
+   * @param message XML that represents the change.
+   */
   void receive(Node message) {
     //System.out.println(getId() + ": " + Utils.getPrettyXml(message));
     Node child = message.firstChild;
@@ -118,25 +118,25 @@ class Session implements DiagramChangeListener {
   }
 
   /**
-	 * Returns the changes received by other sessions for the shared diagram.
-	 * The method returns an empty XML node if no change was received within
-	 * 10 seconds.
-	 * 
-	 * @return Returns a string representing the changes to the shared diagram.
-	 */
+   * Returns the changes received by other sessions for the shared diagram.
+   * The method returns an empty XML node if no change was received within
+   * 10 seconds.
+   * 
+   * @return Returns a string representing the changes to the shared diagram.
+   */
   //	String poll() //throws InterruptedException
   //	{
   //		return poll(DEFAULT_TIMEOUT);
   //	}
 
   /**
-	 * Returns the changes received by other sessions for the shared diagram.
-	 * The method returns an empty XML node if no change was received within
-	 * the given timeout.
-	 * 
-	 * @param timeout Time in milliseconds to wait for changes.
-	 * @return Returns a string representing the changes to the shared diagram.
-	 */
+   * Returns the changes received by other sessions for the shared diagram.
+   * The method returns an empty XML node if no change was received within
+   * the given timeout.
+   * 
+   * @param timeout Time in milliseconds to wait for changes.
+   * @return Returns a string representing the changes to the shared diagram.
+   */
   String poll([int timeout = DEFAULT_TIMEOUT]) //throws InterruptedException
   {
     _lastTimeMillis = new DateTime.now().millisecondsSinceEpoch;
@@ -167,9 +167,9 @@ class Session implements DiagramChangeListener {
   }
 
   /*
-	 * (non-Javadoc)
-	 * @see graph.sharing.mxSharedDiagram.mxDiagramChangeListener#diagramChanged(java.lang.Object, org.w3c.dom.Node)
-	 */
+   * (non-Javadoc)
+   * @see graph.sharing.mxSharedDiagram.mxDiagramChangeListener#diagramChanged(java.lang.Object, org.w3c.dom.Node)
+   */
   /*synchronized*/ void diagramChanged(Object sender, String edits) {
     if (sender != this) {
       /*synchronized (this)
@@ -181,15 +181,15 @@ class Session implements DiagramChangeListener {
   }
 
   /**
-	 * Returns the number of milliseconds this session has been inactive.
-	 */
+   * Returns the number of milliseconds this session has been inactive.
+   */
   int inactiveTimeMillis() {
     return new DateTime.now().millisecondsSinceEpoch - _lastTimeMillis;
   }
 
   /**
-	 * Destroys the session and removes its listener from the shared diagram.
-	 */
+   * Destroys the session and removes its listener from the shared diagram.
+   */
   void destroy() {
     _diagram.removeDiagramChangeListener(this);
   }

@@ -62,12 +62,6 @@ part of graph.util.png;
 //import java.io.FilterOutputStream;
 //import java.io.IOException;
 //import java.io.OutputStream;
-//import java.util.Calendar;
-//import java.util.Date;
-//import java.util.GregorianCalendar;
-//import java.util.TimeZone;
-//import java.util.zip.Deflater;
-//import java.util.zip.DeflaterOutputStream;
 
 class CRC
 {
@@ -221,11 +215,11 @@ class ChunkStream extends OutputStream implements DataOutput
 	}
 
 	/**
-	 * this doesnt do much, its main purpose is to stop complaints
-	 * about 'outputStream not closed...'.
-	 * 
-	 * @throws IOException
-	 */
+   * this doesnt do much, its main purpose is to stop complaints
+   * about 'outputStream not closed...'.
+   * 
+   * @throws IOException
+   */
 	void close() //throws IOException
 	{
 
@@ -394,16 +388,16 @@ class PngImageEncoder
 	}
 
 	/**
-	 *
-	 */
+   *
+   */
 	PngEncodeParam getParam()
 	{
 		return param;
 	}
 
 	/**
-	 *
-	 */
+   *
+   */
 	void setParam(PngEncodeParam param)
 	{
 		this.param = param;
@@ -985,13 +979,13 @@ class PngImageEncoder
 	}
 
 	/**
-	 * Analyzes a set of palettes and determines if it can be expressed
-	 * as a standard set of gray values, with zero or one values being
-	 * fully transparent and the rest being fully opaque.  If it
-	 * is possible to express the data thusly, the method returns
-	 * a suitable instance of PNGEncodeParam.Gray; otherwise it
-	 * returns null.
-	 */
+   * Analyzes a set of palettes and determines if it can be expressed
+   * as a standard set of gray values, with zero or one values being
+   * fully transparent and the rest being fully opaque.  If it
+   * is possible to express the data thusly, the method returns
+   * a suitable instance of PNGEncodeParam.Gray; otherwise it
+   * returns null.
+   */
 	Gray createGrayParam(List<byte> redPalette,
 			List<byte> greenPalette, List<byte> bluePalette, List<byte> alphaPalette)
 	{
@@ -1031,11 +1025,11 @@ class PngImageEncoder
 	}
 
 	/**
-	 * This method encodes a <code>RenderedImage</code> into PNG.
-	 * The stream into which the PNG is dumped is not closed at
-	 * the end of the operation, this should be done if needed
-	 * by the caller of this method.
-	 */
+   * This method encodes a <code>RenderedImage</code> into PNG.
+   * The stream into which the PNG is dumped is not closed at
+   * the end of the operation, this should be done if needed
+   * by the caller of this method.
+   */
 	void encode(RenderedImage im) //throws IOException
 	{
 		this.image = im;

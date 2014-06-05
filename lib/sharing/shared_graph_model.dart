@@ -3,7 +3,6 @@
  */
 part of graph.sharing;
 
-//import java.util.LinkedList;
 
 //import org.w3c.dom.Node;
 
@@ -13,26 +12,26 @@ part of graph.sharing;
 class SharedGraphModel extends SharedState {
 
   /**
-	 * 
-	 */
+   * 
+   */
   GraphModel _model;
 
   /**
-	 * 
-	 */
+   * 
+   */
   Codec _codec;
 
   /**
-	 * Whether remote changes should be significant in the
-	 * local command history. Default is true.
-	 */
+   * Whether remote changes should be significant in the
+   * local command history. Default is true.
+   */
   bool _significantRemoteChanges = true;
 
   /**
-	 * Constructs a new diagram with the given model.
-	 * 
-	 * @param model Initial model of the diagram.
-	 */
+   * Constructs a new diagram with the given model.
+   * 
+   * @param model Initial model of the diagram.
+   */
   SharedGraphModel(GraphModel model) : super(null) // Overrides getState
   {
     _codec = new SharedGraphModelCodec(this);
@@ -40,36 +39,36 @@ class SharedGraphModel extends SharedState {
   }
 
   /**
-	 * @return the model
-	 */
+   * @return the model
+   */
   GraphModel getModel() {
     return _model;
   }
 
   /**
-	 * @return the significantRemoteChanges
-	 */
+   * @return the significantRemoteChanges
+   */
   bool isSignificantRemoteChanges() {
     return _significantRemoteChanges;
   }
 
   /**
-	 * @param significantRemoteChanges the significantRemoteChanges to set
-	 */
+   * @param significantRemoteChanges the significantRemoteChanges to set
+   */
   void setSignificantRemoteChanges(bool significantRemoteChanges) {
     this._significantRemoteChanges = significantRemoteChanges;
   }
 
   /**
-	 * Returns the initial state of the diagram.
-	 */
+   * Returns the initial state of the diagram.
+   */
   String getState() {
     return XmlUtils.getXml(_codec.encode(_model));
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   /*synchronized*/ void addDelta(String edits) {
     // Edits are not added to the history. They are sent straight out to
     // all sessions and the model is updated so the next session will get
@@ -77,8 +76,8 @@ class SharedGraphModel extends SharedState {
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   String _processEdit(Node node) {
     List<AtomicGraphModelChange> changes = _decodeChanges(node.firstChild);
 
@@ -96,9 +95,9 @@ class SharedGraphModel extends SharedState {
   }
 
   /**
-	 * Creates a new UndoableEdit that implements the notify function to fire
-	 * a change and notify event via the model.
-	 */
+   * Creates a new UndoableEdit that implements the notify function to fire
+   * a change and notify event via the model.
+   */
   UndoableEdit _createUndoableEdit(List<AtomicGraphModelChange> changes) {
     throw new Exception();
     UndoableEdit edit = new SharedGraphModelUndoableEdit(this, _significantRemoteChanges);
@@ -111,9 +110,9 @@ class SharedGraphModel extends SharedState {
   }
 
   /**
-	 * Adds removed cells to the codec object lookup for references to the removed
-	 * cells after this point in time.
-	 */
+   * Adds removed cells to the codec object lookup for references to the removed
+   * cells after this point in time.
+   */
   List<AtomicGraphModelChange> _decodeChanges(Node node) {
     // Updates the document in the existing codec
     _codec.setDocument(node.ownerDocument);
@@ -158,9 +157,9 @@ class SharedGraphModel extends SharedState {
   }
 
   /**
-	 * Adds removed cells to the codec object lookup for references to the removed
-	 * cells after this point in time.
-	 */
+   * Adds removed cells to the codec object lookup for references to the removed
+   * cells after this point in time.
+   */
   void cellRemoved(Object cell) {
     _codec.putObject((cell as ICell).getId(), cell);
 

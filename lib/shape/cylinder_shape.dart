@@ -7,8 +7,8 @@ part of graph.shape;
 class CylinderShape extends BasicShape {
 
   /**
-	 * Draws a cylinder for the given parameters.
-	 */
+   * Draws a cylinder for the given parameters.
+   */
   void paintShape(Graphics2DCanvas canvas, CellState state) {
     awt.Rectangle rect = state.getRectangle();
     int x = rect.x;

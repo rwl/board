@@ -3,8 +3,6 @@
  */
 part of graph.io;
 
-//import java.util.HashMap;
-//import java.util.List;
 
 //import org.w3c.dom.Document;
 //import org.w3c.dom.Element;
@@ -20,10 +18,10 @@ part of graph.io;
  */
 class GraphMlCodec {
   /**
-	 * Receives a GraphMl document and parses it generating a new graph that is inserted in graph.
-	 * @param document XML to be parsed
-	 * @param graph Graph where the parsed graph is included.
-	 */
+   * Receives a GraphMl document and parses it generating a new graph that is inserted in graph.
+   * @param document XML to be parsed
+   * @param graph Graph where the parsed graph is included.
+   */
   static void decode(Document document, Graph graph) {
     Object parent = graph.getDefaultParent();
 
@@ -48,17 +46,17 @@ class GraphMlCodec {
   }
 
   /**
-	 * Remove all the elements in the Defined Maps.
-	 */
+   * Remove all the elements in the Defined Maps.
+   */
   static void _cleanMaps() {
     GraphMlKeyManager.getInstance().getKeyMap().clear();
   }
 
   /**
-	 * Generates a Xml document with the gmlGraph.
-	 * @param gmlGraph Graph model.
-	 * @return The Xml document generated.
-	 */
+   * Generates a Xml document with the gmlGraph.
+   * @param gmlGraph Graph model.
+   * @return The Xml document generated.
+   */
   static Document encodeXML(GraphMlGraph gmlGraph) {
     Document doc = DomUtils.createDocument();
 
@@ -86,10 +84,10 @@ class GraphMlCodec {
   }
 
   /**
-	 * Generates a Xml document with the cells in the graph.
-	 * @param graph Graph with the cells.
-	 * @return The Xml document generated.
-	 */
+   * Generates a Xml document with the cells in the graph.
+   * @param graph Graph with the cells.
+   * @return The Xml document generated.
+   */
   static Document encode(Graph graph) {
     GraphMlGraph gmlGraph = new GraphMlGraph();
     Object parent = graph.getDefaultParent();
@@ -105,8 +103,8 @@ class GraphMlCodec {
   }
 
   /**
-	 * Creates the key elements for the encode.
-	 */
+   * Creates the key elements for the encode.
+   */
   static void _createKeyElements() {
     HashMap<String, GraphMlKey> keyMap = GraphMlKeyManager.getInstance().getKeyMap();
     GraphMlKey keyNode = new GraphMlKey(GraphMlConstants.KEY_NODE_ID, keyForValues.NODE, GraphMlConstants.KEY_NODE_NAME, keyTypeValues.STRING);
@@ -117,12 +115,12 @@ class GraphMlCodec {
   }
 
   /**
-	 * Returns a Gml graph with the data of the vertexes and edges in the graph.
-	 * @param gmlGraph Gml document where the elements are put.
-	 * @param parent Parent cell of the vertexes and edges to be added.
-	 * @param graph Graph that contains the vertexes and edges.
-	 * @return Returns the document with the elements added.
-	 */
+   * Returns a Gml graph with the data of the vertexes and edges in the graph.
+   * @param gmlGraph Gml document where the elements are put.
+   * @param parent Parent cell of the vertexes and edges to be added.
+   * @param graph Graph that contains the vertexes and edges.
+   * @return Returns the document with the elements added.
+   */
   static GraphMlGraph decodeGraph(Graph graph, Object parent, GraphMlGraph gmlGraph) {
     List<Object> vertexes = graph.getChildVertices(parent);
     List<GraphMlEdge> gmlEdges = gmlGraph.getEdges();
@@ -154,10 +152,10 @@ class GraphMlCodec {
   }
 
   /**
-	 * Add the node data in the gmlNode.
-	 * @param gmlNode Gml node where the data add.
-	 * @param v Cell where data are obtained.
-	 */
+   * Add the node data in the gmlNode.
+   * @param gmlNode Gml node where the data add.
+   * @param v Cell where data are obtained.
+   */
   static void addNodeData(GraphMlNode gmlNode, Cell v) {
     GraphMlData data = new GraphMlData();
     GraphMlShapeNode dataShapeNode = new GraphMlShapeNode();
@@ -175,10 +173,10 @@ class GraphMlCodec {
   }
 
   /**
-	 * Add the edge data in the gmlEdge.
-	 * @param gmlEdge Gml edge where the data add.
-	 * @param v Cell where data are obtained.
-	 */
+   * Add the edge data in the gmlEdge.
+   * @param gmlEdge Gml edge where the data add.
+   * @param v Cell where data are obtained.
+   */
   static void addEdgeData(GraphMlEdge gmlEdge, Cell v) {
     GraphMlData data = new GraphMlData();
     GraphMlShapeEdge dataShapeEdge = new GraphMlShapeEdge();
@@ -192,13 +190,13 @@ class GraphMlCodec {
   }
 
   /**
-	 * Converts a connection point in the string representation of a port.
-	 * The specials names North, NorthWest, NorthEast, East, West, South, SouthEast and SouthWest
-	 * may be returned. Else, the values returned follows the pattern "double,double"
-	 * where double must be in the range 0..1
-	 * @param point Point2d
-	 * @return Name of the port
-	 */
+   * Converts a connection point in the string representation of a port.
+   * The specials names North, NorthWest, NorthEast, East, West, South, SouthEast and SouthWest
+   * may be returned. Else, the values returned follows the pattern "double,double"
+   * where double must be in the range 0..1
+   * @param point Point2d
+   * @return Name of the port
+   */
   static String _pointToPortString(Point2d point) {
     String port = "";
     if (point != null) {
@@ -229,12 +227,12 @@ class GraphMlCodec {
   }
 
   /**
-	 * Returns a list of mxGmlEdge with the data of the edges in the graph.
-	 * @param Gmledges List where the elements are put.
-	 * @param parent Parent cell of the edges to be added.
-	 * @param graph Graph that contains the edges.
-	 * @return Returns the list Gmledges with the elements added.
-	 */
+   * Returns a list of mxGmlEdge with the data of the edges in the graph.
+   * @param Gmledges List where the elements are put.
+   * @param parent Parent cell of the edges to be added.
+   * @param graph Graph that contains the edges.
+   * @return Returns the list Gmledges with the elements added.
+   */
   static List<GraphMlEdge> _encodeEdges(List<GraphMlEdge> Gmledges, Object parent, Graph graph) {
     List<Object> edges = graph.getChildEdges(parent);
     for (Object edge in edges) {

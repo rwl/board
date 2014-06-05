@@ -4,13 +4,12 @@
 part of graph.shape;
 
 //import java.awt.Rectangle;
-//import java.util.Map;
 
 class RectangleShape extends BasicShape {
 
   /**
-	 * 
-	 */
+   * 
+   */
   void paintShape(Graphics2DCanvas canvas, CellState state) {
     Map<String, Object> style = state.getStyle();
 
@@ -60,12 +59,12 @@ class RectangleShape extends BasicShape {
   }
 
   /**
-	 * Computes the arc size for the given dimension.
-	 * 
-	 * @param w Width of the rectangle.
-	 * @param h Height of the rectangle.
-	 * @return Returns the arc size for the given dimension.
-	 */
+   * Computes the arc size for the given dimension.
+   * 
+   * @param w Width of the rectangle.
+   * @param h Height of the rectangle.
+   * @return Returns the arc size for the given dimension.
+   */
   int getArcSize(int w, int h) {
     int arcSize;
 
