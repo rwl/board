@@ -72,59 +72,24 @@ part of graph.swing;
  */
 class GraphComponent extends JScrollPane implements Printable {
 
-  /**
-   * 
-   */
-  //	static final long serialVersionUID = -30203858391633447L;
-
-  /**
-   * 
-   */
   static final int GRID_STYLE_DOT = 0;
 
-  /**
-   * 
-   */
   static final int GRID_STYLE_CROSS = 1;
 
-  /**
-   * 
-   */
   static final int GRID_STYLE_LINE = 2;
 
-  /**
-   * 
-   */
   static final int GRID_STYLE_DASHED = 3;
 
-  /**
-   * 
-   */
   static final int ZOOM_POLICY_NONE = 0;
 
-  /**
-   * 
-   */
   static final int ZOOM_POLICY_PAGE = 1;
 
-  /**
-   * 
-   */
   static final int ZOOM_POLICY_WIDTH = 2;
 
-  /**
-   * 
-   */
   static ImageIcon DEFAULT_EXPANDED_ICON = null;
 
-  /**
-   * 
-   */
   static ImageIcon DEFAULT_COLLAPSED_ICON = null;
 
-  /**
-   * 
-   */
   static ImageIcon DEFAULT_WARNING_ICON = null;
 
   /**
@@ -144,44 +109,20 @@ class GraphComponent extends JScrollPane implements Printable {
     .getResource("/com/mxgraph/swing/images/warning.gif"));
   }
 
-  /**
-   * 
-   */
   Graph _graph;
 
-  /**
-   * 
-   */
   GraphControl _graphControl;
 
-  /**
-   * 
-   */
   EventSource _eventSource = new EventSource(this);
 
-  /**
-   * 
-   */
   ICellEditor _cellEditor;
 
-  /**
-   * 
-   */
   ConnectionHandler _connectionHandler;
 
-  /**
-   * 
-   */
   PanningHandler _panningHandler;
 
-  /**
-   * 
-   */
   SelectionCellsHandler _selectionCellsHandler;
 
-  /**
-   * 
-   */
   GraphHandler _graphHandler;
 
   /**
@@ -201,19 +142,10 @@ class GraphComponent extends JScrollPane implements Printable {
    */
   PageFormat _pageFormat = new PageFormat();
 
-  /**
-   * 
-   */
   InteractiveCanvas _canvas;
 
-  /**
-   * 
-   */
   BufferedImage _tripleBuffer;
 
-  /**
-   * 
-   */
   Graphics2D _tripleBufferGraphics;
 
   /**
@@ -265,14 +197,8 @@ class GraphComponent extends JScrollPane implements Printable {
    */
   Color _pageBackgroundColor = new Color(144, 153, 174);
 
-  /**
-   * 
-   */
   Color _pageShadowColor = new Color(110, 120, 140);
 
-  /**
-   * 
-   */
   Color _pageBorderColor = Color.black;
 
   /**
@@ -280,9 +206,6 @@ class GraphComponent extends JScrollPane implements Printable {
    */
   bool _gridVisible = false;
 
-  /**
-   * 
-   */
   Color _gridColor = new Color(192, 192, 192);
 
   /**
@@ -299,19 +222,10 @@ class GraphComponent extends JScrollPane implements Printable {
    */
   bool _autoExtend = true;
 
-  /**
-   * 
-   */
   bool _dragEnabled = true;
 
-  /**
-   * 
-   */
   bool _importEnabled = true;
 
-  /**
-   * 
-   */
   bool _exportEnabled = true;
 
   /**
@@ -337,34 +251,16 @@ class GraphComponent extends JScrollPane implements Printable {
    */
   bool _transparentSwimlaneContent = true;
 
-  /**
-   * 
-   */
   int _gridStyle = GRID_STYLE_DOT;
 
-  /**
-   * 
-   */
   ImageIcon _expandedIcon = DEFAULT_EXPANDED_ICON;
 
-  /**
-   * 
-   */
   ImageIcon _collapsedIcon = DEFAULT_COLLAPSED_ICON;
 
-  /**
-   * 
-   */
   ImageIcon _warningIcon = DEFAULT_WARNING_ICON;
 
-  /**
-   * 
-   */
   bool _antiAlias = true;
 
-  /**
-   * 
-   */
   bool _textAntiAlias = true;
 
   /**
@@ -450,9 +346,6 @@ class GraphComponent extends JScrollPane implements Printable {
     _graphControl.updatePreferredSize();
   };
 
-  /**
-   * 
-   */
   IEventListener _repaintHandler = (Object source, EventObj evt) {
     Rect dirty = evt.getProperty("region") as Rect;
     awt.Rectangle rect = (dirty != null) ? dirty.getRectangle() : null;
@@ -494,9 +387,6 @@ class GraphComponent extends JScrollPane implements Printable {
     // ----------------------------------------------------------
   };
 
-  /**
-   * 
-   */
   PropertyChangeListener _viewChangeHandler = (PropertyChangeEvent evt) {
     if (evt.getPropertyName().equals("view")) {
       GraphView oldView = evt.getOldValue() as GraphView;
@@ -586,16 +476,10 @@ class GraphComponent extends JScrollPane implements Printable {
     _graphControl.addMouseListener(new DoubleClickMouseAdapter(this));
   }
 
-  /**
-   * 
-   */
   ICellEditor _createCellEditor() {
     return new CellEditor(this);
   }
 
-  /**
-   * 
-   */
   void setGraph(Graph value) {
     Graph oldValue = _graph;
 
@@ -674,9 +558,6 @@ class GraphComponent extends JScrollPane implements Printable {
     _graphHandler = _createGraphHandler();
   }
 
-  /**
-   * 
-   */
   TransferHandler _createTransferHandler() {
     return new GraphTransferHandler();
   }
@@ -695,16 +576,10 @@ class GraphComponent extends JScrollPane implements Printable {
     return new GraphHandler(this);
   }
 
-  /**
-   * 
-   */
   SelectionCellsHandler getSelectionCellsHandler() {
     return _selectionCellsHandler;
   }
 
-  /**
-   * 
-   */
   GraphHandler getGraphHandler() {
     return _graphHandler;
   }
@@ -716,9 +591,6 @@ class GraphComponent extends JScrollPane implements Printable {
     return new ConnectionHandler(this);
   }
 
-  /**
-   * 
-   */
   ConnectionHandler getConnectionHandler() {
     return _connectionHandler;
   }
@@ -730,30 +602,18 @@ class GraphComponent extends JScrollPane implements Printable {
     return new PanningHandler(this);
   }
 
-  /**
-   * 
-   */
   PanningHandler getPanningHandler() {
     return _panningHandler;
   }
 
-  /**
-   * 
-   */
   bool isEditing() {
     return getCellEditor().getEditingCell() != null;
   }
 
-  /**
-   * 
-   */
   ICellEditor getCellEditor() {
     return _cellEditor;
   }
 
-  /**
-   * 
-   */
   void setCellEditor(ICellEditor value) {
     ICellEditor oldValue = _cellEditor;
     _cellEditor = value;
@@ -779,16 +639,10 @@ class GraphComponent extends JScrollPane implements Printable {
     firePropertyChange("tolerance", oldValue, _tolerance);
   }
 
-  /**
-   * 
-   */
   PageFormat getPageFormat() {
     return _pageFormat;
   }
 
-  /**
-   * 
-   */
   void setPageFormat(PageFormat value) {
     PageFormat oldValue = _pageFormat;
     _pageFormat = value;
@@ -796,16 +650,10 @@ class GraphComponent extends JScrollPane implements Printable {
     firePropertyChange("pageFormat", oldValue, _pageFormat);
   }
 
-  /**
-   * 
-   */
   double getPageScale() {
     return _pageScale;
   }
 
-  /**
-   * 
-   */
   void setPageScale(double value) {
     double oldValue = _pageScale;
     _pageScale = value;
@@ -826,16 +674,10 @@ class GraphComponent extends JScrollPane implements Printable {
     }
   }
 
-  /**
-   * 
-   */
   ImageIcon getBackgroundImage() {
     return _backgroundImage;
   }
 
-  /**
-   * 
-   */
   void setBackgroundImage(ImageIcon value) {
     ImageIcon oldValue = _backgroundImage;
     _backgroundImage = value;
@@ -927,9 +769,6 @@ class GraphComponent extends JScrollPane implements Printable {
     firePropertyChange("horizontalPageCount", oldValue, _horizontalPageCount);
   }
 
-  /**
-   * 
-   */
   int getHorizontalPageCount() {
     return _horizontalPageCount;
   }
@@ -945,9 +784,6 @@ class GraphComponent extends JScrollPane implements Printable {
     firePropertyChange("verticalPageCount", oldValue, _verticalPageCount);
   }
 
-  /**
-   * 
-   */
   int getVerticalPageCount() {
     return _verticalPageCount;
   }
@@ -1082,9 +918,6 @@ class GraphComponent extends JScrollPane implements Printable {
     firePropertyChange("centerZoom", oldValue, _centerZoom);
   }
 
-  /**
-   * 
-   */
   void setZoomPolicy(int value) {
     int oldValue = _zoomPolicy;
     _zoomPolicy = value;
@@ -1096,9 +929,6 @@ class GraphComponent extends JScrollPane implements Printable {
     firePropertyChange("zoomPolicy", oldValue, _zoomPolicy);
   }
 
-  /**
-   * 
-   */
   int getZoomPolicy() {
     return _zoomPolicy;
   }
@@ -1167,24 +997,15 @@ class GraphComponent extends JScrollPane implements Printable {
     return new Point2d(x, y);
   }
 
-  /**
-   * 
-   */
   void startEditing() {
     startEditingAtCell(null);
   }
 
-  /**
-   * 
-   */
   //	void startEditingAtCell(Object cell)
   //	{
   //		startEditingAtCell(cell, null);
   //	}
 
-  /**
-   * 
-   */
   void startEditingAtCell(Object cell, [EventObject evt = null]) {
     if (cell == null) {
       cell = _graph.getSelectionCell();
@@ -1200,16 +1021,10 @@ class GraphComponent extends JScrollPane implements Printable {
     }
   }
 
-  /**
-   * 
-   */
   String getEditingValue(Object cell, EventObject trigger) {
     return _graph.convertValueToString(cell);
   }
 
-  /**
-   * 
-   */
   void stopEditing(bool cancel) {
     _cellEditor.stopEditing(cancel);
   }
@@ -1327,9 +1142,6 @@ class GraphComponent extends JScrollPane implements Printable {
     zoom(1 / _zoomFactor);
   }
 
-  /**
-   * 
-   */
   void zoomBy(double factor) {
     GraphView view = _graph.getView();
     double newScale = (double)((int)(view.getScale() * 100 * factor)) / 100;
@@ -1347,9 +1159,6 @@ class GraphComponent extends JScrollPane implements Printable {
     }
   }
 
-  /**
-   * 
-   */
   void zoomTo(final double newScale, final bool center) {
     GraphView view = _graph.getView();
     final double scale = view.getScale();
@@ -1407,9 +1216,6 @@ class GraphComponent extends JScrollPane implements Printable {
     }
   }
 
-  /**
-   * 
-   */
   void zoom(final bool page, final bool center) {
     if (_pageVisible && !_zooming) {
       _zooming = true;
@@ -1474,9 +1280,6 @@ class GraphComponent extends JScrollPane implements Printable {
     }
   }
 
-  /**
-   * 
-   */
   void scrollToCenter(bool horizontal) {
     JScrollBar scrollBar = (horizontal) ? getHorizontalScrollBar() : getVerticalScrollBar();
 
@@ -1599,9 +1402,6 @@ class GraphComponent extends JScrollPane implements Printable {
     return null;
   }
 
-  /**
-   * 
-   */
   void setSwimlaneSelectionEnabled(bool value) {
     bool oldValue = _swimlaneSelectionEnabled;
     _swimlaneSelectionEnabled = value;
@@ -1609,16 +1409,10 @@ class GraphComponent extends JScrollPane implements Printable {
     firePropertyChange("swimlaneSelectionEnabled", oldValue, _swimlaneSelectionEnabled);
   }
 
-  /**
-   * 
-   */
   bool isSwimlaneSelectionEnabled() {
     return _swimlaneSelectionEnabled;
   }
 
-  /**
-   * 
-   */
   List<Object> selectRegion(awt.Rectangle rect, MouseEvent e) {
     List<Object> cells = getCells(rect);
 
@@ -1745,9 +1539,6 @@ class GraphComponent extends JScrollPane implements Printable {
     return null;
   }
 
-  /**
-   * 
-   */
   awt.Rectangle getFoldingIconBounds(CellState state, ImageIcon icon) {
     IGraphModel model = _graph.getModel();
     bool isEdge = model.isEdge(state.getCell());
@@ -1806,9 +1597,6 @@ class GraphComponent extends JScrollPane implements Printable {
     }
   }
 
-  /**
-   * 
-   */
   bool isConnectable() {
     return _connectionHandler.isEnabled();
   }
@@ -1820,9 +1608,6 @@ class GraphComponent extends JScrollPane implements Printable {
     _connectionHandler.setEnabled(connectable);
   }
 
-  /**
-   * 
-   */
   bool isPanning() {
     return _panningHandler.isEnabled();
   }
@@ -1996,16 +1781,10 @@ class GraphComponent extends JScrollPane implements Printable {
     firePropertyChange("textAntiAlias", oldValue, _textAntiAlias);
   }
 
-  /**
-   * 
-   */
   float getPreviewAlpha() {
     return _previewAlpha;
   }
 
-  /**
-   * 
-   */
   void setPreviewAlpha(float value) {
     float oldValue = _previewAlpha;
     _previewAlpha = value;
@@ -2166,9 +1945,6 @@ class GraphComponent extends JScrollPane implements Printable {
     firePropertyChange("foldingEnabled", oldValue, _foldingEnabled);
   }
 
-  /**
-   * 
-   */
   bool isEditEvent(MouseEvent e) {
     return (e != null) ? e.getClickCount() == 2 : false;
   }
@@ -2239,17 +2015,11 @@ class GraphComponent extends JScrollPane implements Printable {
     return (event != null) ? event.isAltDown() : false;
   }
 
-  /**
-   * 
-   */
   //	Point2d snapScaledPoint(Point2d pt)
   //	{
   //		return snapScaledPoint(pt, 0, 0);
   //	}
 
-  /**
-   * 
-   */
   Point2d snapScaledPoint(Point2d pt, [double dx = 0.0, double dy = 0.0]) {
     if (pt != null) {
       double scale = _graph.getView().getScale();
@@ -2338,16 +2108,10 @@ class GraphComponent extends JScrollPane implements Printable {
     return result;
   }
 
-  /**
-   * 
-   */
   InteractiveCanvas getCanvas() {
     return _canvas;
   }
 
-  /**
-   * 
-   */
   BufferedImage getTripleBuffer() {
     return _tripleBuffer;
   }
@@ -2397,25 +2161,16 @@ class GraphComponent extends JScrollPane implements Printable {
     return null;
   }
 
-  /**
-   * 
-   */
   void insertComponent(CellState state, Component c) {
     getGraphControl().add(c, 0);
   }
 
-  /**
-   * 
-   */
   void removeComponent(Component c, Object cell) {
     if (c.getParent() != null) {
       c.getParent().remove(c);
     }
   }
 
-  /**
-   * 
-   */
   void updateComponent(CellState state, Component c) {
     int x = state.getX() as int;
     int y = state.getY() as int;
@@ -2437,9 +2192,6 @@ class GraphComponent extends JScrollPane implements Printable {
     c.setBounds(x, y, width, height);
   }
 
-  /**
-   * 
-   */
   void updateComponents() {
     Object root = _graph.getModel().getRoot();
     Hashtable<Object, List<Component>> result = updateComponents(root);
@@ -2461,9 +2213,6 @@ class GraphComponent extends JScrollPane implements Printable {
     }
   }
 
-  /**
-   * 
-   */
   void removeAllComponents(Hashtable<Object, List<Component>> map) {
     Iterator<Map.Entry<Object, List<Component>>> it = map.entrySet().iterator();
 
@@ -2477,9 +2226,6 @@ class GraphComponent extends JScrollPane implements Printable {
     }
   }
 
-  /**
-   * 
-   */
   void removeAllOverlays(Hashtable<Object, List<ICellOverlay>> map) {
     Iterator<Map.Entry<Object, List<ICellOverlay>>> it = map.entrySet().iterator();
 
@@ -2493,9 +2239,6 @@ class GraphComponent extends JScrollPane implements Printable {
     }
   }
 
-  /**
-   * 
-   */
   Hashtable<Object, List<Component>> updateCellComponents(Object cell) {
     Hashtable<Object, List<Component>> result = new Hashtable<Object, List<Component>>();
     List<Component> c = _components.remove(cell);
@@ -2908,9 +2651,6 @@ class GraphComponent extends JScrollPane implements Printable {
     return result;
   }
 
-  /**
-   * 
-   */
   void _paintBackground(Graphics g) {
     awt.Rectangle clip = g.getClipBounds();
     awt.Rectangle rect = _paintBackgroundPage(g);
@@ -2927,9 +2667,6 @@ class GraphComponent extends JScrollPane implements Printable {
     g.setClip(clip);
   }
 
-  /**
-   * 
-   */
   awt.Rectangle _paintBackgroundPage(Graphics g) {
     Point2d translate = _graph.getView().getTranslate();
     double scale = _graph.getView().getScale();
@@ -3004,9 +2741,6 @@ class GraphComponent extends JScrollPane implements Printable {
     return new awt.Rectangle(x0, y0, w, h);
   }
 
-  /**
-   * 
-   */
   void _paintBackgroundImage(Graphics g) {
     if (_backgroundImage != null) {
       Point2d translate = _graph.getView().getTranslate();

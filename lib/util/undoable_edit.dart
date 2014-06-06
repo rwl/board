@@ -127,9 +127,6 @@ class UndoableEdit {
     _changes.add(change);
   }
 
-  /**
-   * 
-   */
   void undo() {
     if (!_undone) {
       int count = _changes.length;
@@ -146,9 +143,6 @@ class UndoableEdit {
     dispatch();
   }
 
-  /**
-   * 
-   */
   void redo() {
     if (!_redone) {
       int count = _changes.length;

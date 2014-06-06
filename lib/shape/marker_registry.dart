@@ -6,9 +6,6 @@ part of graph.shape;
 //import java.awt.geom.awt.Line2D;
 
 class MarkerRegistry {
-  /**
-   * 
-   */
   static Map<String, IMarker> _markers = new Hashtable<String, IMarker>();
 
   static init() {
@@ -75,16 +72,10 @@ class MarkerRegistry {
     });
   }
 
-  /**
-   * 
-   */
   static IMarker getMarker(String name) {
     return _markers[name];
   }
 
-  /**
-   * 
-   */
   static void registerMarker(String name, IMarker marker) {
     _markers[name] = marker;
   }

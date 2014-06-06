@@ -2,24 +2,12 @@ part of graph.view;
 
 
 class TemporaryCellStates {
-  /**
-   * 
-   */
   GraphView _view;
 
-  /**
-   * 
-   */
   Map<Object, CellState> _oldStates;
 
-  /**
-   * 
-   */
   Rect _oldBounds;
 
-  /**
-   * 
-   */
   double _oldScale;
 
   /**

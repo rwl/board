@@ -187,9 +187,6 @@ class FastOrganicLayout extends GraphLayout {
     disableEdgeStyle = value;
   }
 
-  /**
-   * 
-   */
   double getMaxIterations() {
     return maxIterations;
   }
@@ -202,9 +199,6 @@ class FastOrganicLayout extends GraphLayout {
     maxIterations = value;
   }
 
-  /**
-   * 
-   */
   double getForceConstant() {
     return forceConstant;
   }
@@ -217,9 +211,6 @@ class FastOrganicLayout extends GraphLayout {
     forceConstant = value;
   }
 
-  /**
-   * 
-   */
   double getMinDistanceLimit() {
     return minDistanceLimit;
   }
@@ -246,9 +237,6 @@ class FastOrganicLayout extends GraphLayout {
     this.maxDistanceLimit = maxDistanceLimit;
   }
 
-  /**
-   * 
-   */
   double getInitialTemp() {
     return initialTemp;
   }

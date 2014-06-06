@@ -223,26 +223,17 @@ class GraphicsCanvas2D implements ICanvas2D {
     return null;
   }
 
-  /**
-   * 
-   */
   void scale(double value) {
     // This implementation uses custom scale/translate and built-in rotation
     _state.scale = _state.scale * value;
   }
 
-  /**
-   * 
-   */
   void translate(double dx, double dy) {
     // This implementation uses custom scale/translate and built-in rotation
     _state.dx += dx;
     _state.dy += dy;
   }
 
-  /**
-   * 
-   */
   void rotate(double theta, bool flipH, bool flipV, double cx, double cy) {
     cx += _state.dx;
     cy += _state.dy;
@@ -273,9 +264,6 @@ class GraphicsCanvas2D implements ICanvas2D {
     _state.flipV = flipV;
   }
 
-  /**
-   * 
-   */
   void setStrokeWidth(double value) {
     // Lazy and cached instantiation strategy for all stroke properties
     if (value != _state.strokeWidth) {
@@ -294,9 +282,6 @@ class GraphicsCanvas2D implements ICanvas2D {
     }
   }
 
-  /**
-   * 
-   */
   void setDashed(bool value) {
     // Lazy and cached instantiation strategy for all stroke properties
     if (value != _state.dashed) {
@@ -304,9 +289,6 @@ class GraphicsCanvas2D implements ICanvas2D {
     }
   }
 
-  /**
-   * 
-   */
   void setDashPattern(String value) {
     if (value != null && value.length > 0) {
       List<String> tokens = value.split(" ");
@@ -320,45 +302,30 @@ class GraphicsCanvas2D implements ICanvas2D {
     }
   }
 
-  /**
-   * 
-   */
   void setLineCap(String value) {
     if (_state.lineCap != value) {
       _state.lineCap = value;
     }
   }
 
-  /**
-   * 
-   */
   void setLineJoin(String value) {
     if (_state.lineJoin != value) {
       _state.lineJoin = value;
     }
   }
 
-  /**
-   * 
-   */
   void setMiterLimit(double value) {
     if (value != _state.miterLimit) {
       _state.miterLimit = value;
     }
   }
 
-  /**
-   * 
-   */
   void setFontSize(double value) {
     if (value != _state.fontSize) {
       _state.fontSize = value;
     }
   }
 
-  /**
-   * 
-   */
   void setFontColor(String value) {
     if (_state.fontColorValue == null || _state.fontColorValue != value) {
       _state.fontColorValue = value;
@@ -366,9 +333,6 @@ class GraphicsCanvas2D implements ICanvas2D {
     }
   }
 
-  /**
-   * 
-   */
   void setFontBackgroundColor(String value) {
     if (_state.fontBackgroundColorValue == null || _state.fontBackgroundColorValue != value) {
       _state.fontBackgroundColorValue = value;
@@ -376,9 +340,6 @@ class GraphicsCanvas2D implements ICanvas2D {
     }
   }
 
-  /**
-   * 
-   */
   void setFontBorderColor(String value) {
     if (_state.fontBorderColorValue == null || _state.fontBorderColorValue != value) {
       _state.fontBorderColorValue = value;
@@ -386,27 +347,18 @@ class GraphicsCanvas2D implements ICanvas2D {
     }
   }
 
-  /**
-   * 
-   */
   void setFontFamily(String value) {
     if (_state.fontFamily != value) {
       _state.fontFamily = value;
     }
   }
 
-  /**
-   * 
-   */
   void setFontStyle(int value) {
     if (value != _state.fontStyle) {
       _state.fontStyle = value;
     }
   }
 
-  /**
-   * 
-   */
   void setAlpha(double value) {
     if (_state.alpha != value) {
       _state.g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, value));
@@ -414,9 +366,6 @@ class GraphicsCanvas2D implements ICanvas2D {
     }
   }
 
-  /**
-   * 
-   */
   void setFillColor(String value) {
     if (_state.fillColorValue == null || _state.fillColorValue != value) {
       _state.fillColorValue = value;
@@ -427,9 +376,6 @@ class GraphicsCanvas2D implements ICanvas2D {
     }
   }
 
-  /**
-   * 
-   */
   void setGradient(String color1, String color2, double x, double y, double w, double h, String direction, double alpha1, double alpha2) {
     // LATER: Add lazy instantiation and check if paint already created
     double x1 = ((_state.dx + x) * _state.scale) as double;
@@ -506,17 +452,11 @@ class GraphicsCanvas2D implements ICanvas2D {
     quadTo(x, y, x + dx, y);
   }
 
-  /**
-   * 
-   */
   void ellipse(double x, double y, double w, double h) {
     _currentPath = new GeneralPath();
     _currentPath.append(new Ellipse2D((_state.dx + x) * _state.scale, (_state.dy + y) * _state.scale, w * _state.scale, h * _state.scale), false);
   }
 
-  /**
-   * 
-   */
   void image(double x, double y, double w, double h, String src, bool aspect, bool flipH, bool flipV) {
     if (src != null && w > 0 && h > 0) {
       Image img = _loadImage(src);
@@ -532,9 +472,6 @@ class GraphicsCanvas2D implements ICanvas2D {
     }
   }
 
-  /**
-   * 
-   */
   void _drawImage(Graphics2D graphics, Image image, int x, int y) {
     graphics.drawImage(image, x, y, null);
   }
@@ -546,9 +483,6 @@ class GraphicsCanvas2D implements ICanvas2D {
     return Utils.loadImage(src);
   }
 
-  /**
-   * 
-   */
   /*final*/ awt.Rectangle _getImageBounds(Image img, double x, double y, double w, double h, bool aspect) {
     x = (_state.dx + x) * _state.scale;
     y = (_state.dy + y) * _state.scale;
@@ -713,9 +647,6 @@ class GraphicsCanvas2D implements ICanvas2D {
     return LightweightLabel.getSharedInstance();
   }
 
-  /**
-   * 
-   */
   Point2D _getMargin(String align, String valign) {
     double dx = 0.0;
     double dy = 0.0;
@@ -956,34 +887,22 @@ class GraphicsCanvas2D implements ICanvas2D {
     return g2;
   }
 
-  /**
-   * 
-   */
   void begin() {
     _currentPath = new GeneralPath();
   }
 
-  /**
-   * 
-   */
   void moveTo(double x, double y) {
     if (_currentPath != null) {
       _currentPath.moveTo(((_state.dx + x) * _state.scale) as double, ((_state.dy + y) * _state.scale) as double);
     }
   }
 
-  /**
-   * 
-   */
   void lineTo(double x, double y) {
     if (_currentPath != null) {
       _currentPath.lineTo(((_state.dx + x) * _state.scale) as double, ((_state.dy + y) * _state.scale) as double);
     }
   }
 
-  /**
-   * 
-   */
   void quadTo(double x1, double y1, double x2, double y2) {
     if (_currentPath != null) {
       _currentPath.quadTo(((_state.dx + x1) * _state.scale) as double, ((_state.dy + y1) * _state.scale) as double,
@@ -991,9 +910,6 @@ class GraphicsCanvas2D implements ICanvas2D {
     }
   }
 
-  /**
-   * 
-   */
   void curveTo(double x1, double y1, double x2, double y2, double x3, double y3) {
     if (_currentPath != null) {
       _currentPath.curveTo(((_state.dx + x1) * _state.scale) as double, ((_state.dy + y1) * _state.scale) as double,
@@ -1011,30 +927,18 @@ class GraphicsCanvas2D implements ICanvas2D {
     }
   }
 
-  /**
-   * 
-   */
   void stroke() {
     _paintCurrentPath(false, true);
   }
 
-  /**
-   * 
-   */
   void fill() {
     _paintCurrentPath(true, false);
   }
 
-  /**
-   * 
-   */
   void fillAndStroke() {
     _paintCurrentPath(true, true);
   }
 
-  /**
-   * 
-   */
   void _paintCurrentPath(bool filled, bool stroked) {
     if (_currentPath != null) {
       if (stroked) {
@@ -1081,9 +985,6 @@ class GraphicsCanvas2D implements ICanvas2D {
     }
   }
 
-  /**
-   * 
-   */
   void _paintShadow(bool filled, bool stroked) {
     if (_state.shadowColor == null) {
       _state.shadowColor = _parseColor(_state.shadowColorValue);
@@ -1130,38 +1031,23 @@ class GraphicsCanvas2D implements ICanvas2D {
     }
   }
 
-  /**
-   * 
-   */
   void setShadow(bool value) {
     _state.shadow = value;
   }
 
-  /**
-   * 
-   */
   void setShadowColor(String value) {
     _state.shadowColorValue = value;
   }
 
-  /**
-   * 
-   */
   void setShadowAlpha(double value) {
     _state.shadowAlpha = value;
   }
 
-  /**
-   * 
-   */
   void setShadowOffset(double dx, double dy) {
     _state.shadowOffsetX = dx;
     _state.shadowOffsetY = dy;
   }
 
-  /**
-   * 
-   */
   void _updateFont() {
     int size = math.round(_state.fontSize * _state.scale) as int;
     int style = ((_state.fontStyle & Constants.FONT_BOLD) == Constants.FONT_BOLD) ? Font.BOLD : Font.PLAIN;
@@ -1201,9 +1087,6 @@ class GraphicsCanvas2D implements ICanvas2D {
     return family;
   }
 
-  /**
-   * 
-   */
   void _updateStroke() {
     double sw = Math.max(1, _state.strokeWidth * _state.scale) as double;
     int cap = BasicStroke.CAP_BUTT;
@@ -1328,9 +1211,6 @@ class _CanvasState {//implements Cloneable {
    */
   /*transient*/ Graphics2D g;
 
-  /**
-   * 
-   */
   /*Object clone() //throws CloneNotSupportedException
   {
     return super.clone();

@@ -12,17 +12,11 @@ class CurveShape extends ConnectorShape {
    */
   Curve _curve;
 
-  /**
-   * 
-   */
   //	CurveShape()
   //	{
   //		this(new Curve());
   //	}
 
-  /**
-   * 
-   */
   CurveShape([Curve curve = null]) {
     if (curve == null) {
       curve = new Curve();
@@ -30,16 +24,10 @@ class CurveShape extends ConnectorShape {
     this._curve = curve;
   }
 
-  /**
-   * 
-   */
   Curve getCurve() {
     return _curve;
   }
 
-  /**
-   * 
-   */
   void paintShape(Graphics2DCanvas canvas, CellState state) {
     Object keyStrokeHint = canvas.getGraphics().getRenderingHint(RenderingHints.KEY_STROKE_CONTROL);
     canvas.getGraphics().setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
@@ -49,9 +37,6 @@ class CurveShape extends ConnectorShape {
     canvas.getGraphics().setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, keyStrokeHint);
   }
 
-  /**
-   * 
-   */
   void _paintPolyline(Graphics2DCanvas canvas, List<Point2d> points, Map<String, Object> style) {
     double scale = canvas.getScale();
     validateCurve(points, scale, style);

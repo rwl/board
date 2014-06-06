@@ -300,9 +300,6 @@ class GraphView extends EventSource {
     validate();
   }
 
-  /**
-   * 
-   */
   void revalidate() {
     invalidate();
     validate();
@@ -1469,19 +1466,10 @@ class GraphView extends EventSource {
  */
 class CurrentRootChange implements UndoableChange {
 
-  /**
-   * 
-   */
   GraphView view;
 
-  /**
-   * 
-   */
   Object root, previous;
 
-  /**
-   * 
-   */
   bool up;
 
   /**

@@ -13,9 +13,6 @@ part of graph.swing;
  *
  */
 class MouseTracker implements MouseListener, MouseMotionListener {
-  /**
-   * 
-   */
   final GraphOutline graphOutline;
 
   /**
@@ -25,9 +22,6 @@ class MouseTracker implements MouseListener, MouseMotionListener {
     this.graphOutline = graphOutline;
   }
 
-  /**
-   * 
-   */
   awt.Point start = null;
 
   /*
@@ -124,9 +118,6 @@ class MouseTracker implements MouseListener, MouseMotionListener {
     }
   }
 
-  /**
-   * 
-   */
   bool hitZoomHandle(int x, int y) {
     return new awt.Rectangle(this.graphOutline._finderBounds.x + this.graphOutline._finderBounds.width - 6, this.graphOutline._finderBounds.y + this.graphOutline._finderBounds.height - 6, 8, 8).contains(x, y);
   }

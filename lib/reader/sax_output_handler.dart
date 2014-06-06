@@ -39,9 +39,6 @@ class SaxOutputHandler extends xml.DefaultHandler {
     return _canvas;
   }
 
-  /**
-   * 
-   */
   void startElement(String qName, Map<String, String> atts) //throws SAXException
   {
     SaxElementHandler handler = _handlers[qName.toLowerCase()];
@@ -51,9 +48,6 @@ class SaxOutputHandler extends xml.DefaultHandler {
     }
   }
 
-  /**
-   * 
-   */
   void _initHandlers() {
     _handlers["save"] = (Map<String, String> atts) {
       _canvas.save();

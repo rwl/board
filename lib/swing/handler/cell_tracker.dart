@@ -14,11 +14,6 @@ part of graph.swing.handler;
 class CellTracker extends CellMarker implements MouseListener, MouseMotionListener {
 
   /**
-   * 
-   */
-  //	static final long serialVersionUID = 7372144804885125688L;
-
-  /**
    * Constructs an event handler that highlights cells.
    */
   CellTracker(GraphComponent graphComponent, Color color) : super(graphComponent, color) {
@@ -26,9 +21,6 @@ class CellTracker extends CellMarker implements MouseListener, MouseMotionListen
     graphComponent.getGraphControl().addMouseMotionListener(this);
   }
 
-  /**
-   * 
-   */
   void destroy() {
     _graphComponent.getGraphControl().removeMouseListener(this);
     _graphComponent.getGraphControl().removeMouseMotionListener(this);

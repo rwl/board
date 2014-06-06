@@ -2,9 +2,6 @@ part of graph.shape;
 
 class LineShape extends BasicShape {
 
-  /**
-   * 
-   */
   void paintShape(Graphics2DCanvas canvas, CellState state) {
     if (_configureGraphics(canvas, state, false)) {
       bool rounded = Utils.isTrue(state.getStyle(), Constants.STYLE_ROUNDED, false) && canvas.getScale() > Constants.MIN_SCALE_FOR_ROUNDED_LINES;
@@ -13,9 +10,6 @@ class LineShape extends BasicShape {
     }
   }
 
-  /**
-   * 
-   */
   List<Point2d> createPoints(Graphics2DCanvas canvas, CellState state) {
     String direction = Utils.getString(state.getStyle(), Constants.STYLE_DIRECTION, Constants.DIRECTION_EAST);
 

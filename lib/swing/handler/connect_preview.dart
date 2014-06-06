@@ -15,24 +15,12 @@ part of graph.swing.handler;
  * icon, while the preview is used to draw the line.
  */
 class ConnectPreview extends EventSource {
-  /**
-   * 
-   */
   GraphComponent _graphComponent;
 
-  /**
-   * 
-   */
   CellState _previewState;
 
-  /**
-   * 
-   */
   CellState _sourceState;
 
-  /**
-   * 
-   */
   Point2d _startPoint;
 
   /**
@@ -60,30 +48,18 @@ class ConnectPreview extends EventSource {
     return cell;
   }
 
-  /**
-   * 
-   */
   bool isActive() {
     return _sourceState != null;
   }
 
-  /**
-   * 
-   */
   CellState getSourceState() {
     return _sourceState;
   }
 
-  /**
-   * 
-   */
   CellState getPreviewState() {
     return _previewState;
   }
 
-  /**
-   * 
-   */
   Point2d getStartPoint() {
     return _startPoint;
   }
@@ -102,9 +78,6 @@ class ConnectPreview extends EventSource {
     fireEvent(new EventObj(Event.START, "event", e, "state", _previewState));
   }
 
-  /**
-   * 
-   */
   void update(MouseEvent e, CellState targetState, double x, double y) {
     Graph graph = _graphComponent.getGraph();
     ICell cell = _previewState.getCell() as ICell;
@@ -138,17 +111,11 @@ class ConnectPreview extends EventSource {
     }
   }
 
-  /**
-   * 
-   */
   //	awt.Rectangle _getDirtyRect()
   //	{
   //		return _getDirtyRect(null);
   //	}
 
-  /**
-   * 
-   */
   awt.Rectangle _getDirtyRect([Rect dirty = null]) {
     if (_previewState != null) {
       Rect tmp = _graphComponent.getGraph().getPaintBounds([_previewState.getCell()]);
@@ -170,9 +137,6 @@ class ConnectPreview extends EventSource {
     return null;
   }
 
-  /**
-   * 
-   */
   Point2d _transformScreenPoint(double x, double y) {
     Graph graph = _graphComponent.getGraph();
     Point2d tr = graph.getView().getTranslate();
@@ -181,17 +145,11 @@ class ConnectPreview extends EventSource {
     return new Point2d(graph.snap(x / scale - tr.getX()), graph.snap(y / scale - tr.getY()));
   }
 
-  /**
-   * 
-   */
   void revalidate(CellState state) {
     state.getView().invalidate(state.getCell());
     state.getView().validateCellState(state.getCell());
   }
 
-  /**
-   * 
-   */
   void paint(Graphics g) {
     if (_previewState != null) {
       Graphics2DCanvas canvas = _graphComponent.getCanvas();

@@ -7,9 +7,6 @@ part of graph.shape;
 
 class ConnectorShape extends BasicShape {
 
-  /**
-   * 
-   */
   void paintShape(Graphics2DCanvas canvas, CellState state) {
     if (state.getAbsolutePointCount() > 1 && _configureGraphics(canvas, state, false)) {
       List<Point2d> pts = new List<Point2d>.from(state.getAbsolutePoints());
@@ -38,25 +35,16 @@ class ConnectorShape extends BasicShape {
     }
   }
 
-  /**
-   * 
-   */
   void _paintPolyline(Graphics2DCanvas canvas, List<Point2d> points, Map<String, Object> style) {
     bool rounded = isRounded(style) && canvas.getScale() > Constants.MIN_SCALE_FOR_ROUNDED_LINES;
 
     canvas.paintPolyline(points, rounded);
   }
 
-  /**
-   * 
-   */
   bool isRounded(Map<String, Object> style) {
     return Utils.isTrue(style, Constants.STYLE_ROUNDED, false);
   }
 
-  /**
-   * 
-   */
   void _translatePoint(List<Point2d> points, int index, Point2d offset) {
     if (offset != null) {
       Point2d pt = points[index].clone() as Point2d;

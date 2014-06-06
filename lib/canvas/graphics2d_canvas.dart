@@ -23,14 +23,8 @@ part of graph.canvas;
  * An implementation of a canvas that uses Graphics2D for painting.
  */
 class Graphics2DCanvas extends BasicCanvas {
-  /**
-   * 
-   */
   static final String TEXT_SHAPE_DEFAULT = "default";
 
-  /**
-   * 
-   */
   static final String TEXT_SHAPE_HTML = "html";
 
   /**
@@ -105,16 +99,10 @@ class Graphics2DCanvas extends BasicCanvas {
     }
   }
 
-  /**
-   * 
-   */
   static void putShape(String name, IShape shape) {
     _shapes[name] = shape;
   }
 
-  /**
-   * 
-   */
   IShape getShape(Map<String, Object> style) {
     String name = Utils.getString(style, Constants.STYLE_SHAPE, null);
     IShape shape = _shapes[name];
@@ -126,16 +114,10 @@ class Graphics2DCanvas extends BasicCanvas {
     return shape;
   }
 
-  /**
-   * 
-   */
   static void putTextShape(String name, ITextShape shape) {
     _textShapes[name] = shape;
   }
 
-  /**
-   * 
-   */
   ITextShape getTextShape(Map<String, Object> style, bool html) {
     String name;
 
@@ -148,9 +130,6 @@ class Graphics2DCanvas extends BasicCanvas {
     return _textShapes[name];
   }
 
-  /**
-   * 
-   */
   CellRendererPane getRendererPane() {
     return _rendererPane;
   }
@@ -220,17 +199,11 @@ class Graphics2DCanvas extends BasicCanvas {
     return shape;
   }
 
-  /**
-   * 
-   */
   //	void drawImage(awt.Rectangle bounds, String imageUrl)
   //	{
   //		drawImage(bounds, imageUrl, PRESERVE_IMAGE_ASPECT, false, false);
   //	}
 
-  /**
-   * 
-   */
   void drawImage(awt.Rectangle bounds, String imageUrl, [bool preserveAspect = null, bool flipH = false, bool flipV = false]) {
     if (imageUrl != null && bounds.getWidth() > 0 && bounds.getHeight() > 0) {
       Image img = loadImage(imageUrl);
@@ -306,9 +279,6 @@ class Graphics2DCanvas extends BasicCanvas {
     return new awt.Dimension(image.getWidth(null), image.getHeight(null));
   }
 
-  /**
-   * 
-   */
   void paintPolyline(List<Point2d> points, bool rounded) {
     if (points != null && points.length > 1) {
       Point2d pt = points[0];
@@ -421,9 +391,6 @@ class Graphics2DCanvas extends BasicCanvas {
     _g.fill(shape);
   }
 
-  /**
-   * 
-   */
   Stroke createStroke(Map<String, Object> style) {
     double width = Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1.0) * _scale;
     bool dashed = Utils.isTrue(style, Constants.STYLE_DASHED);
@@ -441,9 +408,6 @@ class Graphics2DCanvas extends BasicCanvas {
     }
   }
 
-  /**
-   * 
-   */
   Paint createFillPaint(Rect bounds, Map<String, Object> style) {
     awt.Color fillColor = Utils.getColor(style, Constants.STYLE_FILLCOLOR);
     Paint fillPaint = null;
@@ -476,9 +440,6 @@ class Graphics2DCanvas extends BasicCanvas {
     return fillPaint;
   }
 
-  /**
-   * 
-   */
   Graphics2D createTemporaryGraphics(Map<String, Object> style, double opacity, Rect bounds) {
     Graphics2D temporaryGraphics = _g.create() as Graphics2D;
 

@@ -41,11 +41,6 @@ part of graph.swing.handler;
 class GraphHandler extends MouseAdapter implements DropTargetListener {
 
   /**
-   * 
-   */
-  //	static final long serialVersionUID = 3241109976696510225L;
-
-  /**
    * Default is Cursor.DEFAULT_CURSOR.
    */
   static Cursor DEFAULT_CURSOR = new Cursor(Cursor.DEFAULT_CURSOR);
@@ -96,9 +91,6 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
    */
   bool _removeCellsFromParent = true;
 
-  /**
-   * 
-   */
   MovePreview _movePreview;
 
   /**
@@ -139,29 +131,14 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
    */
   /*transient*/ awt.Point _first;
 
-  /**
-   * 
-   */
   /*transient*/ Object _cell;
 
-  /**
-   * 
-   */
   /*transient*/ Object _initialCell;
 
-  /**
-   * 
-   */
   /*transient*/ List<Object> _dragCells;
 
-  /**
-   * 
-   */
   /*transient*/ CellMarker _marker;
 
-  /**
-   * 
-   */
   /*transient*/ bool _canImport;
 
   /**
@@ -179,14 +156,8 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
    */
   /*transient*/ Rect _transferBounds;
 
-  /**
-   * 
-   */
   /*transient*/ bool _visible = false;
 
-  /**
-   * 
-   */
   /*transient*/ awt.Rectangle _previewBounds = null;
 
   /**
@@ -244,9 +215,6 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
     setVisible(false);
   }
 
-  /**
-   * 
-   */
   void _installDragGestureHandler() {
     DragGestureListener dragGestureListener = (DragGestureEvent e) {
       if (_graphComponent.isDragEnabled() && _first != null) {
@@ -266,9 +234,6 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
     dragSource.createDefaultDragGestureRecognizer(_graphComponent.getGraphControl(), (isCloneEnabled()) ? DnDConstants.ACTION_COPY_OR_MOVE : DnDConstants.ACTION_MOVE, dragGestureListener);
   }
 
-  /**
-   * 
-   */
   void _installDropTargetHandler() {
     DropTarget dropTarget = _graphComponent.getDropTarget();
 
@@ -282,16 +247,10 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
     }
   }
 
-  /**
-   * 
-   */
   bool isVisible() {
     return _visible;
   }
 
-  /**
-   * 
-   */
   void setVisible(bool value) {
     if (_visible != value) {
       _visible = value;
@@ -302,9 +261,6 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
     }
   }
 
-  /**
-   * 
-   */
   void setPreviewBounds(awt.Rectangle bounds) {
     if ((bounds == null && _previewBounds != null) || (bounds != null && _previewBounds == null) || (bounds != null && _previewBounds != null && !bounds.equals(_previewBounds))) {
       awt.Rectangle dirty = null;
@@ -327,23 +283,14 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
     }
   }
 
-  /**
-   * 
-   */
   MovePreview _createMovePreview() {
     return new MovePreview(_graphComponent);
   }
 
-  /**
-   * 
-   */
   MovePreview getMovePreview() {
     return _movePreview;
   }
 
-  /**
-   * 
-   */
   CellMarker _createMarker() {
     CellMarker marker = new GraphHandlerCellMarker(this, graphComponent, Color.BLUE);
 
@@ -353,156 +300,90 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
     return marker;
   }
 
-  /**
-   * 
-   */
   GraphComponent getGraphComponent() {
     return _graphComponent;
   }
 
-  /**
-   * 
-   */
   bool isEnabled() {
     return _enabled;
   }
 
-  /**
-   * 
-   */
   void setEnabled(bool value) {
     _enabled = value;
   }
 
-  /**
-   * 
-   */
   bool isCloneEnabled() {
     return _cloneEnabled;
   }
 
-  /**
-   * 
-   */
   void setCloneEnabled(bool value) {
     _cloneEnabled = value;
   }
 
-  /**
-   * 
-   */
   bool isMoveEnabled() {
     return _moveEnabled;
   }
 
-  /**
-   * 
-   */
   void setMoveEnabled(bool value) {
     _moveEnabled = value;
   }
 
-  /**
-   * 
-   */
   bool isMarkerEnabled() {
     return _markerEnabled;
   }
 
-  /**
-   * 
-   */
   void setMarkerEnabled(bool value) {
     _markerEnabled = value;
   }
 
-  /**
-   * 
-   */
   CellMarker getMarker() {
     return _marker;
   }
 
-  /**
-   * 
-   */
   void setMarker(CellMarker value) {
     _marker = value;
   }
 
-  /**
-   * 
-   */
   bool isSelectEnabled() {
     return _selectEnabled;
   }
 
-  /**
-   * 
-   */
   void setSelectEnabled(bool value) {
     _selectEnabled = value;
   }
 
-  /**
-   * 
-   */
   bool isRemoveCellsFromParent() {
     return _removeCellsFromParent;
   }
 
-  /**
-   * 
-   */
   void setRemoveCellsFromParent(bool value) {
     _removeCellsFromParent = value;
   }
 
-  /**
-   * 
-   */
   bool isLivePreview() {
     return _livePreview;
   }
 
-  /**
-   * 
-   */
   void setLivePreview(bool value) {
     _livePreview = value;
   }
 
-  /**
-   * 
-   */
   bool isImagePreview() {
     return _imagePreview;
   }
 
-  /**
-   * 
-   */
   void setImagePreview(bool value) {
     _imagePreview = value;
   }
 
-  /**
-   * 
-   */
   bool isCenterPreview() {
     return _centerPreview;
   }
 
-  /**
-   * 
-   */
   void setCenterPreview(bool value) {
     _centerPreview = value;
   }
 
-  /**
-   * 
-   */
   void updateDragImage(List<Object> cells) {
     _dragImage = null;
 
@@ -516,9 +397,6 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
     }
   }
 
-  /**
-   * 
-   */
   void mouseMoved(MouseEvent e) {
     if (_graphComponent.isEnabled() && isEnabled() && !e.isConsumed()) {
       Cursor cursor = _getCursor(e);
@@ -532,9 +410,6 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
     }
   }
 
-  /**
-   * 
-   */
   Cursor _getCursor(MouseEvent e) {
     Cursor cursor = null;
 
@@ -553,9 +428,6 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
     return cursor;
   }
 
-  /**
-   * 
-   */
   void dragEnter(DropTargetDragEvent e) {
     JComponent component = _getDropTarget(e);
     TransferHandler th = component.getTransferHandler();
@@ -623,9 +495,6 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
     }
   }
 
-  /**
-   * 
-   */
   void mousePressed(MouseEvent e) {
     if (_graphComponent.isEnabled() && isEnabled() && !e.isConsumed() && !_graphComponent.isForceMarqueeEvent(e)) {
       _cell = _graphComponent.getCellAt(e.getX(), e.getY(), false);
@@ -649,18 +518,12 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
     }
   }
 
-  /**
-   * 
-   */
   List<Object> getCells(Object initialCell) {
     Graph graph = _graphComponent.getGraph();
 
     return graph.getMovableCells(graph.getSelectionCells());
   }
 
-  /**
-   * 
-   */
   void start(MouseEvent e) {
     if (isLivePreview()) {
       _movePreview.start(e, _graphComponent.getGraph().getView().getState(_initialCell));
@@ -686,9 +549,6 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
     _first = e.getPoint();
   }
 
-  /**
-   * 
-   */
   void dropActionChanged(DropTargetDragEvent e) {
     // do nothing
   }
@@ -741,9 +601,6 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
     }
   }
 
-  /**
-   * 
-   */
   awt.Point convertPoint(awt.Point pt) {
     pt = SwingUtilities.convertPoint(_graphComponent, pt, _graphComponent.getGraphControl());
 
@@ -753,9 +610,6 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
     return pt;
   }
 
-  /**
-   * 
-   */
   void mouseDragged(MouseEvent e) {
     // LATER: Check scrollborder, use scroll-increments, do not
     // scroll when over ruler dragging from library
@@ -821,9 +675,6 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
     }
   }
 
-  /**
-   * 
-   */
   awt.Point _getPreviewLocation(MouseEvent e, bool gridEnabled) {
     int x = 0;
     int y = 0;
@@ -892,9 +743,6 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
     }
   }
 
-  /**
-   * 
-   */
   void mouseReleased(MouseEvent e) {
     if (_graphComponent.isEnabled() && isEnabled() && !e.isConsumed()) {
       Graph graph = _graphComponent.getGraph();
@@ -1007,17 +855,11 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
     reset();
   }
 
-  /**
-   * 
-   */
   void _fold(Object cell) {
     bool collapse = !_graphComponent.getGraph().isCellCollapsed(cell);
     _graphComponent.getGraph().foldCells(collapse, false, [cell]);
   }
 
-  /**
-   * 
-   */
   void reset() {
     if (_movePreview.isActive()) {
       _movePreview.stop(false, null, 0, 0, false, null);
@@ -1097,9 +939,6 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
     }
   }
 
-  /**
-   * 
-   */
   MouseEvent _createEvent(DropTargetEvent e) {
     JComponent component = _getDropTarget(e);
     awt.Point location = null;

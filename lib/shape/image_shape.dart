@@ -12,9 +12,6 @@ part of graph.shape;
  */
 class ImageShape extends RectangleShape {
 
-  /**
-   * 
-   */
   void paintShape(Graphics2DCanvas canvas, CellState state) {
     super.paintShape(canvas, state);
 
@@ -24,37 +21,22 @@ class ImageShape extends RectangleShape {
     canvas.drawImage(getImageBounds(canvas, state), getImageForStyle(canvas, state), Graphics2DCanvas.PRESERVE_IMAGE_ASPECT, flipH, flipV);
   }
 
-  /**
-   * 
-   */
   awt.Rectangle getImageBounds(Graphics2DCanvas canvas, CellState state) {
     return state.getRectangle();
   }
 
-  /**
-   * 
-   */
   bool hasGradient(Graphics2DCanvas canvas, CellState state) {
     return false;
   }
 
-  /**
-   * 
-   */
   String getImageForStyle(Graphics2DCanvas canvas, CellState state) {
     return canvas.getImageForStyle(state.getStyle());
   }
 
-  /**
-   * 
-   */
   Color getFillColor(Graphics2DCanvas canvas, CellState state) {
     return Utils.getColor(state.getStyle(), Constants.STYLE_IMAGE_BACKGROUND);
   }
 
-  /**
-   * 
-   */
   Color getStrokeColor(Graphics2DCanvas canvas, CellState state) {
     return Utils.getColor(state.getStyle(), Constants.STYLE_IMAGE_BORDER);
   }

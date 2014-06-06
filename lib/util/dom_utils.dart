@@ -56,9 +56,6 @@ class DomUtils {
     return document;
   }
 
-  /**
-   * 
-   */
   static Document createVmlDocument() {
     Document document = createDocument();
 

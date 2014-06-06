@@ -18,9 +18,6 @@ part of graph.util;
 typedef ICanvas CanvasFactory(int width, int height);
 
 class CellRenderer {
-  /**
-   * 
-   */
   factory CellRenderer() {
     // static class
     return null;
@@ -89,9 +86,6 @@ class CellRenderer {
     return canvas;
   }
 
-  /**
-   * 
-   */
   //	static BufferedImage createBufferedImage(Graph graph,
   //			List<Object> cells, double scale, Color background, bool antiAlias,
   //			Rect clip)
@@ -100,9 +94,6 @@ class CellRenderer {
   //				clip, new Graphics2DCanvas());
   //	}
 
-  /**
-   * 
-   */
   static image.Image createBufferedImage(Graph graph, List<Object> cells, double scale, final awt.Color background, final bool antiAlias, Rect clip, [/*final*/ Graphics2DCanvas graphicsCanvas = null]) {
     if (graphicsCanvas == null) {
       graphicsCanvas = new Graphics2DCanvas();
@@ -114,9 +105,6 @@ class CellRenderer {
     return (canvas != null) ? canvas.destroy() : null;
   }
 
-  /**
-   * 
-   */
   static Document createHtmlDocument(Graph graph, List<Object> cells, double scale, awt.Color background, Rect clip) {
     HtmlCanvas canvas = drawCells(graph, cells, scale, clip, (int width, int height) {
       return new HtmlCanvas(DomUtils.createHtmlDocument());
@@ -125,9 +113,6 @@ class CellRenderer {
     return canvas.getDocument();
   }
 
-  /**
-   * 
-   */
   static Document createSvgDocument(Graph graph, List<Object> cells, double scale, awt.Color background, Rect clip) {
     SvgCanvas canvas = drawCells(graph, cells, scale, clip, (int width, int height) {
       return new SvgCanvas(DomUtils.createSvgDocument(width, height));
@@ -136,9 +121,6 @@ class CellRenderer {
     return canvas.getDocument();
   }
 
-  /**
-   * 
-   */
   static Document createVmlDocument(Graph graph, List<Object> cells, double scale, awt.Color background, Rect clip) {
     VmlCanvas canvas = drawCells(graph, cells, scale, clip, (int width, int height) {
       return new VmlCanvas(DomUtils.createVmlDocument());
@@ -147,9 +129,6 @@ class CellRenderer {
     return canvas.getDocument();
   }
 
-  /**
-   * 
-   */
   //	static abstract class CanvasFactory
   //	{
   //

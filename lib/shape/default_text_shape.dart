@@ -11,9 +11,6 @@ part of graph.shape;
 
 class DefaultTextShape implements ITextShape {
 
-  /**
-   * 
-   */
   void paintShape(Graphics2DCanvas canvas, String text, CellState state, Map<String, Object> style) {
     awt.Rectangle rect = state.getLabelBounds().getRectangle();
     Graphics2D g = canvas.getGraphics();

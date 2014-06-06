@@ -17,9 +17,6 @@ class HtmlColor {
 
   static final RegExp _rgbRegex = new RegExp(r"rgba?\\([^)]*\\)", caseSensitive: false);
 
-  /**
-   * 
-   */
   static String hexString(awt.Color color) {
     int r = color.getRed();
     int g = color.getGreen();

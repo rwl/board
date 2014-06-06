@@ -11,10 +11,6 @@ part of graph.util;
  */
 class Rect extends Point2d {
 
-  /**
-   * 
-   */
-  //	private static final long serialVersionUID = -3793966043543578946L;
 
   /**
    * Holds the width and the height. Default is 0.

@@ -187,9 +187,6 @@ class GraphSelectionModel extends EventSource {
     }
   }
 
-  /**
-   * 
-   */
   void addCells(List<Object> cells) {
     if (cells != null) {
       Iterable<Object> remove = null;
@@ -220,9 +217,6 @@ class GraphSelectionModel extends EventSource {
     }
   }
 
-  /**
-   * 
-   */
   void removeCells(List<Object> cells) {
     if (cells != null) {
       List<Object> tmp = new List<Object>(cells.length);
@@ -237,9 +231,6 @@ class GraphSelectionModel extends EventSource {
     }
   }
 
-  /**
-   * 
-   */
   void _changeSelection(Iterable<Object> added, Iterable<Object> removed) {
     if ((added != null && added.length > 0) || (removed != null && removed.length > 0)) {
       SelectionChange change = new SelectionChange(this, added, removed);
@@ -250,18 +241,12 @@ class GraphSelectionModel extends EventSource {
     }
   }
 
-  /**
-   * 
-   */
   void _cellAdded(Object cell) {
     if (cell != null) {
       _cells.add(cell);
     }
   }
 
-  /**
-   * 
-   */
   void _cellRemoved(Object cell) {
     if (cell != null) {
       _cells.remove(cell);
@@ -275,14 +260,8 @@ class GraphSelectionModel extends EventSource {
  */
 class SelectionChange implements UndoableChange {
 
-  /**
-   * 
-   */
   GraphSelectionModel model;
 
-  /**
-   * 
-   */
   List<Object> added, removed;
 
   /**
@@ -297,9 +276,6 @@ class SelectionChange implements UndoableChange {
     this.removed = (removed != null) ? new List<Object>.from(removed) : null;
   }
 
-  /**
-   * 
-   */
   void execute() {
     if (removed != null) {
       Iterator<Object> it = removed.iterator;

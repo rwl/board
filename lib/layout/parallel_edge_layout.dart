@@ -48,9 +48,6 @@ class ParallelEdgeLayout extends GraphLayout {
     }
   }
 
-  /**
-   * 
-   */
   Map<String, List<Object>> findParallels(Object parent) {
     Map<String, List<Object>> lookup = new Map<String, List<Object>>();
     IGraphModel model = graph.getModel();
@@ -75,9 +72,6 @@ class ParallelEdgeLayout extends GraphLayout {
     return lookup;
   }
 
-  /**
-   * 
-   */
   String getEdgeId(Object edge) {
     GraphView view = graph.getView();
     CellState state = view.getState(edge);
@@ -94,9 +88,6 @@ class ParallelEdgeLayout extends GraphLayout {
     return null;
   }
 
-  /**
-   * 
-   */
   void layout(List<Object> parallels) {
     Object edge = parallels[0];
     IGraphModel model = graph.getModel();
@@ -142,9 +133,6 @@ class ParallelEdgeLayout extends GraphLayout {
     }
   }
 
-  /**
-   * 
-   */
   void route(Object edge, double x, double y) {
     if (graph.isCellMovable(edge)) {
       setEdgePoints(edge, [ new Point2d(x, y) ]);

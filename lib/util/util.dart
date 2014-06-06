@@ -863,9 +863,6 @@ class Utils {
     }
   }
 
-  /**
-   * 
-   */
   static void fillClippedRect(Graphics g, int x, int y, int width, int height) {
     awt.Rectangle bg = new awt.Rectangle(x, y, width, height);
 
@@ -1435,17 +1432,11 @@ class Utils {
     }
   }
 
-  /**
-   * 
-   */
   //	static Font getFont(Map<String, Object> style)
   //	{
   //		return getFont(style, 1);
   //	}
 
-  /**
-   * 
-   */
   static Font getFont(Map<String, Object> style, [double scale = 1.0]) {
     String fontFamily = getString(style, Constants.STYLE_FONTFAMILY, Constants.DEFAULT_FONTFAMILY);
     int fontSize = getInt(style, Constants.STYLE_FONTSIZE, Constants.DEFAULT_FONTSIZE);
@@ -1457,9 +1448,6 @@ class Utils {
     return new Font(fontFamily, swingFontStyle, (fontSize * scale) as int);
   }
 
-  /**
-   * 
-   */
   static String hexString(awt.Color color) {
     return HtmlColor.hexString(color);
   }

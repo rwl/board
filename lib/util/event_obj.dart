@@ -57,16 +57,10 @@ class EventObj {
     return _name;
   }
 
-  /**
-   * 
-   */
   Map<String, Object> getProperties() {
     return _properties;
   }
 
-  /**
-   * 
-   */
   Object getProperty(String key) {
     return _properties[key];
   }

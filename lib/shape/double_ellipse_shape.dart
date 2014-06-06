@@ -4,9 +4,6 @@ part of graph.shape;
 
 class DoubleEllipseShape extends EllipseShape {
 
-  /**
-   * 
-   */
   void paintShape(Graphics2DCanvas canvas, CellState state) {
     super.paintShape(canvas, state);
 

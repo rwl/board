@@ -304,11 +304,6 @@ class Cell implements ICell //, Cloneable, Serializable
 {
 
   /**
-   * 
-   */
-  //	private static final long serialVersionUID = 910211337632342672L;
-
-  /**
    * Holds the Id. Default is null.
    */
   String _id;

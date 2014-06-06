@@ -42,14 +42,8 @@ class Morphing extends Animation {
    */
   List<Object> _cells;
 
-  /**
-   * 
-   */
   /*transient*/ Rect _dirty;
 
-  /**
-   * 
-   */
   /*transient*/ CellStatePreview _preview;
 
   /**
@@ -136,9 +130,6 @@ class Morphing extends Animation {
     }
   }
 
-  /**
-   * 
-   */
   void stopAnimation() {
     _graphComponent.getGraph().getView().revalidate();
     super.stopAnimation();

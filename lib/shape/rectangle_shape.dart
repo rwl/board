@@ -7,9 +7,6 @@ part of graph.shape;
 
 class RectangleShape extends BasicShape {
 
-  /**
-   * 
-   */
   void paintShape(Graphics2DCanvas canvas, CellState state) {
     Map<String, Object> style = state.getStyle();
 

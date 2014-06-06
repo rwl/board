@@ -107,11 +107,6 @@ part of graph.swing.handler;
 class CellMarker extends JComponent {
 
   /**
-   * 
-   */
-  //	static final long serialVersionUID = 614473367053597572L;
-
-  /**
    * Specifies if the highlights should appear on top of everything
    * else in the overlay pane. Default is false.
    */
@@ -377,17 +372,11 @@ class CellMarker extends JComponent {
     return state;
   }
 
-  /**
-   * 
-   */
   //	void highlight(CellState state, Color color)
   //	{
   //		highlight(state, color, true);
   //	}
 
-  /**
-   * 
-   */
   void highlight(CellState state, Color color, [bool valid = true]) {
     if (valid) {
       _validState = state;

@@ -11,10 +11,6 @@ part of graph.util;
 class Image //implements Serializable, Cloneable
 {
 
-  /**
-   * 
-   */
-  //	private static final long serialVersionUID = 8541229679513497585L;
 
   /**
    * Holds the path or URL for the image.

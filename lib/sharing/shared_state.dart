@@ -99,16 +99,10 @@ class SharedState extends EventSource {
     dispatchDiagramChangeEvent(sender, xml);
   }
 
-  /**
-   * 
-   */
   String _processEdit(Node node) {
     return XmlUtils.getXml(node);
   }
 
-  /**
-   * 
-   */
   /*synchronized*/ void addDelta(String xml) {
     // TODO: Clear delta if xml contains RootChange
     _delta.write(xml);

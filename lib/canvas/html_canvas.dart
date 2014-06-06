@@ -33,9 +33,6 @@ class HtmlCanvas extends BasicCanvas {
     setDocument(document);
   }
 
-  /**
-   * 
-   */
   void appendHtmlElement(Element node) {
     if (_document != null) {
       Node body = _document.documentElement.firstChild.nextNode;
@@ -46,9 +43,6 @@ class HtmlCanvas extends BasicCanvas {
     }
   }
 
-  /**
-   * 
-   */
   void setDocument(Document document) {
     this._document = document;
   }

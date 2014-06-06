@@ -8,23 +8,12 @@ part of graph.swing.util;
 
 abstract class ICellOverlay {
 
-  /**
-   * 
-   */
   Rect getBounds(CellState state);
 
 }
 
 class CellOverlay extends JComponent implements ICellOverlay {
 
-  /**
-   * 
-   */
-  //	static final long serialVersionUID = 921991820491141221L;
-
-  /**
-   * 
-   */
   ImageIcon _imageIcon;
 
   /**
@@ -48,9 +37,6 @@ class CellOverlay extends JComponent implements ICellOverlay {
    */
   double _defaultOverlap = 0.5;
 
-  /**
-   * 
-   */
   CellOverlay(ImageIcon icon, String warning) {
     this._imageIcon = icon;
     setToolTipText(warning);
@@ -85,9 +71,6 @@ class CellOverlay extends JComponent implements ICellOverlay {
     _verticalAlign = value;
   }
 
-  /**
-   * 
-   */
   void paint(Graphics g) {
     g.drawImage(_imageIcon.getImage(), 0, 0, getWidth(), getHeight(), this);
   }

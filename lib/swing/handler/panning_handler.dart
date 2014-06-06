@@ -12,24 +12,10 @@ part of graph.swing.handler;
  */
 class PanningHandler extends MouseAdapter {
 
-  /**
-   * 
-   */
-  //	static final long serialVersionUID = 7969814728058376339L;
-
-  /**
-   * 
-   */
   GraphComponent _graphComponent;
 
-  /**
-   * 
-   */
   bool _enabled = true;
 
-  /**
-   * 
-   */
   /*transient*/ awt.Point _start;
 
   /**
@@ -43,32 +29,20 @@ class PanningHandler extends MouseAdapter {
     graphComponent.getGraphControl().addMouseMotionListener(this);
   }
 
-  /**
-   * 
-   */
   bool isEnabled() {
     return _enabled;
   }
 
-  /**
-   * 
-   */
   void setEnabled(bool value) {
     _enabled = value;
   }
 
-  /**
-   * 
-   */
   void mousePressed(MouseEvent e) {
     if (isEnabled() && !e.isConsumed() && _graphComponent.isPanningEvent(e) && !e.isPopupTrigger()) {
       _start = e.getPoint();
     }
   }
 
-  /**
-   * 
-   */
   void mouseDragged(MouseEvent e) {
     if (!e.isConsumed() && _start != null) {
       int dx = e.getX() - _start.x;
@@ -85,9 +59,6 @@ class PanningHandler extends MouseAdapter {
     }
   }
 
-  /**
-   * 
-   */
   void mouseReleased(MouseEvent e) {
     if (!e.isConsumed() && _start != null) {
       int dx = math.abs(_start.x - e.getX());

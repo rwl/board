@@ -36,9 +36,6 @@ class SvgCanvas extends BasicCanvas {
    */
   Map<String, Element> _images = new Map<String, Element>();
 
-  /**
-   * 
-   */
   Element _defs = null;
 
   /**
@@ -62,18 +59,12 @@ class SvgCanvas extends BasicCanvas {
     setDocument(document);
   }
 
-  /**
-   * 
-   */
   void appendSvgElement(Element node) {
     if (_document != null) {
       _document.documentElement.append(node);
     }
   }
 
-  /**
-   * 
-   */
   Element _getDefsElement() {
     if (_defs == null) {
       _defs = _document.createElement("defs");
@@ -90,9 +81,6 @@ class SvgCanvas extends BasicCanvas {
     return _defs;
   }
 
-  /**
-   * 
-   */
   Element getGradientElement(String start, String end, String direction) {
     String id = getGradientId(start, end, direction);
     Element gradient = _gradients[id];
@@ -107,9 +95,6 @@ class SvgCanvas extends BasicCanvas {
     return gradient;
   }
 
-  /**
-   * 
-   */
   Element getGlassGradientElement() {
     String id = "mx-glass-gradient";
 
@@ -140,9 +125,6 @@ class SvgCanvas extends BasicCanvas {
     return glassGradient;
   }
 
-  /**
-   * 
-   */
   Element _createGradientElement(String start, String end, String direction) {
     Element gradient = _document.createElement("linearGradient");
     gradient.setAttribute("x1", "0%");
@@ -173,9 +155,6 @@ class SvgCanvas extends BasicCanvas {
     return gradient;
   }
 
-  /**
-   * 
-   */
   String getGradientId(String start, String end, String direction) {
     // Removes illegal characters from gradient ID
     if (start.startsWith("#")) {
@@ -264,9 +243,6 @@ class SvgCanvas extends BasicCanvas {
     return result;
   }
 
-  /**
-   * 
-   */
   Element _getEmbeddedImageElement(String src) {
     Element img = _images[src];
 
@@ -303,9 +279,6 @@ class SvgCanvas extends BasicCanvas {
     return img;
   }
 
-  /**
-   * 
-   */
   Element _createImageElement(double x, double y, double w, double h, String src, bool aspect, bool flipH, bool flipV, bool embedded) {
     Element elem = null;
 
@@ -365,9 +338,6 @@ class SvgCanvas extends BasicCanvas {
     return elem;
   }
 
-  /**
-   * 
-   */
   void setDocument(Document document) {
     this._document = document;
   }
@@ -381,16 +351,10 @@ class SvgCanvas extends BasicCanvas {
     return _document;
   }
 
-  /**
-   * 
-   */
   void setEmbedded(bool value) {
     _embedded = value;
   }
 
-  /**
-   * 
-   */
   bool isEmbedded() {
     return _embedded;
   }

@@ -11,14 +11,8 @@ part of graph.swing;
  */
 class MouseRedirector implements MouseListener, MouseMotionListener {
 
-  /**
-   * 
-   */
   GraphComponent graphComponent;
 
-  /**
-   * 
-   */
   MouseRedirector(GraphComponent graphComponent) {
     this.graphComponent = graphComponent;
   }

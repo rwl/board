@@ -56,44 +56,26 @@ abstract class BasicCanvas implements ICanvas {
     return _translate;
   }
 
-  /**
-   * 
-   */
   void setScale(double scale) {
     this._scale = scale;
   }
 
-  /**
-   * 
-   */
   double getScale() {
     return _scale;
   }
 
-  /**
-   * 
-   */
   void setDrawLabels(bool drawLabels) {
     this._drawLabels = drawLabels;
   }
 
-  /**
-   * 
-   */
   String getImageBasePath() {
     return _imageBasePath;
   }
 
-  /**
-   * 
-   */
   void setImageBasePath(String imageBasePath) {
     this._imageBasePath = imageBasePath;
   }
 
-  /**
-   * 
-   */
   bool isDrawLabels() {
     return _drawLabels;
   }
@@ -117,9 +99,6 @@ abstract class BasicCanvas implements ICanvas {
     return img;
   }
 
-  /**
-   * 
-   */
   void flushImageCache() {
     _imageCache.clear();
   }

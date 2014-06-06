@@ -53,17 +53,11 @@ class Resources {
   //		_bundles.addFirst(PropertyResourceBundle.getBundle(basename, locale));
   //	}
 
-  /**
-   * 
-   */
   //	static String get(String key)
   //	{
   //		return get(key, null, null);
   //	}
 
-  /**
-   * 
-   */
   //	static String get(String key, [String defaultValue=null])
   //	{
   //		return get(key, null, defaultValue);

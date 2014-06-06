@@ -39,9 +39,6 @@ class EdgeLabelLayout extends GraphLayout {
     placeLabels(vertices, edges);
   }
 
-  /**
-   * 
-   */
   void placeLabels(List<Object> v, List<Object> e) {
     IGraphModel model = graph.getModel();
 
@@ -68,9 +65,6 @@ class EdgeLabelLayout extends GraphLayout {
     }
   }
 
-  /**
-   * 
-   */
   void avoid(CellState edge, CellState vertex) {
     IGraphModel model = graph.getModel();
     awt.Rectangle labRect = edge.getLabelBounds().getRectangle();

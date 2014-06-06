@@ -47,19 +47,10 @@ class LayoutManager extends EventSource {
    */
   bool _bubbling = true;
 
-  /**
-   * 
-   */
   IEventListener _undoHandler;
 
-  /**
-   * 
-   */
   IEventListener _moveHandler;
 
-  /**
-   * 
-   */
   LayoutManager(Graph graph) {
     _undoHandler = (Object source, EventObj evt) {
       if (isEnabled()) {
@@ -128,16 +119,10 @@ class LayoutManager extends EventSource {
     }
   }
 
-  /**
-   * 
-   */
   IGraphLayout _getLayout(Object parent) {
     return null;
   }
 
-  /**
-   * 
-   */
   void _cellsMoved(List<Object> cells, svg.Point location) {
     if (cells != null && location != null) {
       IGraphModel model = getGraph().getModel();
@@ -153,9 +138,6 @@ class LayoutManager extends EventSource {
     }
   }
 
-  /**
-   * 
-   */
   void _beforeUndo(UndoableEdit edit) {
     Iterable<Object> cells = _getCellsForChanges(edit.getChanges());
     IGraphModel model = getGraph().getModel();
@@ -176,9 +158,6 @@ class LayoutManager extends EventSource {
     _layoutCells(new List<Object>.from(Utils.sortCells(cells, false)));
   }
 
-  /**
-   * 
-   */
   Iterable<Object> _getCellsForChanges(List<UndoableChange> changes) {
     Set<Object> result = new HashSet<Object>();
     Iterator<UndoableChange> it = changes.iterator;
@@ -196,9 +175,6 @@ class LayoutManager extends EventSource {
     return result;
   }
 
-  /**
-   * 
-   */
   Iterable<Object> _getCellsForChange(UndoableChange change) {
     IGraphModel model = getGraph().getModel();
     Set<Object> result = new HashSet<Object>();
@@ -234,9 +210,6 @@ class LayoutManager extends EventSource {
     return result;
   }
 
-  /**
-   * 
-   */
   void _layoutCells(List<Object> cells) {
     if (cells.length > 0) {
       // Invokes the layouts while removing duplicates
@@ -257,18 +230,12 @@ class LayoutManager extends EventSource {
     }
   }
 
-  /**
-   * 
-   */
   void _executeLayout(IGraphLayout layout, Object parent) {
     if (layout != null && parent != null) {
       layout.execute(parent);
     }
   }
 
-  /**
-   * 
-   */
   void destroy() {
     setGraph(null);
   }

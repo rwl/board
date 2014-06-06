@@ -53,9 +53,6 @@ class UndoManager extends EventSource {
     clear();
   }
 
-  /**
-   * 
-   */
   bool isEmpty() {
     return _history.length == 0;
   }

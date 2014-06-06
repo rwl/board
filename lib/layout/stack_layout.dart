@@ -83,9 +83,6 @@ class StackLayout extends GraphLayout {
     this.border = border;
   }
 
-  /**
-   * 
-   */
   bool isHorizontal() {
     return horizontal;
   }

@@ -21,19 +21,10 @@ part of graph.swing.handler;
  *
  */
 class EdgeHandler extends CellHandler {
-  /**
-   * 
-   */
   bool _cloneEnabled = true;
 
-  /**
-   * 
-   */
   PoList<int> _p;
 
-  /**
-   * 
-   */
   /*transient*/ String _error;
 
   /**
@@ -46,9 +37,6 @@ class EdgeHandler extends CellHandler {
    */
   /*transient*/ bool _constrainedEvent = false;
 
-  /**
-   * 
-   */
   CellMarker _marker;
 
   /**
@@ -60,16 +48,10 @@ class EdgeHandler extends CellHandler {
     _marker = new EdgeHandlerCellMarker(this, graphComponent);
   }
 
-  /**
-   * 
-   */
   void setCloneEnabled(bool cloneEnabled) {
     this._cloneEnabled = cloneEnabled;
   }
 
-  /**
-   * 
-   */
   bool isCloneEnabled() {
     return _cloneEnabled;
   }
@@ -81,9 +63,6 @@ class EdgeHandler extends CellHandler {
     return !_isFlipEvent(e) && super._isIgnoredEvent(e);
   }
 
-  /**
-   * 
-   */
   bool _isFlipEvent(MouseEvent e) {
     return false;
   }
@@ -117,16 +96,10 @@ class EdgeHandler extends CellHandler {
     return super._isHandleVisible(index) && (isSource(index) || isTarget(index) || _isCellBendable());
   }
 
-  /**
-   * 
-   */
   bool _isCellBendable() {
     return _graphComponent.getGraph().isCellBendable(_state.getCell());
   }
 
-  /**
-   * 
-   */
   List<awt.Rectangle> _createHandles() {
     _p = _createPoints(_state);
     List<awt.Rectangle> h = new List<awt.Rectangle>(_p.length + 1);
@@ -140,9 +113,6 @@ class EdgeHandler extends CellHandler {
     return h;
   }
 
-  /**
-   * 
-   */
   Color _getHandleFillColor(int index) {
     bool source = isSource(index);
 
@@ -177,24 +147,15 @@ class EdgeHandler extends CellHandler {
     return index;
   }
 
-  /**
-   * 
-   */
   //	awt.Rectangle _createHandle(awt.Point center)
   //	{
   //		return _createHandle(center, Constants.HANDLE_SIZE);
   //	}
 
-  /**
-   * 
-   */
   awt.Rectangle _createHandle(awt.Point center, [int size = Constants.HANDLE_SIZE]) {
     return new awt.Rectangle(center.x - size / 2, center.y - size / 2, size, size);
   }
 
-  /**
-   * 
-   */
   PoList<int> _createPoints(CellState s) {
     List<awt.Point> pts = new List<awt.Point>(s.getAbsolutePointCount());
 
@@ -205,9 +166,6 @@ class EdgeHandler extends CellHandler {
     return pts;
   }
 
-  /**
-   * 
-   */
   JComponent _createPreview() {
     throw new Exception();
     /*JPanel preview = new JPanel()
@@ -308,9 +266,6 @@ class EdgeHandler extends CellHandler {
     return bounds;
   }
 
-  /**
-   * 
-   */
   void mousePressed(MouseEvent e) {
     super.mousePressed(e);
 
@@ -327,9 +282,6 @@ class EdgeHandler extends CellHandler {
     }
   }
 
-  /**
-   * 
-   */
   void mouseDragged(MouseEvent e) {
     if (!e.isConsumed() && _first != null) {
       _gridEnabledEvent = _graphComponent.isGridEnabledEvent(e);
@@ -459,9 +411,6 @@ class EdgeHandler extends CellHandler {
     }
   }
 
-  /**
-   * 
-   */
   void mouseReleased(MouseEvent e) {
     Graph graph = _graphComponent.getGraph();
 
@@ -621,9 +570,6 @@ class EdgeHandler extends CellHandler {
     }
   }
 
-  /**
-   * 
-   */
   Cursor _getCursor(MouseEvent e, int index) {
     Cursor cursor = null;
 
@@ -636,23 +582,14 @@ class EdgeHandler extends CellHandler {
     return cursor;
   }
 
-  /**
-   * 
-   */
   Color getSelectionColor() {
     return SwingConstants.EDGE_SELECTION_COLOR;
   }
 
-  /**
-   * 
-   */
   Stroke getSelectionStroke() {
     return SwingConstants.EDGE_SELECTION_STROKE;
   }
 
-  /**
-   * 
-   */
   void paint(Graphics g) {
     Graphics2D g2 = g as Graphics2D;
 
@@ -684,8 +621,6 @@ class EdgeHandler extends CellHandler {
 class EdgeHandlerCellMarker extends CellMarker {
 
   final mxEdgeHandler edgeHandler;
-
-  //    private static final long serialVersionUID = 8826073441093831764L;
 
   EdgeHandlerCellMarker(EdgeHandler mxEdgeHandler, GraphComponent graphComponent) : super(graphComponent) {
     edgeHandler = mxEdgeHandler;

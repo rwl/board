@@ -22,11 +22,6 @@ part of graph.swing.handler;
 class SelectionCellsHandler implements MouseListener, MouseMotionListener {
 
   /**
-   * 
-   */
-  //	static final long serialVersionUID = -882368002120921842L;
-
-  /**
    * Defines the default value for maxHandlers. Default is 100.
    */
   static int DEFAULT_MAX_HANDLERS = 100;
@@ -62,18 +57,12 @@ class SelectionCellsHandler implements MouseListener, MouseMotionListener {
    */
   /*transient*/ LinkedHashMap<Object, CellHandler> _handlers = new LinkedHashMap<Object, CellHandler>();
 
-  /**
-   * 
-   */
   /*transient*/ IEventListener _refreshHandler = (Object source, EventObj evt) {
     if (isEnabled()) {
       refresh();
     }
   };
 
-  /**
-   * 
-   */
   /*transient*/ PropertyChangeListener _labelMoveHandler = (PropertyChangeEvent evt) {
     if (evt.getPropertyName().equals("vertexLabelsMovable") || evt.getPropertyName().equals("edgeLabelsMovable")) {
       refresh();
@@ -145,58 +134,34 @@ class SelectionCellsHandler implements MouseListener, MouseMotionListener {
     }
   }
 
-  /**
-   * 
-   */
   GraphComponent getGraphComponent() {
     return _graphComponent;
   }
 
-  /**
-   * 
-   */
   bool isEnabled() {
     return _enabled;
   }
 
-  /**
-   * 
-   */
   void setEnabled(bool value) {
     _enabled = value;
   }
 
-  /**
-   * 
-   */
   bool isVisible() {
     return _visible;
   }
 
-  /**
-   * 
-   */
   void setVisible(bool value) {
     _visible = value;
   }
 
-  /**
-   * 
-   */
   int getMaxHandlers() {
     return _maxHandlers;
   }
 
-  /**
-   * 
-   */
   void setMaxHandlers(int value) {
     _maxHandlers = value;
   }
 
-  /**
-   * 
-   */
   CellHandler getHandler(Object cell) {
     return _handlers.get(cell);
   }
@@ -216,9 +181,6 @@ class SelectionCellsHandler implements MouseListener, MouseMotionListener {
     }
   }
 
-  /**
-   * 
-   */
   void mouseMoved(MouseEvent e) {
     if (_graphComponent.isEnabled() && isEnabled()) {
       Iterator<CellHandler> it = _handlers.values().iterator();
@@ -229,9 +191,6 @@ class SelectionCellsHandler implements MouseListener, MouseMotionListener {
     }
   }
 
-  /**
-   * 
-   */
   void mouseDragged(MouseEvent e) {
     if (_graphComponent.isEnabled() && isEnabled()) {
       Iterator<CellHandler> it = _handlers.values().iterator();
@@ -242,9 +201,6 @@ class SelectionCellsHandler implements MouseListener, MouseMotionListener {
     }
   }
 
-  /**
-   * 
-   */
   void mouseReleased(MouseEvent e) {
     if (_graphComponent.isEnabled() && isEnabled()) {
       Iterator<CellHandler> it = _handlers.values().iterator();
@@ -274,9 +230,6 @@ class SelectionCellsHandler implements MouseListener, MouseMotionListener {
     return tip;
   }
 
-  /**
-   * 
-   */
   void reset() {
     Iterator<CellHandler> it = _handlers.values().iterator();
 
@@ -285,9 +238,6 @@ class SelectionCellsHandler implements MouseListener, MouseMotionListener {
     }
   }
 
-  /**
-   * 
-   */
   void refresh() {
     Graph graph = _graphComponent.getGraph();
 
@@ -354,9 +304,6 @@ class SelectionCellsHandler implements MouseListener, MouseMotionListener {
     _bounds = handleBounds;
   }
 
-  /**
-   * 
-   */
   void paintHandles(Graphics g) {
     Iterator<CellHandler> it = _handlers.values().iterator();
 

@@ -47,9 +47,6 @@ class HtmlTextShape implements ITextShape {
     _replaceHtmlLinefeeds = value;
   }
 
-  /**
-   * 
-   */
   String _createHtmlDocument(Map<String, Object> style, String text, int w, int h) {
     String overflow = Utils.getString(style, Constants.STYLE_OVERFLOW, "");
 
@@ -62,9 +59,6 @@ class HtmlTextShape implements ITextShape {
     }
   }
 
-  /**
-   * 
-   */
   void paintShape(Graphics2DCanvas canvas, String text, CellState state, Map<String, Object> style) {
     LightweightLabel textRenderer = LightweightLabel.getSharedInstance();
     CellRendererPane rendererPane = canvas.getRendererPane();

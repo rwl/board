@@ -2426,17 +2426,11 @@ class Graph extends EventSource {
     }
   }
 
-  /**
-   * 
-   */
   //	Object splitEdge(Object edge, List<Object> cells)
   //	{
   //		return splitEdge(edge, cells, null, 0, 0);
   //	}
 
-  /**
-   * 
-   */
   //	Object splitEdge(Object edge, List<Object> cells, [double dx=0.0, double dy=0.0])
   //	{
   //		return splitEdge(edge, cells, null, dx, dy);
@@ -3682,9 +3676,6 @@ class Graph extends EventSource {
     return null;
   }
 
-  /**
-   * 
-   */
   //	void enterGroup()
   //	{
   //		enterGroup(null);
@@ -4068,9 +4059,6 @@ class Graph extends EventSource {
   // Cell validation
   //
 
-  /**
-   * 
-   */
   void setMultiplicities(List<Multiplicity> value) {
     List<Multiplicity> oldValue = _multiplicities;
     _multiplicities = value;
@@ -4078,9 +4066,6 @@ class Graph extends EventSource {
     _changeSupport.firePropertyChange("multiplicities", oldValue, _multiplicities);
   }
 
-  /**
-   * 
-   */
   List<Multiplicity> getMultiplicities() {
     return _multiplicities;
   }
@@ -4257,9 +4242,6 @@ class Graph extends EventSource {
     _changeSupport.firePropertyChange("htmlLabels", oldValue, _htmlLabels);
   }
 
-  /**
-   * 
-   */
   bool isHtmlLabels() {
     return _htmlLabels;
   }
@@ -6216,16 +6198,10 @@ class Graph extends EventSource {
   // Selection
   //
 
-  /**
-   * 
-   */
   GraphSelectionModel getSelectionModel() {
     return _selectionModel;
   }
 
-  /**
-   * 
-   */
   int getSelectionCount() {
     return _selectionModel.size();
   }
@@ -6247,9 +6223,6 @@ class Graph extends EventSource {
     return _selectionModel.isEmpty();
   }
 
-  /**
-   * 
-   */
   void clearSelection() {
     _selectionModel.clear();
   }
@@ -6278,9 +6251,6 @@ class Graph extends EventSource {
     return _selectionModel.getCells();
   }
 
-  /**
-   * 
-   */
 //  void setSelectionCells(List<Object> cells) {
 //    _selectionModel.setCells(cells);
 //  }
@@ -6298,30 +6268,18 @@ class Graph extends EventSource {
 		}
 	}
 
-  /**
-   * 
-   */
   void addSelectionCell(Object cell) {
     _selectionModel.addCell(cell);
   }
 
-  /**
-   * 
-   */
   void addSelectionCells(List<Object> cells) {
     _selectionModel.addCells(cells);
   }
 
-  /**
-   * 
-   */
   void removeSelectionCell(Object cell) {
     _selectionModel.removeCell(cell);
   }
 
-  /**
-   * 
-   */
   void removeSelectionCells(List<Object> cells) {
     _selectionModel.removeCells(cells);
   }
@@ -6468,9 +6426,6 @@ class Graph extends EventSource {
     setSelectionCells(cells);
   }
 
-  /**
-   * 
-   */
   //	void selectAll()
   //	{
   //		selectAll(null);

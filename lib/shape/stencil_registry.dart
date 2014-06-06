@@ -2,9 +2,6 @@ part of graph.shape;
 
 
 class StencilRegistry {
-  /**
-   * 
-   */
   static Map<String, Stencil> _stencils = new HashMap<String, Stencil>();
 
   /**

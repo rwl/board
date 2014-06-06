@@ -69,9 +69,6 @@ class CellHandler {
     refresh(state);
   }
 
-  /**
-   * 
-   */
   bool isActive() {
     return _first != null;
   }
@@ -98,9 +95,6 @@ class CellHandler {
     }
   }
 
-  /**
-   * 
-   */
   GraphComponent getGraphComponent() {
     return _graphComponent;
   }

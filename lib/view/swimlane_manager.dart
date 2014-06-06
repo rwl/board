@@ -41,19 +41,10 @@ class SwimlaneManager extends EventSource {
    */
   bool _resizeEnabled;
 
-  /**
-   * 
-   */
   IEventListener _addHandler;
 
-  /**
-   * 
-   */
   IEventListener _resizeHandler;
 
-  /**
-   * 
-   */
   SwimlaneManager(Graph graph) {
     _addHandler = (Object source, EventObj evt) {
       if (isEnabled() && isAddEnabled()) {
@@ -308,9 +299,6 @@ class SwimlaneManager extends EventSource {
     }
   }
 
-  /**
-   * 
-   */
   void destroy() {
     setGraph(null);
   }

@@ -8,204 +8,84 @@ part of graph.util;
  */
 class Event {
 
-  /**
-   * 
-   */
   static const String DONE = "done";
 
-  /**
-   * 
-   */
   static const String ADD_CELLS = "addCells";
 
-  /**
-   * 
-   */
   static const String CELLS_ADDED = "cellsAdded";
 
-  /**
-   * 
-   */
   static const String ALIGN_CELLS = "alignCells";
 
-  /**
-   * 
-   */
   static const String CONNECT_CELL = "connectCell";
 
-  /**
-   * 
-   */
   static const String CONNECT = "connect";
 
-  /**
-   * 
-   */
   static const String CELL_CONNECTED = "cellConnected";
 
-  /**
-   * 
-   */
   static const String FLIP_EDGE = "flipEdge";
 
-  /**
-   * 
-   */
   static const String FOLD_CELLS = "foldCells";
 
-  /**
-   * 
-   */
   static const String CELLS_FOLDED = "cellsFolded";
 
-  /**
-   * 
-   */
   static const String GROUP_CELLS = "groupCells";
 
-  /**
-   * 
-   */
   static const String UNGROUP_CELLS = "ungroupCells";
 
-  /**
-   * 
-   */
   static const String REMOVE_CELLS_FROM_PARENT = "removeCellsFromParent";
 
-  /**
-   * 
-   */
   static const String MOVE_CELLS = "moveCells";
 
-  /**
-   * 
-   */
   static const String CELLS_MOVED = "cellsMoved";
 
-  /**
-   * 
-   */
   static const String ORDER_CELLS = "orderCells";
 
-  /**
-   * 
-   */
   static const String CELLS_ORDERED = "cellsOrdered";
 
-  /**
-   * 
-   */
   static const String REMOVE_CELLS = "removeCells";
 
-  /**
-   * 
-   */
   static const String CELLS_REMOVED = "cellsRemoved";
 
-  /**
-   * 
-   */
   static const String REPAINT = "repaint";
 
-  /**
-   * 
-   */
   static const String RESIZE_CELLS = "resizeCells";
 
-  /**
-   * 
-   */
   static const String CELLS_RESIZED = "cellsResized";
 
-  /**
-   * 
-   */
   static const String SPLIT_EDGE = "splitEdge";
 
-  /**
-   * 
-   */
   static const String TOGGLE_CELLS = "toggleCells";
 
-  /**
-   * 
-   */
   static const String CELLS_TOGGLED = "cellsToggled";
 
-  /**
-   * 
-   */
   static const String UPDATE_CELL_SIZE = "updateCellSize";
 
-  /**
-   * 
-   */
   static const String LABEL_CHANGED = "labelChanged";
 
-  /**
-   * 
-   */
   static const String ADD_OVERLAY = "addOverlay";
 
-  /**
-   * 
-   */
   static const String REMOVE_OVERLAY = "removeOverlay";
 
-  /**
-   * 
-   */
   static const String BEFORE_PAINT = "beforePaint";
 
-  /**
-   * 
-   */
   static const String PAINT = "paint";
 
-  /**
-   * 
-   */
   static const String AFTER_PAINT = "afterPaint";
 
-  /**
-   * 
-   */
   static const String START_EDITING = "startEditing";
 
-  /**
-   * 
-   */
   static const String UNDO = "undo";
 
-  /**
-   * 
-   */
   static const String REDO = "redo";
 
-  /**
-   * 
-   */
   static const String UP = "up";
 
-  /**
-   * 
-   */
   static const String DOWN = "down";
 
-  /**
-   * 
-   */
   static const String SCALE = "scale";
 
-  /**
-   * 
-   */
   static const String TRANSLATE = "translate";
 
-  /**
-   * 
-   */
   static const String SCALE_AND_TRANSLATE = "scaleAndTranslate";
 
   /**
@@ -250,29 +130,14 @@ class Event {
    */
   static const String END_UPDATE = "endUpdate";
 
-  /**
-   * 
-   */
   static const String INSERT = "insert";
 
-  /**
-   * 
-   */
   static const String ADD = "add";
 
-  /**
-   * 
-   */
   static const String CLEAR = "clear";
 
-  /**
-   * 
-   */
   static const String FIRED = "fired";
 
-  /**
-   * 
-   */
   static const String SELECT = "select";
 
   /**
@@ -295,29 +160,14 @@ class Event {
    */
   static String MARK = "mark";
 
-  /**
-   * 
-   */
   static String ROOT = "root";
 
-  /**
-   * 
-   */
   static String LAYOUT_CELLS = "layoutCells";
 
-  /**
-   * 
-   */
   static String START = "start";
 
-  /**
-   * 
-   */
   static String CONTINUE = "continue";
 
-  /**
-   * 
-   */
   static String STOP = "stop";
 
 }

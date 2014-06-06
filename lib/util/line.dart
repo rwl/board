@@ -25,10 +25,6 @@ part of graph.util;
  * Implements a line with double precision coordinates.
  */
 class Line extends Point2d {
-  /**
-   * 
-   */
-  //	private static final long serialVersionUID = -4730972599169158546L;
 
   /**
    * The end point of the line

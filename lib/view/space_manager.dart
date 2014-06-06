@@ -32,14 +32,8 @@ class SpaceManager extends EventSource {
    */
   bool _extendParents;
 
-  /**
-   * 
-   */
   IEventListener _resizeHandler;
 
-  /**
-   * 
-   */
   SpaceManager(Graph graph) {
     _resizeHandler = (Object source, EventObj evt) {
       if (isEnabled()) {
@@ -49,16 +43,10 @@ class SpaceManager extends EventSource {
     setGraph(graph);
   }
 
-  /**
-   * 
-   */
   bool isCellIgnored(Object cell) {
     return !getGraph().getModel().isVertex(cell);
   }
 
-  /**
-   * 
-   */
   bool isCellShiftable(Object cell) {
     return getGraph().getModel().isVertex(cell) && getGraph().isCellMovable(cell);
   }
@@ -142,9 +130,6 @@ class SpaceManager extends EventSource {
     }
   }
 
-  /**
-   * 
-   */
   void _cellsResized(List<Object> cells) {
     if (cells != null) {
       IGraphModel model = getGraph().getModel();
@@ -163,9 +148,6 @@ class SpaceManager extends EventSource {
     }
   }
 
-  /**
-   * 
-   */
   void _cellResized(Object cell) {
     Graph graph = getGraph();
     GraphView view = graph.getView();
@@ -207,9 +189,6 @@ class SpaceManager extends EventSource {
     }
   }
 
-  /**
-   * 
-   */
   void _shiftCell(Object cell, double dx, double dy, double x0, double y0, double right, double bottom, double fx, double fy, bool extendParent) {
     Graph graph = getGraph();
     CellState state = graph.getView().getState(cell);
@@ -259,9 +238,6 @@ class SpaceManager extends EventSource {
     }
   }
 
-  /**
-   * 
-   */
   List<Object> _getCellsToShift(CellState state) {
     Graph graph = this.getGraph();
     Object parent = graph.getModel().getParent(state.getCell());
@@ -271,9 +247,6 @@ class SpaceManager extends EventSource {
     return graph.getCellsBeyond(state.getX() + ((down) ? 0 : state.getWidth()), state.getY() + ((down && right) ? 0 : state.getHeight()), parent, right, down);
   }
 
-  /**
-   * 
-   */
   void destroy() {
     setGraph(null);
   }

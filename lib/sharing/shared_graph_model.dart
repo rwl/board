@@ -11,14 +11,8 @@ part of graph.sharing;
  */
 class SharedGraphModel extends SharedState {
 
-  /**
-   * 
-   */
   GraphModel _model;
 
-  /**
-   * 
-   */
   Codec _codec;
 
   /**
@@ -66,18 +60,12 @@ class SharedGraphModel extends SharedState {
     return XmlUtils.getXml(_codec.encode(_model));
   }
 
-  /**
-   * 
-   */
   /*synchronized*/ void addDelta(String edits) {
     // Edits are not added to the history. They are sent straight out to
     // all sessions and the model is updated so the next session will get
     // these edits via the new state of the model in getState.
   }
 
-  /**
-   * 
-   */
   String _processEdit(Node node) {
     List<AtomicGraphModelChange> changes = _decodeChanges(node.firstChild);
 

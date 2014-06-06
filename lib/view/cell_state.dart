@@ -8,10 +8,6 @@ part of graph.view;
  * Represents the current state of a cell in a given graph view.
  */
 class CellState extends Rect {
-  /**
-   * 
-   */
-  //	static final long serialVersionUID = 7588335615324083354L;
 
   /**
    * Reference to the enclosing graph view.

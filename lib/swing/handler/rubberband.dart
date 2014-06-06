@@ -150,9 +150,6 @@ class Rubberband implements MouseListener, MouseMotionListener {
     return _graphComponent.selectRegion(rect, e);
   }
 
-  /**
-   * 
-   */
   void paintRubberband(Graphics g) {
     if (_first != null && _bounds != null && _graphComponent.isSignificant(_bounds.width, _bounds.height)) {
       awt.Rectangle rect = new awt.Rectangle(_bounds);
@@ -165,9 +162,6 @@ class Rubberband implements MouseListener, MouseMotionListener {
     }
   }
 
-  /**
-   * 
-   */
   void mousePressed(MouseEvent e) {
     if (!e.isConsumed() && isEnabled() && isRubberbandTrigger(e) && !e.isPopupTrigger()) {
       start(e.getPoint());
@@ -175,9 +169,6 @@ class Rubberband implements MouseListener, MouseMotionListener {
     }
   }
 
-  /**
-   * 
-   */
   void mouseDragged(MouseEvent e) {
     if (!e.isConsumed() && _first != null) {
       awt.Rectangle oldBounds = new awt.Rectangle(_bounds);
@@ -224,9 +215,6 @@ class Rubberband implements MouseListener, MouseMotionListener {
     }
   }
 
-  /**
-   * 
-   */
   void mouseReleased(MouseEvent e) {
     awt.Rectangle rect = _bounds;
     reset();

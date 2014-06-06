@@ -34,9 +34,6 @@ class ElbowEdgeHandler extends EdgeHandler {
     return null;
   }
 
-  /**
-   * 
-   */
   bool _isFlipEvent(MouseEvent e) {
     return e.getClickCount() == 2 && _index == 1;
   }
@@ -48,9 +45,6 @@ class ElbowEdgeHandler extends EdgeHandler {
     return index == 3;
   }
 
-  /**
-   * 
-   */
   List<awt.Rectangle> _createHandles() {
     _p = _createPoints(_state);
     List<awt.Rectangle> h = new List<awt.Rectangle>(4);

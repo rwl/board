@@ -10,35 +10,20 @@ part of graph.swing.view;
 //import java.awt.image.ImageObserver;
 
 class InteractiveCanvas extends Graphics2DCanvas {
-  /**
-   * 
-   */
   ImageObserver _imageObserver = null;
 
-  /**
-   * 
-   */
   InteractiveCanvas() {
     this(null);
   }
 
-  /**
-   * 
-   */
   InteractiveCanvas(ImageObserver imageObserver) {
     setImageObserver(imageObserver);
   }
 
-  /**
-   * 
-   */
   void setImageObserver(ImageObserver value) {
     _imageObserver = value;
   }
 
-  /**
-   * 
-   */
   ImageObserver getImageObserver() {
     return _imageObserver;
   }
@@ -57,16 +42,10 @@ class InteractiveCanvas extends Graphics2DCanvas {
     return new awt.Dimension(image.getWidth(_imageObserver), image.getHeight(_imageObserver));
   }
 
-  /**
-   * 
-   */
   bool contains(GraphComponent graphComponent, awt.Rectangle rect, CellState state) {
     return state != null && state.getX() >= rect.x && state.getY() >= rect.y && state.getX() + state.getWidth() <= rect.x + rect.width && state.getY() + state.getHeight() <= rect.y + rect.height;
   }
 
-  /**
-   * 
-   */
   bool intersects(GraphComponent graphComponent, awt.Rectangle rect, CellState state) {
     if (state != null) {
       // Checks if the label intersects

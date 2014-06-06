@@ -6,9 +6,6 @@ part of graph.shape;
 
 class RhombusShape extends BasicShape {
 
-  /**
-   * 
-   */
   Shape createShape(Graphics2DCanvas canvas, CellState state) {
     awt.Rectangle temp = state.getRectangle();
     int x = temp.x;

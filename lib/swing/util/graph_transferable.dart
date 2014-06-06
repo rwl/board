@@ -25,11 +25,6 @@ part of graph.swing.util;
 class GraphTransferable implements Transferable, UIResource, Serializable {
 
   /**
-   * 
-   */
-  //	static final long serialVersionUID = 5123819419918087664L;
-
-  /**
    * Global switch to disable image support in transferables. Set this to false as a workaround
    * for Data translation failed: not an image format in Java 1.7 on Mac OS X.
    */
@@ -59,51 +54,24 @@ class GraphTransferable implements Transferable, UIResource, Serializable {
    */
   static DataFlavor dataFlavor;
 
-  /**
-   * 
-   */
   static List<DataFlavor> _htmlFlavors;
 
-  /**
-   * 
-   */
   static List<DataFlavor> _stringFlavors;
 
-  /**
-   * 
-   */
   static List<DataFlavor> _plainFlavors;
 
-  /**
-   * 
-   */
   static List<DataFlavor> _imageFlavors;
 
-  /**
-   * 
-   */
   List<Object> _cells;
 
-  /**
-   * 
-   */
   Rect _bounds;
 
-  /**
-   * 
-   */
   ImageIcon _image;
 
-  /**
-   * 
-   */
   GraphTransferable(List<Object> cells, Rect bounds) {
     this(cells, bounds, null);
   }
 
-  /**
-   * 
-   */
   GraphTransferable(List<Object> cells, Rect bounds, ImageIcon image) {
     this._cells = cells;
     this._bounds = bounds;
@@ -124,16 +92,10 @@ class GraphTransferable implements Transferable, UIResource, Serializable {
     return _bounds;
   }
 
-  /**
-   * 
-   */
   ImageIcon getImage() {
     return _image;
   }
 
-  /**
-   * 
-   */
   List<DataFlavor> getTransferDataFlavors() {
     List<DataFlavor> richerFlavors = _getRicherFlavors();
 
@@ -357,9 +319,6 @@ class GraphTransferable implements Transferable, UIResource, Serializable {
     return false;
   }
 
-  /**
-   * 
-   */
   bool isImageSupported() {
     return enableImageSupport && _image != null;
   }

@@ -34,9 +34,6 @@ class VmlCanvas extends BasicCanvas {
     setDocument(document);
   }
 
-  /**
-   * 
-   */
   void setDocument(Document document) {
     this._document = document;
   }
@@ -50,9 +47,6 @@ class VmlCanvas extends BasicCanvas {
     return _document;
   }
 
-  /**
-   * 
-   */
   void appendVmlElement(Element node) {
     if (_document != null) {
       Node body = _document.documentElement.firstChild.nextNode;

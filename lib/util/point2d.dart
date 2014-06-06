@@ -13,10 +13,6 @@ part of graph.util;
 class Point2d // implements Serializable, Cloneable
 {
 
-  /**
-   * 
-   */
-  //	private static final long serialVersionUID = 6554231393215892186L;
 
   /**
    * Holds the x- and y-coordinates of the point. Default is 0.

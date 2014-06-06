@@ -493,9 +493,6 @@ class CompactTreeLayout extends GraphLayout {
     }
   }
 
-  /**
-   * 
-   */
   Rect _horizontalLayout(_TreeNode node, double x0, double y0, Rect bounds) {
     node.x += x0 + node.offsetX;
     node.y += y0 + node.offsetY;
@@ -517,9 +514,6 @@ class CompactTreeLayout extends GraphLayout {
     return bounds;
   }
 
-  /**
-   * 
-   */
   Rect _verticalLayout(_TreeNode node, Object parent, double x0, double y0, Rect bounds) {
     node.x += x0 + node.offsetY;
     node.y += y0 + node.offsetX;
@@ -541,9 +535,6 @@ class CompactTreeLayout extends GraphLayout {
     return bounds;
   }
 
-  /**
-   * 
-   */
   void _attachParent(_TreeNode node, double height) {
     double x = (_nodeDistance + _levelDistance).toDouble();
     double y2 = (height - node.width) / 2 - _nodeDistance;
@@ -556,9 +547,6 @@ class CompactTreeLayout extends GraphLayout {
     node.contour.lowerHead = _createLine(node.height, 0.0, _createLine(x, y2, node.contour.lowerHead));
   }
 
-  /**
-   * 
-   */
   void _layoutLeaf(_TreeNode node) {
     double dist = (2 * _nodeDistance).toDouble();
 
@@ -568,9 +556,6 @@ class CompactTreeLayout extends GraphLayout {
     node.contour.lowerHead = _createLine(node.height + dist, 0.0, node.contour.lowerTail);
   }
 
-  /**
-   * 
-   */
   double _join(_TreeNode node) {
     double dist = 2.0 * _nodeDistance;
 
@@ -592,9 +577,6 @@ class CompactTreeLayout extends GraphLayout {
     return sum;
   }
 
-  /**
-   * 
-   */
   double _merge(_Polygon p1, _Polygon p2) {
     double x = 0.0;
     double y = 0.0;
@@ -636,9 +618,6 @@ class CompactTreeLayout extends GraphLayout {
     return total;
   }
 
-  /**
-   * 
-   */
   double _offset(double p1, double p2, double a1, double a2, double b1, double b2) {
     double d = 0.0;
 
@@ -675,9 +654,6 @@ class CompactTreeLayout extends GraphLayout {
     return 0.0;
   }
 
-  /**
-   * 
-   */
   _Polyline _bridge(_Polyline line1, double x1, double y1, _Polyline line2, double x2, double y2) {
     double dx = x2 + line2.dx - x1;
     double dy = 0.0;
@@ -696,9 +672,6 @@ class CompactTreeLayout extends GraphLayout {
     return r;
   }
 
-  /**
-   * 
-   */
   _TreeNode _createNode(Object cell) {
     _TreeNode node = new _TreeNode(cell);
 
@@ -747,9 +720,6 @@ class CompactTreeLayout extends GraphLayout {
     return bounds;
   }
 
-  /**
-   * 
-   */
   _Polyline _createLine(double dx, double dy, _Polyline next) {
     return new _Polyline(dx, dy, next);
   }
@@ -942,9 +912,6 @@ class _WeightedCellSorter implements Comparable<Object> {
  */
 class _Polygon {
 
-  /**
-   * 
-   */
   _Polyline lowerHead, lowerTail, upperHead, upperTail;
 
 }
@@ -954,19 +921,10 @@ class _Polygon {
  */
 class _Polyline {
 
-  /**
-   * 
-   */
   double dx, dy;
 
-  /**
-   * 
-   */
   _Polyline next;
 
-  /**
-   * 
-   */
   _Polyline(double dx, double dy, _Polyline next) {
     this.dx = dx;
     this.dy = dy;
@@ -979,29 +937,14 @@ class _Polyline {
  * 
  */
 class _TreeNode {
-  /**
-   * 
-   */
   Object cell;
 
-  /**
-   * 
-   */
   double x, y, width, height, offsetX, offsetY;
 
-  /**
-   * 
-   */
   _TreeNode child, next; // parent, sibling
 
-  /**
-   * 
-   */
   _Polygon contour = new _Polygon();
 
-  /**
-   * 
-   */
   _TreeNode(Object cell) {
     this.cell = cell;
   }

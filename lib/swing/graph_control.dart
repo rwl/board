@@ -33,15 +33,7 @@ class GraphControlMouseAdapter extends MouseAdapter {
  */
 class GraphControl extends JComponent {
 
-  /**
-   * 
-   */
   final GraphComponent graphComponent;
-
-  /**
-   * 
-   */
-  //	static final long serialVersionUID = -8916603170766739124L;
 
   /**
    * Specifies a translation for painting. This should only be used during
@@ -72,9 +64,6 @@ class GraphControl extends JComponent {
     translate = value;
   }
 
-  /**
-   * 
-   */
   GraphComponent getGraphContainer() {
     return this.graphComponent;
   }
@@ -143,9 +132,6 @@ class GraphControl extends JComponent {
     }
   }
 
-  /**
-   * 
-   */
   String getToolTipText(MouseEvent e) {
     String tip = this.graphComponent.getSelectionCellsHandler().getToolTipText(e);
 
@@ -203,9 +189,6 @@ class GraphControl extends JComponent {
     }
   }
 
-  /**
-   * 
-   */
   void paint(Graphics g) {
     g.translate(translate.x, translate.y);
     this.graphComponent._eventSource.fireEvent(new EventObj(Event.BEFORE_PAINT, "g", g));
@@ -214,9 +197,6 @@ class GraphControl extends JComponent {
     g.translate(-translate.x, -translate.y);
   }
 
-  /**
-   * 
-   */
   void paintComponent(Graphics g) {
     super.paintComponent(g);
 
@@ -251,9 +231,6 @@ class GraphControl extends JComponent {
     this.graphComponent._eventSource.fireEvent(new EventObj(Event.PAINT, "g", g));
   }
 
-  /**
-   * 
-   */
   void drawGraph(Graphics2D g, bool drawLabels) {
     Graphics2D previousGraphics = this.graphComponent._canvas.getGraphics();
     bool previousDrawLabels = this.graphComponent._canvas.isDrawLabels();
@@ -283,9 +260,6 @@ class GraphControl extends JComponent {
     drawCell(this.graphComponent._canvas, this.graphComponent._graph.getModel().getRoot());
   }
 
-  /**
-   * 
-   */
   bool hitClip(Graphics2DCanvas canvas, CellState state) {
     awt.Rectangle rect = getExtendedCellBounds(state);
 
@@ -377,9 +351,6 @@ class GraphControl extends JComponent {
     }
   }
 
-  /**
-   * 
-   */
   void cellDrawn(ICanvas canvas, CellState state) {
     if (this.graphComponent.isFoldingEnabled() && canvas is Graphics2DCanvas) {
       IGraphModel model = this.graphComponent._graph.getModel();

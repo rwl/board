@@ -19,9 +19,6 @@ part of graph.swing.handler;
  */
 class VertexHandler extends CellHandler {
 
-  /**
-   * 
-   */
   static List<Cursor> CURSORS = [new Cursor(Cursor.NW_RESIZE_CURSOR), new Cursor(Cursor.N_RESIZE_CURSOR), new Cursor(Cursor.NE_RESIZE_CURSOR), new Cursor(Cursor.W_RESIZE_CURSOR), new Cursor(Cursor.E_RESIZE_CURSOR), new Cursor(Cursor.SW_RESIZE_CURSOR), new Cursor(Cursor.S_RESIZE_CURSOR), new Cursor(Cursor.SE_RESIZE_CURSOR), new Cursor(Cursor.MOVE_CURSOR)];
 
   /**
@@ -41,9 +38,6 @@ class VertexHandler extends CellHandler {
    */
   VertexHandler(GraphComponent graphComponent, CellState state) : super(graphComponent, state);
 
-  /**
-   * 
-   */
   List<awt.Rectangle> _createHandles() {
     List<awt.Rectangle> h = null;
 
@@ -82,9 +76,6 @@ class VertexHandler extends CellHandler {
     return h;
   }
 
-  /**
-   * 
-   */
   JComponent _createPreview() {
     JPanel preview = new JPanel();
     preview.setBorder(SwingConstants.PREVIEW_BORDER);
@@ -94,9 +85,6 @@ class VertexHandler extends CellHandler {
     return preview;
   }
 
-  /**
-   * 
-   */
   void mouseDragged(MouseEvent e) {
     if (!e.isConsumed() && _first != null) {
       _gridEnabledEvent = _graphComponent.isGridEnabledEvent(e);
@@ -149,9 +137,6 @@ class VertexHandler extends CellHandler {
     }
   }
 
-  /**
-   * 
-   */
   void mouseReleased(MouseEvent e) {
     if (!e.isConsumed() && _first != null) {
       if (_preview != null && _preview.isVisible()) {
@@ -168,9 +153,6 @@ class VertexHandler extends CellHandler {
     super.mouseReleased(e);
   }
 
-  /**
-   * 
-   */
   void _moveLabel(MouseEvent e) {
     Graph graph = _graphComponent.getGraph();
     Geometry geometry = graph.getModel().getGeometry(_state.getCell());
@@ -258,9 +240,6 @@ class VertexHandler extends CellHandler {
     }
   }
 
-  /**
-   * 
-   */
   Cursor _getCursor(MouseEvent e, int index) {
     if (index >= 0 && index <= CURSORS.length) {
       return CURSORS[index];
@@ -312,23 +291,14 @@ class VertexHandler extends CellHandler {
     return new Rect(left, top, width, height);
   }
 
-  /**
-   * 
-   */
   Color getSelectionColor() {
     return SwingConstants.VERTEX_SELECTION_COLOR;
   }
 
-  /**
-   * 
-   */
   Stroke getSelectionStroke() {
     return SwingConstants.VERTEX_SELECTION_STROKE;
   }
 
-  /**
-   * 
-   */
   void paint(Graphics g) {
     awt.Rectangle bounds = getState().getRectangle();
 

@@ -44,39 +44,18 @@ abstract class ICellEditor {
  */
 class CellEditor implements ICellEditor {
 
-  /**
-   * 
-   */
   static final String _CANCEL_EDITING = "cancel-editing";
 
-  /**
-   * 
-   */
   static final String _INSERT_BREAK = "insert-break";
 
-  /**
-   * 
-   */
   static final String _SUBMIT_TEXT = "submit-text";
 
-  /**
-   * 
-   */
   static int DEFAULT_MIN_WIDTH = 100;
 
-  /**
-   * 
-   */
   static int DEFAULT_MIN_HEIGHT = 60;
 
-  /**
-   * 
-   */
   static double DEFAULT_MINIMUM_EDITOR_SCALE = 1;
 
-  /**
-   * 
-   */
   GraphComponent _graphComponent;
 
   /**
@@ -85,29 +64,14 @@ class CellEditor implements ICellEditor {
    */
   double _minimumEditorScale = DEFAULT_MINIMUM_EDITOR_SCALE;
 
-  /**
-   * 
-   */
   int _minimumWidth = DEFAULT_MIN_WIDTH;
 
-  /**
-   * 
-   */
   int _minimumHeight = DEFAULT_MIN_HEIGHT;
 
-  /**
-   * 
-   */
   /*transient*/ Object _editingCell;
 
-  /**
-   * 
-   */
   /*transient*/ EventObject _trigger;
 
-  /**
-   * 
-   */
   /*transient*/ JScrollPane _scrollPane;
 
   /**
@@ -139,44 +103,20 @@ class CellEditor implements ICellEditor {
    */
   bool _shiftEnterSubmitsText = false;
 
-  /**
-   * 
-   */
   /*transient*/ Object editorEnterActionMapKey;
 
-  /**
-   * 
-   */
   /*transient*/ Object textEnterActionMapKey;
 
-  /**
-   * 
-   */
   /*transient*/ KeyStroke escapeKeystroke = KeyStroke.getKeyStroke("ESCAPE");
 
-  /**
-   * 
-   */
   /*transient*/ KeyStroke enterKeystroke = KeyStroke.getKeyStroke("ENTER");
 
-  /**
-   * 
-   */
   /*transient*/ KeyStroke shiftEnterKeystroke = KeyStroke.getKeyStroke("shift ENTER");
 
-  /**
-   * 
-   */
   AbstractAction _cancelEditingAction = new CancelEditingAction(this);
 
-  /**
-   * 
-   */
   AbstractAction _textSubmitAction = new TextSubmitAction(this);
 
-  /**
-   * 
-   */
   CellEditor(GraphComponent graphComponent) {
     this._graphComponent = graphComponent;
 
@@ -413,9 +353,6 @@ class CellEditor implements ICellEditor {
     }
   }
 
-  /**
-   * 
-   */
   bool _isHideLabel(CellState state) {
     return true;
   }

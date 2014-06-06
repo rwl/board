@@ -9,9 +9,6 @@ part of graph.shape;
 
 class BasicShape implements IShape {
 
-  /**
-   * 
-   */
   void paintShape(Graphics2DCanvas canvas, CellState state) {
     Shape shape = createShape(canvas, state);
 
@@ -28,9 +25,6 @@ class BasicShape implements IShape {
     }
   }
 
-  /**
-   * 
-   */
   Shape createShape(Graphics2DCanvas canvas, CellState state) {
     return null;
   }
@@ -70,37 +64,22 @@ class BasicShape implements IShape {
     }
   }
 
-  /**
-   * 
-   */
   Rect _getGradientBounds(Graphics2DCanvas canvas, CellState state) {
     return state;
   }
 
-  /**
-   * 
-   */
   bool hasGradient(Graphics2DCanvas canvas, CellState state) {
     return true;
   }
 
-  /**
-   * 
-   */
   bool hasShadow(Graphics2DCanvas canvas, CellState state) {
     return Utils.isTrue(state.getStyle(), Constants.STYLE_SHADOW, false);
   }
 
-  /**
-   * 
-   */
   Color getFillColor(Graphics2DCanvas canvas, CellState state) {
     return Utils.getColor(state.getStyle(), Constants.STYLE_FILLCOLOR);
   }
 
-  /**
-   * 
-   */
   Color getStrokeColor(Graphics2DCanvas canvas, CellState state) {
     return Utils.getColor(state.getStyle(), Constants.STYLE_STROKECOLOR);
   }

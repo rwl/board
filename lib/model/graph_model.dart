@@ -99,9 +99,6 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
    */
   /*transient*/ int _updateLevel = 0;
 
-  /**
-   * 
-   */
   /*transient*/ bool _endingUpdate = false;
 
   /**
@@ -127,9 +124,6 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
     setRoot(createRoot());
   }
 
-  /**
-   * 
-   */
   int getUpdateLevel() {
     return _updateLevel;
   }
@@ -1298,9 +1292,6 @@ class GraphModel extends EventSource implements IGraphModel //, Serializable
     return new List<Object>.from(parents);
   }
 
-  /**
-   * 
-   */
   static List<Object> filterCells(List<Object> cells, Filter filter) {
     List<Object> result = null;
 

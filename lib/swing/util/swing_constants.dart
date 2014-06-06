@@ -147,10 +147,6 @@ class SwingConstants {
   /*static Border PREVIEW_BORDER = new LineBorder(
 			SwingConstants.HANDLE_BORDERCOLOR)
 	{
-		/**
-	   * 
-	   */
-		private static final long serialVersionUID = 1348016511717964310L;
 
 		public void paintBorder(Component c, Graphics g, int x, int y,
 				int width, int height)

@@ -58,18 +58,12 @@ class EventSource {
     setEventSource(source);
   }
 
-  /**
-   * 
-   */
   Object getEventSource() {
     return _eventSource;
   }
 
   Object get eventSource => _eventSource;
 
-  /**
-   * 
-   */
   void setEventSource(Object value) {
     this._eventSource = value;
   }
@@ -78,16 +72,10 @@ class EventSource {
     _eventSource = s;
   }
 
-  /**
-   * 
-   */
   bool isEventsEnabled() {
     return _eventsEnabled;
   }
 
-  /**
-   * 
-   */
   void setEventsEnabled(bool eventsEnabled) {
     this._eventsEnabled = eventsEnabled;
   }

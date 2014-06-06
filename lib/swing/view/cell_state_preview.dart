@@ -13,19 +13,10 @@ part of graph.swing.view;
  * Represents the current state of a cell in a given graph view.
  */
 class CellStatePreview {
-  /**
-   * 
-   */
   Map<CellState, Point2d> _deltas = new LinkedHashMap<CellState, Point2d>();
 
-  /**
-   * 
-   */
   int _count = 0;
 
-  /**
-   * 
-   */
   GraphComponent _graphComponent;
 
   /**
@@ -33,14 +24,8 @@ class CellStatePreview {
    */
   bool _cloned;
 
-  /**
-   * 
-   */
   float _opacity = 1;
 
-  /**
-   * 
-   */
   List<CellState> _cellStates;
 
   /**
@@ -52,66 +37,39 @@ class CellStatePreview {
     this._cloned = cloned;
   }
 
-  /**
-   * 
-   */
   bool isCloned() {
     return _cloned;
   }
 
-  /**
-   * 
-   */
   void setCloned(bool value) {
     _cloned = value;
   }
 
-  /**
-   * 
-   */
   bool isEmpty() {
     return _count == 0;
   }
 
-  /**
-   * 
-   */
   int getCount() {
     return _count;
   }
 
-  /**
-   * 
-   */
   Map<CellState, Point2d> getDeltas() {
     return _deltas;
   }
 
-  /**
-   * 
-   */
   void setOpacity(float value) {
     _opacity = value;
   }
 
-  /**
-   * 
-   */
   float getOpacity() {
     return _opacity;
   }
 
-  /**
-   * 
-   */
   //	Point2d moveState(CellState state, double dx, double dy)
   //	{
   //		return moveState(state, dx, dy, true, true);
   //	}
 
-  /**
-   * 
-   */
   Point2d moveState(CellState state, double dx, double dy, [bool add = true, bool includeEdges = true]) {
     Point2d delta = _deltas.get(state);
 
@@ -206,9 +164,6 @@ class CellStatePreview {
     return dirty;
   }
 
-  /**
-   * 
-   */
   void restore(List<CellState> snapshot) {
     Graph graph = _graphComponent.getGraph();
     Iterator<CellState> it = snapshot.iterator();
@@ -223,9 +178,6 @@ class CellStatePreview {
     }
   }
 
-  /**
-   * 
-   */
   void restoreState(CellState state, CellState from) {
     state.setLabelBounds(from.getLabelBounds());
     state.setAbsolutePoints(from.getAbsolutePoints());
@@ -241,9 +193,6 @@ class CellStatePreview {
     state.setHeight(from.getHeight());
   }
 
-  /**
-   * 
-   */
   List<CellState> snapshot(CellState state) {
     List<CellState> result = new LinkedList<CellState>();
 
@@ -342,9 +291,6 @@ class CellStatePreview {
     return dirty;
   }
 
-  /**
-   * 
-   */
   void addEdges(CellState state) {
     Graph graph = _graphComponent.getGraph();
     IGraphModel model = graph.getModel();
@@ -360,9 +306,6 @@ class CellStatePreview {
     }
   }
 
-  /**
-   * 
-   */
   void paint(Graphics g) {
     if (_cellStates != null && _cellStates.length > 0) {
       Graphics2DCanvas canvas = _graphComponent.getCanvas();
@@ -390,9 +333,6 @@ class CellStatePreview {
     }
   }
 
-  /**
-   * 
-   */
   float _getOpacityForCell(Object cell) {
     return _opacity;
   }

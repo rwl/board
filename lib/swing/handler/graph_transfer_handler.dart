@@ -19,11 +19,6 @@ part of graph.swing.handler;
 class GraphTransferHandler extends TransferHandler {
 
   /**
-   * 
-   */
-  //	static final long serialVersionUID = -6443287704811197675L;
-
-  /**
    * bool that specifies if an image of the cells should be created for
    * each transferable. Default is true.
    */
@@ -69,54 +64,30 @@ class GraphTransferHandler extends TransferHandler {
    */
   Color _transferImageBackground = DEFAULT_BACKGROUNDCOLOR;
 
-  /**
-   * 
-   */
   awt.Point _location;
 
-  /**
-   * 
-   */
   awt.Point _offset;
 
-  /**
-   * 
-   */
   int getImportCount() {
     return _importCount;
   }
 
-  /**
-   * 
-   */
   void setImportCount(int value) {
     _importCount = value;
   }
 
-  /**
-   * 
-   */
   void setTransferImageEnabled(bool transferImageEnabled) {
     this._transferImageEnabled = transferImageEnabled;
   }
 
-  /**
-   * 
-   */
   bool isTransferImageEnabled() {
     return this._transferImageEnabled;
   }
 
-  /**
-   * 
-   */
   void setTransferImageBackground(Color transferImageBackground) {
     this._transferImageBackground = transferImageBackground;
   }
 
-  /**
-   * 
-   */
   Color getTransferImageBackground() {
     return this._transferImageBackground;
   }
@@ -128,23 +99,14 @@ class GraphTransferHandler extends TransferHandler {
     return _originalCells != null;
   }
 
-  /**
-   * 
-   */
   void setLocation(awt.Point value) {
     _location = value;
   }
 
-  /**
-   * 
-   */
   void setOffset(awt.Point value) {
     _offset = value;
   }
 
-  /**
-   * 
-   */
   bool canImport(JComponent comp, List<DataFlavor> flavors) {
     for (int i = 0; i < flavors.length; i++) {
       if (flavors[i] != null && flavors[i].equals(GraphTransferable.dataFlavor)) {
@@ -179,9 +141,6 @@ class GraphTransferHandler extends TransferHandler {
     return null;
   }
 
-  /**
-   * 
-   */
   GraphTransferable createGraphTransferable(GraphComponent graphComponent, List<Object> cells, ImageIcon icon) {
     Graph graph = graphComponent.getGraph();
     Point2d tr = graph.getView().getTranslate();
@@ -198,16 +157,10 @@ class GraphTransferHandler extends TransferHandler {
     return createGraphTransferable(graphComponent, cells, bounds, icon);
   }
 
-  /**
-   * 
-   */
   GraphTransferable createGraphTransferableWithBounds(GraphComponent graphComponent, List<Object> cells, Rect bounds, ImageIcon icon) {
     return new GraphTransferable(graphComponent.getGraph().cloneCells(cells), bounds, icon);
   }
 
-  /**
-   * 
-   */
   ImageIcon createTransferableImage(GraphComponent graphComponent, List<Object> cells) {
     ImageIcon icon = null;
     Color bg = (_transferImageBackground != null) ? _transferImageBackground : graphComponent.getBackground();
@@ -220,9 +173,6 @@ class GraphTransferHandler extends TransferHandler {
     return icon;
   }
 
-  /**
-   * 
-   */
   void exportDone(JComponent c, Transferable data, int action) {
     _initialImportCount = 1;
 
@@ -242,16 +192,10 @@ class GraphTransferHandler extends TransferHandler {
     _offset = null;
   }
 
-  /**
-   * 
-   */
   void _removeCells(GraphComponent graphComponent, List<Object> cells) {
     graphComponent.getGraph().removeCells(cells);
   }
 
-  /**
-   * 
-   */
   int getSourceActions(JComponent c) {
     return COPY_OR_MOVE;
   }

@@ -12,9 +12,6 @@ part of graph.swing.handler;
  * icon, while the preview is used to draw the line.
  */
 class MovePreview extends EventSource {
-  /**
-   * 
-   */
   GraphComponent _graphComponent;
 
   /**
@@ -48,39 +45,18 @@ class MovePreview extends EventSource {
    */
   bool _hideSelectionHandler = false;
 
-  /**
-   * 
-   */
   /*transient*/ CellState _startState;
 
-  /**
-   * 
-   */
   /*transient*/ List<CellState> _previewStates;
 
-  /**
-   * 
-   */
   /*transient*/ List<Object> _movingCells;
 
-  /**
-   * 
-   */
   /*transient*/ awt.Rectangle _initialPlaceholder;
 
-  /**
-   * 
-   */
   /*transient*/ awt.Rectangle _placeholder;
 
-  /**
-   * 
-   */
   /*transient*/ Rect _lastDirty;
 
-  /**
-   * 
-   */
   /*transient*/ CellStatePreview _preview;
 
   /**
@@ -98,79 +74,46 @@ class MovePreview extends EventSource {
     });
   }
 
-  /**
-   * 
-   */
   int getThreshold() {
     return _threshold;
   }
 
-  /**
-   * 
-   */
   void setThreshold(int value) {
     _threshold = value;
   }
 
-  /**
-   * 
-   */
   bool isPlaceholderPreview() {
     return _placeholderPreview;
   }
 
-  /**
-   * 
-   */
   void setPlaceholderPreview(bool value) {
     _placeholderPreview = value;
   }
 
-  /**
-   * 
-   */
   bool isClonePreview() {
     return _clonePreview;
   }
 
-  /**
-   * 
-   */
   void setClonePreview(bool value) {
     _clonePreview = value;
   }
 
-  /**
-   * 
-   */
   bool isContextPreview() {
     return _contextPreview;
   }
 
-  /**
-   * 
-   */
   void setContextPreview(bool value) {
     _contextPreview = value;
   }
 
-  /**
-   * 
-   */
   bool isHideSelectionHandler() {
     return _hideSelectionHandler;
   }
 
-  /**
-   * 
-   */
   void setHideSelectionHandler(bool value) {
     _hideSelectionHandler = value;
   }
 
-  /**
-   * 
-   */
   bool isActive() {
     return _startState != null;
   }
@@ -182,9 +125,6 @@ class MovePreview extends EventSource {
     return _movingCells;
   }
 
-  /**
-   * 
-   */
   List<Object> getCells(CellState initialState) {
     Graph graph = _graphComponent.getGraph();
 
@@ -233,9 +173,6 @@ class MovePreview extends EventSource {
     return result.toArray(new List<CellState>(result.length));
   }
 
-  /**
-   * 
-   */
   bool _isCellOpaque(Object cell) {
     return _startState != null && _startState.getCell() == cell;
   }
@@ -257,18 +194,12 @@ class MovePreview extends EventSource {
     fireEvent(new EventObj(Event.START, "event", e, "state", _startState));
   }
 
-  /**
-   * 
-   */
   Rect _getPlaceholderBounds(CellState startState) {
     Graph graph = _graphComponent.getGraph();
 
     return graph.getView().getBounds(graph.getSelectionCells());
   }
 
-  /**
-   * 
-   */
   CellStatePreview createCellStatePreview() {
     return new MovePreviewCellStatePreview(this, graphComponent, isClonePreview());
   }
@@ -329,9 +260,6 @@ class MovePreview extends EventSource {
     fireEvent(new EventObj(Event.CONTINUE, "event", e, "dx", dx, "dy", dy));
   }
 
-  /**
-   * 
-   */
   void _repaint(Rect dirty) {
     if (dirty != null) {
       _graphComponent.getGraphControl().repaint(dirty.getRectangle());
@@ -340,9 +268,6 @@ class MovePreview extends EventSource {
     }
   }
 
-  /**
-   * 
-   */
   void _reset() {
     Graph graph = _graphComponent.getGraph();
 

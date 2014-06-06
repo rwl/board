@@ -7,9 +7,6 @@ part of graph.shape;
 
 class LabelShape extends ImageShape {
 
-  /**
-   * 
-   */
   void paintShape(Graphics2DCanvas canvas, CellState state) {
     super.paintShape(canvas, state);
 
@@ -39,9 +36,6 @@ class LabelShape extends ImageShape {
     canvas.getGraphics().fill(path);
   }
 
-  /**
-   * 
-   */
   awt.Rectangle getImageBounds(Graphics2DCanvas canvas, CellState state) {
     Map<String, Object> style = state.getStyle();
     double scale = canvas.getScale();
@@ -77,23 +71,14 @@ class LabelShape extends ImageShape {
     return imageBounds.getRectangle();
   }
 
-  /**
-   * 
-   */
   awt.Color getFillColor(Graphics2DCanvas canvas, CellState state) {
     return Utils.getColor(state.getStyle(), Constants.STYLE_FILLCOLOR);
   }
 
-  /**
-   * 
-   */
   awt.Color getStrokeColor(Graphics2DCanvas canvas, CellState state) {
     return Utils.getColor(state.getStyle(), Constants.STYLE_STROKECOLOR);
   }
 
-  /**
-   * 
-   */
   bool hasGradient(Graphics2DCanvas canvas, CellState state) {
     return true;
   }

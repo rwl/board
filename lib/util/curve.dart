@@ -69,16 +69,10 @@ class Curve {
    */
   bool _valid = false;
 
-  /**
-   * 
-   */
   void setLabelBuffer(double buffer) {
     _labelBuffer = buffer;
   }
 
-  /**
-   * 
-   */
   Rect getBounds() {
     if (!_valid) {
       _createCoreCurve();
@@ -86,16 +80,10 @@ class Curve {
     return new Rect(_minXBounds, _minYBounds, _maxXBounds - _minXBounds, _maxYBounds - _minYBounds);
   }
 
-  /**
-   * 
-   */
   //	Curve()
   //	{
   //	}
 
-  /**
-   * 
-   */
   Curve([List<Point2d> points = null]) {
     if (points == null) {
       return;

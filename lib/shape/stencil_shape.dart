@@ -89,9 +89,6 @@ class StencilShape extends BasicShape {
     }
   }
 
-  /**
-   * 
-   */
   //	@Override
   void paintShape(Graphics2DCanvas canvas, CellState state) {
     double x = state.getX();
@@ -113,9 +110,6 @@ class StencilShape extends BasicShape {
     canvas.getGraphics().translate(-x, -y);
   }
 
-  /**
-   * 
-   */
   void paintNode(Graphics2DCanvas canvas, CellState state, _svgShape shape, double widthRatio, double heightRatio) {
     Shape associatedShape = shape.shape;
 
@@ -245,9 +239,6 @@ class StencilShape extends BasicShape {
     }
   }
 
-  /**
-   * 
-   */
   void createShape(Node root, _svgShape shape) {
     Node child = root.firstChild;
     /*

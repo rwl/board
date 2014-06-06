@@ -68,9 +68,6 @@ class Multiplicity {
    */
   String _typeError;
 
-  /**
-   * 
-   */
   Multiplicity(bool source, String type, String attr, String value, int min, String max, Iterable<String> validNeighbors,
       String countError, String typeError, bool validNeighborsAllowed) {
     this._source = source;

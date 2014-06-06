@@ -16,14 +16,7 @@ part of graph.util;
 class LightweightLabel //extends JLabel
 {
 
-  /**
-   * 
-   */
-  //	private static final long serialVersionUID = -6771477489533614010L;
 
-  /**
-   * 
-   */
   static LightweightLabel _sharedInstance;
 
   /**
@@ -41,9 +34,6 @@ class LightweightLabel //extends JLabel
 		}
 	}*/
 
-  /**
-   * 
-   */
   /*static LightweightLabel getSharedInstance()
 	{
 		return _sharedInstance;
