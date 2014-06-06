@@ -69,7 +69,8 @@ class DomUtils {
 
     Element style = document.createElement("style");
     style.setAttribute("type", "text/css");
-    style.append(document.createTextNode("<!-- v\\:* {behavior: url(#default#VML);} -->"));
+    //style.append(document.createTextNode("<!-- v\\:* {behavior: url(#default#VML);} -->"));
+    style.text = "<!-- v\\:* {behavior: url(#default#VML);} -->";
 
     head.append(style);
     root.append(head);

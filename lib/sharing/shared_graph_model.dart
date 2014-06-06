@@ -87,7 +87,6 @@ class SharedGraphModel extends SharedState {
    * a change and notify event via the model.
    */
   UndoableEdit _createUndoableEdit(List<AtomicGraphModelChange> changes) {
-    throw new Exception();
     UndoableEdit edit = new SharedGraphModelUndoableEdit(this, _significantRemoteChanges);
 
     for (int i = 0; i < changes.length; i++) {

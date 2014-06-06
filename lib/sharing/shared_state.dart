@@ -78,21 +78,18 @@ class SharedState extends EventSource {
   void processDelta(Object sender, Node delta) {
     StringBuffer edits = new StringBuffer();
 
-    throw new Exception();
-    /*synchronized (this)
-		{
-			Node edit = delta.getFirstChild();
+    //synchronized (this) {
+			Node edit = delta.firstChild;
 
 			while (edit != null)
 			{
-				if (edit.getNodeName().equals("edit"))
-				{
-					edits.append(_processEdit(edit));
+				if (edit.nodeName == "edit") {
+					edits.write(_processEdit(edit));
 				}
 
-				edit = edit.getNextSibling();
+				edit = edit.nextNode;
 			}
-		}*/
+		//}
 
     String xml = edits.toString();
     addDelta(xml);

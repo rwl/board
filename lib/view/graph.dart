@@ -486,39 +486,6 @@ class Graph extends EventSource {
   IEventListener _graphModelChangeHandler;
 
   /**
-   * Constructs a new graph with an empty
-   * {@link graph.model.GraphModel}.
-   */
-  //	Graph()
-  //	{
-  //		this(null, null);
-  //	}
-
-  /**
-   * Constructs a new graph for the specified model. If no model is
-   * specified, then a new, empty {@link graph.model.GraphModel} is
-   * used.
-   * 
-   * @param model Model that contains the graph data
-   */
-  //	Graph(IGraphModel model)
-  //	{
-  //		this(model, null);
-  //	}
-
-  /**
-   * Constructs a new graph for the specified model. If no model is
-   * specified, then a new, empty {@link graph.model.GraphModel} is
-   * used.
-   * 
-   * @param stylesheet The stylesheet to use for the graph.
-   */
-  //	Graph(Stylesheet stylesheet)
-  //	{
-  //		this(null, stylesheet);
-  //	}
-
-  /**
    * Constructs a new graph for the specified model. If no model is
    * specified, then a new, empty {@link graph.model.GraphModel} is
    * used.

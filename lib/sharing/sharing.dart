@@ -7,8 +7,6 @@ library graph.sharing;
 import 'dart:html' show Node;
 import 'dart:collection' show Queue;
 
-import '../sharing/sharing.dart' show DiagramChangeListener;
-
 import '../io/io.dart' show Codec;
 
 import '../model/model.dart' show ChildChange;

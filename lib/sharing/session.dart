@@ -67,11 +67,10 @@ class Session implements DiagramChangeListener {
    * @return Returns the initial state of the session.
    */
   /*synchronized*/ String init() {
-    /*synchronized (this)
-		{
+    //synchronized (this) {
 			_buffer = new StringBuffer();
-			notify();
-		}*/
+			//notify();
+		//}
 
     return getInitialMessage();
   }
@@ -103,7 +102,7 @@ class Session implements DiagramChangeListener {
    * @param message XML that represents the change.
    */
   void receive(Node message) {
-    //System.out.println(getId() + ": " + Utils.getPrettyXml(message));
+    //print(getId() + ": " + Utils.getPrettyXml(message));
     Node child = message.firstChild;
 
     while (child != null) {
@@ -113,21 +112,9 @@ class Session implements DiagramChangeListener {
 
       child = child.nextNode;
     }
-    /*System.out.println(Utils.getPrettyXml(new Codec()
-				.encode(((SharedGraphModel) diagram).getModel())));*/
+    /*print(Utils.getPrettyXml(new Codec()
+				.encode((diagram as SharedGraphModel).getModel())));*/
   }
-
-  /**
-   * Returns the changes received by other sessions for the shared diagram.
-   * The method returns an empty XML node if no change was received within
-   * 10 seconds.
-   * 
-   * @return Returns a string representing the changes to the shared diagram.
-   */
-  //	String poll() //throws InterruptedException
-  //	{
-  //		return poll(DEFAULT_TIMEOUT);
-  //	}
 
   /**
    * Returns the changes received by other sessions for the shared diagram.
@@ -142,41 +129,38 @@ class Session implements DiagramChangeListener {
     _lastTimeMillis = new DateTime.now().millisecondsSinceEpoch;
     StringBuffer result = new StringBuffer("<message>");
 
-    /*synchronized (this)
-		{
+    //synchronized (this) {
 			if (_buffer.length == 0)
 			{
-				wait(timeout);
+				//wait(timeout);
 			}
 
 			if (_buffer.length > 0)
 			{
-				result.append("<delta>");
-				result.append(_buffer.toString());
-				result.append("</delta>");
+				result.write("<delta>");
+				result.write(_buffer.toString());
+				result.write("</delta>");
 				
 				_buffer = new StringBuffer();
 			}
 
-			notify();
-		}*/
+			//notify();
+		//}
 
     result.write("</message>");
 
     return result.toString();
   }
 
-  /*
-   * (non-Javadoc)
-   * @see graph.sharing.mxSharedDiagram.mxDiagramChangeListener#diagramChanged(java.lang.Object, org.w3c.dom.Node)
+  /**
+   * @see DiagramChangeListener#diagramChanged(Object, Node)
    */
   /*synchronized*/ void diagramChanged(Object sender, String edits) {
     if (sender != this) {
-      /*synchronized (this)
-			{
-				_buffer.append(edits);
-				notify();
-			}*/
+      //synchronized (this) {
+				_buffer.write(edits);
+				//notify();
+			//}
     }
   }
 
