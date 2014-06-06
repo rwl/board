@@ -219,11 +219,8 @@ class SvgCanvas extends BasicCanvas {
     return src != null && (src.toLowerCase().endsWith(".png") || src.toLowerCase().endsWith(".jpg") || src.toLowerCase().endsWith(".gif"));
   }
 
-  /**
-   * 
-   */
-  InputStream _getResource(String src) {
-    InputStream stream = null;
+  /*InputStream*/String _getResource(String src) {
+    /*InputStream stream = null;
 
     try {
       stream = new BufferedInputStream(new URL(src).openStream());
@@ -231,20 +228,18 @@ class SvgCanvas extends BasicCanvas {
       stream = getClass().getResourceAsStream(src);
     }
 
-    return stream;
+    return stream;*/
+    return src;
   }
 
-  /**
-   * @throws IOException 
-   * 
-   */
   String _createDataUrl(String src) //throws IOException
   {
     String result = null;
-    InputStream inputStream = _isImageResource(src) ? _getResource(src) : null;
+    /*InputStream*/String inputStream = _isImageResource(src) ? _getResource(src) : null;
 
     if (inputStream != null) {
-      ByteArrayOutputStream outputStream = new ByteArrayOutputStream(1024);
+      String outputStream = inputStream;
+      /*ByteArrayOutputStream outputStream = new ByteArrayOutputStream(1024);
       List<byte> bytes = new List<byte>(512);
 
       // Read bytes from the input stream in bytes.length-sized chunks and write
@@ -252,7 +247,7 @@ class SvgCanvas extends BasicCanvas {
       int readBytes;
       while ((readBytes = inputStream.read(bytes)) > 0) {
         outputStream.write(bytes, 0, readBytes);
-      }
+      }*/
 
       // Convert the contents of the output stream into a Data URL
       String format = "png";
@@ -262,7 +257,8 @@ class SvgCanvas extends BasicCanvas {
         format = src.substring(dot + 1);
       }
 
-      result = "data:image/" + format + ";base64," + Base64.encodeToString(outputStream.toByteArray(), false);
+      //result = "data:image/" + format + ";base64," + Base64.encodeToString(outputStream.toByteArray(), false);
+      result = "data:image/" + format + ";base64," + CryptoUtils.bytesToBase64(outputStream.codeUnits, addLineSeparator: false);
     }
 
     return result;
@@ -287,15 +283,15 @@ class SvgCanvas extends BasicCanvas {
       _images[src] = img;
 
       if (!src.startsWith("data:image/")) {
-        try {
-          String tmp = _createDataUrl(src);
+        //try {
+        String tmp = _createDataUrl(src);
 
-          if (tmp != null) {
-            src = tmp;
-          }
-        } on IOException catch (e) {
-          // ignore
+        if (tmp != null) {
+          src = tmp;
         }
+        //} on IOException catch (e) {
+          // ignore
+        //}
       }
 
       inner.setAttributeNS(Constants.NS_XLINK, "xlink:href", src);
@@ -486,7 +482,7 @@ class SvgCanvas extends BasicCanvas {
     String fillColor = Utils.getString(style, Constants.STYLE_FILLCOLOR, "none");
     String gradientColor = Utils.getString(style, Constants.STYLE_GRADIENTCOLOR, "none");
     String strokeColor = Utils.getString(style, Constants.STYLE_STROKECOLOR, "none");
-    double strokeWidth = (Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1.0) * _scale) as double;
+    double strokeWidth = (Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1.0) * _scale);
     double opacity = Utils.getFloat(style, Constants.STYLE_OPACITY, 100.0);
 
     // Draws the shape
@@ -781,7 +777,7 @@ class SvgCanvas extends BasicCanvas {
     bool rounded = Utils.isTrue(style, Constants.STYLE_ROUNDED, false);
     String strokeColor = Utils.getString(style, Constants.STYLE_STROKECOLOR);
     double tmpStroke = Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1.0);
-    double strokeWidth = (tmpStroke * _scale) as double;
+    double strokeWidth = (tmpStroke * _scale);
 
     if (strokeColor != null && strokeWidth > 0) {
       // Draws the start marker
@@ -979,7 +975,7 @@ class SvgCanvas extends BasicCanvas {
     int fontSize = (Utils.getInt(style, Constants.STYLE_FONTSIZE, Constants.DEFAULT_FONTSIZE) * _scale) as int;
 
     if (text != null && text.length > 0) {
-      double strokeWidth = (Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1.0) * _scale) as double;
+      double strokeWidth = Utils.getFloat(style, Constants.STYLE_STROKEWIDTH, 1.0) * _scale;
 
       // Applies the opacity
       double opacity = Utils.getFloat(style, Constants.STYLE_TEXT_OPACITY, 100.0);
@@ -1053,8 +1049,8 @@ class SvgCanvas extends BasicCanvas {
         elem.setAttribute("stroke-opacity", value);
       }
 
-      int swingFontStyle = ((fontStyle & Constants.FONT_BOLD) == Constants.FONT_BOLD) ? Font.BOLD : Font.PLAIN;
-      swingFontStyle += ((fontStyle & Constants.FONT_ITALIC) == Constants.FONT_ITALIC) ? Font.ITALIC : Font.PLAIN;
+      //int swingFontStyle = ((fontStyle & Constants.FONT_BOLD) == Constants.FONT_BOLD) ? Font.BOLD : Font.PLAIN;
+      //swingFontStyle += ((fontStyle & Constants.FONT_ITALIC) == Constants.FONT_ITALIC) ? Font.ITALIC : Font.PLAIN;
 
       List<String> lines = text.split("\n");
       y += fontSize + (h - lines.length * (fontSize + Constants.LINESPACING)) / 2 - 2;
@@ -1080,7 +1076,8 @@ class SvgCanvas extends BasicCanvas {
         tspan.setAttribute("x", x.toString());
         tspan.setAttribute("y", y.toString());
 
-        tspan.append(_document.createTextNode(lines[i]));
+        //tspan.append(_document.createTextNode(lines[i]));
+        tspan.text = lines[i];
         elem.append(tspan);
 
         y += fontSize + Constants.LINESPACING;

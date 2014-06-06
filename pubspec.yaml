@@ -4,6 +4,7 @@ author: Richard Lincoln <r.w.lincoln@gmail.com>
 description: Visualisation and interaction with node-edge graphs
 homepage: https://github.com/rwl/dgraph.dart
 dependencies:
+  crypto: any
   image: any
   intl: any
   unicode_helper: any

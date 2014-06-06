@@ -14,6 +14,7 @@ import 'dart:math' as Math;
 
 //import 'package:color/color.dart' as color;
 import 'package:image/image.dart' as image;
+import 'package:crypto/crypto.dart';
 
 import '../util/java/math.dart' as math;
 import '../util/awt/awt.dart' as awt;
