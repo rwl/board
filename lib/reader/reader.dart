@@ -7,11 +7,12 @@ library graph.reader;
 
 import 'dart:html';
 
+import 'package:xmlstream/xmlstream.dart';
 import 'package:image/image.dart' as image;
-//import 'package:color/color.dart' as color;
 
 import '../util/java/math.dart' as math;
 import '../util/awt/awt.dart' as awt;
+import '../util/xml/xml.dart' as xml;
 
 import '../canvas/canvas.dart' show ICanvas2D, Graphics2DCanvas, ICanvas, ImageCanvas;
 //import '../reader/reader.dart' show IElementHandler;

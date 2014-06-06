@@ -5,7 +5,7 @@ part of graph.reader;
 //import org.xml.sax.SAXException;
 //import org.xml.sax.helpers.DefaultHandler;
 
-//typedef void IElementHandler(Attributes atts);
+typedef void SaxElementHandler(Map<String, String> atts);
 
 /**
 	XMLReader reader = SAXParserFactory.newInstance().newSAXParser()
@@ -14,20 +14,12 @@ part of graph.reader;
 			new GraphicsExportCanvas(g2)));
 	reader.parse(new InputSource(new StringReader(xml)));
  */
-class SaxOutputHandler extends DefaultHandler {
-  /**
-   * 
-   */
+class SaxOutputHandler extends xml.DefaultHandler {
+
   ICanvas2D _canvas;
 
-  /**
-   * 
-   */
-  /*transient*/ Map<String, IElementHandler> _handlers = new Map<String, IElementHandler>();
+  /*transient*/ Map<String, SaxElementHandler> _handlers = new Map<String, SaxElementHandler>();
 
-  /**
-   * 
-   */
   SaxOutputHandler(ICanvas2D canvas) {
     setCanvas(canvas);
     _initHandlers();
@@ -50,9 +42,9 @@ class SaxOutputHandler extends DefaultHandler {
   /**
    * 
    */
-  void startElement(String uri, String localName, String qName, Attributes atts) //throws SAXException
+  void startElement(String qName, Map<String, String> atts) //throws SAXException
   {
-    IElementHandler handler = _handlers[qName.toLowerCase()];
+    SaxElementHandler handler = _handlers[qName.toLowerCase()];
 
     if (handler != null) {
       handler(atts);
@@ -63,159 +55,159 @@ class SaxOutputHandler extends DefaultHandler {
    * 
    */
   void _initHandlers() {
-    _handlers["save"] = (Attributes atts) {
+    _handlers["save"] = (Map<String, String> atts) {
       _canvas.save();
     };
 
-    _handlers["restore"] = (Attributes atts) {
+    _handlers["restore"] = (Map<String, String> atts) {
       _canvas.restore();
     };
 
-    _handlers["scale"] = (Attributes atts) {
-      _canvas.scale(double.parse(atts.getValue("scale")));
+    _handlers["scale"] = (Map<String, String> atts) {
+      _canvas.scale(double.parse(atts["scale"]));
     };
 
-    _handlers["translate"] = (Attributes atts) {
-      _canvas.translate(double.parse(atts.getValue("dx")), double.parse(atts.getValue("dy")));
+    _handlers["translate"] = (Map<String, String> atts) {
+      _canvas.translate(double.parse(atts["dx"]), double.parse(atts["dy"]));
     };
 
-    _handlers["rotate"] = (Attributes atts) {
-      _canvas.rotate(double.parse(atts.getValue("theta")), atts.getValue("flipH") == "1", atts.getValue("flipV") == "1", double.parse(atts.getValue("cx")), double.parse(atts.getValue("cy")));
+    _handlers["rotate"] = (Map<String, String> atts) {
+      _canvas.rotate(double.parse(atts["theta"]), atts["flipH"] == "1", atts["flipV"] == "1", double.parse(atts["cx"]), double.parse(atts["cy"]));
     };
 
-    _handlers["strokewidth"] = (Attributes atts) {
-      _canvas.setStrokeWidth(double.parse(atts.getValue("width")));
+    _handlers["strokewidth"] = (Map<String, String> atts) {
+      _canvas.setStrokeWidth(double.parse(atts["width"]));
     };
 
-    _handlers["strokecolor"] = (Attributes atts) {
-      _canvas.setStrokeColor(atts.getValue("color"));
+    _handlers["strokecolor"] = (Map<String, String> atts) {
+      _canvas.setStrokeColor(atts["color"]);
     };
 
-    _handlers["dashed"] = (Attributes atts) {
-      _canvas.setDashed(atts.getValue("dashed") == "1");
+    _handlers["dashed"] = (Map<String, String> atts) {
+      _canvas.setDashed(atts["dashed"] == "1");
     };
 
-    _handlers["dashpattern"] = (Attributes atts) {
-      _canvas.setDashPattern(atts.getValue("pattern"));
+    _handlers["dashpattern"] = (Map<String, String> atts) {
+      _canvas.setDashPattern(atts["pattern"]);
     };
 
-    _handlers["linecap"] = (Attributes atts) {
-      _canvas.setLineCap(atts.getValue("cap"));
+    _handlers["linecap"] = (Map<String, String> atts) {
+      _canvas.setLineCap(atts["cap"]);
     };
 
-    _handlers["linejoin"] = (Attributes atts) {
-      _canvas.setLineJoin(atts.getValue("join"));
+    _handlers["linejoin"] = (Map<String, String> atts) {
+      _canvas.setLineJoin(atts["join"]);
     };
 
-    _handlers["miterlimit"] = (Attributes atts) {
-      _canvas.setMiterLimit(double.parse(atts.getValue("limit")));
+    _handlers["miterlimit"] = (Map<String, String> atts) {
+      _canvas.setMiterLimit(double.parse(atts["limit"]));
     };
 
-    _handlers["fontsize"] = (Attributes atts) {
-      _canvas.setFontSize(double.parse(atts.getValue("size")));
+    _handlers["fontsize"] = (Map<String, String> atts) {
+      _canvas.setFontSize(double.parse(atts["size"]));
     };
 
-    _handlers["fontcolor"] = (Attributes atts) {
-      _canvas.setFontColor(atts.getValue("color"));
+    _handlers["fontcolor"] = (Map<String, String> atts) {
+      _canvas.setFontColor(atts["color"]);
     };
 
-    _handlers["fontbackgroundcolor"] = (Attributes atts) {
-      _canvas.setFontBackgroundColor(atts.getValue("color"));
+    _handlers["fontbackgroundcolor"] = (Map<String, String> atts) {
+      _canvas.setFontBackgroundColor(atts["color"]);
     };
 
-    _handlers["fontbordercolor"] = (Attributes atts) {
-      _canvas.setFontBorderColor(atts.getValue("color"));
+    _handlers["fontbordercolor"] = (Map<String, String> atts) {
+      _canvas.setFontBorderColor(atts["color"]);
     };
 
-    _handlers["fontfamily"] = (Attributes atts) {
-      _canvas.setFontFamily(atts.getValue("family"));
+    _handlers["fontfamily"] = (Map<String, String> atts) {
+      _canvas.setFontFamily(atts["family"]);
     };
 
-    _handlers["fontstyle"] = (Attributes atts) {
-      _canvas.setFontStyle(int.parse(atts.getValue("style")));
+    _handlers["fontstyle"] = (Map<String, String> atts) {
+      _canvas.setFontStyle(int.parse(atts["style"]));
     };
 
-    _handlers["alpha"] = (Attributes atts) {
-      _canvas.setAlpha(double.parse(atts.getValue("alpha")));
+    _handlers["alpha"] = (Map<String, String> atts) {
+      _canvas.setAlpha(double.parse(atts["alpha"]));
     };
 
-    _handlers["fillcolor"] = (Attributes atts) {
-      _canvas.setFillColor(atts.getValue("color"));
+    _handlers["fillcolor"] = (Map<String, String> atts) {
+      _canvas.setFillColor(atts["color"]);
     };
 
-    _handlers["shadowcolor"] = (Attributes atts) {
-      _canvas.setShadowColor(atts.getValue("color"));
+    _handlers["shadowcolor"] = (Map<String, String> atts) {
+      _canvas.setShadowColor(atts["color"]);
     };
 
-    _handlers["shadowalpha"] = (Attributes atts) {
-      _canvas.setShadowAlpha(double.parse(atts.getValue("alpha")));
+    _handlers["shadowalpha"] = (Map<String, String> atts) {
+      _canvas.setShadowAlpha(double.parse(atts["alpha"]));
     };
 
-    _handlers["shadowoffset"] = (Attributes atts) {
-      _canvas.setShadowOffset(double.parse(atts.getValue("dx")), double.parse(atts.getValue("dy")));
+    _handlers["shadowoffset"] = (Map<String, String> atts) {
+      _canvas.setShadowOffset(double.parse(atts["dx"]), double.parse(atts["dy"]));
     };
 
-    _handlers["shadow"] = (Attributes atts) {
+    _handlers["shadow"] = (Map<String, String> atts) {
       _canvas.setShadow(_getValue(atts, "enabled", "1") == "1");
     };
 
-    _handlers["gradient"] = (Attributes atts) {
-      _canvas.setGradient(atts.getValue("c1"), atts.getValue("c2"), double.parse(atts.getValue("x")), double.parse(atts.getValue("y")), double.parse(atts.getValue("w")), double.parse(atts.getValue("h")), atts.getValue("direction"), double.parse(_getValue(atts, "alpha1", "1")), double.parse(_getValue(atts, "alpha2", "1")));
+    _handlers["gradient"] = (Map<String, String> atts) {
+      _canvas.setGradient(atts["c1"], atts["c2"], double.parse(atts["x"]), double.parse(atts["y"]), double.parse(atts["w"]), double.parse(atts["h"]), atts["direction"], double.parse(_getValue(atts, "alpha1", "1")), double.parse(_getValue(atts, "alpha2", "1")));
     };
 
-    _handlers["rect"] = (Attributes atts) {
-      _canvas.rect(double.parse(atts.getValue("x")), double.parse(atts.getValue("y")), double.parse(atts.getValue("w")), double.parse(atts.getValue("h")));
+    _handlers["rect"] = (Map<String, String> atts) {
+      _canvas.rect(double.parse(atts["x"]), double.parse(atts["y"]), double.parse(atts["w"]), double.parse(atts["h"]));
     };
 
-    _handlers["roundrect"] = (Attributes atts) {
-      _canvas.roundrect(double.parse(atts.getValue("x")), double.parse(atts.getValue("y")), double.parse(atts.getValue("w")), double.parse(atts.getValue("h")), double.parse(atts.getValue("dx")), double.parse(atts.getValue("dy")));
+    _handlers["roundrect"] = (Map<String, String> atts) {
+      _canvas.roundrect(double.parse(atts["x"]), double.parse(atts["y"]), double.parse(atts["w"]), double.parse(atts["h"]), double.parse(atts["dx"]), double.parse(atts["dy"]));
     };
 
-    _handlers["ellipse"] = (Attributes atts) {
-      _canvas.ellipse(double.parse(atts.getValue("x")), double.parse(atts.getValue("y")), double.parse(atts.getValue("w")), double.parse(atts.getValue("h")));
+    _handlers["ellipse"] = (Map<String, String> atts) {
+      _canvas.ellipse(double.parse(atts["x"]), double.parse(atts["y"]), double.parse(atts["w"]), double.parse(atts["h"]));
     };
 
-    _handlers["image"] = (Attributes atts) {
-      _canvas.image(double.parse(atts.getValue("x")), double.parse(atts.getValue("y")), double.parse(atts.getValue("w")), double.parse(atts.getValue("h")), atts.getValue("src"), atts.getValue("aspect") == "1", atts.getValue("flipH") == "1", atts.getValue("flipV") == "1");
+    _handlers["image"] = (Map<String, String> atts) {
+      _canvas.image(double.parse(atts["x"]), double.parse(atts["y"]), double.parse(atts["w"]), double.parse(atts["h"]), atts["src"], atts["aspect"] == "1", atts["flipH"] == "1", atts["flipV"] == "1");
     };
 
-    _handlers["text"] = (Attributes atts) {
-      _canvas.text(double.parse(atts.getValue("x")), double.parse(atts.getValue("y")), double.parse(atts.getValue("w")), double.parse(atts.getValue("h")), atts.getValue("str"), atts.getValue("align"), atts.getValue("valign"), _getValue(atts, "wrap", "") == "1", atts.getValue("format"), atts.getValue("overflow"), _getValue(atts, "clip", "") == "1", double.parse(_getValue(atts, "rotation", "0")));
+    _handlers["text"] = (Map<String, String> atts) {
+      _canvas.text(double.parse(atts["x"]), double.parse(atts["y"]), double.parse(atts["w"]), double.parse(atts["h"]), atts["str"], atts["align"], atts["valign"], _getValue(atts, "wrap", "") == "1", atts["format"], atts["overflow"], _getValue(atts, "clip", "") == "1", double.parse(_getValue(atts, "rotation", "0")));
     };
 
-    _handlers["begin"] = (Attributes atts) {
+    _handlers["begin"] = (Map<String, String> atts) {
       _canvas.begin();
     };
 
-    _handlers["move"] = (Attributes atts) {
-      _canvas.moveTo(double.parse(atts.getValue("x")), double.parse(atts.getValue("y")));
+    _handlers["move"] = (Map<String, String> atts) {
+      _canvas.moveTo(double.parse(atts["x"]), double.parse(atts["y"]));
     };
 
-    _handlers["line"] = (Attributes atts) {
-      _canvas.lineTo(double.parse(atts.getValue("x")), double.parse(atts.getValue("y")));
+    _handlers["line"] = (Map<String, String> atts) {
+      _canvas.lineTo(double.parse(atts["x"]), double.parse(atts["y"]));
     };
 
-    _handlers["quad"] = (Attributes atts) {
-      _canvas.quadTo(double.parse(atts.getValue("x1")), double.parse(atts.getValue("y1")), double.parse(atts.getValue("x2")), double.parse(atts.getValue("y2")));
+    _handlers["quad"] = (Map<String, String> atts) {
+      _canvas.quadTo(double.parse(atts["x1"]), double.parse(atts["y1"]), double.parse(atts["x2"]), double.parse(atts["y2"]));
     };
 
-    _handlers["curve"] = (Attributes atts) {
-      _canvas.curveTo(double.parse(atts.getValue("x1")), double.parse(atts.getValue("y1")), double.parse(atts.getValue("x2")), double.parse(atts.getValue("y2")), double.parse(atts.getValue("x3")), double.parse(atts.getValue("y3")));
+    _handlers["curve"] = (Map<String, String> atts) {
+      _canvas.curveTo(double.parse(atts["x1"]), double.parse(atts["y1"]), double.parse(atts["x2"]), double.parse(atts["y2"]), double.parse(atts["x3"]), double.parse(atts["y3"]));
     };
 
-    _handlers["close"] = (Attributes atts) {
+    _handlers["close"] = (Map<String, String> atts) {
       _canvas.close();
     };
 
-    _handlers["stroke"] = (Attributes atts) {
+    _handlers["stroke"] = (Map<String, String> atts) {
       _canvas.stroke();
     };
 
-    _handlers["fill"] = (Attributes atts) {
+    _handlers["fill"] = (Map<String, String> atts) {
       _canvas.fill();
     };
 
-    _handlers["fillstroke"] = (Attributes atts) {
+    _handlers["fillstroke"] = (Map<String, String> atts) {
       _canvas.fillAndStroke();
     };
   }
@@ -223,8 +215,8 @@ class SaxOutputHandler extends DefaultHandler {
   /**
    * Returns the given attribute value or an empty string.
    */
-  String _getValue(Attributes atts, String name, String defaultValue) {
-    String value = atts.getValue(name);
+  String _getValue(Map<String, String> atts, String name, String defaultValue) {
+    String value = atts[name];
 
     if (value == null) {
       value = defaultValue;

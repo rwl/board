@@ -5,7 +5,7 @@ part of graph.reader;
 //import org.w3c.dom.Node;
 //import org.xml.sax.Attributes;
 
-typedef void IElementHandler(Element elt);
+typedef void DomElementHandler(Element elt);
 
 /**
  *
@@ -50,32 +50,21 @@ typedef void IElementHandler(Element elt);
 	reader.read(root.getFirstChild());
  */
 class DomOutputParser {
-  /**
-   * 
-   */
+
   ICanvas2D _canvas;
 
-  /**
-   * 
-   */
-  /*transient*/ Map<String, IElementHandler> _handlers = new Map<String, IElementHandler>();
+  /*transient*/ Map<String, DomElementHandler> _handlers = new Map<String, DomElementHandler>();
 
-  /**
-   * 
-   */
   DomOutputParser(ICanvas2D canvas) {
     this._canvas = canvas;
     _initHandlers();
   }
 
-  /**
-   * 
-   */
   void read(Node node) {
     while (node != null) {
       if (node is Element) {
-        Element elt = node as Element;
-        IElementHandler handler = _handlers[elt.nodeName];
+        Element elt = node;
+        DomElementHandler handler = _handlers[elt.nodeName];
 
         if (handler != null) {
           handler(elt);
@@ -86,9 +75,6 @@ class DomOutputParser {
     }
   }
 
-  /**
-   * 
-   */
   void _initHandlers() {
     _handlers["save"] = (Element elt) {
       _canvas.save();

@@ -11,7 +11,7 @@ part of graph.reader;
 /**
  * An abstract converter that renders display XML data onto a canvas.
  */
-abstract class GraphViewReader extends DefaultHandler {
+abstract class GraphViewReader extends xml.DefaultHandler {
 
   /**
    * Holds the canvas to be used for rendering the graph.
@@ -60,26 +60,24 @@ abstract class GraphViewReader extends DefaultHandler {
     return _canvas;
   }
 
-  /**
-   * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
-   */
-  void startElement(String uri, String localName, String qName, Attributes atts) //throws SAXException
+  void startElement(String qName, Map<String, String> atts) //throws SAXException
   {
     String tagName = qName.toUpperCase();
-    Map<String, Object> attrs = new Map<String, Object>();
+    //Map<String, Object> attrs = new Map<String, Object>();
 
-    for (int i = 0; i < atts.getLength(); i++) {
-      String name = atts.getQName(i);
+    /*for (int i = 0; i < atts.length; i++) {
+      //String name = atts.getQName(i);
+      String name = atts[i].local;
 
       // Workaround for possible null name
-      if (name == null || name.length == 0) {
+      /*if (name == null || name.length == 0) {
         name = atts.getLocalName(i);
-      }
+      }*/
 
-      attrs[name] = atts.getValue(i);
-    }
+      attrs[name] = atts[i].value;
+    }*/
 
-    parseElement(tagName, attrs);
+    parseElement(tagName, atts);
   }
 
   /**

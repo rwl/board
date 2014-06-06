@@ -53,34 +53,6 @@ class GraphViewImageReader extends GraphViewReader {
   /**
    * Constructs a new reader with a transparent background.
    */
-//  GraphViewImageReader() {
-//    this(null);
-//  }
-
-  /**
-   * Constructs a new reader with the given background color.
-   */
-//  GraphViewImageReader([awt.Color background=null]) {
-//    this(background, 0);
-//  }
-
-  /**
-   * Constructs a new reader with a transparent background.
-   */
-//  GraphViewImageReader(awt.Color background, int border) {
-//    this(background, border, true);
-//  }
-
-  /**
-   * Constructs a new reader with a transparent background.
-   */
-//  GraphViewImageReader(awt.Color background, int border, bool antiAlias) {
-//    this(background, border, antiAlias, true);
-//  }
-
-  /**
-   * Constructs a new reader with a transparent background.
-   */
   GraphViewImageReader([awt.Color background=null, int border=0, bool antiAlias=true, bool cropping=true]) {
     setBackground(background);
     setBorder(border);
@@ -88,44 +60,26 @@ class GraphViewImageReader extends GraphViewReader {
     setCropping(cropping);
   }
 
-  /**
-   * 
-   */
   awt.Color getBackground() {
     return _background;
   }
 
-  /**
-   * 
-   */
   void setBackground(awt.Color background) {
     this._background = background;
   }
 
-  /**
-   * 
-   */
   int getBorder() {
     return _border;
   }
 
-  /**
-   * 
-   */
   void setBorder(int border) {
     this._border = border;
   }
 
-  /**
-   * 
-   */
   bool isAntiAlias() {
     return _antiAlias;
   }
 
-  /**
-   * 
-   */
   void setAntiAlias(bool antiAlias) {
     this._antiAlias = antiAlias;
   }
@@ -137,32 +91,20 @@ class GraphViewImageReader extends GraphViewReader {
     return _cropping;
   }
 
-  /**
-   * 
-   */
   void setCropping(bool value) {
     this._cropping = value;
   }
 
-  /**
-   * 
-   */
   Rect getClip() {
     return _clip;
   }
 
-  /**
-   * 
-   */
   void setClip(Rect value) {
     this._clip = value;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * graph.reader.GraphViewReader#createCanvas(java.util.Hashtable)
+  /**
+   * @see graph.reader.GraphViewReader#createCanvas(java.util.Hashtable)
    */
   ICanvas createCanvas(Map<String, Object> attrs) {
     int width = 0;
@@ -213,10 +155,10 @@ class GraphViewImageReader extends GraphViewReader {
    *            Filename of the display XML file.
    * @return Returns an image representing the display XML file.
    */
-  static image.Image convertFile(String filename, GraphViewImageReader viewReader) //throws ParserConfigurationException, SAXException, IOException
+  /*static image.Image convertFile(String filename, GraphViewImageReader viewReader) //throws ParserConfigurationException, SAXException, IOException
   {
     return convert(new InputSource(new FileInputStream(filename)), viewReader);
-  }
+  }*/
 
   /**
    * Creates the image for the given display XML input source. (Note: The XML
@@ -226,14 +168,18 @@ class GraphViewImageReader extends GraphViewReader {
    *            Input source that contains the display XML.
    * @return Returns an image representing the display XML input source.
    */
-  static image.Image convert(InputSource inputSource, GraphViewImageReader viewReader) //throws ParserConfigurationException, SAXException, IOException
+  static image.Image convert(/*InputSource*/String inputSource, GraphViewImageReader viewReader) //throws ParserConfigurationException, SAXException, IOException
   {
     image.Image result = null;
-    SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
+    
+    /*SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
     XMLReader reader = parser.getXMLReader();
 
     reader.setContentHandler(viewReader);
-    reader.parse(inputSource);
+    reader.parse(inputSource);*/
+    
+    var xmlStreamer = new XmlStreamer(inputSource);
+    xmlStreamer.read().listen(viewReader);
 
     if (viewReader.getCanvas() is ImageCanvas) {
       result = (viewReader.getCanvas() as ImageCanvas).destroy();
