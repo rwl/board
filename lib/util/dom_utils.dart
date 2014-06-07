@@ -19,7 +19,7 @@ class DomUtils {
    * @return Returns a new DOM document.
    */
   static Document createDocument() {
-    throw new Exception();
+    throw new UnimplementedError("new Document()");
     Document result = null;//new Document();
 
     /*try {

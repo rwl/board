@@ -124,7 +124,8 @@ class StylesheetCodec extends ObjectCodec {
                   Object value = null;
 
                   if (text != null && text.length > 0) {
-                    value = Utils.eval(text);
+                    throw new UnimplementedError("Utils.eval()");
+                    //value = Utils.eval(text);
                   } else {
                     value = entryElement.getAttribute("value");
 

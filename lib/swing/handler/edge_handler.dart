@@ -167,7 +167,7 @@ class EdgeHandler extends CellHandler {
   }
 
   JComponent _createPreview() {
-    throw new Exception();
+    throw new UnimplementedError("JPanel subclass");
     /*JPanel preview = new JPanel()
 		{
 			public void paint(Graphics g)

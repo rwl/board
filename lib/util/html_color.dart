@@ -17,12 +17,13 @@ class HtmlColor {
 
   static final RegExp _rgbRegex = new RegExp(r"rgba?\\([^)]*\\)", caseSensitive: false);
 
-  static String hexString(awt.Color color) {
-    int r = color.getRed();
-    int g = color.getGreen();
-    int b = color.getBlue();
+  static String hexString(awt.Color c) {
+    int r = c.getRed();
+    int g = c.getGreen();
+    int b = c.getBlue();
 
-    return String.format("#%02X%02X%02X", r, g, b);
+    //return String.format("#%02X%02X%02X", r, g, b);
+    return '#' + color.Color.rgbToHexString(r, g, b);
   }
 
   /**
@@ -32,8 +33,8 @@ class HtmlColor {
    *            Color to return the hex string for.
    * @return Returns a hex string for the given color.
    */
-  static String getHexColorString(awt.Color color) {
-    return int.toHexString((color.getRGB() & 0x00FFFFFF) | (color.getAlpha() << 24));
+  static String getHexColorString(awt.Color color) {    
+    return ((color.getRGB() & 0x00FFFFFF) | (color.getAlpha() << 24)).toRadixString(16).padLeft(2, '0');
   }
 
   /**
@@ -54,7 +55,7 @@ class HtmlColor {
   {
     if (str == null || str == Constants.NONE) {
       return null;
-    } else if (_rgbRegex.matcher(str).matches()) {
+    } else if (_rgbRegex.hasMatch(str)) {
       return _parseRgb(str);
     } else if (!str.startsWith("#")) {
       awt.Color result = _htmlColors[str];

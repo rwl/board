@@ -349,13 +349,13 @@ class Codec {
           child = child.nextNode;
         }
 
-        throw new Exception();
+        throw new UnimplementedError("Cell.class.getSimpleName()");
         String name;// = Cell.class.getSimpleName();
         decoder = CodecRegistry.getCodec(name);
       }
 
       if (!(decoder is CellCodec)) {
-        throw new Exception();
+        throw new UnimplementedError("Cell.class.getSimpleName()");
         String name;// = Cell.class.getSimpleName();
         decoder = CodecRegistry.getCodec(name);
       }

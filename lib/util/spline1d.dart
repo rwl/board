@@ -113,7 +113,7 @@ class Spline1D {
    */
   double getDx(double x) {
     if (_len.length == 0 || _len.length == 1) {
-      return 0;
+      return 0.0;
     }
 
     int index = binarySearch(_len, x);

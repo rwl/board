@@ -89,7 +89,8 @@ abstract class BasicCanvas implements ICanvas {
     image.Image img = _imageCache[image];
 
     if (img == null) {
-      img = Utils.loadImage(image);
+      throw new UnimplementedError("Utils.loadImage()");
+      //img = Utils.loadImage(image);
 
       if (img != null) {
         _imageCache[image] = img;

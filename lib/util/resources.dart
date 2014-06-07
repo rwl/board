@@ -119,7 +119,8 @@ class Resources {
    * for <code>key</code>.
    */
   static String _getResource(String key) {
-    Iterator<ResourceBundle> it = _bundles.iterator;
+    throw new UnimplementedError("Resource bundles");
+    /*Iterator<ResourceBundle> it = _bundles.iterator;
 
     while (it.moveNext()) {
       try {
@@ -127,7 +128,7 @@ class Resources {
       } on MissingResourceException catch (mrex) {
         // continue
       }
-    }
+    }*/
 
     return null;
   }

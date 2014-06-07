@@ -2884,7 +2884,8 @@ class Graph extends EventSource {
         String value = getLabel(cell);
 
         if (value != null && value.length > 0) {
-          Rect size = Utils.getLabelSize(value, style, isHtmlLabel(cell), 1.0);
+          throw new UnimplementedError("Utils.getLabelSize()");
+          Rect size = new Rect();//Utils.getLabelSize(value, style, isHtmlLabel(cell), 1.0);
           double width = size.getWidth() + dx;
           double height = size.getHeight() + dy;
 
@@ -6468,7 +6469,7 @@ class Graph extends EventSource {
 
       // Holds the current clipping region in case the label will
       // be clipped
-      Shape clip = null;
+//      Shape clip = null;
       awt.Rectangle newClip = state.getRectangle();
 
       // Indirection for image canvas that contains a graphics canvas
@@ -6481,7 +6482,7 @@ class Graph extends EventSource {
         //newClip.translate(-pt.x, -pt.y);
       }
 
-      if (clippedCanvas is Graphics2DCanvas) {
+      /*if (clippedCanvas is Graphics2DCanvas) {
         Graphics g = (clippedCanvas as Graphics2DCanvas).getGraphics();
         clip = g.getClip();
 
@@ -6492,7 +6493,7 @@ class Graph extends EventSource {
         else {
           g.setClip(newClip);
         }
-      }
+      }*/
 
       if (drawLabel) {
         String label = state.getLabel();
@@ -6503,9 +6504,9 @@ class Graph extends EventSource {
       }
 
       // Restores the previous clipping region
-      if (clippedCanvas is Graphics2DCanvas) {
+      /*if (clippedCanvas is Graphics2DCanvas) {
         (clippedCanvas as Graphics2DCanvas).getGraphics().setClip(clip);
-      }
+      }*/
 
       // Invokes the cellDrawn callback with the object which was created
       // by the canvas to represent the cell graphically

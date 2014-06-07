@@ -10,11 +10,12 @@ library graph.util;
  */
 
 import 'dart:html';
-import 'dart:collection' show HashMap, SplayTreeSet, binarySearch, LinkedList, Queue;
-//import 'dart:collection.algorithms' show binarySearch;
+import 'dart:collection' show HashMap, SplayTreeSet, LinkedList, Queue;
+import 'package:collection/algorithms.dart' show binarySearch;
 import 'dart:math' as Math;
 import 'package:unicode_helper/unicode_helper.dart' as unicode;
 import 'package:crypto/crypto.dart';
+import 'package:color/color.dart' as color;
 
 import 'package:image/image.dart' as image;
 import 'package:xml/xml.dart' as xml;
@@ -191,25 +192,15 @@ class Utils {
   /**
    * Returns the paint bounds for the given label.
    */
-  //	static Rect getLabelPaintBounds(String label,
-  //			Map<String, Object> style, bool isHtml, Point2d offset,
-  //			Rect vertexBounds, double scale)
-  //	{
-  //		return getLabelPaintBounds(label, style, isHtml, offset, vertexBounds,
-  //				scale, false);
-  //	}
-
-  /**
-   * Returns the paint bounds for the given label.
-   */
-  /*static Rect getLabelPaintBounds(String label, Map<String, Object> style, bool isHtml, Point2d offset, Rect vertexBounds, double scale, [bool isEdge = false]) {
+  static Rect getLabelPaintBounds(String label, Map<String, Object> style, bool isHtml, Point2d offset, Rect vertexBounds, double scale, [bool isEdge = false]) {
     double wrapWidth = 0.0;
 
     if (isHtml && vertexBounds != null && Utils.getString(style, Constants.STYLE_WHITE_SPACE, "nowrap") == "wrap") {
       wrapWidth = vertexBounds.getWidth();
     }
 
-    Rect size = Utils.getLabelSize(label, style, isHtml, scale, wrapWidth);
+    throw new UnimplementedError("Utils.getLabelSize()");
+    Rect size = new Rect();//Utils.getLabelSize(label, style, isHtml, scale, wrapWidth);
 
     // Measures font with full scale and scales back
     size.setWidth(size.getWidth() / scale);
@@ -243,7 +234,7 @@ class Utils {
     }
 
     return Utils.getScaledLabelBounds(x, y, size, width, height, style, scale);
-  }*/
+  }
 
   /**
    * Returns the bounds for a label for the given location and size, taking
@@ -1906,7 +1897,7 @@ class Utils {
    * @return Returns a new DOM document.
    */
   /*static HtmlDocument createHtmlDocumentObject(Map<String, Object> style, double scale) {
-    throw new Exception();
+    throw new UnimplementedException("new HtmlDocument()");
     // Applies the font settings
     HtmlDocument document = null;//new HtmlDocument();
 

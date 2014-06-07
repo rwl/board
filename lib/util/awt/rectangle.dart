@@ -221,7 +221,10 @@ class Rectangle {//extends Rectangle2D implements Shape, Serializable {
     double ry1 = getY();
     double rx2 = rx1 + getWidth();
     double ry2 = ry1 + getHeight();
-    return (rx1 <= x1 && x1 <= rx2 && ry1 <= y1 && y1 <= ry2) || (rx1 <= x2 && x2 <= rx2 && ry1 <= y2 && y2 <= ry2) || Line2D.linesIntersect(rx1, ry1, rx2, ry2, x1, y1, x2, y2) || Line2D.linesIntersect(rx2, ry1, rx1, ry2, x1, y1, x2, y2);
+    return (rx1 <= x1 && x1 <= rx2 && ry1 <= y1 && y1 <= ry2) ||
+        (rx1 <= x2 && x2 <= rx2 && ry1 <= y2 && y2 <= ry2) ||
+            Line2D.LinesIntersect(rx1, ry1, rx2, ry2, x1, y1, x2, y2) ||
+                Line2D.LinesIntersect(rx2, ry1, rx1, ry2, x1, y1, x2, y2);
   }
 
   bool intersectsLine(Line2D l) {

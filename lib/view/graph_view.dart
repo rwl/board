@@ -666,7 +666,8 @@ class GraphView extends EventSource {
       // font size/scale factor still stays within the bounds. All this ensures
       // the wrapped lines are constant overing scaling, at the expense the
       // label bounds will vary.
-      List<String> lines = Utils.wordWrap(label, Utils.getFontMetrics(Utils.getFont(state.getStyle())), w * Constants.LABEL_SCALE_BUFFER);
+      throw new UnimplementedError("Utils.wordWrap()");
+      /*List<String> lines = Utils.wordWrap(label, Utils.getFontMetrics(Utils.getFont(state.getStyle())), w * Constants.LABEL_SCALE_BUFFER);
 
       if (lines.length > 0) {
         StringBuffer buffer = new StringBuffer();
@@ -676,7 +677,7 @@ class GraphView extends EventSource {
         }
 
         label = buffer.toString().substring(0, buffer.length - 1);
-      }
+      }*/
     }
 
     state.setLabel(label);
@@ -928,7 +929,8 @@ class GraphView extends EventSource {
       Object tmp = StyleRegistry.getValue(str);
 
       if (tmp == null) {
-        tmp = Utils.eval(str);
+        throw new UnimplementedError();
+        //tmp = Utils.eval(str);
       }
 
       edgeStyle = tmp;
@@ -1089,7 +1091,8 @@ class GraphView extends EventSource {
       Object tmp = StyleRegistry.getValue(str);
 
       if (tmp == null) {
-        tmp = Utils.eval(str);
+        throw new UnimplementedError("Utils.eval()");
+        //tmp = Utils.eval(str);
       }
 
       perimeter = tmp;

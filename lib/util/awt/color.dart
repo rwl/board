@@ -44,6 +44,10 @@ class Color {
     return new Color((r * 255 + 0.5) as int, (g * 255 + 0.5) as int, (b * 255 + 0.5) as int, (a * 255 + 0.5) as int);
   }
 
+  int getRGB() {
+    return value;
+  }
+
   int getRed() {
     return (value >> 16) & 0xFF;
   }

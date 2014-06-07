@@ -116,7 +116,7 @@ class ConnectionHandler extends MouseAdapter {
       }
     });
 
-    throw new Exception();
+    throw new UnimplementedError("CellMarker subclass");
     /*_marker = new CellMarker(graphComponent)
 		{
 
