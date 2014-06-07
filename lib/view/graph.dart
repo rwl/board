@@ -3065,7 +3065,7 @@ class Graph extends EventSource {
    * @param location Location where the mouse was released.
    * @return Returns the cells that were moved.
    */
-  List<Object> moveCells(List<Object> cells, double dx, double dy, [bool clone = false, Object target = null, svg.Point location = null]) {
+  List<Object> moveCells(List<Object> cells, double dx, double dy, [bool clone = false, Object target = null, awt.Point location = null]) {
     if (cells != null && (dx != 0 || dy != 0 || clone || target != null)) {
       _model.beginUpdate();
       try {
@@ -5538,7 +5538,7 @@ class Graph extends EventSource {
    * 
    * This function should only be used if isDropEnabled returns true.
    */
-  Object getDropTarget(List<Object> cells, svg.Point pt, Object cell) {
+  Object getDropTarget(List<Object> cells, awt.Point pt, Object cell) {
     if (!isSwimlaneNesting()) {
       for (int i = 0; i < cells.length; i++) {
         if (isSwimlane(cells[i])) {

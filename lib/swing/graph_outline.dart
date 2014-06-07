@@ -24,16 +24,16 @@ part of graph.swing;
 /**
  * An outline view for a specific graph component.
  */
-class GraphOutline extends JComponent {
+class GraphOutline {//extends JComponent {
 
-  static Color DEFAULT_ZOOMHANDLE_FILL = new Color(0, 255, 255);
+  static awt.Color DEFAULT_ZOOMHANDLE_FILL = new awt.Color(0, 255, 255);
 
   GraphComponent _graphComponent;
 
   /**
    * TODO: Not yet implemented.
    */
-  BufferedImage _tripleBuffer;
+  image.Image _tripleBuffer;
 
   /**
    * Holds the graphics of the triple buffer.
@@ -80,7 +80,7 @@ class GraphOutline extends JComponent {
    */
   int _outlineBorder = 10;
 
-  MouseTracker _tracker = new MouseTracker(this);
+  MouseTracker _tracker;
 
   double _scale = 1;
 
@@ -88,38 +88,43 @@ class GraphOutline extends JComponent {
 
   /*transient*/ bool _zoomGesture = false;
 
-  IEventListener _repaintHandler = (Object source, EventObj evt) {
-    updateScaleAndTranslate();
-    Rect dirty = evt.getProperty("region") as Rect;
+  IEventListener _repaintHandler;
 
-    if (dirty != null) {
-      _repaintClip = new Rect(dirty);
-    } else {
-      _repaintBuffer = true;
-    }
+  ComponentListener _componentHandler;
 
-    if (dirty != null) {
-      updateFinder(true);
-
-      dirty.grow(1 / _scale);
-
-      dirty.setX(dirty.getX() * _scale + _translate.x);
-      dirty.setY(dirty.getY() * _scale + _translate.y);
-      dirty.setWidth(dirty.getWidth() * _scale);
-      dirty.setHeight(dirty.getHeight() * _scale);
-
-      repaint(dirty.getRectangle());
-    } else {
-      updateFinder(false);
-      repaint();
-    }
-  };
-
-  ComponentListener _componentHandler = ResizedComponentAdapter(this);
-
-  AdjustmentListener _adjustmentHandler = new AdjustmentValueListener(this);
+  AdjustmentListener _adjustmentHandler;
 
   GraphOutline(GraphComponent graphComponent) {
+    _tracker = new MouseTracker(this);
+    _repaintHandler = (Object source, EventObj evt) {
+      updateScaleAndTranslate();
+      Rect dirty = evt.getProperty("region") as Rect;
+
+      if (dirty != null) {
+        _repaintClip = new Rect(dirty);
+      } else {
+        _repaintBuffer = true;
+      }
+
+      if (dirty != null) {
+        updateFinder(true);
+
+        dirty.grow(1 / _scale);
+
+        dirty.setX(dirty.getX() * _scale + _translate.x);
+        dirty.setY(dirty.getY() * _scale + _translate.y);
+        dirty.setWidth(dirty.getWidth() * _scale);
+        dirty.setHeight(dirty.getHeight() * _scale);
+
+        repaint(dirty.getRectangle());
+      } else {
+        updateFinder(false);
+        repaint();
+      }
+    };
+    _componentHandler = ResizedComponentAdapter(this);
+    _adjustmentHandler = new AdjustmentValueListener(this);
+
     addComponentListener(_componentHandler);
     addMouseMotionListener(_tracker);
     addMouseListener(_tracker);
@@ -344,8 +349,8 @@ class GraphOutline extends JComponent {
   }
 
   void updateFinderBounds(awt.Rectangle bounds, bool repaint) {
-    if (bounds != null && !bounds.equals(_finderBounds)) {
-      awt.Rectangle old = new awt.Rectangle(_finderBounds);
+    if (bounds != null && bounds != _finderBounds) {
+      awt.Rectangle old = new awt.Rectangle.from(_finderBounds);
       _finderBounds = bounds;
 
       // LATER: Fix repaint region to be smaller
@@ -412,7 +417,7 @@ class GraphOutline extends JComponent {
 
         // Draws the scaled page background
         if (!_graphComponent.isPageVisible()) {
-          Color bg = _graphComponent.getBackground();
+          awt.Color bg = _graphComponent.getBackground();
 
           if (_graphComponent.getViewport().isOpaque()) {
             bg = _graphComponent.getViewport().getBackground();
@@ -477,7 +482,7 @@ class GraphOutline extends JComponent {
         g2.setStroke(stroke);
         g.setColor(DEFAULT_ZOOMHANDLE_FILL);
         g.fillRect(_finderBounds.x + _finderBounds.width - 6, _finderBounds.y + _finderBounds.height - 6, 8, 8);
-        g.setColor(Color.BLACK);
+        g.setColor(awt.Color.BLACK);
         g.drawRect(_finderBounds.x + _finderBounds.width - 6, _finderBounds.y + _finderBounds.height - 6, 8, 8);
       }
     }
@@ -535,15 +540,10 @@ class GraphOutline extends JComponent {
 
 }
 
-class ResizedComponentAdapter extends ComponentAdapter {
-  /**
-     *
-     */
+class ResizedComponentAdapter {//extends ComponentAdapter {
+
   final GraphOutline graphOutline;
 
-  /**
-     * @param mxGraphOutline
-     */
   ResizedComponentAdapter(this.graphOutline);
 
   void componentResized(ComponentEvent e) {
@@ -557,20 +557,12 @@ class ResizedComponentAdapter extends ComponentAdapter {
   }
 }
 
-class AdjustmentValueListener implements AdjustmentListener {
-  /**
-     *
-     */
+class AdjustmentValueListener {//implements AdjustmentListener {
+
   final GraphOutline graphOutline;
 
-  /**
-     * @param mxGraphOutline
-     */
   AdjustmentValueListener(this.graphOutline);
 
-  /**
-     *
-     */
   void adjustmentValueChanged(AdjustmentEvent e) {
     if (graphOutline.updateScaleAndTranslate()) {
       graphOutline.repaintBuffer = true;

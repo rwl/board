@@ -11,7 +11,7 @@ library graph.view;
 import 'dart:html' show Element, Node;
 import 'dart:math' as Math;
 import 'dart:collection' show LinkedList, LinkedHashSet, HashSet;
-import 'dart:svg' as svg;
+//import 'dart:svg' as svg;
 
 import '../util/java/math.dart' as math;
 import '../util/awt/awt.dart' as awt;

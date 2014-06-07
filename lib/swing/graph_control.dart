@@ -12,26 +12,12 @@ part of graph.swing;
 //import javax.swing.ImageIcon;
 //import javax.swing.JComponent;
 
-class GraphControlMouseAdapter extends MouseAdapter {
-
-  final GraphControl graphControl;
-
-  GraphControlMouseAdapter(this.graphControl);
-
-  void mouseReleased(MouseEvent e) {
-    if (this.graphControl.translate.x != 0 || this.graphControl.translate.y != 0) {
-      this.graphControl.translate = new awt.Point(0, 0);
-      this.graphControl.repaint();
-    }
-  }
-}
-
 /**
  * 
  * @author gaudenz
  * 
  */
-class GraphControl extends JComponent {
+class GraphControl {//extends JComponent {
 
   final GraphComponent graphComponent;
 
@@ -170,7 +156,7 @@ class GraphControl extends JComponent {
         page.height += 2 * this.graphComponent.getVerticalPageBorder();
       }
 
-      d = new awt.Dimension((int)(page.width * scale), (int)(page.height * scale));
+      d = new awt.Dimension((page.width * scale), (page.height * scale));
     } else {
       d = this.graphComponent._getScaledPreferredSizeForGraph();
     }
@@ -228,7 +214,7 @@ class GraphControl extends JComponent {
       }
     }
 
-    this.graphComponent._eventSource.fireEvent(new EventObj(Event.PAINT, "g", g));
+    this.graphComponent._eventSource.fireEvent(new EventObj(Event.PAINT, ["g", g]));
   }
 
   void drawGraph(Graphics2D g, bool drawLabels) {
@@ -361,7 +347,7 @@ class GraphControl extends JComponent {
       bool isEdge = model.isEdge(state.getCell());
 
       if (state.getCell() != this.graphComponent._graph.getCurrentRoot() && (model.isVertex(state.getCell()) || isEdge)) {
-        ImageIcon icon = this.graphComponent.getFoldingIcon(state);
+        ImageElement icon = this.graphComponent.getFoldingIcon(state);
 
         if (icon != null) {
           awt.Rectangle bounds = this.graphComponent.getFoldingIconBounds(state, icon);
@@ -380,4 +366,18 @@ class GraphControl extends JComponent {
     return cell != this.graphComponent._graph.getView().getCurrentRoot() && cell != this.graphComponent._graph.getModel().getRoot();
   }
 
+}
+
+class GraphControlMouseAdapter {//extends MouseAdapter {
+
+  final GraphControl graphControl;
+
+  GraphControlMouseAdapter(this.graphControl);
+
+  void mouseReleased(MouseEvent e) {
+    if (this.graphControl.translate.x != 0 || this.graphControl.translate.y != 0) {
+      this.graphControl.translate = new awt.Point(0, 0);
+      this.graphControl.repaint();
+    }
+  }
 }

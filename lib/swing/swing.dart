@@ -3,6 +3,12 @@ library graph.swing;
  * This package contains the main component for JFC/Swing, namely the graph
  * component and the outline component.
  */
+import 'dart:html' show ImageElement, Element;
+import 'dart:math' as Math;
+
+import '../util/java/math.dart' as math;
+import '../util/awt/awt.dart' as awt;
+import '../util/property_change/property_change.dart';
 
 import '../canvas/canvas.dart' show Graphics2DCanvas;
 import '../canvas/canvas.dart' show ICanvas;

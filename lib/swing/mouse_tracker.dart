@@ -12,7 +12,8 @@ part of graph.swing;
 /**
  *
  */
-class MouseTracker implements MouseListener, MouseMotionListener {
+class MouseTracker {//implements MouseListener, MouseMotionListener {
+  
   final GraphOutline graphOutline;
 
   /**
@@ -57,8 +58,8 @@ class MouseTracker implements MouseListener, MouseMotionListener {
         // we need the location of the first mouse event, since
         // the movement can not be constrained for incremental
         // steps as used below.
-        int dx = (int)((e.getX() - start.getX()) / this.graphOutline._scale);
-        int dy = (int)((e.getY() - start.getY()) / this.graphOutline._scale);
+        int dx = ((e.getX() - start.getX()) / this.graphOutline._scale);
+        int dy = ((e.getY() - start.getY()) / this.graphOutline._scale);
 
         // Keeps current location as start for delta movement
         // of the scrollbars
@@ -90,12 +91,12 @@ class MouseTracker implements MouseListener, MouseMotionListener {
         }
 
         final JScrollBar vs = this.graphOutline._graphComponent.getVerticalScrollBar();
-        final double sy;
+        double sy;
 
         if (vs != null) {
           sy = (vs.getValue() as double) / vs.getMaximum();
         } else {
-          sy = 0;
+          sy = 0.0;
         }
 
         GraphView view = this.graphOutline._graphComponent.getGraph().getView();
@@ -105,11 +106,11 @@ class MouseTracker implements MouseListener, MouseMotionListener {
         view.setScale(newScale);
 
         if (hs != null) {
-          hs.setValue((int)(sx * hs.getMaximum() * factor));
+          hs.setValue((sx * hs.getMaximum() * factor));
         }
 
         if (vs != null) {
-          vs.setValue((int)(sy * vs.getMaximum() * factor));
+          vs.setValue((sy * vs.getMaximum() * factor));
         }
       }
 

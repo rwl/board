@@ -9,7 +9,7 @@ part of graph.swing;
 /**
  * 
  */
-class MouseRedirector implements MouseListener, MouseMotionListener {
+class MouseRedirector {//implements MouseListener, MouseMotionListener {
 
   GraphComponent graphComponent;
 

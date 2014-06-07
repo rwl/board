@@ -20,7 +20,57 @@ part of graph.harmony;
  */
 class Color {
 
+  static final Color white = new Color(255, 255, 255);
+
+  static final Color WHITE = white;
+
+  static final Color lightGray = new Color(192, 192, 192);
+
+  static final Color LIGHT_GRAY = lightGray;
+
+  static final Color gray = new Color(128, 128, 128);
+
+  static final Color GRAY = gray;
+
+  static final Color darkGray = new Color(64, 64, 64);
+
+  static final Color DARK_GRAY = darkGray;
+
   static final Color black = new Color(0, 0, 0);
+
+  static final Color BLACK = black;
+
+  static final Color red = new Color(255, 0, 0);
+
+  static final Color RED = red;
+
+  static final Color pink = new Color(255, 175, 175);
+
+  static final Color PINK = pink;
+
+  static final Color orange = new Color(255, 200, 0);
+
+  static final Color ORANGE = orange;
+
+  static final Color yellow = new Color(255, 255, 0);
+
+  static final Color YELLOW = yellow;
+
+  static final Color green = new Color(0, 255, 0);
+
+  static final Color GREEN = green;
+
+  static final Color magenta = new Color(255, 0, 255);
+
+  static final Color MAGENTA = magenta;
+
+  static final Color cyan = new Color(0, 255, 255);
+
+  static final Color CYAN = cyan;
+
+  static final Color blue = new Color(0, 0, 255);
+
+  static final Color BLUE = blue;
 
   /**
    * Integer RGB value.
