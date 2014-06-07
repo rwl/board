@@ -26,18 +26,23 @@ class XmlUtils {
   /**
    * Returns a new document for the given XML string.
    * 
-   * @param xml
+   * @param xmlData
    *            String that represents the XML data.
    * @return Returns a new XML document.
    */
-  static Document parseXml(String xml) {
-    try {
+  static xml.XmlElement parseXml(String xmlData) {
+    /*try {
       DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
       DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
 
       return docBuilder.parse(new InputSource(new StringReader(xml)));
     } on Exception catch (e) {
       e.printStackTrace();
+    }*/
+    try {
+      return xml.XML.parse(xmlData);
+    } on xml.XmlException catch (e, st) {
+      print(st);
     }
 
     return null;
@@ -52,7 +57,7 @@ class XmlUtils {
    */
   static String getXml(Node node) {
     try {
-      Transformer tf = TransformerFactory.newInstance().newTransformer();
+      /*Transformer tf = TransformerFactory.newInstance().newTransformer();
 
       tf.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
       tf.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
@@ -60,7 +65,8 @@ class XmlUtils {
       StreamResult dest = new StreamResult(new StringWriter());
       tf.transform(new DOMSource(node), dest);
 
-      return dest.getWriter().toString();
+      return dest.getWriter().toString();*/
+      return node.toString(); // FIXME
     } on Exception catch (e) {
       // ignore
     }

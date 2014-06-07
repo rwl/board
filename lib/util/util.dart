@@ -12,12 +12,12 @@ library graph.util;
 import 'dart:html';
 import 'dart:collection' show HashMap, SplayTreeSet, binarySearch, LinkedList, Queue;
 //import 'dart:collection.algorithms' show binarySearch;
-import 'dart:svg' as svg;
 import 'dart:math' as Math;
 import 'package:unicode_helper/unicode_helper.dart' as unicode;
+import 'package:crypto/crypto.dart';
 
 import 'package:image/image.dart' as image;
-//import 'package:color/color.dart' as color;
+import 'package:xml/xml.dart' as xml;
 
 import '../util/java/math.dart' as math;
 import './awt/awt.dart' as awt;
@@ -110,17 +110,17 @@ class Utils {
   /**
    * True if the machine is a Mac.
    */
-  static bool IS_MAC = false;//System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0;
+  //static bool IS_MAC = System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0;
 
   /**
    * True if the machine is running a linux kernel.
    */
-  static bool IS_LINUX = false;//System.getProperty("os.name").toLowerCase().indexOf("linux") >= 0;
+  //static bool IS_LINUX = System.getProperty("os.name").toLowerCase().indexOf("linux") >= 0;
 
   /**
    * Static Graphics used for Font Metrics.
    */
-  static /*transient*/ Graphics _fontGraphics;
+  //static /*transient*/ Graphics _fontGraphics;
 
   // Creates a renderer for HTML markup (only possible in
   // non-headless environment)
@@ -153,7 +153,7 @@ class Utils {
    * markup in the label is computed as HTML and all newlines inside the HTML
    * body are converted into linebreaks.
    */
-  static Rect getLabelSize(String label, Map<String, Object> style, bool isHtml, double scale, [double htmlWrapWidth = 0.0]) {
+  /*static Rect getLabelSize(String label, Map<String, Object> style, bool isHtml, double scale, [double htmlWrapWidth = 0.0]) {
     Rect size;
 
     if (isHtml) {
@@ -163,7 +163,7 @@ class Utils {
     }
 
     return size;
-  }
+  }*/
 
   /**
    * Returns the body part of the given HTML markup.
@@ -202,7 +202,7 @@ class Utils {
   /**
    * Returns the paint bounds for the given label.
    */
-  static Rect getLabelPaintBounds(String label, Map<String, Object> style, bool isHtml, Point2d offset, Rect vertexBounds, double scale, [bool isEdge = false]) {
+  /*static Rect getLabelPaintBounds(String label, Map<String, Object> style, bool isHtml, Point2d offset, Rect vertexBounds, double scale, [bool isEdge = false]) {
     double wrapWidth = 0.0;
 
     if (isHtml && vertexBounds != null && Utils.getString(style, Constants.STYLE_WHITE_SPACE, "nowrap") == "wrap") {
@@ -243,7 +243,7 @@ class Utils {
     }
 
     return Utils.getScaledLabelBounds(x, y, size, width, height, style, scale);
-  }
+  }*/
 
   /**
    * Returns the bounds for a label for the given location and size, taking
@@ -315,13 +315,13 @@ class Utils {
    * @param font The font whose metrics are to be returned
    * @return the font metrics of the specified font
    */
-  static FontMetrics getFontMetrics(Font font) {
+  /*static FontMetrics getFontMetrics(Font font) {
     if (_fontGraphics != null) {
       return _fontGraphics.getFontMetrics(font);
     }
 
     return null;
-  }
+  }*/
 
   /**
    * Returns an <Rect> with the size (width and height in pixels) of
@@ -332,7 +332,7 @@ class Utils {
    * @param font
    *            Font to be used for the computation.
    */
-  static Rect getSizeForString(String text, Font font, double scale) {
+  /*static Rect getSizeForString(String text, Font font, double scale) {
     FontRenderContext frc = new FontRenderContext(null, false, false);
     font = font.deriveFont((font.getSize2D() * scale) as double);
     FontMetrics metrics = null;
@@ -368,7 +368,7 @@ class Utils {
     }
 
     return new Rect.rectangle(boundingBox);
-  }
+  }*/
 
   /**
    * Returns the specified text in lines that fit within the specified
@@ -378,7 +378,7 @@ class Utils {
    * @param width the width that the text must fit within
    * @return the input text split in lines that fit the specified width
    */
-  static List<String> wordWrap(String text, FontMetrics metrics, double width) {
+  /*static List<String> wordWrap(String text, FontMetrics metrics, double width) {
     List<String> result = new List<String>();
     // First split the processing into lines already delimited by
     // newlines. We want the result to retain all newlines in position.
@@ -507,7 +507,7 @@ class Utils {
     }
 
     return result;
-  }
+  }*/
 
   /**
    * Returns an Rect with the size (width and height in pixels) of the
@@ -516,7 +516,7 @@ class Utils {
    * @param markup
    *            HTML markup whose size should be returned.
    */
-  static Rect getSizeForHtml(String markup, Map<String, Object> style, double scale, double wrapWidth) {
+  /*static Rect getSizeForHtml(String markup, Map<String, Object> style, double scale, double wrapWidth) {
     LightweightLabel textRenderer = LightweightLabel.getSharedInstance();
 
     if (textRenderer != null) {
@@ -542,7 +542,7 @@ class Utils {
     } else {
       return getSizeForString(markup, getFont(style), scale);
     }
-  }
+  }*/
 
   /**
    * Function: arcToCurves
@@ -841,7 +841,7 @@ class Utils {
   /**
    * Draws the image inside the clip bounds to the given graphics object.
    */
-  static void drawImageClip(Graphics g, BufferedImage image, ImageObserver observer) {
+  /*static void drawImageClip(Graphics g, BufferedImage image, ImageObserver observer) {
     awt.Rectangle clip = g.getClipBounds();
 
     if (clip != null) {
@@ -861,9 +861,9 @@ class Utils {
     } else {
       g.drawImage(image, 0, 0, observer);
     }
-  }
+  }*/
 
-  static void fillClippedRect(Graphics g, int x, int y, int width, int height) {
+  /*static void fillClippedRect(Graphics g, int x, int y, int width, int height) {
     awt.Rectangle bg = new awt.Rectangle(x, y, width, height);
 
     try {
@@ -875,7 +875,7 @@ class Utils {
     }
 
     g.fillRect(bg.x, bg.y, bg.width, bg.height);
-  }
+  }*/
 
   /**
    * Creates a new list of new points obtained by translating the points in
@@ -1432,12 +1432,7 @@ class Utils {
     }
   }
 
-  //	static Font getFont(Map<String, Object> style)
-  //	{
-  //		return getFont(style, 1);
-  //	}
-
-  static Font getFont(Map<String, Object> style, [double scale = 1.0]) {
+  /*static Font getFont(Map<String, Object> style, [double scale = 1.0]) {
     String fontFamily = getString(style, Constants.STYLE_FONTFAMILY, Constants.DEFAULT_FONTFAMILY);
     int fontSize = getInt(style, Constants.STYLE_FONTSIZE, Constants.DEFAULT_FONTSIZE);
     int fontStyle = getInt(style, Constants.STYLE_FONTSTYLE);
@@ -1446,7 +1441,7 @@ class Utils {
     swingFontStyle += ((fontStyle & Constants.FONT_ITALIC) == Constants.FONT_ITALIC) ? Font.ITALIC : Font.PLAIN;
 
     return new Font(fontFamily, swingFontStyle, (fontSize * scale) as int);
-  }
+  }*/
 
   static String hexString(awt.Color color) {
     return HtmlColor.hexString(color);
@@ -1490,10 +1485,10 @@ class Utils {
    * @return Returns a string representing the file contents.
    * @throws IOException
    */
-  static String readFile(String filename) /*throws IOException*/
+  /*static String readFile(String filename) /*throws IOException*/
   {
     return readInputStream(new FileInputStream(filename));
-  }
+  }*/
 
   /**
    * Reads the given filename into a string.
@@ -1503,7 +1498,7 @@ class Utils {
    * @return Returns a string representing the file contents.
    * @throws IOException
    */
-  static String readInputStream(InputStream stream) /*throws IOException*/
+  /*static String readInputStream(InputStream stream) /*throws IOException*/
   {
     BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
     StringBuffer result = new StringBuffer();
@@ -1517,7 +1512,7 @@ class Utils {
     reader.close();
 
     return result.toString();
-  }
+  }*/
 
   /**
    * Writes the given string into the given file.
@@ -1545,7 +1540,7 @@ class Utils {
    */
   static String getMd5Hash(String text) {
     StringBuffer result = new StringBuffer(32);
-    try {
+    /*try {
       MessageDigest md5 = MessageDigest.getInstance("MD5");
       md5.update(text.getBytes());
       Formatter f = new Formatter(result);
@@ -1559,7 +1554,9 @@ class Utils {
       ex.printStackTrace();
     }
 
-    return result.toString();
+    return result.toString();*/
+    
+    return CryptoUtils.bytesToHex((new MD5()..add(text.codeUnits)).close());
   }
 
   /**
@@ -1613,17 +1610,17 @@ class Utils {
    * @param antiAlias
    * @param textAntiAlias
    */
-  static void setAntiAlias(Graphics2D g, bool antiAlias, bool textAntiAlias) {
+  /*static void setAntiAlias(Graphics2D g, bool antiAlias, bool textAntiAlias) {
     g.setRenderingHint(RenderingHints.KEY_RENDERING, (antiAlias) ? RenderingHints.VALUE_RENDER_QUALITY : RenderingHints.VALUE_RENDER_SPEED);
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, (antiAlias) ? RenderingHints.VALUE_ANTIALIAS_ON : RenderingHints.VALUE_ANTIALIAS_OFF);
     g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, (textAntiAlias) ? RenderingHints.VALUE_TEXT_ANTIALIAS_ON : RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
-  }
+  }*/
 
   /**
    * Clears the given area of the specified graphics object with the given
    * color or makes the region transparent.
    */
-  static void clearRect(Graphics2D g, awt.Rectangle rect, awt.Color background) {
+  /*static void clearRect(Graphics2D g, awt.Rectangle rect, awt.Color background) {
     if (background != null) {
       g.setColor(background);
       g.fillRect(rect.x, rect.y, rect.width, rect.height);
@@ -1632,13 +1629,13 @@ class Utils {
       g.fillRect(rect.x, rect.y, rect.width, rect.height);
       g.setComposite(AlphaComposite.SrcOver);
     }
-  }
+  }*/
 
   /**
    * Creates a buffered image for the given parameters. If there is not enough
    * memory to create the image then a OutOfMemoryError is thrown.
    */
-  static BufferedImage createBufferedImage(int w, int h, Color background) {
+  /*static BufferedImage createBufferedImage(int w, int h, Color background) {
     BufferedImage result = null;
 
     if (w > 0 && h > 0) {
@@ -1654,12 +1651,12 @@ class Utils {
     }
 
     return result;
-  }
+  }*/
 
   /**
    * Loads an image from the local filesystem, a data URI or any other URL.
    */
-  static BufferedImage loadImage(String url) {
+  /*static BufferedImage loadImage(String url) {
     BufferedImage img = null;
 
     if (url != null) {
@@ -1693,7 +1690,7 @@ class Utils {
     }
 
     return img;
-  }
+  }*/
 
   /**
    * Creates a table for the given text using the given document to create the
@@ -1908,7 +1905,7 @@ class Utils {
    * 
    * @return Returns a new DOM document.
    */
-  static HtmlDocument createHtmlDocumentObject(Map<String, Object> style, double scale) {
+  /*static HtmlDocument createHtmlDocumentObject(Map<String, Object> style, double scale) {
     throw new Exception();
     // Applies the font settings
     HtmlDocument document = null;//new HtmlDocument();
@@ -1949,7 +1946,7 @@ class Utils {
     document.styleSheets.first.addRule(rule.toString());
 
     return document;
-  }
+  }*/
 
   /**
    * Returns a new DOM document for the given URI.
@@ -1958,7 +1955,7 @@ class Utils {
    *            URI to parse into the document.
    * @return Returns a new DOM document for the given URI.
    */
-  static Document loadDocument(String uri) {
+  /*static Document loadDocument(String uri) {
     try {
       DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
       DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
@@ -1968,7 +1965,7 @@ class Utils {
     }
 
     return null;
-  }
+  }*/
 
   /**
    * Returns a new document for the given XML string.
@@ -1978,20 +1975,20 @@ class Utils {
    * @return Returns a new XML document.
    * @deprecated Use <code>XmlUtils.parseXml</code> (Jan 2012)
    */
-  static Document parseXml(String xml) {
-    return XmlUtils.parseXml(xml);
-  }
+//  static Document parseXml(String xml) {
+//    return XmlUtils.parseXml(xml);
+//  }
 
   /**
    * Evaluates a Java expression as a class member using CodecRegistry. The
    * range of supported expressions is limited to static class members such as
    * EdgeStyle.ElbowConnector.
    */
-  static Object eval(String expression) {
+  /*static Object eval(String expression) {
     int dot = expression.lastIndexOf(".");
 
     if (dot > 0) {
-      /*Class<?> clazz = CodecRegistry.getClassForName(expression
+      Class<?> clazz = CodecRegistry.getClassForName(expression
 					.substring(0, dot));
 
 			if (clazz != null)
@@ -2005,18 +2002,18 @@ class Utils {
 				{
 					// ignore
 				}
-			}*/
+			}
     }
 
     return expression;
-  }
+  }*/
 
   /**
    * Returns the first node where attr equals value. This implementation does
    * not use XPath.
    */
   static Node findNode(Node node, String attr, String value) {
-    String tmp = (node is Element) ? (node as Element).getAttribute(attr) : null;
+    String tmp = (node is Element) ? node.getAttribute(attr) : null;
 
     if (tmp != null && tmp == value) {
       return node;
@@ -2046,7 +2043,7 @@ class Utils {
    *            XPath expression to be matched.
    * @return Returns a single node matching the given expression.
    */
-  static Node selectSingleNode(Document doc, String expression) {
+  /*static Node selectSingleNode(Document doc, String expression) {
     try {
       XPath xpath = XPathFactory.newInstance().newXPath();
 
@@ -2056,7 +2053,7 @@ class Utils {
     }
 
     return null;
-  }
+  }*/
 
   /**
    * Converts the ampersand, quote, prime, less-than and greater-than
@@ -2074,9 +2071,9 @@ class Utils {
    * @return Returns an XML string.
    * @deprecated Use <code>XmlUtils.getXml(Node)</code> (Jan 2012)
    */
-  static String getXml(Node node) {
+  /*static String getXml(Node node) {
     return XmlUtils.getXml(node);
-  }
+  }*/
 
   /**
    * Returns a pretty-printed XML string for the given node.
@@ -2111,14 +2108,21 @@ class Utils {
         result.write(node.nodeValue);
       } else {
         result.write(indent + "<" + node.nodeName);
-        /*NamedNodeMap*/Map<String, String> attrs = node.attributes;
-
-        if (attrs != null) {
-          for (int i = 0; i < attrs.length; i++) {
-            String value = attrs[i].nodeValue;
+        if (node is Element) {
+          /*NamedNodeMap attrs = node.attributes;
+  
+          if (attrs != null) {
+            for (int i = 0; i < attrs.length; i++) {
+              String value = attrs[i].nodeValue;
+              value = Utils.htmlEntities(value);
+              result.write(" " + attrs[i].nodeName + "=\"" + value + "\"");
+            }
+          }*/
+          Map<String, String> attrs = node.attributes;
+          node.attributes.forEach((String name, String value) {
             value = Utils.htmlEntities(value);
-            result.write(" " + attrs[i].nodeName + "=\"" + value + "\"");
-          }
+            result.write(" " + name + "=\"" + value + "\"");            
+          });
         }
         Node tmp = node.firstChild;
 

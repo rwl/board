@@ -122,8 +122,8 @@ class GraphSelectionModel extends EventSource {
   /**
    * Returns the selection cells.
    */
-  Set<Object> getCells() {
-    return _cells;
+  List<Object> getCells() {
+    return new List<Object>.from(_cells);
   }
 
   /**

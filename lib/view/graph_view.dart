@@ -1368,7 +1368,7 @@ class GraphView extends EventSource {
         }
 
         double yDistance = awt.Line2D.pointLineDist(p0.getX(), p0.getY(), pe.getX(), pe.getY(), x, y);
-        int direction = awt.Line2D.relativeCCW(p0.getX(), p0.getY(), pe.getX(), pe.getY(), x, y);
+        int direction = awt.Line2D.RelativeCCW(p0.getX(), p0.getY(), pe.getX(), pe.getY(), x, y);
 
         if (direction == -1) {
           yDistance = -yDistance;
@@ -1445,7 +1445,7 @@ class GraphView extends EventSource {
    * @return Returns the CellState that has been removed.
    */
   CellState removeState(Object cell) {
-    return (cell != null) ? _states.remove(cell) as CellState : null;
+    return (cell != null) ? _states.remove(cell) : null;
   }
 
   /**

@@ -9,6 +9,7 @@ dependencies:
   intl: any
   unicode_helper: any
   xmlstream: any
+  xml: any
 dev_dependencies:
   browser: any
   unittest: any

@@ -180,7 +180,7 @@ class LayoutManager extends EventSource {
     Set<Object> result = new HashSet<Object>();
 
     if (change is ChildChange) {
-      ChildChange cc = change as ChildChange;
+      ChildChange cc = change;
       Object parent = model.getParent(cc.getChild());
 
       if (cc.getChild() != null) {
@@ -195,7 +195,7 @@ class LayoutManager extends EventSource {
         result.add(cc.getPrevious());
       }
     } else if (change is TerminalChange || change is GeometryChange) {
-      Object cell = (change is TerminalChange) ? (change as TerminalChange).getCell() : (change as GeometryChange).getCell();
+      Object cell = (change is TerminalChange) ? change.getCell() : (change as GeometryChange).getCell();
 
       if (cell != null) {
         result.add(cell);

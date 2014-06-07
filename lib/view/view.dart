@@ -15,6 +15,7 @@ import 'dart:svg' as svg;
 
 import '../util/java/math.dart' as math;
 import '../util/awt/awt.dart' as awt;
+import '../util/property_change/property_change.dart';
 
 import '../layout/layout.dart' show IGraphLayout;
 
@@ -29,7 +30,7 @@ import '../model/model.dart' show ICell;
 import '../model/model.dart' show Cell;
 import '../model/model.dart' show ChildChange;
 import '../model/model.dart' show CollapseChange;
-import '../model/model.dart' show Filter;
+//import '../model/model.dart' show Filter;
 import '../model/model.dart' show GeometryChange;
 import '../model/model.dart' show RootChange;
 import '../model/model.dart' show StyleChange;

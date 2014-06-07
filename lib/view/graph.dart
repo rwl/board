@@ -503,7 +503,7 @@ class Graph extends EventSource {
       }
     };
     _graphModelChangeHandler = (Object sender, EventObj evt) {
-      Rect dirty = graphModelChanged(sender as IGraphModel, (evt.getProperty("edit") as UndoableEdit).getChanges() as List<UndoableChange>);
+      Rect dirty = graphModelChanged(sender as IGraphModel, (evt.getProperty("edit") as UndoableEdit).getChanges());
       repaint(dirty);
     };
 
@@ -637,22 +637,22 @@ class Graph extends EventSource {
       Object change = it.current;
 
       if (change is ChildChange) {
-        cells.add((change as ChildChange).getChild());
+        cells.add(change.getChild());
       } else if (change is TerminalChange) {
-        cells.add((change as TerminalChange).getCell());
+        cells.add(change.getCell());
       } else if (change is ValueChange) {
-        cells.add((change as ValueChange).getCell());
+        cells.add(change.getCell());
       } else if (change is StyleChange) {
-        cells.add((change as StyleChange).getCell());
+        cells.add(change.getCell());
       } else if (change is GeometryChange) {
-        cells.add((change as GeometryChange).getCell());
+        cells.add(change.getCell());
       } else if (change is CollapseChange) {
-        cells.add((change as CollapseChange).getCell());
+        cells.add(change.getCell());
       } else if (change is VisibleChange) {
-        VisibleChange vc = change as VisibleChange;
+        VisibleChange vc = change;
 
         if (vc.isVisible()) {
-          cells.add((change as VisibleChange).getCell());
+          cells.add(change.getCell());
         }
       }
     }
@@ -754,13 +754,13 @@ class Graph extends EventSource {
       if (change is RootChange) {
         break;
       } else if (change is ChildChange) {
-        ChildChange cc = change as ChildChange;
+        ChildChange cc = change;
 
         if (cc.getParent() == null) {
           result.addAll(GraphModel.getDescendants(_model, cc.getChild()));
         }
       } else if (change is VisibleChange) {
-        Object cell = (change as VisibleChange).getCell();
+        Object cell = change.getCell();
         result.addAll(GraphModel.getDescendants(_model, cell));
       }
     }
@@ -803,7 +803,7 @@ class Graph extends EventSource {
 
       if (invalidate) {
         clearSelection();
-        _removeStateForCell((change as RootChange).getPrevious());
+        _removeStateForCell(change.getPrevious());
 
         if (isResetViewOnRootChange()) {
           _view.setEventsEnabled(false);
@@ -819,7 +819,7 @@ class Graph extends EventSource {
 
       fireEvent(new EventObj(Event.ROOT));
     } else if (change is ChildChange) {
-      ChildChange cc = change as ChildChange;
+      ChildChange cc = change;
 
       // Repaints the parent area if it is a rendered cell (vertex or
       // edge) otherwise only the child area is repainted, same holds
@@ -853,7 +853,7 @@ class Graph extends EventSource {
         }
       }
     } else if (change is TerminalChange) {
-      Object cell = (change as TerminalChange).getCell();
+      Object cell = change.getCell();
 
       if (!ignoreDirty) {
         result = getBoundingBox(cell, true);
@@ -863,7 +863,7 @@ class Graph extends EventSource {
         _view.invalidate(cell);
       }
     } else if (change is ValueChange) {
-      Object cell = (change as ValueChange).getCell();
+      Object cell = change.getCell();
 
       if (!ignoreDirty) {
         result = getBoundingBox(cell);
@@ -873,7 +873,7 @@ class Graph extends EventSource {
         _view.clear(cell, false, false);
       }
     } else if (change is StyleChange) {
-      Object cell = (change as StyleChange).getCell();
+      Object cell = change.getCell();
 
       if (!ignoreDirty) {
         result = getBoundingBox(cell, true);
@@ -888,7 +888,7 @@ class Graph extends EventSource {
         _view.invalidate(cell);
       }
     } else if (change is GeometryChange) {
-      Object cell = (change as GeometryChange).getCell();
+      Object cell = change.getCell();
 
       if (!ignoreDirty) {
         result = getBoundingBox(cell, true, true);
@@ -898,20 +898,20 @@ class Graph extends EventSource {
         _view.invalidate(cell);
       }
     } else if (change is CollapseChange) {
-      Object cell = (change as CollapseChange).getCell();
+      Object cell = change.getCell();
 
       if (!ignoreDirty) {
-        result = getBoundingBox((change as CollapseChange).getCell(), true, true);
+        result = getBoundingBox(change.getCell(), true, true);
       }
 
       if (invalidate) {
         _removeStateForCell(cell);
       }
     } else if (change is VisibleChange) {
-      Object cell = (change as VisibleChange).getCell();
+      Object cell = change.getCell();
 
       if (!ignoreDirty) {
-        result = getBoundingBox((change as VisibleChange).getCell(), true, true);
+        result = getBoundingBox(change.getCell(), true, true);
       }
 
       if (invalidate) {
@@ -6525,19 +6525,20 @@ class Graph extends EventSource {
 
       if (link != null) {
         String title = getToolTipForCell(state.getCell());
-        Element elem = element as Element;
+        Element elem = element;
 
-        if (elem.getNodeName().startsWith("v:")) {
+        if (elem.nodeName.startsWith("v:")) {
           elem.setAttribute("href", link.toString());
 
           if (title != null) {
             elem.setAttribute("title", title);
           }
-        } else if (elem.getOwnerDocument().getElementsByTagName("svg").getLength() > 0) {
-          Element xlink = elem.getOwnerDocument().createElement("a");
+        } else if (elem.ownerDocument.getElementsByTagName("svg").length > 0) {
+          Element xlink = elem.ownerDocument.createElement("a");
           xlink.setAttribute("xlink:href", link.toString());
 
-          elem.getParentNode().replaceChild(xlink, elem);
+          //elem.parentNode.replaceChild(xlink, elem);
+          elem.replaceWith(xlink);
           xlink.append(elem);
 
           if (title != null) {
@@ -6546,7 +6547,7 @@ class Graph extends EventSource {
 
           elem = xlink;
         } else {
-          Element a = elem.getOwnerDocument().createElement("a");
+          Element a = elem.ownerDocument.createElement("a");
           a.setAttribute("href", link.toString());
           a.setAttribute("style", "text-decoration:none;");
 
@@ -6592,34 +6593,34 @@ class Graph extends EventSource {
    * @param listener
    * @see java.beans.PropertyChangeSupport#addPropertyChangeListener(java.beans.PropertyChangeListener)
    */
-  void addPropertyChangeListener(PropertyChangeListener listener) {
-    _changeSupport.addPropertyChangeListener(listener);
-  }
+//  void addPropertyChangeListener(PropertyChangeListener listener) {
+//    _changeSupport.addPropertyChangeListener(listener);
+//  }
 
   /**
    * @param propertyName
    * @param listener
    * @see java.beans.PropertyChangeSupport#addPropertyChangeListener(java.lang.String, java.beans.PropertyChangeListener)
    */
-  void addNamedPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
-    _changeSupport.addPropertyChangeListener(propertyName, listener);
+  void addPropertyChangeListener(PropertyChangeListener listener, [String propertyName=null]) {
+    _changeSupport.addPropertyChangeListener(listener, propertyName);
   }
 
   /**
    * @param listener
    * @see java.beans.PropertyChangeSupport#removePropertyChangeListener(java.beans.PropertyChangeListener)
    */
-  void removePropertyChangeListener(PropertyChangeListener listener) {
-    _changeSupport.removePropertyChangeListener(listener);
-  }
+//  void removePropertyChangeListener(PropertyChangeListener listener) {
+//    _changeSupport.removePropertyChangeListener(listener);
+//  }
 
   /**
    * @param propertyName
    * @param listener
    * @see java.beans.PropertyChangeSupport#removePropertyChangeListener(java.lang.String, java.beans.PropertyChangeListener)
    */
-  void removeNamedPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
-    _changeSupport.removePropertyChangeListener(propertyName, listener);
+  void removeNamedPropertyChangeListener(PropertyChangeListener listener, [String propertyName=null]) {
+    _changeSupport.removePropertyChangeListener(listener, propertyName);
   }
 
   /**
