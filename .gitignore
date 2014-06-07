@@ -1,2 +1,9 @@
-.project
-.settings/
+out/
+packages
+pubspec.lock
+
+.idea/
+board.iml
+
+/.project
+/.settings/
