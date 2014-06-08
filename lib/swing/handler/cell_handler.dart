@@ -46,12 +46,12 @@ class CellHandler {
   /**
    * Holds the component that is used for preview.
    */
-  /*transient*/ Element _preview;
+  /*transient*/ ui.Widget _preview;
 
   /**
    * Holds the start location of the mouse gesture.
    */
-  /*transient*/ Point _first;
+  /*transient*/ awt.Point _first;
 
   /**
    * Holds the index of the handle that was clicked.
@@ -169,7 +169,7 @@ class CellHandler {
    * Hook for subclassers to return tooltip texts for certain points on the
    * handle.
    */
-  String getToolTipText(MouseEvent e) {
+  String getToolTipText(event.MouseEvent e) {
     return null;
   }
 
@@ -198,9 +198,9 @@ class CellHandler {
   /**
    * Processes the given event.
    */
-  void mousePressed(MouseEvent e) {
-    if (!e.defaultPrevented) {
-      int tmp = getIndexAt(e.client.x, e.client.y);
+  void mousePressed(event.MouseEvent e) {
+    if (e.isLive()) {
+      int tmp = getIndexAt(e.getClientX(), e.getClientY());
 
       if (!_isIgnoredEvent(e) && tmp >= 0 && _isHandleEnabled(tmp)) {
         _graphComponent.stopEditing(true);
@@ -213,19 +213,19 @@ class CellHandler {
   /**
    * Processes the given event.
    */
-  void mouseMoved(MouseEvent e) {
-    if (!e.defaultPrevented && _handles != null) {
-      int index = getIndexAt(e.client.x, e.client.y);
+  void mouseMoved(event.MouseEvent e) {
+    if (e.isLive() && _handles != null) {
+      int index = getIndexAt(e.getClientX(), e.getClientY());
 
       if (index >= 0 && _isHandleEnabled(index)) {
-        /*Cursor cursor = _getCursor(e, index);
+        util.Cursor cursor = _getCursor(e, index);
 
         if (cursor != null) {
           _graphComponent.getGraphControl().setCursor(cursor);
-          e.consume();
+          e.preventDefault();
         } else {
-          _graphComponent.getGraphControl().setCursor(new Cursor(Cursor.HAND_CURSOR));
-        }*/
+          _graphComponent.getGraphControl().setCursor(util.Cursor.MOVE);
+        }
       }
     }
   }
@@ -233,41 +233,41 @@ class CellHandler {
   /**
    * Processes the given event.
    */
-  void mouseDragged(MouseEvent e) {
+  void mouseDragged(event.MouseEvent e) {
     // empty
   }
 
   /**
    * Processes the given event.
    */
-  void mouseReleased(MouseEvent e) {
+  void mouseReleased(event.MouseEvent e) {
     reset();
   }
 
   /**
    * Starts handling a gesture at the given handle index.
    */
-  void start(MouseEvent e, int index) {
+  void start(event.MouseEvent e, int index) {
     this._index = index;
-    _first = e.client;
+    _first = new awt.Point(e.getClientX(), e.getClientY());
     _preview = _createPreview();
 
     if (_preview != null) {
-      _graphComponent.getGraphControl().getElement().children.insert(0, _preview);
+      _graphComponent.getGraphControl().getElement().insert(0, _preview);
     }
   }
 
   /**
    * Returns true if the given event should be ignored.
    */
-  bool _isIgnoredEvent(MouseEvent e) {
+  bool _isIgnoredEvent(event.MouseEvent e) {
     return _graphComponent.isEditEvent(e);
   }
 
   /**
    * Creates the preview for this handler.
    */
-  Element _createPreview() {
+  ui.Widget _createPreview() {
     return null;
   }
 
@@ -276,9 +276,9 @@ class CellHandler {
    */
   void reset() {
     if (_preview != null) {
-      _preview.setVisible(false);
+      ui.UiObject.setVisible(_preview.getElement(), false);
       //_preview.getParent().remove(_preview);
-      _preview.remove();
+      _preview.removeFromParent();
       _preview = null;
     }
 
@@ -288,14 +288,14 @@ class CellHandler {
   /**
    * Returns the cursor for the given event and handle.
    */
-  /*Cursor _getCursor(MouseEvent e, int index) {
+  util.Cursor _getCursor(event.MouseEvent e, int index) {
     return null;
-  }*/
+  }
 
   /**
    * Paints the visible handles of this handler.
    */
-  void paint(Element g) {
+  void paint(ui.Widget g) {
     if (_handles != null && isHandlesVisible()) {
       for (int i = 0; i < _handles.length; i++) {
         /*if (_isHandleVisible(i) && g.hitClip(_handles[i].x, _handles[i].y, _handles[i].width, _handles[i].height)) {

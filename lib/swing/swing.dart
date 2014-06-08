@@ -6,6 +6,9 @@ library graph.swing;
 import 'dart:html' show ImageElement, Element;
 import 'dart:math' as Math;
 
+import 'package:dart_web_toolkit/ui.dart' as ui;
+import 'package:dart_web_toolkit/event.dart' as event;
+
 import '../util/java/math.dart' as math;
 import '../util/awt/awt.dart' as awt;
 import '../util/property_change/property_change.dart';

@@ -5,8 +5,12 @@ library graph.swing.handler;
  * creating connections, handling vertices and edges, moving cells, panning
  * and keystroke handling.
  */
-import 'dart:html' show MouseEvent, Element, DivElement, ImageElement;
+//import 'dart:html' show MouseEvent, Element, DivElement, ImageElement;
 import 'dart:math' show Point;
+
+import 'package:dart_web_toolkit/ui.dart' as ui;
+import 'package:dart_web_toolkit/event.dart' as event;
+import 'package:dart_web_toolkit/util.dart' as util;
 
 import '../../util/awt/awt.dart' as awt;
 

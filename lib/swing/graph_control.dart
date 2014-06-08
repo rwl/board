@@ -17,9 +17,9 @@ part of graph.swing;
  * @author gaudenz
  * 
  */
-class GraphControl {//extends JComponent {
+class GraphControl extends ui.FlowPanel {//ui.FocusWidget {//extends JComponent {
   
-  /*final */Element _element;
+  /*final *///Element _element;
 
   final GraphComponent graphComponent;
 
@@ -35,7 +35,7 @@ class GraphControl {//extends JComponent {
    * 
    */
   GraphControl(this.graphComponent) {
-    addMouseListener(new GraphControlMouseAdapter(this));
+    addMouseUpHandler(new GraphControlMouseAdapter(this));
   }
 
   /**
@@ -62,6 +62,7 @@ class GraphControl {//extends JComponent {
    */
   void scrollRectToVisible(awt.Rectangle aRect, bool extend) {
     super.scrollRectToVisible(aRect);
+    //this.graphComponent.ensureVisible(item);
 
     if (extend) {
       extendComponent(aRect);
@@ -120,7 +121,7 @@ class GraphControl {//extends JComponent {
     }
   }
 
-  String getToolTipText(MouseEvent e) {
+  String getToolTipText(event.MouseEvent e) {
     String tip = this.graphComponent.getSelectionCellsHandler().getToolTipText(e);
 
     if (tip == null) {
@@ -179,9 +180,9 @@ class GraphControl {//extends JComponent {
 
   void paint(Graphics g) {
     g.translate(translate.x, translate.y);
-    this.graphComponent._eventSource.fireEvent(new EventObj(Event.BEFORE_PAINT, "g", g));
+    this.graphComponent._eventSource.fireEvent(new EventObj(Event.BEFORE_PAINT, ["g", g]));
     super.paint(g);
-    this.graphComponent._eventSource.fireEvent(new EventObj(Event.AFTER_PAINT, "g", g));
+    this.graphComponent._eventSource.fireEvent(new EventObj(Event.AFTER_PAINT, ["g", g]));
     g.translate(-translate.x, -translate.y);
   }
 
@@ -368,19 +369,19 @@ class GraphControl {//extends JComponent {
     return cell != this.graphComponent._graph.getView().getCurrentRoot() && cell != this.graphComponent._graph.getModel().getRoot();
   }
   
-  Element getElement() {
+  /*Element getElement() {
     return _element;
-  }
+  }*/
 
 }
 
-class GraphControlMouseAdapter {//extends MouseAdapter {
+class GraphControlMouseAdapter extends event.MouseUpHandler {
 
   final GraphControl graphControl;
 
   GraphControlMouseAdapter(this.graphControl);
 
-  void mouseReleased(MouseEvent e) {
+  void onMouseUp(event.MouseUpEvent e) {
     if (this.graphControl.translate.x != 0 || this.graphControl.translate.y != 0) {
       this.graphControl.translate = new awt.Point(0, 0);
       this.graphControl.repaint();

@@ -11,6 +11,7 @@ dependencies:
   xmlstream: any
   xml: any
   color: any
+  dart_web_toolkit: any
 dev_dependencies:
   browser: any
   unittest: any

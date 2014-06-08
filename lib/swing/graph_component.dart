@@ -70,7 +70,7 @@ part of graph.swing;
  * method is called on the component. The <code>g</code> property contains the
  * graphics context which is used for painting.
  */
-class GraphComponent {//extends JScrollPane implements Printable {
+class GraphComponent extends ui.ScrollPanel {//extends JScrollPane implements Printable {
 
   static const int GRID_STYLE_DOT = 0;
 

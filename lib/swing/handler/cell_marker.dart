@@ -104,7 +104,7 @@ part of graph.swing.handler;
  * graphComponent.getConnectionHandler().setMarker(highlighter);
  * </code>
  */
-class CellMarker {//extends DivElement {//JComponent {
+class CellMarker extends ui.Widget {//extends DivElement {//JComponent {
 
 //  factory CellMarker() => new Element.tag('div');
 //  CellMarker.created() : super.created();
@@ -179,7 +179,7 @@ class CellMarker {//extends DivElement {//JComponent {
    * Constructs a new marker for the given graph component.
    */
   CellMarker(GraphComponent graphComponent, [awt.Color validColor = null,
-      awt.Color invalidColor = null, double hotspot = null]) {
+      awt.Color invalidColor = null, double hotspot = null]) : super() {
     _eventSource = new EventSource(this);
     
     this._graphComponent = graphComponent;
@@ -343,7 +343,7 @@ class CellMarker {//extends DivElement {//JComponent {
    * color. The state is returned regardless of the marker color and
    * valid state. 
    */
-  CellState process(MouseEvent e) {
+  CellState process(event.MouseEvent e) {
     CellState state = null;
 
     if (isEnabled()) {
@@ -356,11 +356,6 @@ class CellMarker {//extends DivElement {//JComponent {
 
     return state;
   }
-
-  //	void highlight(CellState state, awt.Color color)
-  //	{
-  //		highlight(state, color, true);
-  //	}
 
   void highlight(CellState state, awt.Color color, [bool valid = true]) {
     if (valid) {
@@ -391,19 +386,19 @@ class CellMarker {//extends DivElement {//JComponent {
       bounds.grow(3, 3);
       bounds.width += 1;
       bounds.height += 1;
-      /*setBounds(bounds);
+      setPixelSize(bounds.width, bounds.height);
 
       if (getParent() == null) {
-        setVisible(true);
+        ui.UiObject.setVisible(this.getElement(), true);
 
         if (KEEP_ON_TOP) {
-          _graphComponent.getGraphControl().add(this, 0);
+          _graphComponent.getGraphControl().getElement().children.insert(0, this.getElement());
         } else {
-          _graphComponent.getGraphControl().add(this);
+          _graphComponent.getGraphControl().getElement().append(this.getElement());
         }
       }
 
-      repaint();*/
+      repaint();
       _eventSource.fireEvent(new EventObj(Event.MARK, ["state", _markedState]));
     }
   }
@@ -412,11 +407,12 @@ class CellMarker {//extends DivElement {//JComponent {
    * Hides the marker and fires a Event.MARK event.
    */
   void unmark() {
-//    if (getParent() != null) {
-//      setVisible(false);
-//      getParent().remove(this);
+    if (getParent() != null) {
+      ui.UiObject.setVisible(this.getElement(), false);
+      //getParent().remove(this);
+      this.removeFromParent();
       _eventSource.fireEvent(new EventObj(Event.MARK));
-//    }
+    }
   }
 
   /**
@@ -432,7 +428,7 @@ class CellMarker {//extends DivElement {//JComponent {
    * Returns the valid- or invalidColor depending on the value of isValid.
    * The given state is ignored by this implementation.
    */
-  awt.Color _getMarkerColor(MouseEvent e, CellState state, bool isValid) {
+  awt.Color _getMarkerColor(event.MouseEvent e, CellState state, bool isValid) {
     return (isValid) ? _validColor : _invalidColor;
   }
 
@@ -440,7 +436,7 @@ class CellMarker {//extends DivElement {//JComponent {
    * Uses getCell, getMarkedState and intersects to return the state for
    * the given event.
    */
-  CellState _getState(MouseEvent e) {
+  CellState _getState(event.MouseEvent e) {
     Object cell = _getCell(e);
     GraphView view = _graphComponent.getGraph().getView();
     CellState state = _getStateToMark(view.getState(cell));
@@ -451,8 +447,8 @@ class CellMarker {//extends DivElement {//JComponent {
   /**
    * Returns the state at the given location. This uses Graph.getCellAt.
    */
-  Object _getCell(MouseEvent e) {
-    return _graphComponent.getCellAt(e.client.x, e.client.y, _swimlaneContentEnabled);
+  Object _getCell(event.MouseEvent e) {
+    return _graphComponent.getCellAt(e.getClientX(), e.getClientY(), _swimlaneContentEnabled);
   }
 
   /**
@@ -468,9 +464,10 @@ class CellMarker {//extends DivElement {//JComponent {
    * returns true if the hotspot is 0 or the event is inside the hotspot for
    * the given cell state.
    */
-  bool _intersects(CellState state, MouseEvent e) {
+  bool _intersects(CellState state, event.MouseEvent e) {
     if (isHotspotEnabled()) {
-      return Utils.intersectsHotspot(state, e.client.x, e.client.y, _hotspot, Constants.MIN_HOTSPOT_SIZE, Constants.MAX_HOTSPOT_SIZE);
+      return Utils.intersectsHotspot(state, e.getClientX(), e.getClientY(), _hotspot,
+          Constants.MIN_HOTSPOT_SIZE, Constants.MAX_HOTSPOT_SIZE);
     }
 
     return true;
