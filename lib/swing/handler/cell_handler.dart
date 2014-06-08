@@ -46,12 +46,12 @@ class CellHandler {
   /**
    * Holds the component that is used for preview.
    */
-  /*transient*/ JComponent _preview;
+  /*transient*/ Element _preview;
 
   /**
    * Holds the start location of the mouse gesture.
    */
-  /*transient*/ awt.Point _first;
+  /*transient*/ Point _first;
 
   /**
    * Holds the index of the handle that was clicked.
@@ -88,7 +88,7 @@ class CellHandler {
       if (_handles != null) {
         for (int i = 0; i < _handles.length; i++) {
           if (_isHandleVisible(i)) {
-            _bounds.add(_handles[i]);
+            _bounds.addRect(_handles[i]);
           }
         }
       }
@@ -199,13 +199,13 @@ class CellHandler {
    * Processes the given event.
    */
   void mousePressed(MouseEvent e) {
-    if (!e.isConsumed()) {
-      int tmp = getIndexAt(e.getX(), e.getY());
+    if (!e.defaultPrevented) {
+      int tmp = getIndexAt(e.client.x, e.client.y);
 
       if (!_isIgnoredEvent(e) && tmp >= 0 && _isHandleEnabled(tmp)) {
         _graphComponent.stopEditing(true);
         start(e, tmp);
-        e.consume();
+        e.preventDefault();
       }
     }
   }
@@ -214,18 +214,18 @@ class CellHandler {
    * Processes the given event.
    */
   void mouseMoved(MouseEvent e) {
-    if (!e.isConsumed() && _handles != null) {
-      int index = getIndexAt(e.getX(), e.getY());
+    if (!e.defaultPrevented && _handles != null) {
+      int index = getIndexAt(e.client.x, e.client.y);
 
       if (index >= 0 && _isHandleEnabled(index)) {
-        Cursor cursor = _getCursor(e, index);
+        /*Cursor cursor = _getCursor(e, index);
 
         if (cursor != null) {
           _graphComponent.getGraphControl().setCursor(cursor);
           e.consume();
         } else {
           _graphComponent.getGraphControl().setCursor(new Cursor(Cursor.HAND_CURSOR));
-        }
+        }*/
       }
     }
   }
@@ -249,11 +249,11 @@ class CellHandler {
    */
   void start(MouseEvent e, int index) {
     this._index = index;
-    _first = e.getPoint();
+    _first = e.client;
     _preview = _createPreview();
 
     if (_preview != null) {
-      _graphComponent.getGraphControl().add(_preview, 0);
+      _graphComponent.getGraphControl().getElement().children.insert(0, _preview);
     }
   }
 
@@ -267,7 +267,7 @@ class CellHandler {
   /**
    * Creates the preview for this handler.
    */
-  JComponent _createPreview() {
+  Element _createPreview() {
     return null;
   }
 
@@ -277,7 +277,8 @@ class CellHandler {
   void reset() {
     if (_preview != null) {
       _preview.setVisible(false);
-      _preview.getParent().remove(_preview);
+      //_preview.getParent().remove(_preview);
+      _preview.remove();
       _preview = null;
     }
 
@@ -287,23 +288,23 @@ class CellHandler {
   /**
    * Returns the cursor for the given event and handle.
    */
-  Cursor _getCursor(MouseEvent e, int index) {
+  /*Cursor _getCursor(MouseEvent e, int index) {
     return null;
-  }
+  }*/
 
   /**
    * Paints the visible handles of this handler.
    */
-  void paint(Graphics g) {
+  void paint(Element g) {
     if (_handles != null && isHandlesVisible()) {
       for (int i = 0; i < _handles.length; i++) {
-        if (_isHandleVisible(i) && g.hitClip(_handles[i].x, _handles[i].y, _handles[i].width, _handles[i].height)) {
+        /*if (_isHandleVisible(i) && g.hitClip(_handles[i].x, _handles[i].y, _handles[i].width, _handles[i].height)) {
           g.setColor(_getHandleFillColor(i));
           g.fillRect(_handles[i].x, _handles[i].y, _handles[i].width, _handles[i].height);
 
           g.setColor(_getHandleBorderColor(i));
           g.drawRect(_handles[i].x, _handles[i].y, _handles[i].width - 1, _handles[i].height - 1);
-        }
+        }*/
       }
     }
   }
@@ -312,7 +313,7 @@ class CellHandler {
    * Returns the color used to draw the selection border. This implementation
    * returns null.
    */
-  Color getSelectionColor() {
+  awt.Color getSelectionColor() {
     return null;
   }
 
@@ -320,9 +321,9 @@ class CellHandler {
    * Returns the stroke used to draw the selection border. This implementation
    * returns null.
    */
-  Stroke getSelectionStroke() {
+  /*Stroke getSelectionStroke() {
     return null;
-  }
+  }*/
 
   /**
    * Returns true if the handle at the specified index is enabled.
@@ -341,7 +342,7 @@ class CellHandler {
   /**
    * Returns the color to be used to fill the handle at the specified index.
    */
-  Color _getHandleFillColor(int index) {
+  awt.Color _getHandleFillColor(int index) {
     if (isLabel(index)) {
       return SwingConstants.LABEL_HANDLE_FILLCOLOR;
     }
@@ -352,7 +353,7 @@ class CellHandler {
   /**
    * Returns the border color of the handle at the specified index.
    */
-  Color _getHandleBorderColor(int index) {
+  awt.Color _getHandleBorderColor(int index) {
     return SwingConstants.HANDLE_BORDERCOLOR;
   }
 

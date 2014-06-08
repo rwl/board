@@ -11,10 +11,12 @@ part of graph.swing.handler;
 //import java.awt.event.MouseEvent;
 
 /**
- * Connection handler creates new connections between cells. This control is used to display the connector
- * icon, while the preview is used to draw the line.
+ * Connection handler creates new connections between cells. This control is
+ * used to display the connector icon, while the preview is used to draw the
+ * line.
  */
 class ConnectPreview extends EventSource {
+  
   GraphComponent _graphComponent;
 
   CellState _previewState;
@@ -30,10 +32,10 @@ class ConnectPreview extends EventSource {
   ConnectPreview(GraphComponent graphComponent) {
     this._graphComponent = graphComponent;
 
-    // Installs the paint handler
+    // Installs the paint handler.
     graphComponent.addListener(Event.AFTER_PAINT, (Object sender, EventObj evt) {
-      Graphics g = evt.getProperty("g") as Graphics;
-      paint(g);
+//      Graphics g = evt.getProperty("g") as Graphics;
+//      paint(g);
     });
   }
 
@@ -75,7 +77,7 @@ class ConnectPreview extends EventSource {
     graph.getView().validateCell(cell);
     _previewState = graph.getView().getState(cell);
 
-    fireEvent(new EventObj(Event.START, "event", e, "state", _previewState));
+    fireEvent(new EventObj(Event.START, ["event", e, "state", _previewState]));
   }
 
   void update(MouseEvent e, CellState targetState, double x, double y) {
@@ -98,23 +100,18 @@ class ConnectPreview extends EventSource {
     geo.setTerminalPoint(_transformScreenPoint(x, y), false);
 
     revalidate(_previewState);
-    fireEvent(new EventObj(Event.CONTINUE, "event", e, "x", x, "y", y));
+    fireEvent(new EventObj(Event.CONTINUE, ["event", e, "x", x, "y", y]));
 
     // Repaints the dirty region
     // TODO: Cache the new dirty region for next repaint
     awt.Rectangle tmp = _getDirtyRect(dirty);
 
     if (tmp != null) {
-      _graphComponent.getGraphControl().repaint(tmp);
+//      _graphComponent.getGraphControl().repaint(tmp);
     } else {
-      _graphComponent.getGraphControl().repaint();
+//      _graphComponent.getGraphControl().repaint();
     }
   }
-
-  //	awt.Rectangle _getDirtyRect()
-  //	{
-  //		return _getDirtyRect(null);
-  //	}
 
   awt.Rectangle _getDirtyRect([Rect dirty = null]) {
     if (_previewState != null) {
@@ -128,7 +125,7 @@ class ConnectPreview extends EventSource {
 
       if (dirty != null) {
         // TODO: Take arrow size into account
-        dirty.grow(2);
+        dirty.grow(2.0);
 
         return dirty.getRectangle();
       }
@@ -150,7 +147,7 @@ class ConnectPreview extends EventSource {
     state.getView().validateCellState(state.getCell());
   }
 
-  void paint(Graphics g) {
+  /*void paint(Graphics g) {
     if (_previewState != null) {
       Graphics2DCanvas canvas = _graphComponent.getCanvas();
 
@@ -180,7 +177,7 @@ class ConnectPreview extends EventSource {
         canvas.setGraphics(previousGraphics);
       }
     }
-  }
+  }*/
 
   /**
    * Draws the preview using the graphics canvas.
@@ -189,17 +186,6 @@ class ConnectPreview extends EventSource {
     _graphComponent.getGraphControl().drawCell(_graphComponent.getCanvas(), _previewState.getCell());
   }
 
-  /**
-   *
-   */
-  //	Object stop(bool commit)
-  //	{
-  //		return stop(commit, null);
-  //	}
-
-  /**
-   *
-   */
   Object stop(bool commit, [MouseEvent e = null]) {
     Object result = (_sourceState != null) ? _sourceState.getCell() : null;
 
@@ -224,7 +210,7 @@ class ConnectPreview extends EventSource {
           result = graph.addCell(cell, null, null, src, trg);
         }
 
-        fireEvent(new EventObj(Event.STOP, "event", e, "commit", commit, "cell", (commit) ? result : null));
+        fireEvent(new EventObj(Event.STOP, ["event", e, "commit", commit, "cell", (commit) ? result : null]));
 
         // Clears the state before the model commits
         if (_previewState != null) {
@@ -233,7 +219,7 @@ class ConnectPreview extends EventSource {
           _previewState = null;
 
           if (!commit && dirty != null) {
-            _graphComponent.getGraphControl().repaint(dirty);
+//            _graphComponent.getGraphControl().repaint(dirty);
           }
         }
       } finally {

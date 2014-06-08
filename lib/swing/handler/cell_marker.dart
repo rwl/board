@@ -104,7 +104,10 @@ part of graph.swing.handler;
  * graphComponent.getConnectionHandler().setMarker(highlighter);
  * </code>
  */
-class CellMarker extends JComponent {
+class CellMarker {//extends DivElement {//JComponent {
+
+//  factory CellMarker() => new Element.tag('div');
+//  CellMarker.created() : super.created();
 
   /**
    * Specifies if the highlights should appear on top of everything
@@ -115,12 +118,12 @@ class CellMarker extends JComponent {
   /**
    * Specifies the default stroke for the marker.
    */
-  static Stroke DEFAULT_STROKE = new BasicStroke(3);
+  //static Stroke DEFAULT_STROKE = new BasicStroke(3);
 
   /**
    * Holds the event source.
    */
-  EventSource _eventSource = new EventSource(this);
+  EventSource _eventSource;
 
   /**
    * Holds the enclosing graph component.
@@ -138,7 +141,7 @@ class CellMarker extends JComponent {
    * as the hotspot. Possible values are between 0 and 1. Default is
    * Constants.DEFAULT_HOTSPOT.
    */
-  double _hotspot;
+  double _hotspot = Constants.DEFAULT_HOTSPOT;
 
   /**
    * Specifies if the hotspot is enabled. Default is false.
@@ -154,12 +157,13 @@ class CellMarker extends JComponent {
   /**
    * Specifies the valid- and invalidColor for the marker.
    */
-  Color _validColor, _invalidColor;
+  awt.Color _validColor = SwingConstants.DEFAULT_VALID_COLOR;
+  awt.Color _invalidColor = SwingConstants.DEFAULT_INVALID_COLOR;
 
   /**
    * Holds the current marker color.
    */
-  /*transient*/ Color _currentColor;
+  /*transient*/ awt.Color _currentColor;
 
   /**
    * Holds the marked state if it is valid.
@@ -173,40 +177,21 @@ class CellMarker extends JComponent {
 
   /**
    * Constructs a new marker for the given graph component.
-   * 
-   * @param graphComponent
    */
-  //	CellMarker(GraphComponent graphComponent)
-  //	{
-  //		this(graphComponent, );
-  //	}
-
-  /**
-   * Constructs a new marker for the given graph component.
-   */
-  //	CellMarker(GraphComponent graphComponent, Color validColor)
-  //	{
-  //		this(graphComponent, validColor, SwingConstants.DEFAULT_INVALID_COLOR);
-  //	}
-
-  /**
-   * Constructs a new marker for the given graph component.
-   */
-  //	CellMarker(GraphComponent graphComponent, Color validColor,
-  //			Color invalidColor)
-  //	{
-  //		this(graphComponent, validColor, invalidColor,
-  //				Constants.DEFAULT_HOTSPOT);
-  //	}
-
-  /**
-   * Constructs a new marker for the given graph component.
-   */
-  CellMarker(GraphComponent graphComponent, [Color validColor = SwingConstants.DEFAULT_VALID_COLOR, Color invalidColor = SwingConstants.DEFAULT_INVALID_COLOR, double hotspot = Constants.DEFAULT_HOTSPOT]) {
+  CellMarker(GraphComponent graphComponent, [awt.Color validColor = null,
+      awt.Color invalidColor = null, double hotspot = null]) {
+    _eventSource = new EventSource(this);
+    
     this._graphComponent = graphComponent;
-    this._validColor = validColor;
-    this._invalidColor = invalidColor;
-    this._hotspot = hotspot;
+    if (validColor != null) {
+      this._validColor = validColor;
+    }
+    if (invalidColor != null) {
+      this._invalidColor = invalidColor;
+    }
+    if (hotspot != null) {
+      this._hotspot = hotspot;
+    }
   }
 
   /**
@@ -271,28 +256,28 @@ class CellMarker extends JComponent {
   /**
    * Sets the color used for valid highlights.
    */
-  void setValidColor(Color value) {
+  void setValidColor(awt.Color value) {
     _validColor = value;
   }
 
   /**
    * Returns the color used for valid highlights.
    */
-  Color getValidColor() {
+  awt.Color getValidColor() {
     return _validColor;
   }
 
   /**
    * Sets the color used for invalid highlights.
    */
-  void setInvalidColor(Color value) {
+  void setInvalidColor(awt.Color value) {
     _invalidColor = value;
   }
 
   /**
    * Returns the color used for invalid highlights.
    */
-  Color getInvalidColor() {
+  awt.Color getInvalidColor() {
     return _invalidColor;
   }
 
@@ -313,14 +298,14 @@ class CellMarker extends JComponent {
   /**
    * Sets the current color. 
    */
-  void setCurrentColor(Color value) {
+  void setCurrentColor(awt.Color value) {
     _currentColor = value;
   }
 
   /**
    * Returns the current color.
    */
-  Color getCurrentColor() {
+  awt.Color getCurrentColor() {
     return _currentColor;
   }
 
@@ -364,7 +349,7 @@ class CellMarker extends JComponent {
     if (isEnabled()) {
       state = _getState(e);
       bool valid = (state != null) ? _isValidState(state) : false;
-      Color color = _getMarkerColor(e, state, valid);
+      awt.Color color = _getMarkerColor(e, state, valid);
 
       highlight(state, color, valid);
     }
@@ -372,12 +357,12 @@ class CellMarker extends JComponent {
     return state;
   }
 
-  //	void highlight(CellState state, Color color)
+  //	void highlight(CellState state, awt.Color color)
   //	{
   //		highlight(state, color, true);
   //	}
 
-  void highlight(CellState state, Color color, [bool valid = true]) {
+  void highlight(CellState state, awt.Color color, [bool valid = true]) {
     if (valid) {
       _validState = state;
     } else {
@@ -406,7 +391,7 @@ class CellMarker extends JComponent {
       bounds.grow(3, 3);
       bounds.width += 1;
       bounds.height += 1;
-      setBounds(bounds);
+      /*setBounds(bounds);
 
       if (getParent() == null) {
         setVisible(true);
@@ -418,8 +403,8 @@ class CellMarker extends JComponent {
         }
       }
 
-      repaint();
-      _eventSource.fireEvent(new EventObj(Event.MARK, "state", _markedState));
+      repaint();*/
+      _eventSource.fireEvent(new EventObj(Event.MARK, ["state", _markedState]));
     }
   }
 
@@ -427,11 +412,11 @@ class CellMarker extends JComponent {
    * Hides the marker and fires a Event.MARK event.
    */
   void unmark() {
-    if (getParent() != null) {
-      setVisible(false);
-      getParent().remove(this);
+//    if (getParent() != null) {
+//      setVisible(false);
+//      getParent().remove(this);
       _eventSource.fireEvent(new EventObj(Event.MARK));
-    }
+//    }
   }
 
   /**
@@ -447,7 +432,7 @@ class CellMarker extends JComponent {
    * Returns the valid- or invalidColor depending on the value of isValid.
    * The given state is ignored by this implementation.
    */
-  Color _getMarkerColor(MouseEvent e, CellState state, bool isValid) {
+  awt.Color _getMarkerColor(MouseEvent e, CellState state, bool isValid) {
     return (isValid) ? _validColor : _invalidColor;
   }
 
@@ -467,7 +452,7 @@ class CellMarker extends JComponent {
    * Returns the state at the given location. This uses Graph.getCellAt.
    */
   Object _getCell(MouseEvent e) {
-    return _graphComponent.getCellAt(e.getX(), e.getY(), _swimlaneContentEnabled);
+    return _graphComponent.getCellAt(e.client.x, e.client.y, _swimlaneContentEnabled);
   }
 
   /**
@@ -485,7 +470,7 @@ class CellMarker extends JComponent {
    */
   bool _intersects(CellState state, MouseEvent e) {
     if (isHotspotEnabled()) {
-      return Utils.intersectsHotspot(state, e.getX(), e.getY(), _hotspot, Constants.MIN_HOTSPOT_SIZE, Constants.MAX_HOTSPOT_SIZE);
+      return Utils.intersectsHotspot(state, e.client.x, e.client.y, _hotspot, Constants.MIN_HOTSPOT_SIZE, Constants.MAX_HOTSPOT_SIZE);
     }
 
     return true;
@@ -499,14 +484,6 @@ class CellMarker extends JComponent {
   }
 
   /**
-   * Removes the given event listener.
-   */
-  //	void removeListener(IEventListener listener)
-  //	{
-  //		_eventSource.removeListener(listener);
-  //	}
-
-  /**
    * Removes the given event listener for the specified event name.
    */
   void removeListener(IEventListener listener, [String eventName = null]) {
@@ -516,7 +493,7 @@ class CellMarker extends JComponent {
   /**
    * Paints the outline of the markedState with the currentColor.
    */
-  void paint(Graphics g) {
+  /*void paint(Graphics g) {
     if (_markedState != null && _currentColor != null) {
       (g as Graphics2D).setStroke(DEFAULT_STROKE);
       g.setColor(_currentColor);
@@ -533,6 +510,6 @@ class CellMarker extends JComponent {
         g.drawRect(1, 1, getWidth() - 3, getHeight() - 3);
       }
     }
-  }
+  }*/
 
 }

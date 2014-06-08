@@ -25,14 +25,14 @@ part of graph.swing.handler;
  */
 class ConnectionHandler extends MouseAdapter {
 
-  static Cursor CONNECT_CURSOR = new Cursor(Cursor.HAND_CURSOR);
+  //static Cursor CONNECT_CURSOR = new Cursor(Cursor.HAND_CURSOR);
 
   GraphComponent _graphComponent;
 
   /**
    * Holds the event source.
    */
-  EventSource _eventSource = new EventSource(this);
+  EventSource _eventSource;
 
   ConnectPreview _connectPreview;
 
@@ -40,7 +40,7 @@ class ConnectionHandler extends MouseAdapter {
    * Specifies the icon to be used for creating new connections. If this is
    * specified then it is used instead of the handle. Default is null.
    */
-  ImageIcon _connectIcon = null;
+  ImageElement _connectIcon = null;
 
   /**
    * Specifies the size of the handle to be used for creating new
@@ -83,110 +83,44 @@ class ConnectionHandler extends MouseAdapter {
 
   /*transient*/ String _error;
 
-  /*transient*/ IEventListener _resetHandler = (Object source, EventObj evt) {
-    reset();
-  };
+  /*transient*/ IEventListener _resetHandler;
 
   /**
    * 
    * @param graphComponent
    */
   ConnectionHandler(GraphComponent graphComponent) {
+    _eventSource = new EventSource(this);
+
+    _resetHandler = (Object source, EventObj evt) {
+      reset();
+    };
+
     this._graphComponent = graphComponent;
 
     // Installs the paint handler
     graphComponent.addListener(Event.AFTER_PAINT, (Object sender, EventObj evt) {
-      Graphics g = evt.getProperty("g") as Graphics;
-      paint(g);
+//      Graphics g = evt.getProperty("g") as Graphics;
+//      paint(g);
     });
 
     _connectPreview = _createConnectPreview();
 
     GraphControl graphControl = graphComponent.getGraphControl();
-    graphControl.addMouseListener(this);
-    graphControl.addMouseMotionListener(this);
+//    graphControl.addMouseListener(this);
+//    graphControl.addMouseMotionListener(this);
 
     // Installs the graph listeners and keeps them in sync
     _addGraphListeners(graphComponent.getGraph());
 
-    graphComponent.addPropertyChangeListener((PropertyChangeEvent evt) {
-      if (evt.getPropertyName().equals("graph")) {
-        _removeGraphListeners(evt.getOldValue() as Graph);
-        _addGraphListeners(evt.getNewValue() as Graph);
+    /*graphComponent.addPropertyChangeListener((PropertyChangeEvent evt) {
+      if (evt.propertyName == "graph") {
+        _removeGraphListeners(evt.oldValue as Graph);
+        _addGraphListeners(evt.newValue as Graph);
       }
-    });
+    });*/
 
-    throw new UnimplementedError("CellMarker subclass");
-    /*_marker = new CellMarker(graphComponent)
-		{
-
-			// Overrides to return cell at location only if valid (so that
-			// there is no highlight for invalid cells that have no error
-			// message when the mouse is released)
-			protected Object _getCell(MouseEvent e)
-			{
-				Object cell = super._getCell(e);
-
-				if (isConnecting())
-				{
-					if (_source != null)
-					{
-						_error = validateConnection(_source.getCell(), cell);
-
-						if (_error != null && _error.length == 0)
-						{
-							cell = null;
-
-							// Enables create target inside groups
-							if (_createTarget)
-							{
-								_error = null;
-							}
-						}
-					}
-				}
-				else if (!isValidSource(cell))
-				{
-					cell = null;
-				}
-
-				return cell;
-			}
-
-			// Sets the highlight color according to isValidConnection
-			protected bool _isValidState(CellState state)
-			{
-				if (isConnecting())
-				{
-					return _error == null;
-				}
-				else
-				{
-					return super._isValidState(state);
-				}
-			}
-
-			// Overrides to use marker color only in highlight mode or for
-			// target selection
-			protected Color _getMarkerColor(MouseEvent e, CellState state,
-					bool isValid)
-			{
-				return (isHighlighting() || isConnecting()) ? super
-						._getMarkerColor(e, state, isValid) : null;
-			}
-
-			// Overrides to use hotspot only for source selection otherwise
-			// intersects always returns true when over a cell
-			protected bool _intersects(CellState state, MouseEvent e)
-			{
-				if (!isHighlighting() || isConnecting())
-				{
-					return true;
-				}
-
-				return super._intersects(state, e);
-			}
-		};*/
+    _marker = new ConnectionHandlerCellMarker(this, graphComponent);
 
     _marker.setHotspotEnabled(true);
   }
@@ -267,11 +201,11 @@ class ConnectionHandler extends MouseAdapter {
     _keepOnTop = value;
   }
 
-  void setConnectIcon(ImageIcon value) {
+  void setConnectIcon(ImageElement value) {
     _connectIcon = value;
   }
 
-  ImageIcon getConnecIcon() {
+  ImageElement getConnecIcon() {
     return _connectIcon;
   }
 
@@ -571,4 +505,63 @@ class ConnectionHandler extends MouseAdapter {
     }
   }
 
+}
+
+
+class ConnectionHandlerCellMarker extends CellMarker {
+
+  final ConnectionHandler connectionHandler;
+
+  ConnectionHandlerCellMarker(this.connectionHandler, GraphComponent graphComponent) : super(graphComponent);
+
+  // Overrides to return cell at location only if valid (so that
+  // there is no highlight for invalid cells that have no error
+  // message when the mouse is released)
+  Object getCell(MouseEvent e) {
+    Object cell = super._getCell(e);
+
+    if (connectionHandler.isConnecting()) {
+      if (connectionHandler._source != null) {
+        connectionHandler._error = connectionHandler.validateConnection(connectionHandler._source.getCell(), cell);
+
+        if (connectionHandler._error != null && connectionHandler._error.length() == 0) {
+          cell = null;
+
+          // Enables create target inside groups
+          if (connectionHandler._createTarget) {
+            connectionHandler._error = null;
+          }
+        }
+      }
+    } else if (!connectionHandler.isValidSource(cell)) {
+      cell = null;
+    }
+
+    return cell;
+  }
+
+  // Sets the highlight color according to isValidConnection
+  bool _isValidState(CellState state) {
+    if (connectionHandler.isConnecting()) {
+      return connectionHandler._error == null;
+    } else {
+      return super._isValidState(state);
+    }
+  }
+
+  // Overrides to use marker color only in highlight mode or for
+  // target selection
+  awt.Color _getMarkerColor(MouseEvent e, CellState state, bool isValid) {
+    return (connectionHandler.isHighlighting() || connectionHandler.isConnecting()) ? super._getMarkerColor(e, state, isValid) : null;
+  }
+
+  // Overrides to use hotspot only for source selection otherwise
+  // intersects always returns true when over a cell
+  bool _intersects(CellState state, MouseEvent e) {
+    if (!connectionHandler.isHighlighting() || connectionHandler.isConnecting()) {
+      return true;
+    }
+
+    return super._intersects(state, e);
+  }
 }

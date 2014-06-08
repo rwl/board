@@ -18,6 +18,8 @@ part of graph.swing;
  * 
  */
 class GraphControl {//extends JComponent {
+  
+  /*final */Element _element;
 
   final GraphComponent graphComponent;
 
@@ -364,6 +366,10 @@ class GraphControl {//extends JComponent {
    */
   bool isCellDisplayable(Object cell) {
     return cell != this.graphComponent._graph.getView().getCurrentRoot() && cell != this.graphComponent._graph.getModel().getRoot();
+  }
+  
+  Element getElement() {
+    return _element;
   }
 
 }

@@ -12,11 +12,7 @@ part of graph.swing.view;
 class InteractiveCanvas extends Graphics2DCanvas {
   ImageObserver _imageObserver = null;
 
-  InteractiveCanvas() {
-    this(null);
-  }
-
-  InteractiveCanvas(ImageObserver imageObserver) {
+  InteractiveCanvas([ImageObserver imageObserver=null]) {
     setImageObserver(imageObserver);
   }
 
