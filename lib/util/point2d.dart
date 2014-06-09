@@ -52,9 +52,9 @@ class Point2d // implements Serializable, Cloneable
    * @param x X-coordinate of the point to be created.
    * @param y Y-coordinate of the point to be created.
    */
-  Point2d([double x = 0.0, double y = 0.0]) {
-    setX(x);
-    setY(y);
+  Point2d([num x = 0, num y = 0]) {
+    setX(x.toDouble());
+    setY(y.toDouble());
   }
 
   /**

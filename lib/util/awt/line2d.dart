@@ -17,7 +17,7 @@
 /**
  * @author Denis M. Kishenko
  */
-part of graph.harmony;
+part of graph.util.awt;
 
 //import java.awt.Rectangle;
 //import java.awt.Shape;

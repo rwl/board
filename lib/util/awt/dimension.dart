@@ -14,17 +14,16 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-/**
- * @author Denis M. Kishenko
- */
-part of graph.harmony;
+part of graph.util.awt;
 
 //import java.awt.geom.Dimension2D;
 //import java.io.Serializable;
 
 //import org.apache.awt.misc.HashCode;
 
-
+/**
+ * @author Denis M. Kishenko
+ */
 class Dimension {//extends Dimension2D implements Serializable {
 
     num width;

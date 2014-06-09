@@ -17,7 +17,7 @@
 /**
  * @author Denis M. Kishenko
  */
-part of graph.harmony;
+part of graph.util.awt;
 
 //import java.awt.geom.Rectangle2D;
 //import java.io.Serializable;
