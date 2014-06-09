@@ -17,13 +17,10 @@ part of graph.swing.handler;
 //import javax.swing.JOptionPane;
 //import javax.swing.JPanel;
 
-/**
- *
- */
 class EdgeHandler extends CellHandler {
   bool _cloneEnabled = true;
 
-  PoList<int> _p;
+  List<awt.Point> _p;
 
   /*transient*/ String _error;
 
@@ -59,11 +56,11 @@ class EdgeHandler extends CellHandler {
   /**
    * No flip event is ignored.
    */
-  bool _isIgnoredEvent(MouseEvent e) {
+  bool _isIgnoredEvent(event.MouseEvent e) {
     return !_isFlipEvent(e) && super._isIgnoredEvent(e);
   }
 
-  bool _isFlipEvent(MouseEvent e) {
+  bool _isFlipEvent(event.MouseEvent e) {
     return false;
   }
 
@@ -113,7 +110,7 @@ class EdgeHandler extends CellHandler {
     return h;
   }
 
-  Color _getHandleFillColor(int index) {
+  awt.Color _getHandleFillColor(int index) {
     bool source = isSource(index);
 
     if (source || isTarget(index)) {
@@ -147,16 +144,11 @@ class EdgeHandler extends CellHandler {
     return index;
   }
 
-  //	awt.Rectangle _createHandle(awt.Point center)
-  //	{
-  //		return _createHandle(center, Constants.HANDLE_SIZE);
-  //	}
-
   awt.Rectangle _createHandle(awt.Point center, [int size = Constants.HANDLE_SIZE]) {
     return new awt.Rectangle(center.x - size / 2, center.y - size / 2, size, size);
   }
 
-  PoList<int> _createPoints(CellState s) {
+  List<awt.Point> _createPoints(CellState s) {
     List<awt.Point> pts = new List<awt.Point>(s.getAbsolutePointCount());
 
     for (int i = 0; i < pts.length; i++) {
@@ -166,55 +158,15 @@ class EdgeHandler extends CellHandler {
     return pts;
   }
 
-  JComponent _createPreview() {
-    throw new UnimplementedError("JPanel subclass");
-    /*JPanel preview = new JPanel()
-		{
-			public void paint(Graphics g)
-			{
-				super.paint(g);
+  ui.Widget _createPreview() {
+    ui.Panel preview = new EdgeHandlerPreview(this);
 
-				if (!isLabel(_index) && _p != null)
-				{
-					((Graphics2D) g).setStroke(SwingConstants.PREVIEW_STROKE);
-
-					if (isSource(_index) || isTarget(_index))
-					{
-						if (_marker.hasValidState()
-								|| _graphComponent.getGraph()
-										.isAllowDanglingEdges())
-						{
-							g.setColor(SwingConstants.DEFAULT_VALID_COLOR);
-						}
-						else
-						{
-							g.setColor(SwingConstants.DEFAULT_INVALID_COLOR);
-						}
-					}
-					else
-					{
-						g.setColor(Color.BLACK);
-					}
-
-					awt.Point origin = getLocation();
-					awt.Point last = _p[0];
-
-					for (int i = 1; i < _p.length; i++)
-					{
-						g.drawLine(last.x - origin.x, last.y - origin.y, _p[i].x
-								- origin.x, _p[i].y - origin.y);
-						last = _p[i];
-					}
-				}
-			}
-		};*/
-
-    if (isLabel(_index)) {
+    /*if (isLabel(_index)) {
       preview.setBorder(SwingConstants.PREVIEW_BORDER);
-    }
+    }*/
 
-    preview.setOpaque(false);
-    preview.setVisible(false);
+    //preview.setOpaque(false);
+    ui.UiObject.setVisible(preview.getElement(), false);
 
     return preview;
   }
@@ -253,10 +205,10 @@ class EdgeHandler extends CellHandler {
     if (isLabel(_index)) {
       bounds = _state.getLabelBounds().getRectangle();
     } else {
-      bounds = new awt.Rectangle(_p[0]);
+      bounds = new awt.Rectangle.point(_p[0]);
 
       for (int i = 0; i < _p.length; i++) {
-        bounds.add(_p[i]);
+        bounds.addPoint(_p[i]);
       }
 
       bounds.height += 1;
@@ -266,7 +218,7 @@ class EdgeHandler extends CellHandler {
     return bounds;
   }
 
-  void mousePressed(MouseEvent e) {
+  void mousePressed(event.MouseEvent e) {
     super.mousePressed(e);
 
     bool source = isSource(_index);
@@ -276,14 +228,15 @@ class EdgeHandler extends CellHandler {
       IGraphModel model = graph.getModel();
       Object terminal = model.getTerminal(_state.getCell(), source);
 
-      if ((terminal == null && !graph.isTerminalPointMovable(_state.getCell(), source)) || (terminal != null && !graph.isCellDisconnectable(_state.getCell(), terminal, source))) {
+      if ((terminal == null && !graph.isTerminalPointMovable(_state.getCell(), source)) 
+          || (terminal != null && !graph.isCellDisconnectable(_state.getCell(), terminal, source))) {
         _first = null;
       }
     }
   }
 
-  void mouseDragged(MouseEvent e) {
-    if (!e.isConsumed() && _first != null) {
+  void mouseDragged(event.MouseEvent e) {
+    if (e.isLive() && _first != null) {
       _gridEnabledEvent = _graphComponent.isGridEnabledEvent(e);
       _constrainedEvent = _graphComponent.isConstrainedEvent(e);
 
@@ -298,14 +251,14 @@ class EdgeHandler extends CellHandler {
         double dx = abs.getX() - _first.x;
         double dy = abs.getY() - _first.y;
 
-        Point2d pt = new Point2d(e.getPoint());
+        Point2d pt = new Point2d(e.getX().toDouble(), e.getY().toDouble());
 
         if (_gridEnabledEvent) {
           pt = _graphComponent.snapScaledPoint(pt, dx, dy);
         }
 
         if (_constrainedEvent) {
-          if (math.abs(e.getX() - _first.x) > math.abs(e.getY() - _first.y)) {
+          if ((e.getX() - _first.x).abs() > (e.getY() - _first.y).abs()) {
             pt.setY(abs.getY());
           } else {
             pt.setX(abs.getX());
@@ -313,7 +266,7 @@ class EdgeHandler extends CellHandler {
         }
 
         awt.Rectangle rect = _getPreviewBounds();
-        rect.translate(math.round(pt.getX() - _first.x) as int, math.round(pt.getY() - _first.y) as int);
+        rect.translate((pt.getX() - _first.x).round(), (pt.getY() - _first.y).round());
         _preview.setBounds(rect);
       } else {
         // Clones the cell state and updates the absolute points using
@@ -327,33 +280,33 @@ class EdgeHandler extends CellHandler {
         if (_isSource || _isTarget) {
           _marker.process(e);
           CellState currentState = _marker.getValidState();
-          target = _state.getVisibleTerminal(!isSource);
+          target = _state.getVisibleTerminal(!_isSource);
 
           if (currentState != null) {
             source = currentState.getCell();
           } else {
-            Point2d pt = new Point2d(e.getPoint());
+            Point2d pt = new Point2d(e.getX().toDouble(), e.getY().toDouble());
 
             if (_gridEnabledEvent) {
               pt = _graphComponent.snapScaledPoint(pt);
             }
 
-            clone.setAbsoluteTerminalPoint(pt, isSource);
+            clone.setAbsoluteTerminalPoint(pt, _isSource);
           }
 
-          if (!isSource) {
+          if (!_isSource) {
             Object tmp = source;
             source = target;
             target = tmp;
           }
         } else {
-          Point2d point = _convertPoint(new Point2d(e.getPoint()), _gridEnabledEvent);
+          Point2d point = _convertPoint(new Point2d(e.getX().toDouble(), e.getY().toDouble()), _gridEnabledEvent);
 
           if (points == null) {
-            points = Arrays.asList([point]);
+            points = [point];
           } else if (_index - 1 < points.length) {
-            points = new List<Point2d>(points);
-            points.set(_index - 1, point);
+            points = new List<Point2d>.from(points);
+            points[_index - 1] = point;
           }
 
           source = view.getVisibleTerminal(_state.getCell(), true);
@@ -401,27 +354,28 @@ class EdgeHandler extends CellHandler {
         _preview.setBounds(_getPreviewBounds());
       }
 
-      if (!_preview.isVisible() && _graphComponent.isSignificant(e.getX() - _first.x, e.getY() - _first.y)) {
-        _preview.setVisible(true);
-      } else if (_preview.isVisible()) {
+      if (!ui.UiObject.isVisible(_preview.getElement()) && _graphComponent.isSignificant(e.getX() - _first.x, e.getY() - _first.y)) {
+        ui.UiObject.setVisible(_preview.getElement(), true);
+      } else if (ui.UiObject.isVisible(_preview.getElement())) {
         _preview.repaint();
       }
 
-      e.consume();
+      e.preventDefault();
     }
   }
 
-  void mouseReleased(MouseEvent e) {
+  void mouseReleased(event.MouseEvent e) {
     Graph graph = _graphComponent.getGraph();
 
-    if (!e.isConsumed() && _first != null) {
+    if (e.isLive() && _first != null) {
       double dx = e.getX() - _first.x;
       double dy = e.getY() - _first.y;
 
       if (_graphComponent.isSignificant(dx, dy)) {
         if (_error != null) {
           if (_error.length > 0) {
-            JOptionPane.showMessageDialog(_graphComponent, _error);
+            //JOptionPane.showMessageDialog(_graphComponent, _error);
+            window.alert(_error);
           }
         } else if (isLabel(_index)) {
           Point2d abs = _state.getAbsoluteOffset();
@@ -655,5 +609,50 @@ class EdgeHandlerCellMarker extends CellMarker {
     edgeHandler.error = edgeHandler.validateConnection(source, target);
 
     return edgeHandler.error == null;
+  }
+}
+
+class EdgeHandlerPreview extends ui.SimplePanel {
+  final EdgeHandler edgeHandler;
+
+  EdgeHandlerPreview(this.edgeHandler);
+
+
+  void paint(Graphics g)
+  {
+    super.paint(g);
+
+    if (!edgeHandler.isLabel(edgeHandler.index) && edgeHandler.p != null)
+    {
+      ((Graphics2D) g).setStroke(mxSwingConstants.PREVIEW_STROKE);
+
+      if (edgeHandler.isSource(edgeHandler.index) || edgeHandler.isTarget(edgeHandler.index))
+      {
+        if (edgeHandler.marker.hasValidState()
+            || edgeHandler.graphComponent.getGraph()
+                .isAllowDanglingEdges())
+        {
+          g.setColor(mxSwingConstants.DEFAULT_VALID_COLOR);
+        }
+        else
+        {
+          g.setColor(mxSwingConstants.DEFAULT_INVALID_COLOR);
+        }
+      }
+      else
+      {
+        g.setColor(Color.BLACK);
+      }
+
+      Point origin = getLocation();
+      Point last = edgeHandler.p[0];
+
+      for (int i = 1; i < edgeHandler.p.length; i++)
+      {
+        g.drawLine(last.x - origin.x, last.y - origin.y, edgeHandler.p[i].x
+            - origin.x, edgeHandler.p[i].y - origin.y);
+        last = edgeHandler.p[i];
+      }
+    }
   }
 }

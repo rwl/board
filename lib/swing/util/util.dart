@@ -4,6 +4,8 @@ library graph.swing.util;
  * mouse event handling, drag and drop, actions and overlays.
  */
 
+import '../../util/awt/awt.dart' as awt;
+
 import '../../swing/swing.dart' show GraphComponent;
 import '../../swing/view/view.dart' show CellStatePreview;
 

@@ -18,11 +18,11 @@ class SwingConstants {
   /**
    * Contains an empty image of size 1, 1.
    */
-  static BufferedImage EMPTY_IMAGE;
+  static image.Image EMPTY_IMAGE;
 
   static init() {
     try {
-      SwingConstants.EMPTY_IMAGE = new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB);
+      SwingConstants.EMPTY_IMAGE = new image.Image(1, 1, image.Image.TYPE_INT_RGB);
     } on Exception catch (e) {
       // Occurs when running on GAE, BufferedImage is a
       // blacklisted class
