@@ -228,8 +228,7 @@ class EdgeHandler extends CellHandler {
       IGraphModel model = graph.getModel();
       Object terminal = model.getTerminal(_state.getCell(), source);
 
-      if ((terminal == null && !graph.isTerminalPointMovable(_state.getCell(), source)) 
-          || (terminal != null && !graph.isCellDisconnectable(_state.getCell(), terminal, source))) {
+      if ((terminal == null && !graph.isTerminalPointMovable(_state.getCell(), source)) || (terminal != null && !graph.isCellDisconnectable(_state.getCell(), terminal, source))) {
         _first = null;
       }
     }
@@ -251,7 +250,7 @@ class EdgeHandler extends CellHandler {
         double dx = abs.getX() - _first.x;
         double dy = abs.getY() - _first.y;
 
-        Point2d pt = new Point2d(e.getX().toDouble(), e.getY().toDouble());
+        Point2d pt = new Point2d(e.getX(), e.getY());
 
         if (_gridEnabledEvent) {
           pt = _graphComponent.snapScaledPoint(pt, dx, dy);
@@ -285,7 +284,7 @@ class EdgeHandler extends CellHandler {
           if (currentState != null) {
             source = currentState.getCell();
           } else {
-            Point2d pt = new Point2d(e.getX().toDouble(), e.getY().toDouble());
+            Point2d pt = new Point2d(e.getX(), e.getY());
 
             if (_gridEnabledEvent) {
               pt = _graphComponent.snapScaledPoint(pt);
@@ -300,7 +299,7 @@ class EdgeHandler extends CellHandler {
             target = tmp;
           }
         } else {
-          Point2d point = _convertPoint(new Point2d(e.getX().toDouble(), e.getY().toDouble()), _gridEnabledEvent);
+          Point2d point = _convertPoint(new Point2d(e.getX(), e.getY()), _gridEnabledEvent);
 
           if (points == null) {
             points = [point];
@@ -382,14 +381,14 @@ class EdgeHandler extends CellHandler {
           dx = abs.getX() - _first.x;
           dy = abs.getY() - _first.y;
 
-          Point2d pt = new Point2d(e.getPoint());
+          Point2d pt = new Point2d(e.getX(), e.getY());
 
           if (_gridEnabledEvent) {
             pt = _graphComponent.snapScaledPoint(pt, dx, dy);
           }
 
           if (_constrainedEvent) {
-            if (math.abs(e.getX() - _first.x) > math.abs(e.getY() - _first.y)) {
+            if ((e.getX() - _first.x).abs() > (e.getY() - _first.y).abs()) {
               pt.setY(abs.getY());
             } else {
               pt.setX(abs.getX());
@@ -400,16 +399,16 @@ class EdgeHandler extends CellHandler {
         } else if (_marker.hasValidState() && (isSource(_index) || isTarget(_index))) {
           _connect(_state.getCell(), _marker.getValidState().getCell(), isSource(_index), _graphComponent.isCloneEvent(e) && isCloneEnabled());
         } else if ((!isSource(_index) && !isTarget(_index)) || _graphComponent.getGraph().isAllowDanglingEdges()) {
-          _movePoint(_state.getCell(), _index, _convertPoint(new Point2d(e.getPoint()), _gridEnabledEvent));
+          _movePoint(_state.getCell(), _index, _convertPoint(new Point2d(e.getX(), e.getY()), _gridEnabledEvent));
         }
 
-        e.consume();
+        e.preventDefault();
       }
     }
 
-    if (!e.isConsumed() && _isFlipEvent(e)) {
+    if (e.isLive() && _isFlipEvent(e)) {
       graph.flipEdge(_state.getCell());
-      e.consume();
+      e.preventDefault();
     }
 
     super.mouseReleased(e);
@@ -450,9 +449,9 @@ class EdgeHandler extends CellHandler {
 
           if (pts != null) {
             if (pointIndex <= pts.length) {
-              pts.set(pointIndex - 1, point);
+              pts[pointIndex - 1] = point;
             } else if (pointIndex - 1 <= pts.length) {
-              pts.add(pointIndex - 1, point);
+              pts.insert(pointIndex - 1, point);
             }
           }
         }
@@ -518,25 +517,25 @@ class EdgeHandler extends CellHandler {
       double scale = graph.getView().getScale();
       geometry.setOffset(new Point2d(0, 0));
       pt = graph.getView().getPoint(edgeState, geometry);
-      geometry.setOffset(new Point2d(math.round((x - pt.getX()) / scale), math.round((y - pt.getY()) / scale)));
+      geometry.setOffset(new Point2d(((x - pt.getX()) / scale).round(), ((y - pt.getY()) / scale).round()));
 
       model.setGeometry(edgeState.getCell(), geometry);
     }
   }
 
-  Cursor _getCursor(MouseEvent e, int index) {
-    Cursor cursor = null;
+  util.Cursor _getCursor(event.MouseEvent e, int index) {
+    util.Cursor cursor = null;
 
     if (isLabel(index)) {
-      cursor = new Cursor(Cursor.MOVE_CURSOR);
+      cursor = util.Cursor.MOVE;
     } else {
-      cursor = new Cursor(Cursor.HAND_CURSOR);
+      cursor = util.Cursor.MOVE;//HAND_CURSOR;
     }
 
     return cursor;
   }
 
-  Color getSelectionColor() {
+  awt.Color getSelectionColor() {
     return SwingConstants.EDGE_SELECTION_COLOR;
   }
 
@@ -544,8 +543,8 @@ class EdgeHandler extends CellHandler {
     return SwingConstants.EDGE_SELECTION_STROKE;
   }
 
-  void paint(Graphics g) {
-    Graphics2D g2 = g as Graphics2D;
+  void paint(CanvasRenderingContext2D g) {
+    CanvasRenderingContext2D g2 = g;
 
     Stroke stroke = g2.getStroke();
     g2.setStroke(getSelectionStroke());
@@ -555,7 +554,7 @@ class EdgeHandler extends CellHandler {
 
     for (int i = 1; i < _state.getAbsolutePointCount(); i++) {
       awt.Point current = _state.getAbsolutePoint(i).getPoint();
-      awt.Line2D line = new awt.Line2D.Float(last.x, last.y, current.x, current.y);
+      awt.Line2D line = new awt.Line2D(last.x, last.y, current.x, current.y);
 
       awt.Rectangle bounds = g2.getStroke().createStrokedShape(line).getBounds();
 
@@ -574,20 +573,18 @@ class EdgeHandler extends CellHandler {
 
 class EdgeHandlerCellMarker extends CellMarker {
 
-  final mxEdgeHandler edgeHandler;
+  final EdgeHandler edgeHandler;
 
-  EdgeHandlerCellMarker(EdgeHandler mxEdgeHandler, GraphComponent graphComponent) : super(graphComponent) {
-    edgeHandler = mxEdgeHandler;
-  }
+  EdgeHandlerCellMarker(this.edgeHandler, GraphComponent graphComponent) : super(graphComponent);
 
   // Only returns edges if they are connectable and never returns
   // the edge that is currently being modified
-  Object getCell(MouseEvent e) {
-    mxGraph graph = graphComponent.getGraph();
-    mxIGraphModel model = graph.getModel();
-    Object cell = super.getCell(e);
+  Object _getCell(event.MouseEvent e) {
+    Graph graph = _graphComponent.getGraph();
+    IGraphModel model = graph.getModel();
+    Object cell = super._getCell(e);
 
-    if (cell == edgeHandler.state.getCell() || (!graph.isConnectableEdges() && model.isEdge(cell))) {
+    if (cell == edgeHandler._state.getCell() || (!graph.isConnectableEdges() && model.isEdge(cell))) {
       cell = null;
     }
 
@@ -595,20 +592,20 @@ class EdgeHandlerCellMarker extends CellMarker {
   }
 
   // Sets the highlight color according to isValidConnection
-  boolean isValidState(mxCellState state) {
-    mxGraphView view = graphComponent.getGraph().getView();
-    mxIGraphModel model = graphComponent.getGraph().getModel();
-    Object edge = edgeHandler.state.getCell();
-    boolean isSource = edgeHandler.isSource(edgeHandler.index);
+  bool _isValidState(CellState state) {
+    GraphView view = _graphComponent.getGraph().getView();
+    IGraphModel model = _graphComponent.getGraph().getModel();
+    Object edge = edgeHandler._state.getCell();
+    bool isSource = edgeHandler.isSource(edgeHandler._index);
 
-    mxCellState other = view.getTerminalPort(state, view.getState(model.getTerminal(edge, !isSource)), !isSource);
+    CellState other = view.getTerminalPort(state, view.getState(model.getTerminal(edge, !isSource)), !isSource);
     Object otherCell = (other != null) ? other.getCell() : null;
     Object source = (isSource) ? state.getCell() : otherCell;
     Object target = (isSource) ? otherCell : state.getCell();
 
-    edgeHandler.error = edgeHandler.validateConnection(source, target);
+    edgeHandler._error = edgeHandler.validateConnection(source, target);
 
-    return edgeHandler.error == null;
+    return edgeHandler._error == null;
   }
 }
 
@@ -618,39 +615,27 @@ class EdgeHandlerPreview extends ui.SimplePanel {
   EdgeHandlerPreview(this.edgeHandler);
 
 
-  void paint(Graphics g)
-  {
+  void paint(CanvasRenderingContext2D g) {
     super.paint(g);
 
-    if (!edgeHandler.isLabel(edgeHandler.index) && edgeHandler.p != null)
-    {
-      ((Graphics2D) g).setStroke(mxSwingConstants.PREVIEW_STROKE);
+    if (!edgeHandler.isLabel(edgeHandler._index) && edgeHandler.p != null) {
+      g.setStroke(SwingConstants.PREVIEW_STROKE);
 
-      if (edgeHandler.isSource(edgeHandler.index) || edgeHandler.isTarget(edgeHandler.index))
-      {
-        if (edgeHandler.marker.hasValidState()
-            || edgeHandler.graphComponent.getGraph()
-                .isAllowDanglingEdges())
-        {
-          g.setColor(mxSwingConstants.DEFAULT_VALID_COLOR);
+      if (edgeHandler.isSource(edgeHandler._index) || edgeHandler.isTarget(edgeHandler._index)) {
+        if (edgeHandler._marker.hasValidState() || edgeHandler._graphComponent.getGraph().isAllowDanglingEdges()) {
+          g.setColor(SwingConstants.DEFAULT_VALID_COLOR);
+        } else {
+          g.setColor(SwingConstants.DEFAULT_INVALID_COLOR);
         }
-        else
-        {
-          g.setColor(mxSwingConstants.DEFAULT_INVALID_COLOR);
-        }
-      }
-      else
-      {
-        g.setColor(Color.BLACK);
+      } else {
+        g.setColor(awt.Color.BLACK);
       }
 
-      Point origin = getLocation();
-      Point last = edgeHandler.p[0];
+      awt.Point origin = getLocation();
+      awt.Point last = edgeHandler.p[0];
 
-      for (int i = 1; i < edgeHandler.p.length; i++)
-      {
-        g.drawLine(last.x - origin.x, last.y - origin.y, edgeHandler.p[i].x
-            - origin.x, edgeHandler.p[i].y - origin.y);
+      for (int i = 1; i < edgeHandler.p.length; i++) {
+        g.drawLine(last.x - origin.x, last.y - origin.y, edgeHandler.p[i].x - origin.x, edgeHandler.p[i].y - origin.y);
         last = edgeHandler.p[i];
       }
     }
