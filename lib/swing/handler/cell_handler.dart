@@ -221,10 +221,10 @@ class CellHandler {
         util.Cursor cursor = _getCursor(e, index);
 
         if (cursor != null) {
-          _graphComponent.getGraphControl().setCursor(cursor);
+          _graphComponent.getGraphControl().getElement().style.cursor = cursor.value;
           e.preventDefault();
         } else {
-          _graphComponent.getGraphControl().setCursor(util.Cursor.MOVE);
+          _graphComponent.getGraphControl().getElement().style.cursor = util.Cursor.MOVE.value;
         }
       }
     }
@@ -253,7 +253,7 @@ class CellHandler {
     _preview = _createPreview();
 
     if (_preview != null) {
-      _graphComponent.getGraphControl().getElement().insert(0, _preview);
+      _graphComponent.getGraphControl().insertAt(_preview, 0);
     }
   }
 
@@ -295,16 +295,18 @@ class CellHandler {
   /**
    * Paints the visible handles of this handler.
    */
-  void paint(ui.Widget g) {
+  void paint(CanvasRenderingContext2D g) {
     if (_handles != null && isHandlesVisible()) {
       for (int i = 0; i < _handles.length; i++) {
-        /*if (_isHandleVisible(i) && g.hitClip(_handles[i].x, _handles[i].y, _handles[i].width, _handles[i].height)) {
-          g.setColor(_getHandleFillColor(i));
+        if (_isHandleVisible(i)) {// && g.hitClip(_handles[i].x, _handles[i].y, _handles[i].width, _handles[i].height)) {
+          final fillColor = _getHandleFillColor(i);
+          g.setFillColorRgb(fillColor.getRed(), fillColor.getGreen(), fillColor.getBlue());
           g.fillRect(_handles[i].x, _handles[i].y, _handles[i].width, _handles[i].height);
 
-          g.setColor(_getHandleBorderColor(i));
-          g.drawRect(_handles[i].x, _handles[i].y, _handles[i].width - 1, _handles[i].height - 1);
-        }*/
+          final borderColor = _getHandleBorderColor(i);
+          g.setStrokeColorRgb(borderColor.getRed(), borderColor.getGreen(), borderColor.getBlue());
+          g.strokeRect(_handles[i].x, _handles[i].y, _handles[i].width - 1, _handles[i].height - 1);
+        }
       }
     }
   }

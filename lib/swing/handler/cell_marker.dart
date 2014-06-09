@@ -119,6 +119,7 @@ class CellMarker extends ui.Widget {//extends DivElement {//JComponent {
    * Specifies the default stroke for the marker.
    */
   //static Stroke DEFAULT_STROKE = new BasicStroke(3);
+  static int DEFAULT_STROKE = 3;
 
   /**
    * Holds the event source.
@@ -490,23 +491,26 @@ class CellMarker extends ui.Widget {//extends DivElement {//JComponent {
   /**
    * Paints the outline of the markedState with the currentColor.
    */
-  /*void paint(Graphics g) {
+  void paint(CanvasRenderingContext2D g) {
     if (_markedState != null && _currentColor != null) {
-      (g as Graphics2D).setStroke(DEFAULT_STROKE);
-      g.setColor(_currentColor);
+      //(g as Graphics2D).setStroke(DEFAULT_STROKE);
+      g.lineWidth = DEFAULT_STROKE;
+      g.setStrokeColorRgb(_currentColor.getRed(), _currentColor.getGreen(), _currentColor.getBlue());
 
       if (_markedState.getAbsolutePointCount() > 0) {
-        awt.Point last = _markedState.getAbsolutePoint(0).getPoint();
+        awt.Point point = _markedState.getAbsolutePoint(0).getPoint();
 
+        g.beginPath();
+        g.moveTo(point.x - getAbsoluteLeft(), point.y - getAbsoluteTop());
         for (int i = 1; i < _markedState.getAbsolutePointCount(); i++) {
-          awt.Point current = _markedState.getAbsolutePoint(i).getPoint();
-          g.drawLine(last.x - getX(), last.y - getY(), current.x - getX(), current.y - getY());
-          last = current;
+          point = _markedState.getAbsolutePoint(i).getPoint();
+          g.moveTo(point.x - getAbsoluteLeft(), point.y - getAbsoluteTop());
         }
+        g.stroke();
       } else {
-        g.drawRect(1, 1, getWidth() - 3, getHeight() - 3);
+        g.strokeRect(1, 1, getOffsetWidth() - 3, getOffsetHeight() - 3);
       }
     }
-  }*/
+  }
 
 }

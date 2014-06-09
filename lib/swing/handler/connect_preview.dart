@@ -34,8 +34,8 @@ class ConnectPreview extends EventSource {
 
     // Installs the paint handler.
     graphComponent.addListener(Event.AFTER_PAINT, (Object sender, EventObj evt) {
-//      Graphics g = evt.getProperty("g") as Graphics;
-//      paint(g);
+      CanvasRenderingContext2D g = evt.getProperty("g") as CanvasRenderingContext2D;
+      paint(g);
     });
   }
 
@@ -69,7 +69,7 @@ class ConnectPreview extends EventSource {
   /**
    * Updates the style of the edge preview from the incoming edge
    */
-  void start(MouseEvent e, CellState startState, String style) {
+  void start(event.MouseEvent e, CellState startState, String style) {
     Graph graph = _graphComponent.getGraph();
     _sourceState = startState;
     _startPoint = _transformScreenPoint(startState.getCenterX(), startState.getCenterY());
@@ -80,7 +80,7 @@ class ConnectPreview extends EventSource {
     fireEvent(new EventObj(Event.START, ["event", e, "state", _previewState]));
   }
 
-  void update(MouseEvent e, CellState targetState, double x, double y) {
+  void update(event.MouseEvent e, CellState targetState, double x, double y) {
     Graph graph = _graphComponent.getGraph();
     ICell cell = _previewState.getCell() as ICell;
 
@@ -107,9 +107,9 @@ class ConnectPreview extends EventSource {
     awt.Rectangle tmp = _getDirtyRect(dirty);
 
     if (tmp != null) {
-//      _graphComponent.getGraphControl().repaint(tmp);
+      _graphComponent.getGraphControl().repaint(tmp);
     } else {
-//      _graphComponent.getGraphControl().repaint();
+      _graphComponent.getGraphControl().repaint();
     }
   }
 
@@ -147,28 +147,29 @@ class ConnectPreview extends EventSource {
     state.getView().validateCellState(state.getCell());
   }
 
-  /*void paint(Graphics g) {
+  void paint(CanvasRenderingContext2D g) {
     if (_previewState != null) {
       Graphics2DCanvas canvas = _graphComponent.getCanvas();
 
-      if (_graphComponent.isAntiAlias()) {
+      /*if (_graphComponent.isAntiAlias()) {
         Utils.setAntiAlias(g as Graphics2D, true, false);
-      }
+      }*/
 
-      float alpha = _graphComponent.getPreviewAlpha();
+      double alpha = _graphComponent.getPreviewAlpha();
 
       if (alpha < 1) {
-        (g as Graphics2D).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+        //(g as Graphics2D).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+        g.globalAlpha = alpha;
       }
 
-      Graphics2D previousGraphics = canvas.getGraphics();
+      CanvasRenderingContext2D previousGraphics = canvas.getGraphics();
       awt.Point previousTranslate = canvas.getTranslate();
       double previousScale = canvas.getScale();
 
       try {
         canvas.setScale(_graphComponent.getGraph().getView().getScale());
         canvas.setTranslate(0, 0);
-        canvas.setGraphics(g as Graphics2D);
+        canvas.setGraphics(g);
 
         _paintPreview(canvas);
       } finally {
@@ -177,7 +178,7 @@ class ConnectPreview extends EventSource {
         canvas.setGraphics(previousGraphics);
       }
     }
-  }*/
+  }
 
   /**
    * Draws the preview using the graphics canvas.
@@ -186,7 +187,7 @@ class ConnectPreview extends EventSource {
     _graphComponent.getGraphControl().drawCell(_graphComponent.getCanvas(), _previewState.getCell());
   }
 
-  Object stop(bool commit, [MouseEvent e = null]) {
+  Object stop(bool commit, [event.MouseEvent e = null]) {
     Object result = (_sourceState != null) ? _sourceState.getCell() : null;
 
     if (_previewState != null) {
@@ -219,7 +220,7 @@ class ConnectPreview extends EventSource {
           _previewState = null;
 
           if (!commit && dirty != null) {
-//            _graphComponent.getGraphControl().repaint(dirty);
+            _graphComponent.getGraphControl().repaint(dirty);
           }
         }
       } finally {

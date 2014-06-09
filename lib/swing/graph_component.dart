@@ -258,9 +258,9 @@ class GraphComponent extends ui.ScrollPanel {//extends JScrollPane implements Pr
 
   ImageElement _warningIcon = DEFAULT_WARNING_ICON;
 
-  bool _antiAlias = true;
+  //bool _antiAlias = true;
 
-  bool _textAntiAlias = true;
+  //bool _textAntiAlias = true;
 
   /**
    * Specifies <escape> should be invoked when the escape key is pressed.
@@ -1723,9 +1723,9 @@ class GraphComponent extends ui.ScrollPanel {//extends JScrollPane implements Pr
   /**
    * @return the gridVisible
    */
-  bool isAntiAlias() {
-    return _antiAlias;
-  }
+//  bool isAntiAlias() {
+//    return _antiAlias;
+//  }
 
   /**
    * Fires a property change event for <code>antiAlias</code>.
@@ -1733,19 +1733,19 @@ class GraphComponent extends ui.ScrollPanel {//extends JScrollPane implements Pr
    * @param value
    *            the antiAlias to set
    */
-  void setAntiAlias(bool value) {
-    bool oldValue = _antiAlias;
-    _antiAlias = value;
-
-    firePropertyChange("antiAlias", oldValue, _antiAlias);
-  }
+//  void setAntiAlias(bool value) {
+//    bool oldValue = _antiAlias;
+//    _antiAlias = value;
+//
+//    firePropertyChange("antiAlias", oldValue, _antiAlias);
+//  }
 
   /**
    * @return the gridVisible
    */
-  bool isTextAntiAlias() {
-    return _antiAlias;
-  }
+//  bool isTextAntiAlias() {
+//    return _antiAlias;
+//  }
 
   /**
    * Fires a property change event for <code>textAntiAlias</code>.
@@ -1753,12 +1753,12 @@ class GraphComponent extends ui.ScrollPanel {//extends JScrollPane implements Pr
    * @param value
    *            the textAntiAlias to set
    */
-  void setTextAntiAlias(bool value) {
-    bool oldValue = _textAntiAlias;
-    _textAntiAlias = value;
-
-    firePropertyChange("textAntiAlias", oldValue, _textAntiAlias);
-  }
+//  void setTextAntiAlias(bool value) {
+//    bool oldValue = _textAntiAlias;
+//    _textAntiAlias = value;
+//
+//    firePropertyChange("textAntiAlias", oldValue, _textAntiAlias);
+//  }
 
   float getPreviewAlpha() {
     return _previewAlpha;
