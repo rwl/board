@@ -13,18 +13,13 @@ part of graph.swing.handler;
  */
 class ElbowEdgeHandler extends EdgeHandler {
 
-  /**
-   * 
-   * @param graphComponent
-   * @param state
-   */
   ElbowEdgeHandler(GraphComponent graphComponent, CellState state) : super(graphComponent, state);
 
   /**
    * Hook for subclassers to return tooltip texts for certain points on the
    * handle.
    */
-  String getToolTipText(MouseEvent e) {
+  String getToolTipText(event.MouseEvent e) {
     int index = getIndexAt(e.getX(), e.getY());
 
     if (index == 1) {
@@ -34,8 +29,8 @@ class ElbowEdgeHandler extends EdgeHandler {
     return null;
   }
 
-  bool _isFlipEvent(MouseEvent e) {
-    return e.getClickCount() == 2 && _index == 1;
+  bool _isFlipEvent(event.MouseEvent e) {
+    return e is event.DoubleClickEvent && _index == 1;
   }
 
   /**
@@ -60,11 +55,11 @@ class ElbowEdgeHandler extends EdgeHandler {
     List<Point2d> points = geometry.getPoints();
     awt.Point pt = null;
 
-    if (points == null || points.isEmpty()) {
-      pt = new awt.Point((int)(math.round(p0.getX()) + math.round((pe.getX() - p0.getX()) / 2)), (int)(math.round(p0.getY()) + math.round((pe.getY() - p0.getY()) / 2)));
+    if (points == null || points.length == 0) {
+      pt = new awt.Point(p0.getX().round() + ((pe.getX() - p0.getX()) / 2).round(), p0.getY().round() + ((pe.getY() - p0.getY()) / 2).round());
     } else {
       GraphView view = _graphComponent.getGraph().getView();
-      pt = view.transformControlPoint(_state, points.get(0)).getPoint();
+      pt = view.transformControlPoint(_state, points[0]).getPoint();
     }
 
     // Create the green middle handle

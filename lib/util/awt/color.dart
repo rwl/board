@@ -114,5 +114,13 @@ class Color {
   int getAlpha() {
     return (value >> 24) & 0xFF;
   }
+  
+  void setCanvasStrokeColor(CanvasRenderingContext2D context) {
+    context.setStrokeColorRgb(getRed(), getGreen(), getBlue());
+  }
+  
+  void setCanvasFillColor(CanvasRenderingContext2D context) {
+    context.setFillColorRgb(getRed(), getGreen(), getBlue());
+  }
 
 }

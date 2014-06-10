@@ -60,7 +60,7 @@ class GraphControl extends ui.FlowPanel {//ui.FocusWidget {//extends JComponent 
    * Overrides parent method to add extend flag for making the control
    * larger during previews.
    */
-  void scrollRectToVisible(awt.Rectangle aRect, bool extend) {
+  void scrollRectToVisible(awt.Rectangle aRect, [bool extend=false]) {
     super.scrollRectToVisible(aRect);
     //this.graphComponent.ensureVisible(item);
 

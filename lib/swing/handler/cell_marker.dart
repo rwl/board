@@ -118,8 +118,8 @@ class CellMarker extends ui.Widget {//extends DivElement {//JComponent {
   /**
    * Specifies the default stroke for the marker.
    */
-  //static Stroke DEFAULT_STROKE = new BasicStroke(3);
-  static int DEFAULT_STROKE = 3;
+  static awt.Stroke DEFAULT_STROKE = new awt.Stroke(3);
+  //static int DEFAULT_STROKE = 3;
 
   /**
    * Holds the event source.
@@ -494,8 +494,8 @@ class CellMarker extends ui.Widget {//extends DivElement {//JComponent {
   void paint(CanvasRenderingContext2D g) {
     if (_markedState != null && _currentColor != null) {
       //(g as Graphics2D).setStroke(DEFAULT_STROKE);
-      g.lineWidth = DEFAULT_STROKE;
-      g.setStrokeColorRgb(_currentColor.getRed(), _currentColor.getGreen(), _currentColor.getBlue());
+      DEFAULT_STROKE.setCanvasStroke(g);
+      _currentColor.setCanvasStrokeColor(g);
 
       if (_markedState.getAbsolutePointCount() > 0) {
         awt.Point point = _markedState.getAbsolutePoint(0).getPoint();

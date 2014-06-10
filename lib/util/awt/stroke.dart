@@ -94,17 +94,17 @@ class Stroke {
     }
   }
   
-  static void setCanvasStroke(CanvasRenderingContext2D context, Stroke stroke) {
-    context.lineWidth = stroke.width;
-    context.lineCap = stroke.cap;
-    context.lineJoin = stroke.join;
-    context.miterLimit = stroke.miterLimit;
-    context.setLineDash(stroke.dash);
-    context.lineDashOffset = stroke.dashPhase;
-  }
-  
-  static Stroke getCanvasStroke(CanvasRenderingContext2D context) {
+  factory Stroke.canvas(CanvasRenderingContext2D context) {
     return new Stroke(context.lineWidth, context.lineCap, context.lineJoin,
         context.miterLimit, context.getLineDash(), context.lineDashOffset);
+  }
+  
+  void setCanvasStroke(CanvasRenderingContext2D context) {
+    context.lineWidth = width;
+    context.lineCap = cap;
+    context.lineJoin = join;
+    context.miterLimit = miterLimit;
+    context.setLineDash(dash);
+    context.lineDashOffset = dashPhase;
   }
 }

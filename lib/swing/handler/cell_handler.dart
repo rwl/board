@@ -300,11 +300,11 @@ class CellHandler {
       for (int i = 0; i < _handles.length; i++) {
         if (_isHandleVisible(i)) {// && g.hitClip(_handles[i].x, _handles[i].y, _handles[i].width, _handles[i].height)) {
           final fillColor = _getHandleFillColor(i);
-          g.setFillColorRgb(fillColor.getRed(), fillColor.getGreen(), fillColor.getBlue());
+          fillColor.setCanvasFillColor(g);
           g.fillRect(_handles[i].x, _handles[i].y, _handles[i].width, _handles[i].height);
 
           final borderColor = _getHandleBorderColor(i);
-          g.setStrokeColorRgb(borderColor.getRed(), borderColor.getGreen(), borderColor.getBlue());
+          borderColor.setCanvasStrokeColor(g);
           g.strokeRect(_handles[i].x, _handles[i].y, _handles[i].width - 1, _handles[i].height - 1);
         }
       }
@@ -323,9 +323,9 @@ class CellHandler {
    * Returns the stroke used to draw the selection border. This implementation
    * returns null.
    */
-  /*Stroke getSelectionStroke() {
+  awt.Stroke getSelectionStroke() {
     return null;
-  }*/
+  }
 
   /**
    * Returns true if the handle at the specified index is enabled.

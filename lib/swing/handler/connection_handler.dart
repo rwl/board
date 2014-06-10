@@ -499,7 +499,7 @@ class ConnectionHandler extends MouseAdapter {
         g.draw3DRect(_bounds.x, _bounds.y, _bounds.width - 1, _bounds.height - 1, true);
         g.setColor(awt.Color.GREEN);
         g.fill3DRect(_bounds.x + 1, _bounds.y + 1, _bounds.width - 2, _bounds.height - 2, true);*/
-        g.setStrokeColorRgb(awt.Color.BLUE.getRed(), awt.Color.BLUE.getGreen(), awt.Color.BLUE.getBlue());
+        awt.Color.BLUE.setCanvasStrokeColor(g);
         g.strokeRect(_bounds.x + _bounds.width / 2 - 1, _bounds.y + _bounds.height / 2 - 1, 1, 1);
       }
     }

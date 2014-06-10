@@ -539,16 +539,16 @@ class EdgeHandler extends CellHandler {
     return SwingConstants.EDGE_SELECTION_COLOR;
   }
 
-  Stroke getSelectionStroke() {
+  awt.Stroke getSelectionStroke() {
     return SwingConstants.EDGE_SELECTION_STROKE;
   }
 
   void paint(CanvasRenderingContext2D g) {
     CanvasRenderingContext2D g2 = g;
 
-    Stroke stroke = g2.getStroke();
-    g2.setStroke(getSelectionStroke());
-    g.setColor(getSelectionColor());
+    awt.Stroke stroke = new awt.Stroke.canvas(g2);
+    getSelectionStroke().setCanvasStroke(g2);
+    getSelectionColor().setCanvasStrokeColor(g);
 
     awt.Point last = _state.getAbsolutePoint(0).getPoint();
 
@@ -556,16 +556,17 @@ class EdgeHandler extends CellHandler {
       awt.Point current = _state.getAbsolutePoint(i).getPoint();
       awt.Line2D line = new awt.Line2D(last.x, last.y, current.x, current.y);
 
-      awt.Rectangle bounds = g2.getStroke().createStrokedShape(line).getBounds();
+      /*awt.Rectangle bounds = g2.getStroke().createStrokedShape(line).getBounds();
 
       if (g.hitClip(bounds.x, bounds.y, bounds.width, bounds.height)) {
         g2.draw(line);
-      }
+      }*/
+      line.draw(g2);
 
       last = current;
     }
 
-    g2.setStroke(stroke);
+    stroke.setCanvasStroke(g2);
     super.paint(g);
   }
 
@@ -618,26 +619,29 @@ class EdgeHandlerPreview extends ui.SimplePanel {
   void paint(CanvasRenderingContext2D g) {
     super.paint(g);
 
-    if (!edgeHandler.isLabel(edgeHandler._index) && edgeHandler.p != null) {
-      g.setStroke(SwingConstants.PREVIEW_STROKE);
+    if (!edgeHandler.isLabel(edgeHandler._index) && edgeHandler._p != null) {
+      SwingConstants.PREVIEW_STROKE.setCanvasStroke(g);
 
       if (edgeHandler.isSource(edgeHandler._index) || edgeHandler.isTarget(edgeHandler._index)) {
         if (edgeHandler._marker.hasValidState() || edgeHandler._graphComponent.getGraph().isAllowDanglingEdges()) {
-          g.setColor(SwingConstants.DEFAULT_VALID_COLOR);
+          SwingConstants.DEFAULT_VALID_COLOR.setCanvasStrokeColor(g);
         } else {
-          g.setColor(SwingConstants.DEFAULT_INVALID_COLOR);
+          SwingConstants.DEFAULT_INVALID_COLOR.setCanvasStrokeColor(g);
         }
       } else {
-        g.setColor(awt.Color.BLACK);
+        awt.Color.BLACK.setCanvasStrokeColor(g);
       }
 
-      awt.Point origin = getLocation();
-      awt.Point last = edgeHandler.p[0];
+      awt.Point origin = new awt.Point(getAbsoluteLeft(), getAbsoluteTop());//getLocation();
+      awt.Point point = edgeHandler._p[0];
+      g.beginPath();
+      g.moveTo(point.x - origin.x, point.y - origin.y);
 
-      for (int i = 1; i < edgeHandler.p.length; i++) {
-        g.drawLine(last.x - origin.x, last.y - origin.y, edgeHandler.p[i].x - origin.x, edgeHandler.p[i].y - origin.y);
-        last = edgeHandler.p[i];
+      for (int i = 1; i < edgeHandler._p.length; i++) {
+        point = edgeHandler._p[i];
+        g.lineTo(point.x - origin.x, point.y - origin.y);
       }
+      g.stroke();
     }
   }
 }

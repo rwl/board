@@ -38,22 +38,22 @@ part of graph.swing.handler;
 //import javax.swing.SwingUtilities;
 //import javax.swing.TransferHandler;
 
-class GraphHandler extends MouseAdapter implements DropTargetListener {
+class GraphHandler implements event.MouseMoveHandler, event.MouseDownHandler, event.MouseUpHandler, event.DropHandler {
 
   /**
    * Default is Cursor.DEFAULT_CURSOR.
    */
-  static Cursor DEFAULT_CURSOR = new Cursor(Cursor.DEFAULT_CURSOR);
+  static util.Cursor DEFAULT_CURSOR = util.Cursor.DEFAULT;
 
   /**
    * Default is Cursor.MOVE_CURSOR.
    */
-  static Cursor MOVE_CURSOR = new Cursor(Cursor.MOVE_CURSOR);
+  static util.Cursor MOVE_CURSOR = util.Cursor.MOVE;
 
   /**
    * Default is Cursor.HAND_CURSOR.
    */
-  static Cursor FOLD_CURSOR = new Cursor(Cursor.HAND_CURSOR);
+  static util.Cursor FOLD_CURSOR = util.Cursor.POINTER;
 
   /**
    * Reference to the enclosing graph component.
@@ -124,7 +124,7 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
   /**
    * Holds the image that is being used for the preview.
    */
-  /*transient*/ ImageIcon _dragImage;
+  /*transient*/ ImageElement _dragImage;
 
   /**
    * Holds the start location of the mouse gesture.
@@ -174,7 +174,7 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
   /**
    * Reference to the current drop target.
    */
-  /*transient*/ DropTarget _currentDropTarget = null;
+  /*transient*/ event.DropHandler _currentDropTarget = null;
 
   /**
    * 
@@ -187,13 +187,15 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
 
     // Installs the paint handler
     graphComponent.addListener(Event.AFTER_PAINT, (Object sender, EventObj evt) {
-      Graphics g = evt.getProperty("g") as Graphics;
+      CanvasRenderingContext2D g = evt.getProperty("g") as CanvasRenderingContext2D;
       paint(g);
     });
 
     // Listens to all mouse events on the rendering control
-    graphComponent.getGraphControl().addMouseListener(this);
-    graphComponent.getGraphControl().addMouseMotionListener(this);
+    graphComponent.getGraphControl().addMouseMoveHandler(this);
+    graphComponent.getGraphControl().addMouseDownHandler(this);
+    graphComponent.getGraphControl().addMouseUpHandler(this);
+    //graphComponent.getGraphControl().addHandler(this, event.DragEvent);
 
     // Drag target creates preview image
     _installDragGestureHandler();
@@ -203,7 +205,7 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
 
     // Listens to changes of the transferhandler
     graphComponent.addPropertyChangeListener((PropertyChangeEvent evt) {
-      if (evt.getPropertyName().equals("transferHandler")) {
+      if (evt.propertyName == "transferHandler") {
         if (_currentDropTarget != null) {
           _currentDropTarget.removeDropTargetListener(this);
         }
@@ -262,14 +264,15 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
   }
 
   void setPreviewBounds(awt.Rectangle bounds) {
-    if ((bounds == null && _previewBounds != null) || (bounds != null && _previewBounds == null) || (bounds != null && _previewBounds != null && !bounds.equals(_previewBounds))) {
+    if ((bounds == null && _previewBounds != null) || (bounds != null && _previewBounds == null)
+        || (bounds != null && _previewBounds != null && bounds != _previewBounds)) {
       awt.Rectangle dirty = null;
 
       if (isVisible()) {
         dirty = _previewBounds;
 
         if (dirty != null) {
-          dirty.add(bounds);
+          dirty.addRect(bounds);
         } else {
           dirty = bounds;
         }
@@ -292,7 +295,7 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
   }
 
   CellMarker _createMarker() {
-    CellMarker marker = new GraphHandlerCellMarker(this, graphComponent, Color.BLUE);
+    CellMarker marker = new GraphHandlerCellMarker(this, _graphComponent, awt.Color.BLUE);
 
     // Swimlane content area will not be transparent drop targets
     marker.setSwimlaneContentEnabled(true);
@@ -388,30 +391,30 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
     _dragImage = null;
 
     if (cells != null && cells.length > 0) {
-      Image img = CellRenderer.createBufferedImage(_graphComponent.getGraph(), cells, _graphComponent.getGraph().getView().getScale(), null, _graphComponent.isAntiAlias(), null, _graphComponent.getCanvas());
+      image.Image img = CellRenderer.createBufferedImage(_graphComponent.getGraph(), cells, _graphComponent.getGraph().getView().getScale(), null, _graphComponent.isAntiAlias(), null, _graphComponent.getCanvas());
 
       if (img != null) {
         _dragImage = new ImageIcon(img);
-        _previewBounds.setSize(_dragImage.getIconWidth(), _dragImage.getIconHeight());
+        _previewBounds.setSize(_dragImage.width, _dragImage.height);
       }
     }
   }
 
-  void mouseMoved(MouseEvent e) {
-    if (_graphComponent.isEnabled() && isEnabled() && !e.isConsumed()) {
-      Cursor cursor = _getCursor(e);
+  void onMouseMove(event.MouseMoveEvent e) {
+    if (_graphComponent.isEnabled() && isEnabled() && e.isLive()) {
+      util.Cursor cursor = _getCursor(e);
 
       if (cursor != null) {
-        _graphComponent.getGraphControl().setCursor(cursor);
-        e.consume();
+        _graphComponent.getGraphControl().getElement().style.cursor = cursor.value;
+        e.preventDefault();
       } else {
-        _graphComponent.getGraphControl().setCursor(DEFAULT_CURSOR);
+        _graphComponent.getGraphControl().getElement().style.cursor = DEFAULT_CURSOR.value;
       }
     }
   }
 
-  Cursor _getCursor(MouseEvent e) {
-    Cursor cursor = null;
+  util.Cursor _getCursor(event.MouseEvent e) {
+    util.Cursor cursor = null;
 
     if (isMoveEnabled()) {
       Object cell = _graphComponent.getCellAt(e.getX(), e.getY(), false);
@@ -429,7 +432,7 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
   }
 
   void dragEnter(DropTargetDragEvent e) {
-    JComponent component = _getDropTarget(e);
+    ui.Widget component = _getDropTarget(e);
     TransferHandler th = component.getTransferHandler();
     bool isLocal = th is GraphTransferHandler && (th as GraphTransferHandler).isLocalDrag();
 
@@ -454,8 +457,8 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
             Graph graph = _graphComponent.getGraph();
             double scale = graph.getView().getScale();
             _transferBounds = gt.getBounds();
-            int w = math.ceil((_transferBounds.getWidth() + 1) * scale) as int;
-            int h = math.ceil((_transferBounds.getHeight() + 1) * scale) as int;
+            int w = ((_transferBounds.getWidth() + 1) * scale).ceil();
+            int h = ((_transferBounds.getHeight() + 1) * scale).ceil();
             setPreviewBounds(new awt.Rectangle(_transferBounds.getX() as int, _transferBounds.getY() as int, w, h));
 
             if (_imagePreview) {
@@ -485,9 +488,9 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
         }
 
         e.acceptDrag(TransferHandler.COPY_OR_MOVE);
-      } on Exception catch (ex) {
+      } on Exception catch (ex, st) {
         // do nothing
-        ex.printStackTrace();
+        print(st);
       }
 
     } else {
@@ -495,8 +498,8 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
     }
   }
 
-  void mousePressed(MouseEvent e) {
-    if (_graphComponent.isEnabled() && isEnabled() && !e.isConsumed() && !_graphComponent.isForceMarqueeEvent(e)) {
+  void onMouseDown(event.MouseDownEvent e) {
+    if (_graphComponent.isEnabled() && isEnabled() && e.isLive() && !_graphComponent.isForceMarqueeEvent(e)) {
       _cell = _graphComponent.getCellAt(e.getX(), e.getY(), false);
       _initialCell = _cell;
 
@@ -510,7 +513,7 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
         // cells of the selection are movable
         if (isMoveEnabled() && !e.isPopupTrigger()) {
           start(e);
-          e.consume();
+          e.preventDefault();
         }
       } else if (e.isPopupTrigger()) {
         _graphComponent.getGraph().clearSelection();
@@ -537,7 +540,7 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
       if (_cellBounds != null) {
         // Updates the size of the graph handler that is in
         // charge of painting all other handlers
-        _bbox = graph.getView().getBoundingBox(_cells);
+        _bbox = graph.getView().getBounds(_cells);
 
         awt.Rectangle bounds = _cellBounds.getRectangle();
         bounds.width += 1;
@@ -567,7 +570,7 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
         double scale = graph.getView().getScale();
         awt.Point pt = SwingUtilities.convertPoint(_graphComponent, e.getLocation(), _graphComponent.getGraphControl());
 
-        pt = _graphComponent.snapScaledPoint(new Point2d(pt)).getPoint();
+        pt = _graphComponent.snapScaledPoint(new Point2d.from(pt)).getPoint();
         handler.setLocation(new awt.Point(pt));
 
         int dx = 0;
@@ -575,8 +578,8 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
 
         // Centers the preview image
         if (_centerPreview && _transferBounds != null) {
-          dx -= math.round(_transferBounds.getWidth() * scale / 2);
-          dy -= math.round(_transferBounds.getHeight() * scale / 2);
+          dx -= (_transferBounds.getWidth() * scale / 2).round();
+          dy -= (_transferBounds.getHeight() * scale / 2).round();
         }
 
         // Sets the drop offset so that the location in the transfer
@@ -587,8 +590,8 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
         // Shifts the preview so that overlapping parts do not
         // affect the centering
         if (_transferBounds != null && _dragImage != null) {
-          dx = math.round((_dragImage.getIconWidth() - 2 - _transferBounds.getWidth() * scale) / 2) as int;
-          dy = math.round((_dragImage.getIconHeight() - 2 - _transferBounds.getHeight() * scale) / 2) as int;
+          dx = ((_dragImage.width - 2 - _transferBounds.getWidth() * scale) / 2).round();
+          dy = ((_dragImage.height - 2 - _transferBounds.getHeight() * scale) / 2).round();
           pt.translate(-dx, -dy);
         }
 
@@ -604,20 +607,20 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
   awt.Point convertPoint(awt.Point pt) {
     pt = SwingUtilities.convertPoint(_graphComponent, pt, _graphComponent.getGraphControl());
 
-    pt.x -= _graphComponent.getHorizontalScrollBar().getValue();
-    pt.y -= _graphComponent.getVerticalScrollBar().getValue();
+    pt.x -= _graphComponent.getHorizontalScrollPosition();
+    pt.y -= _graphComponent.getVerticalScrollPosition();
 
     return pt;
   }
 
-  void mouseDragged(MouseEvent e) {
+  void mouseDragged(event.MouseEvent e) {
     // LATER: Check scrollborder, use scroll-increments, do not
     // scroll when over ruler dragging from library
     if (_graphComponent.isAutoScroll()) {
-      _graphComponent.getGraphControl().scrollRectToVisible(new awt.Rectangle(e.getPoint()));
+      _graphComponent.getGraphControl().scrollRectToVisible(new awt.Rectangle.point(e.getPoint()));
     }
 
-    if (!e.isConsumed()) {
+    if (e.isLive()) {
       _gridEnabledEvent = _graphComponent.isGridEnabledEvent(e);
       _constrainedEvent = _graphComponent.isConstrainedEvent(e);
 
@@ -625,7 +628,7 @@ class GraphHandler extends MouseAdapter implements DropTargetListener {
         int x = e.getX();
         int y = e.getY();
 
-        if (math.abs(e.getX() - _first.x) > math.abs(e.getY() - _first.y)) {
+        if ((e.getX() - _first.x).abs() > (e.getY() - _first.y).abs()) {
           y = _first.y;
         } else {
           x = _first.x;

@@ -126,19 +126,19 @@ class SwingConstants {
    * Defines the stroke used for painting selected edges. Default is a dashed
    * line.
    */
-  static Stroke EDGE_SELECTION_STROKE = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0, [3.0, 3.0], 0.0);
+  static awt.Stroke EDGE_SELECTION_STROKE = new awt.Stroke(1, awt.Stroke.CAP_BUTT, awt.Stroke.JOIN_MITER, 10.0, [3.0, 3.0], 0.0);
 
   /**
    * Defines the stroke used for painting the border of selected vertices.
    * Default is a dashed line.
    */
-  static Stroke VERTEX_SELECTION_STROKE = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0, [3.0, 3.0], 0.0);
+  static awt.Stroke VERTEX_SELECTION_STROKE = new awt.Stroke(1, awt.Stroke.CAP_BUTT, awt.Stroke.JOIN_MITER, 10.0, [3.0, 3.0], 0.0);
 
   /**
    * Defines the stroke used for painting the preview for new and existing edges
    * that are being changed. Default is a dashed line.
    */
-  static Stroke PREVIEW_STROKE = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0, [3.0, 3.0], 0.0);
+  static awt.Stroke PREVIEW_STROKE = new awt.Stroke(1, awt.Stroke.CAP_BUTT, awt.Stroke.JOIN_MITER, 10.0, [3.0, 3.0], 0.0);
 
   /**
    * Defines the border used for painting the preview when vertices are being

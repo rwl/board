@@ -269,5 +269,12 @@ class Line2D {//implements Shape, Cloneable {
     bool intersectsRect(Rectangle r) {
         return r.intersectsLineBetween(getX1(), getY1(), getX2(), getY2());
     }
+    
+    void draw(CanvasRenderingContext2D context) {
+      context.beginPath();
+      context.moveTo(x1, y1);
+      context.lineTo(x2, y2);
+      context.stroke();
+    }
 
 }
