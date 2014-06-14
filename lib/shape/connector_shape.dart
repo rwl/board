@@ -98,7 +98,7 @@ class ConnectorShape extends BasicShape {
     IMarker marker = MarkerRegistry.getMarker(type);
 
     if (marker != null) {
-      offset = marker.paintMarker(canvas, state, type, pe, nx, ny, absSize, source);
+      offset = marker(canvas, state, type, pe, nx, ny, absSize, source);
 
       if (offset != null) {
         offset.setX(offset.getX() - strokeX / 2.0);

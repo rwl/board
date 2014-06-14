@@ -10,7 +10,7 @@ part of graph.shape;
 class BasicShape implements IShape {
 
   void paintShape(Graphics2DCanvas canvas, CellState state) {
-    Shape shape = createShape(canvas, state);
+    awt.Shape shape = createShape(canvas, state);
 
     if (shape != null) {
       // Paints the background
@@ -25,7 +25,7 @@ class BasicShape implements IShape {
     }
   }
 
-  Shape createShape(Graphics2DCanvas canvas, CellState state) {
+  awt.Shape createShape(Graphics2DCanvas canvas, CellState state) {
     return null;
   }
 
@@ -42,21 +42,21 @@ class BasicShape implements IShape {
 
     if (background) {
       // Paints the background of the shape
-      Paint fillPaint = hasGradient(canvas, state) ? canvas.createFillPaint(_getGradientBounds(canvas, state), style) : null;
+      awt.Paint fillPaint = hasGradient(canvas, state) ? canvas.createFillPaint(_getGradientBounds(canvas, state), style) : null;
 
       if (fillPaint != null) {
         canvas.getGraphics().setPaint(fillPaint);
 
         return true;
       } else {
-        Color color = getFillColor(canvas, state);
+        awt.Color color = getFillColor(canvas, state);
         canvas.getGraphics().setColor(color);
 
         return color != null;
       }
     } else {
       canvas.getGraphics().setPaint(null);
-      Color color = getStrokeColor(canvas, state);
+      awt.Color color = getStrokeColor(canvas, state);
       canvas.getGraphics().setColor(color);
       canvas.getGraphics().setStroke(canvas.createStroke(style));
 
@@ -76,11 +76,11 @@ class BasicShape implements IShape {
     return Utils.isTrue(state.getStyle(), Constants.STYLE_SHADOW, false);
   }
 
-  Color getFillColor(Graphics2DCanvas canvas, CellState state) {
+  awt.Color getFillColor(Graphics2DCanvas canvas, CellState state) {
     return Utils.getColor(state.getStyle(), Constants.STYLE_FILLCOLOR);
   }
 
-  Color getStrokeColor(Graphics2DCanvas canvas, CellState state) {
+  awt.Color getStrokeColor(Graphics2DCanvas canvas, CellState state) {
     return Utils.getColor(state.getStyle(), Constants.STYLE_STROKECOLOR);
   }
 

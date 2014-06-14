@@ -6,15 +6,15 @@ part of graph.shape;
 
 class ActorShape extends BasicShape {
 
-  Shape createShape(Graphics2DCanvas canvas, CellState state) {
+  awt.Shape createShape(Graphics2DCanvas canvas, CellState state) {
     awt.Rectangle temp = state.getRectangle();
     int x = temp.x;
     int y = temp.y;
     int w = temp.width;
     int h = temp.height;
-    float width = w * 2 / 6;
+    double width = w * 2 / 6;
 
-    GeneralPath path = new GeneralPath();
+    awt.GeneralPath path = new awt.GeneralPath();
 
     path.moveTo(x, y + h);
     path.curveTo(x, y + 3 * h / 5, x, y + 2 * h / 5, x + w / 2, y + 2 * h / 5);

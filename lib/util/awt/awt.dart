@@ -9,3 +9,8 @@ part 'rectangle.dart';
 part 'dimension.dart';
 part 'line2d.dart';
 part 'stroke.dart';
+part 'shape.dart';
+part 'general_path.dart';
+part 'polygon.dart';
+part 'ellipse.dart';
+part 'paint.dart';

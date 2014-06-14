@@ -22,7 +22,7 @@ part of graph.util.awt;
 //import java.awt.geom.Rectangle2D;
 //import java.io.Serializable;
 
-class Rectangle {//extends Rectangle2D implements Shape, Serializable {
+class Rectangle implements Shape {//extends Rectangle2D implements Shape, Serializable {
 
   static final int OUT_LEFT = 1;
   static final int OUT_TOP = 2;
@@ -33,10 +33,6 @@ class Rectangle {//extends Rectangle2D implements Shape, Serializable {
   num y;
   num width;
   num height;
-
-  //    Rectangle() {
-  //        setBounds(0, 0, 0, 0);
-  //    }
 
   factory Rectangle.point(Point p) {
     return new Rectangle(p.x, p.y, 0, 0);
@@ -281,6 +277,15 @@ class Rectangle {//extends Rectangle2D implements Shape, Serializable {
 
   String toString() {
     return "Rectangle[x=${x},y=${y},width=${width},height=${height}]";
+  }
+  
+  
+  void draw(CanvasRenderingContext2D g) {
+    
+  }
+  
+  void fill(CanvasRenderingContext2D g) {
+    
   }
 
 }

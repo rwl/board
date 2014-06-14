@@ -6,11 +6,11 @@ part of graph.shape;
 //import java.awt.geom.awt.Line2D;
 
 class MarkerRegistry {
-  static Map<String, IMarker> _markers = new Hashtable<String, IMarker>();
+  static Map<String, IMarker> _markers = new Map<String, IMarker>();
 
   static init() {
     IMarker tmp = (Graphics2DCanvas canvas, CellState state, String type, Point2d pe, double nx, double ny, double size, bool source) {
-      Polygon poly = new Polygon();
+      awt.Polygon poly = new awt.Polygon();
       poly.addPoint(math.round(pe.getX()) as int, math.round(pe.getY()) as int);
       poly.addPoint(math.round(pe.getX() - nx - ny / 2) as int, math.round(pe.getY() - ny + nx / 2) as int);
 
@@ -43,7 +43,7 @@ class MarkerRegistry {
       double cx = pe.getX() - nx / 2;
       double cy = pe.getY() - ny / 2;
       double a = size / 2;
-      Shape shape = new Ellipse2D.Double(cx - a, cy - a, size, size);
+      awt.Shape shape = new awt.Ellipse(cx - a, cy - a, size, size);
 
       if (Utils.isTrue(state.getStyle(), (source) ? "startFill" : "endFill", true)) {
         canvas.fillShape(shape);
@@ -56,8 +56,8 @@ class MarkerRegistry {
 
 
     registerMarker(Constants.ARROW_DIAMOND, (Graphics2DCanvas canvas, CellState state, String type, Point2d pe, double nx, double ny, double size, bool source) {
-      Polygon poly = new Polygon();
-      poly.addPoint(math.round(pe.getX()) as int, math.round(pe.getY())) as int;
+      awt.Polygon poly = new awt.Polygon();
+      poly.addPoint(math.round(pe.getX()) as int, math.round(pe.getY()) as int);
       poly.addPoint(math.round(pe.getX() - nx / 2 - ny / 2) as int, math.round(pe.getY() + nx / 2 - ny / 2) as int);
       poly.addPoint(math.round(pe.getX() - nx) as int, math.round(pe.getY() - ny) as int);
       poly.addPoint(math.round(pe.getX() - nx / 2 + ny / 2) as int, math.round(pe.getY() - ny / 2 - nx / 2) as int);

@@ -5,10 +5,7 @@ part of graph.shape;
 
 class ArrowShape extends BasicShape {
 
-  /**
-   *
-   */
-  Shape createShape(Graphics2DCanvas canvas, CellState state) {
+  awt.Shape createShape(Graphics2DCanvas canvas, CellState state) {
     double scale = canvas.getScale();
     Point2d p0 = state.getAbsolutePoint(0);
     Point2d pe = state.getAbsolutePoint(state.getAbsolutePointCount() - 1);
@@ -44,7 +41,7 @@ class ArrowShape extends BasicShape {
     double p5x = p3x - 3 * floorx;
     double p5y = p3y - 3 * floory;
 
-    Polygon poly = new Polygon();
+    awt.Polygon poly = new awt.Polygon();
     poly.addPoint(math.round(p0x) as int, math.round(p0y) as int);
     poly.addPoint(math.round(p1x) as int, math.round(p1y) as int);
     poly.addPoint(math.round(p2x) as int, math.round(p2y) as int);

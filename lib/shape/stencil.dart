@@ -459,14 +459,6 @@ class Stencil implements IShape {
   }
 
   /**
-   * Returns the given attribute or 0.
-   */
-  //	double _getDouble(Element elt, String attribute)
-  //	{
-  //		return _getDouble(elt, attribute, 0);
-  //	}
-
-  /**
    * Returns the given attribute or the default value.
    */
   double _getDouble(Element elt, String attribute, [double defaultValue = 0.0]) {

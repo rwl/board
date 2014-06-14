@@ -11,6 +11,7 @@ library graph.canvas;
 import 'dart:html';
 import 'dart:collection' show HashMap;
 import 'dart:math' as Math;
+import 'dart:svg' show Matrix;
 
 //import 'package:color/color.dart' as color;
 import 'package:image/image.dart' as image;

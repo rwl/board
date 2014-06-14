@@ -23,11 +23,11 @@ import '../swing/util/util.dart' show SwingConstants;
 
 // stencil
 import '../util/util.dart' show XmlUtils;
-import '../util/svg/svg.dart' show AWTPathProducer;
-import '../util/svg/svg.dart' show AWTPolygonProducer;
-import '../util/svg/svg.dart' show AWTPolylineProducer;
-import '../util/svg/svg.dart' show CSSConstants;
-import '../util/svg/svg.dart' show ExtendedGeneralPath;
+//import '../util/svg/svg.dart' show AWTPathProducer;
+//import '../util/svg/svg.dart' show AWTPolygonProducer;
+//import '../util/svg/svg.dart' show AWTPolylineProducer;
+//import '../util/svg/svg.dart' show CSSConstants;
+//import '../util/svg/svg.dart' show ExtendedGeneralPath;
 import '../canvas/canvas.dart' show GraphicsCanvas2D;
 
 part 'actor_shape.dart';
@@ -45,7 +45,6 @@ part 'ellipse_shape.dart';
 part 'hexagon_shape.dart';
 part 'html_text_shape.dart';
 part 'image_shape.dart';
-part 'text_shape.dart';
 part 'label_shape.dart';
 part 'line_shape.dart';
 part 'marker_registry.dart';
@@ -68,3 +67,7 @@ abstract class IShape {
 //abstract class IMarker {
 //  Point2d paintMarker(Graphics2DCanvas canvas, CellState state, String type, Point2d pe, double nx, double ny, double size, bool source);
 //}
+
+abstract class ITextShape {
+  void paintShape(Graphics2DCanvas canvas, String text, CellState state, Map<String, Object> style);
+}

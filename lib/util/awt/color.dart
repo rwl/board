@@ -94,6 +94,9 @@ class Color {
   factory Color.double(double r, double g, double b, double a) {
     return new Color((r * 255 + 0.5) as int, (g * 255 + 0.5) as int, (b * 255 + 0.5) as int, (a * 255 + 0.5) as int);
   }
+  
+  //factory Color.canvasFill(CanvasRenderingContext2D context) {    
+  //}
 
   int getRGB() {
     return value;

@@ -26,66 +26,62 @@ part of graph.util.awt;
  */
 class Dimension {//extends Dimension2D implements Serializable {
 
-    num width;
-    num height;
+  num width;
+  num height;
 
-    factory Dimension.from(Dimension d) {
-        return new Dimension(d.width, d.height);
-    }
+  factory Dimension.from(Dimension d) {
+    return new Dimension(d.width, d.height);
+  }
 
-//    Dimension() {
-//        this(0, 0);
-//    }
+  Dimension([num width = 0, num height = 0]) {
+    setSize(width, height);
+  }
 
-    Dimension([num width=0, num height=0]) {
-        setSize(width, height);
-    }
-
-    /*int hashCode() {
+  /*int hashCode() {
         HashCode hash = new HashCode();
         hash.append(width);
         hash.append(height);
         return hash.hashCode();
     }*/
 
-    bool operator ==(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (obj is Dimension) {
-            Dimension d = obj;
-            return (d.width == width && d.height == height);
-        }
-        return false;
+  bool operator ==(Object obj) {
+    if (obj == this) {
+      return true;
     }
-
-    String toString() {
-        return "Dimension[width=${width},height=${height}]";
+    if (obj is Dimension) {
+      Dimension d = obj;
+      return (d.width == width && d.height == height);
     }
+    return false;
+  }
 
-    void setSize(num width, num height) {
-        this.width = width.ceil();
-        this.height = height.ceil();
-    }
+  String toString() {
+    return "Dimension[width=${width},height=${height}]";
+  }
 
-    void setDimension(Dimension d) {
-        setSize(d.width, d.height);
-    }
+  void setSize(num width, num height) {
+    this.width = width.ceil();
+    this.height = height.ceil();
+  }
 
-    /*void setSize(double width, double height) {
+  void setDimension(Dimension d) {
+    setSize(d.width, d.height);
+  }
+
+  /*void setSize(double width, double height) {
         setSize((int)Math.ceil(width), (int)Math.ceil(height));
     }*/
 
-    Dimension getSize() {
-        return new Dimension(width, height);
-    }
+  Dimension getSize() {
+    return new Dimension(width, height);
+  }
 
-    num getHeight() {
-        return height;
-    }
+  num getHeight() {
+    return height;
+  }
 
-    num getWidth() {
-        return width;
-    }
+  num getWidth() {
+    return width;
+  }
 
 }

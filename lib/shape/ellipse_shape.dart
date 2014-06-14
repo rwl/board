@@ -6,10 +6,10 @@ part of graph.shape;
 
 class EllipseShape extends BasicShape {
 
-  Shape createShape(Graphics2DCanvas canvas, CellState state) {
+  awt.Shape createShape(Graphics2DCanvas canvas, CellState state) {
     awt.Rectangle temp = state.getRectangle();
 
-    return new Ellipse2D.Float(temp.x, temp.y, temp.width, temp.height);
+    return new awt.Ellipse(temp.x, temp.y, temp.width, temp.height);
   }
 
 }

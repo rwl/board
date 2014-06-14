@@ -6,7 +6,7 @@ part of graph.shape;
 
 class RhombusShape extends BasicShape {
 
-  Shape createShape(Graphics2DCanvas canvas, CellState state) {
+  awt.Shape createShape(Graphics2DCanvas canvas, CellState state) {
     awt.Rectangle temp = state.getRectangle();
     int x = temp.x;
     int y = temp.y;
@@ -15,7 +15,7 @@ class RhombusShape extends BasicShape {
     int halfWidth = (w / 2) as int;
     int halfHeight = (h / 2) as int;
 
-    Polygon rhombus = new Polygon();
+    awt.Polygon rhombus = new awt.Polygon();
     rhombus.addPoint(x + halfWidth, y);
     rhombus.addPoint(x + w, y + halfHeight);
     rhombus.addPoint(x + halfWidth, y + h);

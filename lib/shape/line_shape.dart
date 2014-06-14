@@ -4,7 +4,8 @@ class LineShape extends BasicShape {
 
   void paintShape(Graphics2DCanvas canvas, CellState state) {
     if (_configureGraphics(canvas, state, false)) {
-      bool rounded = Utils.isTrue(state.getStyle(), Constants.STYLE_ROUNDED, false) && canvas.getScale() > Constants.MIN_SCALE_FOR_ROUNDED_LINES;
+      bool rounded = Utils.isTrue(state.getStyle(), Constants.STYLE_ROUNDED, false)
+          && canvas.getScale() > Constants.MIN_SCALE_FOR_ROUNDED_LINES;
 
       canvas.paintPolyline(createPoints(canvas, state), rounded);
     }

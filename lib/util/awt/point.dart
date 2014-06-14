@@ -21,89 +21,84 @@ part of graph.util.awt;
  */
 class Point {
 
-    num x;
-    num y;
+  num x;
+  num y;
 
-    Point([num x=0, num y=0]) {
-        setLocation(x, y);
+  Point([num x = 0, num y = 0]) {
+    setLocation(x, y);
+  }
+
+  Point.from(Point p) {
+    setLocation(p.x, p.y);
+  }
+
+  bool operator ==(Object obj) {
+    if (obj == this) {
+      return true;
     }
-
-    Point.from(Point p) {
-        setLocation(p.x, p.y);
+    if (obj is Point) {
+      Point p = obj;
+      return x == p.x && y == p.y;
     }
+    return false;
+  }
 
-    bool operator ==(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (obj is Point) {
-            Point p = obj;
-            return x == p.x && y == p.y;
-        }
-        return false;
-    }
+  String toString() {
+    return "Point[x=$x,y=$y]";
+  }
 
-    String toString() {
-        return "Point[x=$x,y=$y]"; 
-    }
+  double getX() {
+    return x;
+  }
 
-    double getX() {
-        return x;
-    }
+  double getY() {
+    return y;
+  }
 
-    double getY() {
-        return y;
-    }
+  Point getLocation() {
+    return new Point(x, y);
+  }
 
-    Point getLocation() {
-        return new Point(x, y);
-    }
+  void setLocationAt(Point p) {
+    setLocation(p.x, p.y);
+  }
 
-    void setLocationAt(Point p) {
-        setLocation(p.x, p.y);
-    }
+  void setLocation(num x, num y) {
+    setLocation(x.round(), y.round());
+  }
 
-//    void setLocation(int x, int y) {
-//        this.x = x;
-//        this.y = y;
-//    }
+  void move(int x, int y) {
+    setLocation(x, y);
+  }
 
-    void setLocation(num x, num y) {
-        setLocation(x.round(), y.round());
-    }
+  void translate(int dx, int dy) {
+    x += dx;
+    y += dy;
+  }
 
-    void move(int x, int y) {
-        setLocation(x, y);
-    }
+  static double DistanceSq(double x1, double y1, double x2, double y2) {
+    x2 -= x1;
+    y2 -= y1;
+    return x2 * x2 + y2 * y2;
+  }
 
-    void translate(int dx, int dy) {
-        x += dx;
-        y += dy;
-    }
+  double distanceSq(double px, double py) {
+    return Point.DistanceSq(getX(), getY(), px, py);
+  }
 
-    static double DistanceSq(double x1, double y1, double x2, double y2) {
-        x2 -= x1;
-        y2 -= y1;
-        return x2 * x2 + y2 * y2;
-    }
+  double distanceSqFrom(Point p) {
+    return DistanceSq(getX(), getY(), p.getX(), p.getY());
+  }
 
-    double distanceSq(double px, double py) {
-        return Point.DistanceSq(getX(), getY(), px, py);
-    }
+  static double Distance(double x1, double y1, double x2, double y2) {
+    return Math.sqrt(DistanceSq(x1, y1, x2, y2));
+  }
 
-    double distanceSqFrom(Point p) {
-        return DistanceSq(getX(), getY(), p.getX(), p.getY());
-    }
+  double distance(double px, double py) {
+    return Math.sqrt(distanceSq(px, py));
+  }
 
-    static double Distance(double x1, double y1, double x2, double y2) {
-        return Math.sqrt(DistanceSq(x1, y1, x2, y2));
-    }
-
-    double distance(double px, double py) {
-      return Math.sqrt(distanceSq(px, py));
-    }
-
-    double distanceFrom(Point p) {
-        return Math.sqrt(distanceSqFrom(p));
-    }
+  double distanceFrom(Point p) {
+    return Math.sqrt(distanceSqFrom(p));
+  }
 }

@@ -21,16 +21,16 @@ class LabelShape extends ImageShape {
   static void drawGlassEffect(Graphics2DCanvas canvas, CellState state) {
     double size = 0.4;
     canvas.getGraphics().setPaint(new GradientPaint(state.getX() as double, state.getY() as double,
-        new awt.Color(1, 1, 1, 0.9), (state.getX()) as double, (state.getY() + state.getHeight() * size) as double, new awt.Color(1, 1, 1, 0.3)));
+        new awt.Color.double(1.0, 1.0, 1.0, 0.9), (state.getX()) as double, (state.getY() + state.getHeight() * size) as double, new awt.Color(1, 1, 1, 0.3)));
 
-    double sw = (Utils.getFloat(state.getStyle(), Constants.STYLE_STROKEWIDTH, 1.0) * canvas.getScale() / 2) as double;
+    double sw = (Utils.getFloat(state.getStyle(), Constants.STYLE_STROKEWIDTH, 1.0) * canvas.getScale() / 2);
 
-    GeneralPath path = new GeneralPath();
-    path.moveTo(state.getX() - sw as double, state.getY() - sw as double);
-    path.lineTo(state.getX() - sw as double, (state.getY() + state.getHeight() * size) as double);
-    path.quadTo((state.getX() + state.getWidth() * 0.5) as double, (state.getY() + state.getHeight() * 0.7) as double,
-        (state.getX() + state.getWidth() + sw) as double, (state.getY() + state.getHeight() * size) as double);
-    path.lineTo((state.getX() + state.getWidth() + sw) as double, state.getY() - sw as double);
+    awt.GeneralPath path = new awt.GeneralPath();
+    path.moveTo(state.getX() - sw, state.getY() - sw);
+    path.lineTo(state.getX() - sw, (state.getY() + state.getHeight() * size));
+    path.quadTo((state.getX() + state.getWidth() * 0.5), (state.getY() + state.getHeight() * 0.7),
+        (state.getX() + state.getWidth() + sw), (state.getY() + state.getHeight() * size));
+    path.lineTo((state.getX() + state.getWidth() + sw), state.getY() - sw);
     path.closePath();
 
     canvas.getGraphics().fill(path);

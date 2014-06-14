@@ -28,7 +28,7 @@ part of graph.shape;
 class StencilShape extends BasicShape {
   //	StencilShape() : super();
 
-  GeneralPath _shapePath;
+  awt.GeneralPath _shapePath;
 
   /**
    * Reference to the root node of the Dia shape description.

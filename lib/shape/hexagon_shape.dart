@@ -6,14 +6,14 @@ part of graph.shape;
 
 class HexagonShape extends BasicShape {
 
-  Shape createShape(Graphics2DCanvas canvas, CellState state) {
+  awt.Shape createShape(Graphics2DCanvas canvas, CellState state) {
     awt.Rectangle temp = state.getRectangle();
     int x = temp.x;
     int y = temp.y;
     int w = temp.width;
     int h = temp.height;
     String direction = Utils.getString(state.getStyle(), Constants.STYLE_DIRECTION, Constants.DIRECTION_EAST);
-    Polygon hexagon = new Polygon();
+    awt.Polygon hexagon = new awt.Polygon();
 
     if (direction == Constants.DIRECTION_NORTH || direction == Constants.DIRECTION_SOUTH) {
       hexagon.addPoint(x + (0.5 * w) as int, y);

@@ -18,7 +18,8 @@ class ImageShape extends RectangleShape {
     bool flipH = Utils.isTrue(state.getStyle(), Constants.STYLE_IMAGE_FLIPH, false);
     bool flipV = Utils.isTrue(state.getStyle(), Constants.STYLE_IMAGE_FLIPV, false);
 
-    canvas.drawImage(getImageBounds(canvas, state), getImageForStyle(canvas, state), Graphics2DCanvas.PRESERVE_IMAGE_ASPECT, flipH, flipV);
+    canvas.drawImage(getImageBounds(canvas, state), getImageForStyle(canvas, state),
+        Graphics2DCanvas.PRESERVE_IMAGE_ASPECT, flipH, flipV);
   }
 
   awt.Rectangle getImageBounds(Graphics2DCanvas canvas, CellState state) {
@@ -33,11 +34,11 @@ class ImageShape extends RectangleShape {
     return canvas.getImageForStyle(state.getStyle());
   }
 
-  Color getFillColor(Graphics2DCanvas canvas, CellState state) {
+  awt.Color getFillColor(Graphics2DCanvas canvas, CellState state) {
     return Utils.getColor(state.getStyle(), Constants.STYLE_IMAGE_BACKGROUND);
   }
 
-  Color getStrokeColor(Graphics2DCanvas canvas, CellState state) {
+  awt.Color getStrokeColor(Graphics2DCanvas canvas, CellState state) {
     return Utils.getColor(state.getStyle(), Constants.STYLE_IMAGE_BORDER);
   }
 
