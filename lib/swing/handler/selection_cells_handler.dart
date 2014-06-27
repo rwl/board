@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2008, Gaudenz Alder
- * 
+ *
  * Known issue: Drag image size depends on the initial position and may sometimes
  * not align with the grid when dragging. This is because the rounding of the width
  * and height at the initial position may be different than that at the current
@@ -19,7 +19,7 @@ part of graph.swing.handler;
 
 //import javax.swing.SwingUtilities;
 
-class SelectionCellsHandler implements MouseListener, MouseMotionListener {
+class SelectionCellsHandler {//implements MouseListener, MouseMotionListener {
 
   /**
    * Defines the default value for maxHandlers. Default is 100.
@@ -57,24 +57,27 @@ class SelectionCellsHandler implements MouseListener, MouseMotionListener {
    */
   /*transient*/ LinkedHashMap<Object, CellHandler> _handlers = new LinkedHashMap<Object, CellHandler>();
 
-  /*transient*/ IEventListener _refreshHandler = (Object source, EventObj evt) {
-    if (isEnabled()) {
-      refresh();
-    }
-  };
+  /*transient*/ IEventListener _refreshHandler;
 
-  /*transient*/ PropertyChangeListener _labelMoveHandler = (PropertyChangeEvent evt) {
-    if (evt.getPropertyName().equals("vertexLabelsMovable") || evt.getPropertyName().equals("edgeLabelsMovable")) {
-      refresh();
-    }
-  };
+  /*transient*/ PropertyChangeListener _labelMoveHandler;
 
   /**
-   * 
+   *
    * @param graphComponent
    */
   SelectionCellsHandler(final GraphComponent graphComponent) {
     this._graphComponent = graphComponent;
+
+    _refreshHandler = (Object source, EventObj evt) {
+      if (isEnabled()) {
+        refresh();
+      }
+    };
+    _labelMoveHandler = (PropertyChangeEvent evt) {
+      if (evt.getPropertyName().equals("vertexLabelsMovable") || evt.getPropertyName().equals("edgeLabelsMovable")) {
+        refresh();
+      }
+    };
 
     // Listens to all mouse events on the rendering control
     graphComponent.getGraphControl().addMouseListener(this);

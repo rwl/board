@@ -61,7 +61,7 @@ class MovePreview extends EventSource {
 
   /**
    * Constructs a new rubberband selection for the given graph component.
-   * 
+   *
    * @param graphComponent Component that contains the rubberband.
    */
   MovePreview(GraphComponent graphComponent) {
@@ -340,7 +340,7 @@ class MovePreviewCellStatePreview extends CellStatePreview {
 
   final MovePreview movePreview;
 
-  MovePreviewCellStatePreview(this.ovePreview, GraphComponent graphComponent, boolean cloned) : super(graphComponent, cloned);
+  MovePreviewCellStatePreview(this.movePreview, GraphComponent graphComponent, boolean cloned) : super(graphComponent, cloned);
 
   float getOpacityForCell(Object cell) {
     if (movePreview.isCellOpaque(cell)) {

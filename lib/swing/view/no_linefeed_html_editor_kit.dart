@@ -13,7 +13,7 @@ part of graph.swing.view;
 /**
  * Workaround for inserted linefeeds when getting text from HTML editor.
  */
-class NoLinefeedHtmlEditorKit extends HTMLEditorKit {
+class NoLinefeedHtmlEditorKit {//extends HTMLEditorKit {
   void write(Writer out, Document doc, int pos, int len) //throws IOException, BadLocationException
   {
     if (doc is HTMLDocument) {

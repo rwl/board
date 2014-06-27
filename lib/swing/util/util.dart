@@ -3,6 +3,7 @@ library graph.swing.util;
  * This package contains all utility classes that require JFC/Swing, namely for
  * mouse event handling, drag and drop, actions and overlays.
  */
+import 'package:dart_web_toolkit/ui.dart' as ui;
 
 import '../../util/awt/awt.dart' as awt;
 

@@ -17,7 +17,7 @@ class Animation extends EventSource {
   /**
    * Specifies the default delay for animations in ms. Default is 20.
    */
-  static int DEFAULT_DELAY = 20;
+  static const int DEFAULT_DELAY = 20;
 
   /**
    * Default is DEFAULT_DELAY.
@@ -32,14 +32,7 @@ class Animation extends EventSource {
   /**
    * Constructs a new animation instance with the given repaint delay.
    */
-  Animation() {
-    this(DEFAULT_DELAY);
-  }
-
-  /**
-   * Constructs a new animation instance with the given repaint delay.
-   */
-  Animation(int delay) {
+  Animation([int delay=DEFAULT_DELAY]) {
     this._delay = delay;
   }
 

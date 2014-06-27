@@ -5,7 +5,7 @@ part of graph.swing.util;
 
 //import java.awt.event.ActionEvent;
 
-//import javax.swing.AbstractAction;
+//import javax.swing.awt.AbstractAction;
 //import javax.swing.Action;
 
 /**
@@ -65,7 +65,7 @@ class GraphActions {
   static final Action toFrontAction = new LayerAction("toFront");
 
   /**
-   * 
+   *
    * @return the delete action
    */
   static Action getDeleteAction() {
@@ -73,7 +73,7 @@ class GraphActions {
   }
 
   /**
-   * 
+   *
    * @return the edit action
    */
   static Action getEditAction() {
@@ -81,7 +81,7 @@ class GraphActions {
   }
 
   /**
-   * 
+   *
    * @return the edit action
    */
   static Action getGroupAction() {
@@ -89,7 +89,7 @@ class GraphActions {
   }
 
   /**
-   * 
+   *
    * @return the edit action
    */
   static Action getUngroupAction() {
@@ -97,7 +97,7 @@ class GraphActions {
   }
 
   /**
-   * 
+   *
    * @return the edit action
    */
   static Action getRemoveFromParentAction() {
@@ -105,7 +105,7 @@ class GraphActions {
   }
 
   /**
-   * 
+   *
    * @return the edit action
    */
   static Action getUpdateGroupBoundsAction() {
@@ -113,7 +113,7 @@ class GraphActions {
   }
 
   /**
-   * 
+   *
    * @return the select all action
    */
   static Action getSelectAllAction() {
@@ -121,7 +121,7 @@ class GraphActions {
   }
 
   /**
-   * 
+   *
    * @return the select vertices action
    */
   static Action getSelectVerticesAction() {
@@ -129,7 +129,7 @@ class GraphActions {
   }
 
   /**
-   * 
+   *
    * @return the select edges action
    */
   static Action getSelectEdgesAction() {
@@ -137,7 +137,7 @@ class GraphActions {
   }
 
   /**
-   * 
+   *
    * @return the select none action
    */
   static Action getSelectNoneAction() {
@@ -145,7 +145,7 @@ class GraphActions {
   }
 
   /**
-   * 
+   *
    * @return the select next action
    */
   static Action getSelectNextAction() {
@@ -153,7 +153,7 @@ class GraphActions {
   }
 
   /**
-   * 
+   *
    * @return the select previous action
    */
   static Action getSelectPreviousAction() {
@@ -161,7 +161,7 @@ class GraphActions {
   }
 
   /**
-   * 
+   *
    * @return the select parent action
    */
   static Action getSelectParentAction() {
@@ -169,7 +169,7 @@ class GraphActions {
   }
 
   /**
-   * 
+   *
    * @return the select child action
    */
   static Action getSelectChildAction() {
@@ -177,7 +177,7 @@ class GraphActions {
   }
 
   /**
-   * 
+   *
    * @return the go into action
    */
   static Action getEnterGroupAction() {
@@ -185,7 +185,7 @@ class GraphActions {
   }
 
   /**
-   * 
+   *
    * @return the go up action
    */
   static Action getExitGroupAction() {
@@ -193,7 +193,7 @@ class GraphActions {
   }
 
   /**
-   * 
+   *
    * @return the home action
    */
   static Action getHomeAction() {
@@ -201,7 +201,7 @@ class GraphActions {
   }
 
   /**
-   * 
+   *
    * @return the collapse action
    */
   static Action getCollapseAction() {
@@ -209,7 +209,7 @@ class GraphActions {
   }
 
   /**
-   * 
+   *
    * @return the expand action
    */
   static Action getExpandAction() {
@@ -217,7 +217,7 @@ class GraphActions {
   }
 
   /**
-   * 
+   *
    * @return the zoom actual action
    */
   static Action getZoomActualAction() {
@@ -225,7 +225,7 @@ class GraphActions {
   }
 
   /**
-   * 
+   *
    * @return the zoom in action
    */
   static Action getZoomInAction() {
@@ -233,7 +233,7 @@ class GraphActions {
   }
 
   /**
-   * 
+   *
    * @return the zoom out action
    */
   static Action getZoomOutAction() {
@@ -241,7 +241,7 @@ class GraphActions {
   }
 
   /**
-   * 
+   *
    * @return the action that moves cell(s) to the backmost layer
    */
   static Action getToBackAction() {
@@ -249,7 +249,7 @@ class GraphActions {
   }
 
   /**
-   * 
+   *
    * @return the action that moves cell(s) to the frontmost layer
    */
   static Action getToFrontAction() {
@@ -257,7 +257,7 @@ class GraphActions {
   }
 
   /**
-   * 
+   *
    * @param e
    * @return Returns the graph for the given action event.
    */
@@ -277,7 +277,7 @@ class GraphActions {
 /**
  *
  */
-class EditAction extends AbstractAction {
+class EditAction extends awt.AbstractAction {
 
   EditAction(String name) : super(name);
 
@@ -295,7 +295,7 @@ class EditAction extends AbstractAction {
 /**
  *
  */
-class DeleteAction extends AbstractAction {
+class DeleteAction extends awt.AbstractAction {
 
   DeleteAction(String name) : super(name);
 
@@ -309,7 +309,7 @@ class DeleteAction extends AbstractAction {
 
 }
 
-class GroupAction extends AbstractAction {
+class GroupAction extends awt.AbstractAction {
 
   GroupAction(String name) : super(name);
 
@@ -328,7 +328,7 @@ class GroupAction extends AbstractAction {
 
 }
 
-class UngroupAction extends AbstractAction {
+class UngroupAction extends awt.AbstractAction {
 
   UngroupAction(String name) : super(name);
 
@@ -342,7 +342,7 @@ class UngroupAction extends AbstractAction {
 
 }
 
-class RemoveFromParentAction extends AbstractAction {
+class RemoveFromParentAction extends awt.AbstractAction {
 
   RemoveFromParentAction(String name) : super(name);
 
@@ -356,7 +356,7 @@ class RemoveFromParentAction extends AbstractAction {
 
 }
 
-class UpdateGroupBoundsAction extends AbstractAction {
+class UpdateGroupBoundsAction extends awt.AbstractAction {
 
   UpdateGroupBoundsAction(String name) : super(name);
 
@@ -374,7 +374,7 @@ class UpdateGroupBoundsAction extends AbstractAction {
 
 }
 
-class LayerAction extends AbstractAction {
+class LayerAction extends awt.AbstractAction {
 
   LayerAction(String name) : super(name);
 
@@ -389,7 +389,7 @@ class LayerAction extends AbstractAction {
 
 }
 
-class FoldAction extends AbstractAction {
+class FoldAction extends awt.AbstractAction {
 
   FoldAction(String name) : super(name);
 
@@ -404,7 +404,7 @@ class FoldAction extends AbstractAction {
 
 }
 
-class DrillAction extends AbstractAction {
+class DrillAction extends awt.AbstractAction {
 
   DrillAction(String name) : super(name);
 
@@ -426,7 +426,7 @@ class DrillAction extends AbstractAction {
 
 }
 
-class ZoomAction extends AbstractAction {
+class ZoomAction extends awt.AbstractAction {
 
   ZoomAction(String name) : super(name);
 
@@ -449,7 +449,7 @@ class ZoomAction extends AbstractAction {
 
 }
 
-class SelectAction extends AbstractAction {
+class SelectAction extends awt.AbstractAction {
 
   SelectAction(String name) : super(name);
 

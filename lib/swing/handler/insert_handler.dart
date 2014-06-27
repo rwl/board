@@ -32,11 +32,13 @@ class InsertHandler extends MouseAdapter {
 
   Rect _current;
 
-  EventSource _eventSource = new EventSource(this);
+  EventSource _eventSource;
 
   InsertHandler(GraphComponent graphComponent, String style) {
     this._graphComponent = graphComponent;
     this._style = style;
+
+    _eventSource = new EventSource(this);
 
     // Installs the paint handler
     graphComponent.addListener(Event.AFTER_PAINT, (Object sender, EventObj evt) {
@@ -160,14 +162,7 @@ class InsertHandler extends MouseAdapter {
   /**
    *
    */
-  void removeListener(IEventListener listener) {
-    removeListener(listener, null);
-  }
-
-  /**
-   *
-   */
-  void removeListener(IEventListener listener, String eventName) {
+  void removeListener(IEventListener listener, [String eventName=null]) {
     _eventSource.removeListener(listener, eventName);
   }
 

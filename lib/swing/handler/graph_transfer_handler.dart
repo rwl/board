@@ -14,9 +14,9 @@ part of graph.swing.handler;
 //import javax.swing.TransferHandler;
 
 /**
- * 
+ *
  */
-class GraphTransferHandler extends TransferHandler {
+class GraphTransferHandler {//extends TransferHandler {
 
   /**
    * bool that specifies if an image of the cells should be created for
@@ -119,7 +119,7 @@ class GraphTransferHandler extends TransferHandler {
 
   /**
    * (non-Javadoc)
-   * 
+   *
    * @see javax.swing.TransferHandler#createTransferable(javax.swing.JComponent)
    */
   Transferable createTransferable(JComponent c) {

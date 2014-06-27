@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2008-2012, JGraph Ltd
- * 
+ *
  * Known issue: Drag image size depends on the initial position and may sometimes
  * not align with the grid when dragging. This is because the rounding of the width
  * and height at the initial position may be different than that at the current
@@ -177,7 +177,7 @@ class GraphHandler implements event.MouseMoveHandler, event.MouseDownHandler, ev
   /*transient*/ event.DropHandler _currentDropTarget = null;
 
   /**
-   * 
+   *
    * @param graphComponent
    */
   GraphHandler(final GraphComponent graphComponent) {
@@ -557,7 +557,7 @@ class GraphHandler implements event.MouseMoveHandler, event.MouseDownHandler, ev
   }
 
   /**
-   * 
+   *
    * @param e
    */
   void dragOver(DropTargetDragEvent e) {
@@ -711,7 +711,7 @@ class GraphHandler implements event.MouseMoveHandler, event.MouseDownHandler, ev
   }
 
   /**
-   * 
+   *
    * @param e
    */
   void dragExit(DropTargetEvent e) {
@@ -728,7 +728,7 @@ class GraphHandler implements event.MouseMoveHandler, event.MouseDownHandler, ev
   }
 
   /**
-   * 
+   *
    * @param e
    */
   void drop(DropTargetDropEvent e) {
@@ -893,7 +893,7 @@ class GraphHandler implements event.MouseMoveHandler, event.MouseDownHandler, ev
   }
 
   /**
-   * 
+   *
    * @param dx
    * @param dy
    * @param e
@@ -994,7 +994,7 @@ class GraphHandler implements event.MouseMoveHandler, event.MouseDownHandler, ev
 
 }
 
-class GraphHandlerDragSourceAdapter extends DragSourceAdapter {
+class GraphHandlerDragSourceAdapter {//extends DragSourceAdapter {
   /**
      *
      */

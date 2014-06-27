@@ -22,7 +22,7 @@ part of graph.swing.util;
 /**
  *
  */
-class GraphTransferable implements Transferable, UIResource, Serializable {
+class GraphTransferable {//implements Transferable, UIResource, Serializable {
 
   /**
    * Global switch to disable image support in transferables. Set this to false as a workaround
@@ -31,7 +31,7 @@ class GraphTransferable implements Transferable, UIResource, Serializable {
   static bool enableImageSupport = true;
 
   /**
-   * Serialized Data Flavor. Use the following code to switch to local 
+   * Serialized Data Flavor. Use the following code to switch to local
    * reference flavor:
    * <code>
    * try
@@ -44,7 +44,7 @@ class GraphTransferable implements Transferable, UIResource, Serializable {
    *   // do nothing
    * }
    * </code>
-   * 
+   *
    * If you get a class not found exception, try the following instead:
    * <code>
    * GraphTransferable.dataFlavor = new DataFlavor(DataFlavor.javaJVMLocalObjectMimeType
@@ -68,11 +68,11 @@ class GraphTransferable implements Transferable, UIResource, Serializable {
 
   ImageIcon _image;
 
-  GraphTransferable(List<Object> cells, Rect bounds) {
-    this(cells, bounds, null);
-  }
+//  GraphTransferable(List<Object> cells, Rect bounds) {
+//    this(cells, bounds, null);
+//  }
 
-  GraphTransferable(List<Object> cells, Rect bounds, ImageIcon image) {
+  GraphTransferable(List<Object> cells, Rect bounds, [ImageIcon image=null]) {
     this._cells = cells;
     this._bounds = bounds;
     this._image = image;
@@ -151,7 +151,7 @@ class GraphTransferable implements Transferable, UIResource, Serializable {
   /**
    * Returns whether or not the specified data flavor is supported for this
    * object.
-   * 
+   *
    * @param flavor
    *            the requested flavor for the data
    * @return bool indicating whether or not the data flavor is supported
@@ -172,7 +172,7 @@ class GraphTransferable implements Transferable, UIResource, Serializable {
    * Returns an object which represents the data to be transferred. The class
    * of the object returned is defined by the representation class of the
    * flavor.
-   * 
+   *
    * @param flavor
    *            the requested flavor for the data
    * @see DataFlavor#getRepresentationClass
@@ -233,7 +233,7 @@ class GraphTransferable implements Transferable, UIResource, Serializable {
   }
 
   /**
-   * 
+   *
    * @param flavor
    * @return Returns true if the given flavor is a richer flavor of this
    * transferable.
@@ -252,7 +252,7 @@ class GraphTransferable implements Transferable, UIResource, Serializable {
   }
 
   /**
-   * 
+   *
    * @param flavor
    * @return the richer data flavor of this and the specified
    * @throws UnsupportedFlavorException
@@ -269,7 +269,7 @@ class GraphTransferable implements Transferable, UIResource, Serializable {
   /**
    * Returns whether or not the specified data flavor is an HTML flavor that
    * is supported.
-   * 
+   *
    * @param flavor
    *            the requested flavor for the data
    * @return bool indicating whether or not the data flavor is supported
@@ -302,7 +302,7 @@ class GraphTransferable implements Transferable, UIResource, Serializable {
   }
 
   /**
-   * 
+   *
    * @param flavor
    * @return Returns true if the given flavor is an image flavor of this
    * transferable.
@@ -326,7 +326,7 @@ class GraphTransferable implements Transferable, UIResource, Serializable {
   /**
    * Returns whether or not the specified data flavor is an plain flavor that
    * is supported.
-   * 
+   *
    * @param flavor
    *            the requested flavor for the data
    * @return bool indicating whether or not the data flavor is supported
@@ -361,7 +361,7 @@ class GraphTransferable implements Transferable, UIResource, Serializable {
   /**
    * Returns whether or not the specified data flavor is a String flavor that
    * is supported.
-   * 
+   *
    * @param flavor
    *            the requested flavor for the data
    * @return bool indicating whether or not the data flavor is supported

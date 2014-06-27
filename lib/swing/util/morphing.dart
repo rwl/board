@@ -33,12 +33,12 @@ class Morphing extends Animation {
   double _ease;
 
   /**
-   * Maps from cells to origins. 
+   * Maps from cells to origins.
    */
   Map<Object, Point2d> _origins = new HashMap<Object, Point2d>();
 
   /**
-   * Optional array of cells to limit the animation to. 
+   * Optional array of cells to limit the animation to.
    */
   List<Object> _cells;
 
@@ -49,23 +49,29 @@ class Morphing extends Animation {
   /**
    * Constructs a new morphing instance for the given graph.
    */
-  Morphing(GraphComponent graphComponent) {
-    this(graphComponent, 6, 1.5, DEFAULT_DELAY);
+//  Morphing(GraphComponent graphComponent) {
+//    this(graphComponent, 6, 1.5, DEFAULT_DELAY);
+//
+//    // Installs the paint handler
+//    graphComponent.addListener(Event.AFTER_PAINT, (Object sender, EventObj evt) {
+//      Graphics g = evt.getProperty("g") as Graphics;
+//      paint(g);
+//    });
+//  }
+
+  /**
+   * Constructs a new morphing instance for the given graph.
+   */
+  Morphing(GraphComponent graphComponent, [int steps=6, double ease=1.5, int delay=Animation.DEFAULT_DELAY]) : super(delay) {
+    this._graphComponent = graphComponent;
+    this._steps = steps;
+    this._ease = ease;
 
     // Installs the paint handler
     graphComponent.addListener(Event.AFTER_PAINT, (Object sender, EventObj evt) {
       Graphics g = evt.getProperty("g") as Graphics;
       paint(g);
     });
-  }
-
-  /**
-   * Constructs a new morphing instance for the given graph.
-   */
-  Morphing(GraphComponent graphComponent, int steps, double ease, int delay) : super(delay) {
-    this._graphComponent = graphComponent;
-    this._steps = steps;
-    this._ease = ease;
   }
 
   /**

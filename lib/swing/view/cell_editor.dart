@@ -60,7 +60,7 @@ class CellEditor implements ICellEditor {
 
   /**
    * Defines the minimum scale to be used for the editor. Set this to
-   * 0 if the font size in the editor 
+   * 0 if the font size in the editor
    */
   double _minimumEditorScale = DEFAULT_MINIMUM_EDITOR_SCALE;
 
@@ -113,12 +113,15 @@ class CellEditor implements ICellEditor {
 
   /*transient*/ KeyStroke shiftEnterKeystroke = KeyStroke.getKeyStroke("shift ENTER");
 
-  AbstractAction _cancelEditingAction = new CancelEditingAction(this);
+  AbstractAction _cancelEditingAction;
 
-  AbstractAction _textSubmitAction = new TextSubmitAction(this);
+  AbstractAction _textSubmitAction;
 
   CellEditor(GraphComponent graphComponent) {
     this._graphComponent = graphComponent;
+
+    _cancelEditingAction = new CancelEditingAction(this);
+    _textSubmitAction = new TextSubmitAction(this);
 
     // Creates the plain text editor
     _textArea = new JTextArea();
@@ -463,7 +466,7 @@ class CellEditor implements ICellEditor {
 
 }
 
-class CancelEditingAction extends AbstractAction {
+class CancelEditingAction extends awt.AbstractAction {
 
   final CellEditor cellEditor;
 
@@ -474,7 +477,7 @@ class CancelEditingAction extends AbstractAction {
   }
 }
 
-class TextSubmitAction extends AbstractAction {
+class TextSubmitAction extends awt.AbstractAction {
 
   final CellEditor cellEditor;
 

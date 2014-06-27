@@ -10,7 +10,7 @@ part of graph.swing.util;
 /**
  *
  */
-class MouseAdapter implements MouseMotionListener, MouseListener {
+class MouseAdapter {//implements MouseMotionListener, MouseListener {
 
   void mouseDragged(MouseEvent e) {
     // empty

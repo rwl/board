@@ -14,3 +14,9 @@ part 'general_path.dart';
 part 'polygon.dart';
 part 'ellipse.dart';
 part 'paint.dart';
+
+abstract class AbstractAction {
+  String name;
+  AbstractAction([this.name]);
+  void actionPerformed(ActionEvent e);
+}

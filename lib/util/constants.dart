@@ -158,10 +158,10 @@ class Constants {
   /**
    * Specifies the default dash pattern, 3 pixels solid, 3 pixels clear.
    */
-  static const List<double> DEFAULT_DASHED_PATTERN = [3.0, 3.0];
+  static /*const*/final List<double> DEFAULT_DASHED_PATTERN = [3.0, 3.0];
 
   /**
-   * Specifies the default distance at 1.0 scale that the label curve is 
+   * Specifies the default distance at 1.0 scale that the label curve is
    * created from its base curve
    */
   static const double DEFAULT_LABEL_BUFFER = 12.0;
@@ -228,9 +228,9 @@ class Constants {
   /**
    * Defines the key for the perimeter style.
    * This is a function that defines the perimeter around a particular shape.
-   * Possible values are the functions defined in Perimeter that use the 
+   * Possible values are the functions defined in Perimeter that use the
    * <code>PerimeterFunction</code> interface. Alternatively, the constants
-   * in this class that start with <code>PERIMETER_</code> may be used to 
+   * in this class that start with <code>PERIMETER_</code> may be used to
    * access perimeter styles in <code>StyleRegistry</code>.
    */
   static const String STYLE_PERIMETER = "perimeter";
@@ -251,20 +251,20 @@ class Constants {
 
   /**
    * Defines the direction(s) that edges are allowed to connect to cells in.
-   * Possible values are <code>DIRECTION_NORTH, DIRECTION_SOUTH, 
+   * Possible values are <code>DIRECTION_NORTH, DIRECTION_SOUTH,
    * DIRECTION_EAST</code> and <code>DIRECTION_WEST</code>.
-   * 
+   *
    */
   static const String STYLE_PORT_CONSTRAINT = "portConstraint";
 
   /**
-   * Defines the key for the opacity style. The type of the value is 
+   * Defines the key for the opacity style. The type of the value is
    * <code>float</code> and the possible range is 0-100.
    */
   static const String STYLE_OPACITY = "opacity";
 
   /**
-   * Defines the key for the text opacity style. The type of the value is 
+   * Defines the key for the text opacity style. The type of the value is
    * <code>float</code> and the possible range is 0-100.
    */
   static const String STYLE_TEXT_OPACITY = "textOpacity";
@@ -276,7 +276,7 @@ class Constants {
    * "visible" will show the complete label. A value of "hidden" will clip
    * the label so that it does not overlap the vertex bounds. A value of
    * "fill" will use the vertex bounds for the label.
-   * 
+   *
    * @see graph.view.Graph#isLabelClipped(Object)
    */
   static const String STYLE_OVERFLOW = "overflow";
@@ -339,7 +339,7 @@ class Constants {
   static const String STYLE_WHITE_SPACE = "whiteSpace";
 
   /**
-   * Defines the key for the rotation style. The type of the value is 
+   * Defines the key for the rotation style. The type of the value is
    * <code>double</code> and the possible range is 0-360.
    */
   static const String STYLE_ROTATION = "rotation";
@@ -347,7 +347,7 @@ class Constants {
   /**
    * Defines the key for the fillColor style. The value is a string
    * expression supported by Utils.parseColor.
-   * 
+   *
    * @see graph.util.Utils#parseColor(String)
    */
   static const String STYLE_FILLCOLOR = "fillColor";
@@ -356,7 +356,7 @@ class Constants {
    * Defines the key for the gradientColor style. The value is a string
    * expression supported by Utils.parseColor. This is ignored if no fill
    * color is defined.
-   * 
+   *
    * @see graph.util.Utils#parseColor(String)
    */
   static const String STYLE_GRADIENTCOLOR = "gradientColor";
@@ -377,7 +377,7 @@ class Constants {
   /**
    * Defines the key for the strokeColor style. The value is a string
    * expression supported by Utils.parseColor.
-   * 
+   *
    * @see graph.util.Utils#parseColor(String)
    */
   static const String STYLE_STROKECOLOR = "strokeColor";
@@ -386,7 +386,7 @@ class Constants {
    * Defines the key for the separatorColor style. The value is a string
    * expression supported by Utils.parseColor. This style is only used
    * for SHAPE_SWIMLANE shapes.
-   * 
+   *
    * @see graph.util.Utils#parseColor(String)
    */
   static const String STYLE_SEPARATORCOLOR = "separatorColor";
@@ -554,7 +554,7 @@ class Constants {
 
   /**
    * Variable: STYLE_FLIPV
-   * 
+   *
    * Defines the key for the vertical flip. Possible values are 0 and 1.
    * Default is 0.
    */
@@ -579,7 +579,7 @@ class Constants {
   /**
    * Defines the key for the label background color. The value is a string
    * expression supported by Utils.parseColor.
-   * 
+   *
    * @see graph.util.Utils#parseColor(String)
    */
   static const String STYLE_LABEL_BACKGROUNDCOLOR = "labelBackgroundColor";
@@ -587,7 +587,7 @@ class Constants {
   /**
    * Defines the key for the label border color. The value is a string
    * expression supported by Utils.parseColor.
-   * 
+   *
    * @see graph.util.Utils#parseColor(String)
    */
   static const String STYLE_LABEL_BORDERCOLOR = "labelBorderColor";
@@ -609,7 +609,7 @@ class Constants {
   /**
    * Defines the key for the indicatorColor style. The value is a string
    * expression supported by Utils.parseColor.
-   * 
+   *
    * @see graph.util.Utils#parseColor(String)
    */
   static const String STYLE_INDICATOR_COLOR = "indicatorColor";
@@ -618,7 +618,7 @@ class Constants {
    * Defines the key for the indicatorGradientColor style. The value is a
    * string expression supported by Utils.parseColor. This style is only
    * supported in SHAPE_LABEL shapes.
-   * 
+   *
    * @see graph.util.Utils#parseColor(String)
    */
   static const String STYLE_INDICATOR_GRADIENTCOLOR = "indicatorGradientColor";
@@ -670,8 +670,8 @@ class Constants {
   static const String STYLE_STARTARROW = "startArrow";
 
   /**
-   * Defines the key for the endSize style. The type of this value is 
-   * <code>float</code> and the value represents the size of the end 
+   * Defines the key for the endSize style. The type of this value is
+   * <code>float</code> and the value represents the size of the end
    * marker in pixels.
    */
   static const String STYLE_ENDSIZE = "endSize";
@@ -705,7 +705,7 @@ class Constants {
 
   /**
    * Defines the key for the dashed pattern style. The type of this value
-   * is <code>List<float></code> and the value specifies the dashed pattern 
+   * is <code>List<float></code> and the value specifies the dashed pattern
    * to apply to edges drawn with this style. This style allows the user
    * to specify a custom-defined dash pattern. This is done using a series
    * of numbers. Dash styles are defined in terms of the length of the dash
@@ -818,7 +818,7 @@ class Constants {
    * Defines the key for the fontColor style. The value is type
    * <code>String</code> and of the expression supported by
    * Utils.parseColor.
-   * 
+   *
    * @see graph.util.Utils#parseColor(String)
    */
   static const String STYLE_FONTCOLOR = "fontColor";

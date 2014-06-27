@@ -5,6 +5,8 @@ library graph.swing.view;
  * defines the requirements for a canvas that supports hit-detection on shapes.
  */
 
+import '../../util/awt/awt.dart' as awt;
+
 import '../../canvas/canvas.dart' show Graphics2DCanvas;
 
 import '../../model/model.dart' show Geometry;

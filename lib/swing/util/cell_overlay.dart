@@ -12,7 +12,7 @@ abstract class ICellOverlay {
 
 }
 
-class CellOverlay extends JComponent implements ICellOverlay {
+class CellOverlay extends ui.Widget implements ICellOverlay {
 
   ImageIcon _imageIcon;
 

@@ -16,7 +16,7 @@ part of graph.swing.handler;
 /**
  * Implements a rubberband selection.
  */
-class Rubberband implements MouseListener, MouseMotionListener {
+class Rubberband {//implements MouseListener, MouseMotionListener {
 
   /**
    * Defines the border color for drawing the rubberband selection.
@@ -52,7 +52,7 @@ class Rubberband implements MouseListener, MouseMotionListener {
 
   /**
    * Constructs a new rubberband selection for the given graph component.
-   * 
+   *
    * @param graphComponent Component that contains the rubberband.
    */
   Rubberband(final GraphComponent graphComponent) {
@@ -142,7 +142,7 @@ class Rubberband implements MouseListener, MouseMotionListener {
   }
 
   /**
-   * 
+   *
    * @param rect
    * @param e
    */
@@ -260,7 +260,7 @@ class Rubberband implements MouseListener, MouseMotionListener {
 
 }
 
-class RubberbandKeyAdapter extends KeyAdapter {
+class RubberbandKeyAdapter {//extends KeyAdapter {
 
   final Rubberband rubberband;
   final GraphComponent graphComponent;

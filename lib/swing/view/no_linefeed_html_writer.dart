@@ -8,7 +8,7 @@ part of graph.swing.view;
 /**
  * Subclassed to make setLineLength visible for the custom editor kit.
  */
-class NoLinefeedHtmlWriter extends HTMLWriter {
+class NoLinefeedHtmlWriter {//extends HTMLWriter {
   NoLinefeedHtmlWriter(Writer buf, HTMLDocument doc, int pos, int len) : super(buf, doc, pos, len);
 
   void setLineLength(int l) {
