@@ -1,17 +1,17 @@
-name: dgraph
-version: 0.0.1
+name: board
+version: 0.0.1-alpha.1
 author: Richard Lincoln <r.w.lincoln@gmail.com>
-description: Visualisation and interaction with node-edge graphs
-homepage: https://github.com/rwl/dgraph.dart
+description: Interactive node-edge graph visualisation
+homepage: https://github.com/rwl/board.dart
 dependencies:
+  color: any
   crypto: any
+  dart_web_toolkit: any
   image: any
   intl: any
   unicode_helper: any
-  xmlstream: any
   xml: any
-  color: any
-  dart_web_toolkit: any
+  xmlstream: any
 dev_dependencies:
   browser: any
   unittest: any
